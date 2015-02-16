@@ -1,5 +1,5 @@
 {
-    "name": "fm-labs/cakephp3-plugin-backend",
+    "name": "fm-labs/cakephp3-backend",
     "description": "Backend plugin for CakePHP",
     "type": "cakephp-plugin",
     "require": {

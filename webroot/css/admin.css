@@ -1,0 +1,83 @@
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+}
+body.sidebar #page {
+  padding-left: 260px !important;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+body.sidebar-hidden #page {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+body.sidebar .pusher > .cake-debug-output {
+  padding-left: 260px;
+}
+body.sidebar .pusher > .cake-debug-output:first-child {
+  margin-top: 4em;
+}
+.padding-reset {
+  padding: 0px !important;
+}
+.ui.left.sidebar {
+  margin-top: 37px !important;
+}
+.ui.flash.message {
+  margin-bottom: 1rem;
+}
+.index table .thumb {
+  width: 30px;
+  height: auto;
+  vertical-align: middle;
+}
+#page-breadcrumbs {
+  margin-top: 50px;
+  background-color: #EEE;
+  padding: 0.5rem 1rem;
+}
+#page-main {
+  margin-top: 1rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  min-height: 700px;
+}
+.backend.dashboard .dashboard-item {
+  min-height: 200px;
+}
+/*
+.ui.vertical.menu{
+    margin-top: -15px !important;
+    width: 100%;
+    display: none;
+}
+
+.mobile.row{
+    padding-top: 0px !important;
+    margin-top: 0px !important;
+}
+
+.mobile.row .ui.inverted.menu{
+    border-radius: 0px !important;
+}
+
+@media (max-width: 767px) {
+    .ui.grid.main{
+        margin-top: 70px;
+    }
+    .ui.vertical.menu.navbar{
+        margin-top: 0px !important;
+    }
+}
+*/

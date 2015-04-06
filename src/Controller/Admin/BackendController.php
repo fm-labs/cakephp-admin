@@ -8,4 +8,9 @@ class BackendController extends AppController
     public function index()
     {
     }
+
+    public function dashboard()
+    {
+
+    }
 }

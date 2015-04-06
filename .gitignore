@@ -2,4 +2,3 @@
 vendor/
 composer.lock
 config/bootstrap.php
-config/backend.default.php

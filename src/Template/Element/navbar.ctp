@@ -5,56 +5,54 @@ use Cake\Utility\Inflector;
 <div class="ui grid">
     <div class="computer tablet only row" style="padding: 0;">
         <div class="ui inverted fixed menu navbar grid">
-            <?= $this->Ui->link('Menu', '#', ['id' => 'backend-admin-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
+            <?= $this->Ui->link('', '#', ['id' => 'backend-admin-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
             <?= $this->Ui->link(
-                Configure::read('Backend.Dashboard.title'),
-                Configure::read('Backend.Dashboard.url'),
-                ['class' => 'item', 'icon' => Configure::read('Backend.Dashboard.icon')]
+                Configure::read('Backend.title'),
+                Configure::read('Backend.dashboardUrl'),
+                ['class' => 'item', 'icon' => 'dashboard']
             ); ?>
-            <?= $this->Ui->link('View Website', '/', ['class' => 'item', 'icon' => 'external link', 'target' => 'frontend']); ?>
 
             <div class="right menu">
-                <!--
-                <?= $this->Ui->link('Messages', '/backend/admin/Messages', ['class' => 'item', 'icon' => 'comment']); ?>
-                -->
                 <div class="ui dropdown item"><i class="user icon"></i><?= $this->Session->read('Auth.User'); ?>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        You are logged in
-                        <!--
                         <?= $this->Ui->link('Profile', '/backend/admin/Auth/user', ['class' => 'item']); ?>
                         <div class="ui divider"></div>
                         <?= $this->Ui->link(
                             __('Logout'),
-                            ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
+                            Configure::read('Backend.logoutUrl'),
                             ['class' => 'item']);
                         ?>
-                        -->
-                    </div>
-                </div>
-                <div class="ui dropdown item"><i class="cubes icon"></i>Backend
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <?= $this->Ui->link(
-                            'Dashboard',
-                            ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
-                            ['class' => 'item', 'icon' => 'dashboard']
-                        ); ?>
-                        <?= $this->Ui->link(
-                            'Logs',
-                            ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
-                            ['class' => 'item', 'icon' => 'tasks']
-                        ); ?>
-                        <div class="ui divider"></div>
-                        <?= $this->Ui->link('Systeminfo',
-                            ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                            ['class' => 'item', 'icon' => 'info']
-                        ); ?>
                     </div>
                 </div>
             </div>
+
+            <div class="right menu">
+                <?= $this->Ui->link(
+                    'Backend',
+                    ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
+                    ['class' => 'item', 'icon' => 'cubes']
+                ); ?>
+                <?= $this->Ui->link(
+                    'Logs',
+                    ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
+                    ['class' => 'item', 'icon' => 'tasks']
+                ); ?>
+                <!--
+                <?= $this->Ui->link(
+                    'Messages',
+                    '/backend/admin/Messages',
+                    ['class' => 'item', 'icon' => 'comment']
+                ); ?>
+                -->
+                <?= $this->Ui->link('Systeminfo',
+                    ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
+                    ['class' => 'item', 'icon' => 'info']
+                ); ?>
+            </div>
         </div>
     </div>
+    <!--
     <div class="mobile only row">
         <div class="ui fixed inverted navbar menu">
             <a href="" class="brand item">Project Name</a>
@@ -86,4 +84,5 @@ use Cake\Utility\Inflector;
             </div>
         </div>
     </div>
+    -->
 </div>

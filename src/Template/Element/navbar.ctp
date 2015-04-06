@@ -17,18 +17,19 @@ use Cake\Utility\Inflector;
                 <!--
                 <?= $this->Ui->link('Messages', '/backend/admin/Messages', ['class' => 'item', 'icon' => 'comment']); ?>
                 -->
-                <div class="ui dropdown item"><i class="user icon"></i><?= $this->Session->read('Backend.User.username'); ?>
+                <div class="ui dropdown item"><i class="user icon"></i><?= $this->Session->read('Auth.User'); ?>
                     <i class="dropdown icon"></i>
                     <div class="menu">
+                        You are logged in
                         <!--
                         <?= $this->Ui->link('Profile', '/backend/admin/Auth/user', ['class' => 'item']); ?>
                         <div class="ui divider"></div>
-                        -->
                         <?= $this->Ui->link(
                             __('Logout'),
                             ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
                             ['class' => 'item']);
                         ?>
+                        -->
                     </div>
                 </div>
                 <div class="ui dropdown item"><i class="cubes icon"></i>Backend

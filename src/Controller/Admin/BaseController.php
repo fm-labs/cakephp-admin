@@ -5,6 +5,8 @@ use Cake\Controller\Controller;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
 use Cake\Controller\Component\FlashComponent;
+use Cake\Network\Exception\MethodNotAllowedException;
+use Cake\Core\Exception\Exception;
 
 /**
  * Class BackendAppController
@@ -48,15 +50,15 @@ abstract class BaseController extends Controller
             'key' => 'backend',
             'plugin' => 'Backend'
         ]);
+    }
 
-        $this->loadComponent('Auth', [
-            'loginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
-            'authenticate' => [
-                'Form' => [
-                    'userModel' => 'Backend.BackendUsers'
-                ]
-            ]
-        ]);
-        $this->Auth->sessionKey = 'Backend.User';
+    public function startup()
+    {
+        /**
+         * @TODO Replace with more sophisticated mechanism
+         */
+        if (!$this->Auth->user('is_backend_user')) {
+            throw new Exception('Backend: Not Authorized');
+        }
     }
 }

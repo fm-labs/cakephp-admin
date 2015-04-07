@@ -1,7 +1,7 @@
 <?php
 namespace Backend\Controller\Admin;
 
-use Backend\Controller\AppController;
+use Backend\Controller\Admin\AppController;
 
 class BackendController extends AppController
 {

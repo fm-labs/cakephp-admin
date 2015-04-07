@@ -1,26 +1,22 @@
-<?php
-use Cake\Core\Configure;
-use Cake\Utility\Inflector;
-?>
 <div class="ui grid">
     <div class="computer tablet only row" style="padding: 0;">
         <div class="ui inverted fixed menu navbar grid">
             <?= $this->Ui->link('', '#', ['id' => 'backend-admin-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
             <?= $this->Ui->link(
-                Configure::read('Backend.title'),
-                Configure::read('Backend.dashboardUrl'),
+                $this->get('be_title'),
+                $this->get('be_dashboard_url'),
                 ['class' => 'item', 'icon' => 'dashboard']
             ); ?>
 
             <div class="right menu">
-                <div class="ui dropdown item"><i class="user icon"></i><?= $this->Session->read('Auth.User'); ?>
+                <div class="ui dropdown item"><i class="user icon"></i><?= __('Hi!') ?>
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         <?= $this->Ui->link('Profile', '/backend/admin/Auth/user', ['class' => 'item']); ?>
                         <div class="ui divider"></div>
                         <?= $this->Ui->link(
                             __('Logout'),
-                            Configure::read('Backend.logoutUrl'),
+                            $this->get('be_auth_logout_url'),
                             ['class' => 'item']);
                         ?>
                     </div>

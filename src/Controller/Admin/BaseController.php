@@ -7,6 +7,8 @@ use Cake\Controller\Component\PaginatorComponent;
 use Cake\Controller\Component\FlashComponent;
 use Cake\Network\Exception\MethodNotAllowedException;
 use Cake\Core\Exception\Exception;
+use Cake\Core\Configure;
+use App\Controller\Admin\AppController as AppAdminController;
 
 /**
  * Class BackendAppController
@@ -20,7 +22,7 @@ use Cake\Core\Exception\Exception;
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
  */
-abstract class BaseController extends Controller
+abstract class BaseController extends AppAdminController
 {
     public $layout = "Backend.admin";
 
@@ -41,24 +43,42 @@ abstract class BaseController extends Controller
      *
      * Use this method to add common initialization code like loading components.
      *
+     * @throws \Cake\Core\Exception\Exception
      * @return void
      */
     public function initialize()
     {
+        parent::initialize();
+
+        // Attach Backend's FlashComponent
+        if ($this->components()->has('Flash')) {
+            $this->components()->unload('Flash');
+        }
         $this->loadComponent('Flash', [
             'className' => '\Backend\Controller\Component\FlashComponent',
             'key' => 'backend',
             'plugin' => 'Backend'
         ]);
+
+        // Check for AuthComponent
+        if (!$this->components()->has('Auth')) {
+            throw new Exception('Backend: AuthComponent not configured');
+        }
+
     }
 
-    public function startup()
+    public function beforeFilter(\Cake\Event\Event $event)
     {
-        /**
-         * @TODO Replace with more sophisticated mechanism
-         */
-        if (!$this->Auth->user('is_backend_user')) {
-            throw new Exception('Backend: Not Authorized');
-        }
+        parent::beforeFilter($event);
+    }
+
+    public function beforeRender(\Cake\Event\Event $event)
+    {
+        parent::beforeRender($event);
+
+        $this->set('be_title', Configure::read('Backend.title'));
+        $this->set('be_dashboard_url', Configure::read('Backend.dashboardUrl'));
+        $this->set('be_auth_login_url', '/login');
+        $this->set('be_auth_logout_url', '/logout');
     }
 }

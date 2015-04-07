@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Controller;
+namespace Backend\Controller\Admin;
 
 use Backend\Controller\Admin\BaseController;
 

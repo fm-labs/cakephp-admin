@@ -2,8 +2,6 @@
 return [
     'Backend' => [
         'title' => 'Dashboard',
-        'dashboardUrl' => '/backend/admin/Backend/default',
-        'loginUrl' => '/users/login',
-        'logoutUrl' => '/users/logout'
+        'dashboardUrl' => '/backend/admin/Backend/default'
     ]
 ];

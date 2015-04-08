@@ -81,4 +81,13 @@ abstract class BaseController extends AppAdminController
         $this->set('be_auth_login_url', '/login');
         $this->set('be_auth_logout_url', '/logout');
     }
+
+    public function isAuthorized()
+    {
+        // root is always authorized
+        //@TODO Make controller authorization for root user configurable
+        if ($this->Auth->user('id') === 1 || $this->Auth->user('username') === 'root') {
+            return true;
+        }
+    }
 }

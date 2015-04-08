@@ -33,8 +33,11 @@
             </div>
             <div class="ui attached segment dashboard-item">
                 <div class="ui list">
-                    <?= $this->Ui->link('Users', ['controller' => 'BackendUsers', 'action' => 'index'], ['class' => 'item', 'icon' => 'male']); ?>
-                    <?= $this->Ui->link('User Roles', ['controller' => 'BackendUserRoles', 'action' => 'index'], ['class' => 'item', 'icon' => 'users']); ?>
+                    <?= $this->Ui->link(
+                        'List Backend Users',
+                        ['controller' => 'BackendUsers', 'action' => 'index'],
+                        ['class' => 'item', 'icon' => 'male']
+                    ); ?>
                 </div>
             </div>
         </div>

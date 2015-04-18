@@ -62,9 +62,16 @@ abstract class BaseController extends AppAdminController
 
         // Check for AuthComponent
         if (!$this->components()->has('Auth')) {
-            throw new Exception('Backend: AuthComponent not configured');
+            throw new Exception('Backend: Authentication not configured');
         }
 
+        //@TODO inject Backend's Authorizatin Provider
+        $authorize = $this->Auth->config('authorize');
+        if (empty($authorize)) {
+            throw new Exception('Backend: Authorization not configured');
+        }
+
+        $authModel = $this->Auth->config('authenticate')['all']['userModel'];
     }
 
     public function beforeFilter(\Cake\Event\Event $event)
@@ -82,11 +89,38 @@ abstract class BaseController extends AppAdminController
         $this->set('be_auth_logout_url', '/logout');
     }
 
+    /**
+     * Backend fallback controller authorization
+     *
+     * If controller authorization has been enabled and no other subclasses handles `isAuthorized`
+     * ALL of the following fallback validations will be performed:
+     *
+     * 1) root: TRUE, if user with Id '1' or username 'root'
+     * 2) userfield: TRUE, if user with field 'is_backend_user' set to TRUE
+     * 3) usergroup: TRUE, if user is member of group 'backend' listed in field 'groups'
+     *
+     * @return bool
+     */
     public function isAuthorized()
     {
+        //@TODO Make controller authorization configurable
+
         // root is always authorized
-        //@TODO Make controller authorization for root user configurable
         if ($this->Auth->user('id') === 1 || $this->Auth->user('username') === 'root') {
+            return true;
+        }
+
+        // user field authorization
+        if ($this->Auth->user('is_backend_user') === true) {
+            return true;
+        }
+
+        // user group authorization
+        if ($this->Auth->user('groups') &&
+            is_array($this->Auth->user('groups')) &&
+            //isset($this->Auth->user('groups')[0]) &&
+            in_array('backend', $this->Auth->user('groups'))
+        ) {
             return true;
         }
     }

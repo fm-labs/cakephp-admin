@@ -34,7 +34,7 @@
             <div class="ui attached segment dashboard-item">
                 <div class="ui list">
                     <?= $this->Ui->link(
-                        'List Backend Users',
+                        'Manage Users',
                         ['controller' => 'BackendUsers', 'action' => 'index'],
                         ['class' => 'item', 'icon' => 'male']
                     ); ?>

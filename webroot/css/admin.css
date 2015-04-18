@@ -48,10 +48,11 @@ body.sidebar .pusher > .cake-debug-output:first-child {
   padding: 0.5rem 1rem;
 }
 #page-main {
+  min-height: 700px;
   margin-top: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
-  min-height: 700px;
+  padding-bottom: 100px;
 }
 .backend.dashboard .dashboard-item {
   min-height: 200px;

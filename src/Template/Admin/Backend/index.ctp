@@ -35,7 +35,7 @@
                 <div class="ui list">
                     <?= $this->Ui->link(
                         'Manage Users',
-                        ['controller' => 'BackendUsers', 'action' => 'index'],
+                        ['controller' => 'Users', 'action' => 'index'],
                         ['class' => 'item', 'icon' => 'male']
                     ); ?>
                 </div>

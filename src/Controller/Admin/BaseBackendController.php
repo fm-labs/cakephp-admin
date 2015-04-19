@@ -1,12 +1,13 @@
 <?php
 namespace Backend\Controller\Admin;
 
+use Backend\Controller\BackendControllerInterface;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
-use Backend\Controller\Component\FlashComponent;
-use Cake\Core\Exception\Exception;
 use Cake\Core\Configure;
-use App\Controller\Admin\AppController as AppAdminController;
+use Cake\Controller\Controller;
+use Backend\Controller\Component\FlashComponent;
+use App\Controller\Admin\AppController as AdminAppController;
 
 /**
  * Class BackendAppController
@@ -20,7 +21,7 @@ use App\Controller\Admin\AppController as AppAdminController;
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
  */
-abstract class BaseBackendController extends AppAdminController
+abstract class BaseBackendController extends AdminAppController implements BackendControllerInterface
 {
     public $layout = "Backend.admin";
 

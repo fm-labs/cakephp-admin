@@ -8,11 +8,12 @@
 
 namespace Backend\Controller\Component;
 
-use Backend\Controller\Admin\BaseBackendController;
 use Cake\Controller\Component;
 use Cake\Event\Event;
 use Cake\Log\Log;
 use Cake\Core\Configure;
+use Cake\Core\Exception\Exception;
+use Backend\Controller\BackendControllerInterface;
 
 class BackendComponent extends Component
 {
@@ -22,8 +23,8 @@ class BackendComponent extends Component
 
     public function beforeFilter(Event $event)
     {
-        // only act on instances of BaseBackendController
-        if ($event->subject() instanceof BaseBackendController) {
+        // only act on instances of BackendControllerInterface
+        if ($event->subject() instanceof BackendControllerInterface) {
 
             // Configure FlashComponent
             if ($this->_registry->has('Flash')) {
@@ -60,7 +61,7 @@ class BackendComponent extends Component
 
     public function beforeRender(\Cake\Event\Event $event)
     {
-        if ($event->subject() instanceof BaseBackendController) {
+        if ($event->subject() instanceof BackendControllerInterface) {
             $controller = $event->subject();
             $controller->set('be_title', Configure::read('Backend.title'));
             $controller->set('be_dashboard_url', Configure::read('Backend.dashboardUrl'));

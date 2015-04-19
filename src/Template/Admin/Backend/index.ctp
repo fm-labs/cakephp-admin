@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
 <div id="backend-dashboard" class="backend dashboard index">
-    <h1 class="ui header"><i class="dashboard icon"></i>Backend Dashboard</h1>
+    <h1 class="ui header"><i class="cubes icon"></i>Backend Dashboard</h1>
     <div class="ui doubling stackable four column grid">
         <div class="column">
             <div class="ui top attached segment">

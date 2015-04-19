@@ -8,10 +8,10 @@
 
 namespace Backend\Model\Table;
 
-use User\Model\Table\UsersTable;
+use User\Model\Table\UsersTable as BaseUsersTable;
 use Cake\Log\Log;
 
-class BackendUsersTable extends UsersTable
+class UsersTable extends BaseUsersTable
 {
     /**
      * Initialize method
@@ -22,7 +22,7 @@ class BackendUsersTable extends UsersTable
     public function initialize(array $config)
     {
         parent::initialize($config);
-        $this->entityClass('Backend\Model\Entity\BackendUser');
+        $this->entityClass('Backend\Model\Entity\User');
         //$this->table('users');
     }
 
@@ -77,8 +77,38 @@ class BackendUsersTable extends UsersTable
         $user->password = $user->password1;
 
         if ($this->save($user)) {
-            Log::info('[plugin:user] New backend user added with ID ' . $user->id);
+            Log::info('[plugin:backend] User added with ID ' . $user->id);
         }
+        return $user;
+    }
+
+    public function createRootUser()
+    {
+        // check if there is already a root user
+        if ($this->find()->where(['id' => 1])->first()) {
+            return false;
+        }
+
+        $data = [
+            'id' => 1,
+            'name' => 'root',
+            'username' => 'root',
+            'email' => 'root@example.org',
+            'password' => 't00rt00r',
+            'login_enabled' => true,
+            'email_verification_required' => false,
+        ];
+
+        $user = $this->newEntity();
+        $user->accessible([
+           'id', 'name', 'username', 'email', 'password', 'login_enabled', 'email_verification_required'
+        ], true);
+        $this->patchEntity($user, $data);
+
+        if ($this->save($user)) {
+            Log::info('[plugin:backend] ROOT User added with ID ' . $user->id);
+        }
+
         return $user;
     }
 }

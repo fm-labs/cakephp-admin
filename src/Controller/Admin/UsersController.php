@@ -1,28 +1,15 @@
 <?php
 namespace Backend\Controller\Admin;
 
-use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
-use Cake\Event\Event;
-use Cake\ORM\TableRegistry;
+use Backend\Controller\Admin\AppController;
 
 /**
  * Users Controller
  *
- * @property \User\Model\Table\UsersTable $Users
+ * @property \Backend\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController
 {
-    public function beforeFilter(Event $event)
-    {
-        parent::beforeFilter($event);
-
-        //if (!Configure::check('Backend.userModel')) {
-        //    throw new Exception('Backend: User model not configured');
-        //}
-        //$this->Users = TableRegistry::get(Configure::read('Backend.userModel'));
-        $this->Users = TableRegistry::get('Backend.BackendUsers');
-    }
 
     /**
      * Index method
@@ -31,6 +18,9 @@ class UsersController extends AppController
      */
     public function index()
     {
+        $this->paginate = [
+            'contain' => ['PrimaryUserGroup']
+        ];
         $this->set('users', $this->paginate($this->Users));
         $this->set('_serialize', ['users']);
     }
@@ -45,7 +35,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => ['PrimaryUserGroup', 'UserGroups']
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
@@ -59,17 +49,21 @@ class UsersController extends AppController
     public function add()
     {
         $user = $this->Users->newEntity();
+        $user->accessible([
+            'username', 'user_group_id', 'name', 'email', 'password'
+        ], true);
         if ($this->request->is('post')) {
-            $user = $this->Users->add($this->request->data);
-            if ($user->id) {
-                $this->Flash->success('The user has been saved.');
+            $user = $this->Users->patchEntity($user, $this->request->data);
+            if ($this->Users->save($user)) {
+                $this->Flash->success(__('The {0} has been saved.', __('user')));
                 return $this->redirect(['action' => 'index']);
             } else {
-                debug($user->errors());
-                $this->Flash->error('The user could not be saved. Please, try again.');
+                $this->Flash->error(__('The {0} could not be saved. Please, try again.', __('user')));
             }
         }
-        $this->set(compact('user'));
+        $primaryUserGroup = $this->Users->PrimaryUserGroup->find('list', ['limit' => 200]);
+        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'primaryUserGroup', 'userGroups'));
         $this->set('_serialize', ['user']);
     }
 
@@ -83,18 +77,21 @@ class UsersController extends AppController
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => ['UserGroups']
         ]);
+        $user->accessible('*', true);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user)) {
-                $this->Flash->success('The user has been saved.');
+                $this->Flash->success(__('The {0} has been saved.', __('user')));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error('The user could not be saved. Please, try again.');
+                $this->Flash->error(__('The {0} could not be saved. Please, try again.', __('user')));
             }
         }
-        $this->set(compact('user'));
+        $primaryUserGroup = $this->Users->PrimaryUserGroup->find('list', ['limit' => 200]);
+        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'primaryUserGroup', 'userGroups'));
         $this->set('_serialize', ['user']);
     }
 
@@ -110,11 +107,10 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
         if ($this->Users->delete($user)) {
-            $this->Flash->success('The user has been deleted.');
+            $this->Flash->success(__('The {0} has been deleted.', __('user')));
         } else {
-            $this->Flash->error('The user could not be deleted. Please, try again.');
+            $this->Flash->error(__('The {0} could not be deleted. Please, try again.', __('user')));
         }
         return $this->redirect(['action' => 'index']);
     }
-
 }

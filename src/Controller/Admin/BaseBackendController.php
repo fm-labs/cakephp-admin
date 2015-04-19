@@ -1,11 +1,9 @@
 <?php
 namespace Backend\Controller\Admin;
 
-use Cake\Controller\Controller;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
-use Cake\Controller\Component\FlashComponent;
-use Cake\Network\Exception\MethodNotAllowedException;
+use Backend\Controller\Component\FlashComponent;
 use Cake\Core\Exception\Exception;
 use Cake\Core\Configure;
 use App\Controller\Admin\AppController as AppAdminController;
@@ -22,20 +20,25 @@ use App\Controller\Admin\AppController as AppAdminController;
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
  */
-abstract class BaseController extends AppAdminController
+abstract class BaseBackendController extends AppAdminController
 {
     public $layout = "Backend.admin";
 
     public $helpers = [
         'Html',
-        'SemanticUi.Ui',
         'Form' => [
-            'templates' => 'Backend.semantic-form-templates',
-            'widgets' => ['button' => ['SemanticUi\View\Widget\ButtonWidget']]
+            'templates' => [
+                'Backend.semantic-form-templates'
+             ],
+            'widgets' => [
+                'button' => ['SemanticUi\View\Widget\ButtonWidget'],
+                'datetime' => ['Backend\View\Widget\DateTimeWidget']
+            ]
         ],
         'Paginator' => [
             'templates' => 'Backend.semantic-paginator-templates'
-        ]
+        ],
+        'SemanticUi.Ui'
     ];
 
     /**
@@ -50,43 +53,9 @@ abstract class BaseController extends AppAdminController
     {
         parent::initialize();
 
-        // Attach Backend's FlashComponent
-        if ($this->components()->has('Flash')) {
-            $this->components()->unload('Flash');
+        if (!$this->components()->has('Backend')) {
+            $this->loadComponent('Backend.Backend');
         }
-        $this->loadComponent('Flash', [
-            'className' => '\Backend\Controller\Component\FlashComponent',
-            'key' => 'backend',
-            'plugin' => 'Backend'
-        ]);
-
-        // Check for AuthComponent
-        if (!$this->components()->has('Auth')) {
-            throw new Exception('Backend: Authentication not configured');
-        }
-
-        //@TODO inject Backend's Authorizatin Provider
-        $authorize = $this->Auth->config('authorize');
-        if (empty($authorize)) {
-            throw new Exception('Backend: Authorization not configured');
-        }
-
-        $authModel = $this->Auth->config('authenticate')['all']['userModel'];
-    }
-
-    public function beforeFilter(\Cake\Event\Event $event)
-    {
-        parent::beforeFilter($event);
-    }
-
-    public function beforeRender(\Cake\Event\Event $event)
-    {
-        parent::beforeRender($event);
-
-        $this->set('be_title', Configure::read('Backend.title'));
-        $this->set('be_dashboard_url', Configure::read('Backend.dashboardUrl'));
-        $this->set('be_auth_login_url', '/login');
-        $this->set('be_auth_logout_url', '/logout');
     }
 
     /**
@@ -107,11 +76,6 @@ abstract class BaseController extends AppAdminController
 
         // root is always authorized
         if ($this->Auth->user('id') === 1 || $this->Auth->user('username') === 'root') {
-            return true;
-        }
-
-        // user field authorization
-        if ($this->Auth->user('is_backend_user') === true) {
             return true;
         }
 

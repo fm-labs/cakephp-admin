@@ -12,13 +12,14 @@ $fields = collection($fields)
     <div class="ui secondary menu">
         <div class="item"></div>
         <div class="right menu">
-            <div class="item">
-                <i class="add icon"></i>
-                <?= $this->Html->link(__('New {0}', __('<%= $singularHumanName %>')), ['action' => 'add']) ?>
-            </div>
+            <?= $this->Ui->link(
+                __('New {0}', __('<%= $singularHumanName %>')),
+                ['action' => 'add'],
+                ['class' => 'item', 'icon' => 'add']
+            ) ?>
             <div class="ui dropdown item">
                 <i class="dropdown icon"></i>
-                <i class="tasks icon"></i>Actions
+                <i class="setting icon"></i>Actions
                 <div class="menu">
 <%
                     $done = [];
@@ -26,14 +27,17 @@ $fields = collection($fields)
                         foreach ($data as $alias => $details):
                             if ($details['controller'] != $this->name && !in_array($details['controller'], $done)):
 %>
-                    <div class="item">
-                        <i class="list icon"></i>
-                        <?= $this->Html->link(__('List {0}', __('<%= $this->_pluralHumanName($alias) %>')), ['controller' => '<%= $details["controller"] %>', 'action' => 'index']) ?>
-                    </div>
-                    <div class="item">
-                        <i class="add icon"></i>
-                        <?= $this->Html->link(__('New {0}', __('<%= $this->_singularHumanName($alias) %>')), ['controller' => '<%= $details["controller"] %>', 'action' => 'add']) ?>
-                    </div>
+                    <?= $this->Ui->link(
+                        __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
+                        ['controller' => '<%= $details["controller"] %>', 'action' => 'index'],
+                        ['class' => 'item', 'icon' => 'list']
+                    ) ?>
+
+                    <?= $this->Ui->link(
+                        __('New {0}', __('<%= $this->_singularHumanName($alias) %>')),
+                        ['controller' => '<%= $details["controller"] %>', 'action' => 'add'],
+                        ['class' => 'item', 'icon' => 'add']
+                    ) ?>
 <%
                                 $done[] = $details['controller'];
                             endif;
@@ -94,23 +98,23 @@ $fields = collection($fields)
         $pk = '$' . $singularVar . '->' . $primaryKey[0];
 %>
             <td class="actions">
-                <div class="ui basic mini buttons">
+                <div class="ui basic small buttons">
                     <div class="ui button">
                         <?= $this->Html->link(__('View'), ['action' => 'view', <%= $pk %>]) ?>
                     </div>
                     <div class="ui floating dropdown icon button">
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <div class="item"><i class="edit icon"></i>
-                                <?= $this->Html->link(__('Edit'), ['action' => 'edit', <%= $pk %>]) ?>
-                            </div>
-                            <div class="item"><i class="delete icon"></i>
-                                <?= $this->Form->postLink(
-                                    __('Delete'),
-                                    ['action' => 'delete', <%= $pk %>],
-                                    ['confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]
-                                ) ?>
-                            </div>
+                            <?= $this->Ui->link(
+                                __('Edit'),
+                                ['action' => 'edit', <%= $pk %>],
+                                ['class' => 'item', 'icon' => 'edit']
+                            ) ?>
+                            <?= $this->Ui->postLink(
+                                __('Delete'),
+                                ['action' => 'delete', <%= $pk %>],
+                                ['class' => 'item', 'icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]
+                            ) ?>
                         </div>
                     </div>
                 </div>

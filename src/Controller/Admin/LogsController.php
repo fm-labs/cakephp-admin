@@ -1,7 +1,6 @@
 <?php
 namespace Backend\Controller\Admin;
 
-use Backend\Controller\Admin\AppController;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 

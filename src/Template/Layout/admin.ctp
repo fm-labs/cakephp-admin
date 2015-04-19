@@ -14,29 +14,35 @@
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
     <?= $this->Html->css('SemanticUi.semantic.min'); ?>
     <?= $this->Html->css('Backend.admin'); ?>
+    <?= $this->Html->css('Backend.pickadate/themes/default.css'); ?>
+    <?= $this->Html->css('Backend.pickadate/themes/default.date.css'); ?>
+    <?= $this->Html->css('Backend.pickadate/themes/default.time.css'); ?>
     <?= $this->fetch('css') ?>
-
 
     <?= $this->fetch('script') ?>
 
 </head>
-<body class="sidebar">
+<body class="sidebar-hidden">
 
 <?= $this->element('Backend.navbar'); ?>
-<?= $this->element('Backend.sidebar'); ?>
+<?= ""; //$this->element('Backend.sidebar'); ?>
 
 
 <div id="page">
 
-    <div id="page-breadcrumbs">
-        <?= $this->element('Backend.breadcrumbs'); ?>
+    <div id="page-top">
+        <div id="page-flash">
+            <?= $this->Flash->render() ?>
+            <?= $this->Flash->render('auth') ?>
+            <?= $this->Flash->render('backend') ?>
+        </div>
+
+        <div id="page-breadcrumbs">
+            <?= $this->element('Backend.breadcrumbs'); ?>
+        </div>
     </div>
 
     <div id="page-main">
-        <div id="page-flash">
-            <?= $this->Flash->render('backend') ?>
-        </div>
-        <div class="ui hidden divider"></div>
         <div id="page-content">
             <?= $this->fetch('content'); ?>
         </div>
@@ -48,6 +54,9 @@
 <?= $this->Html->script('SemanticUi.semantic.min.js'); ?>
 <?= $this->Html->script('Backend.tinymce/tinymce.min.js'); ?>
 <?= $this->Html->script('Backend.tinymce/jquery.tinymce.min.js'); ?>
+<?= $this->Html->script('Backend.pickadate/picker.js'); ?>
+<?= $this->Html->script('Backend.pickadate/picker.date.js'); ?>
+<?= $this->Html->script('Backend.pickadate/picker.time.js'); ?>
 <script>
 $(document).ready(function() {
     var $sidebar = $('#backend-admin-sidebar');
@@ -58,6 +67,7 @@ $(document).ready(function() {
     ;
 
     // sidebar
+    /*
     $sidebar.sidebar({
         transition: 'overlay',
         dimPage: false,
@@ -72,6 +82,7 @@ $(document).ready(function() {
             $('body').removeClass('sidebar-hidden');
         }
     });
+    */
 
     // sidebar toggle
     $('#backend-admin-sidebar-toggle').click(function() {
@@ -83,6 +94,27 @@ $(document).ready(function() {
         $(this).closest('.message').fadeOut();
     });
 
+    // pickadate datepicker
+    $('.datepicker').pickadate({
+        // Escape any “rule” characters with an exclamation mark (!).
+        format: 'yyyy-mm-dd',
+        formatSubmit: 'yyyy-mm-dd',
+        hiddenPrefix: 'pickadate__',
+        hiddenSuffix: undefined
+    });
+
+    // pickadate timepicker
+    $('.timepicker').pickatime({
+        // Escape any “rule” characters with an exclamation mark (!).
+        format: 'h:i a',
+        formatLabel: '<b>h</b>:i <!i>a</!i>',
+        formatSubmit: 'HH:ii',
+        hiddenPrefix: 'pickatime__',
+        hiddenSuffix: undefined
+    });
+
+
+    // tinymce wysiwyg editor
     $('.tinymce').tinymce({
         plugins: 'image link lists code table media paste wordcount',
         content_css: '<?= $this->Url->build('/'); ?>backend/css/admin.tinymce.css',

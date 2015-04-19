@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
 <div id="backend-user-dashboard" class="backend dashboard index">
-    <h1 class="ui header"><i class="dashboard icon"></i>Howdy!</h1>
+    <h1 class="ui header"><i class="rocket icon"></i>Howdy!</h1>
 
     <p>
         Yeah, It works!
@@ -8,7 +8,7 @@
         This is the default template for your personal dashboard page.
         <br /><br />
         If you want to customize this page,<br />
-        create <span style="font-style: italic;">src/Template/Plugin/Backend/Admin/dashboard.ctp</span>
+        create <span style="font-style: italic;">src/Template/Plugin/Backend/Default/index.ctp</span>
         <br /><br />
         Or set the 'dashboardUrl' value in <span style="font-style: italic;">config/backend.php</span>
         to a custom controller action

@@ -1,39 +1,23 @@
 <div class="ui grid">
     <div class="computer tablet only row" style="padding: 0;">
         <div class="ui inverted fixed menu navbar grid">
+            <!--
             <?= $this->Ui->link('', '#', ['id' => 'backend-admin-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
+            -->
             <?= $this->Ui->link(
                 $this->get('be_title'),
                 $this->get('be_dashboard_url'),
-                ['class' => 'item', 'icon' => 'dashboard']
+                ['class' => 'item', 'icon' => 'rocket']
+            ); ?>
+
+            <?= $this->Ui->link(
+                'Backend',
+                ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
+                ['class' => 'item', 'icon' => 'cubes']
             ); ?>
 
             <div class="right menu">
-                <div class="ui dropdown item"><i class="user icon"></i><?= __('Hi!') ?>
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <?= $this->Ui->link('Profile', '/backend/admin/Auth/user', ['class' => 'item']); ?>
-                        <div class="ui divider"></div>
-                        <?= $this->Ui->link(
-                            __('Logout'),
-                            $this->get('be_auth_logout_url'),
-                            ['class' => 'item']);
-                        ?>
-                    </div>
-                </div>
-            </div>
 
-            <div class="right menu">
-                <?= $this->Ui->link(
-                    'Backend',
-                    ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
-                    ['class' => 'item', 'icon' => 'cubes']
-                ); ?>
-                <?= $this->Ui->link(
-                    'Logs',
-                    ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
-                    ['class' => 'item', 'icon' => 'tasks']
-                ); ?>
                 <!--
                 <?= $this->Ui->link(
                     'Messages',
@@ -41,11 +25,29 @@
                     ['class' => 'item', 'icon' => 'comment']
                 ); ?>
                 -->
-                <?= $this->Ui->link('Systeminfo',
-                    ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                    ['class' => 'item', 'icon' => 'info']
-                ); ?>
+
+                <?php if ($this->request->session()->check('Auth.User')): ?>
+                <div class="ui dropdown item">
+                    <i class="user icon"></i>
+                    <?= __('Hi, {0}', $this->request->session()->read('Auth.User.name')); ?>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <!--
+                        <?= $this->Ui->link('Profile', '/backend/admin/Auth/user', ['class' => 'item']); ?>
+                        <div class="ui divider"></div>
+                        -->
+                        <?= $this->Ui->link(
+                            __('Logout'),
+                            $this->get('be_auth_logout_url'),
+                            ['class' => 'item']);
+                        ?>
+                    </div>
+                </div>
+                <?php else: ?>
+                    <!-- @TODO Insert 'unauthenticated' notice -->
+                <?php endif; ?>
             </div>
+
         </div>
     </div>
     <!--

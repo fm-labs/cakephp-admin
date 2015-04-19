@@ -8,9 +8,9 @@
 
 namespace Backend\Model\Entity;
 
-use User\Model\Entity\User;
+use User\Model\Entity\User as BaseUser;
 
-class BackendUser extends User
+class User extends BaseUser
 {
 
 }

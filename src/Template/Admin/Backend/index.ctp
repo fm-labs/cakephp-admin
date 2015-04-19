@@ -38,6 +38,11 @@
                         ['controller' => 'Users', 'action' => 'index'],
                         ['class' => 'item', 'icon' => 'male']
                     ); ?>
+                    <?= $this->Ui->link(
+                        'Change password',
+                        ['controller' => 'Users', 'action' => 'password_change'],
+                        ['class' => 'item', 'icon' => 'edit']
+                    ); ?>
                 </div>
             </div>
         </div>

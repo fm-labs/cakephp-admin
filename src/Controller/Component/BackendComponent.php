@@ -26,28 +26,7 @@ class BackendComponent extends Component
         // only act on instances of BackendControllerInterface
         if ($event->subject() instanceof BackendControllerInterface) {
 
-            // Configure FlashComponent
-            if ($this->_registry->has('Flash')) {
-                $this->_registry->unload('Flash');
-            }
-            $this->_registry->load('Flash', [
-                'className' => '\Backend\Controller\Component\FlashComponent',
-                'key' => 'backend',
-                'plugin' => 'Backend'
-            ]);
 
-            // Configure Authentication
-            //@TODO autoconfigure backend authentication
-            if (!$this->_registry->has('Auth')) {
-                throw new Exception('Backend: Authentication not configured');
-            }
-
-            // Configure Authorization
-            //@TODO autoconfigure backend authorization
-            $authorize = $this->_registry->get('Auth')->config('authorize');
-            if (empty($authorize)) {
-                throw new Exception('Backend: Authorization not configured');
-            }
 
         }
 

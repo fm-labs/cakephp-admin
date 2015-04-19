@@ -43,6 +43,11 @@ abstract class BaseBackendController extends AdminAppController implements Backe
     ];
 
     /**
+     * @var FlashComponent
+     */
+    public $Flash;
+
+    /**
      * Initialization hook method.
      *
      * Use this method to add common initialization code like loading components.
@@ -53,6 +58,29 @@ abstract class BaseBackendController extends AdminAppController implements Backe
     public function initialize()
     {
         parent::initialize();
+
+        // Configure FlashComponent
+        if ($this->components()->has('Flash')) {
+            $this->components()->unload('Flash');
+        }
+        $this->Flash = $this->components()->load('Flash', [
+            'className' => '\Backend\Controller\Component\FlashComponent',
+            'key' => 'backend',
+            'plugin' => 'Backend'
+        ]);
+
+        // Configure Authentication
+        //@TODO autoconfigure backend authentication
+        if (!$this->components()->has('Auth')) {
+            throw new Exception('Backend: Authentication not configured');
+        }
+
+        // Configure Authorization
+        //@TODO autoconfigure backend authorization
+        $authorize = $this->Auth->config('authorize');
+        if (empty($authorize)) {
+            throw new Exception('Backend: Authorization not configured');
+        }
 
         if (!$this->components()->has('Backend')) {
             $this->loadComponent('Backend.Backend');

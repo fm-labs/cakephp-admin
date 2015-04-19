@@ -113,4 +113,18 @@ class UsersController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
+    public function password_change()
+    {
+        $user = $this->Users->get($this->Auth->user('id'));
+        if ($this->request->is('post') || $this->request->is('put')) {
+            if ($this->Users->changePassword($user, $this->request->data)) {
+                $this->Flash->success(__('Your password has been changed.'));
+                $this->redirect(['controller' => 'Backend', 'action' => 'index']);
+            } else {
+                $this->Flash->error(__('Ups, something went wrong'));
+            }
+        }
+        $this->set('user', $user);
+    }
 }

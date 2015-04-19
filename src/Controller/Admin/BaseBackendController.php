@@ -75,8 +75,15 @@ abstract class BaseBackendController extends AdminAppController implements Backe
     {
         //@TODO Make controller authorization configurable
 
+        $userId = $this->Auth->user('id');
+
         // root is always authorized
-        if ($this->Auth->user('id') === 1 || $this->Auth->user('username') === 'root') {
+        if ($userId === 1 || $this->Auth->user('username') === 'root') {
+            return true;
+        }
+
+        // configured backend user ids
+        if (Configure::check('Backend.Users') && in_array($userId, (array) Configure::read('Backend.Users'))) {
             return true;
         }
 

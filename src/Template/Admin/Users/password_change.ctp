@@ -11,7 +11,7 @@
                 ['class' => 'item', 'icon' => 'add']
             ) ?>
 
-            <?= $this->Ui->link(__('Back'), '/', [
+            <?= $this->Ui->link(__('Back'), '#', [
                 'onclick' => "javascript:history.go(-1)",
                 'class' => 'item',
                 'icon' => 'arrow left'

@@ -1,23 +1,35 @@
-<?php
-use Cake\Core\Configure;
-use Cake\Utility\Inflector;
-?>
 <div class="ui grid">
     <div class="computer tablet only row" style="padding: 0;">
         <div class="ui inverted fixed menu navbar grid">
-            <?= $this->Ui->link('Menu', '#', ['id' => 'backend-admin-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
+            <!--
+            <?= $this->Ui->link('', '#', ['id' => 'backend-admin-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
+            -->
             <?= $this->Ui->link(
-                Configure::read('Backend.Dashboard.title'),
-                Configure::read('Backend.Dashboard.url'),
-                ['class' => 'item', 'icon' => Configure::read('Backend.Dashboard.icon')]
+                $this->get('be_title'),
+                $this->get('be_dashboard_url'),
+                ['class' => 'item', 'icon' => 'rocket']
             ); ?>
-            <?= $this->Ui->link('View Website', '/', ['class' => 'item', 'icon' => 'external link', 'target' => 'frontend']); ?>
+
+            <?= $this->Ui->link(
+                'Backend',
+                ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
+                ['class' => 'item', 'icon' => 'cubes']
+            ); ?>
 
             <div class="right menu">
+
                 <!--
-                <?= $this->Ui->link('Messages', '/backend/admin/Messages', ['class' => 'item', 'icon' => 'comment']); ?>
+                <?= $this->Ui->link(
+                    'Messages',
+                    '/backend/admin/Messages',
+                    ['class' => 'item', 'icon' => 'comment']
+                ); ?>
                 -->
-                <div class="ui dropdown item"><i class="user icon"></i><?= $this->Session->read('Backend.User.username'); ?>
+
+                <?php if ($this->request->session()->check('Auth.User')): ?>
+                <div class="ui dropdown item">
+                    <i class="user icon"></i>
+                    <?= __('Hi, {0}', $this->request->session()->read('Auth.User.name')); ?>
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         <!--
@@ -26,34 +38,19 @@ use Cake\Utility\Inflector;
                         -->
                         <?= $this->Ui->link(
                             __('Logout'),
-                            ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
+                            $this->get('be_auth_logout_url'),
                             ['class' => 'item']);
                         ?>
                     </div>
                 </div>
-                <div class="ui dropdown item"><i class="cubes icon"></i>Backend
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <?= $this->Ui->link(
-                            'Dashboard',
-                            ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
-                            ['class' => 'item', 'icon' => 'dashboard']
-                        ); ?>
-                        <?= $this->Ui->link(
-                            'Logs',
-                            ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
-                            ['class' => 'item', 'icon' => 'tasks']
-                        ); ?>
-                        <div class="ui divider"></div>
-                        <?= $this->Ui->link('Systeminfo',
-                            ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                            ['class' => 'item', 'icon' => 'info']
-                        ); ?>
-                    </div>
-                </div>
+                <?php else: ?>
+                    <!-- @TODO Insert 'unauthenticated' notice -->
+                <?php endif; ?>
             </div>
+
         </div>
     </div>
+    <!--
     <div class="mobile only row">
         <div class="ui fixed inverted navbar menu">
             <a href="" class="brand item">Project Name</a>
@@ -85,4 +82,5 @@ use Cake\Utility\Inflector;
             </div>
         </div>
     </div>
+    -->
 </div>

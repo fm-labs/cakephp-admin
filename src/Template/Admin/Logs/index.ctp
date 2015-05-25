@@ -20,12 +20,28 @@
                 <td><?= $this->Number->toReadableSize($file['size']); ?></td>
                 <td><?= $this->Time->timeAgoInWords($file['last_modified']); ?></td>
                 <td><?= $this->Time->timeAgoInWords($file['last_access']); ?></td>
+
                 <td class="actions">
-                    <ul class="actions">
-                        <li><?= $this->Html->link(__d('backend', 'View'), ['action' => 'view', $id]); ?></li>
-                        <li><?= $this->Html->link(__d('backend', 'Clear'), ['action' => 'clear', $id]); ?></li>
-                        <li><?= $this->Html->link(__d('backend', 'Delete'), ['action' => 'delete', $id]); ?></li>
-                    </ul>
+                    <div class="ui basic small buttons">
+                        <div class="ui button">
+                            <?= $this->Html->link(__('View'), ['action' => 'view', $id]) ?>
+                        </div>
+                        <div class="ui floating dropdown icon button">
+                            <i class="dropdown icon"></i>
+                            <div class="menu">
+                                <?= $this->Ui->link(
+                                    __('Clear'),
+                                    ['action' => 'clear', $id],
+                                    ['class' => 'item', 'icon' => 'trash']
+                                ) ?>
+                                <?= $this->Ui->postLink(
+                                    __('Delete'),
+                                    ['action' => 'delete', $id],
+                                    ['class' => 'item', 'icon' => 'remove', 'confirm' => __('Are you sure you want to delete {0}?', $file['name'])]
+                                ) ?>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
         <?php endforeach; ?>

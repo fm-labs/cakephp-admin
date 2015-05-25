@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
 <div id="backend-dashboard" class="backend dashboard index">
-    <h1 class="ui header"><i class="dashboard icon"></i>Backend Dashboard</h1>
+    <h1 class="ui header"><i class="cubes icon"></i>Backend Dashboard</h1>
     <div class="ui doubling stackable four column grid">
         <div class="column">
             <div class="ui top attached segment">
@@ -33,8 +33,16 @@
             </div>
             <div class="ui attached segment dashboard-item">
                 <div class="ui list">
-                    <?= $this->Ui->link('Users', ['controller' => 'BackendUsers', 'action' => 'index'], ['class' => 'item', 'icon' => 'male']); ?>
-                    <?= $this->Ui->link('User Roles', ['controller' => 'BackendUserRoles', 'action' => 'index'], ['class' => 'item', 'icon' => 'users']); ?>
+                    <?= $this->Ui->link(
+                        'Manage Users',
+                        ['controller' => 'Users', 'action' => 'index'],
+                        ['class' => 'item', 'icon' => 'male']
+                    ); ?>
+                    <?= $this->Ui->link(
+                        'Change password',
+                        ['controller' => 'Users', 'action' => 'password_change'],
+                        ['class' => 'item', 'icon' => 'edit']
+                    ); ?>
                 </div>
             </div>
         </div>

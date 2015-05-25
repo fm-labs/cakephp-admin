@@ -8,7 +8,7 @@
 
 namespace Backend\Controller\Admin;
 
-use Backend\Controller\AppController;
+use Backend\Controller\Admin\AppController;
 use Backend\Lib\FileManager\FileManager;
 
 class FileManagerController extends AppController

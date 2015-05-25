@@ -7,6 +7,7 @@
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
+  background-color: #FFF;
 }
 body.sidebar #page {
   padding-left: 260px !important;
@@ -34,27 +35,55 @@ body.sidebar .pusher > .cake-debug-output:first-child {
 .ui.left.sidebar {
   margin-top: 37px !important;
 }
-.ui.flash.message {
-  margin-bottom: 1rem;
+.ui.success.message {
+  background-color: #3C763D;
+  color: #FFF;
+}
+.ui.error.message {
+  background-color: #A94442;
+  color: #FFF;
 }
 .index table .thumb {
   width: 30px;
   height: auto;
   vertical-align: middle;
 }
-#page-breadcrumbs {
+#page-top {
   margin-top: 50px;
-  background-color: #EEE;
-  padding: 0.5rem 1rem;
+}
+#page-flash {
+  background-color: #FFF;
+}
+#page-flash .ui.message {
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1em 2em;
+  margin: 0;
+}
+#page-breadcrumbs {
+  padding: 1rem 2rem 0;
 }
 #page-main {
+  min-height: 700px;
   margin-top: 1rem;
   padding-left: 2rem;
   padding-right: 2rem;
-  min-height: 700px;
+  padding-bottom: 100px;
 }
 .backend.dashboard .dashboard-item {
   min-height: 200px;
+}
+form div.required > label {
+  font-weight: bold;
+}
+form div.required > label:after {
+  content: "*";
+}
+form div.input {
+  margin-bottom: 0.5em;
+}
+form div.checkbox {
+  padding: 0.5em 0 0.5em;
 }
 /*
 .ui.vertical.menu{

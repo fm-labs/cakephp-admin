@@ -25,16 +25,12 @@ class BackendComponent extends Component
     {
         // only act on instances of BackendControllerInterface
         if ($event->subject() instanceof BackendControllerInterface) {
-
-
-
         }
 
     }
 
     public function startup(Event $event)
     {
-
     }
 
 
@@ -44,8 +40,8 @@ class BackendComponent extends Component
             $controller = $event->subject();
             $controller->set('be_title', Configure::read('Backend.title'));
             $controller->set('be_dashboard_url', Configure::read('Backend.dashboardUrl'));
-            $controller->set('be_auth_login_url', '/login');
-            $controller->set('be_auth_logout_url', '/logout');
+            $controller->set('be_auth_login_url', ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login']);
+            $controller->set('be_auth_logout_url', ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout']);
         }
     }
 
@@ -53,21 +49,14 @@ class BackendComponent extends Component
     {
         $events = parent::implementedEvents();
 
-        $events['User.Auth.afterLogin'] = 'afterLogin';
-        $events['User.Auth.loginFailure'] = 'loginFailure';
+        $events['User.login'] = 'onUserLogin';
 
         return $events;
     }
 
-    public function afterLogin(Event $event)
+    public function onUserLogin(Event $event)
     {
         //@TODO Implement me
-        Log::debug('Backend:Event:afterLogin');
-    }
-
-    public function loginFailure(Event $event)
-    {
-        //@TODO Implement me
-        Log::debug('Backend:Event:loginFailure');
+        Log::debug('Backend:Event: User.login');
     }
 }

@@ -8,12 +8,12 @@
 
 namespace Backend\Controller\Admin;
 
-use Backend\Controller\Admin\BaseBackendController;
+use Backend\Controller\Admin\AbstractBackendController;
 
-class DefaultController extends BaseBackendController
+class DefaultController extends AbstractBackendController
 {
     public function index()
     {
 
     }
-} 
+}

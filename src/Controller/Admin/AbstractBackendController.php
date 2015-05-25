@@ -5,7 +5,7 @@ use Backend\Controller\BackendControllerInterface;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
 use Cake\Core\Configure;
-use Cake\Controller\Controller;
+use \Cake\Core\Exception\Exception;
 use Backend\Controller\Component\FlashComponent;
 use App\Controller\Admin\AppController as AdminAppController;
 
@@ -21,7 +21,7 @@ use App\Controller\Admin\AppController as AdminAppController;
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
  */
-abstract class BaseBackendController extends AdminAppController implements BackendControllerInterface
+abstract class AbstractBackendController extends AdminAppController implements BackendControllerInterface
 {
     public $layout = "Backend.admin";
 
@@ -43,11 +43,6 @@ abstract class BaseBackendController extends AdminAppController implements Backe
     ];
 
     /**
-     * @var FlashComponent
-     */
-    public $Flash;
-
-    /**
      * Initialization hook method.
      *
      * Use this method to add common initialization code like loading components.
@@ -59,7 +54,7 @@ abstract class BaseBackendController extends AdminAppController implements Backe
     {
         parent::initialize();
 
-        // Configure FlashComponent
+        // Configure Backend FlashComponent
         if ($this->components()->has('Flash')) {
             $this->components()->unload('Flash');
         }
@@ -69,19 +64,23 @@ abstract class BaseBackendController extends AdminAppController implements Backe
             'plugin' => 'Backend'
         ]);
 
-        // Configure Authentication
-        //@TODO autoconfigure backend authentication
-        if (!$this->components()->has('Auth')) {
-            throw new Exception('Backend: Authentication not configured');
+        // Configure Backend Authentication
+        if ($this->components()->has('Auth')) {
+            $this->components()->unload('Auth');
         }
+        $this->Auth = $this->components()->load('User.Auth', [
+            //'className' => '\Backend\Controller\Component\BackendAuthComponent',
+            'loginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
+            'authenticate' => [
+                'Form' => [ 'userModel' => 'Backend.Users' ]
+            ],
+            'authorize' => [
+                'Controller'
+            ],
+            'loginRedirect' => (Configure::read('Backend.dashboardUrl')) ?: null,
+        ]);
 
-        // Configure Authorization
-        //@TODO autoconfigure backend authorization
-        $authorize = $this->Auth->config('authorize');
-        if (empty($authorize)) {
-            throw new Exception('Backend: Authorization not configured');
-        }
-
+        // Configure Backend component
         if (!$this->components()->has('Backend')) {
             $this->loadComponent('Backend.Backend');
         }
@@ -97,13 +96,16 @@ abstract class BaseBackendController extends AdminAppController implements Backe
      * 2) userfield: TRUE, if user with field 'is_backend_user' set to TRUE
      * 3) usergroup: TRUE, if user is member of group 'backend' listed in field 'groups'
      *
-     * @return bool
+     * @return bool|null
      */
     public function isAuthorized()
     {
         //@TODO Make controller authorization configurable
 
         $userId = $this->Auth->user('id');
+        if (!$userId) {
+            return null;
+        }
 
         // root is always authorized
         if ($userId === 1 || $this->Auth->user('username') === 'root') {

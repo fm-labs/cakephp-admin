@@ -22,31 +22,39 @@
     <?= $this->fetch('script') ?>
 
 </head>
-<body class="sidebar-hidden">
+<body>
 
-<?= $this->element('Backend.navbar'); ?>
-<?= ""; //$this->element('Backend.sidebar'); ?>
+<?= '' // $this->element('Backend.navbar'); ?>
 
-
+<div id="sidebar">
+    <?= $this->element('Backend.sidebar'); ?>
+</div>
 <div id="page">
 
     <div id="page-top">
-        <div id="page-flash">
-            <?= $this->Flash->render('auth') ?>
-            <?= $this->Flash->render('backend') ?>
-        </div>
-
         <div id="page-breadcrumbs">
             <?= $this->element('Backend.breadcrumbs'); ?>
         </div>
     </div>
 
     <div id="page-main">
+
+        <div id="page-flash">
+            <?= $this->Flash->render('auth') ?>
+            <?= $this->Flash->render('backend') ?>
+        </div>
+
         <div id="page-content">
             <?= $this->fetch('content'); ?>
         </div>
+        <div id="page-right">
+            <?= $this->fetch('right', "RIGHT"); ?>
+        </div>
     </div>
 
+    <div id="page-footer">
+
+    </div>
 
 </div> <!-- #page -->
 <?= $this->Html->script('Backend.jquery-1.11.2.min.js'); ?>

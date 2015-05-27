@@ -9,32 +9,34 @@ body {
   font-size: 14px;
   background-color: #FFF;
 }
+/*
 body.sidebar #page {
-  padding-left: 260px !important;
-  -webkit-transition: all 0.5s ease-out;
-  -moz-transition: all 0.5s ease-out;
-  -o-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
+  padding-left: @sidebar-w !important;
+  .transition(0.5s)
 }
+
 body.sidebar-hidden #page {
   padding-left: 0;
-  -webkit-transition: all 0.5s ease-out;
-  -moz-transition: all 0.5s ease-out;
-  -o-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
+  .transition(0.5s)
 }
+
 body.sidebar .pusher > .cake-debug-output {
-  padding-left: 260px;
+  padding-left: @sidebar-w;
+
+  &:first-child {
+    margin-top: 4em;
+  }
 }
-body.sidebar .pusher > .cake-debug-output:first-child {
-  margin-top: 4em;
-}
+*/
 .padding-reset {
   padding: 0px !important;
 }
+/*
 .ui.left.sidebar {
-  margin-top: 37px !important;
+    //z-index: 9999;
+    margin-top: 37px !important;
 }
+*/
 .ui.success.message {
   background-color: #3C763D;
   color: #FFF;
@@ -48,8 +50,13 @@ body.sidebar .pusher > .cake-debug-output:first-child {
   height: auto;
   vertical-align: middle;
 }
-#page-top {
-  margin-top: 50px;
+#sidebar {
+  z-index: 9999;
+}
+#sidebar .be-sidebar {
+  -webkit-box-shadow: -3px -5px 13px #333333;
+  -moz-box-shadow: -3px -5px 13px #333333;
+  box-shadow: -3px -5px 13px #333333;
 }
 #page-flash {
   background-color: #FFF;
@@ -62,13 +69,25 @@ body.sidebar .pusher > .cake-debug-output:first-child {
 }
 #page-breadcrumbs {
   padding: 1rem 2rem 0;
+  display: none;
 }
 #page-main {
+  position: relative;
+  background-color: #CCC;
+  padding-left: 260px;
+}
+#page-content {
   min-height: 700px;
-  margin-top: 1rem;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-bottom: 100px;
+  background-color: #FFF;
+  padding: 2rem;
+}
+#page-right {
+  position: absolute;
+  width: 200px;
+  background-color: blue;
+  right: 0;
+  top: 0;
+  display: none;
 }
 .backend.dashboard .dashboard-item {
   min-height: 200px;

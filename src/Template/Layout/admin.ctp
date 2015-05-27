@@ -32,7 +32,6 @@
 
     <div id="page-top">
         <div id="page-flash">
-            <?= $this->Flash->render() ?>
             <?= $this->Flash->render('auth') ?>
             <?= $this->Flash->render('backend') ?>
         </div>

@@ -30,7 +30,6 @@
     </header>
     <div id="container">
         <div id="flash">
-            <?= $this->Flash->render() ?>
             <?= $this->Flash->render('auth') ?>
         </div>
         <div id="content">

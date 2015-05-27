@@ -9,6 +9,7 @@
 namespace Backend\Controller\Component;
 
 use Cake\Controller\Component\FlashComponent as CakeFlashComponent;
+use Cake\Core\Configure;
 use Cake\Network\Exception\InternalErrorException;
 use Cake\Utility\Inflector;
 
@@ -48,6 +49,11 @@ class FlashComponent extends CakeFlashComponent
         if (!isset($options['params']['class'])) {
             $options['params'] += ['class' => $options['class']];
         }
+
+        // debug message shows flash key
+        //if (Configure::read('debug')) {
+        //    $message = sprintf("[%s] %s", $options['key'], $message);
+        //}
 
         $this->_session->write('Flash.' . $options['key'], [
             'message' => $message,

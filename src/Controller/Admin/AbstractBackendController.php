@@ -4,10 +4,9 @@ namespace Backend\Controller\Admin;
 use Backend\Controller\BackendControllerInterface;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
+use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use \Cake\Core\Exception\Exception;
 use Backend\Controller\Component\FlashComponent;
-use App\Controller\Admin\AppController as AdminAppController;
 
 /**
  * Class BackendAppController
@@ -21,7 +20,7 @@ use App\Controller\Admin\AppController as AdminAppController;
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
  */
-abstract class AbstractBackendController extends AdminAppController implements BackendControllerInterface
+abstract class AbstractBackendController extends Controller implements BackendControllerInterface
 {
     public $layout = "Backend.admin";
 
@@ -70,12 +69,6 @@ abstract class AbstractBackendController extends AdminAppController implements B
         }
         $this->Auth = $this->components()->load('User.Auth', [
             //'className' => '\Backend\Controller\Component\BackendAuthComponent',
-            //'flash' => [
-            //    'element' => 'error',
-            //    'key' => 'auth',
-            //    'params' => ['class' => 'error'],
-            //    'plugin' => 'Backend'
-            //],
             'loginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
             'authenticate' => [
                 'Form' => [ 'userModel' => 'Backend.Users' ]
@@ -106,7 +99,7 @@ abstract class AbstractBackendController extends AdminAppController implements B
      */
     public function isAuthorized()
     {
-        //@TODO Make controller authorization configurable / Create Backend authorization provider
+        //@TODO Make controller authorization configurable
 
         $userId = $this->Auth->user('id');
         if (!$userId) {
@@ -126,6 +119,7 @@ abstract class AbstractBackendController extends AdminAppController implements B
         // user group authorization
         if ($this->Auth->user('groups') &&
             is_array($this->Auth->user('groups')) &&
+            //isset($this->Auth->user('groups')[0]) &&
             in_array('backend', $this->Auth->user('groups'))
         ) {
             return true;

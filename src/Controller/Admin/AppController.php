@@ -18,22 +18,22 @@ class AppController extends AbstractBackendController
                     'logs' => [
                         'title' => 'Logs',
                         'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
-                        'icon' => 'info'
-                    ],
-                    'users' => [
-                        'title' => 'Users',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
-                        'icon' => 'info'
+                        'icon' => 'browser'
                     ],
                     'files' => [
-                        'title' => 'File Manager',
+                        'title' => 'Files',
                         'url' => ['plugin' => 'Backend', 'controller' => 'FileManager', 'action' => 'index'],
-                        'icon' => 'info'
+                        'icon' => 'file'
                     ],
                     'system' => [
                         'title' => 'Systeminfo',
                         'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
                         'icon' => 'info'
+                    ],
+                    'users' => [
+                        'title' => 'Access Controller',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
+                        'icon' => 'lock'
                     ]
                 ]
             ]

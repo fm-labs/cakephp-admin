@@ -5,9 +5,17 @@
  * Check Admin/AppController in application dir and plugin paths
  * if class exists and has a public static 'backendMenu' method.
  */
+use Cake\Routing\Router;
 
 $menu = [];
+$loadedPlugins = \Cake\Core\Plugin::loaded();
+
+/**
+ * Resolve menu items from app or plugin
+ * @param $val string Plugin name or NULL
+ */
 $menuResolver = function ($val) use (&$menu) {
+    // get AppController classname for app or plugin
     $plugin = $val;
     $className = ($plugin) ? $plugin . '.' . 'App' : 'App';
 
@@ -16,6 +24,8 @@ $menuResolver = function ($val) use (&$menu) {
         return;
     }
 
+    // call static 'AppController::backendMenu()' method
+    // and merge into $menu
     $callable = [$class, 'backendMenu'];
     if (is_callable($callable)) {
         $_menu = call_user_func($callable);
@@ -24,14 +34,9 @@ $menuResolver = function ($val) use (&$menu) {
     }
 };
 
-// resolve app menus
-$menuResolver(null);
-// resolve plugin menus
-$loadedPlugins = \Cake\Core\Plugin::loaded();
-array_walk($loadedPlugins, $menuResolver);
 
 $requestedPlugin = (isset($this->request->params['plugin'])) ? $this->request->params['plugin'] : null;
-$menuItemBuilder = function ($item, $childBuilder) use ($requestedPlugin) {
+$menuItemBuilder = function ($item, $childBuilder, $level = 0) use ($requestedPlugin) {
     $_default = ['plugin' => null, 'url' => null, 'title' => null, 'icon' => null, '_children' => []];
     $item = array_merge($_default, $item);
 
@@ -49,7 +54,10 @@ $menuItemBuilder = function ($item, $childBuilder) use ($requestedPlugin) {
 
     $title = $item['title'];
 
-    if ($plugin == $requestedPlugin) {
+    //if ($level == 0 && $plugin == $requestedPlugin) {
+    //    $item = $this->Html->addClass($item, 'active');
+    //}
+    if (Router::normalize($url) == '/' . $this->request->url) {
         $item = $this->Html->addClass($item, 'active');
     }
 
@@ -57,7 +65,7 @@ $menuItemBuilder = function ($item, $childBuilder) use ($requestedPlugin) {
         $subMenu = '<div class="menu">';
         foreach ($children as $child) {
             $child['plugin'] = $plugin;
-            $subMenu .= $childBuilder($child, $childBuilder);
+            $subMenu .= $childBuilder($child, $childBuilder, $level+1);
         }
         $subMenu .= '</div>';
 
@@ -75,6 +83,16 @@ $menuItemBuilder = function ($item, $childBuilder) use ($requestedPlugin) {
 
 };
 
+// resolve app menus
+$menuResolver(null);
+// resolve plugin menus
+array_walk($loadedPlugins, $menuResolver);
+
+/**
+ * Build nested html structure for backend menu items
+ * @param $menu
+ * @return string
+ */
 $menuBuilder = function ($menu) use ($menuItemBuilder) {
     $html = "";
     foreach ($menu as $item) {
@@ -83,16 +101,17 @@ $menuBuilder = function ($menu) use ($menuItemBuilder) {
     return $html;
 };
 
-
 //debug($menu);
 ?>
-<div class="be-sidebar ui left vertical visible overlay sidebar inverted menu">
+<div class="be-sidebar ui left vertical visible overlay sidebar pointing inverted menu">
     <h3 class="ui header item">
         Backend
     </h3>
     <!-- Search -->
-    <div class="item">
-        <div class="ui input"><input placeholder="Search..." type="text"></div>
+    <div class="item search">
+        <div class="ui input">
+            <input placeholder="Search..." type="text">
+        </div>
     </div>
 
     <!-- Menu -->

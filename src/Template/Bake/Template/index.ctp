@@ -8,7 +8,7 @@ $fields = collection($fields)
     ->take(7);
 %>
 <?php $this->Html->addCrumb(__('<%= $pluralHumanName %>')); ?>
-<div class="actions">
+<div class="be-toolbar actions">
     <div class="ui secondary menu">
         <div class="item"></div>
         <div class="right menu">

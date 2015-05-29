@@ -13,7 +13,7 @@ $fields = collection($fields)
 <?php $this->Html->addCrumb(__('New {0}', __('<%= $singularHumanName %>'))); ?>
 <% endif; %>
 <div class="<%= $pluralVar %>">
-    <div class="actions">
+    <div class="be-toolbar actions">
         <div class="ui secondary menu">
             <div class="item"></div>
             <div class="right menu">

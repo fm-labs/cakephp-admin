@@ -4,11 +4,17 @@
  *
  * Check Admin/AppController in application dir and plugin paths
  * if class exists and has a public static 'backendMenu' method.
+ *
+ * @TODO Refactor with Cell
  */
 use Cake\Routing\Router;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
 
 $menu = [];
-$loadedPlugins = \Cake\Core\Plugin::loaded();
+$menuOrder = (Configure::read('Backend.Menu.order')) ?: [];
+$loadedPlugins = Plugin::loaded();
+
 
 /**
  * Resolve menu items from app or plugin
@@ -30,7 +36,7 @@ $menuResolver = function ($val) use (&$menu) {
     if (is_callable($callable)) {
         $_menu = call_user_func($callable);
         //array_push($menu, (array) $_menu);
-        $menu = array_merge_recursive($menu, (array) $_menu);
+        $menu = array_merge($menu, (array) $_menu);
     }
 };
 
@@ -93,7 +99,14 @@ array_walk($loadedPlugins, $menuResolver);
  * @param $menu
  * @return string
  */
-$menuBuilder = function ($menu) use ($menuItemBuilder) {
+$menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
+
+    if (!empty($menuOrder)) {
+        $menu = array_intersect_key($menu, array_flip($menuOrder));
+    } else {
+        ksort($menu, SORT_ASC);
+    }
+
     $html = "";
     foreach ($menu as $item) {
         $html .= $menuItemBuilder($item, $menuItemBuilder);
@@ -105,14 +118,16 @@ $menuBuilder = function ($menu) use ($menuItemBuilder) {
 ?>
 <div class="be-sidebar ui left vertical visible overlay sidebar pointing inverted menu">
     <h3 class="ui header item">
-        Backend
+        Administration
     </h3>
-    <!-- Search -->
+    <!--
+    Search
     <div class="item search">
         <div class="ui input">
             <input placeholder="Search..." type="text">
         </div>
     </div>
+     -->
 
     <!-- Menu -->
     <?php

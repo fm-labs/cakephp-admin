@@ -24,7 +24,10 @@
 </head>
 <body>
 
-<?= '' // $this->element('Backend.navbar'); ?>
+<div id="headerbar">
+    <?= $this->element('Backend.headerbar'); ?>
+</div>
+
 
 <div id="sidebar">
     <?= $this->element('Backend.sidebar'); ?>

@@ -8,7 +8,7 @@ class AppController extends AbstractBackendController
     public static function backendMenu()
     {
         return [
-            'backend' => [
+            'Backend' => [
                 'plugin' => 'Backend',
                 'title' => 'Backend',
                 'url' => ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],

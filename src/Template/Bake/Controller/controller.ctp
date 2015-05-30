@@ -26,7 +26,7 @@ $defaultModel = $name;
 <?php
 namespace <%= $namespace %>\Controller<%= $prefix %>;
 
-use <%= $namespace %>\Controller<%= $prefix %>\AppBackendController;
+use <%= $namespace %>\Controller<%= $prefix %>\AppController;
 
 /**
  * <%= $name %> Controller
@@ -39,7 +39,7 @@ foreach ($components as $component):
  * @property <%= $classInfo['fqn'] %> $<%= $classInfo['name'] %>
 <% endforeach; %>
  */
-class <%= $name %>Controller extends AppBackendController
+class <%= $name %>Controller extends AppController
 {
 <%
 echo $this->Bake->arrayProperty('helpers', $helpers, ['indent' => false]);

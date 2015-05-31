@@ -8,6 +8,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   background-color: #FFF;
+  padding-top: 50px;
 }
 /*
 body.sidebar #page {
@@ -83,7 +84,7 @@ body.sidebar .pusher > .cake-debug-output {
 #page-content {
   min-height: 700px;
   background-color: #FFF;
-  padding: 5rem 2rem;
+  padding: 1rem 2rem 4rem 2rem;
 }
 #page-right {
   position: absolute;

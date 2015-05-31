@@ -22,7 +22,7 @@ $uses = [
     "use $namespace\\Model\\Entity\\$entity;",
     'use Cake\ORM\Query;',
     'use Cake\Datasource\RulesChecker;',
-    'use Cake\ORM\Table;'
+    'use Cake\ORM\Table;',
     'use Cake\Validation\Validator;'
 ];
 sort($uses);

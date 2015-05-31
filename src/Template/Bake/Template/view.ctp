@@ -156,19 +156,19 @@ $pk = "\$$singularVar->{$primaryKey[0]}";
 <% if ($groupedFields['date']) : %>
 
 <% foreach ($groupedFields['date'] as $field) : %>
-            <tr>
-                <td><%= "<%= __('" . Inflector::humanize($field) . "') %>" %></td>
-                <td><?= h($<%= $singularVar %>-><%= $field %>) ?></td>
-            </tr>
+        <tr class="date">
+            <td><%= "<%= __('" . Inflector::humanize($field) . "') %>" %></td>
+            <td><?= h($<%= $singularVar %>-><%= $field %>) ?></td>
+        </tr>
 <% endforeach; %>
 
 <% endif; %>
 <% if ($groupedFields['boolean']) : %>
 <% foreach ($groupedFields['boolean'] as $field) : %>
-            <tr class="boolean">
-                <td><?= __('<%= Inflector::humanize($field) %>') ?></td>
-                <td><?= $<%= $singularVar %>-><%= $field %> ? __('Yes') : __('No'); ?></td>
-            </tr>
+        <tr class="boolean">
+            <td><?= __('<%= Inflector::humanize($field) %>') ?></td>
+            <td><?= $<%= $singularVar %>-><%= $field %> ? __('Yes') : __('No'); ?></td>
+        </tr>
 <% endforeach; %>
 <% endif; %>
 <% if ($groupedFields['text']) : %>
@@ -176,7 +176,7 @@ $pk = "\$$singularVar->{$primaryKey[0]}";
         <tr class="text">
             <td><?= __('<%= Inflector::humanize($field) %>') ?></td>
             <td><?= $this->Text->autoParagraph(h($<%= $singularVar %>-><%= $field %>)); ?></td>
-        </td>
+        </tr>
 <% endforeach; %>
 <% endif; %>
     </table>

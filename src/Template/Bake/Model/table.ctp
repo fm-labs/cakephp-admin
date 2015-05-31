@@ -21,7 +21,7 @@ namespace <%= $namespace %>\Model\Table;
 $uses = [
     "use $namespace\\Model\\Entity\\$entity;",
     'use Cake\ORM\Query;',
-    'use Cake\ORM\RulesChecker;',
+    'use Cake\Datasource\RulesChecker;',
     'use Cake\ORM\Table;'
     'use Cake\Validation\Validator;'
 ];

@@ -36,7 +36,7 @@ class AppController extends AbstractBackendController
                         'icon' => 'info'
                     ],
                     'users' => [
-                        'title' => 'Access Controller',
+                        'title' => 'Access Control',
                         'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
                         'icon' => 'lock'
                     ]

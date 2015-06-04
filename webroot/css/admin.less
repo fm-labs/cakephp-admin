@@ -8,38 +8,13 @@ body{
   font-size: @font-size-default;
   background-color: #FFF;
   padding-top: 50px;
+  padding-left: 260px;
+  .transition(0.5s);
 }
-
-/*
-body.sidebar #page {
-  padding-left: @sidebar-w !important;
-  .transition(0.5s)
-}
-
-body.sidebar-hidden #page {
-  padding-left: 0;
-  .transition(0.5s)
-}
-
-body.sidebar .pusher > .cake-debug-output {
-  padding-left: @sidebar-w;
-
-  &:first-child {
-    margin-top: 4em;
-  }
-}
-*/
 
 .padding-reset{
     padding: 0px !important;
 }
-
-/*
-.ui.left.sidebar {
-    //z-index: 9999;
-    margin-top: 37px !important;
-}
-*/
 
 .ui.success.message {
   background-color: #3C763D;
@@ -74,15 +49,58 @@ body.sidebar .pusher > .cake-debug-output {
   .be-sidebar {
     overflow-x: hidden;
     .box-shadow(-3px -5px 13px #333);
+
+    .item > .menu {
+      display: none;
+    }
+
+    .item.trail > .menu {
+      display: inherit;
+    }
+
+    .item.active > .menu {
+      //display: inherit;
+    }
+  }
+}
+
+
+body.be-sidebar-small {
+
+  @width: 50px;
+  @trans: 0.3s;
+
+  padding-left: @width;
+  .transition(@trans);
+
+  #sidebar {
+    .be-sidebar {
+      max-width: @width;
+      width: @width;
+      .transition(@trans);
+
+      .item:before {
+        //background: none;
+      }
+
+      .item > a > span,
+      .item > span,
+      .item > .menu {
+        display: none;
+      }
+    }
+  }
+
+  #headerbar .ui.navbar.menu {
+    padding-left: @width + 25px;
+    .transition(@trans);
   }
 }
 
 #page {
-
 }
 
 #page-top {
-  //margin-top: 50px;
 }
 
 #page-flash {
@@ -104,7 +122,6 @@ body.sidebar .pusher > .cake-debug-output {
 #page-main {
   position: relative;
   background-color: #CCC;
-  padding-left: 260px;
   //padding-right: 220px;
 }
 

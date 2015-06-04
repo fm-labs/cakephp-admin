@@ -14,6 +14,5 @@ class DefaultController extends AbstractBackendController
 {
     public function index()
     {
-
     }
 }

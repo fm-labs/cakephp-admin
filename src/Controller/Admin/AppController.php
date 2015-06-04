@@ -12,9 +12,14 @@ class AppController extends AbstractBackendController
                 'plugin' => 'Backend',
                 'title' => 'Backend',
                 'url' => ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
-                'icon' => 'cubes',
+                'icon' => 'setting',
 
                 '_children' => [
+                    'dashboard' => [
+                        'title' => 'Dashboard',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
+                        'icon' => 'dashboard'
+                    ],
                     'logs' => [
                         'title' => 'Logs',
                         'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],

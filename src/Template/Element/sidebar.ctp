@@ -10,9 +10,10 @@
 use Cake\Routing\Router;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Utility\Inflector;
 
 $menu = [];
-$menuOrder = (Configure::read('Backend.Menu.order')) ?: [];
+$menuOrder = (Configure::read('Backend.sidebar')) ?: [];
 $loadedPlugins = Plugin::loaded();
 
 
@@ -42,7 +43,8 @@ $menuResolver = function ($val) use (&$menu) {
 
 
 $requestedPlugin = (isset($this->request->params['plugin'])) ? $this->request->params['plugin'] : null;
-$menuItemBuilder = function ($item, $childBuilder, $level = 0) use ($requestedPlugin) {
+$menuItemBuilder = function ($item, $childBuilder, $level = 0, $trail = false) use ($requestedPlugin) {
+
     $_default = ['plugin' => null, 'url' => null, 'title' => null, 'icon' => null, '_children' => []];
     $item = array_merge($_default, $item);
 
@@ -63,26 +65,42 @@ $menuItemBuilder = function ($item, $childBuilder, $level = 0) use ($requestedPl
     //if ($level == 0 && $plugin == $requestedPlugin) {
     //    $item = $this->Html->addClass($item, 'active');
     //}
+    $activePlugin = $trail = ($plugin == $requestedPlugin) ? true : false;
+    $activeRoute = false;
     if (Router::normalize($url) == '/' . $this->request->url) {
-        $item = $this->Html->addClass($item, 'active');
+        $activeRoute = true;
+        //$item = $this->Html->addClass($item, 'active');
     }
 
     if (!empty($children)) {
         $subMenu = '<div class="menu">';
         foreach ($children as $child) {
             $child['plugin'] = $plugin;
-            $subMenu .= $childBuilder($child, $childBuilder, $level+1);
+            $subMenu .= $childBuilder($child, $childBuilder, $level+1, $trail);
         }
         $subMenu .= '</div>';
 
-        $icon = ($item['icon']) ? sprintf('<i class="%s icon"></i>', $item['icon']) : '';
-        unset($item['icon']);
+        //$icon = ($item['icon']) ? sprintf('<i class="%s icon"></i>', $item['icon']) : '';
+        //unset($item['icon']);
         //$title = $title . " (" . count($children) . ")";
 
-        $title = $this->Ui->link($title, $url, $item);
+        $item['escape'] = false;
+        $item['data-plugin'] = $plugin;
 
-        return $this->Html->div('item', $title . $icon . $subMenu);
+        $title = '<span>' . h($title) . '</span>';
+        $link = $this->Ui->link($title, $url, $item);
+
+        $class = 'item';
+        $class .= ($trail) ? ' trail' : '';
+        $class .= ($plugin) ? ' plugin-' . Inflector::underscore($plugin) : ' app';
+        return $this->Html->div($class, $link . $subMenu);
     } else {
+        if ($activeRoute) {
+            $item = $this->Html->addClass($item, 'active');
+        }
+        elseif ($trail) {
+            $item = $this->Html->addClass($item, 'trail');
+        }
         $item = $this->Html->addClass($item, 'item');
         return $this->Ui->link($title, $url, $item);
     }
@@ -102,7 +120,13 @@ array_walk($loadedPlugins, $menuResolver);
 $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
 
     if (!empty($menuOrder)) {
-        $menu = array_intersect_key($menu, array_flip($menuOrder));
+        $orderedMenu = [];
+        array_walk($menuOrder, function ($val) use ($menu, &$orderedMenu) {
+            if (isset($menu[$val]) && is_array($menu[$val]) && !empty($menu[$val])) {
+                $orderedMenu[$val] = $menu[$val];
+            }
+        });
+        $menu = $orderedMenu;
     } else {
         ksort($menu, SORT_ASC);
     }
@@ -117,9 +141,12 @@ $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
 //debug($menu);
 ?>
 <div class="be-sidebar ui left vertical visible overlay sidebar pointing inverted menu">
-    <h3 class="ui header item">
-        Administration
-    </h3>
+    <div class="item be-sidebar-toggle">
+        <a href="#">
+            <i class="ui cubes icon"></i>
+            <span>Administration</span>
+        </a>
+    </div>
     <!--
     Search
     <div class="item search">
@@ -136,3 +163,14 @@ $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
 
     <?php //echo $this->fetch('backend-sidebar'); ?>
 </div>
+<?php $this->append('script-bottom'); ?>
+<script>
+$(document).ready(function() {
+    $('.be-sidebar-toggle').click(function(e) {
+       var $sb = $(this).closest('.be-sidebar');
+       //$sb.toggleClass('be-sidebar-small icon');
+       $('body').toggleClass('be-sidebar-small icon');
+    });
+});
+</script>
+<?php $this->end(); ?>

@@ -9,35 +9,15 @@ body {
   font-size: 14px;
   background-color: #FFF;
   padding-top: 50px;
+  padding-left: 260px;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
 }
-/*
-body.sidebar #page {
-  padding-left: @sidebar-w !important;
-  .transition(0.5s)
-}
-
-body.sidebar-hidden #page {
-  padding-left: 0;
-  .transition(0.5s)
-}
-
-body.sidebar .pusher > .cake-debug-output {
-  padding-left: @sidebar-w;
-
-  &:first-child {
-    margin-top: 4em;
-  }
-}
-*/
 .padding-reset {
   padding: 0px !important;
 }
-/*
-.ui.left.sidebar {
-    //z-index: 9999;
-    margin-top: 37px !important;
-}
-*/
 .ui.success.message {
   background-color: #3C763D;
   color: #FFF;
@@ -63,6 +43,39 @@ body.sidebar .pusher > .cake-debug-output {
   -moz-box-shadow: -3px -5px 13px #333333;
   box-shadow: -3px -5px 13px #333333;
 }
+#sidebar .be-sidebar .item > .menu {
+  display: none;
+}
+#sidebar .be-sidebar .item.trail > .menu {
+  display: inherit;
+}
+body.be-sidebar-small {
+  padding-left: 50px;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+body.be-sidebar-small #sidebar .be-sidebar {
+  max-width: 50px;
+  width: 50px;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+body.be-sidebar-small #sidebar .be-sidebar .item > a > span,
+body.be-sidebar-small #sidebar .be-sidebar .item > span,
+body.be-sidebar-small #sidebar .be-sidebar .item > .menu {
+  display: none;
+}
+body.be-sidebar-small #headerbar .ui.navbar.menu {
+  padding-left: 75px;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
 #page-flash {
   background-color: #FFF;
 }
@@ -79,7 +92,6 @@ body.sidebar .pusher > .cake-debug-output {
 #page-main {
   position: relative;
   background-color: #CCC;
-  padding-left: 260px;
 }
 #page-content {
   min-height: 700px;

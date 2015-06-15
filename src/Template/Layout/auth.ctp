@@ -13,7 +13,8 @@
 
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
     <?= $this->Html->css('SemanticUi.semantic.min'); ?>
-    <?= $this->Html->css('Backend.login'); ?>
+    <?= $this->Html->css('Backend.auth'); ?>
+    <?= $this->Html->css('Backend.shared'); ?>
 
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
@@ -41,13 +42,7 @@
 
     <?= $this->Html->script('Backend.jquery-1.11.2.min.js'); ?>
     <?= $this->Html->script('SemanticUi.semantic.min.js'); ?>
-    <script>
-        $(document).ready(function() {
-            // flash messages
-            $('.message .close').on('click', function() {
-                $(this).closest('.message').fadeOut();
-            });
-        });
-    </script>
+    <?= $this->Html->script('Backend.auth'); ?>
+    <?= $this->Html->script('Backend.shared'); ?>
 </body>
 </html>

@@ -141,10 +141,10 @@ $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
 //debug($menu);
 ?>
 <div id="<?= $domId; ?>" class="be-sidebar ui left vertical visible overlay sidebar pointing inverted menu">
-    <div class="item be-sidebar-toggle">
+    <div class="be-sidebar-root item">
         <a href="#">
-            <i class="ui cubes icon"></i>
-            <span>Administration</span>
+            <i class="be-sidebar-toggle ui content icon"></i>
+            <span>Menu</span>
         </a>
     </div>
     <!--
@@ -178,8 +178,10 @@ $(document).ready(function() {
         // @TODO fallback with cookie storage
     }
 
-    $('#<?= $domId; ?>').click(function(e) {
-       var $sb = $(this).closest('.be-sidebar');
+    $('#<?= $domId; ?> .be-sidebar-toggle').click(function(e) {
+       //console.log(e);
+
+       var $sb = $('#<?= $domId; ?>').closest('.be-sidebar');
        $('body').toggleClass('be-sidebar-small');
 
        if (storage !== "undefined") {

@@ -10,10 +10,10 @@ body {
   background-color: #FFF;
   padding-top: 50px;
   padding-left: 260px;
-  -webkit-transition: all 0.5s ease-out;
-  -moz-transition: all 0.5s ease-out;
-  -o-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  -o-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
 }
 .padding-reset {
   padding: 0px !important;
@@ -49,20 +49,24 @@ body {
 #sidebar .be-sidebar .item.trail > .menu {
   display: inherit;
 }
+#sidebar .be-sidebar-root span {
+  font-size: 90%;
+  color: #eee;
+}
 body.be-sidebar-small {
   padding-left: 50px;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  -o-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
 }
 body.be-sidebar-small #sidebar .be-sidebar {
   max-width: 50px;
   width: 50px;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  -o-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
 }
 body.be-sidebar-small #sidebar .be-sidebar .item > a > span,
 body.be-sidebar-small #sidebar .be-sidebar .item > span,
@@ -71,10 +75,10 @@ body.be-sidebar-small #sidebar .be-sidebar .item > .menu {
 }
 body.be-sidebar-small #headerbar .ui.navbar.menu {
   padding-left: 75px;
-  -webkit-transition: all 0.3s ease-out;
-  -moz-transition: all 0.3s ease-out;
-  -o-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  -o-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
 }
 #page-flash {
   background-color: #FFF;

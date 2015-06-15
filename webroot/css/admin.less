@@ -2,6 +2,8 @@
 @import "vars.less";
 
 @sidebar-w: 260px;
+@sidebar-transition: 0.1s;
+@sidebar-small-w: 50px;
 
 body{
   font-family: @font-family-primary;
@@ -9,7 +11,7 @@ body{
   background-color: #FFF;
   padding-top: 50px;
   padding-left: 260px;
-  .transition(0.5s);
+  .transition(@sidebar-transition);
 }
 
 .padding-reset{
@@ -62,22 +64,24 @@ body{
       //display: inherit;
     }
   }
+
+  .be-sidebar-root span {
+    font-size: 90%;
+    color: #eee;
+  }
 }
 
 
 body.be-sidebar-small {
 
-  @width: 50px;
-  @trans: 0.3s;
-
-  padding-left: @width;
-  .transition(@trans);
+  padding-left: @sidebar-small-w;
+  .transition(@sidebar-transition);
 
   #sidebar {
     .be-sidebar {
-      max-width: @width;
-      width: @width;
-      .transition(@trans);
+      max-width: @sidebar-small-w;
+      width: @sidebar-small-w;
+      .transition(@sidebar-transition);
 
       .item:before {
         //background: none;
@@ -92,8 +96,8 @@ body.be-sidebar-small {
   }
 
   #headerbar .ui.navbar.menu {
-    padding-left: @width + 25px;
-    .transition(@trans);
+    padding-left: @sidebar-small-w + 25px;
+    .transition(@sidebar-transition);
   }
 }
 

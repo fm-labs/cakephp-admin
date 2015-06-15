@@ -13,10 +13,12 @@
 
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
     <?= $this->Html->css('SemanticUi.semantic.min'); ?>
+    <?= $this->Html->css('Backend.pickadate/themes/default'); ?>
+    <?= $this->Html->css('Backend.pickadate/themes/default.date'); ?>
+    <?= $this->Html->css('Backend.pickadate/themes/default.time'); ?>
     <?= $this->Html->css('Backend.admin'); ?>
-    <?= $this->Html->css('Backend.pickadate/themes/default.css'); ?>
-    <?= $this->Html->css('Backend.pickadate/themes/default.date.css'); ?>
-    <?= $this->Html->css('Backend.pickadate/themes/default.time.css'); ?>
+    <?= $this->Html->css('Backend.shared'); ?>
+
     <?= $this->fetch('css') ?>
 
     <?= $this->fetch('script') ?>
@@ -68,6 +70,7 @@
 <?= $this->Html->script('Backend.pickadate/picker.date'); ?>
 <?= $this->Html->script('Backend.pickadate/picker.time'); ?>
 <?= $this->Html->script('Backend.backend'); ?>
+<?= $this->Html->script('Backend.shared'); ?>
 
 <script>
     $(document).ready(function() {

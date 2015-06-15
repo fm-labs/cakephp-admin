@@ -15,7 +15,7 @@ use Cake\Utility\Inflector;
 $menu = [];
 $menuOrder = (Configure::read('Backend.sidebar')) ?: [];
 $loadedPlugins = Plugin::loaded();
-
+$domId = uniqid('beSidebar');
 
 /**
  * Resolve menu items from app or plugin
@@ -140,7 +140,7 @@ $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
 
 //debug($menu);
 ?>
-<div class="be-sidebar ui left vertical visible overlay sidebar pointing inverted menu">
+<div id="<?= $domId; ?>" class="be-sidebar ui left vertical visible overlay sidebar pointing inverted menu">
     <div class="item be-sidebar-toggle">
         <a href="#">
             <i class="ui cubes icon"></i>
@@ -166,11 +166,36 @@ $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
 <?php $this->append('script-bottom'); ?>
 <script>
 $(document).ready(function() {
-    $('.be-sidebar-toggle').click(function(e) {
+
+    var storage;
+    if (!!window.localStorage) {
+        //console.log("Supports localStorage");
+        storage = localStorage;
+    } else if (!!window.sessionStorage) {
+        //console.log("Supports sessionStorage")
+        storage = sessionStorage;
+    } else {
+        // @TODO fallback with cookie storage
+    }
+
+    $('#<?= $domId; ?>').click(function(e) {
        var $sb = $(this).closest('.be-sidebar');
-       //$sb.toggleClass('be-sidebar-small icon');
-       $('body').toggleClass('be-sidebar-small icon');
+       $('body').toggleClass('be-sidebar-small');
+
+       if (storage !== "undefined") {
+           //console.log('Current state: ' + storage.getItem('beSidebarCollapsed'));
+           var state = ($('body').hasClass('be-sidebar-small') === true) ? 'true' : 'false';
+
+           //console.log("Updating sidebar state: " + state);
+           storage.setItem('beSidebarCollapsed', state);
+       }
     });
+
+    //console.log('Current state: ' + storage.getItem('beSidebarCollapsed'));
+    if (storage !== "undefined" && storage.getItem('beSidebarCollapsed') === 'true') {
+        //console.log("sidebar should be collapsed");
+        $('body').addClass('be-sidebar-small');
+    }
 });
 </script>
 <?php $this->end(); ?>

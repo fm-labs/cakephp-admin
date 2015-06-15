@@ -70,7 +70,7 @@
 <?= $this->Html->script('Backend.pickadate/picker'); ?>
 <?= $this->Html->script('Backend.pickadate/picker.date'); ?>
 <?= $this->Html->script('Backend.pickadate/picker.time'); ?>
-<?= $this->Html->script('Backend.backend'); ?>
+<?= $this->Html->script('Backend.admin'); ?>
 <?= $this->Html->script('Backend.shared'); ?>
 
 <script>

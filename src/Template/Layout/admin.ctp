@@ -6,6 +6,7 @@
     <meta name="description" content="">
     <meta name=viewport content="width=device-width, initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="robots" content="noindex,nofollow">
 
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>

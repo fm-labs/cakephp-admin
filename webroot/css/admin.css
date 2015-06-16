@@ -8,7 +8,7 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   background-color: #FFF;
-  padding-top: 50px;
+  padding-top: 54px;
   padding-left: 260px;
   -webkit-transition: all 0.1s ease-out;
   -moz-transition: all 0.1s ease-out;
@@ -34,6 +34,9 @@ body {
 #headerbar .ui.navbar.menu {
   padding-left: 275px;
 }
+#headerbar .ui.navbar.menu > .item:first-child {
+  padding-left: 0;
+}
 #sidebar {
   z-index: 9999;
 }
@@ -49,9 +52,9 @@ body {
 #sidebar .be-sidebar .item.trail > .menu {
   display: inherit;
 }
-#sidebar .be-sidebar-root span {
-  font-size: 90%;
-  color: #eee;
+#sidebar .be-sidebar-toggle span {
+  font-size: 80%;
+  color: #bbb;
 }
 body.be-sidebar-small {
   padding-left: 50px;
@@ -150,3 +153,12 @@ form div.checkbox {
     }
 }
 */
+.menu.opaque {
+  opacity: 0.97;
+}
+.menu.opaque:hover {
+  opacity: 1;
+}
+.menu.toolbar .item:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}

@@ -140,12 +140,27 @@ $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
 
 //debug($menu);
 ?>
-<div id="<?= $domId; ?>" class="be-sidebar ui left vertical visible overlay sidebar pointing inverted menu">
-    <div class="be-sidebar-root item">
+<div id="<?= $domId; ?>" class="be-sidebar ui left vertical visible overlay sidebar pointing inverted opaque menu">
+
+    <div class="be-sidebar-toggle item">
+        <a href="#">
+            <i class="ui angle double left icon"></i>
+            <span>hide menu</span>
+        </a>
+    </div>
+
+    <div class="item">
+        <?= $this->Ui->link(
+            $this->Html->tag('span', $this->get('be_title')),
+            $this->get('be_dashboard_url'),
+            ['icon' => 'inverted blue home', 'escape' => false]
+        ); ?>
+        <!--
         <a href="#">
             <i class="be-sidebar-toggle ui content icon"></i>
             <span>Menu</span>
         </a>
+        -->
     </div>
     <!--
     Search
@@ -183,6 +198,7 @@ $(document).ready(function() {
 
        var $sb = $('#<?= $domId; ?>').closest('.be-sidebar');
        $('body').toggleClass('be-sidebar-small');
+       $('#<?= $domId; ?> .be-sidebar-toggle i.icon').toggleClass('left right');
 
        if (storage !== "undefined") {
            //console.log('Current state: ' + storage.getItem('beSidebarCollapsed'));
@@ -197,6 +213,7 @@ $(document).ready(function() {
     if (storage !== "undefined" && storage.getItem('beSidebarCollapsed') === 'true') {
         //console.log("sidebar should be collapsed");
         $('body').addClass('be-sidebar-small');
+        $('#<?= $domId; ?> .be-sidebar-toggle i.icon').toggleClass('left right');
     }
 });
 </script>

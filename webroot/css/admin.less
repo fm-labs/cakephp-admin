@@ -1,6 +1,8 @@
 @import "elements.less";
 @import "vars.less";
 
+@body-offset-top: 54px;
+
 @sidebar-w: 260px;
 @sidebar-transition: 0.1s;
 @sidebar-small-w: 50px;
@@ -9,8 +11,8 @@ body{
   font-family: @font-family-primary;
   font-size: @font-size-default;
   background-color: #FFF;
-  padding-top: 50px;
-  padding-left: 260px;
+  padding-top: @body-offset-top;
+  padding-left: @sidebar-w;
   .transition(@sidebar-transition);
 }
 
@@ -42,6 +44,10 @@ body{
   .ui.navbar.menu {
     padding-left: 275px;
   }
+
+  .ui.navbar.menu > .item:first-child {
+    padding-left: 0;
+  }
 }
 
 #sidebar {
@@ -65,9 +71,9 @@ body{
     }
   }
 
-  .be-sidebar-root span {
-    font-size: 90%;
-    color: #eee;
+  .be-sidebar-toggle span {
+    font-size: 80%;
+    color: #bbb;
   }
 }
 
@@ -191,4 +197,18 @@ form div.checkbox {
     }
 }
 */
+
+.menu.opaque {
+  opacity: 0.97;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.menu.toolbar {
+  .item:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important;
+  }
+}
 

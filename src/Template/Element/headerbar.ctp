@@ -1,22 +1,35 @@
 <div class="ui grid">
     <div class="computer tablet only row" style="padding: 0;">
-        <div class="ui fixed menu navbar grid">
+        <div class="ui fixed large inverted opaque menu navbar grid">
+
+
             <!--
+
             <?= $this->Ui->link('', '#', ['id' => 'backend-admin-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
             -->
+
             <?= $this->Ui->link(
                 $this->get('be_title'),
                 $this->get('be_dashboard_url'),
-                ['class' => 'item', 'icon' => 'rocket']
+                ['class' => 'item', 'icon' => 'home']
             ); ?>
+            <!--
 
             <?= $this->Ui->link(
                 'Backend',
                 ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
                 ['class' => 'item', 'icon' => 'cubes']
             ); ?>
+            -->
 
             <div class="right menu">
+
+                <div class="item">
+                    <div class="ui icon mini input">
+                        <input placeholder="Search..." type="text">
+                        <i class="search link icon"></i>
+                    </div>
+                </div>
 
                 <!--
                 <?= $this->Ui->link(

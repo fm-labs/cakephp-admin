@@ -14,6 +14,7 @@
 
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
     <?= $this->Html->css('SemanticUi.semantic.min'); ?>
+    <?= $this->Html->css('Backend.chosen/chosen.min'); ?>
     <?= $this->Html->css('Backend.pickadate/themes/default'); ?>
     <?= $this->Html->css('Backend.pickadate/themes/default.date'); ?>
     <?= $this->Html->css('Backend.pickadate/themes/default.time'); ?>
@@ -65,6 +66,7 @@
 </div> <!-- #page -->
 <?= $this->Html->script('Backend.jquery-1.11.2.min'); ?>
 <?= $this->Html->script('SemanticUi.semantic.min'); ?>
+<?= $this->Html->script('Backend.chosen/chosen.jquery.min'); ?>
 <?= $this->Html->script('Backend.tinymce/tinymce.min'); ?>
 <?= $this->Html->script('Backend.tinymce/jquery.tinymce.min'); ?>
 <?= $this->Html->script('Backend.pickadate/picker'); ?>
@@ -100,7 +102,27 @@
         $('.tinymce-default').tinymce({
             content_css: '<?= $this->Url->build('/'); ?>backend/css/admin.tinymce.css'
         });
-    })
+
+
+
+        // Chosen
+        $('select').each(function() {
+            // explicitly do not use chosen
+            if ($(this).hasClass('no-pretty'))
+                return;
+
+            var allowSingleDeselect = $(this).data('chosenAllowSingleDeselect');
+            var disableSearchThreshold = $(this).data('chosenDisableSearchThreshold');
+
+            var chosen = {
+                allow_single_deselect: (allowSingleDeselect == true) ? allowSingleDeselect : false,
+                disable_search_threshold: (disableSearchThreshold > 0) ? disableSearchThreshold : null
+            };
+
+            $(this).chosen(chosen);
+        });
+
+    });
 </script>
 <?= $this->fetch('script-bottom') ?>
 

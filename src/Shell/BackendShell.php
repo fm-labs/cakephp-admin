@@ -36,7 +36,7 @@ class BackendShell extends Shell
         */
         $parser->addArgument('task', [
             'help' => 'Backend task to be executed',
-            'required' => true,
+            'required' => false,
             'choices' => array_keys($this->_tasks)
         ])->description(__("Select from the list of available backend tasks"));
 
@@ -51,7 +51,7 @@ class BackendShell extends Shell
             $this->error("Failed to create root user: Root user already exists!");
         }
 
-        $this->out("<success>Root user created with default password.</success>");
+        $this->out("<success>Root user created with default password</success>");
     }
 
     public function cacheClear()

@@ -93,8 +93,8 @@ class UsersTable extends BaseUsersTable
             'id' => 1,
             'name' => 'root',
             'username' => 'root',
-            'email' => 'root@example.org',
-            'password' => 't00rt00r',
+            'email' => 'change_me@example.org',
+            'password' => 'change_me',
             'login_enabled' => true,
             'email_verification_required' => false,
         ];
@@ -111,4 +111,5 @@ class UsersTable extends BaseUsersTable
 
         return $user;
     }
+
 }

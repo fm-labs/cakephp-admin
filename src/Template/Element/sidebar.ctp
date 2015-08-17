@@ -140,14 +140,16 @@ $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
 
 //debug($menu);
 ?>
-<div id="<?= $domId; ?>" class="be-sidebar ui left vertical visible overlay sidebar pointing inverted opaque menu">
+<div id="be-sidebar" class="be-sidebar ui left vertical visible overlay sidebar pointing inverted opaque menu">
 
+    <!--
     <div class="be-sidebar-toggle item">
         <a href="#">
             <i class="ui angle double left icon"></i>
             <span>hide menu</span>
         </a>
     </div>
+    -->
 
     <div class="item">
         <?= $this->Ui->link(
@@ -178,43 +180,3 @@ $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
 
     <?php //echo $this->fetch('backend-sidebar'); ?>
 </div>
-<?php $this->append('script-bottom'); ?>
-<script>
-$(document).ready(function() {
-
-    var storage;
-    if (!!window.localStorage) {
-        //console.log("Supports localStorage");
-        storage = localStorage;
-    } else if (!!window.sessionStorage) {
-        //console.log("Supports sessionStorage")
-        storage = sessionStorage;
-    } else {
-        // @TODO fallback with cookie storage
-    }
-
-    $('#<?= $domId; ?> .be-sidebar-toggle').click(function(e) {
-       //console.log(e);
-
-       var $sb = $('#<?= $domId; ?>').closest('.be-sidebar');
-       $('body').toggleClass('be-sidebar-small');
-       $('#<?= $domId; ?> .be-sidebar-toggle i.icon').toggleClass('left right');
-
-       if (storage !== "undefined") {
-           //console.log('Current state: ' + storage.getItem('beSidebarCollapsed'));
-           var state = ($('body').hasClass('be-sidebar-small') === true) ? 'true' : 'false';
-
-           //console.log("Updating sidebar state: " + state);
-           storage.setItem('beSidebarCollapsed', state);
-       }
-    });
-
-    //console.log('Current state: ' + storage.getItem('beSidebarCollapsed'));
-    if (storage !== "undefined" && storage.getItem('beSidebarCollapsed') === 'true') {
-        //console.log("sidebar should be collapsed");
-        $('body').addClass('be-sidebar-small');
-        $('#<?= $domId; ?> .be-sidebar-toggle i.icon').toggleClass('left right');
-    }
-});
-</script>
-<?php $this->end(); ?>

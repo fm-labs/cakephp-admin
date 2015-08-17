@@ -2,9 +2,7 @@
 <div class="ui grid">
     <div class="computer tablet only row" style="padding: 0;">
     -->
-        <div class="ui fixed large opaque menu navbar grid">
-
-            <?= $this->Ui->link('', '#', ['id' => 'be-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
+        <div class="ui fixed large opaque secondary menu navbar grid">
 
             <!--
             <?= $this->Ui->link(
@@ -22,41 +20,59 @@
 
             <div class="right menu">
 
+                <!--
                 <div class="item">
                     <div class="ui icon mini input">
-                        <input placeholder="Search..." type="text">
+                        <input placeholder="Filter..." type="text">
                         <i class="search link icon"></i>
                     </div>
                 </div>
-
-                <!--
-                <?= $this->Ui->link(
-                    'Messages',
-                    '/backend/admin/Messages',
-                    ['class' => 'item', 'icon' => 'comment']
-                ); ?>
                 -->
 
-                <?php if ($this->request->session()->check('Auth.User')): ?>
+                <?= $this->Ui->link(
+                    'Reset',
+                    '#',
+                    ['class' => 'item', 'icon' => 'comment']
+                ); ?>
+
+                <?= $this->Ui->link(
+                    'Submit',
+                    '#',
+                    ['class' => 'item', 'icon' => 'play']
+                ); ?>
+
+                <?= $this->Ui->link(
+                    'Archive Item',
+                    '#',
+                    ['class' => 'item']);
+                ?>
+                <div class="ui divider"></div>
+                <?= $this->Ui->link(
+                    __('Publish Item'),
+                    '#',
+                    ['class' => 'item']);
+                ?>
+
+                <!--
                 <div class="ui dropdown item">
-                    <i class="user icon"></i>
-                    <?= __('{0}', $this->request->session()->read('Auth.User.name')); ?>
+                    <i class="setting icon"></i>
+                    More
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        <!--
-                        <?= $this->Ui->link('Profile', '/backend/admin/Auth/user', ['class' => 'item']); ?>
-                        <div class="ui divider"></div>
-                        -->
                         <?= $this->Ui->link(
-                            __('Logout'),
-                            $this->get('be_auth_logout_url'),
+                            'Archive Item',
+                            '#',
+                            ['class' => 'item']);
+                        ?>
+                        <div class="ui divider"></div>
+                        <?= $this->Ui->link(
+                            __('Publish Item'),
+                            '#',
                             ['class' => 'item']);
                         ?>
                     </div>
                 </div>
-                <?php else: ?>
-                    <!-- @TODO Insert 'unauthenticated' notice -->
-                <?php endif; ?>
+                -->
             </div>
 
             <!--

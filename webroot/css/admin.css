@@ -34,8 +34,10 @@ body {
 #headerbar .ui.navbar.menu {
   padding-left: 275px;
 }
-#headerbar .ui.navbar.menu > .item:first-child {
-  padding-left: 0;
+#actionbar .ui.navbar.menu {
+  padding-left: 275px;
+  top: 48px;
+  background-color: #e8e8e8;
 }
 #sidebar {
   z-index: 9999;
@@ -127,6 +129,11 @@ form div.input {
 }
 form div.checkbox {
   padding: 0.5em 0 0.5em;
+}
+form fieldset {
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 /*
 .ui.vertical.menu{

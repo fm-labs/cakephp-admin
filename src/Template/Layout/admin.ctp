@@ -21,6 +21,7 @@
     <?= $this->Html->css('Backend.admin'); ?>
     <?= $this->Html->css('Backend.shared'); ?>
 
+    <?= $this->Html->css('admin/admin'); ?>
     <?= $this->fetch('css') ?>
 
     <?= $this->fetch('script') ?>
@@ -30,6 +31,9 @@
 
 <div id="headerbar">
     <?= $this->element('Backend.headerbar'); ?>
+</div>
+<div id="actionbar">
+    <?= $this->element('Backend.actionbar'); ?>
 </div>
 
 
@@ -52,6 +56,10 @@
         </div>
 
         <div id="page-content">
+
+            <div id="toolbar">
+                <?php // $this->element('Backend.toolbar'); ?>
+            </div>
             <?= $this->fetch('content'); ?>
         </div>
         <div id="page-right">
@@ -64,66 +72,26 @@
     </div>
 
 </div> <!-- #page -->
-<?= $this->Html->script('Backend.jquery-1.11.2.min'); ?>
-<?= $this->Html->script('SemanticUi.semantic.min'); ?>
+<script>
+var _backend = {
+    rootUrl: '<?= $this->Url->build('/'); ?>'
+}
+</script>
+<?= $this->Html->script('Backend.jquery/jquery-1.11.2.min'); ?>
+<?= $this->Html->script('Backend.jquery/jquery-ui.min'); // no widgets ?>
 <?= $this->Html->script('Backend.chosen/chosen.jquery.min'); ?>
 <?= $this->Html->script('Backend.tinymce/tinymce.min'); ?>
 <?= $this->Html->script('Backend.tinymce/jquery.tinymce.min'); ?>
 <?= $this->Html->script('Backend.pickadate/picker'); ?>
 <?= $this->Html->script('Backend.pickadate/picker.date'); ?>
 <?= $this->Html->script('Backend.pickadate/picker.time'); ?>
-<?= $this->Html->script('Backend.admin'); ?>
+<?= $this->Html->script('SemanticUi.semantic.min'); ?>
 <?= $this->Html->script('Backend.shared'); ?>
+<?= $this->Html->script('Backend.admin'); ?>
+<?= $this->Html->script('Backend.admin-sidebar'); ?>
+<?= $this->Html->script('Backend.admin-tinymce'); ?>
+<?= $this->Html->script('Backend.admin-chosen'); ?>
 
-<script>
-    $(document).ready(function() {
-
-        // tinymce wysiwyg editor
-        $('.tinymce').tinymce({
-            plugins: 'image link lists code table media paste wordcount',
-            content_css: '<?= $this->Url->build('/'); ?>backend/css/admin.tinymce.css',
-            menu : { // this is the complete default configuration
-                file   : {title : 'File'  , items : 'newdocument'},
-                edit   : {title : 'Edit'  , items : 'undo redo | cut copy paste pastetext | selectall'},
-                insert : {title : 'Insert', items : 'link media | template hr'},
-                view   : {title : 'View'  , items : 'visualaid'},
-                format : {title : 'Format', items : 'bold italic underline strikethrough superscript subscript | formats | removeformat'},
-                table  : {title : 'Table' , items : 'inserttable tableprops deletetable | cell row column'},
-                tools  : {title : 'Tools' , items : 'spellchecker code'}
-            },
-            menubar: false,
-            toolbar: [
-                "formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | blockquote | code",
-                "undo redo | cut copy paste | link image media | table"
-            ]
-        });
-
-
-        $('.tinymce-default').tinymce({
-            content_css: '<?= $this->Url->build('/'); ?>backend/css/admin.tinymce.css'
-        });
-
-
-
-        // Chosen
-        $('select').each(function() {
-            // explicitly do not use chosen
-            if ($(this).hasClass('no-pretty'))
-                return;
-
-            var allowSingleDeselect = $(this).data('chosenAllowSingleDeselect');
-            var disableSearchThreshold = $(this).data('chosenDisableSearchThreshold');
-
-            var chosen = {
-                allow_single_deselect: (allowSingleDeselect == true) ? allowSingleDeselect : false,
-                disable_search_threshold: (disableSearchThreshold > 0) ? disableSearchThreshold : null
-            };
-
-            $(this).chosen(chosen);
-        });
-
-    });
-</script>
 <?= $this->fetch('script-bottom') ?>
 
 </body>

@@ -29,31 +29,30 @@
 </head>
 <body>
 
-<div id="headerbar">
-    <?= $this->element('Backend.headerbar'); ?>
-</div>
-<div id="actionbar">
-    <?= $this->element('Backend.actionbar'); ?>
+<div id="top">
+    <div id="headerbar">
+        <?= $this->element('Backend.headerbar'); ?>
+    </div>
+    <div id="toolbar">
+        <?= $this->fetch('toolbar'); ?>
+    </div>
+
+    <div id="flash">
+        <?= $this->Flash->render('auth') ?>
+        <?= $this->Flash->render('backend') ?>
+    </div>
 </div>
 
 
 <div id="sidebar">
     <?= $this->element('Backend.sidebar'); ?>
 </div>
-<div id="page">
 
+<div id="page">
     <div id="page-top">
-        <div id="page-breadcrumbs">
-            <?= $this->element('Backend.breadcrumbs'); ?>
-        </div>
     </div>
 
     <div id="page-main">
-
-        <div id="page-flash">
-            <?= $this->Flash->render('auth') ?>
-            <?= $this->Flash->render('backend') ?>
-        </div>
 
         <div id="page-content">
 

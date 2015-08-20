@@ -2,9 +2,15 @@
 <div class="ui grid">
     <div class="computer tablet only row" style="padding: 0;">
     -->
-        <div class="ui fixed large opaque menu navbar grid">
+        <div class="ui large opaque menu navbar grid">
 
             <?= $this->Ui->link('', '#', ['id' => 'be-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
+
+            <div class="item" id="headerbar-breadcrumbs">
+                <?= $this->element('Backend.breadcrumbs'); ?>
+            </div>
+
+
 
             <!--
             <?= $this->Ui->link(
@@ -22,12 +28,14 @@
 
             <div class="right menu">
 
+                <!--
                 <div class="item">
                     <div class="ui icon mini input">
                         <input placeholder="Search..." type="text">
                         <i class="search link icon"></i>
                     </div>
                 </div>
+                -->
 
                 <!--
                 <?= $this->Ui->link(

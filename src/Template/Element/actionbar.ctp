@@ -2,7 +2,7 @@
 <div class="ui grid">
     <div class="computer tablet only row" style="padding: 0;">
     -->
-        <div class="ui fixed large opaque secondary menu navbar grid">
+        <div class="ui opaque secondary menu navbar grid">
 
             <!--
             <?= $this->Ui->link(

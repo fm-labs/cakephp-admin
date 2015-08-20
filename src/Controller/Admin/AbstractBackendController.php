@@ -38,6 +38,7 @@ abstract class AbstractBackendController extends Controller implements BackendCo
         'Paginator' => [
             'templates' => 'Backend.semantic-paginator-templates'
         ],
+        'Backend.Toolbar',
         'SemanticUi.Ui'
     ];
 

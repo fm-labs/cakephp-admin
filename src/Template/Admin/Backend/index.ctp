@@ -1,4 +1,8 @@
 <?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php
+$this->Toolbar->addLink('Refresh', ['controller' => 'Backend', 'action' => 'index'], ['class' => 'backend-refresh', 'icon' => 'list']);
+$this->Toolbar->addLink('View Logs', ['controller' => 'Logs', 'action' => 'index'], ['class' => 'backend-logs', 'icon' => 'list']);
+?>
 <div id="backend-dashboard" class="backend dashboard index">
     <h1 class="ui header"><i class="cubes icon"></i>Backend Dashboard</h1>
     <div class="ui doubling stackable four column grid">

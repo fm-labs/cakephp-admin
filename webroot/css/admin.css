@@ -8,12 +8,12 @@ body {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   background-color: #FFF;
-  padding-top: 54px;
+  padding-top: 0px;
   padding-left: 260px;
-  -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
-  -o-transition: all 0.1s ease-out;
-  transition: all 0.1s ease-out;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
 }
 .padding-reset {
   padding: 0px !important;
@@ -32,12 +32,23 @@ body {
   vertical-align: middle;
 }
 #headerbar .ui.navbar.menu {
-  padding-left: 275px;
+  border: none;
+  padding-left: 0px;
 }
+#toolbar .ui.navbar.menu,
 #actionbar .ui.navbar.menu {
-  padding-left: 275px;
-  top: 48px;
   background-color: #e8e8e8;
+  margin-left: 0;
+  margin-right: 0;
+}
+#flash {
+  background-color: #FFF;
+}
+#flash .ui.message {
+  border-radius: 0;
+  box-shadow: none;
+  padding: 1em 2em;
+  margin: 0;
 }
 #sidebar {
   z-index: 9999;
@@ -60,18 +71,18 @@ body {
 }
 body.be-sidebar-small {
   padding-left: 50px;
-  -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
-  -o-transition: all 0.1s ease-out;
-  transition: all 0.1s ease-out;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
 }
 body.be-sidebar-small #sidebar .be-sidebar {
   max-width: 50px;
   width: 50px;
-  -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
-  -o-transition: all 0.1s ease-out;
-  transition: all 0.1s ease-out;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
 }
 body.be-sidebar-small #sidebar .be-sidebar .item > a > span,
 body.be-sidebar-small #sidebar .be-sidebar .item > span,
@@ -79,24 +90,13 @@ body.be-sidebar-small #sidebar .be-sidebar .item > .menu {
   display: none;
 }
 body.be-sidebar-small #headerbar .ui.navbar.menu {
-  padding-left: 75px;
-  -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
-  -o-transition: all 0.1s ease-out;
-  transition: all 0.1s ease-out;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
 }
-#page-flash {
-  background-color: #FFF;
-}
-#page-flash .ui.message {
-  border-radius: 0;
-  box-shadow: none;
-  padding: 1em 2em;
-  margin: 0;
-}
-#page-breadcrumbs {
-  padding: 1rem 2rem 0;
-  display: none;
+#page {
+  padding-top: 1rem;
 }
 #page-main {
   position: relative;

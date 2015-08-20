@@ -53,12 +53,7 @@
     </div>
 
     <div id="page-main">
-
         <div id="page-content">
-
-            <div id="toolbar">
-                <?php // $this->element('Backend.toolbar'); ?>
-            </div>
             <?= $this->fetch('content'); ?>
         </div>
         <div id="page-right">
@@ -67,31 +62,34 @@
     </div>
 
     <div id="page-footer">
-
     </div>
 
 </div> <!-- #page -->
 <script>
-var _backend = {
+var _backendConf = {
     rootUrl: '<?= $this->Url->build('/'); ?>'
-}
+};
+var _backend = (function (conf) {
+    return {
+        rootUrl: conf.rootUrl
+    }
+})(_backendConf);
 </script>
-<?= $this->Html->script('Backend.jquery/jquery-1.11.2.min'); ?>
-<?= $this->Html->script('Backend.jquery/jquery-ui.min'); // no widgets ?>
-<?= $this->Html->script('Backend.chosen/chosen.jquery.min'); ?>
-<?= $this->Html->script('Backend.tinymce/tinymce.min'); ?>
-<?= $this->Html->script('Backend.tinymce/jquery.tinymce.min'); ?>
-<?= $this->Html->script('Backend.pickadate/picker'); ?>
-<?= $this->Html->script('Backend.pickadate/picker.date'); ?>
-<?= $this->Html->script('Backend.pickadate/picker.time'); ?>
-<?= $this->Html->script('SemanticUi.semantic.min'); ?>
-<?= $this->Html->script('Backend.shared'); ?>
-<?= $this->Html->script('Backend.admin'); ?>
-<?= $this->Html->script('Backend.admin-sidebar'); ?>
-<?= $this->Html->script('Backend.admin-tinymce'); ?>
-<?= $this->Html->script('Backend.admin-chosen'); ?>
 
-<?= $this->fetch('script-bottom') ?>
+<?= $this->Backend->script('jquery'); ?>
+<?= $this->Backend->script('jqueryui'); ?>
+<?= $this->Backend->script('tinymce'); ?>
+<?= $this->Backend->script('semanticui'); ?>
+<?= $this->Backend->script('pickadate'); ?>
+<?= $this->Backend->script('shared'); ?>
+<?= $this->Backend->script('admin'); ?>
+<?= $this->Backend->script('admin_sidebar'); ?>
+<?= $this->Backend->script('admin_tinymce'); ?>
+<?= $this->Backend->script('admin_chosen'); ?>
+
+<?= $this->fetch('script-backend'); ?>
+<?= $this->fetch('script-content'); ?>
+<?= $this->fetch('script-bottom'); // legacy ?>
 
 </body>
 </html>

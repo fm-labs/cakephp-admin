@@ -1,43 +1,27 @@
 <?php $this->Html->addCrumb(__('Users'), ['action' => 'index']); ?>
 <?php $this->Html->addCrumb(__('New {0}', __('User'))); ?>
+<?= $this->Toolbar->addLink(
+    __('List {0}', __('Users')),
+    ['controller' => 'Users', 'action' => 'index'],
+    ['icon' => 'list']
+); ?>
+<?= $this->Toolbar->addLink(
+    __('List {0}', __('User Groups')),
+    ['controller' => 'UserGroups', 'action' => 'index'],
+    ['icon' => 'list']
+) ?>
+<?= $this->Toolbar->addLink(
+    __('New {0}', __('User Group')),
+    ['controller' => 'UserGroups', 'action' => 'add'],
+    ['icon' => 'add']
+) ?>
 <div class="users">
-    <div class="actions">
-        <div class="ui secondary menu">
-            <div class="item"></div>
-            <div class="right menu">
-                    <?= $this->Ui->link(
-                    __('List {0}', __('Users')),
-                    ['action' => 'index'],
-                    ['class' => 'item', 'icon' => 'list']
-                ) ?>
-                <div class="ui dropdown item">
-                    <i class="dropdown icon"></i>
-                    <i class="tasks icon"></i>Actions
-                    <div class="menu">
-    
-                        <?= $this->Ui->link(
-                            __('List {0}', __('User Groups')),
-                            ['controller' => 'UserGroups', 'action' => 'index'],
-                            ['class' => 'item', 'icon' => 'list']
-                        ) ?>
 
-                        <?= $this->Ui->link(
-                            __('New {0}', __('User Group')),
-                            ['controller' => 'UserGroups', 'action' => 'add'],
-                            ['class' => 'item', 'icon' => 'add']
-                        ) ?>
-                            </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="ui divider"></div>
-
-    <?= $this->Form->create($user); ?>
-    <h2 class="ui top attached header">
+    <h2 class="ui header">
         <?= __('Add {0}', __('User')) ?>
     </h2>
-    <div class="users ui attached segment">
+    <?= $this->Form->create($user); ?>
+    <div class="users ui attached basic segment">
         <div class="ui form">
         <?php
                 echo $this->Form->input('user_group_id', ['options' => $primaryUserGroup, 'empty' => true]);

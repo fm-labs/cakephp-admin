@@ -1,48 +1,31 @@
 <?php $this->Html->addCrumb(__('Users'), ['action' => 'index']); ?>
 <?php $this->Html->addCrumb(__('Edit {0}', __('User'))); ?>
-<div class="users">
-    <div class="actions">
-        <div class="ui secondary menu">
-            <div class="item"></div>
-            <div class="right menu">
-                <?= $this->Ui->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->id],
-                ['class' => 'item', 'icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
-            )
-            ?>
-                    <?= $this->Ui->link(
-                    __('List {0}', __('Users')),
-                    ['action' => 'index'],
-                    ['class' => 'item', 'icon' => 'list']
-                ) ?>
-                <div class="ui dropdown item">
-                    <i class="dropdown icon"></i>
-                    <i class="tasks icon"></i>Actions
-                    <div class="menu">
-    
-                        <?= $this->Ui->link(
-                            __('List {0}', __('User Groups')),
-                            ['controller' => 'UserGroups', 'action' => 'index'],
-                            ['class' => 'item', 'icon' => 'list']
-                        ) ?>
+<?php $this->Toolbar->addLink(
+    __('Delete'),
+    ['action' => 'delete', $user->id],
+    ['icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
+);?>
+<?php $this->Toolbar->addLink(
+    __('List {0}', __('Users')),
+    ['action' => 'index'],
+    ['icon' => 'list']
+);?>
+<?= $this->Toolbar->addLink(
+    __('List {0}', __('User Groups')),
+    ['controller' => 'UserGroups', 'action' => 'index'],
+    ['icon' => 'list']
+) ?>
 
-                        <?= $this->Ui->link(
-                            __('New {0}', __('User Group')),
-                            ['controller' => 'UserGroups', 'action' => 'add'],
-                            ['class' => 'item', 'icon' => 'add']
-                        ) ?>
-                            </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="ui divider"></div>
-
-    <?= $this->Form->create($user); ?>
-    <h2 class="ui top attached header">
+<?= $this->Toolbar->addLink(
+    __('New {0}', __('User Group')),
+    ['controller' => 'UserGroups', 'action' => 'add'],
+    ['icon' => 'add']
+); ?>
+<div class="backend user">
+    <h2 class="ui header">
         <?= __('Edit {0}', __('User')) ?>
     </h2>
+    <?= $this->Form->create($user); ?>
     <div class="users ui attached segment">
         <div class="ui form">
         <?php

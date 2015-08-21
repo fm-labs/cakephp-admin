@@ -34,6 +34,7 @@ class BackendHelper extends Helper
         'semanticui' => ['SemanticUi.semantic.min'],
         'tinymce' => ['Backend.tinymce/tinymce.min'],
         'tinymce_jquery' => ['Backend.tinymce/jquery.tinymce.min'],
+        'admin' => ['Backend.admin'],
         'admin_chosen' => ['Backend.admin-chosen' => ['chosen'] ],
         'admin_sidebar' => ['Backend.admin-sidebar' => ['jquery']],
         'admin_tinymce' => ['Backend.admin-tinymce' => ['tinymce', 'tinymce_jquery']],

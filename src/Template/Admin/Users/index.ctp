@@ -1,35 +1,19 @@
 <?php $this->Html->addCrumb(__('Users')); ?>
-<div class="actions">
-    <div class="ui secondary menu">
-        <div class="item"></div>
-        <div class="right menu">
-            <?= $this->Ui->link(
-                __('New {0}', __('User')),
-                ['action' => 'add'],
-                ['class' => 'item', 'icon' => 'add']
-            ) ?>
-            <div class="ui dropdown item">
-                <i class="dropdown icon"></i>
-                <i class="tasks icon"></i>Actions
-                <div class="menu">
-                    <?= $this->Ui->link(
-                        __('List {0}', __('User Groups')),
-                        ['controller' => 'UserGroups', 'action' => 'index'],
-                        ['class' => 'item', 'icon' => 'list']
-                    ) ?>
-
-                    <?= $this->Ui->link(
-                        __('New {0}', __('User Group')),
-                        ['controller' => 'UserGroups', 'action' => 'add'],
-                        ['class' => 'item', 'icon' => 'add']
-                    ) ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="ui divider"></div>
-
+<?= $this->Toolbar->addLink(
+    __('New {0}', __('User')),
+    ['controller' => 'Users', 'action' => 'add'],
+    ['icon' => 'add']
+); ?>
+<?= $this->Toolbar->addLink(
+    __('List {0}', __('User Groups')),
+    ['controller' => 'UserGroups', 'action' => 'index'],
+    ['icon' => 'list']
+); ?>
+<?= $this->Toolbar->addLink(
+    __('New {0}', __('User Group')),
+    ['controller' => 'UserGroups', 'action' => 'add'],
+    ['icon' => 'add']
+); ?>
 <div class="users index">
     <table class="ui table striped">
     <thead>

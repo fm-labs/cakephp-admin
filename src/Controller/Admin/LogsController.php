@@ -6,6 +6,13 @@ use Cake\Filesystem\Folder;
 
 class LogsController extends AppController
 {
+    public $permissions = [
+        'index' => ['logs.view'],
+        'view' => ['logs.view'],
+        'clear' => ['logs.edit'],
+        'rotate' => ['logs.edit'],
+        'delete' => ['logs.delete']
+    ];
 
     public $logDir = LOGS;
 

@@ -71,15 +71,13 @@ abstract class AbstractBackendController extends Controller implements BackendCo
         }
         $this->Auth = $this->components()->load('User.Auth', [
             //'className' => '\Backend\Controller\Component\BackendAuthComponent',
-            'loginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
-            'authenticate' => [
-                'Form' => [ 'userModel' => 'Backend.Users' ]
-            ],
-            'authorize' => [
-                'Controller'
-            ],
-            'loginRedirect' => (Configure::read('Backend.dashboardUrl')) ?: null,
         ]);
+        $this->Auth->config('loginAction', ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login']);
+        $this->Auth->config('loginRedirect', (Configure::read('Backend.dashboardUrl')) ?: null);
+        $this->Auth->config('authenticate', [
+            'Form' => [ 'userModel' => 'Backend.Users' ]
+        ]);
+        $this->Auth->config('authorize', ['Rbac.Roles', 'Controller']);
 
         // Configure Backend component
         if (!$this->components()->has('Backend')) {

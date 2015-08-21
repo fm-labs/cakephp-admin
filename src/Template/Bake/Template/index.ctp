@@ -8,52 +8,30 @@ $fields = collection($fields)
     ->take(7);
 %>
 <?php $this->Html->addCrumb(__('<%= $pluralHumanName %>')); ?>
-<div class="be-toolbar actions">
-    <div class="ui secondary menu">
-        <div class="item"></div>
-        <div class="right menu">
-            <?= $this->Ui->link(
-                __('New {0}', __('<%= $singularHumanName %>')),
-                ['action' => 'add'],
-                ['class' => 'item', 'icon' => 'add']
-            ) ?>
-            <div class="ui dropdown item">
-                <i class="dropdown icon"></i>
-                <i class="setting icon"></i>Actions
-                <div class="menu">
-<%
-                    $done = [];
-                    foreach ($associations as $type => $data):
-                        foreach ($data as $alias => $details):
-                            if ($details['controller'] != $this->name && !in_array($details['controller'], $done)):
-%>
-                    <?= $this->Ui->link(
-                        __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
-                        ['controller' => '<%= $details["controller"] %>', 'action' => 'index'],
-                        ['class' => 'item', 'icon' => 'list']
-                    ) ?>
 
-                    <?= $this->Ui->link(
-                        __('New {0}', __('<%= $this->_singularHumanName($alias) %>')),
-                        ['controller' => '<%= $details["controller"] %>', 'action' => 'add'],
-                        ['class' => 'item', 'icon' => 'add']
-                    ) ?>
+<?php $this->Toolbar->addLink(__('New {0}', __('<%= $singularHumanName %>')), ['action' => 'add'], ['icon' => 'add']); ?>
 <%
-                                $done[] = $details['controller'];
-                            endif;
-                        endforeach;
-                    endforeach;
+$done = [];
+foreach ($associations as $type => $data):
+    foreach ($data as $alias => $details):
+        if ($details['controller'] != $this->name && !in_array($details['controller'], $done)):
 %>
-<% if (empty($associations)) { %>
-                    <div class="item">No Actions</div>
-<% } %>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="ui divider"></div>
-
+<?= $this->Toolbar->addLink(
+    __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
+    ['controller' => '<%= $details["controller"] %>', 'action' => 'index'],
+    ['icon' => 'list']
+) ?>
+<?= $this->Toolbar->addLink(
+    __('New {0}', __('<%= $this->_singularHumanName($alias) %>')),
+    ['controller' => '<%= $details["controller"] %>', 'action' => 'add'],
+    ['icon' => 'add']
+) ?>
+<%
+            $done[] = $details['controller'];
+        endif;
+    endforeach;
+endforeach;
+%>
 <div class="<%= $pluralVar %> index">
     <table class="ui table striped">
     <thead>
@@ -98,41 +76,28 @@ $fields = collection($fields)
         $pk = '$' . $singularVar . '->' . $primaryKey[0];
 %>
             <td class="actions">
-                <div class="ui basic small buttons">
-                    <div class="ui button">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', <%= $pk %>]) ?>
-                    </div>
-                    <div class="ui floating dropdown icon button">
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
-                            <?= $this->Ui->link(
-                                __('Edit'),
-                                ['action' => 'edit', <%= $pk %>],
-                                ['class' => 'item', 'icon' => 'edit']
-                            ) ?>
-                            <?= $this->Ui->postLink(
-                                __('Delete'),
-                                ['action' => 'delete', <%= $pk %>],
-                                ['class' => 'item', 'icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]
-                            ) ?>
-                        </div>
-                    </div>
-                </div>
+                <?php
+                $menu = new Backend\Lib\Menu\Menu();
+                $menu->add(__('View'), ['action' => 'view', <%= $pk %>]);
+
+                $dropdown = $menu->add('Dropdown');
+                $dropdown->getChildren()->add(
+                    __('Edit'),
+                    ['action' => 'edit', <%= $pk %>],
+                    ['icon' => 'edit']
+                );
+                $dropdown->getChildren()->add(
+                    __('Delete'),
+                    ['action' => 'delete', <%= $pk %>],
+                    ['icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]
+                );
+                ?>
+                <?= $this->element('Backend.Table/table_row_actions', ['menu' => $menu]); ?>
             </td>
         </tr>
 
     <?php endforeach; ?>
     </tbody>
     </table>
-    <div class="paginator">
-        <div class="ui pagination menu">
-            <?= $this->Paginator->prev(__('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next')) ?>
-
-            <div class="item">
-                <?= $this->Paginator->counter() ?>
-            </div>
-        </div>
-    </div>
+    <?= $this->element('Backend.Pagination/default'); ?>
 </div>

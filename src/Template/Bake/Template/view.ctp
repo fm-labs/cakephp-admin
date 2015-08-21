@@ -53,66 +53,52 @@ $pk = "\$$singularVar->{$primaryKey[0]}";
 %>
 <?php $this->Html->addCrumb(__('<%= $pluralHumanName %>'), ['action' => 'index']); ?>
 <?php $this->Html->addCrumb($<%= $singularVar %>-><%= $displayField %>); ?>
-<div class="be-toolbar actions">
-    <div class="ui secondary menu">
-        <div class="item"></div>
-        <div class="right menu">
-            <?= $this->Ui->link(
-                __('Edit {0}', __('<%= $singularHumanName %>')),
-                ['action' => 'edit', <%= $pk %>],
-                ['class' => 'item', 'icon' => 'edit']
-            ) ?>
-            <?= $this->Ui->postLink(
-                __('Delete {0}', __('<%= $singularHumanName %>')),
-                ['action' => 'delete', <%= $pk %>],
-                ['class' => 'item', 'icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]) ?>
+<?= $this->Toolbar->addLink(
+    __('Edit {0}', __('<%= $singularHumanName %>')),
+    ['action' => 'edit', <%= $pk %>],
+    ['icon' => 'edit']
+) ?>
+<?= $this->Toolbar->addLink(
+    __('Delete {0}', __('<%= $singularHumanName %>')),
+    ['action' => 'delete', <%= $pk %>],
+    ['icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]) ?>
 
-            <?= $this->Ui->link(
-                __('List {0}', __('<%= $pluralHumanName %>')),
-                ['action' => 'index'],
-                ['class' => 'item', 'icon' => 'list']
-            ) ?>
-            <?= $this->Ui->link(
-                __('New {0}', __('<%= $singularHumanName %>')),
-                ['action' => 'add'],
-                ['class' => 'item', 'icon' => 'add']
-            ) ?>
-            <div class="ui item dropdown">
-                <div class="menu">
+<?= $this->Toolbar->addLink(
+    __('List {0}', __('<%= $pluralHumanName %>')),
+    ['action' => 'index'],
+    ['icon' => 'list']
+) ?>
+<?= $this->Toolbar->addLink(
+    __('New {0}', __('<%= $singularHumanName %>')),
+    ['action' => 'add'],
+    ['icon' => 'add']
+) ?>
+<?= $this->Toolbar->startGroup(__('More')); ?>
 <%
-                    $done = [];
-                    foreach ($associations as $type => $data) {
-                        foreach ($data as $alias => $details) {
-                            if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
+$done = [];
+foreach ($associations as $type => $data) {
+    foreach ($data as $alias => $details) {
+        if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
 %>
-                    <?= $this->Ui->link(
-                        __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
-                        ['controller' => '<%= $details['controller'] %>', 'action' => 'index'],
-                        ['class' => 'item', 'icon' => 'list']
-                    ) ?>
-                    <?= $this->Ui->link(
-                        __('New {0}', __('<%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>')),
-                        ['controller' => '<%= $details['controller'] %>', 'action' => 'add'],
-                        ['class' => 'item', 'icon' => 'add']
-                    ) ?>
+<?= $this->Toolbar->addLink(
+    __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
+    ['controller' => '<%= $details['controller'] %>', 'action' => 'index'],
+    ['icon' => 'list']
+) ?>
+<?= $this->Toolbar->addLink(
+    __('New {0}', __('<%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>')),
+    ['controller' => '<%= $details['controller'] %>', 'action' => 'add'],
+    ['icon' => 'add']
+) ?>
 <%
-                                $done[] = $details['controller'];
-                            }
-                        }
-                    }
+            $done[] = $details['controller'];
+        }
+    }
+}
 %>
-<% if (empty($associations)) { %>
-                    <div class="item">No Actions</div>
-<% } %>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="ui divider"></div>
-
+<?= $this->Toolbar->endGroup(); ?>
 <div class="<%= $pluralVar %> view">
-    <h2 class="ui top attached header">
+    <h2 class="ui header">
         <?= h($<%= $singularVar %>-><%= $displayField %>) ?>
     </h2>
     <table class="ui attached celled striped table">
@@ -188,8 +174,8 @@ foreach ($relations as $alias => $details):
     $otherPluralHumanName = Inflector::humanize($details['controller']);
     %>
 <div class="related">
-    <div class="">
-    <h4><?= __('Related {0}', __('<%= $otherPluralHumanName %>')) ?></h4>
+    <div class="ui basic segment">
+    <h4 class="ui header"><?= __('Related {0}', __('<%= $otherPluralHumanName %>')) ?></h4>
     <?php if (!empty($<%= $singularVar %>-><%= $details['property'] %>)): ?>
     <table class="ui table">
         <tr>

@@ -3,7 +3,7 @@
 
 @body-offset-top: 0px;
 
-@sidebar-w: 260px;
+@sidebar-w: 220px;
 @sidebar-transition: 0.5s;
 @sidebar-small-w: 50px;
 
@@ -71,6 +71,14 @@ body{
     background-color: #e8e8e8;
     margin-left: 0;
     margin-right: 0;
+
+    a {
+      color: #333;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .ui.navbar.menu > .item:first-child {
@@ -92,7 +100,9 @@ body{
   z-index: 9999;
 
   .be-sidebar {
+    width: @sidebar-w;
     overflow-x: hidden;
+
     .box-shadow(-3px -5px 13px #333);
 
     .item > .menu {

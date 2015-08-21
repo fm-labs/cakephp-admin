@@ -25,6 +25,8 @@ class ToolbarHelper extends Helper
 
     protected $_rendered = false;
 
+    protected $_grouping = false;
+
     /**
      * Reset to default config settings and clear items
      */
@@ -32,6 +34,7 @@ class ToolbarHelper extends Helper
     {
         $this->_items = [];
         $this->_rendered = false;
+        $this->_grouping = false;
         $this->config($this->_defaultConfig, null, false);
     }
 
@@ -45,19 +48,52 @@ class ToolbarHelper extends Helper
     {
         $this->_items = [];
         $this->_rendered = false;
+        $this->_grouping = false;
         $this->config($config);
     }
 
     /**
      * Add a new toolbar item (link).
-     *
      * @param $title
      * @param null $url
      * @param array $attr
      */
     public function addLink($title, $url = null, $attr = [])
     {
+        if ($this->_grouping === true) {
+            return;
+        }
         $this->_items[] = compact('title', 'url', 'attr');
+    }
+
+    /**
+     * Add a new toolbar item (post-link).
+     * @param $title
+     * @param null $url
+     * @param array $attr
+     */
+    public function addPostLink($title, $url = null, $attr = [])
+    {
+        //@TODO Implement toolbar form post link item
+        $this->addLink($title, $url, $attr);
+    }
+
+    /**
+     * Experimental! Item grouping
+     * @param $title
+     * @param array $options
+     */
+    public function startGroup($title, $options = [])
+    {
+        $this->_grouping = true;
+    }
+
+    /**
+     * Experimental! Item grouping
+     */
+    public function endGroup()
+    {
+        $this->_grouping = false;
     }
 
     /**
@@ -79,6 +115,10 @@ class ToolbarHelper extends Helper
             'inline' => false,
             'block' => $this->config('block')
         ], $options);
+
+        // if ($this->_grouping) {
+        //      $this->endGroup();
+        // }
 
         $html = $this->_View->element($this->config('toolbar_element'), [
             'items' => $this->_items,

@@ -9,7 +9,7 @@ body {
   font-size: 14px;
   background-color: #FFF;
   padding-top: 0px;
-  padding-left: 260px;
+  padding-left: 220px;
   -webkit-transition: all 0.5s ease-out;
   -moz-transition: all 0.5s ease-out;
   -o-transition: all 0.5s ease-out;
@@ -41,6 +41,14 @@ body {
   margin-left: 0;
   margin-right: 0;
 }
+#toolbar .ui.navbar.menu a,
+#actionbar .ui.navbar.menu a {
+  color: #333;
+}
+#toolbar .ui.navbar.menu a:hover,
+#actionbar .ui.navbar.menu a:hover {
+  text-decoration: underline;
+}
 #flash {
   background-color: #FFF;
 }
@@ -54,6 +62,7 @@ body {
   z-index: 9999;
 }
 #sidebar .be-sidebar {
+  width: 220px;
   overflow-x: hidden;
   -webkit-box-shadow: -3px -5px 13px #333333;
   -moz-box-shadow: -3px -5px 13px #333333;

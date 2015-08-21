@@ -1,9 +1,18 @@
 <?php
 return [
+    # General backend settings
     'Backend' => [
-        'title' => 'Dashboard',
+        'title' => 'Backend',
         'dashboardUrl' => '/backend/admin/Default/index',
-        //'userModel' => 'Users'
     ],
-    'Backend.Users' => []
+//    # Backend users for basic auth
+//    'Backend.Users' => [
+//          'admin' => 'myAdminPa$$w0rd'
+//    ],
+//    # Additional Plugins required by this Backend installation
+//    'Backend.Plugins' => [
+//        'SemanticUi', // (required) Backend core plugin
+//        'User', // (required) Backend core plugin
+//        'Rbac', // (required) Role-based-authorization mechanism
+//    ]
 ];

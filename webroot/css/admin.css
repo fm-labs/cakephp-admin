@@ -31,6 +31,9 @@ body {
   height: auto;
   vertical-align: middle;
 }
+.strong {
+  font-weight: bold;
+}
 #headerbar .ui.navbar.menu {
   border: none;
   padding-left: 0px;

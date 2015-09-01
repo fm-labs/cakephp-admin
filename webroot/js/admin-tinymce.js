@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     // tinymce wysiwyg editor
-    $('.tinymce').tinymce({
+    $('.tinymce, .htmleditor').tinymce({
         plugins: 'image link lists code table media paste wordcount',
         content_css: _backend.rootUrl + 'backend/css/admin.tinymce.css',
         menu : { // this is the complete default configuration
@@ -21,7 +21,8 @@ $(document).ready(function() {
     });
 
 
-    $('.tinymce-default').tinymce({
-        content_css: _backend.rootUrl + 'backend/css/admin.tinymce.css'
+    $('.tinymce-default, .htmltext').tinymce({
+        content_css: _backend.rootUrl + 'backend/css/admin.tinymce.css',
+        menubar: false
     });
 });

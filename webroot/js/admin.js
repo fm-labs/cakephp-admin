@@ -29,4 +29,26 @@ $(document).ready(function() {
         hiddenSuffix: undefined
     });
 
+    // imagepicker
+    //$('.imagepicker').imagepicker({ show_label: true });
+    //$('.imagepicker.multi').imagepicker({ show_label: true });
+    /*
+    $('.image_picker_selector .thumbnail').on('mouseover', function(e) {
+       var $label = $(this).find('p').first();
+       var $img = $(this).find('.image_picker_image').first();
+       $label.show();
+    });
+    $('.imageselect .image_picker_selector .thumbnail img.image_picker_image').popup({
+        popup: 'p',
+        inline: true
+    });
+     */
+
+    // tabs (depends on semantic ui)
+    $('.be-tabs .menu .item')
+        .tab()
+    ;
+    $('.be-tabs .menu .item:first-child').addClass('active');
+    $('.be-tabs .tabs .tab:first-child').addClass('active');
+
 });

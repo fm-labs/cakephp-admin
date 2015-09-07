@@ -1,3 +1,7 @@
+<?php use Cake\Core\Configure;
+
+//Configure::write('debug', 0);
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +24,7 @@
     <?= $this->Html->css('Backend.pickadate/themes/default.time'); ?>
     <?= $this->Html->css('Backend.imagepicker/image-picker.css'); ?>
     <?= $this->Html->css('Backend.admin'); ?>
+    <?= $this->Html->css('Backend.iframe'); ?>
     <?= $this->Html->css('Backend.shared'); ?>
 
     <?= $this->Html->css('admin/admin'); ?>
@@ -30,36 +35,15 @@
 </head>
 <body>
 
-<div id="top">
-    <div id="headerbar">
-        <?= $this->element('Backend.headerbar'); ?>
-    </div>
-    <div id="toolbar">
-        <?= $this->fetch('toolbar'); ?>
-    </div>
-
-    <div id="flash">
-        <?= $this->Flash->render('auth') ?>
-        <?= $this->Flash->render('backend') ?>
-    </div>
-</div>
-
-
-<div id="sidebar">
-    <?= $this->element('Backend.sidebar'); ?>
-</div>
-
-<div id="page">
+<div id="page" style="position: relative">
     <div id="page-top">
+        <?= $this->Flash->render(); ?>
+        <?= $this->Flash->render('auth'); ?>
+        <?= $this->Flash->render('backend'); ?>
     </div>
 
     <div id="page-main">
-        <div id="page-content">
-            <?= $this->fetch('content'); ?>
-        </div>
-        <div id="page-right">
-            <?= $this->fetch('right', "RIGHT"); ?>
-        </div>
+        <?= $this->fetch('content'); ?>
     </div>
 
     <div id="page-footer">
@@ -67,14 +51,14 @@
 
 </div> <!-- #page -->
 <script>
-var _backendConf = {
-    rootUrl: '<?= $this->Url->build('/'); ?>'
-};
-var _backend = (function (conf) {
-    return {
-        rootUrl: conf.rootUrl
-    }
-})(_backendConf);
+    var _backendConf = {
+        rootUrl: '<?= $this->Url->build('/'); ?>'
+    };
+    var _backend = (function (conf) {
+        return {
+            rootUrl: conf.rootUrl
+        }
+    })(_backendConf);
 </script>
 
 <?= $this->Backend->script('jquery'); ?>

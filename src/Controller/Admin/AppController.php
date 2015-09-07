@@ -36,6 +36,25 @@ class AppController extends AbstractBackendController
                         'icon' => 'lock'
                     ]
                 ]
+            ],
+            'Media' => [
+                'plugin' => 'Backend',
+                'title' => 'Media',
+                'url' => ['plugin' => 'Backend', 'controller' => 'MediaBrowser', 'action' => 'index', 'config' => 'default'],
+                'icon' => 'cubes',
+
+                '_children' => [
+                    'media_default' => [
+                        'title' => 'All',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'MediaBrowser', 'action' => 'index', 'config' => 'default'],
+                        'icon' => 'file'
+                    ],
+                    'media_gallery' => [
+                        'title' => 'Gallery',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'MediaBrowser', 'action' => 'index', 'config' => 'gallery'],
+                        'icon' => 'file'
+                    ],
+                ]
             ]
         ];
     }

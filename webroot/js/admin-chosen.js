@@ -2,7 +2,7 @@ $(document).ready(function() {
     // Chosen
     $('select').each(function() {
         // explicitly do not use chosen
-        if ($(this).hasClass('no-pretty'))
+        if ($(this).hasClass('nochosen') || $(this).hasClass('no-pretty'))
             return;
 
         var allowSingleDeselect = $(this).data('chosenAllowSingleDeselect');

@@ -20,6 +20,11 @@ body{
     padding: 0px !important;
 }
 
+
+/**
+ * UI Flash Messages
+ */
+
 .ui.success.message {
   background-color: #3C763D;
   color: #FFF;
@@ -48,6 +53,9 @@ body{
 
 }
 
+/**
+ * Headerbar
+ */
 #headerbar {
 
   .ui.navbar.menu {
@@ -67,6 +75,9 @@ body{
   //display: none;
 }
 
+/**
+ * Toolbar
+ */
 #toolbar,
 #actionbar {
   .ui.navbar.menu {
@@ -90,6 +101,10 @@ body{
   }
 }
 
+
+/**
+ * Flash
+ */
 #flash {
   background-color: #FFF;
 
@@ -100,6 +115,10 @@ body{
   }
 }
 
+
+/**
+ * Sidebar
+ */
 #sidebar {
   z-index: 9999;
 
@@ -158,6 +177,9 @@ body.be-sidebar-small {
   }
 }
 
+/**
+ * Admin Page Layout
+ */
 #page {
   padding-top: 1rem;
 }
@@ -185,10 +207,17 @@ body.be-sidebar-small {
 }
 
 
+/**
+ * Backend Dashboard
+ */
 .backend.dashboard .dashboard-item {
   min-height: 200px;
 }
 
+
+/**
+ * Forms
+ */
 form div.required > label {
   font-weight: bold;
 
@@ -211,6 +240,37 @@ form fieldset {
   margin: 0;
 }
 
+
+/**
+ * Imagepicker
+ */
+form .imageselect {
+  ul.image_picker_selector {
+    .thumbnail .image_picker_image {
+      max-width: 100px;
+      height: 100px;
+    }
+
+    .thumbnail {
+      position: relative;
+    }
+
+    .thumbnail p {
+      padding: 3px;
+      max-width: 100px;
+      overflow: hidden;
+      font-size: 0.6rem;
+    }
+  }
+}
+
+iframe {
+  border: none;
+}
+
+/**
+ * Menu
+ */
 /*
 .ui.vertical.menu{
     margin-top: -15px !important;

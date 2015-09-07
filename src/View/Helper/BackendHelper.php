@@ -31,6 +31,7 @@ class BackendHelper extends Helper
         'pickadate_date' => ['Backend.pickadate/picker.date'],
         'pickadate_time' => ['Backend.pickadate/picker.time'],
         'pickadate' => ['pickadate_picker', 'pickadate_date', 'pickadate_time'],
+        'imagepicker' => ['Backend.imagepicker/image-picker.min'],
         'semanticui' => ['SemanticUi.semantic.min'],
         'tinymce' => ['Backend.tinymce/tinymce.min'],
         'tinymce_jquery' => ['Backend.tinymce/jquery.tinymce.min'],

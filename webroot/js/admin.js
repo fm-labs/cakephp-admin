@@ -30,8 +30,24 @@ $(document).ready(function() {
     });
 
     // imagepicker
-    //$('.imagepicker').imagepicker({ show_label: true });
+
+    $('.imagepicker').imagepicker({
+        show_label: true,
+        initialized: function() {
+            $(this)[0].picker.find('img.image_picker_image').each(function() {
+                var $label = $(this).next('p');
+                if ($label.length > 0) {
+                    $(this).attr('title', $label.html());
+                }
+            });
+
+        }
+        //clicked: function() { "clicked" },
+        //changed: function() { "changed" }
+    });
     //$('.imagepicker.multi').imagepicker({ show_label: true });
+
+
     /*
     $('.image_picker_selector .thumbnail').on('mouseover', function(e) {
        var $label = $(this).find('p').first();

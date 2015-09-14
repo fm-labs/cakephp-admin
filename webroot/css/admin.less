@@ -206,6 +206,11 @@ body.be-sidebar-small {
   display: none;
 }
 
+#page-footer footer {
+  font-size: 0.66em;
+  line-height: 1.33em;
+  padding: 1em;
+}
 
 /**
  * Backend Dashboard
@@ -311,3 +316,47 @@ iframe {
   }
 }
 
+/** Image Picker **/
+.imageselect_wrap {
+  padding: 1em 0;
+  max-height: 700px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.imageselect img.image_picker_image {
+  max-height: 100px;
+
+  &~ p {
+    font-size: 0.66rem;
+    display: none;
+  }
+}
+
+.attachments.editor {
+
+  h4.ui.header {
+    margin-top: 1em !important;
+  }
+}
+
+.attachments.editor .attachments {
+
+  .attachment {
+    border: 1px solid #CCC;
+    display: inline-block;
+    padding: 5px;
+
+    .image {
+
+      img {
+        max-height: 100px;
+      }
+    }
+
+    .actions {
+      font-size: 10px;
+    }
+  }
+
+}

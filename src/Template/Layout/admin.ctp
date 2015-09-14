@@ -63,6 +63,7 @@
     </div>
 
     <div id="page-footer">
+        <?= $this->element('Backend.footer'); ?>
     </div>
 
 </div> <!-- #page -->

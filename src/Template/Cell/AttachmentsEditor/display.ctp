@@ -12,6 +12,7 @@
                                 <?= $this->Html->image('/media/gallery/' . $_attachment->filepath, [
                                     'title' => $_attachment->filename
                                 ]); ?>
+                                <?= ($_attachment->desc_text) ? '[desc]' : ''; ?>
                             </div>
                             <div class="actions">
                                 <?= $this->Html->link('Remove',
@@ -44,6 +45,7 @@
                     echo $this->Form->hidden('modelid');
                     echo $this->Form->hidden('scope');
                     echo $this->Form->hidden('type');
+                    echo $this->Form->input('desc_text', ['class' => 'htmltext']);
                     //echo $this->Form->input('filename');
                     ?>
                     <div class="imageselect_wrap">

@@ -22,7 +22,7 @@
                 echo $this->Form->input('filepath', ['type' => 'imageselect', 'options' => $galleryList]);
                 echo $this->Form->input('filename');
                 echo $this->Form->input('title');
-                echo $this->Form->input('desc');
+                echo $this->Form->input('desc_text');
                 echo $this->Form->input('mimetype');
                 echo $this->Form->input('filesize');
         ?>

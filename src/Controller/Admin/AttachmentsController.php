@@ -14,6 +14,7 @@ use Cake\Network\Exception\NotFoundException;
  */
 class AttachmentsController extends AppController
 {
+    public $modelClass = "Attachment.Attachments";
 
     public function initialize()
     {

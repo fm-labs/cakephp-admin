@@ -58,7 +58,7 @@ class ImageSelectWidget extends SelectBoxWidget
         ]);
     }
 
-    protected function _renderOptions($options, $disabled, $selected, $escape)
+    protected function _renderOptions($options, $disabled, $selected, $templateVars, $escape)
     {
         $out = [];
         foreach ($options as $key => $val) {

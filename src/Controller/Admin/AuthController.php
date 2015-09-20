@@ -13,17 +13,17 @@ use Cake\Event\Event;
 
 class AuthController extends AbstractBackendController
 {
-    /**
-     * @var string Name of auth layout
-     */
-    public $layout = 'Backend.auth';
-
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-
-        // allow login method to pass authentication
         $this->Auth->allow(['login']);
+
+        $this->viewBuilder()->layout("Backend.auth");
+    }
+
+    public function beforeRender(Event $event)
+    {
+        parent::beforeRender($event);
     }
 
     /**

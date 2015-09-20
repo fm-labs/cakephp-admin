@@ -24,7 +24,8 @@ class FlashComponent extends CakeFlashComponent
         'key' => 'flash',
         'element' => 'default',
         'class' => 'default',
-        'params' => []
+        'params' => [],
+        'clear' => false // since 3.1.
     ];
 
     public function set($message, array $options = [])
@@ -55,12 +56,19 @@ class FlashComponent extends CakeFlashComponent
         //    $message = sprintf("[%s] %s", $options['key'], $message);
         //}
 
-        $this->_session->write('Flash.' . $options['key'], [
+        $messages = [];
+        if ($options['clear'] === false) {
+            $messages = $this->_session->read('Flash.' . $options['key']);
+        }
+
+        $messages[] = [
             'message' => $message,
             'key' => $options['key'],
             'element' => $options['element'],
             'params' => $options['params']
-        ]);
+        ];
+
+        $this->_session->write('Flash.' . $options['key'], $messages);
     }
 
     public function __call($name, $args)

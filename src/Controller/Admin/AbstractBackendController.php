@@ -7,6 +7,7 @@ use Cake\Controller\Component\PaginatorComponent;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Backend\Controller\Component\FlashComponent;
+use Cake\Event\Event;
 
 /**
  * Class BackendAppController
@@ -19,11 +20,11 @@ use Backend\Controller\Component\FlashComponent;
  * @property AuthComponent $Auth
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
+ *
+ * @TODO Move functionality to BackendComponent
  */
 abstract class AbstractBackendController extends Controller implements BackendControllerInterface
 {
-    public $layout = "Backend.admin";
-
     public $helpers = [
         'Html',
         'Form' => [
@@ -79,10 +80,19 @@ abstract class AbstractBackendController extends Controller implements BackendCo
         ]);
         $this->Auth->config('authorize', ['Rbac.Roles', 'Controller']);
 
+
+        $this->viewBuilder()->layout('Backend.admin');
+
         // Configure Backend component
         if (!$this->components()->has('Backend')) {
             $this->loadComponent('Backend.Backend');
         }
+
+    }
+
+    public function beforeRender(Event $event)
+    {
+        parent::beforeRender($event);
     }
 
     /**
@@ -100,6 +110,7 @@ abstract class AbstractBackendController extends Controller implements BackendCo
     public function isAuthorized()
     {
         //@TODO Make controller authorization configurable
+        //@TODO Refactor with Auth adapter
 
         $userId = $this->Auth->user('id');
         if (!$userId) {

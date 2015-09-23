@@ -7,6 +7,7 @@ use Cake\Controller\Component\PaginatorComponent;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Backend\Controller\Component\FlashComponent;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
 
 /**
@@ -78,7 +79,10 @@ abstract class AbstractBackendController extends Controller implements BackendCo
         $this->Auth->config('authenticate', [
             'Form' => [ 'userModel' => 'Backend.Users' ]
         ]);
-        $this->Auth->config('authorize', ['Rbac.Roles', 'Controller']);
+
+        if (Plugin::loaded('Rbac')) {
+            $this->Auth->config('authorize', ['Rbac.Roles', 'Controller']);
+        }
 
 
         $this->viewBuilder()->layout('Backend.admin');

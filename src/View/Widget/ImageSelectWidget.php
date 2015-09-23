@@ -16,6 +16,8 @@ class ImageSelectWidget extends SelectBoxWidget
 {
     public function render(array $data, ContextInterface $context)
     {
+        return parent::render($data, $context);
+
         $data += [
             'name' => '',
             'empty' => false,

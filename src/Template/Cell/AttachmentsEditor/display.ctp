@@ -40,6 +40,11 @@
                         echo $this->Form->button(__('Add file'), ['type' => 'submit', 'class' => 'ui small button']);
                         ?>
                     </h4>
+                    <div class="imageselect_wrap">
+                        <?php
+                        echo $this->Form->input('filepath', ['type' => 'imageselect', 'label' => false, 'options' => $files]);
+                        ?>
+                    </div>
                     <?php
                     echo $this->Form->hidden('model');
                     echo $this->Form->hidden('modelid');
@@ -48,11 +53,6 @@
                     echo $this->Form->input('desc_text', ['class' => 'htmltext']);
                     //echo $this->Form->input('filename');
                     ?>
-                    <div class="imageselect_wrap">
-                        <?php
-                        echo $this->Form->input('filepath', ['type' => 'imageselect', 'label' => false, 'options' => $files]);
-                        ?>
-                    </div>
                     <?= $this->Form->end(); ?>
                 </div>
             </div>

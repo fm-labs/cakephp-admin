@@ -236,8 +236,6 @@ iframe {
 .imageselect_wrap {
   padding: 1em 0;
   max-height: 700px;
-  overflow: scroll;
-  overflow-x: hidden;
 }
 .imageselect img.image_picker_image {
   max-height: 100px;

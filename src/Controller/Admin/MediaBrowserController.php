@@ -12,6 +12,7 @@ use Backend\Controller\Admin\AppController;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Media\Lib\Media\MediaManager;
 
@@ -42,18 +43,38 @@ class MediaBrowserController extends AppController
             $config = "default";
         }
         $configKey = 'Media.'.$config;
-        if (!Configure::check($configKey)) {
-            throw new Exception(__("Media configuration {0} not found", $config));
+        if (!Plugin::loaded('Media') || !Configure::check($configKey)) {
+            $this->request->params['action'] = 'noconfig';
+            $this->request->params['config'] = $config;
+            //$this->viewBuilder()->view('notfound');
+        } else {
+            $this->_mediaConfig = $config;
+            $this->_mm = MediaManager::create($config);
         }
-        $this->_mediaConfig = $config;
-        $this->_mm = MediaManager::create($config);
     }
 
     public function beforeRender(Event $event)
     {
-        $this->set('cfg', $this->_mediaConfig);
-        $this->set('currentPath', $this->_mm->getPath());
-        $this->set('parentPath', $this->_mm->getParentPath());
+        if ($this->_mediaConfig) {
+            $this->set('cfg', $this->_mediaConfig);
+            $this->set('currentPath', $this->_mm->getPath());
+            $this->set('parentPath', $this->_mm->getParentPath());
+        }
+    }
+
+    public function noconfig()
+    {
+        $pluginLoaded = Plugin::loaded('Media');
+        $config = $this->request->params['config'];
+        if ($pluginLoaded) {
+            $configExample = @file_get_contents(Plugin::path('Media') . DS . 'config' . DS . 'media.default.php');
+        } else {
+            $configExample = "Media plugin must be loaded to show example configuration";
+        }
+
+        $this->set('pluginLoaded', $pluginLoaded);
+        $this->set('configName', $config);
+        $this->set('configExample', $configExample);
     }
 
     public function index()

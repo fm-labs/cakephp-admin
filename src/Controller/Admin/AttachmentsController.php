@@ -5,6 +5,7 @@ use Backend\Controller\Admin\AppController;
 use Attachment\Model\Table\AttachmentsTable;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Core\Plugin;
+use Cake\Event\Event;
 use Cake\Network\Exception\NotFoundException;
 
 /**
@@ -16,6 +17,8 @@ class AttachmentsController extends AppController
 {
     public $modelClass = "Attachment.Attachments";
 
+    public $locale;
+
     public function initialize()
     {
         parent::initialize();
@@ -24,6 +27,23 @@ class AttachmentsController extends AppController
             throw new MissingPluginException(['Attachment']);
         }
         $this->_setModelClass('Attachment.Attachments');
+    }
+
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+        $locale = $this->request->query('locale');
+        $this->locale = ($locale) ? $locale : null;
+        if ($this->locale) {
+            $this->Attachments->enableI18n();
+            $this->Attachments->locale($this->locale);
+        }
+    }
+
+    public function beforeRender(Event $event)
+    {
+        parent::beforeRender($event);
+        $this->set('locale', $this->locale);
     }
 
     public function attach()

@@ -15,7 +15,7 @@
 <?php $this->Toolbar->endGroup(); ?>
 <div class="form">
     <h2 class="ui header">
-        <?= __('Edit {0}', __('Attachment')) ?>
+        <?= __('Edit {0} ({1})', __('Attachment'), $locale) ?>
     </h2>
     <?= $this->Form->create($attachment); ?>
     <div class="users ui basic segment">
@@ -28,9 +28,9 @@
                 echo $this->Form->input('filepath');
                 echo $this->Form->input('filename');
                 echo $this->Form->input('title');
-                echo $this->Form->input('desc');
+                echo $this->Form->input('desc_text', ['class' => 'htmleditor']);
                 echo $this->Form->input('mimetype');
-                echo $this->Form->input('filesize');
+                //echo $this->Form->input('filesize');
         ?>
         </div>
     </div>

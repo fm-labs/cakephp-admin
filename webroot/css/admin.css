@@ -247,11 +247,6 @@ iframe {
 .attachments.editor h4.ui.header {
   margin-top: 1em !important;
 }
-.attachments.editor .attachments .attachment {
-  border: 1px solid #CCC;
-  display: inline-block;
-  padding: 5px;
-}
 .attachments.editor .attachments .attachment .image img {
   max-height: 100px;
 }

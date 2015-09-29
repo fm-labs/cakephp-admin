@@ -3,6 +3,7 @@ namespace Backend\View\Cell;
 
 use Cake\ORM\TableRegistry;
 use Cake\View\Cell;
+use Cake\I18n\I18n;
 
 /**
  * AttachmentsEditor cell
@@ -30,19 +31,25 @@ class AttachmentsEditorCell extends Cell
             'modelid' => null,
             'scope' => null,
             'remoteSrc' => null,
-            'multi' => true
+            'multi' => true,
+            'locale' => false,
         ], $params);
 
-        $remoteSrc = $params['remoteSrc'];
-        unset($params['remoteSrc']);
-
-        $multi = $params['multi'];
-        unset($params['multi']);
-
         $Attachments = TableRegistry::get('Attachment.Attachments');
-        $query = $Attachments->find()->where($params);
 
-        if ($multi) {
+        if ($params['locale']) {
+            $Attachments->enableI18n();
+            $locale = ($params['locale'] === true) ? I18n::locale() : $params['locale'];
+            $Attachments->locale($locale);
+        }
+
+        $query = $Attachments->find()->where([
+            'Attachments.model' => $params['model'],
+            'Attachments.modelid' => $params['modelid'],
+            'Attachments.scope' => $params['scope'],
+        ]);
+
+        if ($params['multi']) {
             $attachments = $query->all();
         } else {
             $attachments = $query->first();
@@ -51,11 +58,16 @@ class AttachmentsEditorCell extends Cell
 
         $attachment = $Attachments->newEntity($params);
         if ($this->request->is('post') || $this->request->is('put')) {
-            $Attachments->patchEntity($attachment, $this->request->data);
+            $data = $this->request->data;
+            if (isset($data['_locale'])) {
+                $locale = $data['_locale'];
+                $Attachments->locale($locale);
+            }
+            $attachment = $Attachments->patchEntity($attachment, $this->request->data);
         }
         $this->set('attachment', $attachment);
-
         $this->set('files', $files);
-        $this->set('multi', $multi);
+        $this->set('multi', $params['multi']);
+        $this->set('locale', $params['locale']);
     }
 }

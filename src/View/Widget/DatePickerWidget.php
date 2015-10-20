@@ -14,7 +14,7 @@ use Cake\View\Form\ContextInterface;
 use Cake\View\StringTemplate;
 use DateTime;
 
-class DateTimeWidget extends CakeDateTimeWidget
+class DatePickerWidget extends CakeDateTimeWidget
 {
     public function __construct(StringTemplate $templates)
     {

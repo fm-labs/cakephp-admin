@@ -11,8 +11,7 @@ return [
 //    ],
 //    # Additional Plugins required by this Backend installation
 //    'Backend.Plugins' => [
-//        'SemanticUi', // (required) Backend core plugin
 //        'User', // (required) Backend core plugin
-//        'Rbac', // (required) Role-based-authorization mechanism
+//        'Rbac', // (optional) Role-based-authorization mechanism
 //    ]
 ];

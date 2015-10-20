@@ -1,5 +1,5 @@
 <?php use Cake\Core\Configure;
-$this->loadHelper('SemanticUi.Ui');
+$this->loadHelper('Backend.Ui');
 ?>
 <?= $this->Toolbar->addLink('New Folder', ['action' => 'dir_create', 'path' => $currentPath], ['class' => '', 'icon' => 'folder']) ?>
 

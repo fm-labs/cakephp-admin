@@ -15,6 +15,8 @@
     <?= $this->Html->css('SemanticUi.semantic.min'); ?>
     <?= $this->Html->css('Media.media'); ?>
     <?= $this->fetch('css') ?>
+
+    <?= $this->Html->script('jquery-1.11.2.min'); ?>
     <?= $this->fetch('script') ?>
 
 </head>
@@ -23,9 +25,6 @@
     <div id="media">
         <?= $this->fetch('content'); ?>
     </div>
-</body>
-<?= $this->Html->script('jquery-1.11.2.min'); ?>
-<?= $this->Html->script('SemanticUi.semantic.min'); ?>
-
+    <?= $this->Html->script('SemanticUi.semantic.min'); ?>
 </body>
 </html>

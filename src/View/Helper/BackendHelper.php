@@ -7,14 +7,13 @@ use Cake\View\Helper\HtmlHelper;
 
 /**
  * Class BackendHelper
+ *
  * @package Backend\View\Helper
  * @property HtmlHelper $Html
  */
 class BackendHelper extends Helper
 {
-    public static $scriptBlockBackend = "script-backend";
-    public static $scriptBlockContent = "script-content";
-    public static $scriptBlockBottom = "script-bottom"; // legacy
+    public static $scriptBlockBottom = "scriptBottom";
 
     public $helpers = ['Html'];
 
@@ -23,6 +22,10 @@ class BackendHelper extends Helper
         //'autoload_css' => []
     ];
 
+    /**
+     * Unstable
+     * @var array
+     */
     protected $_scripts = [
         'jquery' => 'Backend.jquery/jquery-1.11.2.min',
         'jqueryui' => ['Backend.jquery/jquery-ui.min' => ['jquery']],
@@ -32,7 +35,7 @@ class BackendHelper extends Helper
         'pickadate_time' => ['Backend.pickadate/picker.time'],
         'pickadate' => ['pickadate_picker', 'pickadate_date', 'pickadate_time'],
         'imagepicker' => ['Backend.imagepicker/image-picker.min'],
-        'semanticui' => ['SemanticUi.semantic.min'],
+        'semanticui' => ['Backend.semantic/semantic.min'],
         'tinymce' => ['Backend.tinymce/tinymce.min'],
         'tinymce_jquery' => ['Backend.tinymce/jquery.tinymce.min'],
         'admin' => ['Backend.admin'],
@@ -40,7 +43,6 @@ class BackendHelper extends Helper
         'admin_sidebar' => ['Backend.admin-sidebar' => ['jquery']],
         'admin_tinymce' => ['Backend.admin-tinymce' => ['tinymce', 'tinymce_jquery']],
         'shared' => 'Backend.shared'
-
     ];
 
     protected $_css = [
@@ -49,6 +51,13 @@ class BackendHelper extends Helper
 
     protected $_loaded = ['scripts' => [], 'css' => []];
 
+    /**
+     * Unstable
+     *
+     * @param $name
+     * @param array $options
+     * @return mixed|string|void
+     */
     public function script($name, $options = [])
     {
         if (is_string($name) && isset($this->_scripts[$name])) {
@@ -58,6 +67,7 @@ class BackendHelper extends Helper
         }
 
         if (is_array($path)) {
+            $out = "";
             foreach ($path as $_path => $nested) {
                 if (is_numeric($_path)) {
                     $_path = $nested;
@@ -65,19 +75,19 @@ class BackendHelper extends Helper
                 }
 
                 if (!empty($nested)) {
-                    $this->script($nested, $options);
+                    $out .= $this->script($nested, $options);
                 }
 
-                $this->script($_path, $options);
+                $out .= $this->script($_path, $options);
             }
-            return;
+            return $out;
         }
 
-        if (isset($this->_loaded['scripts'][$path])) {
+        $options = array_merge(['block' => null, 'once' => true], $options);
+
+        if (isset($this->_loaded['scripts'][$path]) && $options['once'] === true) {
             return;
         }
-
-        $options = array_merge(['block' => 'script-backend', 'once' => true], $options);
 
         //debug("Loading script: " . $path . "::" . $options['block']);
 
@@ -85,14 +95,4 @@ class BackendHelper extends Helper
         return $this->Html->script($path, $options);
     }
 
-    public function jquery($options = [])
-    {
-        $options = array_merge(['block' => static::$scriptBlockBackend ], $options);
-        return $this->script('jquery', $options);
-    }
-
-    public function tinymce($options = [])
-    {
-        return $this->script('admin-tinymce');
-    }
 }

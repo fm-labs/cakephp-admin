@@ -26,25 +26,6 @@ use Cake\Event\Event;
  */
 abstract class AbstractBackendController extends Controller implements BackendControllerInterface
 {
-    public $helpers = [
-        'Html',
-        'Form' => [
-            'templates' => [
-                'Backend.semantic-form-templates'
-             ],
-            'widgets' => [
-                'button' => ['SemanticUi\View\Widget\ButtonWidget'],
-                'datetime' => ['Backend\View\Widget\DateTimeWidget']
-            ]
-        ],
-        'Paginator' => [
-            'templates' => 'Backend.semantic-paginator-templates'
-        ],
-        'Backend.Backend',
-        'Backend.Toolbar',
-        'SemanticUi.Ui'
-    ];
-
     /**
      * Initialization hook method.
      *
@@ -84,7 +65,7 @@ abstract class AbstractBackendController extends Controller implements BackendCo
             $this->Auth->config('authorize', ['Rbac.Roles', 'Controller']);
         }
 
-
+        $this->viewBuilder()->className('Backend.Backend');
         $this->viewBuilder()->layout('Backend.admin');
 
         // Configure Backend component

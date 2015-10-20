@@ -17,8 +17,8 @@
 
 
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
-    <?= $this->Html->css('SemanticUi.semantic.min'); ?>
-    <?= $this->Html->css('Backend.chosen/chosen.min'); ?>
+    <?= $this->Html->css('Backend.semantic/semantic.min'); ?>
+    <?= '' //$this->Html->css('Backend.chosen/chosen.min'); ?>
     <?= $this->Html->css('Backend.pickadate/themes/default'); ?>
     <?= $this->Html->css('Backend.pickadate/themes/default.date'); ?>
     <?= $this->Html->css('Backend.pickadate/themes/default.time'); ?>

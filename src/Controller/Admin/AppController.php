@@ -15,47 +15,28 @@ class AppController extends AbstractBackendController
                 'icon' => 'cubes',
 
                 '_children' => [
-                    'logs' => [
-                        'title' => 'Logs',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
-                        'icon' => 'browser'
-                    ],
-                    'files' => [
-                        'title' => 'Files',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'FileManager', 'action' => 'index'],
+                    'media' => [
+                        'title' => 'Media',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'MediaBrowser', 'action' => 'index'],
                         'icon' => 'file'
+                    ],
+                    'users' => [
+                        'title' => 'Users',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
+                        'icon' => 'lock'
                     ],
                     'system' => [
                         'title' => 'Systeminfo',
                         'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
                         'icon' => 'info'
                     ],
-                    'users' => [
-                        'title' => 'Access Control',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
-                        'icon' => 'lock'
-                    ]
+                    'logs' => [
+                        'title' => 'Logs',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
+                        'icon' => 'browser'
+                    ],
                 ]
             ],
-            'Media' => [
-                'plugin' => 'Backend',
-                'title' => 'Media',
-                'url' => ['plugin' => 'Backend', 'controller' => 'MediaBrowser', 'action' => 'index', 'config' => 'default'],
-                'icon' => 'cubes',
-
-                '_children' => [
-                    'media_default' => [
-                        'title' => 'All',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'MediaBrowser', 'action' => 'index', 'config' => 'default'],
-                        'icon' => 'file'
-                    ],
-                    'media_gallery' => [
-                        'title' => 'Gallery',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'MediaBrowser', 'action' => 'index', 'config' => 'gallery'],
-                        'icon' => 'file'
-                    ],
-                ]
-            ]
         ];
     }
 }

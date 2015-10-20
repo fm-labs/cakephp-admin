@@ -12,11 +12,10 @@
     <?= $this->fetch('meta') ?>
 
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
-    <?= $this->Html->css('SemanticUi.semantic.min'); ?>
+    <?= $this->fetch('cssBackend'); ?>
     <?= $this->Html->css('Media.media'); ?>
     <?= $this->fetch('css') ?>
 
-    <?= $this->Html->script('jquery-1.11.2.min'); ?>
     <?= $this->fetch('script') ?>
 
 </head>
@@ -25,6 +24,7 @@
     <div id="media">
         <?= $this->fetch('content'); ?>
     </div>
-    <?= $this->Html->script('SemanticUi.semantic.min'); ?>
+    <?= $this->fetch('scriptBackend'); ?>
+    <?= $this->fetch('scriptBottom'); ?>
 </body>
 </html>

@@ -12,6 +12,8 @@
     <?= $this->fetch('meta') ?>
 
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+    <?= $this->fetch('cssBackend') ?>
+    <?= $this->Html->css('Backend.admin'); ?>
     <?= $this->fetch('css') ?>
 
     <?= $this->fetch('script') ?>
@@ -57,6 +59,7 @@
 
 </div> <!-- #page -->
 
+<?= $this->fetch('scriptBackend'); ?>
 <?= $this->fetch('scriptBottom'); ?>
 
 </body>

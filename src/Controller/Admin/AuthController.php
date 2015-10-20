@@ -1,16 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 5/25/15
- * Time: 8:07 PM
- */
-
 namespace Backend\Controller\Admin;
 
-use Backend\Controller\Admin\AbstractBackendController;
 use Cake\Event\Event;
 
+/**
+ * Class AuthController
+ * @package Backend\Controller\Admin
+ * @property UserAuthComponent $Auth
+ */
 class AuthController extends AbstractBackendController
 {
     public function beforeFilter(Event $event)
@@ -18,7 +15,7 @@ class AuthController extends AbstractBackendController
         parent::beforeFilter($event);
         $this->Auth->allow(['login']);
 
-        $this->viewBuilder()->layout("Backend.auth");
+        $this->viewBuilder()->layout('Backend.auth');
     }
 
     public function beforeRender(Event $event)
@@ -31,6 +28,7 @@ class AuthController extends AbstractBackendController
      */
     public function login()
     {
+        $this->set('title', __('Login'));
         $this->Auth->userLogin();
     }
 

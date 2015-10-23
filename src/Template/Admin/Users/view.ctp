@@ -28,12 +28,12 @@
                 <div class="menu">
                     <?= $this->Ui->link(
                         __('List {0}', __('User Groups')),
-                        ['controller' => 'UserGroups', 'action' => 'index'],
+                        ['controller' => 'Groups', 'action' => 'index'],
                         ['class' => 'item', 'icon' => 'list']
                     ) ?>
                     <?= $this->Ui->link(
                         __('New {0}', __('User Group')),
-                        ['controller' => 'UserGroups', 'action' => 'add'],
+                        ['controller' => 'Groups', 'action' => 'add'],
                         ['class' => 'item', 'icon' => 'add']
                     ) ?>
                 </div>
@@ -63,7 +63,7 @@
         </tr>
         <tr>
             <td><?= __('Primary User Group') ?></td>
-            <td><?= $user->has('primary_user_group') ? $this->Html->link($user->primary_user_group->name, ['controller' => 'UserGroups', 'action' => 'view', $user->primary_user_group->id]) : '' ?></td>
+            <td><?= $user->has('primary_user_group') ? $this->Html->link($user->primary_user_group->name, ['controller' => 'Groups', 'action' => 'view', $user->primary_user_group->id]) : '' ?></td>
         </tr>
         <tr>
             <td><?= __('Username') ?></td>
@@ -182,7 +182,7 @@
 </div>
 <div class="related">
     <div class="">
-    <h4><?= __('Related {0}', __('UserGroups')) ?></h4>
+    <h4><?= __('Related {0}', __('Groups')) ?></h4>
     <?php if (!empty($user->user_groups)): ?>
     <table class="ui table">
         <tr>
@@ -196,9 +196,9 @@
             <td><?= h($userGroups->name) ?></td>
 
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => 'UserGroups', 'action' => 'view', $userGroups->id]) ?>
+                <?= $this->Html->link(__('View'), ['controller' => 'Groups', 'action' => 'view', $userGroups->id]) ?>
 
-                <?= $this->Html->link(__('Edit'), ['controller' => 'UserGroups', 'action' => 'edit', $userGroups->id]) ?>
+                <?= $this->Html->link(__('Edit'), ['controller' => 'Groups', 'action' => 'edit', $userGroups->id]) ?>
             </td>
         </tr>
 

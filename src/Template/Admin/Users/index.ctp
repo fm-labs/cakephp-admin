@@ -6,12 +6,12 @@
 ); ?>
 <?= $this->Toolbar->addLink(
     __('List {0}', __('User Groups')),
-    ['controller' => 'UserGroups', 'action' => 'index'],
+    ['controller' => 'Groups', 'action' => 'index'],
     ['icon' => 'list']
 ); ?>
 <?= $this->Toolbar->addLink(
     __('New {0}', __('User Group')),
-    ['controller' => 'UserGroups', 'action' => 'add'],
+    ['controller' => 'Groups', 'action' => 'add'],
     ['icon' => 'add']
 ); ?>
 <div class="users index">
@@ -20,7 +20,7 @@
         <tr>
             <th><?= $this->Paginator->sort('id') ?></th>
             <th><?= $this->Paginator->sort('username') ?></th>
-            <th><?= $this->Paginator->sort('user_group_id') ?></th>
+            <th><?= $this->Paginator->sort('group_id') ?></th>
             <th><?= $this->Paginator->sort('name') ?></th>
             <th><?= $this->Paginator->sort('email') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
@@ -32,7 +32,7 @@
             <td><?= $this->Number->format($user->id) ?></td>
             <td><?= h($user->username) ?></td>
             <td>
-                <?= $user->has('primary_user_group') ? $this->Html->link($user->primary_user_group->name, ['controller' => 'UserGroups', 'action' => 'view', $user->primary_user_group->id]) : '' ?>
+                <?= $user->has('primary_user_group') ? $this->Html->link($user->primary_user_group->name, ['controller' => 'Groups', 'action' => 'view', $user->primary_user_group->id]) : '' ?>
             </td>
             <td><?= h($user->name) ?></td>
             <td><?= h($user->email) ?></td>

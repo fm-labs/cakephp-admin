@@ -1,12 +1,10 @@
 <?php
 namespace Backend\Controller\Admin;
 
-use Backend\Controller\Admin\AppController;
-
 /**
- * UserGroups Controller
+ * Groups Controller
  *
- * @property \Backend\Model\Table\UserGroupsTable $UserGroups
+ * @property \User\Model\Table\GroupsTable $Groups
  */
 class UserGroupsController extends AppController
 {
@@ -18,7 +16,7 @@ class UserGroupsController extends AppController
      */
     public function index()
     {
-        $this->set('userGroups', $this->paginate($this->UserGroups));
+        $this->set('userGroups', $this->paginate($this->Groups));
         $this->set('_serialize', ['userGroups']);
     }
 
@@ -31,7 +29,7 @@ class UserGroupsController extends AppController
      */
     public function view($id = null)
     {
-        $userGroup = $this->UserGroups->get($id, [
+        $userGroup = $this->Groups->get($id, [
             'contain' => ['PrimaryUsers', 'Users']
         ]);
         $this->set('userGroup', $userGroup);
@@ -45,10 +43,10 @@ class UserGroupsController extends AppController
      */
     public function add()
     {
-        $userGroup = $this->UserGroups->newEntity();
+        $userGroup = $this->Groups->newEntity();
         if ($this->request->is('post')) {
-            $userGroup = $this->UserGroups->patchEntity($userGroup, $this->request->data);
-            if ($this->UserGroups->save($userGroup)) {
+            $userGroup = $this->Groups->patchEntity($userGroup, $this->request->data);
+            if ($this->Groups->save($userGroup)) {
                 $this->Flash->success(__('The {0} has been saved.', __('user group')));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -68,12 +66,12 @@ class UserGroupsController extends AppController
      */
     public function edit($id = null)
     {
-        $userGroup = $this->UserGroups->get($id, [
+        $userGroup = $this->Groups->get($id, [
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $userGroup = $this->UserGroups->patchEntity($userGroup, $this->request->data);
-            if ($this->UserGroups->save($userGroup)) {
+            $userGroup = $this->Groups->patchEntity($userGroup, $this->request->data);
+            if ($this->Groups->save($userGroup)) {
                 $this->Flash->success(__('The {0} has been saved.', __('user group')));
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -94,8 +92,8 @@ class UserGroupsController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-        $userGroup = $this->UserGroups->get($id);
-        if ($this->UserGroups->delete($userGroup)) {
+        $userGroup = $this->Groups->get($id);
+        if ($this->Groups->delete($userGroup)) {
             $this->Flash->success(__('The {0} has been deleted.', __('user group')));
         } else {
             $this->Flash->error(__('The {0} could not be deleted. Please, try again.', __('user group')));

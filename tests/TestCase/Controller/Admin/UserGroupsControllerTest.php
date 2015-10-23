@@ -1,13 +1,13 @@
 <?php
 namespace Backend\Test\TestCase\Controller\Admin;
 
-use Backend\Controller\Admin\UserGroupsController;
+use Backend\Controller\Admin\GroupsController;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * Backend\Controller\Admin\UserGroupsController Test Case
+ * Backend\Controller\Admin\GroupsController Test Case
  */
-class UserGroupsControllerTest extends IntegrationTestCase
+class GroupsControllerTest extends IntegrationTestCase
 {
 
     /**

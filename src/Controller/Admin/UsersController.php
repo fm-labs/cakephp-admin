@@ -19,7 +19,7 @@ class UsersController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['PrimaryUserGroup']
+            'contain' => ['PrimaryGroup']
         ];
         $this->set('users', $this->paginate($this->Users));
         $this->set('_serialize', ['users']);
@@ -35,7 +35,7 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['PrimaryUserGroup', 'UserGroups']
+            'contain' => ['PrimaryGroup', 'Groups']
         ]);
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
@@ -50,7 +50,7 @@ class UsersController extends AppController
     {
         $user = $this->Users->newEntity();
         $user->accessible([
-            'username', 'user_group_id', 'name', 'email', 'password'
+            'username', 'group_id', 'name', 'email', 'password'
         ], true);
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
@@ -61,9 +61,9 @@ class UsersController extends AppController
                 $this->Flash->error(__('The {0} could not be saved. Please, try again.', __('user')));
             }
         }
-        $primaryUserGroup = $this->Users->PrimaryUserGroup->find('list', ['limit' => 200]);
-        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'primaryUserGroup', 'userGroups'));
+        $primaryGroup = $this->Users->PrimaryGroup->find('list', ['limit' => 200]);
+        $userGroups = $this->Users->Groups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'primaryGroup', 'userGroups'));
         $this->set('_serialize', ['user']);
     }
 
@@ -77,7 +77,7 @@ class UsersController extends AppController
     public function edit($id = null)
     {
         $user = $this->Users->get($id, [
-            'contain' => ['UserGroups']
+            'contain' => ['Groups']
         ]);
         $user->accessible('*', true);
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -89,9 +89,9 @@ class UsersController extends AppController
                 $this->Flash->error(__('The {0} could not be saved. Please, try again.', __('user')));
             }
         }
-        $primaryUserGroup = $this->Users->PrimaryUserGroup->find('list', ['limit' => 200]);
-        $userGroups = $this->Users->UserGroups->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'primaryUserGroup', 'userGroups'));
+        $primaryGroup = $this->Users->PrimaryGroup->find('list', ['limit' => 200]);
+        $userGroups = $this->Users->Groups->find('list', ['limit' => 200]);
+        $this->set(compact('user', 'primaryGroup', 'userGroups'));
         $this->set('_serialize', ['user']);
     }
 

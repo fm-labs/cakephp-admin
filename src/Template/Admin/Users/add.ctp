@@ -7,12 +7,12 @@
 ); ?>
 <?= $this->Toolbar->addLink(
     __('List {0}', __('User Groups')),
-    ['controller' => 'UserGroups', 'action' => 'index'],
+    ['controller' => 'Groups', 'action' => 'index'],
     ['icon' => 'list']
 ) ?>
 <?= $this->Toolbar->addLink(
     __('New {0}', __('User Group')),
-    ['controller' => 'UserGroups', 'action' => 'add'],
+    ['controller' => 'Groups', 'action' => 'add'],
     ['icon' => 'add']
 ) ?>
 <div class="users">
@@ -24,7 +24,7 @@
     <div class="users ui attached basic segment">
         <div class="ui form">
         <?php
-                echo $this->Form->input('user_group_id', ['options' => $primaryUserGroup, 'empty' => true]);
+                echo $this->Form->input('group_id', ['options' => $primaryGroup, 'empty' => true]);
                 echo $this->Form->input('username');
                 echo $this->Form->input('password');
                 echo $this->Form->input('name', ['label' => __('Real name')]);

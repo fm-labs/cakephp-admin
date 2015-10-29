@@ -6,10 +6,12 @@ use Backend\Controller\Admin\AppController;
 /**
  * Users Controller
  *
- * @property \Backend\Model\Table\UsersTable $Users
+ * @property \User\Model\Table\UsersTable $Users
  */
 class UsersController extends AppController
 {
+
+    public $modelClass = 'User.Users';
 
     /**
      * Index method
@@ -53,10 +55,10 @@ class UsersController extends AppController
             'username', 'group_id', 'name', 'email', 'password'
         ], true);
         if ($this->request->is('post')) {
-            $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
+            $user = $this->Users->add($this->request->data);
+            if ($user->id) {
                 $this->Flash->success(__('The {0} has been saved.', __('user')));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'edit', $user->id]);
             } else {
                 $this->Flash->error(__('The {0} could not be saved. Please, try again.', __('user')));
             }
@@ -114,9 +116,21 @@ class UsersController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function password_change()
+    /**
+     * Change password of current user
+     * @param null $userId
+     * @return \Cake\Network\Response|void
+     */
+    public function password_change($userId = null)
     {
-        $user = $this->Users->get($this->Auth->user('id'));
+        if ($userId === null) {
+            $userId = $this->Auth->user('id');
+        } elseif ($userId !== $this->Auth->user('id')) {
+            $this->Flash->error(__('You are not allowed to do this'));
+            return $this->redirect($this->referer(['action' => 'index']));
+        }
+
+        $user = $this->Users->get($userId);
         if ($this->request->is('post') || $this->request->is('put')) {
             if ($this->Users->changePassword($user, $this->request->data)) {
                 $this->Flash->success(__('Your password has been changed.'));
@@ -127,4 +141,32 @@ class UsersController extends AppController
         }
         $this->set('user', $user);
     }
+
+    /**
+     * Change password of current user
+     * @param null $userId
+     * @return \Cake\Network\Response|void
+     */
+    public function password_reset($userId = null)
+    {
+        $authUserId = $this->Auth->user('id');
+        if ($userId === null) {
+            $userId = $authUserId;
+        } elseif ($userId !== $authUserId && $authUserId !== 1) {
+            $this->Flash->error(__('Only root can do this'));
+            return $this->redirect($this->referer(['action' => 'index']));
+        }
+
+        $user = $this->Users->get($userId);
+        if ($this->request->is('post') || $this->request->is('put')) {
+            if ($this->Users->resetPassword($user, $this->request->data)) {
+                $this->Flash->success(__('Your password has been changed.'));
+                $this->redirect(['controller' => 'Backend', 'action' => 'index']);
+            } else {
+                $this->Flash->error(__('Ups, something went wrong'));
+            }
+        }
+        $this->set('user', $user);
+    }
+
 }

@@ -1,51 +1,52 @@
 <?php $this->Html->addCrumb(__('Users'), ['action' => 'index']); ?>
 <?php $this->Html->addCrumb($user->username); ?>
-<div class="actions">
-    <div class="ui secondary menu">
-        <div class="item"></div>
-        <div class="right menu">
-            <?= $this->Ui->link(
-                __('Edit {0}', __('User')),
-                ['action' => 'edit', $user->id],
-                ['class' => 'item', 'icon' => 'edit']
-            ) ?>
-            <?= $this->Ui->postLink(
-                __('Delete {0}', __('User')),
-                ['action' => 'delete', $user->id],
-                ['class' => 'item', 'icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
 
-            <?= $this->Ui->link(
-                __('List {0}', __('Users')),
-                ['action' => 'index'],
-                ['class' => 'item', 'icon' => 'list']
-            ) ?>
-            <?= $this->Ui->link(
-                __('New {0}', __('User')),
-                ['action' => 'add'],
-                ['class' => 'item', 'icon' => 'add']
-            ) ?>
-            <div class="ui item dropdown">
-                <div class="menu">
-                    <?= $this->Ui->link(
-                        __('List {0}', __('User Groups')),
-                        ['controller' => 'Groups', 'action' => 'index'],
-                        ['class' => 'item', 'icon' => 'list']
-                    ) ?>
-                    <?= $this->Ui->link(
-                        __('New {0}', __('User Group')),
-                        ['controller' => 'Groups', 'action' => 'add'],
-                        ['class' => 'item', 'icon' => 'add']
-                    ) ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="ui divider"></div>
+<?= $this->Toolbar->addLink(
+    __('Edit {0}', __('User')),
+    ['action' => 'edit', $user->id],
+    ['icon' => 'edit']
+) ?>
+<?= $this->Toolbar->addPostLink(
+    __('Delete {0}', __('User')),
+    ['action' => 'delete', $user->id],
+    ['icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
+
+<?= $this->Toolbar->addLink(
+    __('List {0}', __('Users')),
+    ['action' => 'index'],
+    ['icon' => 'list']
+) ?>
+<?= $this->Toolbar->addLink(
+    __('New {0}', __('User')),
+    ['action' => 'add'],
+    ['icon' => 'add']
+) ?>
+<?php $this->Toolbar->startGroup(__('More')); ?>
+<?= $this->Toolbar->addLink(
+    __('List {0}', __('User Groups')),
+    ['controller' => 'Groups', 'action' => 'index'],
+    ['icon' => 'list']
+) ?>
+<?= $this->Toolbar->addLink(
+    __('New {0}', __('User Group')),
+    ['controller' => 'Groups', 'action' => 'add'],
+    ['icon' => 'add']
+) ?>
+<?php $this->Toolbar->endGroup(); ?>
+<?php if ($user->id === $this->request->session()->read('Auth.User.id')): ?>
+    <?= $this->Toolbar->addLink(
+        __('Change my password'),
+        ['action' => 'password_change'],
+        ['icon' => 'add']
+    ) ?>
+<?php endif; ?>
+
+<?php $this->Toolbar->render(); ?>
 
 <div class="users view">
     <h2 class="ui top attached header">
         <?= h($user->username) ?>
+        <?= ($user->id === $this->request->session()->read('Auth.User.id')) ? "(Me)" : ""; ?>
     </h2>
     <table class="ui attached celled striped table">
         <!--
@@ -62,8 +63,8 @@
             <td><?= h($user->name) ?></td>
         </tr>
         <tr>
-            <td><?= __('Primary User Group') ?></td>
-            <td><?= $user->has('primary_user_group') ? $this->Html->link($user->primary_user_group->name, ['controller' => 'Groups', 'action' => 'view', $user->primary_user_group->id]) : '' ?></td>
+            <td><?= __('Primary Group') ?></td>
+            <td><?= $user->has('primary_group') ? $this->Html->link($user->primary_group->name, ['controller' => 'UserGroups', 'action' => 'view', $user->primary_group->id]) : '' ?></td>
         </tr>
         <tr>
             <td><?= __('Username') ?></td>
@@ -71,7 +72,7 @@
         </tr>
         <tr>
             <td><?= __('Password') ?></td>
-            <td><?= h($user->password) ?></td>
+            <td>***** <?= $this->Html->link(__('Change password'), ['action' => 'password_reset', $user->id]); ?></td>
         </tr>
         <tr>
             <td><?= __('Email') ?></td>
@@ -137,60 +138,60 @@
         </tr>
 
 
-            <tr>
-                <td><?= __('Login Last Login Datetime') ?></td>
-                <td><?= h($user->login_last_login_datetime) ?></td>
-            </tr>
-            <tr>
-                <td><?= __('Login Failure Datetime') ?></td>
-                <td><?= h($user->login_failure_datetime) ?></td>
-            </tr>
-            <tr>
-                <td><?= __('Block Datetime') ?></td>
-                <td><?= h($user->block_datetime) ?></td>
-            </tr>
-            <tr>
-                <td><?= __('Created') ?></td>
-                <td><?= h($user->created) ?></td>
-            </tr>
-            <tr>
-                <td><?= __('Modified') ?></td>
-                <td><?= h($user->modified) ?></td>
-            </tr>
+        <tr>
+            <td><?= __('Login Last Login Datetime') ?></td>
+            <td><?= h($user->login_last_login_datetime) ?></td>
+        </tr>
+        <tr>
+            <td><?= __('Login Failure Datetime') ?></td>
+            <td><?= h($user->login_failure_datetime) ?></td>
+        </tr>
+        <tr>
+            <td><?= __('Block Datetime') ?></td>
+            <td><?= h($user->block_datetime) ?></td>
+        </tr>
+        <tr>
+            <td><?= __('Created') ?></td>
+            <td><?= h($user->created) ?></td>
+        </tr>
+        <tr>
+            <td><?= __('Modified') ?></td>
+            <td><?= h($user->modified) ?></td>
+        </tr>
 
-            <tr class="boolean">
-                <td><?= __('Email Verification Required') ?></td>
-                <td><?= $user->email_verification_required ? __('Yes') : __('No'); ?></td>
-            </tr>
-            <tr class="boolean">
-                <td><?= __('Email Verified') ?></td>
-                <td><?= $user->email_verified ? __('Yes') : __('No'); ?></td>
-            </tr>
-            <tr class="boolean">
-                <td><?= __('Password Force Change') ?></td>
-                <td><?= $user->password_force_change ? __('Yes') : __('No'); ?></td>
-            </tr>
-            <tr class="boolean">
-                <td><?= __('Login Enabled') ?></td>
-                <td><?= $user->login_enabled ? __('Yes') : __('No'); ?></td>
-            </tr>
-            <tr class="boolean">
-                <td><?= __('Block Enabled') ?></td>
-                <td><?= $user->block_enabled ? __('Yes') : __('No'); ?></td>
-            </tr>
+        <tr class="boolean">
+            <td><?= __('Email Verification Required') ?></td>
+            <td><?= $user->email_verification_required ? __('Yes') : __('No'); ?></td>
+        </tr>
+        <tr class="boolean">
+            <td><?= __('Email Verified') ?></td>
+            <td><?= $user->email_verified ? __('Yes') : __('No'); ?></td>
+        </tr>
+        <tr class="boolean">
+            <td><?= __('Password Force Change') ?></td>
+            <td><?= $user->password_force_change ? __('Yes') : __('No'); ?></td>
+        </tr>
+        <tr class="boolean">
+            <td><?= __('Login Enabled') ?></td>
+            <td><?= $user->login_enabled ? __('Yes') : __('No'); ?></td>
+        </tr>
+        <tr class="boolean">
+            <td><?= __('Block Enabled') ?></td>
+            <td><?= $user->block_enabled ? __('Yes') : __('No'); ?></td>
+        </tr>
     </table>
 </div>
 <div class="related">
     <div class="">
     <h4><?= __('Related {0}', __('Groups')) ?></h4>
-    <?php if (!empty($user->user_groups)): ?>
+    <?php if (!empty($user->groups)): ?>
     <table class="ui table">
         <tr>
             <th><?= __('Id') ?></th>
             <th><?= __('Name') ?></th>
             <th class="actions"><?= __('Actions') ?></th>
         </tr>
-        <?php foreach ($user->user_groups as $userGroups): ?>
+        <?php foreach ($user->groups as $userGroups): ?>
         <tr>
             <td><?= h($userGroups->id) ?></td>
             <td><?= h($userGroups->name) ?></td>
@@ -207,3 +208,4 @@
     <?php endif; ?>
     </div>
 </div>
+<?php debug($user); ?>

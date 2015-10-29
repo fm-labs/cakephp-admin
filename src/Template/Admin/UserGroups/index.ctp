@@ -1,35 +1,14 @@
 <?php $this->Html->addCrumb(__('User Groups')); ?>
-<div class="actions">
-    <div class="ui secondary menu">
-        <div class="item"></div>
-        <div class="right menu">
-            <?= $this->Ui->link(
-                __('New {0}', __('User Group')),
-                ['action' => 'add'],
-                ['class' => 'item', 'icon' => 'add']
-            ) ?>
-            <div class="ui dropdown item">
-                <i class="dropdown icon"></i>
-                <i class="tasks icon"></i>Actions
-                <div class="menu">
-                    <?= $this->Ui->link(
-                        __('List {0}', __('Users')),
-                        ['controller' => 'Users', 'action' => 'index'],
-                        ['class' => 'item', 'icon' => 'list']
-                    ) ?>
-
-                    <?= $this->Ui->link(
-                        __('New {0}', __('User')),
-                        ['controller' => 'Users', 'action' => 'add'],
-                        ['class' => 'item', 'icon' => 'add']
-                    ) ?>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="ui divider"></div>
-
+<?= $this->Toolbar->addLink(
+    __('New {0}', __('User Group')),
+    ['action' => 'add'],
+    ['icon' => 'add']
+) ?>
+<?= $this->Toolbar->addLink(
+    __('List {0}', __('Users')),
+    ['controller' => 'Users', 'action' => 'index'],
+    ['icon' => 'list']
+); ?>
 <div class="userGroups index">
     <table class="ui table striped">
     <thead>

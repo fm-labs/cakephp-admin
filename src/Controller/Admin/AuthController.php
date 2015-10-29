@@ -13,7 +13,7 @@ class AuthController extends AbstractBackendController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['login']);
+        $this->Auth->allow(['login', 'unauthorized']);
 
         $this->viewBuilder()->layout('Backend.auth');
     }
@@ -28,8 +28,7 @@ class AuthController extends AbstractBackendController
      */
     public function login()
     {
-        $this->set('title', __('Login'));
-        $this->Auth->userLogin();
+        $this->Auth->login();
     }
 
     /**
@@ -37,6 +36,24 @@ class AuthController extends AbstractBackendController
      */
     public function logout()
     {
-        $this->Auth->userLogout();
+        $this->redirect($this->Auth->logout());
+    }
+
+    /**
+     * Unauthorized
+     */
+    public function unauthorized()
+    {
+        $this->response->statusCode(403);
+    }
+
+    /**
+     * Current user
+     */
+    public function user()
+    {
+        $user = $this->Auth->user();
+        $this->set('user', $user);
+        $this->set('_serialize', ['user']);
     }
 }

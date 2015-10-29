@@ -9,6 +9,8 @@ namespace Backend\Controller\Admin;
 class UserGroupsController extends AppController
 {
 
+    public $modelClass = 'User.Groups';
+
     /**
      * Index method
      *

@@ -6,12 +6,12 @@
 ); ?>
 <?= $this->Toolbar->addLink(
     __('List {0}', __('User Groups')),
-    ['controller' => 'Groups', 'action' => 'index'],
+    ['controller' => 'UserGroups', 'action' => 'index'],
     ['icon' => 'list']
 ); ?>
 <?= $this->Toolbar->addLink(
     __('New {0}', __('User Group')),
-    ['controller' => 'Groups', 'action' => 'add'],
+    ['controller' => 'UserGroups', 'action' => 'add'],
     ['icon' => 'add']
 ); ?>
 <div class="users index">
@@ -32,7 +32,7 @@
             <td><?= $this->Number->format($user->id) ?></td>
             <td><?= h($user->username) ?></td>
             <td>
-                <?= $user->has('primary_user_group') ? $this->Html->link($user->primary_user_group->name, ['controller' => 'Groups', 'action' => 'view', $user->primary_user_group->id]) : '' ?>
+                <?= $user->has('primary_group') ? $this->Html->link($user->primary_group->name, ['controller' => 'UserGroups', 'action' => 'view', $user->primary_group->id]) : '' ?>
             </td>
             <td><?= h($user->name) ?></td>
             <td><?= h($user->email) ?></td>
@@ -74,4 +74,6 @@
             </div>
         </div>
     </div>
+
+    <?php debug($users); ?>
 </div>

@@ -8,7 +8,12 @@
 
 namespace Backend\Controller;
 
-
+/**
+ * Interface BackendControllerInterface
+ * @package Backend\Controller
+ *
+ * @deprecated
+ */
 interface BackendControllerInterface
 {
     // just a marker interface

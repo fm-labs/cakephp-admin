@@ -28,6 +28,11 @@ class FlashComponent extends CakeFlashComponent
         'clear' => false // since 3.1.
     ];
 
+    public function initialize(array $config)
+    {
+        parent::initialize($config);
+    }
+
     public function set($message, array $options = [])
     {
         $options += $this->config();

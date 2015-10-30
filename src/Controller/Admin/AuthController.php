@@ -1,18 +1,25 @@
 <?php
 namespace Backend\Controller\Admin;
 
+use Cake\Core\Configure;
 use Cake\Event\Event;
+use User\Controller\Component\AuthComponent;
 
 /**
  * Class AuthController
  * @package Backend\Controller\Admin
- * @property UserAuthComponent $Auth
+ * @property AuthComponent $Auth
  */
-class AuthController extends AbstractBackendController
+class AuthController extends AppController
 {
+
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
+        //debug($this->components()->loaded());
+        //foreach ($this->components()->loaded() as $c) {
+        //    debug($c . " -> " . get_class($this->components()->get($c)));
+        //}
         $this->Auth->allow(['login', 'unauthorized']);
 
         $this->viewBuilder()->layout('Backend.auth');
@@ -29,6 +36,14 @@ class AuthController extends AbstractBackendController
     public function login()
     {
         $this->Auth->login();
+    }
+
+    /**
+     * Login success method
+     */
+    public function login_success()
+    {
+        $this->redirect(Configure::read('Backend.dashboardUrl'));
     }
 
     /**

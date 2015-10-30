@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 9/10/15
- * Time: 9:41 PM
- */
 
 namespace Backend\Lib;
-
 
 use Cake\Core\Plugin;
 

@@ -9,7 +9,6 @@ Router::plugin('Backend', function ($routes) {
         $routes->connect('/media/:config/:action', ['controller' => 'MediaBrowser']);
 
         $routes->connect('/:controller');
-        $routes->fallbacks();
+        $routes->fallbacks('DashedRoute');
     });
-    $routes->fallbacks();
 });

@@ -20,7 +20,6 @@ class BackendShell extends Shell
 {
     protected $_tasks  = [
         'setup_root_user' => 'Setup root user',
-        'cache_clear' => 'Clear cache',
         'quit' => 'Quit'
     ];
 
@@ -45,18 +44,13 @@ class BackendShell extends Shell
 
     public function setupRootUser()
     {
-        $this->loadModel('Backend.Users');
+        $this->loadModel('User.Users');
         $root = $this->Users->createRootUser();
         if ($root === false) {
             $this->error("Failed to create root user: Root user already exists!");
         }
 
         $this->out("<success>Root user created with default password</success>");
-    }
-
-    public function cacheClear()
-    {
-        $this->out('Sorry, cache clearing is not implemented yet');
     }
 
     public function quit()

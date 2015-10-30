@@ -28,7 +28,7 @@ class BackendComponent extends Component
 
     protected $_defaultConfig = [
         'authLoginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
-        'authLoginRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login_success'],
+        'authLoginRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
         'authLogoutAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
         'authUnauthorizedRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'unauthorized'],
         'authAuthorize' => ['Controller', 'Backend.Backend', 'User.Roles'],

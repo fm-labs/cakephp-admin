@@ -96,13 +96,13 @@ class BackendComponent extends Component
     public function beforeRender(\Cake\Event\Event $event)
     {
         // only act on instances of BackendControllerInterface
-        if ($event->subject() instanceof BackendControllerInterface) {
+        //if ($event->subject() instanceof BackendControllerInterface) {
             $controller = $event->subject();
             $controller->set('be_title', Configure::read('Backend.title'));
             $controller->set('be_dashboard_url', Configure::read('Backend.dashboardUrl'));
             $controller->set('be_auth_login_url', $this->config('authLoginAction'));
             $controller->set('be_auth_logout_url', $this->config('authLogoutAction'));
-        }
+        //}
     }
 
     public function implementedEvents()

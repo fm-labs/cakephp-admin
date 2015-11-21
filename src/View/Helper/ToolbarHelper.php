@@ -52,6 +52,21 @@ class ToolbarHelper extends Helper
         $this->config($config);
     }
 
+    public function add($name, $options = [])
+    {
+        $options = array_merge([
+            'type' => null,
+            'name' => $name
+        ], $options);
+
+        switch ($options['type'])
+        {
+            case "link":
+            default:
+                $this->addLink($options);
+        }
+    }
+
     /**
      * Add a new toolbar item (link).
      * @param $title
@@ -60,6 +75,10 @@ class ToolbarHelper extends Helper
      */
     public function addLink($title, $url = null, $attr = [])
     {
+        if (is_array($title)) {
+            extract($title, EXTR_IF_EXISTS);
+        }
+
         if ($this->_grouping === true) {
             return;
         }

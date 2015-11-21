@@ -82,9 +82,9 @@ body {
 #sidebar .be-sidebar {
   width: 220px;
   overflow-x: hidden;
-  -webkit-box-shadow: -3px -5px 13px #333333;
-  -moz-box-shadow: -3px -5px 13px #333333;
-  box-shadow: -3px -5px 13px #333333;
+  -webkit-box-shadow: -3px -5px 13px #333;
+  -moz-box-shadow: -3px -5px 13px #333;
+  box-shadow: -3px -5px 13px #333;
 }
 #sidebar .be-sidebar .item > .menu {
   display: none;
@@ -151,10 +151,18 @@ body.be-sidebar-small #headerbar .ui.navbar.menu {
   padding: 1em;
 }
 /**
- * Backend Dashboard
+ * Dashboard
  */
 .backend.dashboard .dashboard-item {
   min-height: 200px;
+}
+/**
+ * Toolbar
+ */
+.be-toolbar a i.icon,
+.be-toolbar a i.icon:hover {
+  text-underline: none;
+  text-decoration: none;
 }
 /**
  * Forms

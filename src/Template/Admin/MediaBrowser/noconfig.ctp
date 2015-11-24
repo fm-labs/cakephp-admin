@@ -17,6 +17,6 @@
     <div class="ui divider"></div>
     <h3>Example configuration:</h3>
     <div class="media-example-config" style="background-color: #e8e8e8; font-family: Courier, monospace; padding: 2em;">
-        <?= h($configExample); ?>
+        <pre><?= h($configExample); ?></pre>
     </div>
 </div>

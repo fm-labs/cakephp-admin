@@ -75,13 +75,14 @@ class ToolbarHelper extends Helper
      */
     public function addLink($title, $url = null, $attr = [])
     {
+        if ($this->_grouping === true) {
+            return;
+        }
+
         if (is_array($title)) {
             extract($title, EXTR_IF_EXISTS);
         }
 
-        if ($this->_grouping === true) {
-            return;
-        }
         $this->_items[] = compact('title', 'url', 'attr');
     }
 

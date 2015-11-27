@@ -49,7 +49,7 @@ class MediaBrowserController extends AppController
             //$this->viewBuilder()->view('notfound');
         } else {
             $this->_mediaConfig = $config;
-            $this->_mm = MediaManager::create($config);
+            $this->_mm = MediaManager::get($config);
         }
     }
 

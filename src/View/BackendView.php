@@ -31,8 +31,9 @@ class BackendView extends View
                 'templates' => 'Backend.paginator_templates'
             ],
             'Backend.Backend',
-            'Backend.Ui',
-            'Backend.Toolbar'
+            //'Backend.TinyMce',
+            'Backend.Toolbar',
+            'Backend.Ui'
         ];
 
         $this->loadHelper('Html');

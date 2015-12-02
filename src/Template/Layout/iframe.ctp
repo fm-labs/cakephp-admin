@@ -1,7 +1,3 @@
-<?php use Cake\Core\Configure;
-
-//Configure::write('debug', 0);
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +11,7 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
 
-    <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
+    <?= $this->fetch('cssBackend') ?>
     <?= $this->fetch('css') ?>
 
     <?= $this->fetch('script') ?>
@@ -23,7 +19,7 @@
 </head>
 <body>
 
-<div id="page" style="position: relative">
+<div id="page">
     <div id="page-top">
         <?= $this->Flash->render(); ?>
         <?= $this->Flash->render('auth'); ?>
@@ -39,7 +35,9 @@
 
 </div> <!-- #page -->
 
+<?= $this->fetch('scriptBackend'); ?>
 <?= $this->fetch('scriptBottom'); ?>
+
 
 </body>
 </html>

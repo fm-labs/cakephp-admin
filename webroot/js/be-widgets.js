@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     // Chosen SelectBox
+    /*
     $('select.chosen-select').each(function() {
         // explicitly do not use chosen
         if ($(this).hasClass('nochosen') || $(this).hasClass('no-pretty'))
@@ -16,6 +17,7 @@ $(document).ready(function() {
 
         $(this).chosen(chosen);
     });
+    */
 
 
     /*
@@ -62,6 +64,7 @@ $(document).ready(function() {
     });
 
     // imagepicker
+
     /*
     $('.imagepicker').imagepicker({
         show_label: true,
@@ -78,6 +81,8 @@ $(document).ready(function() {
         //changed: function() { "changed" }
     });
     */
+
+
     //$('.imagepicker.multi').imagepicker({ show_label: true });
 
 

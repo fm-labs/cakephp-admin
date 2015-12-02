@@ -25,6 +25,8 @@ class BackendView extends View
                     'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
                     'datepicker' => ['Backend\View\Widget\DatePickerWidget'],
                     'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
+                    'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
+                    'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
                 ]
             ],
             'Paginator' => [
@@ -39,10 +41,11 @@ class BackendView extends View
         $this->loadHelper('Html');
 
         $this->Html->css('Backend.semanticui/semantic.min', ['block' => 'cssBackend']);
-        $this->Html->css('Backend.chosen/chosen.min', ['block' => 'cssBackend']);
+        //$this->Html->css('Backend.chosen/chosen.min', ['block' => 'cssBackend']);
         $this->Html->css('Backend.pickadate/themes/classic', ['block' => 'cssBackend']);
         $this->Html->css('Backend.pickadate/themes/classic.date', ['block' => 'cssBackend']);
         $this->Html->css('Backend.pickadate/themes/classic.time', ['block' => 'cssBackend']);
+        $this->Html->css('Backend.imagepicker/image-picker', ['block' => 'cssBackend']);
         $this->Html->css('Backend.backend', ['block' => 'cssBackend']);
 
         $beScript = <<<SCRIPT
@@ -63,10 +66,11 @@ SCRIPT;
         $this->Html->script('Backend.semanticui/semantic.min', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.tinymce/tinymce.min', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.tinymce/jquery.tinymce.min', ['block' => 'scriptBackend']);
-        $this->Html->script('Backend.chosen/chosen.jquery.min', ['block' => 'scriptBackend']);
+        //$this->Html->script('Backend.chosen/chosen.jquery.min', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.pickadate/picker', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.pickadate/picker.date', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.pickadate/picker.time', ['block' => 'scriptBackend']);
+        $this->Html->script('Backend.imagepicker/image-picker.min', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.be-ui', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.be-widgets', ['block' => 'scriptBackend']);
     }

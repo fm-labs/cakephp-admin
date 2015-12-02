@@ -35,19 +35,8 @@ ul.thumbnails.image_picker_selector li .thumbnail {
 
 ul.thumbnails.image_picker_selector li .thumbnail img {
   -webkit-user-drag: none;
-  max-height: 100px;
 }
 
 ul.thumbnails.image_picker_selector li .thumbnail.selected {
   background: #0088cc;
-}
-
-
-ul.thumbnails.image_picker_selector li {
-  margin: 0px 12px 12px 0px;
-}
-
-ul.thumbnails.image_picker_selector.grouped  > li {
-  float: none;
-  display: block;
 }

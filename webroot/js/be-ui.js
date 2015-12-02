@@ -6,7 +6,7 @@ $(document).ready(function() {
     ;
 
     // form
-    $('.ui.form select')
+    $('.ui.form select.dropdown')
         .dropdown()
     ;
 

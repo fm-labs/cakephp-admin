@@ -1,22 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 9/6/15
- * Time: 1:22 AM
- */
 
 namespace Backend\View\Widget;
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\SelectBoxWidget;
 use Cake\View\Widget\WidgetInterface;
+use Traversable;
 
 class ImageSelectWidget extends SelectBoxWidget
 {
     public function render(array $data, ContextInterface $context)
     {
-        return parent::render($data, $context);
+        //return parent::render($data, $context);
 
         $data += [
             'name' => '',
@@ -28,6 +23,7 @@ class ImageSelectWidget extends SelectBoxWidget
         ];
 
         $options = $this->_renderContent($data);
+
         $name = $data['name'];
         unset($data['name'], $data['options'], $data['empty'], $data['val'], $data['escape']);
         if (isset($data['disabled']) && is_array($data['disabled'])) {
@@ -39,10 +35,10 @@ class ImageSelectWidget extends SelectBoxWidget
             'imageselectMultiple' => '<select name="{{name}}[]" multiple="multiple"{{attrs}}>{{content}}</select>',
         ]);
 
-        $class = 'imagepicker nochosen';
+        $class = 'imagepicker';
         $template = 'imageselect';
         if (!empty($data['multiple'])) {
-            $class = 'imagepicker-multi';
+            $class = 'imagepicker multi';
             $template = 'imageselectMultiple';
             unset($data['multiple']);
         }
@@ -69,7 +65,7 @@ class ImageSelectWidget extends SelectBoxWidget
             if ((!is_int($key) && $arrayVal) ||
                 (is_int($key) && $arrayVal && isset($val['options']))
             ) {
-                $out[] = $this->_renderOptgroup($key, $val, $disabled, $selected, $escape);
+                $out[] = $this->_renderOptgroup($key, $val, $disabled, $selected, $templateVars, $escape);
                 continue;
             }
 
@@ -101,4 +97,36 @@ class ImageSelectWidget extends SelectBoxWidget
         }
         return $out;
     }
+
+    /**
+     * Render the contents of an optgroup element.
+     *
+     * @param string $label The optgroup label text
+     * @param array $optgroup The opt group data.
+     * @param array|null $disabled The options to disable.
+     * @param array|string|null $selected The options to select.
+     * @param array $templateVars Additional template variables.
+     * @param bool $escape Toggle HTML escaping
+     * @return string Formatted template string
+     */
+    protected function _renderOptgroup($label, $optgroup, $disabled, $selected, $templateVars, $escape)
+    {
+        $opts = $optgroup;
+        $attrs = [];
+        if (isset($optgroup['options'], $optgroup['text'])) {
+            $opts = $optgroup['options'];
+            $label = $optgroup['text'];
+            $attrs = $optgroup;
+        }
+        $groupOptions = $this->_renderOptions($opts, $disabled, $selected, $templateVars, $escape);
+
+        return $this->_templates->format('optgroup', [
+            'label' => $escape ? h($label) : $label,
+            'content' => implode('', $groupOptions),
+            'templateVars' => $templateVars,
+            'attrs' => $this->_templates->formatAttributes($attrs, ['text', 'options']),
+        ]);
+
+    }
+
 }

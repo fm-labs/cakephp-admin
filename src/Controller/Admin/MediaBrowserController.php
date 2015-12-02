@@ -33,6 +33,8 @@ class MediaBrowserController extends AppController
     {
         parent::initialize();
 
+        $this->loadComponent('RequestHandler');
+
         //$this->layout = "Backend.media_browser";
 
         $config = $this->request->param('config');
@@ -76,6 +78,56 @@ class MediaBrowserController extends AppController
         $this->set('configName', $config);
         $this->set('configExample', $configExample);
     }
+
+    public function treeData()
+    {
+        $this->viewBuilder()->className('Json');
+
+        $id = $this->request->query('id');
+        if ($id == '#') {
+            $path = null;
+        } else {
+            $path = $id;
+        }
+
+        $mm =& $this->_mm;
+        $mm->open($path);
+
+        $treeData = [];
+        $folders = $mm->listFolders();
+        array_walk($folders, function ($val) use (&$treeData) {
+            $treeData[] = ['id' => $val, 'text' => basename($val), 'children' => true, 'type' => 'folder'];
+        });
+
+        $files = $mm->listFiles();
+        array_walk($files, function ($val) use (&$treeData, &$mm) {
+            $treeData[] = ['id' => $val, 'text' => basename($val), 'children' => false, 'type' => 'file', 'icon' => $mm->getFileUrl($val)];
+        });
+
+        $this->set('treeData', $treeData);
+        $this->set('_serialize', 'treeData');
+    }
+
+    public function treeFiles()
+    {
+        $this->viewBuilder()->className('Json');
+
+        $files = [];
+        $selectedDirs = $this->request->data('selected');
+        foreach ($selectedDirs as $dir) {
+            $this->_mm->open($dir);
+            $files += $this->_mm->listFileUrls();
+        }
+
+        $treeData = [];
+        array_walk($files, function ($val) use (&$treeData) {
+            $treeData[] = ['id' => $val, 'text' => basename($val), 'icon' => 'file'];
+        });
+
+        $this->set('treeData', $treeData);
+        $this->set('_serialize', 'treeData');
+    }
+
 
     public function index()
     {
@@ -141,4 +193,15 @@ class MediaBrowserController extends AppController
     {
 
     }
+
+    public function filepicker()
+    {
+        $path = $this->request->query('path');
+        $file = $this->request->query('file');
+        $this->_mm->open($path);
+
+        $this->set('folders', $this->_mm->listFolders());
+        $this->set('files', $this->_mm->listFiles());
+    }
+
 }

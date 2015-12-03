@@ -5,6 +5,7 @@ namespace Backend\View\Widget;
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\SelectBoxWidget;
 use Cake\View\Widget\WidgetInterface;
+use Media\Lib\Media\MediaManager;
 use Traversable;
 
 class ImageSelectWidget extends SelectBoxWidget
@@ -21,6 +22,11 @@ class ImageSelectWidget extends SelectBoxWidget
             'disabled' => null,
             'val' => null,
         ];
+
+        if (is_string($data['options']) && preg_match('/^\@(.*)/', $data['options'])) {
+            $mediaConfig = substr($data['options'], 1);
+            $data['options'] = MediaManager::get($mediaConfig)->getSelectListRecursiveGrouped();
+        }
 
         $options = $this->_renderContent($data);
 

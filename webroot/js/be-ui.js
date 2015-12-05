@@ -10,6 +10,10 @@ $(document).ready(function() {
         .dropdown()
     ;
 
+    $('form fieldset > legend').on('click', function() {
+       $(this).parent().toggleClass('collapsed');
+    });
+
 
     // flash messages
     $('.message .close').on('click', function() {

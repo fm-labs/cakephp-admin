@@ -98,4 +98,48 @@ $(document).ready(function() {
      });
      */
 
+    $('a.iframe-modal').on('click', function(e) {
+        e.preventDefault();
+
+        var href = $(this).data('iframe-url');
+        if (typeof(href) === 'undefined') {
+            var href = $(this).attr('href');
+            if (href.indexOf('?') < 0) {
+                href = href + '?iframe=1';
+            } else {
+                href = href + '&iframe=1';
+            }
+        }
+
+        var $iframe = $('<iframe>', {'src': href, 'class': 'imodal', 'style': 'width: 100%; min-height: 500px;'});
+
+        var $modal = $('<div>', {'class': 'ui fullscreen long modal'});
+
+        $('<i>', {'class': 'close icon'})
+            .appendTo($modal)
+
+        $('<div>', {'class': 'header'}).html(href)
+            .appendTo($modal);
+
+        $('<div>', {'class': 'content'}).html($iframe)
+            .appendTo($modal);
+
+        $('<div>', {'class': 'actions'})
+            .append($('<div>', {'class': 'ui green basic approve button'}).html('OK'))
+            .appendTo($modal);
+
+        console.log("open iframe modal: " + href);
+        $modal
+            .modal({
+                'onVisible': function() {
+                    console.log("onVisisble");
+                    $iframe.width($modal.width * 0.9);
+                },
+                'onHide': function() {
+                    console.log("onHide");
+                }
+            })
+            .modal('show');
+    });
+
 });

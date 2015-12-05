@@ -77,6 +77,15 @@ class BackendComponent extends Component
         $controller->viewBuilder()->className('Backend.Backend');
         $controller->viewBuilder()->layout('Backend.admin');
 
+        // Iframe request detector
+        $this->request->addDetector('iframe', function($request) {
+            return (bool) $this->request->query('iframe');
+        });
+
+        if ($this->request->is('iframe')) {
+            $controller->viewBuilder()->layout('Backend.iframe');
+        }
+
         $this->_controller =& $controller;
     }
 

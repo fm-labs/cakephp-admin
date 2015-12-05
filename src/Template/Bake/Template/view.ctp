@@ -61,7 +61,7 @@ $pk = "\$$singularVar->{$primaryKey[0]}";
 <?= $this->Toolbar->addLink(
     __('Delete {0}', __('<%= $singularHumanName %>')),
     ['action' => 'delete', <%= $pk %>],
-    ['icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]) ?>
+    ['icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]) ?>
 
 <?= $this->Toolbar->addLink(
     __('List {0}', __('<%= $pluralHumanName %>')),

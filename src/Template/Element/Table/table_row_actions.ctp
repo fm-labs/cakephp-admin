@@ -1,4 +1,4 @@
-<div id="<?= $menu->id; ?>" class="ui basic small buttons <?= $menu->class; ?>">
+<div id="<?= $menu->id; ?>" class="ui basic tiny buttons <?= $menu->class; ?>">
 <?php foreach ($menu as $item) : ?>
     <?php if ($item->children->count() < 1) : ?>
         <div class="ui button">

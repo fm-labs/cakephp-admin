@@ -9,7 +9,7 @@
 <?= $this->Toolbar->addPostLink(
     __('Delete {0}', __('User')),
     ['action' => 'delete', $user->id],
-    ['icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
+    ['icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
 
 <?= $this->Toolbar->addLink(
     __('List {0}', __('Users')),

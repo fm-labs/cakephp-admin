@@ -12,7 +12,7 @@
             <?= $this->Ui->postLink(
                 __('Delete {0}', __('User Group')),
                 ['action' => 'delete', $userGroup->id],
-                ['class' => 'item', 'icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', $userGroup->id)]) ?>
+                ['class' => 'item', 'icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', $userGroup->id)]) ?>
 
             <?= $this->Ui->link(
                 __('List {0}', __('User Groups')),

@@ -14,7 +14,7 @@
 <?= $this->Toolbar->addLink(
     __('Delete'),
     ['action' => 'index'],
-    ['icon' => 'remove']
+    ['icon' => 'trash']
 ) ?>
 <div class="view backend logs">
 	<h2 class="ui header">

@@ -41,7 +41,7 @@
                             <?= $this->Ui->postLink(
                                 __('Delete'),
                                 ['action' => 'delete', $userGroup->id],
-                                ['class' => 'item', 'icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', $userGroup->id)]
+                                ['class' => 'item', 'icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', $userGroup->id)]
                             ) ?>
                         </div>
                     </div>

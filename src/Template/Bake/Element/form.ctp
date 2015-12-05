@@ -16,7 +16,7 @@ $fields = collection($fields)
 <?= $this->Toolbar->addPostLink(
     __('Delete'),
     ['action' => 'delete', $<%= $singularVar %>-><%= $primaryKey[0] %>],
-    ['icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', $<%= $singularVar %>-><%= $primaryKey[0] %>)]
+    ['icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', $<%= $singularVar %>-><%= $primaryKey[0] %>)]
 )
 ?>
 <% endif; %>

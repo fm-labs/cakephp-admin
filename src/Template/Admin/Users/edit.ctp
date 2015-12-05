@@ -3,7 +3,7 @@
 <?php $this->Toolbar->addLink(
     __('Delete'),
     ['action' => 'delete', $user->id],
-    ['icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
+    ['icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
 );?>
 <?php $this->Toolbar->addLink(
     __('List {0}', __('Users')),

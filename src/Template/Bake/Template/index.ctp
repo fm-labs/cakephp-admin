@@ -89,7 +89,7 @@ endforeach;
                 $dropdown->getChildren()->add(
                     __('Delete'),
                     ['action' => 'delete', <%= $pk %>],
-                    ['icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]
+                    ['icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]
                 );
                 ?>
                 <?= $this->element('Backend.Table/table_row_actions', ['menu' => $menu]); ?>

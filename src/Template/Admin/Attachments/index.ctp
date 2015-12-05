@@ -39,7 +39,7 @@
                 $dropdown->getChildren()->add(
                     __('Delete'),
                     ['action' => 'delete', $attachment->id],
-                    ['icon' => 'remove', 'confirm' => __('Are you sure you want to delete # {0}?', $attachment->id)]
+                    ['icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', $attachment->id)]
                 );
                 ?>
                 <?= $this->element('Backend.Table/table_row_actions', ['menu' => $menu]); ?>

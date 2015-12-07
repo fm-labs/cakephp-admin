@@ -1,6 +1,7 @@
 /** Common Backend CSS Stylesheet **/
-.input-imageselect .thumbnails.image_picker_selector.grouped ul li.group-title {
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li.group_title {
   font-weight: bold;
+  font-size: 130%;
 }
 .input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail {
   position: relative;

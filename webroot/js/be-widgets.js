@@ -137,6 +137,9 @@ $(document).ready(function() {
                 },
                 'onHide': function() {
                     console.log("onHide");
+                },
+                'onApprove': function() {
+                    window.location.reload();
                 }
             })
             .modal('show');

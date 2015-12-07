@@ -18,12 +18,16 @@ class ImageSelectWidget extends SelectBoxWidget
             'name' => '',
             'empty' => false,
             'escape' => true,
+            'config' => null,
             'options' => [],
             'disabled' => null,
             'val' => null,
         ];
 
-        if (is_string($data['options']) && preg_match('/^\@(.*)/', $data['options'])) {
+        if (empty($data['options']) && isset($data['config'])) {
+            $data['options'] = MediaManager::get($data['config'])->getSelectListRecursiveGrouped();
+        }
+        elseif (is_string($data['options']) && preg_match('/^\@(.*)/', $data['options'])) {
             $mediaConfig = substr($data['options'], 1);
             $data['options'] = MediaManager::get($mediaConfig)->getSelectListRecursiveGrouped();
         }
@@ -75,6 +79,7 @@ class ImageSelectWidget extends SelectBoxWidget
                 continue;
             }
 
+
             // Basic options
             $optAttrs = [
                 'value' => $key,
@@ -91,9 +96,12 @@ class ImageSelectWidget extends SelectBoxWidget
             }
             $optAttrs['escape'] = $escape;
 
-            $optAttrs['data-img-src'] = $optAttrs['text'];
-            $optAttrs['data-img-label'] = basename($optAttrs['text']);
-            $optAttrs['title'] = basename($optAttrs['text']);
+            if (!empty($key)) {
+                $optAttrs['data-img-src'] = $optAttrs['text'];
+                $optAttrs['data-img-label'] = basename($optAttrs['text']);
+                $optAttrs['text'] = $key;
+                $optAttrs['title'] = basename($optAttrs['text']);
+            }
 
             $out[] = $this->_templates->format('option', [
                 'value' => $escape ? h($optAttrs['value']) : $optAttrs['value'],

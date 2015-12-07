@@ -1,1 +1,38 @@
 /** Common Backend CSS Stylesheet **/
+
+.input-imageselect {
+
+  .thumbnails.image_picker_selector.grouped {
+    ul li {
+      //float: none;
+      //display: inline-block;
+    }
+
+    ul li.group-title {
+      font-weight: bold;
+    }
+
+    ul li .thumbnail {
+      position: relative;
+      text-align: center;
+      padding: 0;
+
+      &:after {
+        clear: both;
+      }
+    }
+
+    ul li .thumbnail img {
+      height: 100px;
+    }
+
+    ul li .thumbnail p {
+      text-align: center;
+      padding: 0.2em;
+      background-color: #efefef;
+    }
+
+
+  }
+
+}

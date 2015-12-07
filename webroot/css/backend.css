@@ -1,1 +1,20 @@
 /** Common Backend CSS Stylesheet **/
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li.group-title {
+  font-weight: bold;
+}
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail {
+  position: relative;
+  text-align: center;
+  padding: 0;
+}
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail:after {
+  clear: both;
+}
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail img {
+  height: 100px;
+}
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail p {
+  text-align: center;
+  padding: 0.2em;
+  background-color: #efefef;
+}

@@ -12,6 +12,7 @@
     <?= $this->fetch('meta') ?>
 
     <?= $this->fetch('cssBackend') ?>
+    <?= $this->Html->css('Backend.iframe'); ?>
     <?= $this->fetch('css') ?>
 
     <?= $this->fetch('script') ?>

@@ -23,7 +23,7 @@ class HtmlEditorWidget extends BasicWidget
         'plugins' => [
             'image link lists code table media paste wordcount'
         ],
-        'content_css_url' => '/backend/css/admin.tinymce.css',
+        'content_css_url' => null,
         'menubar' => false,
         'menu' => [
             //'file' => [ 'title' => 'File', 'items' => 'newdocument'],

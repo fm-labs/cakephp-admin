@@ -36,7 +36,8 @@ class HtmlEditorWidget extends BasicWidget
         'convert_urls' => true, // TinyMCE default: true
         'relative_urls' => false, // TinyMCE default: true
         'remove_script_host' => true, // TinyMCE default: true
-        'document_base_url_url' => '/'
+        'document_base_url_url' => '/',
+        //'importcss_append' => true,
     ];
 
     /**
@@ -75,8 +76,19 @@ class HtmlEditorWidget extends BasicWidget
         // convert urls
         foreach (static::$urlFields as $key) {
             if (isset($editor[$key . '_url'])) {
-                $editor[$key] = Router::url($editor[$key . '_url'], true);
+
+                $url = $editor[$key . '_url'];
                 unset($editor[$key . '_url']);
+
+                if (is_array($url)) {
+                    array_walk($url, function(&$val) {
+                       $val = Router::url($val, true);
+                    });
+                } else {
+                    $url = Router::url($url, true);
+                }
+
+                $editor[$key] = $url;
             }
         }
 
@@ -87,8 +99,8 @@ class HtmlEditorWidget extends BasicWidget
         $selector = $editor['selector'];
         unset($editor['selector']);
         //$editorScript = "$(document).ready(function() { tinymce.init(" . json_encode($editor) .") });";
-        $editorScript = sprintf('$(document).ready(function() { $("%s").tinymce(%s); });',
-            $selector, json_encode($editor));
+        $jsTemplate = '$(document).ready(function() { $("%s").tinymce(%s); });';
+        $editorScript = sprintf($jsTemplate, $selector, json_encode($editor));
 
         return $this->_templates->format('htmlEditor', [
             'name' => $data['name'],

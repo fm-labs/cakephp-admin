@@ -80,14 +80,17 @@ class HtmlEditorWidget extends BasicWidget
                 $url = $editor[$key . '_url'];
                 unset($editor[$key . '_url']);
 
+                /*
                 if (is_array($url)) {
                     array_walk($url, function(&$val) {
                        $val = Router::url($val, true);
                     });
-                } else {
+                } elseif ($url) {
                     $url = Router::url($url, true);
                 }
+                */
 
+                $url = Router::url($url, true);
                 $editor[$key] = $url;
             }
         }

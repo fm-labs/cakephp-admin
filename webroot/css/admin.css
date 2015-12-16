@@ -86,9 +86,6 @@ body {
   -moz-box-shadow: -3px -5px 13px #333;
   box-shadow: -3px -5px 13px #333;
 }
-#sidebar .be-sidebar .item > .menu {
-  display: none;
-}
 #sidebar .be-sidebar .item.trail > .menu {
   display: inherit;
 }

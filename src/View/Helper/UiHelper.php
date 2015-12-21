@@ -29,7 +29,8 @@ class UiHelper extends Helper
     protected $_defaultConfig = [
         'templates' => [
             'iconBefore' => '<i class="{{icon}} icon"></i>{{content}}',
-            'modal' => '<div class="ui modal"></div>'
+            'modal' => '<div class="ui modal"></div>',
+            'label' => '<div class="ui label {{class}}">{{label}}</div>'
         ]
     ];
 
@@ -64,4 +65,25 @@ class UiHelper extends Helper
         return $this->postLink($title, $url, $options);
     }
 
+    public function statusLabel($status, $options = [])
+    {
+        $labels = (isset($options['label'])) ? (array) $options['label'] : [__('No'), __('Yes')];
+        $classes = (isset($options['class'])) ? (array) $options['class'] : ['red', 'green'];
+
+        $label = $status;
+        $class = '';
+        if (isset($labels[$status])) {
+            $label = $labels[$status];
+        }
+
+        if (isset($classes[$status])) {
+            $class = $classes[$status];
+        }
+
+        $html = $this->templater()->format('label', [
+            'class' => $class,
+            'label' => $label
+        ]);
+        return $html;
+    }
 }

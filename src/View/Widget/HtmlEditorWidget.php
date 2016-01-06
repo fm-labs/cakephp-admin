@@ -16,14 +16,24 @@ class HtmlEditorWidget extends BasicWidget
 {
     /**
      * Default TinyMCE html editor config
+     * @see https://www.tinymce.com/docs
      * @var array
      */
     public static $defaultConfig = [
+        // A CSS selector for the areas that TinyMCE should make editable.
         'selector' => 'textarea.htmleditor',
+        // Which plugins TinyMCE will attempt to load when starting up
         'plugins' => [
             'image link lists code table media paste wordcount'
         ],
+        // This option allows you to disable the element path within the status bar at the bottom of the editor.
+        // Default: True
+        'elementpath' => true,
+        // Height of the editable area in pixels.
+        'height' => 300,
+
         'content_css_url' => null,
+
         'menubar' => false,
         'menu' => [
             //'file' => [ 'title' => 'File', 'items' => 'newdocument'],
@@ -38,6 +48,7 @@ class HtmlEditorWidget extends BasicWidget
         'remove_script_host' => true, // TinyMCE default: true
         'document_base_url_url' => '/',
         //'importcss_append' => true,
+        'cache_suffix' => null,
     ];
 
     /**

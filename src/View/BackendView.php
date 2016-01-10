@@ -74,4 +74,16 @@ SCRIPT;
         $this->Html->script('Backend.be-ui', ['block' => 'scriptBackend']);
         //$this->Html->script('Backend.be-widgets', ['block' => 'scriptBackend']);
     }
+
+    public function renderLayout($content, $layout = null)
+    {
+
+        $title = $this->Blocks->get('title');
+        if ($title === '') {
+            $title = sprintf("[%s]", $this->request['controller']);
+            $this->Blocks->set('title', $title);
+        }
+
+        return parent::renderLayout($content, $layout);
+    }
 }

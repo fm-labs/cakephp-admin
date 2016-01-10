@@ -1,6 +1,7 @@
 <?php
 namespace Backend\View\Widget;
 
+use Cake\Core\Configure;
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\BasicWidget;
 use Cake\Routing\Router;
@@ -58,7 +59,8 @@ class HtmlEditorWidget extends BasicWidget
      * @var array
      */
     public static $urlFields = ['document_base_url', 'content_css', 'image_list', 'link_list'];
-    
+
+
     /**
      * Render a text area element which will be converted to a tinymce htmleditor.
      *
@@ -100,6 +102,14 @@ class HtmlEditorWidget extends BasicWidget
                     $url = Router::url($url, true);
                 }
                 */
+
+                if (preg_match('/^\@(.*)/', $url, $matches)) {
+                    $url = Configure::read($matches[1]);
+                    if (!$url) {
+                        debug("HtmlEditor: The config value for the editor url '" . $matches[1] . "' could not be found");
+                        continue;
+                    }
+                }
 
                 $url = Router::url($url, true);
                 $editor[$key] = $url;

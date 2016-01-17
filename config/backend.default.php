@@ -1,9 +1,9 @@
 <?php
 return [
     # General backend settings
-    'Backend' => [
+    'Backend.Dashboard' => [
         'title' => 'Backend',
-        'dashboardUrl' => '/backend/admin/Default/index',
+        'url' => '/backend/admin/Default/index',
     ],
 //    # Backend users for basic auth
 //    'Backend.Users' => [

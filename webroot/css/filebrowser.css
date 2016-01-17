@@ -1,0 +1,50 @@
+#browser-files ul {
+  margin: 0;
+  padding: 0;
+}
+#browser-files ul li {
+  list-style-image: none;
+  list-style-type: none;
+  border-bottom: 1px solid #CCC;
+}
+#browser-files .file {
+  padding: 9px 0;
+  position: relative;
+  min-height: 40px;
+}
+#browser-files .file .desc {
+  display: inline-block;
+  width: 66%;
+  margin-left: 70px;
+  vertical-align: top;
+}
+#browser-files .file .desc .id {
+  visibility: hidden;
+}
+#browser-files .file .thumbnail {
+  max-height: 40px;
+  max-width: 50px;
+  position: absolute;
+  margin-left: 3px;
+  overflow: hidden;
+}
+#browser-files .file .thumbnail img {
+  max-width: 100%;
+  max-height: 100%;
+}
+#browser-files .file .actions {
+  padding-left: 22px;
+  display: inline-block;
+  text-align: right;
+  vertical-align: top;
+  visibility: hidden;
+}
+#browser-files .file:hover {
+  background-color: #e8e8e8;
+}
+#browser-files .file:hover .desc .id {
+  visibility: visible;
+}
+#browser-files .file:hover .actions {
+  visibility: visible;
+}

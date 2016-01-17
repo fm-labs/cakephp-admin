@@ -14,6 +14,7 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
+use Cake\Routing\Router;
 use Media\Lib\Media\MediaManager;
 
 class MediaBrowserController extends AppController
@@ -55,8 +56,15 @@ class MediaBrowserController extends AppController
         }
     }
 
+    public function beforeFilter(Event $event)
+    {
+        parent::beforeFilter($event);
+    }
+
     public function beforeRender(Event $event)
     {
+        parent::beforeRender($event);
+
         if ($this->_mediaConfig) {
             $this->set('cfg', $this->_mediaConfig);
             $this->set('currentPath', $this->_mm->getPath());
@@ -79,35 +87,117 @@ class MediaBrowserController extends AppController
         $this->set('configExample', $configExample);
     }
 
+
+    public function index()
+    {
+        $this->redirect(['action' => 'browse']);
+    }
+
+    public function browse()
+    {
+        $path = $this->request->query('path');
+        $file = $this->request->query('file');
+        $this->_mm->open($path);
+
+        $this->set('directories', $this->_mm->listFolders());
+        $this->set('files', $this->_mm->listFiles());
+        $this->render('index');
+    }
+
     public function treeData()
     {
         $this->viewBuilder()->className('Json');
 
         $id = $this->request->query('id');
-        if ($id == '#') {
-            $path = null;
-        } else {
-            $path = $id;
-        }
+        $path = ($id == '#') ? '/' : $id;
+        $treeData = [];
 
         $mm =& $this->_mm;
         $mm->open($path);
 
-        $treeData = [];
-        $folders = $mm->listFolders();
-        array_walk($folders, function ($val) use (&$treeData) {
-            $treeData[] = ['id' => $val, 'text' => basename($val), 'children' => true, 'type' => 'folder'];
+        $folders = $mm->listFoldersRecursive(0);
+        array_walk($folders, function ($val) use (&$treeData, &$id) {
+            $treeData[] = [
+                'id' => $val,
+                'text' => basename($val),
+                'children' => true,
+                'type' => 'folder',
+                'parent' => $id
+            ];
         });
 
+        /*
         $files = $mm->listFiles();
-        array_walk($files, function ($val) use (&$treeData, &$mm) {
+        array_walk($files, function ($val) use (&$treeData, &$mm, &$parent) {
             $treeData[] = ['id' => $val, 'text' => basename($val), 'children' => false, 'type' => 'file', 'icon' => $mm->getFileUrl($val)];
         });
+        */
+
 
         $this->set('treeData', $treeData);
         $this->set('_serialize', 'treeData');
     }
 
+
+    public function filesData()
+    {
+        $this->viewBuilder()->className('Json');
+
+        $id = $this->request->query('id');
+        $path = ($id == '#') ? '/' : $id;
+        $treeData = [];
+
+        $mm =& $this->_mm;
+        $mm->open($path);
+
+        $files = $mm->listFiles();
+        array_walk($files, function ($val) use (&$treeData, &$mm, &$parent) {
+
+            $icon = true;
+            $filename = basename($val);
+            if (preg_match('/^(.*)\.(jpg|gif|jpeg|png)$/i', $filename)) {
+                // use thumbnail as icon
+                $icon = $mm->getFileUrl($val);
+            } elseif (preg_match('/^\./', $filename)) {
+                // ignore dot-files
+                return;
+            }
+
+            $treeData[] = [
+                'id' => $val,
+                'text' => basename($val),
+                'children' => false,
+                'type' => 'file',
+                'icon' => $icon,
+                'actions' => [
+                    //['title' => 'View', 'icon' => 'eye', 'url' => Router::url(['action' => 'view', 'path' => $val ])],
+                    //['title' => 'Edit', 'icon' => 'edit', 'url' => Router::url(['action' => 'edit', 'path' => $val ])],
+                    ['title' => 'Download', 'icon' => 'download', 'url' => Router::url(['action' => 'download', 'path' => $val ])],
+                    //['title' => 'Download', 'icon' => 'download', 'action' => 'download' ])]
+                ]
+            ];
+        });
+
+
+        $this->set('treeData', $treeData);
+        $this->set('_serialize', 'treeData');
+    }
+
+
+    public function filepicker()
+    {
+        $path = $this->request->query('path');
+        $file = $this->request->query('file');
+        $this->_mm->open($path);
+
+        $this->set('folders', $this->_mm->listFolders());
+        $this->set('files', $this->_mm->listFiles());
+    }
+
+
+    /**
+     * @deprecated
+     */
     public function treeFiles()
     {
         $this->viewBuilder()->className('Json');
@@ -126,82 +216,6 @@ class MediaBrowserController extends AppController
 
         $this->set('treeData', $treeData);
         $this->set('_serialize', 'treeData');
-    }
-
-
-    public function index()
-    {
-        $path = $this->request->query('path');
-        $file = $this->request->query('file');
-        $this->_mm->open($path);
-
-        $this->set('directories', $this->_mm->listFolders());
-        $this->set('files', $this->_mm->listFiles());
-    }
-
-    public function browse()
-    {
-        $this->setAction('index');
-    }
-
-    public function file_open()
-    {
-
-    }
-
-    public function file_create()
-    {
-
-    }
-
-    public function file_copy()
-    {
-
-    }
-
-    public function file_delete()
-    {
-
-    }
-
-    public function file_info()
-    {
-
-    }
-
-    public function dir_create()
-    {
-
-    }
-
-    public function dir_copy()
-    {
-
-    }
-
-    public function dir_move()
-    {
-
-    }
-
-    public function dir_delete()
-    {
-
-    }
-
-    public function dir_info()
-    {
-
-    }
-
-    public function filepicker()
-    {
-        $path = $this->request->query('path');
-        $file = $this->request->query('file');
-        $this->_mm->open($path);
-
-        $this->set('folders', $this->_mm->listFolders());
-        $this->set('files', $this->_mm->listFiles());
     }
 
 }

@@ -26,6 +26,11 @@ $(document).ready(function() {
         $(this).closest('.message').fadeOut();
     });
 
+    // actions
+    $('.actions a.icon.view').html($('<i>', {'class': 'eye icon'}));
+    $('.actions a.icon.edit').html($('<i>', {'class': 'edit icon'}));
+    $('.actions a.icon.delete').html($('<i>', {'class': 'trash icon'}));
+    $('.actions a.icon.copy').html($('<i>', {'class': 'copy icon'}));
 
     //
     // Chosen SelectBox
@@ -80,9 +85,10 @@ $(document).ready(function() {
     //
     // Pickadate Time and datepicker
     //
+    //$('input.datepicker').after($('<i>', {'class': 'calendar icon'}));
 
     // pickadate datepicker
-    $('.datepicker').pickadate({
+    $('input.datepicker').pickadate({
         // Escape any “rule” characters with an exclamation mark (!).
         format: 'yyyy-mm-dd',
         formatSubmit: 'yyyy-mm-dd',
@@ -91,7 +97,7 @@ $(document).ready(function() {
     });
 
     // pickadate timepicker
-    $('.timepicker').pickatime({
+    $('input.timepicker').pickatime({
         // Escape any “rule” characters with an exclamation mark (!).
         format: 'h:i a',
         formatLabel: '<b>h</b>:i <!i>a</!i>',

@@ -67,6 +67,7 @@ class UiHelper extends Helper
 
     public function statusLabel($status, $options = [])
     {
+        $status = (int) $status;
         $labels = (isset($options['label'])) ? (array) $options['label'] : [__('No'), __('Yes')];
         $classes = (isset($options['class'])) ? (array) $options['class'] : ['red', 'green'];
 

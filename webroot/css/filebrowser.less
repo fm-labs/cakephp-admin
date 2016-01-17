@@ -1,0 +1,92 @@
+#browser-wrapper {
+  //border: 1px solid gray;
+}
+
+#browser-path {
+  //border: 1px solid gold;
+  //padding: 1em 0 0 0;
+}
+
+#browser-toolbar {
+  //border: 1px solid aqua;
+}
+
+#browser-container {
+  //border: 1px solid red;
+}
+
+#browser-folders {
+  //border: 1px solid blue;
+  //background-color: #f8f8f8;
+}
+
+#browser-files {
+  //border: 1px solid green;
+
+  ul {
+    margin: 0;
+    padding: 0;
+
+    li {
+      list-style-image: none;
+      list-style-type: none;
+      //display: inline-block;
+      //border: 1px solid orange;
+      border-bottom: 1px solid #CCC;
+    }
+
+  }
+
+  .file {
+    padding: 9px 0;
+    position: relative;
+    min-height: 40px;
+
+    .desc {
+      display: inline-block;
+      width: 66%;
+      margin-left: 70px;
+      vertical-align: top;
+
+    }
+
+    .desc .id {
+      visibility: hidden;
+    }
+
+
+    .thumbnail {
+      max-height: 40px;
+      max-width: 50px;
+      position: absolute;
+      margin-left: 3px;
+      overflow: hidden;
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+      }
+    }
+
+    .actions {
+      padding-left: 22px;
+      display: inline-block;
+      text-align: right;
+      vertical-align: top;
+      visibility: hidden;
+    }
+  }
+
+  .file:hover {
+    background-color: #e8e8e8;
+
+    .desc .id {
+      visibility: visible;
+    }
+
+    .actions {
+      visibility: visible;
+    }
+  }
+
+}

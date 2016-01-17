@@ -7,4 +7,4 @@ use Cake\Core\Configure;
  * Copy backend.default.php to your app's config folder,
  * rename to backend.php and adjust contents
  */
-Configure::load('backend');
+//Configure::load('backend');

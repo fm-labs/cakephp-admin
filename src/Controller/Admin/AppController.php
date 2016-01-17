@@ -20,10 +20,10 @@ class AppController extends AbstractBackendController
                         'url' => ['plugin' => 'Backend', 'controller' => 'MediaBrowser', 'action' => 'index'],
                         'icon' => 'file'
                     ],
-                    'users' => [
-                        'title' => 'Users',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
-                        'icon' => 'lock'
+                    'settings' => [
+                        'title' => 'Settings',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Settings', 'action' => 'index'],
+                        'icon' => 'settings'
                     ],
                     'system' => [
                         'title' => 'Systeminfo',
@@ -34,6 +34,11 @@ class AppController extends AbstractBackendController
                         'title' => 'Logs',
                         'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
                         'icon' => 'browser'
+                    ],
+                    'users' => [
+                        'title' => 'Users',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
+                        'icon' => 'lock'
                     ],
                 ]
             ],

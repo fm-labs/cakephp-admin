@@ -33,7 +33,7 @@
     ['icon' => 'add']
 ) ?>
 <?php $this->Toolbar->endGroup(); ?>
-<?php if ($user->id === $this->request->session()->read('Auth.User.id')): ?>
+<?php if ($user->id === $this->request->session()->read('Backend.User.id')): ?>
     <?= $this->Toolbar->addLink(
         __('Change my password'),
         ['action' => 'password_change'],
@@ -46,7 +46,7 @@
 <div class="users view">
     <h2 class="ui top attached header">
         <?= h($user->username) ?>
-        <?= ($user->id === $this->request->session()->read('Auth.User.id')) ? "(Me)" : ""; ?>
+        <?= ($user->id === $this->request->session()->read('Backend.User.id')) ? "(Me)" : ""; ?>
     </h2>
     <table class="ui attached celled striped table">
         <!--

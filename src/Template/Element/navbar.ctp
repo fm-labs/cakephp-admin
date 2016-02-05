@@ -26,10 +26,10 @@
                 ); ?>
                 -->
 
-                <?php if ($this->request->session()->check('Auth.User')): ?>
+                <?php if ($this->request->session()->check('Backend.User')): ?>
                 <div class="ui dropdown item">
                     <i class="user icon"></i>
-                    <?= __('Hi, {0}', $this->request->session()->read('Auth.User.name')); ?>
+                    <?= __('Hi, {0}', $this->request->session()->read('Backend.User.name')); ?>
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         <!--

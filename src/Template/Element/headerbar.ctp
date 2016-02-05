@@ -1,4 +1,4 @@
-<?php if (!$this->request->session()->check('Auth.User')) return false; ?>
+<?php if (!$this->request->session()->check('Backend.User')) return false; ?>
 <div class="ui large opaque menu navbar grid">
 
     <?= $this->Ui->link('', '#', ['id' => 'be-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
@@ -42,7 +42,7 @@
 
         <div class="ui dropdown item">
             <i class="user icon"></i>
-            <?= __('{0}', $this->request->session()->read('Auth.User.name')); ?>
+            <?= __('{0}', $this->request->session()->read('Backend.User.name')); ?>
             <i class="dropdown icon"></i>
             <div class="menu">
                 <?= $this->Ui->link('Profile',

@@ -8,7 +8,7 @@
             PHP Version: <?= phpversion(); ?>
         </div>
         <div class="center aligned column">
-            <?= __('Logged on as <strong>{0}</strong>', $this->request->session()->read('Auth.User.username')); ?><br />
+            <?= __('Logged on as <strong>{0}</strong>', $this->request->session()->read('Backend.User.username')); ?><br />
             Client IP: <?= $this->request->clientIp(); ?><br />
         </div>
         <div class="right aligned column">

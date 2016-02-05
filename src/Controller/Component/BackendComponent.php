@@ -68,6 +68,7 @@ class BackendComponent extends Component
             'Form',
             //'Basic'
         ]);
+        $controller->Auth->config('storage', [ 'className' => 'Session', 'key' => 'Backend.User', 'redirect' => 'Backend.redirect' ]);
 
         // Configure Backend Authorization
         $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'));
@@ -84,6 +85,9 @@ class BackendComponent extends Component
 
         if ($this->request->is('iframe')) {
             $controller->viewBuilder()->layout('Backend.iframe');
+        }
+        elseif ($this->request->is('ajax')) {
+            $controller->viewBuilder()->layout('Backend.ajax');
         }
 
         $this->_controller =& $controller;

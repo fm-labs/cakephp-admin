@@ -208,6 +208,25 @@ $(document).ready(function() {
     });
 
 
+    // Top Affix
+    var $top = $('#top');
+    var $topClone = $top.clone();
+    var topAffixOffset = 150;
+    $topClone.attr('id', 'top-fixed');
+    $topClone.appendTo('body');
+
+    $(window).scroll(function(e) {
+
+        var pageY = e.originalEvent.pageY;
+        //console.log("Y: " + pageY);
+
+        if (pageY > topAffixOffset && !$('body').hasClass('fixed-nav')) {
+            $('body').addClass('fixed-nav');
+        } else if (pageY < topAffixOffset && $('body').hasClass('fixed-nav')) {
+            $('body').removeClass('fixed-nav');
+        }
+
+    });
 
 
 });

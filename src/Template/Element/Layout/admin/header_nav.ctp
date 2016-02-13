@@ -1,44 +1,42 @@
-<?php if (!$this->request->session()->check('Backend.User')) return false; ?>
-<div class="ui large opaque menu navbar grid">
+<?php
+use Backend\Lib\BackendNav;
 
-    <?= $this->Ui->link('', '#', ['id' => 'be-sidebar-toggle', 'class' => 'item', 'icon' => 'content']); ?>
+if (!$this->request->session()->check('Backend.User')) return false;
+$this->Html->css('Backend.navigation', ['block' => true]);
+?>
+<div class="ui opaque large menu">
 
-    <div class="item" id="headerbar-breadcrumbs">
-        <?= $this->element('Backend.breadcrumbs'); ?>
-    </div>
-
-    <!--
     <?= $this->Ui->link(
         $this->get('be_title'),
         $this->get('be_dashboard_url'),
         ['class' => 'item', 'icon' => 'home']
     ); ?>
 
-    <?= $this->Ui->link(
-        'Backend',
-        ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
-        ['class' => 'item', 'icon' => 'cubes']
-    ); ?>
-    -->
+    <nav class="be-nav">
+        <?php
+        $backendNavMenu = BackendNav::getMenu();
+        echo $this->element('Backend.Navigation/menu', ['menu' => $backendNavMenu]);
+        ?>
+    </nav>
+
 
     <div class="right menu">
 
-        <!-- Search
+        <!-- Search -->
         <div class="item">
             <div class="ui icon mini input">
                 <input placeholder="Search..." type="text">
                 <i class="search link icon"></i>
             </div>
         </div>
-        -->
 
-        <!-- Messages
+
+        <!-- Messages -->
         <?= $this->Ui->link(
             'Messages',
             '/backend/admin/Messages',
             ['class' => 'item', 'icon' => 'comment']
         ); ?>
-        -->
 
         <div class="ui dropdown item">
             <i class="user icon"></i>

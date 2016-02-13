@@ -20,41 +20,44 @@
 </head>
 <body>
 
-<div id="top">
-    <div id="headerbar">
-        <?= $this->element('Backend.headerbar'); ?>
-    </div>
-    <div id="toolbar">
-        <?= $this->fetch('toolbar'); ?>
-    </div>
-
-    <div id="flash">
-        <?= $this->Flash->render('auth') ?>
-        <?= $this->Flash->render('backend') ?>
-    </div>
-</div>
 
 
+<!--
 <div id="sidebar">
-    <?= $this->element('Backend.sidebar'); ?>
+    <?= '' // $this->element('Backend.sidebar'); ?>
 </div>
+-->
 
 <div id="page">
-    <div id="page-top">
-    </div>
+    <header id="top">
+        <nav id="header-nav">
+            <?= $this->element('Backend.Layout/admin/header_nav'); ?>
+        </nav>
+        <div id="toolbar">
+            <?= $this->fetch('toolbar'); ?>
+        </div>
 
-    <div id="page-main">
+        <div id="flash">
+            <?= $this->Flash->render('auth') ?>
+            <?= $this->Flash->render('backend') ?>
+        </div>
+    </header>
+
+    <main id="page-main">
+        <div id="page-crumbs">
+            <?= $this->element('Backend.Layout/admin/breadcrumbs'); ?>
+        </div>
         <div id="page-content">
             <?= $this->fetch('content'); ?>
         </div>
         <div id="page-right">
             <?= $this->fetch('right'); ?>
         </div>
-    </div>
+    </main>
 
-    <div id="page-footer">
-        <?= $this->element('Backend.footer'); ?>
-    </div>
+    <footer id="page-footer">
+        <?= $this->element('Backend.Layout/admin/footer'); ?>
+    </footer>
 
 </div> <!-- #page -->
 

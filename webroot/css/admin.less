@@ -1,12 +1,6 @@
 @import "elements.less";
 @import "vars.less";
 
-@body-offset-top: 80px;
-
-@sidebar-w: 220px;
-@sidebar-transition: 0.5s;
-@sidebar-small-w: 50px;
-
 body{
   font-family: @font-family-primary;
   font-size: @font-size-default;
@@ -69,15 +63,31 @@ table.info.table {
   }
 }
 
-#top {
-  position: fixed;
-  top: 0;
-  left: @sidebar-w + 1;
+#top,
+#top-fixed {
+  position: relative;
+  //top: 0;
+  //left: 0;
   z-index: 99999;
   width: 100%;
   opacity: 1;
   background-color: #FFF;
   box-shadow: 0 0 10px #CCC;
+  transition: 2s;
+}
+
+#top-fixed {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+body.fixed-nav {
+
+  #top-fixed {
+    display: block;
+  }
 }
 
 /**
@@ -213,7 +223,16 @@ body.be-sidebar-small {
  * Admin Page Layout
  */
 #page {
-  padding-top: 1rem;
+  //padding-top: 1rem;
+  padding: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+}
+
+#page-crumbs {
+  padding: 0.66em 2em 0 2em;
+  margin: 0;
 }
 
 #page-main {
@@ -456,3 +475,6 @@ iframe {
   }
 
 }
+
+
+  @import "navigation.less";

@@ -4,12 +4,27 @@
     A set of useful LESS mixins
     More info at: http://lesselements.com
   ---------------------------------------------------*/
+/**
+ * Colors
+ */
+/**
+ * Fonts
+ */
+/**
+ * Body
+ */
+/**
+ * Sidebar
+ */
+/**
+ * Navigation
+ */
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
   background-color: #FFF;
-  padding-top: 80px;
-  padding-left: 220px;
+  padding-top: 0;
+  padding-left: 0;
   -webkit-transition: all 0.5s ease-out;
   -moz-transition: all 0.5s ease-out;
   -o-transition: all 0.5s ease-out;
@@ -52,15 +67,24 @@ body {
 table.info.table tr td:first-child {
   font-weight: bold;
 }
-#top {
-  position: fixed;
-  top: 0;
-  left: 221px;
+#top,
+#top-fixed {
+  position: relative;
   z-index: 99999;
   width: 100%;
   opacity: 1;
   background-color: #FFF;
   box-shadow: 0 0 10px #CCC;
+  transition: 2s;
+}
+#top-fixed {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+body.fixed-nav #top-fixed {
+  display: block;
 }
 /**
  * Headerbar
@@ -110,7 +134,7 @@ table.info.table tr td:first-child {
   z-index: 9999;
 }
 #sidebar .be-sidebar {
-  width: 220px;
+  width: 0;
   overflow-x: hidden;
   -webkit-box-shadow: -3px -5px 13px #333;
   -moz-box-shadow: -3px -5px 13px #333;
@@ -153,7 +177,14 @@ body.be-sidebar-small #headerbar .ui.navbar.menu {
  * Admin Page Layout
  */
 #page {
-  padding-top: 1rem;
+  padding: 0;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
+}
+#page-crumbs {
+  padding: 0.66em 2em 0 2em;
+  margin: 0;
 }
 #page-main {
   position: relative;
@@ -322,4 +353,69 @@ iframe {
 }
 .attachments.editor .attachments .attachment .actions {
   font-size: 10px;
+}
+/**
+ * Backend Navigation Style Sheet
+ *
+ * CSS Scope: .be-nav
+ */
+.be-nav {
+  z-index: 1000;
+}
+.be-nav a {
+  line-height: 30px;
+  margin: 0;
+  padding: 0.33em 0.66em;
+  font-size: 16px;
+  display: block;
+  text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+}
+.be-nav ul {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.be-nav ul li {
+  vertical-align: top;
+  display: inline-block;
+  list-style: none outside none;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
+  border-top: 3px solid #FFF;
+}
+.be-nav ul li:hover {
+  background-color: green;
+  border-top: 3px solid #333;
+}
+.be-nav ul li:hover > ul {
+  visibility: visible;
+  background-color: #f8f8f8;
+}
+.be-nav ul li:hover > a {
+  color: #FFF;
+}
+.be-nav ul li::before {
+  content: "";
+  margin: 0;
+  padding: 0;
+}
+.be-nav ul ul {
+  position: absolute;
+  left: 0;
+  visibility: hidden;
+  margin: 0;
+  padding: 0;
+  width: 250px;
+  background-color: #f8f8f8;
+  z-index: 10000;
+}
+.be-nav ul ul li {
+  display: block;
+  border: none;
+}
+.be-nav ul ul li:hover {
+  border: none;
 }

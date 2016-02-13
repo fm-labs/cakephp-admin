@@ -1,0 +1,80 @@
+/**
+ * Backend Navigation Style Sheet
+ *
+ * CSS Scope: .be-nav
+ */
+/**
+ * Colors
+ */
+/**
+ * Fonts
+ */
+/**
+ * Body
+ */
+/**
+ * Sidebar
+ */
+/**
+ * Navigation
+ */
+.be-nav {
+  z-index: 1000;
+}
+.be-nav a {
+  line-height: 30px;
+  margin: 0;
+  padding: 0.33em 0.66em;
+  font-size: 16px;
+  display: block;
+  text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
+  color: #333;
+}
+.be-nav ul {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.be-nav ul li {
+  vertical-align: top;
+  display: inline-block;
+  list-style: none outside none;
+  margin: 0 !important;
+  padding: 0 !important;
+  position: relative;
+  border-top: 3px solid #FFF;
+}
+.be-nav ul li:hover {
+  background-color: green;
+  border-top: 3px solid #333;
+}
+.be-nav ul li:hover > ul {
+  visibility: visible;
+  background-color: #f8f8f8;
+}
+.be-nav ul li:hover > a {
+  color: #FFF;
+}
+.be-nav ul li::before {
+  content: "";
+  margin: 0;
+  padding: 0;
+}
+.be-nav ul ul {
+  position: absolute;
+  left: 0;
+  visibility: hidden;
+  margin: 0;
+  padding: 0;
+  width: 250px;
+  background-color: #f8f8f8;
+  z-index: 10000;
+}
+.be-nav ul ul li {
+  display: block;
+  border: none;
+}
+.be-nav ul ul li:hover {
+  border: none;
+}

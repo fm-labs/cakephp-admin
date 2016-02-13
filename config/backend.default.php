@@ -9,9 +9,4 @@ return [
 //    'Backend.Users' => [
 //          'admin' => 'myAdminPa$$w0rd'
 //    ],
-//    # Additional Plugins required by this Backend installation
-//    'Backend.Plugins' => [
-//        'User', // (required) Backend core plugin
-//        'Rbac', // (optional) Role-based-authorization mechanism
-//    ]
 ];

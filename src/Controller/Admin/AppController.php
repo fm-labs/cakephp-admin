@@ -8,27 +8,22 @@ class AppController extends AbstractBackendController
     public static function backendMenu()
     {
         return [
-            'Backend' => [
+            'plugin.backend' => [
                 'plugin' => 'Backend',
-                'title' => 'Backend',
+                'title' => 'System',
                 'url' => ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
                 'icon' => 'cubes',
 
                 '_children' => [
-                    'media' => [
-                        'title' => 'Media',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'MediaBrowser', 'action' => 'index'],
-                        'icon' => 'file'
+                    'system' => [
+                        'title' => 'Systeminfo',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
+                        'icon' => 'info'
                     ],
                     'settings' => [
                         'title' => 'Settings',
                         'url' => ['plugin' => 'Backend', 'controller' => 'Settings', 'action' => 'index'],
                         'icon' => 'settings'
-                    ],
-                    'system' => [
-                        'title' => 'Systeminfo',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                        'icon' => 'info'
                     ],
                     'logs' => [
                         'title' => 'Logs',

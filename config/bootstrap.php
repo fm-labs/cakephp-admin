@@ -1,4 +1,5 @@
 <?php
+use Backend\Lib\Backend;
 use Cake\Core\Configure;
 
 /**

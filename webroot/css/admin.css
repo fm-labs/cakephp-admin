@@ -37,6 +37,21 @@ body {
 .strong {
   font-weight: bold;
 }
+/**
+ * Images
+ */
+.image {
+  max-width: 100%;
+}
+.image > img {
+  max-width: 100%;
+}
+/**
+ * Table
+ */
+table.info.table tr td:first-child {
+  font-weight: bold;
+}
 #top {
   position: fixed;
   top: 0;

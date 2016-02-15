@@ -22,21 +22,22 @@ $this->Html->css('Backend.navigation', ['block' => true]);
 
     <div class="right menu">
 
-        <!-- Search -->
+        <!-- Search
         <div class="item">
             <div class="ui icon mini input">
                 <input placeholder="Search..." type="text">
                 <i class="search link icon"></i>
             </div>
         </div>
+        -->
 
-
-        <!-- Messages -->
+        <!-- Messages
         <?= $this->Ui->link(
             'Messages',
             '/backend/admin/Messages',
             ['class' => 'item', 'icon' => 'comment']
         ); ?>
+         -->
 
         <div class="ui dropdown item">
             <i class="user icon"></i>

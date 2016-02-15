@@ -9,7 +9,7 @@
 namespace Backend\Shell;
 
 use Cake\Console\Shell;
-use Backend\Model\Table\UsersTable;
+use User\Model\Table\UsersTable;
 
 /**
  * Class BackendShell
@@ -26,13 +26,6 @@ class BackendShell extends Shell
     public function getOptionParser()
     {
         $parser = parent::getOptionParser();
-        /*
-        $parser->epilog([
-            '-----------------',
-            '# BACKEND SHELL #',
-            '-----------------'
-        ]);
-        */
         $parser->addArgument('task', [
             'help' => 'Backend task to be executed',
             'required' => false,
@@ -44,17 +37,38 @@ class BackendShell extends Shell
 
     public function setupRootUser()
     {
-        $this->loadModel('User.Users');
-        $root = $this->Users->createRootUser();
-        if ($root === false) {
-            $this->error("Failed to create root user: Root user already exists!");
+        $this->out("-- Setup root user --");
+
+        $rootCount = $this->Users->find()->where(['Users.username' => 'root'])->count();
+        if ($rootCount > 0) {
+            $this->error('Root user already exists');
         }
 
-        $this->out("<success>Root user created with default password</success>");
+        do {
+
+            $pass1 = trim($this->in("Choose root password: "));
+            $pass2 = trim($this->in("Repeat password: "));
+
+            $match = ($pass1 === $pass2);
+            if (!$match) {
+                $this->out("Passwords do not match. Please try again.");
+            }
+
+        } while (!$match);
+
+
+
+        $this->loadModel('User.Users');
+        $root = $this->Users->createRootUser($pass1);
+        if ($root === false) {
+            $this->error("Failed to create root user");
+        }
+
+        $this->out("<success>Root user successfully created!</success>");
     }
 
     public function quit()
     {
-        $this->err('ByeBye');
+        $this->out('ByeBye');
     }
 }

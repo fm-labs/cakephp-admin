@@ -2,10 +2,10 @@
 use Cake\Core\Configure;
 ?>
 <?php $this->Html->addCrumb(__('User'), ['action' => 'user']); ?>
-<?php $this->assign('title', 'About Me'); ?>
+<?php $this->assign('title', $user['name']); ?>
 <div class="users view">
     <h2 class="ui header">
-        <?= h('About Me'); ?>
+        <?= h($user['name']); ?>
     </h2>
     <div class="ui card">
         <div class="image">

@@ -29,30 +29,29 @@ class BackendAuthorize extends BaseAuthorize
      */
     public function authorize($user, Request $request)
     {
+        return true;
+
         $userId = $user['id'];
         if (!$userId) {
             return null;
         }
 
-        // root is always authorized
-        if ($userId === 1 && $user['username'] === 'root') {
+        // allow root
+        if ($user['username'] === 'root') {
             return true;
         }
 
-        // configured backend user ids
+        // allow superusers
+        if (isset($user['is_superuser']) && $user['is_superuser'] === true) {
+            return true;
+        }
+
+        // configured backend users
+        //@TODO Refactor this dirty UserId-hack with actual http basic auth
         $backendUsersIds = (array) Configure::read('Backend.Users');
         if (in_array($userId, $backendUsersIds)) {
             return true;
         }
-
-//        // user group authorization
-//        if ($user['_groups'] &&
-//            is_array($user['_groups']) &&
-//            //isset($user['_groups'][0]) &&
-//            in_array('backend', $user['_groups'])
-//        ) {
-//            return true;
-//        }
 
         return null;
     }

@@ -11,10 +11,13 @@
         <div class="ui divider"></div>
 
         <div>
+            <?= $this->Html->link(__('Go to dashboard page'), $be_dashboard_url); ?><br />
             <?= $this->Html->link(__('Go to login page'), ['action' => 'login']); ?><br />
             <?= $this->Html->link(__('Go to logout page'), ['action' => 'logout']); ?><br />
             <?= $this->Html->link(__('Go to main page'), '/'); ?><br />
         </div>
 
+        <div class="ui hidden divider"></div>
+        <?php debug($this->request->session()->read()); ?>
     </div>
 </div>

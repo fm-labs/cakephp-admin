@@ -35,6 +35,12 @@ class AuthController extends AppController
      */
     public function login()
     {
+        if ($this->Auth->user()) {
+            $this->Flash->success(__('You are already logged in'));
+            $this->redirect(['action' => 'user']);
+            return;
+        }
+
         $this->Auth->login();
     }
 

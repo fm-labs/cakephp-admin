@@ -19,6 +19,7 @@
     <thead>
         <tr>
             <th><?= $this->Paginator->sort('id') ?></th>
+            <th><?= $this->Paginator->sort('superuser') ?></th>
             <th><?= $this->Paginator->sort('username') ?></th>
             <th><?= $this->Paginator->sort('group_id') ?></th>
             <th><?= $this->Paginator->sort('name') ?></th>
@@ -30,6 +31,7 @@
     <?php foreach ($users as $user): ?>
         <tr>
             <td><?= $this->Number->format($user->id) ?></td>
+            <td><?= $this->Ui->statusLabel($user->is_superuser) ?></td>
             <td><?= h($user->username) ?></td>
             <td>
                 <?= $user->has('primary_group') ? $this->Html->link($user->primary_group->name, ['controller' => 'UserGroups', 'action' => 'view', $user->primary_group->id]) : '' ?>

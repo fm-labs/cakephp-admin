@@ -121,7 +121,7 @@ class UsersController extends AppController
      * @param null $userId
      * @return \Cake\Network\Response|void
      */
-    public function password_change($userId = null)
+    public function passwordChange($userId = null)
     {
         if ($userId === null) {
             $userId = $this->Auth->user('id');
@@ -147,7 +147,7 @@ class UsersController extends AppController
      * @param null $userId
      * @return \Cake\Network\Response|void
      */
-    public function password_reset($userId = null)
+    public function passwordReset($userId = null)
     {
         $authUserId = $this->Auth->user('id');
         if ($userId === null) {

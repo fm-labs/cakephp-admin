@@ -24,6 +24,7 @@
     <div class="users ui attached basic segment">
         <div class="ui form">
         <?php
+        echo $this->Form->input('superuser');
         echo $this->Form->input('group_id', ['options' => $primaryGroup, 'empty' => true]);
         echo $this->Form->input('username');
         echo $this->Form->input('name', ['label' => __('Real name')]);

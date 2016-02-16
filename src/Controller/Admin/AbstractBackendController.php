@@ -36,13 +36,10 @@ abstract class AbstractBackendController extends Controller implements BackendCo
      */
     public function initialize()
     {
-        parent::initialize();
-
         // Configure Backend component
         if (!$this->components()->has('Backend')) {
             $this->loadComponent('Backend.Backend');
         }
-
     }
 
     /**

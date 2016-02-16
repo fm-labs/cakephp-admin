@@ -1,5 +1,11 @@
 <?php
 return [
+
+    /**
+     * Backend plugin route path
+     */
+    'Backend.path' => '/backend',
+
     /**
      * Backend Dashboard
      *

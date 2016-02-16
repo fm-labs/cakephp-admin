@@ -32,7 +32,7 @@ class BackendComponent extends Component
         'authLogoutAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
         'authUnauthorizedRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'unauthorized'],
         'authAuthorize' => ['Controller', 'Backend.Backend', 'User.Roles'],
-        'userModel' => 'User.Users'
+        'userModel' => 'Backend.Users'
     ];
 
     /**
@@ -64,7 +64,7 @@ class BackendComponent extends Component
         $controller->Auth->config('loginAction', $this->config('authLoginAction'));
         $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'));
         $controller->Auth->config('authenticate', [
-            AuthComponent::ALL => ['userModel' => $this->config('userModel')],
+            AuthComponent::ALL => ['userModel' => $this->config('userModel'), 'finder' => 'backendAuthUser'],
             'Form',
             //'Basic'
         ]);

@@ -16,10 +16,7 @@ class AuthController extends AppController
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        //debug($this->components()->loaded());
-        //foreach ($this->components()->loaded() as $c) {
-        //    debug($c . " -> " . get_class($this->components()->get($c)));
-        //}
+
         $this->Auth->allow(['login', 'unauthorized']);
 
         $this->viewBuilder()->layout('Backend.auth');

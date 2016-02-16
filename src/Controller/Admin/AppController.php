@@ -35,7 +35,7 @@ class AppController extends AbstractBackendController
                     ],
                     'users' => [
                         'title' => 'Users',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
+                        'url' => ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
                         'icon' => 'lock',
                         'requireRoot' => true, // temporary access control workaround
                     ],

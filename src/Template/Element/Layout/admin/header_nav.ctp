@@ -4,7 +4,7 @@ use Backend\Lib\BackendNav;
 if (!$this->request->session()->check('Backend.User')) return false;
 $this->Html->css('Backend.navigation', ['block' => true]);
 ?>
-<div class="ui opaque large menu">
+<div class="ui opaque menu">
 
     <?= $this->Ui->link(
         $this->get('be_title'),

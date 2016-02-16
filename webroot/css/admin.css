@@ -19,6 +19,9 @@
 /**
  * Navigation
  */
+/**
+ * Page
+ */
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
@@ -82,6 +85,9 @@ table.info.table tr td:first-child {
   position: fixed;
   top: 0;
   left: 0;
+}
+#top-fixed #flash {
+  display: none;
 }
 body.fixed-nav #top-fixed {
   display: block;
@@ -183,8 +189,12 @@ body.be-sidebar-small #headerbar .ui.navbar.menu {
   max-width: 100%;
 }
 #page-crumbs {
-  padding: 0.66em 2em 0 2em;
+  padding: 0.33em 1.66em;
   margin: 0;
+}
+#page-crumbs a,
+#page-crumbs .breadcrumb {
+  font-size: 10px;
 }
 #page-main {
   position: relative;
@@ -192,7 +202,7 @@ body.be-sidebar-small #headerbar .ui.navbar.menu {
 #page-content {
   min-height: 700px;
   background-color: #FFF;
-  padding: 1rem 2rem 4rem 2rem;
+  padding: 0.33em 1.66em 4em 1.66em;
 }
 #page-right {
   position: absolute;
@@ -363,13 +373,13 @@ iframe {
   z-index: 1000;
 }
 .be-nav a {
-  line-height: 30px;
+  line-height: 24px;
   margin: 0;
   padding: 0.33em 0.66em;
-  font-size: 16px;
   display: block;
   text-decoration: none;
   font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
   color: #333;
 }
 .be-nav ul {
@@ -411,6 +421,9 @@ iframe {
   width: 250px;
   background-color: #f8f8f8;
   z-index: 10000;
+  -webkit-box-shadow: 0 5px 5px #CCC;
+  -moz-box-shadow: 0 5px 5px #CCC;
+  box-shadow: 0 5px 5px #CCC;
 }
 .be-nav ul ul li {
   display: block;
@@ -418,4 +431,11 @@ iframe {
 }
 .be-nav ul ul li:hover {
   border: none;
+}
+/**
+ * Large Menu Style
+ */
+.be-nav.large a {
+  line-height: 30px;
+  font-size: 16px;
 }

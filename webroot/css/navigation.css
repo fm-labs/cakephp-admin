@@ -3,6 +3,12 @@
  *
  * CSS Scope: .be-nav
  */
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
 /**
  * Colors
  */
@@ -18,17 +24,20 @@
 /**
  * Navigation
  */
+/**
+ * Page
+ */
 .be-nav {
   z-index: 1000;
 }
 .be-nav a {
-  line-height: 30px;
+  line-height: 24px;
   margin: 0;
   padding: 0.33em 0.66em;
-  font-size: 16px;
   display: block;
   text-decoration: none;
   font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
   color: #333;
 }
 .be-nav ul {
@@ -70,6 +79,9 @@
   width: 250px;
   background-color: #f8f8f8;
   z-index: 10000;
+  -webkit-box-shadow: 0 5px 5px #CCC;
+  -moz-box-shadow: 0 5px 5px #CCC;
+  box-shadow: 0 5px 5px #CCC;
 }
 .be-nav ul ul li {
   display: block;
@@ -77,4 +89,11 @@
 }
 .be-nav ul ul li:hover {
   border: none;
+}
+/**
+ * Large Menu Style
+ */
+.be-nav.large a {
+  line-height: 30px;
+  font-size: 16px;
 }

@@ -3,6 +3,7 @@
  *
  * CSS Scope: .be-nav
  */
+@import "elements.less";
 @import "vars.less";
 
 .be-nav {
@@ -10,15 +11,15 @@
 }
 
 .be-nav a {
-  line-height: 30px;
+  line-height: 24px;
   margin: 0;
   padding: 0.33em 0.66em;
-  font-size: 16px;
   display: block;
-  //text-transform: lowercase;
   text-decoration: none;
   font-family: @font-family-primary;
+  font-size: @body-font-size;
   color: @nav-color-link;
+  //text-transform: lowercase;
 }
 
 .be-nav ul {
@@ -70,6 +71,7 @@
   width: 250px;
   background-color: @nav-color-bg;
   z-index: 10000;
+  .box-shadow(0 5px 5px #CCC);
 }
 
 .be-nav ul ul li {
@@ -78,5 +80,17 @@
 
   &:hover {
     border: none;
+  }
+}
+
+/**
+ * Large Menu Style
+ */
+
+.be-nav.large {
+
+  a {
+    line-height: 30px;
+    font-size: @font-size-large;
   }
 }

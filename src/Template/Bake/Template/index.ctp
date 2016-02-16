@@ -33,7 +33,7 @@ foreach ($associations as $type => $data):
 endforeach;
 %>
 <div class="<%= $pluralVar %> index">
-    <table class="ui table striped">
+    <table class="ui compact table striped">
     <thead>
         <tr>
     <% foreach ($fields as $field): %>

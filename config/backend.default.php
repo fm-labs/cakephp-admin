@@ -14,7 +14,7 @@ return [
      */
     'Backend.Dashboard' => [
         'title' => 'Backend',
-        'url' => '/backend/admin/Default/index',
+        'url' => '/backend/admin/Dashboard/index',
     ],
 
     /**

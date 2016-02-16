@@ -1,14 +1,12 @@
 <?php
 namespace Backend\Controller\Admin;
 
-use Backend\Controller\BackendControllerInterface;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Backend\Controller\Component\FlashComponent;
-use Cake\Core\Plugin;
-use Cake\Event\Event;
+
 
 /**
  * Class BackendAppController
@@ -22,9 +20,8 @@ use Cake\Event\Event;
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
  *
- * @deprecated Use BackendComponent instead
  */
-abstract class AbstractBackendController extends Controller implements BackendControllerInterface
+abstract class AbstractBackendController extends Controller
 {
     /**
      * Initialization hook method.

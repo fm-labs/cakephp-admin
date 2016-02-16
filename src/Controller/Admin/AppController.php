@@ -11,9 +11,9 @@ class AppController extends AbstractBackendController
             'plugin.backend' => [
                 'plugin' => 'Backend',
                 'title' => 'System',
-                'url' => ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
+                'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'backend'],
                 'icon' => 'cubes',
-               // 'requireRoot' => true, // temporary access control workaround
+                // 'requireRoot' => true, // temporary access control workaround
 
                 '_children' => [
                     'system' => [

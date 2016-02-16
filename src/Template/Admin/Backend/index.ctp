@@ -31,7 +31,7 @@ $this->Toolbar->addLink('View Logs', ['controller' => 'Logs', 'action' => 'index
                 <h2 class="ui header">
                     <div class="content">
                         <i class="lock icon"></i>Access Control
-                        <div class="sub header">Manage Backend Users and Roles</div>
+                        <div class="sub header">Manage Users and Roles</div>
                     </div>
                 </h2>
             </div>
@@ -39,12 +39,12 @@ $this->Toolbar->addLink('View Logs', ['controller' => 'Logs', 'action' => 'index
                 <div class="ui list">
                     <?= $this->Ui->link(
                         'Manage Users',
-                        ['controller' => 'Users', 'action' => 'index'],
+                        ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
                         ['class' => 'item', 'icon' => 'male']
                     ); ?>
                     <?= $this->Ui->link(
                         'Change password',
-                        ['controller' => 'Users', 'action' => 'password_change'],
+                        ['plugin' => 'User', 'controller' => 'Users', 'action' => 'password_change'],
                         ['class' => 'item', 'icon' => 'edit']
                     ); ?>
                 </div>

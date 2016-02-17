@@ -154,7 +154,7 @@ $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
     <div class="item">
         <?= $this->Ui->link(
             $this->Html->tag('span', $this->get('be_title')),
-            $this->get('be_dashboard_url'),
+            ['_name' => 'backend:admin:dashboard'],
             ['icon' => 'inverted blue home', 'escape' => false]
         ); ?>
         <!--

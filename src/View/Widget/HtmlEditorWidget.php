@@ -33,7 +33,7 @@ class HtmlEditorWidget extends BasicWidget
         // Height of the editable area in pixels.
         'height' => 300,
 
-        'content_css_url' => null,
+        'content_css' => null,
 
         'menubar' => false,
         'menu' => [
@@ -47,19 +47,17 @@ class HtmlEditorWidget extends BasicWidget
         'convert_urls' => true, // TinyMCE default: true
         'relative_urls' => false, // TinyMCE default: true
         'remove_script_host' => true, // TinyMCE default: true
-        'document_base_url_url' => '/',
+        'document_base_url' => '/',
         //'importcss_append' => true,
         'cache_suffix' => null,
     ];
 
-    /**
-     * Editor config fields that will be treated as an URL, if the suffix '_url' is appended.
-     * E.g. if 'image_list_url' is set, the config key 'image_list' will be set with the corresponding route URL
-     *
-     * @var array
-     */
-    public static $urlFields = ['document_base_url', 'content_css', 'image_list', 'link_list'];
+    public function __construct($templates)
+    {
+        static::$defaultConfig['document_base_url'] = Router::url('/', true);
 
+        parent::__construct($templates);
+    }
 
     /**
      * Render a text area element which will be converted to a tinymce htmleditor.
@@ -80,41 +78,33 @@ class HtmlEditorWidget extends BasicWidget
             'id' => '',
             'editor' => [],
         ];
+
         $data['class'] = ($data['class']) ? $data['class'] . ' htmleditor' : 'htmleditor';
         $data['id'] = ($data['id']) ? $data['id'] : uniqid('htmleditor');
 
-        $editor = ($data['editor']) ? array_merge(static::$defaultConfig, $data['editor']) : static::$defaultConfig;
-        $editor['selector'] = '#' . $data['id'];
+
+        // load editor config by config referent (@[Config.Key])
+        if ($data['editor'] && is_string($data['editor']) && preg_match('/^\@(.*)/', $data['editor'], $matches)) {
+            $data['editor'] = Configure::read($matches[1]);
+        }
+
+
+        $data['editor'] = array_merge(static::$defaultConfig, $data['editor']);
 
         // convert urls
-        foreach (static::$urlFields as $key) {
-            if (isset($editor[$key . '_url'])) {
 
-                $url = $editor[$key . '_url'];
-                unset($editor[$key . '_url']);
-
-                /*
-                if (is_array($url)) {
-                    array_walk($url, function(&$val) {
-                       $val = Router::url($val, true);
-                    });
-                } elseif ($url) {
-                    $url = Router::url($url, true);
-                }
-                */
-
-                if (preg_match('/^\@(.*)/', $url, $matches)) {
-                    $url = Configure::read($matches[1]);
-                    if (!$url) {
-                        debug("HtmlEditor: The config value for the editor url '" . $matches[1] . "' could not be found");
-                        continue;
-                    }
-                }
-
-                $url = Router::url($url, true);
-                $editor[$key] = $url;
+        $editor = [];
+        array_walk($data['editor'], function($val, $key) use (&$editor) {
+            if (preg_match('/^_(.*)$/', $key, $matches)) {
+                $_key = $matches[1];
+                $editor[$_key] = Router::url($val, true);
+            } else {
+                $editor[$key] = $val;
             }
-        }
+        });
+
+        $editor['selector'] = '#' . $data['id'];
+        //debug($editor);
 
         $this->_templates->add([
             'htmlEditor' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea><script>{{editorScript}}</script>',

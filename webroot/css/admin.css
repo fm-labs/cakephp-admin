@@ -73,7 +73,7 @@ table.info.table tr td:first-child {
 #top,
 #top-fixed {
   position: relative;
-  z-index: 99999;
+  z-index: 1000;
   width: 100%;
   opacity: 1;
   background-color: #FFF;

@@ -68,7 +68,12 @@ class BackendComponent extends Component
             'Form',
             //'Basic'
         ]);
-        $controller->Auth->config('storage', [ 'className' => 'Session', 'key' => 'Backend.User', 'redirect' => 'Backend.redirect' ]);
+        // Configure Backend Auth Storage
+        $controller->Auth->config('storage', [
+            'className' => 'Session',
+            'key' => 'Backend.User',
+            'redirect' => 'Backend.redirect'
+        ]);
 
         // Configure Backend Authorization
         $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'));
@@ -83,6 +88,7 @@ class BackendComponent extends Component
             return (bool) $this->request->query('iframe');
         });
 
+        // Handle iframe and ajax requests
         if ($this->request->is('iframe')) {
             $controller->viewBuilder()->layout('Backend.iframe');
         }
@@ -95,10 +101,6 @@ class BackendComponent extends Component
 
     public function beforeFilter(Event $event)
     {
-        // only act on instances of BackendControllerInterface
-        //if ($event->subject() instanceof BackendControllerInterface) {
-        //}
-
     }
 
     public function startup(Event $event)
@@ -108,14 +110,18 @@ class BackendComponent extends Component
 
     public function beforeRender(\Cake\Event\Event $event)
     {
-        // only act on instances of BackendControllerInterface
-        //if ($event->subject() instanceof BackendControllerInterface) {
-            $controller = $event->subject();
-            $controller->set('be_title', Configure::read('Backend.Dashboard.title'));
-            $controller->set('be_dashboard_url', Configure::read('Backend.Dashboard.url'));
-            $controller->set('be_auth_login_url', $this->config('authLoginAction'));
-            $controller->set('be_auth_logout_url', $this->config('authLogoutAction'));
-        //}
+        $controller = $event->subject();
+        $controller->set('be_title', Configure::read('Backend.Dashboard.title'));
+    }
+
+    public function authConfig($key, $val = null, $merge = true)
+    {
+        $this->_controller->Auth->config($key, $val, $merge);
+    }
+
+    public function flashConfig($key, $val = null, $merge = true)
+    {
+        $this->_controller->Flash->config($key, $val, $merge);
     }
 
     public function implementedEvents()
@@ -131,16 +137,6 @@ class BackendComponent extends Component
     public function onUserLogin(Event $event)
     {
         //@TODO Implement event callback for 'User.login' (disabled)
-        Log::debug('Backend:Event: User.login');
-    }
-
-    public function authConfig($key, $val = null, $merge = true)
-    {
-        $this->_controller->Auth->config($key, $val, $merge);
-    }
-
-    public function flashConfig($key, $val = null, $merge = true)
-    {
-        $this->_controller->Flash->config($key, $val, $merge);
+        //Log::debug('Backend:Event: User.login');
     }
 }

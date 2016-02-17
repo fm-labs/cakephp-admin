@@ -3,6 +3,7 @@ namespace Backend\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Routing\Router;
 use User\Controller\Component\AuthComponent;
 
 /**
@@ -46,7 +47,7 @@ class AuthController extends AppController
      */
     public function loginSuccess()
     {
-        $this->redirect(Configure::read('Backend.Dashboard.url'));
+        $this->redirect(Router::url(['_name' => 'backend:admin:dashboard']));
     }
 
     /**

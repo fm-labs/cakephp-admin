@@ -22,7 +22,7 @@ use Cake\Core\Configure;
         </div>
         <div class="extra content">
             <?= $this->Ui->link(__('Goto Dashboard'),
-                $this->get('be_dashboard_url'),
+                ['_name' => 'backend:admin:dashboard'],
                 ['icon' => 'user']);
             ?>
         </div>

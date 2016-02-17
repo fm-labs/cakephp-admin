@@ -8,7 +8,7 @@ $this->Html->css('Backend.navigation', ['block' => true]);
 
     <?= $this->Ui->link(
         $this->get('be_title'),
-        $this->get('be_dashboard_url'),
+        ['_name' => 'backend:admin:dashboard'],
         ['class' => 'item', 'icon' => 'home']
     ); ?>
 
@@ -50,7 +50,7 @@ $this->Html->css('Backend.navigation', ['block' => true]);
                 <div class="ui divider"></div>
                 <?= $this->Ui->link(
                     __('Logout'),
-                    $this->get('be_auth_logout_url'),
+                    ['_name' => 'backend:admin:auth:logout'],
                     ['class' => 'item']);
                 ?>
             </div>

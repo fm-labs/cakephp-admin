@@ -28,19 +28,19 @@ use Cake\Core\Configure;
         </div>
         <div class="extra content">
             <?= $this->Ui->link(__('Edit profile'),
-                ['controller' => 'Users', 'action' => 'edit', $user['id']],
+                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'edit', $user['id']],
                 ['icon' => 'user']);
             ?>
         </div>
         <div class="extra content">
             <?= $this->Ui->link(__('Change password'),
-                ['controller' => 'Users', 'action' => 'password_change'],
+                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'password_change'],
                 ['icon' => 'user']);
             ?>
         </div>
         <div class="extra content">
             <?= $this->Ui->link(__('Logout'),
-                ['controller' => 'Auth', 'action' => 'logout'],
+                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
                 ['icon' => 'user']);
             ?>
         </div>

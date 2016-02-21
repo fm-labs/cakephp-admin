@@ -25,7 +25,7 @@ class HtmlEditorWidget extends BasicWidget
         'selector' => 'textarea.htmleditor',
         // Which plugins TinyMCE will attempt to load when starting up
         'plugins' => [
-            'image link lists code table media paste wordcount'
+            'image link lists code table media paste wordcount importcss wordcount'
         ],
         // This option allows you to disable the element path within the status bar at the bottom of the editor.
         // Default: True
@@ -83,7 +83,7 @@ class HtmlEditorWidget extends BasicWidget
         $data['id'] = ($data['id']) ? $data['id'] : uniqid('htmleditor');
 
 
-        // load editor config by config referent (@[Config.Key])
+        // load editor config by config reference (@[Config.Key])
         if ($data['editor'] && is_string($data['editor']) && preg_match('/^\@(.*)/', $data['editor'], $matches)) {
             $data['editor'] = Configure::read($matches[1]);
         }
@@ -92,12 +92,22 @@ class HtmlEditorWidget extends BasicWidget
         $data['editor'] = array_merge(static::$defaultConfig, $data['editor']);
 
         // convert urls
-
         $editor = [];
         array_walk($data['editor'], function($val, $key) use (&$editor) {
             if (preg_match('/^_(.*)$/', $key, $matches)) {
                 $_key = $matches[1];
-                $editor[$_key] = Router::url($val, true);
+
+                // urls in cakephp can be arrays
+                // check if given value is an url or a list of urls
+                if (array_values($val) !== $val) {
+                    $editor[$_key] = Router::url($val, true);
+                } else {
+                    $list = [];
+                    array_walk($val, function ($_url) use (&$list) {
+                        $list[] = Router::url($_url, true);
+                    });
+                }
+
             } else {
                 $editor[$key] = $val;
             }

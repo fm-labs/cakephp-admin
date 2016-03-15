@@ -148,11 +148,30 @@ $(document).ready(function() {
     // Tabs (depends on semantic ui)
     //
 
-    $('.be-tabs .menu .item')
-        .tab()
-    ;
-    $('.be-tabs .menu .item:first-child').addClass('active');
-    $('.be-tabs .tabs .tab:first-child').addClass('active');
+    //$('.be-tabs .menu .item:first-child').addClass('active');
+    //$('.be-tabs .tabs .tab:first-child').addClass('active');
+    //$('.be-tabs .menu .item').tab();
+    //$('.be-tabs .menu .item:first-child').trigger('click');
+    //$('.be-tabs .tabs .tab:first-child').addClass('loading');
+    $('.be-tabs .menu .item').tab({
+        //history: true,
+        evaluateScripts: true,
+        onFirstLoad : function(tabPath,parameterArray, historyEvent){
+            var $tabMenuItem = $('#'+tabPath+'-menu');
+            var url = $tabMenuItem.data('url');
+            if(url && !$tabMenuItem.hasClass('tab-loaded')){
+                console.log("loading tab " + url);
+                var _this = $(this);
+                $(this).addClass('loading');
+                $.get(url, function(response){
+                    _this.html(response);
+                    _this.removeClass('loading');
+                    $tabMenuItem.addClass('tab-loaded');
+                });
+            }
+        }
+    });
+    $('.be-tabs .menu .item:first-child').trigger('click');
 
 
 

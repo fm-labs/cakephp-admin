@@ -16,6 +16,7 @@
     <?= $this->fetch('css') ?>
 
     <?= $this->fetch('script') ?>
+    <?= $this->fetch('scriptBackend'); ?>
 
 </head>
 <body>
@@ -61,7 +62,6 @@
 
 </div> <!-- #page -->
 
-<?= $this->fetch('scriptBackend'); ?>
 <?= $this->fetch('scriptBottom'); ?>
 
 </body>

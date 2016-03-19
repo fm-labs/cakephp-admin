@@ -155,7 +155,7 @@ $(document).ready(function() {
     //$('.be-tabs .tabs .tab:first-child').addClass('loading');
     $('.be-tabs .menu .item').tab({
         //history: true,
-        evaluateScripts: true,
+        //evaluateScripts: true,
         onFirstLoad : function(tabPath,parameterArray, historyEvent){
             var $tabMenuItem = $('#'+tabPath+'-menu');
             var url = $tabMenuItem.data('url');

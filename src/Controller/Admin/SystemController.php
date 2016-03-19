@@ -53,12 +53,16 @@ class SystemController extends AppController
     {
         $plugins = [];
         foreach (Plugin::loaded() as $pluginName) {
+            /*
             $plugins[$pluginName] = [
                 'path' => Plugin::path($pluginName),
                 'config' => Plugin::configPath($pluginName),
                 'class' => Plugin::classPath($pluginName)
             ];
+            */
+            $plugins[$pluginName] = Plugin::path($pluginName);
         }
+
         $this->set('plugins', $plugins);
         $this->set('_serialize', $plugins);
     }

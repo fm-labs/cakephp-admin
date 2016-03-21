@@ -3,8 +3,8 @@
 <head>
     <?= $this->Html->charset() ?>
     <title><?= $this->fetch('title') ?></title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name=viewport content="width=device-width, initial-scale=1">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="robots" content="noindex,nofollow">
 
@@ -12,23 +12,31 @@
     <?= $this->fetch('meta') ?>
 
     <?= $this->fetch('cssBackend') ?>
-    <?= $this->Html->css('Backend.bootstrap.min'); ?>
     <?= $this->Html->css('Backend.admin'); ?>
     <?= $this->fetch('css') ?>
 
     <?= $this->fetch('script') ?>
-    <?= $this->Html->script('Backend.bootstrap.min'); ?>
-    <?= $this->Html->script('Backend.be-ui'); ?>
     <?= $this->fetch('scriptBackend'); ?>
 
 </head>
 <body>
 
+
+
+<!--
+<div id="sidebar">
+    <?= '' // $this->element('Backend.sidebar'); ?>
+</div>
+-->
+
 <div id="page">
     <header id="top">
         <nav id="header-nav">
-            <?= '' // $this->element('Backend.Layout/admin/header_nav'); ?>
+            <?= $this->element('Backend.Layout/admin/header_nav'); ?>
         </nav>
+        <div id="toolbar">
+            <?= $this->fetch('toolbar'); ?>
+        </div>
 
         <div id="flash">
             <?= $this->Flash->render('auth') ?>
@@ -49,7 +57,7 @@
     </main>
 
     <footer id="page-footer">
-        <?= '' // $this->element('Backend.Layout/admin/footer'); ?>
+        <?= $this->element('Backend.Layout/admin/footer'); ?>
     </footer>
 
 </div> <!-- #page -->

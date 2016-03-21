@@ -42,19 +42,34 @@ class TimePickerWidget extends CakeDateTimeWidget
         unset($_data['val']);
         unset($_data['options']);
 
+        $pickerOptions = [
+            'format' => 'h:i a',
+            'formatLabel' => '<b>h</b>:i <!i>a</!i>',
+            'formatSubmit' => 'HH:ii',
+            'hiddenPrefix' => 'pickatime__',
+            'hiddenSuffix' => null
+        ];
+
         $this->_templates->add([
-            'pickadate' => '<input type="{{type}}" name="{{name}}"{{attrs}}>',
+            'timepicker' => '<input type="{{type}}" name="{{name}}"{{attrs}}>',
+            'timepicker_script' => '<script>$("{{selector}}").pickadate({{picker}})</script>'
         ]);
 
-
-        return $this->_templates->format('input', [
+        $html = $this->_templates->format('timepicker', [
             'name' => $_data['name'],
             'type' => $_data['type'],
             'attrs' => $this->_templates->formatAttributes(
-                    $_data,
-                    ['name', 'type']
-                ),
+                $_data,
+                ['name', 'type']
+            ),
         ]);
+
+        $script = $this->_templates->format('timepicker_script', [
+            'selector' => '#' . $_data['id'],
+            'picker' => json_encode($pickerOptions),
+        ]);
+
+        return $html . $script;
     }
 
 }

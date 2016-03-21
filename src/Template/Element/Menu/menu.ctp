@@ -6,10 +6,13 @@
  */
 
 $menu       = isset($menu) ? $menu : false;
-$class      = isset($class) ? $class : 'ui menu';
+$class      = isset($class) ? $class : '';
 $id         = isset($id) ? $id : null;
-$wrapper    = isset($wrapper) ? $wrapper : 'div';
+$wrapper    = isset($wrapper) ? $wrapper : 'ul';
 //$levels     = isset($levels) ? $levels : -1;
+
+debug($class);
+debug($wrapper);
 
 if (!$menu) {
     debug("No menu set");
@@ -21,12 +24,4 @@ foreach ($menu as $menuItem) {
     $html .= $this->element('Backend.Menu/menu_item', ['item' => $menuItem]);
 }
 echo $this->Html->tag($wrapper, $html, ['id' => $id, 'class' => $class]);
-?>
-<!--
-<div id="<?= $id; ?>" class="<?= $class; ?>">
-    <?php foreach ($menu as $menuItem): ?>
-    <?php echo $this->element('Backend.Menu/menu_item', ['item' => $menuItem]); ?>
-    <?php endforeach; ?>
-</div>
--->
 

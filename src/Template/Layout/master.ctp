@@ -11,23 +11,22 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
 
-    <?= $this->fetch('cssBackend') ?>
     <?= $this->Html->css('Backend.bootstrap.min'); ?>
-    <?= $this->Html->css('Backend.admin'); ?>
+    <?= $this->Html->css('Backend.master'); ?>
     <?= $this->fetch('css') ?>
 
     <?= $this->fetch('script') ?>
+    <?= $this->Html->script('Backend.jquery/jquery-1.11.2.min'); ?>
     <?= $this->Html->script('Backend.bootstrap.min'); ?>
-    <?= $this->Html->script('Backend.be-ui'); ?>
-    <?= $this->fetch('scriptBackend'); ?>
+    <?= $this->Html->script('Backend.be-master'); ?>
 
 </head>
 <body>
 
 <div id="page">
     <header id="top">
-        <nav id="header-nav">
-            <?= '' // $this->element('Backend.Layout/admin/header_nav'); ?>
+        <nav id="header-nav" class="navbar navbar-default">
+            <?= $this->element('Backend.Layout/admin/header_nav'); ?>
         </nav>
 
         <div id="flash">
@@ -36,25 +35,17 @@
         </div>
     </header>
 
-    <main id="page-main">
-        <div id="page-crumbs">
-            <?= $this->element('Backend.Layout/admin/breadcrumbs'); ?>
-        </div>
-        <div id="page-content">
-            <?= $this->fetch('content'); ?>
-        </div>
-        <div id="page-right">
-            <?= $this->fetch('right'); ?>
-        </div>
+    <main id="main">
+
+        <?= $this->fetch('content'); ?>
+
     </main>
 
-    <footer id="page-footer">
+    <footer id="footer">
         <?= '' // $this->element('Backend.Layout/admin/footer'); ?>
     </footer>
 
 </div> <!-- #page -->
-
-<?= $this->fetch('scriptBottom'); ?>
 
 </body>
 </html>

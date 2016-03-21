@@ -19,8 +19,10 @@ class BackendView extends View
             'Form' => [
                 'templates' => 'Backend.form_templates',
                 'widgets' => [
+                    '_default' => ['Backend\View\Widget\BasicWidget'],
                     'button' => ['Backend\View\Widget\ButtonWidget'],
-                    //'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
+                    'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
+                    'textarea' => ['Backend\View\Widget\TextareaWidget'],
                     'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
                     'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
                     'datepicker' => ['Backend\View\Widget\DatePickerWidget'],
@@ -40,7 +42,6 @@ class BackendView extends View
 
         $this->loadHelper('Html');
 
-        $this->Html->css('Backend.semanticui/semantic.min', ['block' => 'cssBackend']);
         $this->Html->css('Backend.chosen/chosen.min', ['block' => 'cssBackend']);
         $this->Html->css('Backend.pickadate/themes/classic', ['block' => 'cssBackend']);
         $this->Html->css('Backend.pickadate/themes/classic.date', ['block' => 'cssBackend']);
@@ -63,7 +64,6 @@ SCRIPT;
 
         $this->Html->script('Backend.jquery/jquery-1.11.2.min', ['block' => true]);
 
-        $this->Html->script('Backend.semanticui/semantic.min', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.tinymce/tinymce.min', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.tinymce/jquery.tinymce.min', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.chosen/chosen.jquery.min', ['block' => 'scriptBackend']);
@@ -71,8 +71,7 @@ SCRIPT;
         $this->Html->script('Backend.pickadate/picker.date', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.pickadate/picker.time', ['block' => 'scriptBackend']);
         $this->Html->script('Backend.imagepicker/image-picker.min', ['block' => 'scriptBackend']);
-        $this->Html->script('Backend.be-ui', ['block' => 'scriptBackend']);
-        //$this->Html->script('Backend.be-widgets', ['block' => 'scriptBackend']);
+
     }
 
     public function renderLayout($content, $layout = null)

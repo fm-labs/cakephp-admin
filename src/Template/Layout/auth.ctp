@@ -12,16 +12,23 @@
     <?= $this->fetch('meta') ?>
 
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
-    <?= $this->fetch('cssBackend') ?>
+    <?= $this->Html->css('Backend.bootstrap.min'); ?>
+    <?= $this->Html->css('Backend.admin'); ?>
     <?= $this->Html->css('Backend.auth'); ?>
+    <?= $this->fetch('cssBackend') ?>
     <?= $this->fetch('css') ?>
 
+    <?=
+    $this->Html->script('Backend.jquery-1.11.2.min');
+    $this->Html->script('Backend.bootstrap.min');
+    $this->Html->script('Backend.be-ui');
+    ?>
     <?= $this->fetch('script') ?>
 </head>
 <body>
     <header>
     </header>
-    <div id="container">
+    <div id="page">
         <div id="flash">
             <?= $this->Flash->render('auth') ?>
         </div>

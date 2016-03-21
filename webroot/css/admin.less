@@ -14,24 +14,20 @@ body{
     padding: 0px !important;
 }
 
-
 /**
- * UI Flash Messages
+ * Alert- & Flash Messages
  */
+#alert-pane {
+  position: fixed;
+  height: auto;
+  background: transparent none repeat scroll 0% 0%;
+  z-index: 88888;
+  width: 50%;
+  bottom: 0;
+  right: 0;
 
-.ui.success.message {
-  background-color: #3C763D;
-  color: #FFF;
 }
 
-.ui.error.message {
-  background-color: #A94442;
-  color: #FFF;
-}
-
-//.ui.flash.message {
-//    margin-bottom: 1rem;
-//}
 
 .index table .thumb {
   width: 30px;
@@ -233,6 +229,11 @@ body.be-sidebar-small {
   padding: @page-spacing @page-padding;
   margin: 0;
 
+  .breadcrumbs {
+    padding: 0;
+    margin: 0;
+  }
+
   a, .breadcrumb {
     font-size: 10px;
   }
@@ -245,9 +246,10 @@ body.be-sidebar-small {
 }
 
 #page-content {
-  min-height: 700px;
+  //min-height: 700px;
   background-color: #FFF;
-  padding: @page-spacing @page-padding 4em @page-padding;
+  //padding: @page-spacing @page-padding 4em @page-padding;
+  padding-bottom: 3em;
 }
 
 
@@ -283,7 +285,12 @@ body.be-sidebar-small {
   }
 }
 
-
+/**
+ * Tabs
+ */
+.tab-pane.active {
+  padding: 1em;
+}
 
 /**
  * Forms

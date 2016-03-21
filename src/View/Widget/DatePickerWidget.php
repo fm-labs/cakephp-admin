@@ -26,7 +26,7 @@ class DatePickerWidget extends CakeDateTimeWidget
         $_data = [
             'type' => 'text',
             'escape' => true,
-            'class' => 'datepicker',
+            'class' => 'form-control datepicker',
             'options' => $data['options'],
             'id' => $data['id'],
             'name' => $data['name'],
@@ -42,12 +42,21 @@ class DatePickerWidget extends CakeDateTimeWidget
         unset($_data['val']);
         unset($_data['options']);
 
+
+        $pickerOptions = [
+            'format' => 'yyyy-mm-dd',
+            'formatSubmit' => 'yyyy-mm-dd',
+            'hiddenPrefix' => 'pickadate__',
+            'hiddenSuffix' =>  null
+        ];
+
+
         $this->_templates->add([
-            'pickadate' => '<input type="{{type}}" name="{{name}}"{{attrs}}>',
+            'datepicker' => '<input type="{{type}}" name="{{name}}"{{attrs}}>',
+            'datepicker_script' => '<script>$("{{selector}}").pickadate({{picker}})</script>'
         ]);
 
-
-        return $this->_templates->format('input', [
+        $html = $this->_templates->format('datepicker', [
             'name' => $_data['name'],
             'type' => $_data['type'],
             'attrs' => $this->_templates->formatAttributes(
@@ -55,6 +64,13 @@ class DatePickerWidget extends CakeDateTimeWidget
                     ['name', 'type']
                 ),
         ]);
+
+        $script = $this->_templates->format('datepicker_script', [
+            'selector' => '#' . $_data['id'],
+            'picker' => json_encode($pickerOptions),
+        ]);
+
+        return $html . $script;
     }
 
 }

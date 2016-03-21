@@ -1,0 +1,36 @@
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
+body {
+  background-color: #fff;
+}
+#master-tabs .nav > li > a {
+  padding: 10px 20px 10px 15px;
+}
+#master-tabs .nav > li > .tab-close {
+  position: absolute;
+  right: 7px;
+  top: 12px;
+  background-color: #e8e8e8;
+  font-size: 12px;
+  line-height: 12px;
+  padding: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  display: none;
+}
+#master-tabs .nav > li > .tab-close:hover {
+  cursor: pointer;
+}
+#master-tabs .nav > li:hover > .tab-close {
+  display: inline;
+}
+#master-tab-content .tab-pane > iframe,
+#master-tab-content .tab-pane > .tab-frame {
+  border: 0;
+  overflow-y: hidden;
+}

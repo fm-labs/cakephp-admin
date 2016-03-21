@@ -4,56 +4,69 @@ use Backend\Lib\BackendNav;
 if (!$this->request->session()->check('Backend.User')) return false;
 $this->Html->css('Backend.navigation', ['block' => true]);
 ?>
-<div class="ui opaque menu">
+<div class="container-fluid">
 
-    <?= $this->Ui->link(
-        $this->get('be_title'),
-        ['_name' => 'backend:admin:dashboard'],
-        ['class' => 'item', 'icon' => 'home']
-    ); ?>
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
 
-    <nav class="be-nav">
+        <?= $this->Html->link(
+            $this->get('be_title'),
+            ['_name' => 'backend:admin:dashboard'],
+            ['class' => 'navbar-brand link-master']
+        ); ?>
+    </div>
+
+
+
+
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+
         <?php
         $backendNavMenu = BackendNav::getMenu();
-        echo $this->element('Backend.Navigation/menu', ['menu' => $backendNavMenu]);
+        echo $this->Ui->menu($backendNavMenu, ['class' => 'nav navbar-nav'], ['class' => 'dropdown-menu']);
         ?>
-    </nav>
 
-
-    <div class="right menu">
-
-        <!-- Search
-        <div class="item">
-            <div class="ui icon mini input">
-                <input placeholder="Search..." type="text">
-                <i class="search link icon"></i>
+        <!--
+        <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search">
             </div>
-        </div>
+            <button type="submit" class="btn btn-default">Submit</button>
+        </form>
         -->
 
-        <!-- Messages
-        <?= $this->Ui->link(
-            'Messages',
-            '/backend/admin/Messages',
-            ['class' => 'item', 'icon' => 'comment']
-        ); ?>
-         -->
+        <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <?= $this->Ui->icon('user'); ?>
+                    <?= __('{0}', $this->request->session()->read('Backend.User.name')); ?> <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <?= $this->Ui->link('Profile',
+                            ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user']
+                        ); ?>
+                    </li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                        <?= $this->Ui->link(
+                            __('Logout'),
+                            ['_name' => 'backend:admin:auth:logout']
+                        );
+                        ?>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div><!-- /.navbar-collapse -->
 
-        <div class="ui dropdown item">
-            <i class="user icon"></i>
-            <?= __('{0}', $this->request->session()->read('Backend.User.name')); ?>
-            <i class="dropdown icon"></i>
-            <div class="menu">
-                <?= $this->Ui->link('Profile',
-                    ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user'],
-                    ['class' => 'item']); ?>
-                <div class="ui divider"></div>
-                <?= $this->Ui->link(
-                    __('Logout'),
-                    ['_name' => 'backend:admin:auth:logout'],
-                    ['class' => 'item']);
-                ?>
-            </div>
-        </div>
-    </div>
 </div>

@@ -1,0 +1,38 @@
+@import "elements.less";
+
+body {
+  background-color: #fff;
+}
+
+#master-tabs {
+
+  .nav > li > a {
+    padding: 10px 20px 10px 15px;
+  }
+
+  .nav > li > .tab-close {
+    position: absolute;
+    right: 7px;
+    top: 12px;
+    background-color: #e8e8e8;
+    font-size: 12px;
+    line-height: 12px;
+    padding: 2px;
+    .rounded(2px);
+    display: none;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .nav > li:hover > .tab-close {
+    display: inline;
+  }
+}
+
+#master-tab-content .tab-pane > iframe,
+#master-tab-content .tab-pane > .tab-frame {
+  border: 0;
+  overflow-y: hidden;
+}

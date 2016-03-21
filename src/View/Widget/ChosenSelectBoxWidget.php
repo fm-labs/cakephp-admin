@@ -8,7 +8,23 @@ class ChosenSelectBoxWidget extends SelectBoxWidget
 {
     public function render(array $data, ContextInterface $context)
     {
-        $data['class'] = (isset($data['class'])) ? $data['class'] . ' chosen-select' : 'chosen-select';
-        return parent::render($data, $context);
+        //$data['class'] = (isset($data['class'])) ? $data['class'] . ' chosen-select' : 'chosen-select';
+
+
+        if (!isset($data['id'])) {
+            $data['id'] = uniqid('select');
+        }
+
+        $html = parent::render($data, $context);
+
+        $chosen = [
+            'search_contains' => true,
+            'inherit_select_classes' => true,
+            'width' => '100%'
+        ];
+
+        $js = sprintf("<script>$('#%s').chosen(%s)</script>", $data['id'], json_encode($chosen));
+
+        return $html . $js;
     }
 }

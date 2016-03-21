@@ -37,15 +37,16 @@ body {
   padding: 0px !important;
 }
 /**
- * UI Flash Messages
+ * Alert- & Flash Messages
  */
-.ui.success.message {
-  background-color: #3C763D;
-  color: #FFF;
-}
-.ui.error.message {
-  background-color: #A94442;
-  color: #FFF;
+#alert-pane {
+  position: fixed;
+  height: auto;
+  background: transparent none repeat scroll 0% 0%;
+  z-index: 88888;
+  width: 50%;
+  bottom: 0;
+  right: 0;
 }
 .index table .thumb {
   width: 30px;
@@ -192,6 +193,10 @@ body.be-sidebar-small #headerbar .ui.navbar.menu {
   padding: 0.33em 1.66em;
   margin: 0;
 }
+#page-crumbs .breadcrumbs {
+  padding: 0;
+  margin: 0;
+}
 #page-crumbs a,
 #page-crumbs .breadcrumb {
   font-size: 10px;
@@ -200,9 +205,8 @@ body.be-sidebar-small #headerbar .ui.navbar.menu {
   position: relative;
 }
 #page-content {
-  min-height: 700px;
   background-color: #FFF;
-  padding: 0.33em 1.66em 4em 1.66em;
+  padding-bottom: 3em;
 }
 #page-right {
   position: absolute;
@@ -230,6 +234,12 @@ body.be-sidebar-small #headerbar .ui.navbar.menu {
 .be-toolbar a i.icon:hover {
   text-underline: none;
   text-decoration: none;
+}
+/**
+ * Tabs
+ */
+.tab-pane.active {
+  padding: 1em;
 }
 /**
  * Forms

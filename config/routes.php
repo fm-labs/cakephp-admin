@@ -25,6 +25,7 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
             ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
             ['_name' => 'auth:login']
         );
+
         // backend:admin:auth:logout
         $routes->connect(
             '/logout',
@@ -32,10 +33,24 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
             [ '_name' => 'auth:logout']
         );
 
+        // backend:admin:auth:user
+        $routes->connect(
+            '/user',
+            ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user'],
+            [ '_name' => 'auth:user']
+        );
+
+        // backend:admin:master
+        $routes->connect(
+            '/',
+            ['plugin' => 'Backend', 'controller' => 'Master', 'action' => 'index'],
+            ['_name' => 'master']
+        );
+
         // backend:admin:dashboard
         $dashboardUrl = (Configure::read('Backend.Dashboard.url'))
             ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'];
-        $routes->connect('/', $dashboardUrl, ['_name' => 'dashboard']);
+        $routes->connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
 
         // Fallbacks
         $routes->connect('/:controller');

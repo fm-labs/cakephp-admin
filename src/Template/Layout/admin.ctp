@@ -30,7 +30,7 @@
             <?= '' // $this->element('Backend.Layout/admin/header_nav'); ?>
         </nav>
 
-        <div id="flash">
+        <div id="flash" class="container">
             <?= $this->Flash->render('auth') ?>
             <?= $this->Flash->render('backend') ?>
         </div>
@@ -40,11 +40,8 @@
         <div id="page-crumbs">
             <?= $this->element('Backend.Layout/admin/breadcrumbs'); ?>
         </div>
-        <div id="page-content">
+        <div id="page-content" class="container-fluid">
             <?= $this->fetch('content'); ?>
-        </div>
-        <div id="page-right">
-            <?= $this->fetch('right'); ?>
         </div>
     </main>
 

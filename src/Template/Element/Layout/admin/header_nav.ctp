@@ -17,13 +17,10 @@ $this->Html->css('Backend.navigation', ['block' => true]);
 
         <?= $this->Html->link(
             $this->get('be_title'),
-            ['_name' => 'backend:admin:dashboard'],
+            ['_name' => 'backend:admin:master'],
             ['class' => 'navbar-brand link-master']
         ); ?>
     </div>
-
-
-
 
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -53,14 +50,15 @@ $this->Html->css('Backend.navigation', ['block' => true]);
                 <ul class="dropdown-menu">
                     <li>
                         <?= $this->Ui->link('Profile',
-                            ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user']
+                            ['_name' => 'backend:admin:auth:user']
                         ); ?>
                     </li>
                     <li role="separator" class="divider"></li>
                     <li>
                         <?= $this->Ui->link(
                             __('Logout'),
-                            ['_name' => 'backend:admin:auth:logout']
+                            ['_name' => 'backend:admin:auth:logout'],
+                            ['class' => 'link-master']
                         );
                         ?>
                     </li>

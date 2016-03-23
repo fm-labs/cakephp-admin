@@ -13,7 +13,7 @@
 
     <link href='//fonts.googleapis.com/css?family=Open+Sans:400,700,300&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
     <?= $this->Html->css('Backend.bootstrap.min'); ?>
-    <?= $this->Html->css('Backend.admin'); ?>
+    <?= '' //$this->Html->css('Backend.admin'); ?>
     <?= $this->Html->css('Backend.auth'); ?>
     <?= $this->fetch('cssBackend') ?>
     <?= $this->fetch('css') ?>
@@ -29,7 +29,7 @@
     <header>
     </header>
     <div id="page">
-        <div id="flash">
+        <div id="flash" class="container">
             <?= $this->Flash->render('auth') ?>
         </div>
         <div id="content">

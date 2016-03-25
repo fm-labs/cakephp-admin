@@ -1,0 +1,67 @@
+@import "elements.less";
+@import "vars.less";
+
+/**
+ * Sidebar
+ */
+#sidebar {
+  z-index: 9999;
+
+  .be-sidebar {
+    width: @sidebar-w;
+    overflow-x: hidden;
+
+    .box-shadow(-3px -5px 13px #333);
+
+    .item > .menu {
+      //display: none;
+    }
+
+    .item.trail > .menu {
+      display: inherit;
+    }
+
+    .item.active > .menu {
+      //display: inherit;
+    }
+
+    //.item:hover > .menu {
+    //  display: block;
+    //}
+  }
+
+  .be-sidebar-toggle span {
+    font-size: 80%;
+    color: #bbb;
+  }
+}
+
+
+body.be-sidebar-small {
+
+  padding-left: @sidebar-small-w;
+  .transition(@sidebar-transition);
+
+  #sidebar {
+    .be-sidebar {
+      max-width: @sidebar-small-w;
+      width: @sidebar-small-w;
+      .transition(@sidebar-transition);
+
+      .item:before {
+        //background: none;
+      }
+
+      .item > a > span,
+      .item > span,
+      .item > .menu {
+        display: none;
+      }
+    }
+  }
+
+  #headerbar .ui.navbar.menu {
+    //padding-left: @sidebar-small-w + 25px;
+    .transition(@sidebar-transition);
+  }
+}

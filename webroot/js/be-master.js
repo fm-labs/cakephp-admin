@@ -118,7 +118,7 @@ $(document).ready(function() {
                 return;
             }
 
-
+            var _this = $(this);
             var pane = $(this), target = this.hash;
 
 
@@ -130,28 +130,37 @@ $(document).ready(function() {
             var $iframe = $('<iframe>', { 'class': 'tab-frame' });
             $(target).html($iframe);
             $(window).trigger('resize'); //@TODO only resize the new frame
+            $iframe.on('load', function() {
+                _this.addClass('tab-ajax-loaded');
+                _this.html(this.contentWindow.document.title);
+                _this.attr('data-url', this.contentWindow.location)
+            });
             $iframe.attr('src', url);
-
-            $(this).addClass('tab-ajax-loaded'); //@TODO wait for iframe to complete loading before adding class
 
         } else {
             $(this).tab('show');
         }
     });
 
+    $(document).on('dblclick','#master-tabs .nav a', function (e) {
+
+        e.preventDefault();
+        var url = $(this).attr("data-url");
+
+        if (typeof url !== "undefined") {
+
+            var tabId = $(this).parent().data('tabId');
+            $('#' + tabId).find('iframe.tab-frame').each(function() {
+                $(this).attr('src', url);
+            });
+        }
+
+    });
 
     $(document).on('shown.bs.tab','#master-tabs .nav a', function (e) {
         document.title = $(this).attr('title') || $(this).text();
     });
 
-    $(document).on('dblclick','#master-tabs .nav a', function (e) {
-
-        var tabId = $(this).parent().data('tabId');
-
-        $('#' + tabId).find('iframe.tab-frame').each(function() {
-            $(this).attr('src', $(this).attr('src'));
-        });
-    });
 
     $(document).on('click', '#master-tabs .nav .tab-close', function(e) {
         e.preventDefault();

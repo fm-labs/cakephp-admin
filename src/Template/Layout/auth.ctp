@@ -16,7 +16,7 @@
     <?= $this->fetch('css') ?>
 
     <?=
-    $this->Html->script('Backend.jquery-1.11.2.min');
+    $this->Html->script('Backend.jquery/jquery-1.11.2.min');
     $this->Html->script('Backend.bootstrap.min');
     $this->Html->script('Backend.be-ui');
     ?>

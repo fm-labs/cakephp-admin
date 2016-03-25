@@ -109,9 +109,8 @@ function sendMessage(msg)
         msg = JSON.stringify(msg);
     }
 
-    parent.postMessage(msg, 'http://localhost:9090');
-
-    console.log(parent);
+    var hostUrl = window.location.protocol + "//" + window.location.host;
+    parent.postMessage(msg, hostUrl);
 }
 
 function openLinkFrame(title, url)
@@ -162,7 +161,8 @@ $(document).ready(function() {
     sendMessage({
         type: 'ready',
         data: {
-            url: window.location.href
+            url: window.location.href,
+            title: document.title
         }
     });
 
@@ -196,7 +196,7 @@ $(document).ready(function() {
 
                 alertSuccess('Success');
 
-                window.location.href = window.location.href;
+                //window.location.href = window.location.href;
 
             }
         });

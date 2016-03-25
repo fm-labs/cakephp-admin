@@ -30,7 +30,7 @@
             <?= '' // $this->element('Backend.Layout/admin/header_nav'); ?>
         </nav>
 
-        <div id="flash" class="container">
+        <div id="flash" class="container-fluid">
             <?= $this->Flash->render('auth') ?>
             <?= $this->Flash->render('backend') ?>
         </div>

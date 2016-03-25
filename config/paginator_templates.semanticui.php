@@ -1,6 +1,5 @@
 <?php
 return [
-    /*
     'nextActive' => '<a class="next item icon" rel="next" href="{{url}}">{{text}} <i class="right arrow icon"></i></a>',
     'nextDisabled' => '<div class="next disabled item icon">{{text}} <i class="right arrow icon"></i></div>',
     'prevActive' => '<a class="prev item icon" rel="prev" href="{{url}}"><i class="left arrow icon"></i> {{text}}</a>',
@@ -12,6 +11,7 @@ return [
     'number' => '<a class="item" href="{{url}}">{{text}}</a>',
     'current' => '<a class="active item" href="">{{text}}</a>',
     'ellipsis' => '<div class="ellipsis item disabled">...</div>',
+    /*
     'sort' => '<a href="{{url}}">{{text}}</a>',
     'sortAsc' => '<a class="asc" href="{{url}}">{{text}}</a>',
     'sortDesc' => '<a class="desc" href="{{url}}">{{text}}</a>',

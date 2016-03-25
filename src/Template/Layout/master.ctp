@@ -26,10 +26,10 @@
 <div id="page">
     <header id="top">
         <nav id="header-nav" class="navbar navbar-default">
-            <?= $this->element('Backend.Layout/admin/header_nav'); ?>
+            <?= $this->element('Backend.Layout/master/header_nav'); ?>
         </nav>
 
-        <div id="flash">
+        <div id="flash" class="container-fluid">
             <?= $this->Flash->render('auth') ?>
             <?= $this->Flash->render('backend') ?>
         </div>
@@ -42,7 +42,7 @@
     </main>
 
     <footer id="footer">
-        <?= '' // $this->element('Backend.Layout/admin/footer'); ?>
+        <?= '' // $this->element('Backend.Layout/master/footer'); ?>
     </footer>
 
 </div> <!-- #page -->

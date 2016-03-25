@@ -123,7 +123,7 @@ class HtmlEditorWidget extends BasicWidget
         $selector = $editor['selector'];
         unset($editor['selector']);
         //$editorScript = "$(document).ready(function() { tinymce.init(" . json_encode($editor) .") });";
-        $jsTemplate = '$(document).ready(function() { $("%s").tinymce(%s); });';
+        $jsTemplate = '$(document).on(function() { $("%s").tinymce(%s); });';
         $editorScript = sprintf($jsTemplate, $selector, json_encode($editor));
 
         return $this->_templates->format('htmlEditor', [

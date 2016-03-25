@@ -13,7 +13,7 @@ class DataTableCell extends Cell
 
     public function display($params = [])
     {
-        $params += ['model' => null, 'headers' => [],  'data' => [], 'actions' => [], 'rowActions' => []];
+        $params += ['model' => null, 'headers' => [],  'data' => [], 'actions' => [], 'rowActions' => [], 'paginate' => false];
 
         // model context
         $this->modelClass = $params['model'];

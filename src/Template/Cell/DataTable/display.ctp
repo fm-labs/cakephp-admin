@@ -1,25 +1,34 @@
 <?php
 use Cake\Utility\Hash;
+
+$this->loadHelper('Backend.DataTable');
+$this->DataTable->create($params);
 ?>
+<?= $this->DataTable->pagination(); ?>
 <table class="table table-striped table-hover table-condensed">
     <thead>
-        <?php foreach ($params['headers'] as $header): ?>
-        <th><?= h($header); ?></th>
-        <?php endforeach; ?>
+        <?= $this->DataTable->renderHead(); ?>
         <th class="actions"><?= __d('shop','Actions') ?></th>
     </thead>
 
     <tbody>
     <?php foreach ($params['data'] as $row): ?>
         <tr>
-            <?php foreach ($params['headers'] as $header): ?>
-            <td><?= h(Hash::get($row, $header)); ?></td>
-            <?php endforeach; ?>
+            <?= $this->DataTable->renderRow($row); ?>
             <td class="actions">
-
+                <div class="dropdown">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Actions
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right">
+                         <?= $this->DataTable->renderRowActions($params['rowActions'], $row); ?>
+                    </ul>
+                </div>
             </td>
         </tr>
     <?php endforeach; ?>
     </tbody>
 </table>
-<?php // debug($params); ?>
+<?= $this->DataTable->pagination(); ?>
+<?= $this->DataTable->debug(); ?>

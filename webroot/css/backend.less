@@ -1,5 +1,71 @@
-/** Common Backend CSS Stylesheet **/
+/**
+ * Common Backend CSS Stylesheet
+ */
 
+@import "elements.less";
+@import "vars.less";
+
+
+body{
+  font-family: @font-family-primary;
+  font-size: @font-size-default;
+  background-color: #FFF;
+  padding-top: @body-offset-top;
+  padding-left: @sidebar-w;
+  .transition(@sidebar-transition);
+}
+
+/**
+ * Helper classes
+ */
+.padding-reset{
+  padding: 0px !important;
+}
+
+
+.strong {
+  font-weight: bold;
+}
+
+/**
+ * Standard views
+ */
+.index, .form {
+  > h1, > h2 {
+    margin: 0.5rem 0 1rem;
+    padding: 0;
+  }
+}
+
+.index table .thumb {
+  width: 30px;
+  height: auto;
+  vertical-align: middle;
+}
+
+/**
+ * Images
+ */
+.image {
+  max-width: 100%;
+
+  > img {
+    max-width: 100%;
+  }
+}
+
+/**
+ * Table
+ */
+table.info.table {
+  tr td:first-child {
+    font-weight: bold;
+  }
+}
+
+/**
+ * Form Image Select
+ */
 .input-imageselect {
 
   .thumbnails.image_picker_selector.grouped {
@@ -34,6 +100,175 @@
     }
 
 
+  }
+
+}
+
+/**
+ * Tabs
+ */
+.tab-pane.active {
+  padding: 1rem 0.5rem;
+}
+
+/**
+ * Forms
+ */
+form div.required > label {
+  font-weight: bold;
+
+  &:after {
+    content: "*";
+  }
+}
+
+form div.input {
+  margin-bottom: 0.5em;
+}
+
+form div.checkbox {
+  padding: 0.5em 0 0.5em;
+}
+
+form fieldset {
+  border: 1px solid #333;
+  border-width: 1px 0 0 0;
+  padding: 0;
+  margin: 1em 0 0 0;
+}
+
+form fieldset legend {
+  padding: 0 1em 0 0;
+  font-size: 90%;
+
+  &::before {
+    content: "";
+  }
+
+  ~ * {
+    margin-top: 1em;
+  }
+
+}
+
+form fieldset.collapsed {
+
+  > * {
+    display: none;
+  }
+
+  > legend {
+    display: block;
+
+    &::before {
+      content: "> ";
+    }
+
+    ~ * {
+      margin-top: 0.3em;
+    }
+  }
+
+}
+
+
+/**
+ * Imagepicker
+ */
+form .imageselect {
+  ul.image_picker_selector {
+    .thumbnail .image_picker_image {
+      max-width: 100px;
+      height: 100px;
+    }
+
+    .thumbnail {
+      position: relative;
+    }
+
+    .thumbnail p {
+      padding: 3px;
+      max-width: 100px;
+      overflow: hidden;
+      font-size: 0.6rem;
+    }
+  }
+}
+
+
+
+/**
+ * Datepicker
+ */
+form input.datepicker,
+form input.timepicker {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAA8VJREFUWIXFV09oHHUU/t6bnV2TjmlAkyAN7aFFZIvdhIW4G7ubIhYP1igoFPXgTezBU05KvFhKD4JUsSA9SvEPa0GLBylUut3YxIZtNi0uhRZKjdoYU5I0S+ru7LznxZ1Md2cnzR/cD4aZ3/e+ee+b9/vNP8Ia6BtMv6+iHxBzkQ05dCWXuxOoT6ZHhOgoATeqhhz6NZebCdIbQcGBgYEOh81zRGQCeEIVy7Mzt7PN9IlEoq0C/omJwgT0sKL818zt80E1OCio2tYOgNwx6NEg/f1IJMLM7kXRGnoACNUT0aEh6xGbe+yqlKGo+p3UnxjaU8/ZaiwDTrmej8fjppjWLgAIOaGFycnzd71xbwc4lkx9GirLgkBusqHfNXOtjBv1W4idT3zFYWt3TWOb1b9jg+nMvoMHtzV0IDY4NELAu0S+abYKRKDXaPmfBQBvA94OqB6uk5rt7VgU4N6qRm5Fo9GwX2ZVDXUCJYHc9ZC3KqpmvVaY3VpeA50P1AeeWllBJwsNq+Ksqh4PVVZORTq6nvO9NNbEH21tBiuGRfR7qH5U2t7+mUFo0DPQUTtuWIQehMsmzhhKbxTGL7wMAPv2H3iGHT3lL+cd1tL9LxxD37k2lnsFAGLJAy9C6SgCptUNxRKpm8S820cjgPwJwAS4J8BwTWxDcAcs2xj8WDNd4VKWgOAO1MAA9z6EriY2wdi5xiPGq28tAjugkFkFGh4u6wEDRlAHmxsQfXN6IvflZorX0J9MpVVxDswRH4N+xaVQmLi4JcUBYGo8d1FBP/jFfDsgTEtBCaPRaDjc+fhZL1dZnB8uFouVWHJolEj313gSOjE1kf0RRIsPbWAtdHV18ZKNF+o5AIBqH4jcmDK+DcrV8rug5QY2NAXd3d32vd/nXq/nAEANOsGy2nYintxyA5lMxgHwtZeb+m9/9efs2HpyBRroH0wnBfSqhypMX8qejsfjZjViHX8gUbn0Xj6ft/ueTb2lyk/XeGXKXB278MuGDAAUI2DEHSq+AXDasixjyfbwACzLGgVgq0MvEcM1TaLXATQ10PJF2HIDgVMgIleI+Jg7JrkGAKVSyUHYOubVlkolBwCI6AwU12s8EQobMKA7AND0RO4ygMv10Xw+bwMY9TuzMJ79yjcjyS7yabivAQbviSVTJ8Ghk+zIpl7HVWbDgHMYoOf94q4BZaj3042Ij0DliG5ylRgQIOCj0E1PgvnNlVoX5hoNGPj8/6quulrL/ZGcnfltuqd357yS7lVRS7ceAtI5KH38ZG/3h8ViUQHgX+6Ir/q7g4/6AAAAAElFTkSuQmCC') !important;
+  background-repeat: no-repeat !important;
+  background-position: center right !important;
+  background-size: 20px auto !important;
+}
+
+/**
+ * Iframe
+ */
+iframe {
+  border: none;
+}
+
+
+/**
+ * Pagination
+ */
+nav ul.pagination {
+  margin: 0.3rem 0;
+}
+
+
+/** Image Picker **/
+.imageselect_wrap {
+  padding: 1em 0;
+  max-height: 700px;
+  //overflow: scroll;
+  //overflow-x: hidden;
+}
+
+.imageselect img.image_picker_image {
+  max-height: 100px;
+
+  &~ p {
+    font-size: 0.66rem;
+    display: none;
+  }
+}
+
+
+/**
+ * Attachments (deprecated)
+ */
+.attachments.editor {
+
+  h4.ui.header {
+    margin-top: 1em !important;
+  }
+}
+
+.attachments.editor .attachments {
+
+  .attachment {
+    //border: 1px solid #CCC;
+    //display: inline-block;
+    //padding: 5px;
+
+    .image {
+
+      img {
+        max-height: 100px;
+      }
+    }
+
+    .actions {
+      font-size: 10px;
+    }
   }
 
 }

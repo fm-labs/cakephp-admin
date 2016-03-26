@@ -141,13 +141,52 @@ function openLinkModal(url)
 
 function openLinkModalFrame(url)
 {
+    console.log("Open Link in Modal Frame: " + url);
+
     if (window.parent === window) {
         window.location.href = href;
         return;
     }
 
-    console.log("Open Link in Modal Frame (todo): " + url);
-    window.location.href = href;
+
+
+    var dialogTemplate = '<div class="modal-dialog modal-lg"> \
+    <div class="modal-content"> \
+    <div class="modal-header"> \
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> \
+<h4 class="modal-title"></h4> \
+</div> \
+<div class="modal-body"> \
+</div> \
+<div class="modal-footer"> \
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> \
+    <button type="button" class="btn btn-primary">Save changes</button> \
+</div> \
+</div><!-- /.modal-content --> \
+</div><!-- /.modal-dialog -->';
+
+    var modalId = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+
+    var $modal = $('<div>', {
+        id: 'modal' + modalId,
+        class: 'modal fade',
+        tabIndex: -1,
+        role: 'dialog'
+    }).html(dialogTemplate);
+
+
+    var $iframe = $('<iframe>', {
+        class: 'modal-iframe',
+        src: url,
+        style: 'width: 100%; min-height: 500px;'
+    });
+
+    $modal.find('.modal-body').html($iframe);
+
+    $modal.modal({})
+    $modal.on('shown.bs.modal', function (e) {
+        $iframe.width($modal.width * 0.9);
+    })
 }
 
 $(document).ready(function() {
@@ -241,7 +280,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).on('click','a.link-modal-frame', function (e) {
+    $(document).on('click','a.iframe-modal', function (e) {
 
         openLinkModalFrame(this.href);
 
@@ -444,6 +483,7 @@ $(document).ready(function() {
     // Modals (semantic ui)
     //
 
+    /*
     $('a.iframe-modal').on('click', function(e) {
         e.preventDefault();
 
@@ -490,7 +530,7 @@ $(document).ready(function() {
             })
             .modal('show');
     });
-
+    */
 
 
 

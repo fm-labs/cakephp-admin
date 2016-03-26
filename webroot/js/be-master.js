@@ -74,6 +74,11 @@ $(document).ready(function() {
 
     var $tabs = $('#master-tabs');
 
+    $("a[data-icon]").each(function() {
+        console.log("found link with icon " + $(this).data('icon'));
+        $(this).prepend("&nbsp;").prepend($('<i>', { 'class': 'fa fa-'+$(this).data('icon')}));
+    });
+
    // capture all links
     $(document).on('click', 'a:not(.link-master)', function(e) {
 

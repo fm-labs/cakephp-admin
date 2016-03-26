@@ -25,6 +25,7 @@
 /**
  * Common Backend CSS Stylesheet
  */
+@import "font-awesome.min.css";
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;

@@ -79,8 +79,7 @@ SCRIPT;
 
         $title = $this->Blocks->get('title');
         if ($title === '') {
-            $title = sprintf("[%s]", $this->request['controller']);
-            $this->Blocks->set('title', $title);
+            $this->Blocks->set('title', $this->request['controller']);
         }
 
         return parent::renderLayout($content, $layout);

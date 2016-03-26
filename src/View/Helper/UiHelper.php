@@ -28,12 +28,14 @@ class UiHelper extends Helper
      */
     protected $_defaultConfig = [
         'templates' => [
-            'icon' => '<span class="glyphicon glyphicon-{{class}}"{{attrs}}></span>',
+            // 'icon' => '<span class="glyphicon glyphicon-{{class}}"{{attrs}}></span>', #bootstrap style
+            'icon' => '<i class="fa fa-{{class}}"{{attrs}}></i>', # fontawesome style
             'modal' => '<div class="modal"></div>',
             'label' => '<span class="label label-{{class}}">{{label}}</span>',
             'menu' => '<ul{{attrs}}>{{items}}</ul>',
-            'menuItem' => '<li{{attrs}}>{{link}}</li>',
-            'menuItemNested' => '<li class="dropdown"{{attrs}}><a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{title}} <span class="caret"></span></a>{{children}}</li>',
+            'menuItem' => '<li{{attrs}}>{{content}}</li>',
+            'menuItemDropdown' => '<li class="dropdown"{{attrs}}>{{content}}{{children}}</li>',
+            'menuDropdownButton' => '<a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"{{attrs}}>{{title}} <span class="caret"></span></a>',
             'menuLink' => '<a{{attrs}}>{{title}}</a>'
         ]
     ];
@@ -134,27 +136,29 @@ class UiHelper extends Helper
             $item['title'] = $item['href'];
         }
 
-        // build item link
-        $link = $this->link($item['title'], $url, $item);
-
 
         // build item
         if (!empty($children)) {
-            $tag = 'menuItemNested';
-            $link = null;
+            if (isset($item['icon'])) {
+                $item['data-icon'] = $item['icon'];
+            }
+
+            $link = $this->templater()->format('menuDropdownButton', [
+                'attrs' => $this->templater()->formatAttributes($item, ['requireRoot', 'icon']),
+                'title' => $item['title']
+            ]);
+            $tag = 'menuItemDropdown';
             $children = $this->menu($children, $childMenuOptions, $childMenuOptions, $itemOptions);
         } else {
+            $link = $this->link($item['title'], $url, $item);
             $tag = 'menuItem';
             $children = null;
         }
 
-
         return $this->templater()->format($tag, [
             'attrs' => $this->templater()->formatAttributes($itemOptions),
-            'link' => $link,
-            'title' => $item['title'],
+            'content' => $link,
             'children' => $children
         ]);
-
     }
 }

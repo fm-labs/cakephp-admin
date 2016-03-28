@@ -17,7 +17,7 @@ class BackendView extends View
         $this->helpers = [
             'Html',
             'Form' => [
-                'className' => 'Backend\View\Helper\FormHelper',
+                'className' => 'Backend\View\Helper\BackendFormHelper',
                 'templates' => 'Backend.form_templates',
                 'widgets' => [
                     '_default' => ['Backend\View\Widget\BasicWidget'],

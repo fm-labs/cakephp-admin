@@ -1,16 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 3/28/16
- * Time: 11:02 AM
- */
 
 namespace Backend\View\Helper;
 
 use Cake\View\Helper\FormHelper as CakeFormHelper;
 
-class FormHelper extends CakeFormHelper
+class BackendFormHelper extends CakeFormHelper
 {
     private $_fieldsetOptions = [];
 

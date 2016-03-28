@@ -17,6 +17,7 @@ class BackendView extends View
         $this->helpers = [
             'Html',
             'Form' => [
+                'className' => 'Backend\View\Helper\FormHelper',
                 'templates' => 'Backend.form_templates',
                 'widgets' => [
                     '_default' => ['Backend\View\Widget\BasicWidget'],
@@ -47,7 +48,7 @@ class BackendView extends View
         $this->Html->css('Backend.pickadate/themes/classic.date', ['block' => 'cssBackend']);
         $this->Html->css('Backend.pickadate/themes/classic.time', ['block' => 'cssBackend']);
         $this->Html->css('Backend.imagepicker/image-picker', ['block' => 'cssBackend']);
-        $this->Html->css('Backend.backend', ['block' => 'cssBackend']);
+        //$this->Html->css('Backend.backend', ['block' => 'cssBackend']);
 
         $beScript = <<<SCRIPT
 var _backendConf = {

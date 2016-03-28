@@ -111,10 +111,31 @@ function sendMessage(msg)
     parent.postMessage(msg, hostUrl);
 }
 
+function saveScrollTop(val)
+{
+    if (!!window.localStorage) {
+        var scrollTop = window.localStorage.setItem('scrollTop', val);
+    } else {
+        console.log("LocalStorage is not available");
+    }
+}
+
+function restoreScrollTop()
+{
+    if (!!window.localStorage) {
+        var scrollTop = window.localStorage.getItem('scrollTop');
+        if (scrollTop) {
+            window.localStorage.removeItem('scrollTop');
+            $(window).scrollTop(scrollTop);
+        }
+
+    }
+}
+
 function openLinkFrame(title, url)
 {
     if (window.parent === window) {
-        window.location.href = href;
+        window.location.href = url;
         return;
     }
 
@@ -131,12 +152,12 @@ function openLinkFrame(title, url)
 function openLinkModal(url)
 {
     if (window.parent === window) {
-        window.location.href = href;
+        window.location.href = url;
         return;
     }
 
     console.log("Open Link in Modal (todo): " + url);
-    window.location.href = href;
+    window.location.href = url;
 }
 
 function openLinkModalFrame(url)
@@ -144,13 +165,11 @@ function openLinkModalFrame(url)
     console.log("Open Link in Modal Frame: " + url);
 
     if (window.parent === window) {
-        window.location.href = href;
+        window.location.href = url;
         return;
     }
 
-
-
-    var dialogTemplate = '<div class="modal-dialog modal-lg"> \
+    var dialogTemplate = '<div class="modal-dialog modal-lg" style="width: 95%;"> \
     <div class="modal-content"> \
     <div class="modal-header"> \
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> \
@@ -160,7 +179,6 @@ function openLinkModalFrame(url)
 </div> \
 <div class="modal-footer"> \
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> \
-    <button type="button" class="btn btn-primary">Save changes</button> \
 </div> \
 </div><!-- /.modal-content --> \
 </div><!-- /.modal-dialog -->';
@@ -181,12 +199,19 @@ function openLinkModalFrame(url)
         style: 'width: 100%; min-height: 500px;'
     });
 
+    var _window = window;
+
     $modal.find('.modal-body').html($iframe);
 
     $modal.modal({})
     $modal.on('shown.bs.modal', function (e) {
         $iframe.width($modal.width * 0.9);
-    })
+    });
+
+    $modal.on('hidden.bs.modal', function (e) {
+        saveScrollTop($(_window).scrollTop());
+        _window.location.href = _window.location.href;
+    });
 }
 
 $(document).ready(function() {
@@ -194,6 +219,7 @@ $(document).ready(function() {
     initLoader();
     initAlertPane();
     ajaxify();
+    restoreScrollTop();
 
     sendMessage({
         type: 'ready',

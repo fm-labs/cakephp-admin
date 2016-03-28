@@ -46,4 +46,5 @@ return [
 
     'inputContainer' => '<div class="form-group {{required}}">{{content}}</div>',
 
+    'fieldsetBody' => '<div class="body"{{attrs}}>{{content}}</div>',
 ];

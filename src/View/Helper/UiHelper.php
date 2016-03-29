@@ -35,7 +35,7 @@ class UiHelper extends Helper
             'menu' => '<ul{{attrs}}>{{items}}</ul>',
             'menuItem' => '<li{{attrs}}>{{content}}</li>',
             'menuItemDropdown' => '<li class="dropdown"{{attrs}}>{{content}}{{children}}</li>',
-            'menuDropdownButton' => '<a data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"{{attrs}}>{{title}} <span class="caret"></span></a>',
+            'menuDropdownButton' => '<a{{attrs}}>{{title}} <span class="caret"></span></a>',
             'menuLink' => '<a{{attrs}}>{{title}}</a>'
         ]
     ];
@@ -143,10 +143,22 @@ class UiHelper extends Helper
                 $item['data-icon'] = $item['icon'];
             }
 
-            $link = $this->templater()->format('menuDropdownButton', [
-                'attrs' => $this->templater()->formatAttributes($item, ['requireRoot', 'icon']),
+            //$link = ($url) ? $this->link($item['title'], $url, ['class' => 'btn btn-default', 'role' => 'button']) : null;
+
+            $ddAttrs = [
+                'data-toggle' => ($url) ? "dropdown disabled" : "drowdown",
+                'role' => "button",
+                'aria-haspopup' => "true",
+                'aria-expanded' => "false",
+                'href' => ($url) ? $this->Url->build($url) : null,
+            ];
+            $ddAttrs += $item;
+            $ddLink = $this->templater()->format('menuDropdownButton', [
+                'attrs' => $this->templater()->formatAttributes($ddAttrs, ['requireRoot', 'icon', '_children']),
                 'title' => $item['title']
             ]);
+
+            $link = $ddLink;
             $tag = 'menuItemDropdown';
             $children = $this->menu($children, $childMenuOptions, $childMenuOptions, $itemOptions);
         } else {

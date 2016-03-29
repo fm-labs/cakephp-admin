@@ -306,7 +306,7 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).on('click','a.iframe-modal', function (e) {
+    $(document).on('click','a.iframe-modal, a.link-modal-frame', function (e) {
 
         openLinkModalFrame(this.href);
 

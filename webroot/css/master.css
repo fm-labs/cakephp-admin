@@ -228,6 +228,9 @@ nav ul.pagination {
 body {
   background-color: #fff;
 }
+#master-navbar ul.nav li.dropdown:hover ul.dropdown-menu {
+  display: block;
+}
 #master-tabs .nav > li > a {
   padding: 10px 20px 10px 15px;
 }

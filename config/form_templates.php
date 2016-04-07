@@ -44,7 +44,9 @@ return [
     'submitContainer' => '<div class="submit">{{content}}</div>',
     */
 
+    'error' => '<span class="help-block">{{content}}</span>',
     'inputContainer' => '<div class="form-group {{required}}">{{content}}</div>',
+    'inputContainerError' => '<div class="form-group has-error {{required}}">{{content}}{{error}}</div>',
 
     'fieldsetBody' => '<div class="body"{{attrs}}>{{content}}</div>',
 ];

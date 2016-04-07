@@ -8,6 +8,17 @@ class BackendFormHelper extends CakeFormHelper
 {
     private $_fieldsetOptions = [];
 
+    /*
+    public function label($fieldName, $text = null, array $options = [])
+    {
+        if (!isset($options['class'])) {
+            $options['class'] = 'control-label';
+        }
+
+        return parent::label($fieldName, $text, $options);
+    }
+    */
+
     public function fieldsetStart($options = [])
     {
         if (isset($options['collapsed']) && $options['collapsed'] === true) {

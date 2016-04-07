@@ -2,7 +2,7 @@
 use Backend\Lib\BackendNav;
 
 if (!$this->request->session()->check('Backend.User')) return false;
-$this->Html->css('Backend.navigation', ['block' => true]);
+//$this->Html->css('Backend.navigation', ['block' => true]);
 ?>
 <div class="container-fluid">
 

@@ -26,9 +26,14 @@
 
 <div id="page">
     <header id="top">
-        <nav id="header-nav">
-            <?= '' // $this->element('Backend.Layout/admin/header_nav'); ?>
-        </nav>
+        <div id="toolbar">
+            <?php
+            echo $this->Ui->menu($this->Toolbar->getMenuItems(),
+                ['class' => 'nav nav-pills'],
+                ['class' => 'dropdown-menu']
+            );
+            ?>
+        </div>
 
         <div id="flash" class="container-fluid">
             <?= $this->Flash->render('auth') ?>

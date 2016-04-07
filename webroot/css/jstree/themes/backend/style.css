@@ -1,4 +1,8 @@
 /* jsTree default theme */
+.jstree {
+  overflow-x: scroll;
+}
+
 .jstree-node,
 .jstree-children,
 .jstree-container-ul {

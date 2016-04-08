@@ -18,7 +18,8 @@
 
     <?= $this->fetch('script') ?>
     <?= $this->Html->script('Backend.bootstrap.min'); ?>
-    <?= $this->Html->script('Backend.be-ui'); ?>
+    <?= '' // $this->Html->script('Backend.be-ui'); ?>
+    <?= $this->Html->script('Backend.backend'); ?>
     <?= $this->fetch('scriptBackend'); ?>
 
 </head>
@@ -56,6 +57,111 @@
 
 </div> <!-- #page -->
 
+<script>
+    $(document).ready(function() {
+
+        console.log("admin ready");
+
+        //
+        // Tabs (bootstrap)
+        //
+        $(document).on('click','.be-tabs .nav a', function (e) {
+
+            console.log('be-tabs nav link clicked: ' + this.hash);
+
+            e.preventDefault();
+            var url = $(this).attr("data-url");
+
+            if (typeof url !== "undefined") {
+                var pane = $(this), target = this.hash;
+
+                // ajax load from data-url
+                Backend.Ajax.loadHtml(target, url, function(html) {
+                    pane.tab('show');
+                });
+            } else {
+                $(this).tab('show');
+            }
+        });
+
+        //
+        // Form Fieldset toggle
+        //
+        $(document).on('click', 'form fieldset > legend', function() {
+            $(this).parent().toggleClass('collapsed');
+        });
+
+        //
+        // Ajax Form Submission
+        //
+        $(document).on('submit', 'form:not(.no-ajax)', function(e) {
+            e.preventDefault();
+
+            var data = $(this).serialize();
+            var action = $(this).attr('action');
+            var method = $(this).attr('method') || 'POST';
+            var _self = $(this);
+
+            console.log("Submit form to " + action + " via " + method + " with data " + data);
+
+            $.ajax({
+                url: action,
+                data: data,
+                method: method,
+                beforeSend: function() {
+                    Backend.Loader.show();
+                },
+                complete: function() {
+                    Backend.Loader.hide();
+                },
+                success: function(result) {
+
+                    //_self.parent().replaceWith(result);
+                    //ajaxify();
+
+                    Backend.Flash.success('Success');
+
+                    //window.location.href = window.location.href;
+
+                }
+            });
+
+        });
+
+
+        $(document).on('click','a.link-frame', function (e) {
+
+            var title = $(this).attr('title') || $(this).text();
+            var url = $(this).attr('href');
+
+            Backend.Link.openFrame(title, url);
+
+            e.preventDefault();
+            return false;
+        });
+
+        $(document).on('click','a.link-modal', function (e) {
+
+            Backend.Link.openModal(this.href);
+
+            e.preventDefault();
+            return false;
+        });
+
+        $(document).on('click','a.iframe-modal, a.link-modal-frame', function (e) {
+
+            Backend.Link.openModalFrame(this.href);
+
+            e.preventDefault();
+            return false;
+        });
+
+
+
+
+        Backend.ready();
+    });
+</script>
 <?= $this->fetch('scriptBottom'); ?>
 
 </body>

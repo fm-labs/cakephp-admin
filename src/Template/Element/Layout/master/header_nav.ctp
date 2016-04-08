@@ -8,7 +8,7 @@ if (!$this->request->session()->check('Backend.User')) return false;
 
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#master-navbar" aria-expanded="false">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -18,7 +18,7 @@ if (!$this->request->session()->check('Backend.User')) return false;
         <?= $this->Html->link(
             $this->get('be_title'),
             ['_name' => 'backend:admin:master'],
-            ['class' => 'navbar-brand link-master']
+            ['class' => 'navbar-brand', 'target' => '_top']
         ); ?>
     </div>
 

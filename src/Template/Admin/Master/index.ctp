@@ -19,7 +19,19 @@ use Backend\Lib\BackendNav;
                 You dont have any windows open<br /><br />
 
                 <?= $this->Html->link(
-                    'Open Systeminfo',
+                    'Open Systeminfo in current window',
+                    ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
+                    ['title' => 'Systeminfo']
+                ); ?>
+                <br /><br />
+                <?= $this->Html->link(
+                    'Open Systeminfo in new window (tab)',
+                    ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
+                    ['title' => 'Systeminfo']
+                ); ?>
+                <br /><br />
+                <?= $this->Html->link(
+                    'Open Systeminfo in iframe modal',
                     ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
                     ['title' => 'Systeminfo']
                 ); ?>

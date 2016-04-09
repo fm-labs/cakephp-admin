@@ -75,6 +75,10 @@ var Backend = {
 
     },
 
+    /**
+     * Apply 'beautification' rules on the whole DOM
+     * Intended usage after AJAX loaded content is injected into the DOM
+     */
     beautify: function()
     {
         // icon links
@@ -84,6 +88,9 @@ var Backend = {
             var $ico = $('<i>', { class: 'fa fa-' + $(this).data('icon') }).html("");
             $(this).prepend($ico.prop('outerHTML') + "&nbsp");
         });
+
+        // Backend Tabs: Auto-enable first tab
+        $('.be-tabs a').first().trigger('click');
     },
 
     // not in use
@@ -237,13 +244,13 @@ var Backend = {
 
                 case "loader":
                     var op = data.op;
-                    console.log("received loader op: " + op);
                     if (Backend.Loader.hasOwnProperty(op)) {
                         var func = Backend.Loader[op];
                         if (typeof(func) === 'function') {
                             func();
                         }
                     }
+                    break;
 
                 default:
                     console.log("Unknown message type: " + parsed.type);
@@ -359,7 +366,19 @@ var Backend = {
             } else {
 
                 console.log("Flash: [" + type + "] " + msg);
-                alert("[" + type + "] " + msg);
+                //alert("[" + type + "] " + msg);
+
+                var $alert = $('<div>', {
+                    class: 'alert alert-' + type
+                });
+
+                $alert.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' + msg);
+                $alert.hide();
+                $alert.appendTo('#flash').slideDown();
+
+                setTimeout(function() {
+                    $alert.slideUp(1000, function() { $(this).remove(); });
+                }, 5000);
             }
 
         },
@@ -371,7 +390,7 @@ var Backend = {
 
         error: function(msg)
         {
-            this.message('error', msg);
+            this.message('danger', msg);
         }
     },
 

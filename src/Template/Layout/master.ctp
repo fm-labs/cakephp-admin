@@ -210,6 +210,17 @@
             Backend.Master.parsePostMessage(data, origin, source);
         });
 
+        $(document).on('click', '.test-notify', function() {
+            Backend.Flash.success("Test Notify");
+        });
+
+        // clear alerts
+        setTimeout(function() {
+            $('.alert').each(function() {
+                $(this).slideUp(1000, function() { $(this).remove(); });
+            })
+        }, 10000);
+
         Backend.ready();
     });
 </script>

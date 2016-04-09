@@ -117,6 +117,7 @@
                     //_self.parent().replaceWith(result);
                     //ajaxify();
 
+                    Backend.beautify();
                     Backend.Flash.success('Success');
 
                     //window.location.href = window.location.href;

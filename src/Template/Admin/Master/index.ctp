@@ -15,8 +15,6 @@
             <!-- Default frame -->
             <div role="tabpanel" class="tab-pane active" id="home">
 
-
-
                 <div class="container-fluid">
 
                     You dont have any windows open<br /><br />
@@ -37,6 +35,12 @@
                         'Open Systeminfo in iframe modal',
                         ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
                         ['title' => 'Systeminfo', 'class' => 'link-frame-modal']
+                    ); ?>
+                    <br /><br />
+                    <?= $this->Html->link(
+                        'Test Success Notification message (javascript)',
+                        '#',
+                        ['class' => 'test-notify']
                     ); ?>
                 </div>
 

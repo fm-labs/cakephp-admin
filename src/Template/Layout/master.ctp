@@ -42,8 +42,8 @@
 
     </main>
 
-    <footer id="footer">
-        <?= '' // $this->element('Backend.Layout/master/footer'); ?>
+    <footer id="footer" class="container-fluid">
+        <?= $this->element('Backend.Layout/master/footer'); ?>
     </footer>
 
     <div id="loader" class="loader"><i class="fa fa-circle-o-notch fa-spin fa-3x"></i></div>

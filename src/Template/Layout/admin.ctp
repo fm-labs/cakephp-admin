@@ -126,6 +126,10 @@
 
         });
 
+        //
+        // Backend Tabs: Auto-enable first tab
+        //
+        $('.be-tabs a').first().trigger('click');
 
         Backend.ready();
     });

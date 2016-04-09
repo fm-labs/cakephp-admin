@@ -41,23 +41,23 @@ h2 {
   font-size: 1.25em;
 }
 
-.index, .form {
+.index, .view, .form {
   > h1, > h2 {
     margin: 0.5rem 0 1rem;
     //padding: 0;
   }
-}
 
-.index table .thumb {
-  width: 30px;
-  height: auto;
-  vertical-align: middle;
+  table .thumb {
+    width: 30px;
+    height: auto;
+    vertical-align: middle;
+  }
 }
 
 /**
  * Images
  */
-.image {
+.image, .thumb {
   max-width: 100%;
 
   > img {
@@ -65,10 +65,21 @@ h2 {
   }
 }
 
-.image.thumbnail {
+.thumb-md, .image.thumbnail {
   max-width: 100px;
   max-height: 100px;
 }
+
+.thumb-sm {
+  max-width: 30px;
+  max-height: 30px;
+}
+
+.thumb-lg {
+  max-width: 150px;
+  max-height: 150px;
+}
+
 
 /**
  * Table

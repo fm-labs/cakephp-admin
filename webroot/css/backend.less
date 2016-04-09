@@ -30,10 +30,21 @@ body{
 /**
  * Standard views
  */
+
+h1 {
+  font-size: 1.5em;
+  border-bottom: 1px solid #CCC;
+  padding: 0.3em;
+}
+
+h2 {
+  font-size: 1.25em;
+}
+
 .index, .form {
   > h1, > h2 {
     margin: 0.5rem 0 1rem;
-    padding: 0;
+    //padding: 0;
   }
 }
 
@@ -52,6 +63,11 @@ body{
   > img {
     max-width: 100%;
   }
+}
+
+.image.thumbnail {
+  max-width: 100px;
+  max-height: 100px;
 }
 
 /**
@@ -134,7 +150,7 @@ form fieldset {
   border: 1px solid #337ab7 !important;
   border-width: 0 0 1px 0 !important;
   padding: 0;
-  margin: 2em 0 2em 0;
+  margin: 1em 0 1.3em 0;
 }
 
 form fieldset legend {

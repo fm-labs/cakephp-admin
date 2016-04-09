@@ -30,7 +30,7 @@ use Cake\Core\Configure;
 		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'datetime'), ['class' => 'link-modal']);?></dd>
 	
 		<dt><?php echo __d('backend', "Plugins");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'plugins'), ['class' => 'link-modal-frame']);?></dd>
+		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'plugins'), ['class' => 'link-frame-modal']);?></dd>
 		
 		<dt><?php echo __d('backend', "Globals");?></dt>
 		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'globals'));?></dd>

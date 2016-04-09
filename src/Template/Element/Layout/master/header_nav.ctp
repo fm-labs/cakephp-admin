@@ -50,7 +50,8 @@ if (!$this->request->session()->check('Backend.User')) return false;
                 <ul class="dropdown-menu">
                     <li>
                         <?= $this->Ui->link('Profile',
-                            ['_name' => 'backend:admin:auth:user']
+                            ['_name' => 'backend:admin:auth:user'],
+                            ['class' => 'link-frame-modal']
                         ); ?>
                     </li>
                     <li role="separator" class="divider"></li>

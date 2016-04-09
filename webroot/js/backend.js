@@ -22,41 +22,80 @@ var Backend = {
     ready: function()
     {
         this.log("Backend ready event triggered. Location: " + window.location.href);
-        this.log("Window is Iframe: " + this.isIframe());
+        this.log("Window is Iframe: " + this.isFrame());
         this.log(window);
 
         var _this = this;
 
-        // capture all links
-        /*
-        $(document).on('click', 'a', function(ev) {
+        // catch frame links
+        $(document).on('click','a.link-frame', function (e) {
 
-            console.log("Link clicked: " + this.href);
+            var title = $(this).attr('title') || $(this).text();
+            var url = $(this).attr('href');
 
-            return _this.openLink(this, ev);
+            console.log("Clicked frame link " + url);
+            _this.Link.openFrame(title, url);
+
+            e.preventDefault();
+            return false;
         });
-        */
+
+        // catch modal links
+        $(document).on('click','a.link-modal', function (e) {
+
+            _this.Link.openModal(this.href);
+
+            e.preventDefault();
+            return false;
+        });
+
+        // catch modal frame links
+        $(document).on('click','a.link-frame-modal', function (e) {
+
+            _this.Link.openModalFrame(this.href);
+
+            e.preventDefault();
+            return false;
+        });
+
+        this.beautify();
+
+        this.Frame.sendMessage({
+            type: 'hello',
+            data: {}
+        });
 
     },
 
-    isIframe: function()
+    isFrame: function()
     {
 
         var parent = window.parent || window;
-        if (parent !== window) {
-            return true;
-        }
+        return parent !== window;
 
-        return false;
     },
 
+    beautify: function()
+    {
+        // icon links
+        $("a[data-icon]").each(function() {
+           console.log("link " + this.href + " has icon " + $(this).data('icon'));
+
+            var $ico = $('<i>', { class: 'fa fa-' + $(this).data('icon') }).html("");
+            $(this).prepend($ico.prop('outerHTML') + "&nbsp");
+        });
+    },
+
+    // not in use
     openLink: function(link, ev)
     {
 
+        /*
         if ($.contains(document.getElementById('master-tab-list'), $(link))) {
             console.log("Skip: Is Master Tab Nav Item");
             return;
         }
+        */
 
         var title = $(link).attr('title') || $(link).text();
         //var href = $(link).attr('href');
@@ -77,6 +116,7 @@ var Backend = {
             return false;
         }
 
+        /*
         if (target === "_top") {
             window.top.location.href = href;
             return false;
@@ -87,6 +127,7 @@ var Backend = {
             window.location.href = href;
             return false;
         }
+        */
 
         console.log("add tab for " + href + " (" + target + ")");
         //this.addTab(title, href, target);
@@ -94,10 +135,6 @@ var Backend = {
         ev.stopPropagation();
         ev.preventDefault();
         return false;
-    },
-
-    openLinkIframeModal: function() {
-
     },
 
     openInNewTab: function(link)
@@ -116,14 +153,25 @@ var Backend = {
     addTab: function (title, url)
     {
 
-        console.log("Open new tab " + title + " (" + url + ")" );
+        if (this.isFrame()) {
+            this.Frame.sendMessage({
+                type: 'open',
+                data: {
+                    title: title,
+                    url: url
+                }
+            });
+            return;
+        }
+
+        console.log("Adding tab " + title + " (" + url + ")" );
 
         var $tabList = $('#master-tab-list');
         var $tabContent = $('#master-tab-content');
 
         // create tab nav item
 
-        var tabId = Backend.uniqueDomId('tab');
+        var tabId = this.uniqueDomId('tab');
 
         var $navLink = $('<a>', {
             'role': 'tab',
@@ -146,12 +194,18 @@ var Backend = {
             'id': tabId
         }).appendTo($tabContent);
 
-        console.log("tab added");
+        console.log("tab added with id " + tabId);
         $navLink.trigger('click');
     },
 
     Master: {
-        parsePostMessage: function parsePostMessage(msg, origin, source) {
+        parsePostMessage: function (msg, origin, source) {
+
+            // collapse workaround
+            // @TODO: Find out why a message with content 'collapse' is received on page load
+            if (typeof(msg) === 'string' && msg === "collapse") {
+                return false;
+            }
 
             var parsed;
             try {
@@ -165,14 +219,31 @@ var Backend = {
             var data = parsed.data;
 
             switch(type) {
+                case "hello":
+                    console.log("hello received");
+                    break;
 
-                case "ready":
-                    console.log("[master] Page ready: " + data.url);
+                case "flash":
+                    Backend.Flash.message(data.type, data.message);
                     break;
 
                 case "open":
                     Backend.addTab(data.title, data.url);
                     break;
+
+                case "open-frame-modal":
+                    Backend.Link.openModalFrame(data.url);
+                    break;
+
+                case "loader":
+                    var op = data.op;
+                    console.log("received loader op: " + op);
+                    if (Backend.Loader.hasOwnProperty(op)) {
+                        var func = Backend.Loader[op];
+                        if (typeof(func) === 'function') {
+                            func();
+                        }
+                    }
 
                 default:
                     console.log("Unknown message type: " + parsed.type);
@@ -183,13 +254,58 @@ var Backend = {
         }
     },
 
+    Frame: {
+        sendMessage: function(msg)
+        {
+            console.log("[frame] send msg: " + msg.type);
+
+            // check if current window is a framed window
+            var parent = window.parent || window;
+            if (parent === window) {
+                console.log("sending aborted: already on master");
+                return;
+            }
+
+            // convert json objects to json strings
+            if (typeof msg === 'object') {
+                msg = JSON.stringify(msg);
+            }
+
+            var hostUrl = window.location.protocol + "//" + window.location.host;
+            parent.postMessage(msg, hostUrl);
+        }
+    },
+
     Loader: {
         show: function() {
             console.log("show loader");
+
+            if (Backend.isFrame()) {
+                Backend.Frame.sendMessage({
+                    type: 'loader',
+                    data: {
+                        op: 'show'
+                    }
+                });
+            } else {
+
+                $('#loader').show();
+            }
         },
 
         hide: function() {
             console.log("hide loader");
+            if (Backend.isFrame()) {
+                Backend.Frame.sendMessage({
+                    type: 'loader',
+                    data: {
+                        op: 'hide'
+                    }
+                });
+            } else {
+
+                $('#loader').hide();
+            }
         }
     },
 
@@ -230,8 +346,22 @@ var Backend = {
 
         message: function(type, msg)
         {
-            console.log("Flash: [" + type + "] " + msg);
-            alert("[" + type + "] " + msg);
+
+            if (Backend.isFrame()) {
+                Backend.Frame.sendMessage({
+                    type: 'flash',
+                    data: {
+                        type: type,
+                        message: msg
+                    }
+                });
+
+            } else {
+
+                console.log("Flash: [" + type + "] " + msg);
+                alert("[" + type + "] " + msg);
+            }
+
         },
 
         success: function(msg)
@@ -250,22 +380,14 @@ var Backend = {
 
         openFrame: function (title, url)
         {
-            if (window.parent === window) {
-                window.location.href = url;
-                return;
-            }
 
-            console.log("Open link in new frame: " + this.href);
-            sendMessage({
-                type: 'open',
-                data: {
-                    title: title,
-                    url: url
-                }
-            });
+            console.log("Open link in new frame: " + url);
+            Backend.addTab(title, url);
+
 
         },
 
+        /*
         openModal: function (url)
         {
             if (window.parent === window) {
@@ -276,13 +398,19 @@ var Backend = {
             console.log("Open Link in Modal (todo): " + url);
             window.location.href = url;
         },
+        */
 
         openModalFrame: function openLinkModalFrame(url)
         {
             console.log("Open Link in Modal Frame: " + url);
 
-            if (window.parent === window) {
-                window.location.href = url;
+            if (Backend.isFrame()) {
+                Backend.Frame.sendMessage({
+                    type: 'open-frame-modal',
+                    data: {
+                        url: url
+                    }
+                });
                 return;
             }
 
@@ -326,8 +454,8 @@ var Backend = {
             });
 
             $modal.on('hidden.bs.modal', function (e) {
-                saveScrollTop($(_window).scrollTop());
-                _window.location.replace(_window.location.href);
+                //saveScrollTop($(_window).scrollTop());
+                //_window.location.replace(_window.location.href);
             });
         }
     }

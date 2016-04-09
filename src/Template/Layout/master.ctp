@@ -26,7 +26,7 @@
 
 <div id="page">
     <header id="top">
-        <nav id="header-nav" class="navbar navbar-default">
+        <nav id="header-nav" class="navbar navbar-default navbar-inverse">
             <?= $this->element('Backend.Layout/master/header_nav'); ?>
         </nav>
 
@@ -46,11 +46,13 @@
         <?= '' // $this->element('Backend.Layout/master/footer'); ?>
     </footer>
 
-    <div id="loader"></div>
+    <div id="loader" class="loader"><i class="fa fa-circle-o-notch fa-spin fa-3x"></i></div>
+    <div id="modal-container"></div>
 
 </div> <!-- #page -->
 <script>
     $(document).ready(function() {
+
 
         // #################################
         // # MASTER NAV #
@@ -87,12 +89,7 @@
             e.preventDefault();
             var url = $(this).attr("data-url");
 
-            if (typeof url !== "undefined") {
-
-                if ($(this).hasClass('tab-ajax-loaded')) {
-                    $(this).tab('show');
-                    return;
-                }
+            if (typeof url !== "undefined" && !$(this).hasClass('tab-ajax-loaded')) {
 
                 var _this = $(this);
                 var pane = $(this), target = this.hash;
@@ -103,19 +100,36 @@
                 //    url += (url.match(/\?/) ? '&' : '?') + 'iframe=1';
                 //}
 
+                //var $iframeLoader = $('#loader').clone().removeAttr('id').show();
                 var $iframe = $('<iframe>', { 'class': 'tab-frame' });
                 $(target).html($iframe);
                 $(window).trigger('resize'); //@TODO only resize the new frame
+
+                $(this).addClass('tab-loading');
+                $(this).tab('show');
+
+                // @TODO Keep this try (see dblclick event)
                 $iframe.on('load', function() {
+                    console.log("iframe loaded " + url);
+                    Backend.Loader.hide();
+                    //$iframeLoader.remove();
+                    _this.removeClass('tab-loading');
                     _this.addClass('tab-ajax-loaded');
                     _this.html(this.contentWindow.document.title);
                     _this.attr('data-url', this.contentWindow.location)
                 });
+
+                Backend.Loader.show();
                 $iframe.attr('src', url);
 
             } else {
+
                 $(this).tab('show');
             }
+
+
+            e.preventDefault();
+            return false;
         });
 
         $(document).on('dblclick','#master-tabs .nav a', function (e) {
@@ -126,14 +140,30 @@
             if (typeof url !== "undefined") {
 
                 var tabId = $(this).parent().data('tabId');
-                $('#' + tabId).find('iframe.tab-frame').each(function() {
-                    $(this).attr('src', url);
+
+                $(this).addClass('tab-loading');
+                $(this).tab('show');
+
+                // @TODO Keep this DRY. (see click event)
+                var $iframe = $('#' + tabId).find('iframe.tab-frame').first();
+                $iframe.on('load', function() {
+                    Backend.Loader.hide();
+                    _this.removeClass('tab-loading');
                 });
+
+                Backend.Loader.show();
+                $iframe.attr('src', url);
             }
 
         });
 
-        $(document).on('shown.bs.tab','#master-tabs .nav a', function (e) {
+
+        $(document).on('show.bs.tab', '#master-tabs .nav a', function (e) {
+            Backend.Loader.show();
+        });
+
+        $(document).on('shown.bs.tab', '#master-tabs .nav a', function (e) {
+            Backend.Loader.hide();
             document.title = $(this).attr('title') || $(this).text();
         });
 

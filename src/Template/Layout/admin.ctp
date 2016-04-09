@@ -27,14 +27,14 @@
 
 <div id="page">
     <header id="top">
-        <div id="toolbar">
+        <nav id="toolbar">
             <?php
             echo $this->Ui->menu($this->Toolbar->getMenuItems(),
                 ['class' => 'nav nav-pills'],
                 ['class' => 'dropdown-menu']
             );
             ?>
-        </div>
+        </nav>
 
         <div id="flash" class="container-fluid">
             <?= $this->Flash->render('auth') ?>
@@ -60,14 +60,12 @@
 <script>
     $(document).ready(function() {
 
-        console.log("admin ready");
-
         //
         // Tabs (bootstrap)
         //
         $(document).on('click','.be-tabs .nav a', function (e) {
 
-            console.log('be-tabs nav link clicked: ' + this.hash);
+            //console.log('be-tabs nav link clicked: ' + this.hash);
 
             e.preventDefault();
             var url = $(this).attr("data-url");
@@ -102,7 +100,7 @@
             var method = $(this).attr('method') || 'POST';
             var _self = $(this);
 
-            console.log("Submit form to " + action + " via " + method + " with data " + data);
+            //console.log("Submit form to " + action + " via " + method + " with data " + data);
 
             $.ajax({
                 url: action,
@@ -127,36 +125,6 @@
             });
 
         });
-
-
-        $(document).on('click','a.link-frame', function (e) {
-
-            var title = $(this).attr('title') || $(this).text();
-            var url = $(this).attr('href');
-
-            Backend.Link.openFrame(title, url);
-
-            e.preventDefault();
-            return false;
-        });
-
-        $(document).on('click','a.link-modal', function (e) {
-
-            Backend.Link.openModal(this.href);
-
-            e.preventDefault();
-            return false;
-        });
-
-        $(document).on('click','a.iframe-modal, a.link-modal-frame', function (e) {
-
-            Backend.Link.openModalFrame(this.href);
-
-            e.preventDefault();
-            return false;
-        });
-
-
 
 
         Backend.ready();

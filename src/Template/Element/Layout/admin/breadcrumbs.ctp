@@ -1,8 +1,3 @@
-<?php
-use Cake\Core\Configure;
-?>
-<ol class="breadcrumbs">
-    <?=
-    $this->Html->getCrumbs(' / ');
-    ?>
-</ol>
+<?= $this->Html->getCrumbList([
+    'class' => 'breadcrumb'
+], ['text' => 'Dashboard', 'url' => ['_name' => 'backend:admin:dashboard']]); ?>

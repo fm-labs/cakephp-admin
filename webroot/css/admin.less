@@ -33,6 +33,15 @@
   }
 }
 
+#toolbar {
+  padding: 2px 0;
+
+  .nav > li > a {
+      font-size: 0.9em;
+  }
+}
+
+
 /**
  * Top Affix
  */
@@ -127,12 +136,13 @@ body.fixed-nav {
 }
 
 #page-crumbs {
-  padding: @page-spacing @page-padding;
+  padding: 0;
   margin: 0;
 
-  .breadcrumbs {
-    padding: 0;
+  ul.breadcrumb {
+    //padding: 0;
     margin: 0;
+    .border-radius(0);
   }
 
   a, .breadcrumb {
@@ -147,9 +157,8 @@ body.fixed-nav {
 }
 
 #page-content {
-  //min-height: 700px;
   background-color: #FFF;
-  //padding: @page-spacing @page-padding 4em @page-padding;
+  padding-top: 0.5em;
   padding-bottom: 3em;
 }
 

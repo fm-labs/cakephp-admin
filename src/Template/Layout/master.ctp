@@ -177,6 +177,8 @@
 
         $(window).on('resize', function(e) {
 
+            console.log("resize");
+
             $('#master-tab-content iframe').each(function() {
 
                 var $frame = $(this);
@@ -218,8 +220,13 @@
         setTimeout(function() {
             $('.alert').each(function() {
                 $(this).slideUp(1000, function() { $(this).remove(); });
-            })
+            });
         }, 10000);
+
+        // reposition frames every 60 sec
+        setInterval(function() {
+            $(window).trigger('resize');
+        }, 60000);
 
         Backend.ready();
     });

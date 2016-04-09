@@ -9,6 +9,7 @@ body {
 }
 
 #header-nav {
+  margin: 0;
   .border-radius(0);
 
   .navbar-nav > li > a {
@@ -20,12 +21,26 @@ body {
   }
 }
 
+#flash {
+
+  > .alert {
+    margin: 0;
+    //padding: 0.8em;
+    //font-size: 0.8em;
+    .border-radius(0)
+  }
+}
+
 #loader {
   position: absolute;
   top: 60px;
   right: 10px;
   z-index: 99999;
   display: none;
+}
+
+#main {
+  margin-top: 1em;
 }
 
 #master-navbar {
@@ -43,7 +58,7 @@ body {
   }
 
   .nav > li > a {
-    padding: 5px 22px 5px 10px;
+    padding: 10px 22px 10px 10px;
     max-width: 120px;
     white-space: nowrap;
     overflow: hidden;
@@ -59,7 +74,7 @@ body {
   .nav > li > .tab-close {
     position: absolute;
     right: 5px;
-    top: 7px;
+    top: 12px;
     font-size: 11px;
     line-height: 12px;
     padding: 2px;
@@ -112,7 +127,7 @@ body {
 }
 
 #footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;

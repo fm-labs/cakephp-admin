@@ -30,23 +30,21 @@
             <?= $this->element('Backend.Layout/master/header_nav'); ?>
         </nav>
 
-        <div id="flash" class="container-fluid">
+        <div id="flash">
             <?= $this->Flash->render('auth') ?>
             <?= $this->Flash->render('backend') ?>
         </div>
     </header>
 
     <main id="main">
-
         <?= $this->fetch('content'); ?>
-
     </main>
 
     <footer id="footer" class="container-fluid">
         <?= $this->element('Backend.Layout/master/footer'); ?>
     </footer>
 
-    <div id="loader" class="loader"><i class="fa fa-circle-o-notch fa-spin fa-3x"></i></div>
+    <div id="loader" class="loader"><i class="fa fa-cog fa-spin fa-3x"></i></div>
     <div id="modal-container"></div>
 
 </div> <!-- #page -->

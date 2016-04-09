@@ -52,7 +52,7 @@
     </main>
 
     <footer id="page-footer">
-        <?= '' // $this->element('Backend.Layout/admin/footer'); ?>
+        <?= $this->element('Backend.Layout/admin/footer'); ?>
     </footer>
 
 </div> <!-- #page -->

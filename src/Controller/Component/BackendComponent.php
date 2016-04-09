@@ -50,7 +50,15 @@ class BackendComponent extends Component
             $controller->Flash = $this->_registry->load('Flash', [
                 'className' => static::$flashComponentClass,
                 'key' => 'backend',
-                'plugin' => 'Backend'
+                //'class' => 'info',
+                'plugin' => 'Backend',
+                //'params' => ['dismiss' => true],
+                'elementMap' => [
+                    'default' => ['class' => 'info'],
+                    'info' => ['element' => 'default', 'class' => 'info'],
+                    'warning' => ['element' => 'default', 'class' => 'warning'],
+                    'error' => ['element' => 'default', 'class' => 'danger']
+                ]
             ]);
         }
 

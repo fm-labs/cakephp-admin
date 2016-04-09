@@ -240,6 +240,7 @@ body {
   background-color: #fff;
 }
 #header-nav {
+  margin: 0;
   -webkit-border-top-right-radius: 0;
   -webkit-border-bottom-right-radius: 0;
   -webkit-border-bottom-left-radius: 0;
@@ -262,12 +263,33 @@ body {
 #header-nav .navbar-nav > li > a:hover {
   color: #FFF;
 }
+#flash > .alert {
+  margin: 0;
+  -webkit-border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 0;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
 #loader {
   position: absolute;
   top: 60px;
   right: 10px;
   z-index: 99999;
   display: none;
+}
+#main {
+  margin-top: 1em;
 }
 #master-navbar ul.nav li.dropdown:hover ul.dropdown-menu {
   display: block;
@@ -276,7 +298,7 @@ body {
   font-weight: bold;
 }
 #master-tabs .nav > li > a {
-  padding: 5px 22px 5px 10px;
+  padding: 10px 22px 10px 10px;
   max-width: 120px;
   white-space: nowrap;
   overflow: hidden;
@@ -288,7 +310,7 @@ body {
 #master-tabs .nav > li > .tab-close {
   position: absolute;
   right: 5px;
-  top: 7px;
+  top: 12px;
   font-size: 11px;
   line-height: 12px;
   padding: 2px;
@@ -342,7 +364,7 @@ body {
   right: 10px;
 }
 #footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;

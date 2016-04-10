@@ -70,16 +70,28 @@
             e.preventDefault();
             var url = $(this).attr("data-url");
 
-            if (typeof url !== "undefined") {
+            if (typeof url !== "undefined" && !$(this).hasClass('tab-loaded')) {
                 var pane = $(this), target = this.hash;
 
                 // ajax load from data-url
+                var _this = $(this);
                 Backend.Ajax.loadHtml(target, url, function(html) {
                     pane.tab('show');
+                    _this.addClass('tab-loaded');
+
                 });
             } else {
                 $(this).tab('show');
             }
+        });
+
+        $(document).on('dblclick','.be-tabs .nav a', function (e) {
+            $(this).removeClass('tab-loaded');
+            $(this).trigger('click');
+
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
         });
 
         //

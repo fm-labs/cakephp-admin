@@ -80,6 +80,20 @@ h2 {
   max-height: 150px;
 }
 
+/**
+ * Labels
+ */
+.label[data-toggle-url] {
+  cursor: pointer;
+
+  &.loading {
+    background-color: #AAA;
+  }
+
+  &.loading-error::before {
+    content: "!";
+  }
+}
 
 /**
  * Table

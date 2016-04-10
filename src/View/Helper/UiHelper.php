@@ -31,7 +31,7 @@ class UiHelper extends Helper
             // 'icon' => '<span class="glyphicon glyphicon-{{class}}"{{attrs}}></span>', #bootstrap style
             'icon' => '<i class="fa fa-{{class}}"{{attrs}}></i>', # fontawesome style
             'modal' => '<div class="modal"></div>',
-            'label' => '<span class="label label-{{class}}">{{label}}</span>',
+            'label' => '<span class="label label-{{class}}"{{attrs}}>{{label}}</span>',
             'menu' => '<ul{{attrs}}>{{items}}</ul>',
             'menuItem' => '<li{{attrs}}>{{content}}</li>',
             'menuItemDropdown' => '<li class="dropdown"{{attrs}}>{{content}}{{children}}</li>',
@@ -67,27 +67,39 @@ class UiHelper extends Helper
         return $this->postLink($title, $url, $options);
     }
 
-    public function statusLabel($status, $options = [])
+    public function statusLabel($status, $options = [], $map = [])
     {
+        $options += [];
+
+        if (empty($map)) {
+            $map = [
+                0 => [__('No'), 'danger'],
+                1 => [__('Yes'), 'success']
+            ];
+        }
+
         $status = (int) $status;
-        $labels = (isset($options['label'])) ? (array) $options['label'] : [__('No'), __('Yes')];
-        $classes = (isset($options['class'])) ? (array) $options['class'] : ['danger', 'success'];
-
         $label = $status;
-        $class = '';
-        if (isset($labels[$status])) {
-            $label = $labels[$status];
+        $class = "";
+
+        if (array_key_exists($status, $map)) {
+            $stat = $map[$status];
+            if (is_string($stat)) {
+                $stat = [$status, $stat];
+            }
+
+            if (is_array($stat) && count($stat) == 2) {
+                list($label, $class) = $stat;
+            }
+
         }
 
-        if (isset($classes[$status])) {
-            $class = $classes[$status];
-        }
-
-        $html = $this->templater()->format('label', [
+        $label = $this->templater()->format('label', [
             'class' => $class,
-            'label' => $label
+            'label' => $label,
+            'attrs' => $this->templater()->formatAttributes($options, ['toggle', 'class', 'label'])
         ]);
-        return $html;
+        return $label;
     }
 
     public function icon($class, $options = [])

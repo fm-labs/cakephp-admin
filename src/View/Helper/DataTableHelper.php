@@ -4,6 +4,7 @@ namespace Backend\View\Helper;
 
 
 use Cake\Utility\Hash;
+use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
@@ -41,10 +42,16 @@ class DataTableHelper extends Helper
         {
             if (is_numeric($field)) {
                 $field = $conf;
-                $conf = ['title' => $field];
+                $conf = [];
             }
 
             $conf += $_defaultHeader;
+
+
+            if ($conf['title'] === null) {
+                $conf['title'] = Inflector::humanize($field);
+            }
+
             $this->_fields[$field] = $conf;
         }
     }
@@ -82,7 +89,7 @@ class DataTableHelper extends Helper
         {
             $cellData = Hash::get($row, $fieldName);
 
-            $formattedCellData = $this->_formatRowCellData($cellData, $field['formatter'], $row);
+            $formattedCellData = $this->_formatRowCellData($cellData, $field['formatter'], $row, $fieldName);
 
             $html .= $this->templater()->format('rowCell', [
                 'content' => $formattedCellData
@@ -102,7 +109,7 @@ class DataTableHelper extends Helper
      * @param array $rowData
      * @return string
      */
-    protected function _formatRowCellData($cellData, $formatter = null, $rowData = [])
+    protected function _formatRowCellData($cellData, $formatter = null, $rowData = [], $fieldName)
     {
         if ($formatter === false) {
             return $cellData;
@@ -113,7 +120,7 @@ class DataTableHelper extends Helper
         }
 
         if (is_callable($formatter)) {
-            return call_user_func_array($formatter, [$cellData, $rowData]);
+            return call_user_func_array($formatter, [$cellData, $rowData, $fieldName]);
         }
     }
 

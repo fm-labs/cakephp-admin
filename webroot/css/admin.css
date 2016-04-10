@@ -98,6 +98,18 @@ h2 {
   max-height: 150px;
 }
 /**
+ * Labels
+ */
+.label[data-toggle-url] {
+  cursor: pointer;
+}
+.label[data-toggle-url].loading {
+  background-color: #AAA;
+}
+.label[data-toggle-url].loading-error::before {
+  content: "!";
+}
+/**
  * Table
  */
 table.info.table tr td:first-child {

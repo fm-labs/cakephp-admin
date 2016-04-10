@@ -58,6 +58,56 @@ var Backend = {
             return false;
         });
 
+        // status label toggle
+        $(document).on('click', '.label[data-toggle-url]', function(e) {
+            console.log("toggle status label with toggle-url " + $(this).data('toggleUrl'));
+
+            var _this = $(this);
+            var url = $(this).data('toggleUrl');
+
+            if (url !== undefined) {
+
+                $.ajax({
+                    url: url,
+                    type: 'json',
+                    method: 'GET',
+                    beforeSend: function() {
+                        _this.addClass('loading');
+                    },
+                    complete: function() {
+                        _this.removeClass('loading');
+                    },
+                    error: function() {
+                        _this.addClass('loading-error');
+                    },
+                    success: function(json) {
+
+                        console.log(json);
+
+                        if (typeof json !== 'object') {
+                            Backend.Flash.error('Toggle request failed: Expected JSON response');
+                            return;
+                        }
+
+                        if (json.result === -1) {
+                            Backend.Flash.error('Toggle request failed: Server error');
+                            return;
+                        }
+
+                        var newVal = json.new;
+                        var newLabel = json.label;
+                        var newClass = json.class;
+
+                        _this
+                            .html(newLabel)
+                            .attr('class', 'label label-' + newClass);
+                    }
+                })
+            }
+
+
+        })
+
         this.beautify();
 
         this.Frame.sendMessage({

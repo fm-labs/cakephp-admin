@@ -71,7 +71,7 @@ $pk = "\$$singularVar->{$primaryKey[0]}";
 <?= $this->Toolbar->addLink(
     __('New {0}', __('<%= $singularHumanName %>')),
     ['action' => 'add'],
-    ['icon' => 'add']
+    ['icon' => 'plus']
 ) ?>
 <?= $this->Toolbar->startGroup(__('More')); ?>
 <%
@@ -88,7 +88,7 @@ foreach ($associations as $type => $data) {
 <?= $this->Toolbar->addLink(
     __('New {0}', __('<%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'add'],
-    ['icon' => 'add']
+    ['icon' => 'plus']
 ) ?>
 <%
             $done[] = $details['controller'];

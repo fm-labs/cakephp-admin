@@ -8,7 +8,7 @@
 <?= $this->Toolbar->addLink(
     __d('backend','New {0}', __d('backend','Setting')),
     ['action' => 'add'],
-    ['icon' => 'add']
+    ['icon' => 'plus']
 ) ?>
 <div class="settings index">
     <h1>Settings Import</h1>

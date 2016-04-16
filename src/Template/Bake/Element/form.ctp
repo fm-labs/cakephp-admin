@@ -41,7 +41,7 @@ foreach ($associations as $type => $data) {
 <?= $this->Toolbar->addLink(
     __('New {0}', __('<%= $this->_singularHumanName($alias) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'add'],
-    ['icon' => 'add']
+    ['icon' => 'plus']
 ) %>
 <%
             $done[] = $details['controller'];

@@ -7,6 +7,7 @@ use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
+use Cake\View\Helper\FormHelper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\PaginatorHelper;
 use Cake\View\StringTemplateTrait;
@@ -16,13 +17,14 @@ use Cake\View\StringTemplateTrait;
  * @package Backend\View\Helper
  *
  * @property HtmlHelper $Html
+ * @property FormHelper $Form
  * @property PaginatorHelper $Paginator
  */
 class DataTableHelper extends Helper
 {
     use StringTemplateTrait;
 
-    public $helpers = ['Html', 'Paginator'];
+    public $helpers = ['Html', 'Form', 'Paginator'];
 
     protected $_params = [];
 
@@ -85,6 +87,10 @@ class DataTableHelper extends Helper
         ]);
 
         $html = "";
+
+        // multiselect checkbox
+        $html .= $this->_renderRowSelectCell($row);
+
         foreach ($this->_fields as $fieldName => $field)
         {
             $cellData = Hash::get($row, $fieldName);
@@ -96,6 +102,19 @@ class DataTableHelper extends Helper
             ]);
         }
         return $html;
+    }
+
+    protected function _renderRowSelectCell($row) {
+
+        $this->templater()->add([
+            'rowSelectCell' => '<td>{{content}}</td>'
+        ]);
+
+        $input = $this->Form->checkbox('multiselect_' . $row->id);
+
+        return $this->templater()->format('rowCell', [
+            'content' => $input
+        ]);
     }
 
     /**

@@ -22,7 +22,7 @@
             <?= $this->Ui->link(
                 __d('banana','New {0}', __d('banana','Setting')),
                 ['action' => 'add'],
-                ['class' => 'item', 'icon' => 'add']
+                ['class' => 'item', 'icon' => 'plus']
             ) ?>
             <div class="ui item dropdown">
                 <div class="menu">

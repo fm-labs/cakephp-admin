@@ -21,7 +21,7 @@ $this->DataTable->create($params);
                         Actions
                         <span class="caret"></span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-right">
+                    <ul class="dropdown-menu">
                          <?= $this->DataTable->renderRowActions($params['rowActions'], $row); ?>
                     </ul>
                 </div>

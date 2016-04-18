@@ -250,6 +250,23 @@ nav ul.pagination {
   font-size: 0.66rem;
   display: none;
 }
+/** Entity View **/
+.entity-view {
+  position: relative;
+  max-width: 100%;
+}
+.entity-view h1 {
+  border: none;
+}
+.entity-view .table-entity {
+  max-width: 100%;
+  overflow: scroll;
+}
+.entity-view .table-entity tr td:first-child {
+  min-width: 20%;
+  font-weight: 700;
+  vertical-align: top;
+}
 /**
  * Attachments (deprecated)
  */

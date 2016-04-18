@@ -106,15 +106,19 @@ class DataTableHelper extends Helper
 
     protected function _renderRowSelectCell($row) {
 
-        $this->templater()->add([
-            'rowSelectCell' => '<td>{{content}}</td>'
-        ]);
+        if (isset($this->_params['select']) && $this->_params['select'] === true) {
 
-        $input = $this->Form->checkbox('multiselect_' . $row->id);
+            $this->templater()->add([
+                'rowSelectCell' => '<td>{{content}}</td>'
+            ]);
 
-        return $this->templater()->format('rowCell', [
-            'content' => $input
-        ]);
+            $input = $this->Form->checkbox('multiselect_' . $row->id);
+
+            return $this->templater()->format('rowCell', [
+                'content' => $input
+            ]);
+        }
+
     }
 
     /**

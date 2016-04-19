@@ -1,11 +1,12 @@
 /* jsTree default theme */
 .jstree {
-  overflow-x: hidden;
+  /** overflow-x: hidden; **/
+  overflow: hidden;
   border-right: 1px solid #CCC;
 }
 
 .jstree:hover {
-  overflow-x: scroll;
+  /** overflow-x: scroll; **/
 }
 
 .jstree-node,

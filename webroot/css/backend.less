@@ -34,7 +34,7 @@ body{
 h1 {
   font-size: 1.5em;
   border-bottom: 1px solid #CCC;
-  padding: 0.3em;
+  padding: 0.2em 0;
 }
 
 h2 {
@@ -172,8 +172,8 @@ form div.checkbox {
 }
 
 form fieldset {
-  border: 1px solid #337ab7 !important;
-  border-width: 0 0 1px 0 !important;
+  //border-bottom: 1px solid @color-primary !important;
+  //border-width: 0 0 1px 0 !important;
   padding: 0;
   margin: 1em 0 1.3em 0;
 }
@@ -186,7 +186,7 @@ form fieldset legend {
   margin: 0 0 0 0;
   width: 100%;
   padding: 0 0.3em;
-  border-top: 2px solid #337ab7;
+  border-top: 2px solid @color-primary;
   line-height: 30px;
   font-size: 16px;
 
@@ -197,7 +197,7 @@ form fieldset legend {
   &::after {
     font-size: 80%;
     font-style: italic;
-    content: " (click to hide)";
+    //content: " (click to hide)";
   }
 
   ~ * {
@@ -214,6 +214,8 @@ form fieldset.collapsed {
 
   > legend {
     display: block;
+    visibility: visible;
+    height: auto !important;
 
     &::before {
       content: "+ ";
@@ -221,7 +223,7 @@ form fieldset.collapsed {
 
 
     &::after {
-      content: " (click to open)";
+      //content: " (click to open)";
     }
 
     ~ * {

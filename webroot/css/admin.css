@@ -53,7 +53,7 @@ body {
 h1 {
   font-size: 1.5em;
   border-bottom: 1px solid #CCC;
-  padding: 0.3em;
+  padding: 0.2em 0;
 }
 h2 {
   font-size: 1.25em;
@@ -160,8 +160,6 @@ form div.checkbox {
   padding: 0.5em 0 0.5em;
 }
 form fieldset {
-  border: 1px solid #337ab7 !important;
-  border-width: 0 0 1px 0 !important;
   padding: 0;
   margin: 1em 0 1.3em 0;
 }
@@ -182,7 +180,6 @@ form fieldset legend::before {
 form fieldset legend::after {
   font-size: 80%;
   font-style: italic;
-  content: " (click to hide)";
 }
 form fieldset legend ~ * {
   margin-top: 1em;
@@ -192,12 +189,11 @@ form fieldset.collapsed > * {
 }
 form fieldset.collapsed > legend {
   display: block;
+  visibility: visible;
+  height: auto !important;
 }
 form fieldset.collapsed > legend::before {
   content: "+ ";
-}
-form fieldset.collapsed > legend::after {
-  content: " (click to open)";
 }
 form fieldset.collapsed > legend ~ * {
   margin-top: 0.3em;
@@ -380,12 +376,6 @@ nav ul.pagination {
   padding: 1em 2em;
   margin: 0;
 }
-#toolbar {
-  padding: 2px 0;
-}
-#toolbar .nav > li > a {
-  font-size: 0.9em;
-}
 /**
  * Top Affix
  */
@@ -396,8 +386,7 @@ nav ul.pagination {
   width: 100%;
   opacity: 1;
   background-color: #FFF;
-  box-shadow: 0 0 10px #CCC;
-  transition: 2s;
+  margin-bottom: 5px;
 }
 #top-fixed {
   display: none;
@@ -421,24 +410,25 @@ body.fixed-nav #top-fixed {
 /**
  * Toolbar
  */
-#toolbar .ui.navbar.menu,
-#actionbar .ui.navbar.menu {
-  background-color: #e8e8e8;
-  margin-left: 0;
-  margin-right: 0;
-  border-radius: 0;
+#toolbar {
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 0 1px #e8e8e8;
+  transition: 300ms;
 }
-#toolbar .ui.navbar.menu a,
-#actionbar .ui.navbar.menu a {
+#toolbar .nav {
+  padding: 4px 15px;
+}
+#toolbar .nav > li > a {
+  font-size: 0.9em;
   color: #333;
-}
-#toolbar .ui.navbar.menu a:hover,
-#actionbar .ui.navbar.menu a:hover {
-  text-decoration: underline;
-}
-#toolbar .ui.menu > .item:first-child,
-#actionbar .ui.menu > .item:first-child {
+  padding: 5px 10px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
   border-radius: 0;
+}
+#toolbar:hover {
+  box-shadow: 0 0 4px #aaa;
 }
 /**
  * Admin Page Layout
@@ -455,6 +445,7 @@ body.fixed-nav #top-fixed {
 }
 #page-crumbs ul.breadcrumb {
   margin: 0;
+  padding: 0.1em 15px;
   -webkit-border-top-right-radius: 0;
   -webkit-border-bottom-right-radius: 0;
   -webkit-border-bottom-left-radius: 0;
@@ -470,10 +461,11 @@ body.fixed-nav #top-fixed {
   -moz-background-clip: padding-box;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
+  background: transparent;
 }
 #page-crumbs a,
 #page-crumbs .breadcrumb {
-  font-size: 10px;
+  font-size: 0.9em;
 }
 #page-main {
   position: relative;

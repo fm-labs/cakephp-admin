@@ -38,7 +38,7 @@
   text-decoration: none;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
-  color: #333333;
+  color: #333;
 }
 .be-nav ul {
   margin: 0;
@@ -56,14 +56,14 @@
 }
 .be-nav ul li:hover {
   background-color: green;
-  border-top: 3px solid #333333;
+  border-top: 3px solid #333;
 }
 .be-nav ul li:hover > ul {
   visibility: visible;
   background-color: #f8f8f8;
 }
 .be-nav ul li:hover > a {
-  color: #ffffff;
+  color: #FFF;
 }
 .be-nav ul li::before {
   content: "";
@@ -79,9 +79,9 @@
   width: 250px;
   background-color: #f8f8f8;
   z-index: 10000;
-  -webkit-box-shadow: 0 5px 5px #cccccc;
-  -moz-box-shadow: 0 5px 5px #cccccc;
-  box-shadow: 0 5px 5px #cccccc;
+  -webkit-box-shadow: 0 5px 5px #CCC;
+  -moz-box-shadow: 0 5px 5px #CCC;
+  box-shadow: 0 5px 5px #CCC;
 }
 .be-nav ul ul li {
   display: block;

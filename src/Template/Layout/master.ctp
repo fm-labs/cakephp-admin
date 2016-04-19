@@ -44,7 +44,7 @@
         <?= $this->element('Backend.Layout/master/footer'); ?>
     </footer>
 
-    <div id="loader" class="loader"><i class="fa fa-cog fa-spin fa-3x"></i></div>
+    <div id="loader" class="loader"><i class="fa fa-cog fa-spin fa-2x"></i></div>
     <div id="modal-container"></div>
 
 </div> <!-- #page -->
@@ -114,7 +114,8 @@
                     _this.removeClass('tab-loading');
                     _this.addClass('tab-ajax-loaded');
                     _this.html(this.contentWindow.document.title);
-                    _this.attr('data-url', this.contentWindow.location)
+                    _this.attr('title', this.contentWindow.document.title);
+                    _this.attr('data-url', this.contentWindow.location);
                 });
 
                 Backend.Loader.show();
@@ -143,6 +144,7 @@
                 $(this).tab('show');
 
                 // @TODO Keep this DRY. (see click event)
+                var _this = $(this);
                 var $iframe = $('#' + tabId).find('iframe.tab-frame').first();
                 $iframe.on('load', function() {
                     Backend.Loader.hide();

@@ -33,14 +33,14 @@ body {
 
 #loader {
   position: absolute;
-  top: 60px;
+  top: 55px;
   right: 10px;
   z-index: 99999;
   display: none;
+  color: @color-primary;
 }
 
 #main {
-  margin-top: 1em;
 }
 
 #master-navbar {
@@ -52,17 +52,37 @@ body {
 
 #master-tabs {
 
+  .nav {
+    padding: 7px 15px 0;
+    background-color: #F2F2F2;
 
-  .nav > li.active a {
-    font-weight: bold;
   }
 
+
   .nav > li > a {
-    padding: 10px 22px 10px 10px;
-    max-width: 120px;
+    padding: 8px 22px 8px 10px;
+    max-width: 150px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: #333;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+    .border-radius(0);
+    background-color: transparent;
+  }
+
+  .nav > li > a:hover {
+    //text-decoration: underline;
+    border-color: #DDD;
+  }
+
+  .nav > li.active > a {
+    font-weight: bold;
+    background-color: #FFF;
+    border-color: #FFF;
+    border-width: 1px 1px 0 1px;
   }
 
   .nav > li > .tab-loading {
@@ -72,38 +92,39 @@ body {
   }
 
   .nav > li > .tab-close {
+    display: none;
     position: absolute;
     right: 5px;
-    top: 12px;
-    font-size: 11px;
-    line-height: 12px;
+    top: 10px;
+    font-size: 10px;
+    line-height: 7px;
     padding: 2px;
     border: 1px solid #CCC;
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     text-align: center;
     vertical-align: middle;
     font-weight: bold;
     .opacity(0.3);
-    .rounded(15px);
+    .rounded(0);
 
 
     &:hover {
       cursor: pointer;
-      background-color: #CCC;
-      border-color: #CCC;
-      color: #333;
+      background-color: #333;
+      border-color: #3A3A3A;
+      color: #f2f2f2;
       .opacity(1);
     }
   }
 
   .nav > li:hover > .tab-close {
+    display: block;
+  }
+
+  .nav > li:hover > .tab-close {
     display: inline;
   }
-}
-
-#master-tab-list.nav {
-  padding: 0 1rem;
 }
 
 #master-tab-content {

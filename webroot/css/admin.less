@@ -6,6 +6,7 @@
 @import "jstree/themes/backend/style.css";
 @import "font-awesome.min.css";
 
+
 /**
  * Alert- & Flash Messages
  */
@@ -33,14 +34,6 @@
   }
 }
 
-#toolbar {
-  padding: 2px 0;
-
-  .nav > li > a {
-      font-size: 0.9em;
-  }
-}
-
 
 /**
  * Top Affix
@@ -52,10 +45,10 @@
   //left: 0;
   z-index: 1000;
   width: 100%;
-  opacity: 1;
-  background-color: #FFF;
-  box-shadow: 0 0 10px #CCC;
-  transition: 2s;
+  opacity: 1;background-color: #FFF;
+  //box-shadow: 0 0 3px #CCC;
+  margin-bottom: 5px;
+  //transition: 2s;
 }
 
 #top-fixed {
@@ -97,27 +90,27 @@ body.fixed-nav {
 /**
  * Toolbar
  */
-#toolbar,
-#actionbar {
-  .ui.navbar.menu {
-    //padding-left: 275px;
-    //top: 48px;
-    background-color: #e8e8e8;
-    margin-left: 0;
-    margin-right: 0;
-    border-radius: 0;
 
-    a {
-      color: #333;
+#toolbar {
+  padding: 0;
+  margin: 0;
+  box-shadow: 0 0 1px #e8e8e8;
+  transition: 300ms;
 
-      &:hover {
-        text-decoration: underline;
-      }
-    }
+  .nav {
+    padding: 4px 15px;
   }
 
-  .ui.menu > .item:first-child {
-    border-radius: 0;
+  .nav > li > a {
+    font-size: 0.9em;
+    color: #333;
+    //border: 1px solid #CCC;
+    padding: 5px 10px;
+    .rounded(0);
+  }
+
+  &:hover {
+    box-shadow: 0 0 4px #aaa;
   }
 }
 
@@ -142,11 +135,13 @@ body.fixed-nav {
   ul.breadcrumb {
     //padding: 0;
     margin: 0;
+    padding: 0.1em 15px;
     .border-radius(0);
+    background: transparent;
   }
 
   a, .breadcrumb {
-    font-size: 10px;
+    font-size: 0.9em;
   }
 }
 

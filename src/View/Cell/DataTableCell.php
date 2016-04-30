@@ -2,6 +2,7 @@
 namespace Backend\View\Cell;
 
 
+use Cake\Collection\CollectionInterface;
 use Cake\ORM\TableRegistry;
 use Cake\View\Cell;
 
@@ -32,12 +33,21 @@ class DataTableCell extends Cell
 
         // data
         if (is_object($params['data'])) {
-            $params['data'] = $params['data']->toArray();
+            //$params['data'] = $params['data']->toArray();
         }
 
+        $data =& $params['data'];
+
         // headers
-        if (!$params['headers'] && isset($params['data'][0])) {
-            $firstRow = is_object($params['data'][0]) ? $params['data'][0]->toArray() : $params['data'][0];
+        if (!$params['headers']) {
+
+            if ($data instanceof CollectionInterface) {
+                $firstRow = $data->first();
+            } else {
+                $firstRow = (is_array($data) && $data[0]) ? $data[0] : [];
+
+            }
+            $firstRow = is_object($firstRow) ? $firstRow->toArray() : $firstRow;
             $params['headers'] = array_keys($firstRow);
         }
 

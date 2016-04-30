@@ -469,7 +469,7 @@ nav ul.pagination {
  */
 #top,
 #top-fixed {
-  position: relative;
+  position: fixed;
   z-index: 1000;
   width: 100%;
   opacity: 1;
@@ -556,6 +556,7 @@ body.fixed-nav #top-fixed {
   font-size: 0.9em;
 }
 #page-main {
+  padding-top: 40px;
   position: relative;
 }
 #page-content {

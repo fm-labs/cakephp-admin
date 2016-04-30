@@ -22,26 +22,23 @@ $item['attr'] = (isset($item['attr'])) ? $item['attr'] : [];
  * Item with children
  */
 if (isset($item['_children']) && !empty($item['_children'])): ?>
-    <div class="ui dropdown item <?= sprintf('level-%s', $level) ?>">
-        <i class="dropdown icon"></i>
-        <?=
-        $this->Ui->link(
-            $item['title'],
-            $item['url'],
-            $item['attr']
-        ); ?>
-        <div class="menu">
+    <li role="presentation" class="dropdown <?= sprintf('level-%s', $level) ?>">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            Dropdown <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
             <?php foreach ($item['_children'] as $child): ?>
                 <?= $this->element('Backend.Menu/menu_item', ['item' => $child, 'level' => $level + 1]); ?>
             <?php endforeach; ?>
-        </div>
-    </div>
+        </ul>
+    </li>
 <?php
 /**
  * Item without children
  */
 else:
 ?>
+    <li class="" role="presentation">
     <?php
         $item['attr'] = $this->Html->addClass((array) $item['attr'], 'item');
         echo $this->Ui->link(
@@ -49,5 +46,6 @@ else:
             $item['url'],
             $item['attr']
         ); ?>
+    </li>
 <?php
 endif;

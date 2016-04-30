@@ -1,6 +1,6 @@
 <?php $this->Html->addCrumb(__('Attachments')); ?>
 
-<?php $this->Toolbar->addLink(__('New {0}', __('Attachment')), ['action' => 'add'], ['icon' => 'add']); ?>
+<?php $this->Toolbar->addLink(__('New {0}', __('Attachment')), ['action' => 'add'], ['icon' => 'plus']); ?>
 <div class="attachments index">
     <table class="ui table striped">
     <thead>

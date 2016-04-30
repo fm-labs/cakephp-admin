@@ -1,0 +1,166 @@
+@import "elements.less";
+@import "vars.less";
+@import "backend.less";
+
+@import "font-awesome.min.css";
+
+body {
+  background-color: #fff;
+}
+
+#header-nav {
+  margin: 0;
+  .border-radius(0);
+
+  .navbar-nav > li > a {
+      color: #DDD;
+
+      &:hover {
+          color: #FFF;
+      }
+  }
+}
+
+#flash {
+
+  > .alert {
+    margin: 0;
+    //padding: 0.8em;
+    //font-size: 0.8em;
+    .border-radius(0)
+  }
+}
+
+#loader {
+  position: absolute;
+  top: 55px;
+  right: 10px;
+  z-index: 99999;
+  display: none;
+  color: @color-primary;
+}
+
+#main {
+}
+
+#master-navbar {
+
+  ul.nav li.dropdown:hover ul.dropdown-menu {
+    display: block;
+  }
+}
+
+#master-tabs {
+
+  .nav {
+    padding: 7px 15px 0;
+    background-color: #F2F2F2;
+
+  }
+
+
+  .nav > li > a {
+    padding: 8px 22px 8px 10px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #333;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 1px 1px 0 1px;
+    .border-radius(0);
+    background-color: transparent;
+  }
+
+  .nav > li > a:hover {
+    //text-decoration: underline;
+    border-color: #DDD;
+  }
+
+  .nav > li.active > a {
+    font-weight: bold;
+    background-color: #FFF;
+    border-color: #FFF;
+    border-width: 1px 1px 0 1px;
+  }
+
+  .nav > li > .tab-loading {
+      &::after {
+        content: "*";
+      }
+  }
+
+  .nav > li > .tab-close {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    font-size: 10px;
+    line-height: 7px;
+    padding: 2px;
+    border: 1px solid #CCC;
+    width: 14px;
+    height: 14px;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    .opacity(0.3);
+    .rounded(0);
+
+
+    &:hover {
+      cursor: pointer;
+      background-color: #333;
+      border-color: #3A3A3A;
+      color: #f2f2f2;
+      .opacity(1);
+    }
+  }
+
+  .nav > li:hover > .tab-close {
+    display: block;
+  }
+
+  .nav > li:hover > .tab-close {
+    display: inline;
+  }
+}
+
+#master-tab-content {
+  .tab-pane.active {
+    position: relative;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tab-pane > iframe,
+  .tab-pane > .tab-frame {
+    border: 0;
+    overflow-y: hidden;
+    border-bottom: 1px solid #CCC;
+  }
+
+  .tab-pane > .loader {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+  }
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #e8e8e8;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .row > div {
+    font-size: 0.7em;
+  }
+}

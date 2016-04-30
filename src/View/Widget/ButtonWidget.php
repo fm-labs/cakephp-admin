@@ -9,7 +9,7 @@ class ButtonWidget extends CakeButtonWidget
 
     public function render(array $data, ContextInterface $context)
     {
-        $data['class'] = (isset($data['class'])) ? 'ui button ' . $data['class'] : 'ui button';
+        $data['class'] = (isset($data['class'])) ? $data['class'] : 'btn btn-primary';
 
         return parent::render($data, $context);
     }

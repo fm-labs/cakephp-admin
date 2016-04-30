@@ -12,7 +12,7 @@ class AppController extends AbstractBackendController
                 'plugin' => 'Backend',
                 'title' => 'System',
                 'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'backend'],
-                'icon' => 'cubes',
+                'icon' => 'cube',
                 // 'requireRoot' => true, // temporary access control workaround
 
                 '_children' => [
@@ -24,17 +24,17 @@ class AppController extends AbstractBackendController
                     'settings' => [
                         'title' => 'Settings',
                         'url' => ['plugin' => 'Backend', 'controller' => 'Settings', 'action' => 'index'],
-                        'icon' => 'settings',
+                        'icon' => 'gears',
                         'requireRoot' => true, // temporary access control workaround
                     ],
                     'logs' => [
                         'title' => 'Logs',
                         'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
-                        'icon' => 'browser',
+                        'icon' => 'file-text-o',
                         'requireRoot' => true, // temporary access control workaround
                     ],
                     'users' => [
-                        'title' => 'Users',
+                        'title' => 'Access Control',
                         'url' => ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
                         'icon' => 'lock',
                         'requireRoot' => true, // temporary access control workaround

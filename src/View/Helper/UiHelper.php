@@ -28,19 +28,23 @@ class UiHelper extends Helper
      */
     protected $_defaultConfig = [
         'templates' => [
-            'iconBefore' => '<i class="{{icon}} icon"></i>{{content}}',
-            'modal' => '<div class="ui modal"></div>',
-            'label' => '<div class="ui label {{class}}">{{label}}</div>'
+            // 'icon' => '<span class="glyphicon glyphicon-{{class}}"{{attrs}}></span>', #bootstrap style
+            'icon' => '<i class="fa fa-{{class}}"{{attrs}}></i>', # fontawesome style
+            'modal' => '<div class="modal"></div>',
+            'label' => '<span class="label label-{{class}}"{{attrs}}>{{label}}</span>',
+            'menu' => '<ul{{attrs}}>{{items}}</ul>',
+            'menuItem' => '<li{{attrs}}>{{content}}</li>',
+            'menuItemDropdown' => '<li class="dropdown"{{attrs}}>{{content}}{{children}}</li>',
+            'menuDropdownButton' => '<a{{attrs}}>{{title}} <span class="caret"></span></a>',
+            'menuLink' => '<a{{attrs}}>{{title}}</a>'
         ]
     ];
 
     public function link($title, $url = null, array $options = [])
     {
         if (isset($options['icon'])) {
-            $title = $this->templater()->format('iconBefore', [
-                'icon' => $options['icon'],
-                'content' => $title
-            ]);
+            $title = $this->icon($options['icon']) . " " . $title;
+
             $options['escape'] = false;
             unset($options['icon']);
         }
@@ -50,10 +54,8 @@ class UiHelper extends Helper
     public function postLink($title, $url = null, array $options = [])
     {
         if (isset($options['icon'])) {
-            $title = $this->templater()->format('iconBefore', [
-                'icon' => $options['icon'],
-                'content' => $title
-            ]);
+            $title = $this->icon($options['icon']) . " " . $title;
+
             $options['escape'] = false;
             unset($options['icon']);
         }
@@ -65,26 +67,122 @@ class UiHelper extends Helper
         return $this->postLink($title, $url, $options);
     }
 
-    public function statusLabel($status, $options = [])
+    public function statusLabel($status, $options = [], $map = [])
     {
+        $options += [];
+
+        if (empty($map)) {
+            $map = [
+                0 => [__('No'), 'danger'],
+                1 => [__('Yes'), 'success']
+            ];
+        }
+
         $status = (int) $status;
-        $labels = (isset($options['label'])) ? (array) $options['label'] : [__('No'), __('Yes')];
-        $classes = (isset($options['class'])) ? (array) $options['class'] : ['red', 'green'];
-
         $label = $status;
-        $class = '';
-        if (isset($labels[$status])) {
-            $label = $labels[$status];
+        $class = "";
+
+        if (array_key_exists($status, $map)) {
+            $stat = $map[$status];
+            if (is_string($stat)) {
+                $stat = [$status, $stat];
+            }
+
+            if (is_array($stat) && count($stat) == 2) {
+                list($label, $class) = $stat;
+            }
+
         }
 
-        if (isset($classes[$status])) {
-            $class = $classes[$status];
-        }
-
-        $html = $this->templater()->format('label', [
+        $label = $this->templater()->format('label', [
             'class' => $class,
-            'label' => $label
+            'label' => $label,
+            'attrs' => $this->templater()->formatAttributes($options, ['toggle', 'class', 'label'])
         ]);
-        return $html;
+        return $label;
+    }
+
+    public function icon($class, $options = [])
+    {
+        $options += ['tag' => 'icon', 'class' => $class, 'attrs' => []];
+
+        $tag = $options['tag'];
+        unset($options['tag']);
+
+        return $this->templater()->format($tag, $options);
+    }
+
+    public function menu($menuList = [], $menuOptions = [], $childMenuOptions = [], $itemOptions = [])
+    {
+        $menuOptions += ['class' => 'nav navbar-nav'];
+
+        $items = "";
+
+        foreach ($menuList as $alias => $item) {
+            $items .= $this->menuItem($item, $childMenuOptions, $itemOptions);
+        }
+
+        // build list
+        return $this->templater()->format('menu', [
+            'items' => $items,
+            'attrs' => $this->templater()->formatAttributes($menuOptions),
+        ]);
+    }
+
+    public function menuItem($item = [], $childMenuOptions = [], $itemOptions = [])
+    {
+        $item += ['title' => null, 'plugin' => null, 'url' => [], '_children' => []];
+
+
+        $plugin = $item['plugin'];
+        unset($item['plugin']);
+
+        $url = $item['url'];
+        unset($item['url']);
+
+        $children = $item['_children'];
+        unset($item['_children']);
+
+
+        if (!$item['title']) {
+            $item['title'] = $item['href'];
+        }
+
+
+        // build item
+        if (!empty($children)) {
+            if (isset($item['icon'])) {
+                $item['data-icon'] = $item['icon'];
+            }
+
+            //$link = ($url) ? $this->link($item['title'], $url, ['class' => 'btn btn-default', 'role' => 'button']) : null;
+
+            $ddAttrs = [
+                'data-toggle' => ($url) ? "dropdown disabled" : "drowdown",
+                'role' => "button",
+                'aria-haspopup' => "true",
+                'aria-expanded' => "false",
+                'href' => ($url) ? $this->Url->build($url) : null,
+            ];
+            $ddAttrs += $item;
+            $ddLink = $this->templater()->format('menuDropdownButton', [
+                'attrs' => $this->templater()->formatAttributes($ddAttrs, ['requireRoot', 'icon', '_children']),
+                'title' => $item['title']
+            ]);
+
+            $link = $ddLink;
+            $tag = 'menuItemDropdown';
+            $children = $this->menu($children, $childMenuOptions, $childMenuOptions, $itemOptions);
+        } else {
+            $link = $this->link($item['title'], $url, $item);
+            $tag = 'menuItem';
+            $children = null;
+        }
+
+        return $this->templater()->format($tag, [
+            'attrs' => $this->templater()->formatAttributes($itemOptions),
+            'content' => $link,
+            'children' => $children
+        ]);
     }
 }

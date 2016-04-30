@@ -1,4 +1,209 @@
-/** Common Backend CSS Stylesheet **/
+/**
+ * Common Backend CSS Stylesheet
+ */
+/*---------------------------------------------------
+    LESS Elements 0.9
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------*/
+/**
+ * Colors
+ */
+/**
+ * Fonts
+ */
+/**
+ * Body
+ */
+/**
+ * Sidebar
+ */
+/**
+ * Navigation
+ */
+/**
+ * Page
+ */
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  background-color: #FFF;
+  padding-top: 0;
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  -o-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+/**
+ * Helper classes
+ */
+.padding-reset {
+  padding: 0px !important;
+}
+.strong {
+  font-weight: bold;
+}
+/**
+ * Standard views
+ */
+h1 {
+  font-size: 1.5em;
+  border-bottom: 1px solid #CCC;
+  padding: 0.2em 0;
+}
+h2 {
+  font-size: 1.25em;
+}
+.index > h1,
+.view > h1,
+.form > h1,
+.index > h2,
+.view > h2,
+.form > h2 {
+  margin: 0.5rem 0 1rem;
+}
+.index table .thumb,
+.view table .thumb,
+.form table .thumb {
+  width: 30px;
+  height: auto;
+  vertical-align: middle;
+}
+/**
+ * Links
+ */
+.link-frame::after {
+  display: inline-block;
+  margin: 0 .25rem 0 0;
+  width: 1.18em;
+  height: 1em;
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: 400;
+  text-decoration: inherit;
+  text-align: center;
+  font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  content: " \f08e";
+  opacity: 0.1;
+}
+.link-frame:hover::after {
+  opacity: 0.9;
+}
+/**
+ * Images
+ */
+.image,
+.thumb {
+  max-width: 100%;
+}
+.image > img,
+.thumb > img {
+  max-width: 100%;
+}
+.thumb-md,
+.image.thumbnail {
+  max-width: 100px;
+  max-height: 100px;
+}
+.thumb-sm {
+  max-width: 30px;
+  max-height: 30px;
+}
+.thumb-lg {
+  max-width: 150px;
+  max-height: 150px;
+}
+/**
+ * Labels
+ */
+.label[data-toggle-url] {
+  cursor: pointer;
+}
+.label[data-toggle-url].loading {
+  background-color: #AAA;
+}
+.label[data-toggle-url].loading-error::before {
+  content: "!";
+}
+/* Tables
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table tr th, table tr td, table a {
+  font-size: 0.9em;
+  line-height: 1.1em;
+}
+
+table tr th,
+table tr td {
+  border: 1px solid #CBCBCB;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  background-color: #f7f7f7;
+  color: #333;
+}
+
+table tr th {
+  background-color: #D8D8DA;
+  background-repeat: repeat-x;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAIAAACOpGH9AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAl2cEFnAAAAAQAAABYAwhbbewAAAAlwSFlzAAALEAAACxABrSO9dQAAAAZiS0dEAAAAAAAA+UO7fwAAACNJREFUCNdj+P//P9O/f/+YYDQE/wfyITRMDFkeu1qEeiAfAE2gQb0aij7cAAAAAElFTkSuQmCC);
+  height: 22px;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 0 5px;
+  text-align: left;
+  vertical-align: middle;
+}
+
+table tr th a.asc:after {
+  content: ' ⇣';
+}
+
+table tr th a.desc:after {
+  content: ' ⇡';
+}
+
+table tr td {
+  padding: 3px 5px;
+  vertical-align: middle;
+}
+
+table tr:nth-child(2n+1) td,
+table tr:nth-child(2n+1) th[scope="row"] {
+  background-color:#fff;
+}
+
+table tr th[scope="row"] {
+  background-repeat: no-repeat;
+  background-position: top left;
+  background-image: url(data:image/gif;base64,R0lGODlhCQAKAIAAAOrNqf///yH5BAAAAAAALAAAAAAJAAoAAAIOjI+ZwH3NEFyRqgCu3gUAOw==);
+}
+
+
+table tr:HOVER td,
+table tr:HOVER th[scope="row"]{
+  background-color:#E7FF91;
+}
+ */
+/**
+ * Table
+ */
+table.info.table tr td:first-child {
+  font-weight: bold;
+}
+/**
+ * Form Image Select
+ */
 .input-imageselect .thumbnails.image_picker_selector.grouped ul li.group_title {
   font-weight: bold;
   font-size: 130%;
@@ -18,4 +223,143 @@
   text-align: center;
   padding: 0.2em;
   background-color: #efefef;
+}
+/**
+ * Tabs
+ */
+.tab-pane.active {
+  padding: 1rem 0.5rem;
+}
+/**
+ * Forms
+ */
+form div.required > label {
+  font-weight: bold;
+}
+form div.required > label:after {
+  content: "*";
+}
+form div.input {
+  margin-bottom: 0.5em;
+}
+form div.checkbox {
+  padding: 0.5em 0 0.5em;
+}
+form fieldset {
+  padding: 0;
+  margin: 1em 0 1.3em 0;
+}
+form fieldset legend {
+  background-color: #e8e8e8;
+  border: medium none;
+  display: block;
+  margin: 0 0 0 0;
+  width: 100%;
+  padding: 0 0.3em;
+  border-top: 2px solid #337ab7;
+  line-height: 30px;
+  font-size: 16px;
+}
+form fieldset legend::before {
+  content: "- ";
+}
+form fieldset legend::after {
+  font-size: 80%;
+  font-style: italic;
+}
+form fieldset legend ~ * {
+  margin-top: 1em;
+}
+form fieldset.collapsed > * {
+  display: none;
+}
+form fieldset.collapsed > legend {
+  display: block;
+  visibility: visible;
+  height: auto !important;
+}
+form fieldset.collapsed > legend::before {
+  content: "+ ";
+}
+form fieldset.collapsed > legend ~ * {
+  margin-top: 0.3em;
+}
+/**
+ * Imagepicker
+ */
+form .imageselect ul.image_picker_selector .thumbnail .image_picker_image {
+  max-width: 100px;
+  height: 100px;
+}
+form .imageselect ul.image_picker_selector .thumbnail {
+  position: relative;
+}
+form .imageselect ul.image_picker_selector .thumbnail p {
+  padding: 3px;
+  max-width: 100px;
+  overflow: hidden;
+  font-size: 0.6rem;
+}
+/**
+ * Datepicker
+ */
+form input.datepicker,
+form input.timepicker {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAA8VJREFUWIXFV09oHHUU/t6bnV2TjmlAkyAN7aFFZIvdhIW4G7ubIhYP1igoFPXgTezBU05KvFhKD4JUsSA9SvEPa0GLBylUut3YxIZtNi0uhRZKjdoYU5I0S+ru7LznxZ1Md2cnzR/cD4aZ3/e+ee+b9/vNP8Ia6BtMv6+iHxBzkQ05dCWXuxOoT6ZHhOgoATeqhhz6NZebCdIbQcGBgYEOh81zRGQCeEIVy7Mzt7PN9IlEoq0C/omJwgT0sKL818zt80E1OCio2tYOgNwx6NEg/f1IJMLM7kXRGnoACNUT0aEh6xGbe+yqlKGo+p3UnxjaU8/ZaiwDTrmej8fjppjWLgAIOaGFycnzd71xbwc4lkx9GirLgkBusqHfNXOtjBv1W4idT3zFYWt3TWOb1b9jg+nMvoMHtzV0IDY4NELAu0S+abYKRKDXaPmfBQBvA94OqB6uk5rt7VgU4N6qRm5Fo9GwX2ZVDXUCJYHc9ZC3KqpmvVaY3VpeA50P1AeeWllBJwsNq+Ksqh4PVVZORTq6nvO9NNbEH21tBiuGRfR7qH5U2t7+mUFo0DPQUTtuWIQehMsmzhhKbxTGL7wMAPv2H3iGHT3lL+cd1tL9LxxD37k2lnsFAGLJAy9C6SgCptUNxRKpm8S820cjgPwJwAS4J8BwTWxDcAcs2xj8WDNd4VKWgOAO1MAA9z6EriY2wdi5xiPGq28tAjugkFkFGh4u6wEDRlAHmxsQfXN6IvflZorX0J9MpVVxDswRH4N+xaVQmLi4JcUBYGo8d1FBP/jFfDsgTEtBCaPRaDjc+fhZL1dZnB8uFouVWHJolEj313gSOjE1kf0RRIsPbWAtdHV18ZKNF+o5AIBqH4jcmDK+DcrV8rug5QY2NAXd3d32vd/nXq/nAEANOsGy2nYintxyA5lMxgHwtZeb+m9/9efs2HpyBRroH0wnBfSqhypMX8qejsfjZjViHX8gUbn0Xj6ft/ueTb2lyk/XeGXKXB278MuGDAAUI2DEHSq+AXDasixjyfbwACzLGgVgq0MvEcM1TaLXATQ10PJF2HIDgVMgIleI+Jg7JrkGAKVSyUHYOubVlkolBwCI6AwU12s8EQobMKA7AND0RO4ygMv10Xw+bwMY9TuzMJ79yjcjyS7yabivAQbviSVTJ8Ghk+zIpl7HVWbDgHMYoOf94q4BZaj3042Ij0DliG5ylRgQIOCj0E1PgvnNlVoX5hoNGPj8/6quulrL/ZGcnfltuqd357yS7lVRS7ceAtI5KH38ZG/3h8ViUQHgX+6Ir/q7g4/6AAAAAElFTkSuQmCC') !important;
+  background-repeat: no-repeat !important;
+  background-position: center right !important;
+  background-size: 20px auto !important;
+}
+/**
+ * Iframe
+ */
+iframe {
+  border: none;
+}
+/**
+ * Pagination
+ */
+nav ul.pagination {
+  margin: 0.3rem 0;
+}
+/** Image Picker **/
+.imageselect_wrap {
+  padding: 1em 0;
+  max-height: 700px;
+}
+.imageselect img.image_picker_image {
+  max-height: 100px;
+}
+.imageselect img.image_picker_image ~ p {
+  font-size: 0.66rem;
+  display: none;
+}
+/** Entity View **/
+.entity-view {
+  position: relative;
+  max-width: 100%;
+}
+.entity-view h1 {
+  border: none;
+}
+.entity-view .table-entity {
+  max-width: 100%;
+  overflow: scroll;
+}
+.entity-view .table-entity tr td:first-child {
+  min-width: 20%;
+  font-weight: 700;
+  vertical-align: top;
+}
+/**
+ * Attachments (deprecated)
+ */
+.attachments.editor h4.ui.header {
+  margin-top: 1em !important;
+}
+.attachments.editor .attachments .attachment .image img {
+  max-height: 100px;
+}
+.attachments.editor .attachments .attachment .actions {
+  font-size: 10px;
 }

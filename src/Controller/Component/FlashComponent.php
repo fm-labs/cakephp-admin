@@ -18,6 +18,15 @@ class FlashComponent extends CakeFlashComponent
     /**
      * Default configuration
      *
+     * Added config parameters:
+     *
+     * - plugin: Set plugin prefix globally for all flash messages, except explicitly overridden
+     * - elementMap: List of config parameter for element types
+     *      'elementMap' => [
+     *          'error' => ['class' => 'danger'],
+     *          'info' => ['element' => 'default']
+     *      ]
+     *
      * @var array
      */
     protected $_defaultConfig = [
@@ -25,7 +34,9 @@ class FlashComponent extends CakeFlashComponent
         'element' => 'default',
         'class' => 'default',
         'params' => [],
-        'clear' => false // since 3.1.
+        'clear' => false, // since 3.1.
+        'plugin' => null,
+        'elementMap' => []
     ];
 
     public function initialize(array $config)
@@ -44,10 +55,19 @@ class FlashComponent extends CakeFlashComponent
 
         list($plugin, $element) = pluginSplit($options['element']);
 
+        // check map
+        if (isset($options['elementMap'][$element])) {
+            $options = array_merge($options, $options['elementMap'][$element]);
+            list($plugin, $element) = pluginSplit($options['element']);
+        }
+
+        // global plugin
+        if (!$plugin && $options['plugin']) {
+            $plugin = $options['plugin'];
+        }
+
         if ($plugin) {
             $options['element'] = $plugin . '.Flash/' . $element;
-        } elseif (isset($options['plugin'])) {
-            $options['element'] = $options['plugin'] . '.Flash/' . $element;
         } else {
             $options['element'] = 'Flash/' . $element;
         }
@@ -78,14 +98,18 @@ class FlashComponent extends CakeFlashComponent
 
     public function __call($name, $args)
     {
-        $_name = Inflector::underscore($name);
-        $options = ['element' => $_name, 'class' => $_name];
+        $element = Inflector::underscore($name);
+        $options = ['element' => $element, 'class' => $element];
 
         if (count($args) < 1) {
             throw new InternalErrorException('Flash message missing.');
         }
 
         if (!empty($args[1])) {
+            if (!empty($args[1]['plugin'])) {
+                $options = ['element' => $args[1]['plugin'] . '.' . $element];
+                unset($args[1]['plugin']);
+            }
             $options += (array)$args[1];
         }
 

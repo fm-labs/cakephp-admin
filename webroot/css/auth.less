@@ -1,21 +1,53 @@
 /**
  * Backend Auth style sheet
  */
+
 body {
-  background-color: #DADADA;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #eee;
 }
-body > .grid {
-  height: 100%;
+
+.container {
+  max-width: 400px;
 }
-#flash {
+
+.form-signin {
+  margin: 0 auto;
+}
+
+.form-signin .form-signin-heading {
+  text-align: center;
   margin-bottom: 1em;
 }
 
-#container {
-  max-width: 500px;
-  margin: 10em auto;
+.form-signin .checkbox {
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
-#container h2 {
-  margin: 0;
+#page {
+  margin: 2rem;
 }

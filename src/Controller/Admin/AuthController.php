@@ -35,7 +35,7 @@ class AuthController extends AppController
     {
         if ($this->Auth->user()) {
             $this->Flash->success(__('You are already logged in'));
-            $this->redirect(['action' => 'user']);
+            $this->redirect(['_name' => 'backend:admin:auth:user']);
             return;
         }
 
@@ -47,7 +47,7 @@ class AuthController extends AppController
      */
     public function loginSuccess()
     {
-        $this->redirect(Router::url(['_name' => 'backend:admin:dashboard']));
+        $this->redirect(['_name' => 'backend:admin:master']);
     }
 
     /**

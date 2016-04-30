@@ -55,41 +55,38 @@ class TabsHelper extends Helper
         $menuItems = "";
 
         // render tab menu
-        $menuClass = "ui top attached tabular menu";
+        $menuClass = "nav nav-tabs";
         foreach ($this->_items as $tabId => $item) {
 
             $tabMenuId = $tabId . '-menu';
+            $href = '#' . $tabId;
 
-            $attrs = ['class' => 'item', 'data-tab' => $tabId, 'id' => $tabMenuId];
-            $tabParams = [];
+            // build tab link
+            $tabLinkAttrs = [
+                'role' => 'presentation',
+                'id' => $tabMenuId
+            ];
 
             if ($item['url']) {
-                $attrs['data-url'] = $this->Url->build($item['url'], true);
-                $tabParams = [
-                    /*
-                    'auto' => true,
-                    'history' => true,
-                    'path' => $this->Url->build('/', true),
-                    'apiSettings' => [
-                        'url' => $this->Url->build($item['url'], false)
-                    ]
-                    */
-                ];
+                $tabLinkAttrs['data-url'] = $this->Url->build($item['url'], true);
+                //$tabLinkAttrs['data-target'] = $tabId;
             }
+            $tabLink = $this->Html->link($item['title'], $href, $tabLinkAttrs);
 
-            $menuItems .= $this->Html->link($item['title'], '#', $attrs);
+            // build tab menu item
+            $menuItems .= $this->Html->tag('li', $tabLink, ['role' => 'tab', 'aria-controls' => $tabId]);
 
-            $js .= sprintf("$('#%s').tab(%s); ", $tabMenuId, json_encode($tabParams));
+            //$js .= sprintf("$('#%s').tab(%s); ", $tabMenuId, json_encode($tabParams));
         }
-        $menu = $this->Html->div($menuClass, $menuItems);
+        $menu = $this->Html->tag('ul', $menuItems, ['class' => $menuClass, 'role' => 'tablist']);
 
-        // render segments
-        $tabClass = "ui bottom attached tab segment";
+        // render tab contents
+        $tabClass = "tab-pane";
         $i = 0;
         foreach ($this->_items as $tabId => $item) {
             $class = ($i++ > 0) ? $tabClass : $tabClass . " active";
 
-            $attrs = ['data-tab' => $tabId, 'id' => $tabId];
+            $attrs = ['id' => $tabId, 'role' => 'tabpanel'];
             //if ($item['url']) {
             //    $attrs['data-tab-url'] = $this->Url->build($item['url']);
             //}
@@ -97,7 +94,7 @@ class TabsHelper extends Helper
             $tabs .= $this->Html->div($class, $item['content'], $attrs);
 
         }
-        //$tabs = $this->Html->div('tabs', $tabs);
+        $tabs = $this->Html->div('tab-content', $tabs);
 
 
         //$script = sprintf("$(document).ready(function() { %s });", $js);

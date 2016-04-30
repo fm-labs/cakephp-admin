@@ -2,7 +2,7 @@
 <?= $this->Toolbar->addLink(
     __d('backend','New {0}', __d('backend','Setting')),
     ['action' => 'add'],
-    ['icon' => 'add']
+    ['icon' => 'plus']
 ) ?>
 <?= $this->Toolbar->addLink(
     __d('backend','Import {0}', __d('backend','Settings')),

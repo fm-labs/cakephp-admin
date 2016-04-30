@@ -12,10 +12,14 @@
     <?= $this->fetch('meta') ?>
 
     <?= $this->fetch('cssBackend') ?>
-    <?= $this->Html->css('Backend.iframe'); ?>
+    <?= $this->Html->css('Backend.bootstrap.min'); ?>
+    <?= $this->Html->css('Backend.admin'); ?>
     <?= $this->fetch('css') ?>
 
     <?= $this->fetch('script') ?>
+    <?= $this->Html->script('Backend.bootstrap.min'); ?>
+    <?= $this->Html->script('Backend.be-ui'); ?>
+    <?= $this->fetch('scriptBackend'); ?>
 
 </head>
 <body>

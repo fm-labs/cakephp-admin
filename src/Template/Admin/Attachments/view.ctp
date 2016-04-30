@@ -18,7 +18,7 @@
 <?= $this->Toolbar->addLink(
     __('New {0}', __('Attachment')),
     ['action' => 'add'],
-    ['icon' => 'add']
+    ['icon' => 'plus']
 ) ?>
 <?= $this->Toolbar->startGroup(__('More')); ?>
 <?= $this->Toolbar->endGroup(); ?>

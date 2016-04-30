@@ -8,17 +8,13 @@ use Cake\View\Helper\HtmlHelper;
  * Class ToolbarHelper
  * @package Backend\View\Helper
  * @property HtmlHelper $Html
+ * @property UiHelper $Ui
  */
 class ToolbarHelper extends Helper
 {
-    public $helpers = ['Html'];
+    public $helpers = ['Html', 'Backend.Ui'];
 
     protected $_defaultConfig = [
-        'toolbar_element' => 'Backend.Toolbar/toolbar',
-        'toolbar_class' => 'be-toolbar',
-        'item_class' => 'be-toolbar-item',
-        'item_element' => 'Backend.Toolbar/item',
-        'block' => 'toolbar'
     ];
 
     protected $_items = [];
@@ -83,7 +79,14 @@ class ToolbarHelper extends Helper
             extract($title, EXTR_IF_EXISTS);
         }
 
-        $this->_items[] = compact('title', 'url', 'attr');
+        $item = [
+            'title' => $title,
+            'url' => $url
+        ];
+
+        $item += $attr;
+
+        $this->_items[] = $item;
     }
 
     /**
@@ -131,31 +134,7 @@ class ToolbarHelper extends Helper
      */
     public function render($options = [])
     {
-        $options = array_merge([
-            'inline' => false,
-            'block' => $this->config('block')
-        ], $options);
-
-        // if ($this->_grouping) {
-        //      $this->endGroup();
-        // }
-
-        $html = $this->_View->element($this->config('toolbar_element'), [
-            'items' => $this->_items,
-            'config' => $this->config(),
-            'options' => $options
-        ]);
-
-        if ($options['inline'] === true) {
-            return $html;
-        }
-
-        //if ($this->_rendered === true) {
-        //    return;
-        //}
-
-        $this->_View->assign($options['block'], $html);
-        $this->_rendered = true;
+        return $this->Ui->menu($this->getMenuItems(), $options);
     }
 
     /**
@@ -164,9 +143,9 @@ class ToolbarHelper extends Helper
      */
     public function beforeLayout()
     {
-        if ($this->_rendered === false && !empty($this->_items)) {
-            $this->render();
-        }
+        //if ($this->_rendered === false && !empty($this->_items)) {
+        //    $this->render();
+        //}
     }
 
     /**
@@ -175,5 +154,11 @@ class ToolbarHelper extends Helper
     public function __invoke($options = [])
     {
         return $this->render($options);
+    }
+
+
+    public function getMenuItems()
+    {
+        return $this->_items;
     }
 }

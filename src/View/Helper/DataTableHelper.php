@@ -30,13 +30,82 @@ class DataTableHelper extends Helper
 
     protected $_fields = [];
 
-    public function create($params = [])
+    protected $_id;
+
+    public function init($params = [])
     {
+        $params += ['id' => null, 'fields' => null, 'sortable' => false, 'select' => false, 'paginate' => false];
         $this->_params = $params;
+        $this->_parseParams();
         $this->_parseFields();
     }
 
-    private function _parseFields()
+    public function param($key)
+    {
+        if (isset($this->_params[$key])) {
+            return $this->_params[$key];
+        }
+        return null;
+    }
+
+    public function create($class = null)
+    {
+        $this->templater()->add([
+            'table' => '<table{{attrs}}>'
+        ]);
+
+        $tableAttributes = [
+            'id' => $this->id(),
+            'class' => $this->_tableClass($class)
+        ];
+
+        $html = $this->templater()->format('table', [
+            'attrs' => $this->templater()->formatAttributes($tableAttributes),
+            //'cells' => $this->renderRows($row),
+        ]);
+
+        return $html;
+
+    }
+
+    public function end()
+    {
+        return '</table>';
+    }
+
+    public function id()
+    {
+        if (!$this->_id) {
+            $this->_id = uniqid('dt');
+        }
+        return $this->_id;
+    }
+
+    protected function _tableClass($defaults = '')
+    {
+        $class = $defaults;
+        if ($this->_params['sortable']) {
+            $class .= ' sortable';
+        }
+
+        if ($this->_params['select']) {
+            $class .= ' select';
+        }
+        return trim($class);
+    }
+
+    protected function _parseParams()
+    {
+        if (!$this->_params['id']) {
+            $this->_id = $this->_params['id'];
+        }
+        if ($this->_params['sortable']) {
+            //$this->_params = $this->Html->addClass('sortable', $this->_params);
+            //$this->scriptBlock('$("#' . $this->id() . ' tr").sortable()');
+        }
+    }
+
+    protected function _parseFields()
     {
 
         $_defaultHeader = ['title' => null, 'type' => 'string', 'formatter' => null];
@@ -61,7 +130,20 @@ class DataTableHelper extends Helper
     public function renderHead()
     {
         $this->templater()->add([
-            'fieldCell' => '<th>{{content}}</th>'
+            'head' => '<thead><tr>{{cells}}{{actionscell}}</tr></thead>'
+        ]);
+
+        $html = $this->templater()->format('head', [
+            'cells' => $this->renderHeadCells(),
+            'actionscell' => '<th class="actions">' . __('Actions') . '</th>'
+        ]);
+        return $html;
+    }
+
+    public function renderHeadCells()
+    {
+        $this->templater()->add([
+            'headCell' => '<th>{{content}}</th>'
         ]);
 
         $html = "";
@@ -73,17 +155,77 @@ class DataTableHelper extends Helper
                 $header = h($field['title']);
             }
 
-            $html .= $this->templater()->format('fieldCell', [
+            $html .= $this->templater()->format('headCell', [
                 'content' => $header
             ]);
         }
         return $html;
     }
 
+    public function renderBody()
+    {
+
+        $this->templater()->add([
+            'head' => '<tbody>{{rows}}</tbody>'
+        ]);
+
+        $formattedRows = "";
+        foreach ($this->_params['data'] as $row) {
+            $formattedRows .= $this->renderRow($row);
+        }
+
+        $html = $this->templater()->format('head', [
+            'rows' => $formattedRows,
+        ]);
+        return $html;
+    }
+
     public function renderRow($row)
     {
+
         $this->templater()->add([
-            'rowCell' => '<td>{{content}}</td>'
+            'row' => '<tr{{attrs}}>{{cells}}{{actionscell}}</tr>',
+            'rowActionsCell' => '<td class="actions">
+                <div class="dropdown">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Actions
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                         {{actions}}
+                    </ul>
+                </div>
+            </td>'
+        ]);
+
+
+        // data cells
+        $cells = $this->renderRowCells($row);
+
+        // action cell
+        $rowActions = $this->renderRowActions($this->_params['rowActions'], $row);
+        $rowActionsCell = $this->templater()->format('rowActionsCell', [
+            'actions' => $rowActions,
+        ]);
+
+        // row
+        $rowAttributes = [
+            'data-id' => $row['id'],
+            'class' => ''
+        ];
+        $html = $this->templater()->format('row', [
+            'attrs' => $this->templater()->formatAttributes($rowAttributes),
+            'cells' => $cells,
+            'actionscell' => $rowActionsCell
+        ]);
+
+        return $html;
+    }
+
+    public function renderRowCells($row)
+    {
+        $this->templater()->add([
+            'rowCell' => '<td{{attrs}}>{{content}}</td>'
         ]);
 
         $html = "";
@@ -96,9 +238,11 @@ class DataTableHelper extends Helper
             $cellData = Hash::get($row, $fieldName);
 
             $formattedCellData = $this->_formatRowCellData($cellData, $field['formatter'], $row, $fieldName);
+            $cellAttributes = [];
 
             $html .= $this->templater()->format('rowCell', [
-                'content' => $formattedCellData
+                'content' => $formattedCellData,
+                'attrs' => $this->templater()->formatAttributes($cellAttributes)
             ]);
         }
         return $html;
@@ -188,6 +332,33 @@ class DataTableHelper extends Helper
         }
 
         return $this->_View->element('Backend.Pagination/default');
+    }
+
+    /**
+     * @param $script
+     * @param array $options
+     * @deprecated
+     * @return string
+     */
+    public function script($script = null, $options = [])
+    {
+        if ($script === null) {
+            return $this->_View->fetch('script_datatable');
+        }
+
+        $options['block'] = 'script_datatable';
+        $this->Html->script($script, $options);
+    }
+
+    /**
+     * @param $script
+     * @param array $options
+     * @deprecated
+     */
+    public function scriptBlock($script, $options = [])
+    {
+        $options['block'] = 'script_datatable';
+        $this->Html->scriptBlock($script, $options);
     }
 
     public function debug()

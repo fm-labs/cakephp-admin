@@ -1,34 +1,84 @@
 <?php
-use Cake\Utility\Hash;
-
 $this->loadHelper('Backend.DataTable');
-$this->DataTable->create($params);
+$this->DataTable->init($dataTable);
 ?>
 <?= $this->DataTable->pagination(); ?>
-<table class="table table-striped table-hover table-condensed">
-    <thead>
-        <?= $this->DataTable->renderHead(); ?>
-        <th class="actions"><?= __d('shop','Actions') ?></th>
-    </thead>
 
-    <tbody>
-    <?php foreach ($params['data'] as $row): ?>
-        <tr>
-            <?= $this->DataTable->renderRow($row); ?>
-            <td class="actions">
-                <div class="dropdown">
-                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Actions
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                         <?= $this->DataTable->renderRowActions($params['rowActions'], $row); ?>
-                    </ul>
-                </div>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-    </tbody>
-</table>
+<?= $this->DataTable->create('table table-hover table-condensed'); ?>
+<?= $this->DataTable->renderHead(); ?>
+<?= $this->DataTable->renderBody(); ?>
+<?= $this->DataTable->end(); ?>
+
 <?= $this->DataTable->pagination(); ?>
+<?= $this->DataTable->script(); ?>
 <?= $this->DataTable->debug(); ?>
+
+<script type="text/javascript">
+    //$(document).ready(function() {
+        var dtId = '<?= $this->DataTable->id(); ?>';
+        var dtTable = '<?= $this->DataTable->param('model'); ?>';
+        var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->param('sortUrl')); ?>';
+        var $el = $('#' + dtId);
+
+        //originally from http://stackoverflow.com/questions/1307705/jquery-ui-sortable-with-table-and-tr-width/1372954#1372954
+        var fixHelperModified = function(e, tr) {
+            var $originals = tr.children();
+            var $helper = tr.clone();
+            $helper.children().each(function(index)
+            {
+                $(this).width($originals.eq(index).width())
+            });
+            return $helper;
+        };
+
+        //
+        // Jquery UI Sortable DataTable
+        //
+        if ($el.hasClass('sortable')) {
+
+            $el.find("tbody").sortable({
+                placeholder: "ui-sortable-placeholder", // "ui-state-highlight",
+                helper: fixHelperModified,
+                update: function(event, ui) {
+                    console.log(ui);
+                    console.log(event);
+
+                    var sibling = ui.item.prev();
+                    var siblingId = 0;
+                    if (sibling.length > 0) {
+                        siblingId = sibling.data().id;
+                    }
+
+                    var updateData = { id: ui.item.data().id, after: siblingId, model: dtTable };
+                    console.log(updateData);
+
+                    if (dtTable && dtSortUrl) {
+                        $.ajax({
+                            type: 'POST',
+                            url: dtSortUrl,
+                            data: updateData,
+                            dataType: 'json',
+                            success: function(data, textStatus, xhr) {
+                                //console.log(textStatus);
+                                console.log(data);
+
+                                if (data.error !== undefined) {
+                                    alert("Ups. Something went wrong! " + data.error);
+                                    return;
+                                }
+                            },
+                            error: function(err) {
+                                alert("Ups. Something went wrong. Please try again");
+                                console.error(err);
+                            }
+                        });
+                    }
+
+
+                }
+            });
+            //.disableSelection();
+        }
+
+    //});
+</script>

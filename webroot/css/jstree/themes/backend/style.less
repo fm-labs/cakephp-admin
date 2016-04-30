@@ -4,9 +4,11 @@
   overflow: hidden;
   border-right: 1px solid #CCC;
 }
+
 .jstree:hover {
   /** overflow-x: scroll; **/
 }
+
 .jstree-node,
 .jstree-children,
 .jstree-container-ul {
@@ -1067,9 +1069,12 @@
     margin-right: 0;
   }
 }
+
+
 /**
  * JS Tree
  */
+
 .jstree .jstree-icon {
   display: inline-block;
   opacity: 1;
@@ -1086,32 +1091,42 @@
   -webkit-font-smoothing: antialiased;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+
+  &.root::before {
+    content: "\f015";
+  }
+
+  &.content::before {
+    content: "\f016";
+  }
+
+  &.static::before {
+    content: "\f1c9";
+  }
+
+  &.redirect::before {
+    content: "\f08e";
+    color: #0d71bb;
+  }
+
+  &.shop_category::before {
+    content: "\f07b";
+  }
+
+  &.controller::before {
+    content: "\f0c1";
+  }
+
+  &.published::before {
+    color: green;
+  }
+
+  &.unpublished::before {
+    color: red;
+  }
+
 }
-.jstree .jstree-icon.root::before {
-  content: "\f015";
-}
-.jstree .jstree-icon.content::before {
-  content: "\f016";
-}
-.jstree .jstree-icon.static::before {
-  content: "\f1c9";
-}
-.jstree .jstree-icon.redirect::before {
-  content: "\f08e";
-  color: #0d71bb;
-}
-.jstree .jstree-icon.shop_category::before {
-  content: "\f07b";
-}
-.jstree .jstree-icon.controller::before {
-  content: "\f0c1";
-}
-.jstree .jstree-icon.published::before {
-  color: green;
-}
-.jstree .jstree-icon.unpublished::before {
-  color: red;
-}
+
 .be-index-tree.jstree {
   border: none;
   box-shadow: 1px 5px 5px #CCC;

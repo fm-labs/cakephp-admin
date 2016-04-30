@@ -19,7 +19,9 @@ unset($defaultJsTree);
 <?= $this->Html->script('Backend.jstree/jstree.min', ['block' => true]); ?>
 <div class="index index-tree">
 
-    <h1><?= $this->fetch('heading', $this->fetch('title')); ?></h1>
+    <?php if ($this->fetch('heading')): ?>
+    <h1><?= $this->fetch('heading'); ?></h1>
+    <?php endif; ?>
 
     <div class="row">
         <div class="col-sm-4 col-md-3">

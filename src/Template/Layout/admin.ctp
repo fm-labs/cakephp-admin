@@ -12,11 +12,13 @@
     <?= $this->fetch('meta') ?>
 
     <?= $this->fetch('cssBackend') ?>
+    <?= $this->Html->css('Backend.jqueryui/jquery-ui.min'); ?>
     <?= $this->Html->css('Backend.bootstrap.min'); ?>
     <?= $this->Html->css('Backend.admin'); ?>
     <?= $this->fetch('css') ?>
 
     <?= $this->fetch('script') ?>
+    <?= $this->Html->script('Backend.jqueryui/jquery-ui.min'); ?>
     <?= $this->Html->script('Backend.bootstrap.min'); ?>
     <?= '' // $this->Html->script('Backend.be-ui'); ?>
     <?= $this->Html->script('Backend.backend'); ?>
@@ -143,6 +145,12 @@
         // Backend Tabs: Auto-enable first tab
         //
         $('.be-tabs a').first().trigger('click');
+
+        //
+        // Jquery UI Sortable
+        //
+        //$('.sortable').sortable();
+
 
         Backend.ready();
     });

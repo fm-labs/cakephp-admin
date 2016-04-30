@@ -13,7 +13,16 @@ class DataTableCell extends Cell
 
     public function display($params = [])
     {
-        $params += ['model' => null, 'headers' => [],  'data' => [], 'actions' => [], 'rowActions' => [], 'paginate' => false];
+        $params += [
+            'model' => null,
+            'headers' => [],
+            'data' => [],
+            'actions' => [],
+            'rowActions' => [],
+            'paginate' => false,
+            'select' => false,
+            'sortable' => false,
+        ];
 
         // model context
         $this->modelClass = $params['model'];
@@ -32,6 +41,6 @@ class DataTableCell extends Cell
             $params['headers'] = array_keys($firstRow);
         }
 
-        $this->set(compact('params'));
+        $this->set('dataTable', $params);
     }
 }

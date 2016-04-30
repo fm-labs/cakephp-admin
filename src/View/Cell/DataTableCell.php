@@ -48,7 +48,9 @@ class DataTableCell extends Cell
 
             }
             $firstRow = is_object($firstRow) ? $firstRow->toArray() : $firstRow;
-            $params['headers'] = array_keys($firstRow);
+            if ($firstRow) {
+                $params['headers'] = array_keys($firstRow);
+            }
         }
 
         $this->set('dataTable', $params);

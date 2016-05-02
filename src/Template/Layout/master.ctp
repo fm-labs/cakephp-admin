@@ -59,7 +59,7 @@
         var $nav = $('#header-nav');
 
 
-        $(document).on('click','#header-nav .nav a', function (ev) {
+        $(document).on('click','#header-nav .nav a:not(.link-master)', function (ev) {
         //$('#header-nav .nav a').on('click', function (ev) {
             ev.preventDefault();
             ev.stopPropagation();

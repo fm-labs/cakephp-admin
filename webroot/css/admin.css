@@ -468,7 +468,8 @@ nav ul.pagination {
  * Top Affix
  */
 #top,
-#top-fixed {
+#top-fixed,
+.fixed-top {
   position: fixed;
   z-index: 1000;
   width: 100%;
@@ -498,11 +499,16 @@ body.fixed-nav #top-fixed {
 /**
  * Toolbar
  */
+#top {
+  box-shadow: 0 0 4px #aaa;
+  transition: 300ms;
+}
+#top:hover {
+  box-shadow: 0 0 4px #e8e8e8;
+}
 #toolbar {
   padding: 0;
   margin: 0;
-  box-shadow: 0 0 1px #e8e8e8;
-  transition: 300ms;
 }
 #toolbar .nav {
   padding: 4px 15px;
@@ -514,9 +520,6 @@ body.fixed-nav #top-fixed {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
   border-radius: 0;
-}
-#toolbar:hover {
-  box-shadow: 0 0 4px #aaa;
 }
 /**
  * Admin Page Layout

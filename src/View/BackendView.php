@@ -14,34 +14,28 @@ class BackendView extends View
 {
     public function initialize()
     {
-        $this->helpers = [
-            'Html',
-            'Form' => [
-                'className' => 'Backend\View\Helper\BackendFormHelper',
-                'templates' => 'Backend.form_templates',
-                'widgets' => [
-                    '_default' => ['Backend\View\Widget\BasicWidget'],
-                    'button' => ['Backend\View\Widget\ButtonWidget'],
-                    'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
-                    'textarea' => ['Backend\View\Widget\TextareaWidget'],
-                    'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
-                    'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
-                    'datepicker' => ['Backend\View\Widget\DatePickerWidget'],
-                    'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
-                    'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
-                    'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
-                ]
-            ],
-            'Paginator' => [
-                'templates' => 'Backend.paginator_templates'
-            ],
-            'Backend.Backend',
-            //'Backend.TinyMce',
-            'Backend.Toolbar',
-            'Backend.Ui'
-        ];
 
         $this->loadHelper('Html');
+        $this->loadHelper('Form', [
+            'className' => 'Backend\View\Helper\BackendFormHelper',
+            'templates' => 'Backend.form_templates',
+            'widgets' => [
+                '_default' => ['Backend\View\Widget\BasicWidget'],
+                'button' => ['Backend\View\Widget\ButtonWidget'],
+                'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
+                'textarea' => ['Backend\View\Widget\TextareaWidget'],
+                'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
+                'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
+                'datepicker' => ['Backend\View\Widget\DatePickerWidget'],
+                'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
+                'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
+                'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
+            ]
+        ]);
+        $this->loadHelper('Paginator', []);
+        $this->loadHelper('Backend.Backend', []);
+        $this->loadHelper('Backend.Toolbar', []);
+        $this->loadHelper('Backend.Ui', []);
 
         $this->Html->css('Backend.chosen/chosen.min', ['block' => 'cssBackend']);
         $this->Html->css('Backend.pickadate/themes/classic', ['block' => 'cssBackend']);

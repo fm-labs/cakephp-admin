@@ -25,10 +25,12 @@
 <body>
 
 <div id="page">
-    <div id="page-top">
-        <?= $this->Flash->render(); ?>
-        <?= $this->Flash->render('auth'); ?>
-        <?= $this->Flash->render('backend'); ?>
+    <div id="page-top" class="fixed-top">
+        <div id="flash">
+            <?= $this->Flash->render(); ?>
+            <?= $this->Flash->render('auth'); ?>
+            <?= $this->Flash->render('backend'); ?>
+        </div>
     </div>
 
     <div id="page-main">

@@ -106,7 +106,7 @@ var Backend = {
             }
 
 
-        })
+        });
 
         this.beautify();
 
@@ -401,9 +401,10 @@ var Backend = {
 
     Flash: {
 
-        message: function(type, msg)
+        message: function(type, msg, persist)
         {
 
+            /*
             if (Backend.isFrame()) {
                 Backend.Frame.sendMessage({
                     type: 'flash',
@@ -414,18 +415,21 @@ var Backend = {
                 });
 
             } else {
+            }
+            */
 
-                console.log("Flash: [" + type + "] " + msg);
-                //alert("[" + type + "] " + msg);
+            console.log("Flash: [" + type + "] " + msg);
+            //alert("[" + type + "] " + msg);
 
-                var $alert = $('<div>', {
-                    class: 'alert alert-' + type
-                });
+            var $alert = $('<div>', {
+                class: 'alert alert-' + type
+            });
 
-                $alert.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' + msg);
-                $alert.hide();
-                $alert.appendTo('#flash').slideDown();
+            $alert.html('<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>' + msg);
+            $alert.hide();
+            $alert.appendTo('#flash').slideDown();
 
+            if (persist !== true) {
                 setTimeout(function() {
                     $alert.slideUp(1000, function() { $(this).remove(); });
                 }, 5000);

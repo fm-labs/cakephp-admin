@@ -249,7 +249,7 @@ form div.checkbox {
 }
 form fieldset {
   padding: 0;
-  margin: 1em 0 1.3em 0;
+  margin: 0.5em 0;
 }
 form fieldset legend {
   background-color: #e8e8e8;
@@ -260,10 +260,24 @@ form fieldset legend {
   padding: 0 0.3em;
   border-top: 2px solid #337ab7;
   line-height: 30px;
-  font-size: 16px;
+  font-size: 1em;
 }
 form fieldset legend::before {
-  content: "- ";
+  display: inline-block;
+  margin: 0 .25rem 0 0;
+  width: 1.18em;
+  height: 1em;
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: 400;
+  text-decoration: inherit;
+  text-align: center;
+  font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  content: " \f078";
 }
 form fieldset legend::after {
   font-size: 80%;
@@ -281,7 +295,21 @@ form fieldset.collapsed > legend {
   height: auto !important;
 }
 form fieldset.collapsed > legend::before {
-  content: "+ ";
+  display: inline-block;
+  margin: 0 .25rem 0 0;
+  width: 1.18em;
+  height: 1em;
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: 400;
+  text-decoration: inherit;
+  text-align: center;
+  font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  content: " \f054";
 }
 form fieldset.collapsed > legend ~ * {
   margin-top: 0.3em;

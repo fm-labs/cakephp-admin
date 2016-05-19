@@ -7,30 +7,21 @@
 
 .faicon(@code) {
 
-  &::after {
-    display: inline-block;
-    margin: 0 .25rem 0 0;
-    width: 1.18em;
-    height: 1em;
-    font-family: 'FontAwesome';
-    font-style: normal;
-    font-weight: 400;
-    text-decoration: inherit;
-    text-align: center;
-    font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    content: @code;
-    opacity: 0.1;
-  }
-
-  &:hover {
-    &::after {
-      opacity: 0.9;
-    }
-  }
+  display: inline-block;
+  margin: 0 .25rem 0 0;
+  width: 1.18em;
+  height: 1em;
+  font-family: 'FontAwesome';
+  font-style: normal;
+  font-weight: 400;
+  text-decoration: inherit;
+  text-align: center;
+  font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  content: @code;
 }
 
 body{
@@ -84,7 +75,15 @@ h2 {
  * Links
  */
 .link-frame {
-  .faicon(" \f08e");
+
+  &::after {
+    .faicon(" \f08e");
+    opacity: 0.1;
+  }
+
+  &:hover::after {
+    opacity: 0.9;
+  }
 }
 
 .link-frame-modal,
@@ -278,7 +277,7 @@ form fieldset {
   //border-bottom: 1px solid @color-primary !important;
   //border-width: 0 0 1px 0 !important;
   padding: 0;
-  margin: 1em 0 1.3em 0;
+  margin: 0.5em 0;
 }
 
 form fieldset legend {
@@ -291,10 +290,10 @@ form fieldset legend {
   padding: 0 0.3em;
   border-top: 2px solid @color-primary;
   line-height: 30px;
-  font-size: 16px;
+  font-size: 1em;
 
   &::before {
-    content: "- ";
+    .faicon(" \f078");
   }
 
   &::after {
@@ -321,7 +320,7 @@ form fieldset.collapsed {
     height: auto !important;
 
     &::before {
-      content: "+ ";
+      .faicon(" \f054");
     }
 
 

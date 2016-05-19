@@ -34,6 +34,7 @@ use Cake\Utility\Inflector;
                 <td>
                     <?= $formattedValue; ?>
                 </td>
+                <!--
                 <?php if (Configure::read('debug')): ?>
                 <td class="right">
                     <small>
@@ -41,6 +42,7 @@ use Cake\Utility\Inflector;
                     </small>
                 </td>
                 <?php endif; ?>
+                -->
             </tr>
         <?php endforeach; ?>
         </tbody>

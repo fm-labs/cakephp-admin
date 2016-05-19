@@ -52,7 +52,9 @@ var Backend = {
         // catch modal frame links
         $(document).on('click','a.link-frame-modal', function (e) {
 
-            _this.Link.openModalFrame(this.href);
+            _this.Link.openModalFrame(this.href, {
+                title: this.title || this.innerText
+            });
 
             e.preventDefault();
             return false;
@@ -473,15 +475,18 @@ var Backend = {
         },
         */
 
-        openModalFrame: function openLinkModalFrame(url)
+        openModalFrame: function openLinkModalFrame(url, options)
         {
             console.log("Open Link in Modal Frame: " + url);
+
+            options = options || {};
 
             if (Backend.isFrame()) {
                 Backend.Frame.sendMessage({
                     type: 'open-frame-modal',
                     data: {
-                        url: url
+                        url: url,
+                        options: options
                     }
                 });
                 return;
@@ -514,16 +519,24 @@ var Backend = {
             var $iframe = $('<iframe>', {
                 class: 'modal-iframe',
                 src: url,
-                style: 'width: 100%; min-height: 500px;'
+                style: 'width: 100%; min-height: 500px;',
+                height: $(window).height() * 0.70
             });
 
             var _window = window;
+
+            if (options.title) {
+                $modal.find('.modal-title').html(options.title);
+            } else {
+                $modal.find('.modal-header').remove();
+            }
 
             $modal.find('.modal-body').html($iframe);
 
             $modal.modal({})
             $modal.on('shown.bs.modal', function (e) {
                 $iframe.width($modal.width * 0.9);
+                $iframe.height($(window).height() * 0.70);
             });
 
             $modal.on('hidden.bs.modal', function (e) {

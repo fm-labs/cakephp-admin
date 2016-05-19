@@ -26,7 +26,7 @@ class Backend
      */
     public static function plugins()
     {
-        return static::$_plugins;
+        return Plugin::loaded();
     }
 
     /**
@@ -37,6 +37,6 @@ class Backend
      */
     public static function hookPlugin($pluginName)
     {
-        static::$_plugins[] = $pluginName;
+        static::$_plugins[$pluginName] = [];
     }
 }

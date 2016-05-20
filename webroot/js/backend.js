@@ -1,6 +1,10 @@
 var Backend = {
 
     _domIdCounter: 0,
+    _tabCounter: 0,
+
+    tabs: {},
+    tabActive: null,
 
     /**
      * Generate unique domid
@@ -112,11 +116,22 @@ var Backend = {
 
         this.beautify();
 
-        this.Frame.sendMessage({
-            type: 'hello',
-            data: {}
-        });
+        Backend.Util.restoreScrollPosition(null);
 
+        if (this.isFrame()) {
+
+            this.Frame.sendMessage({
+                type: 'hello',
+                data: {
+                    from: this.getWindowId()
+                }
+            });
+        }
+
+    },
+
+    getWindowId: function() {
+        return window._id || 'No Id';
     },
 
     isFrame: function()
@@ -135,7 +150,7 @@ var Backend = {
     {
         // icon links
         $("a[data-icon]").each(function() {
-           console.log("link " + this.href + " has icon " + $(this).data('icon'));
+           //console.log("link " + this.href + " has icon " + $(this).data('icon'));
 
             var $ico = $('<i>', { class: 'fa fa-' + $(this).data('icon') }).html("");
             $(this).prepend($ico.prop('outerHTML') + "&nbsp");
@@ -230,15 +245,19 @@ var Backend = {
 
         // create tab nav item
 
+        var tabNo = this._tabCounter++;
         var tabId = this.uniqueDomId('tab');
+        var tabLinkId = tabId + 'lnk';
 
         var $navLink = $('<a>', {
             'role': 'tab',
             'aria-controls': tabId,
             'data-toggle': 'tab',
             'data-url': url,
+            'data-tab-id': tabId,
             'href': '#' + tabId,
             'title': title,
+            'id': tabLinkId
         })
             .html(title);
 
@@ -255,6 +274,52 @@ var Backend = {
 
         console.log("tab added with id " + tabId);
         $navLink.trigger('click');
+    },
+
+    closeTab: function(tabId) {
+        console.log("closing tab " + tabId);
+
+        this.tabs[tabId] = null;
+        delete this.tabs[tabId];
+
+        // remove closed tab
+        var lastTab;
+        for (lastTab in this.tabs);
+
+        if (lastTab) {
+            this.focusTab(lastTab);
+        }
+    },
+
+    focusTab: function(tabId) {
+        console.log("Focusing tab with id: " + tabId);
+
+        if (this.tabs.hasOwnProperty(tabId)) {
+
+            var $navLink = $('#' + tabId + 'lnk');
+            $navLink.trigger('click');
+        }
+    },
+
+    reloadTab: function(tabId) {
+        console.log("Reload tab with id: " + tabId);
+        if (this.tabs.hasOwnProperty(tabId)) {
+
+            var tabWin = this.tabs[tabId];
+            if (tabWin) {
+                tabWin.location.replace(tabWin.location.href);
+            }
+        }
+    },
+
+    setActiveTab: function(tabId, tabWin) {
+        console.log("Active tab with id: " + tabId);
+
+        if (tabWin !== undefined) {
+            tabWin._id = 'window'+tabId,
+            this.tabs[tabId] = tabWin;
+        }
+        this.tabActive = tabId;
     },
 
     Master: {
@@ -291,7 +356,7 @@ var Backend = {
                     break;
 
                 case "open-frame-modal":
-                    Backend.Link.openModalFrame(data.url);
+                    Backend.Link.openModalFrame(data.url, data.options, data.opener);
                     break;
 
                 case "loader":
@@ -475,7 +540,7 @@ var Backend = {
         },
         */
 
-        openModalFrame: function openLinkModalFrame(url, options)
+        openModalFrame: function openLinkModalFrame(url, options, opener)
         {
             console.log("Open Link in Modal Frame: " + url);
 
@@ -486,11 +551,15 @@ var Backend = {
                     type: 'open-frame-modal',
                     data: {
                         url: url,
-                        options: options
+                        options: options,
+                        opener: window._id
                     }
                 });
                 return;
             }
+
+
+            console.log("Open Link in Modal Frame: " + url + " from opener with ID " + opener);
 
             var dialogTemplate = '<div class="modal-dialog modal-lg" style="width: 95%;"> \
     <div class="modal-content"> \
@@ -506,7 +575,8 @@ var Backend = {
 </div><!-- /.modal-content --> \
 </div><!-- /.modal-dialog -->';
 
-            var modalId = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+            //var modalId = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+            var modalId = Backend.uniqueDomId('modal');
 
             var $modal = $('<div>', {
                 id: 'modal' + modalId,
@@ -540,9 +610,36 @@ var Backend = {
             });
 
             $modal.on('hidden.bs.modal', function (e) {
-                //saveScrollTop($(_window).scrollTop());
+                Backend.Util.saveScrollPosition(null, $(_window).scrollTop());
                 //_window.location.replace(_window.location.href);
+                Backend.reloadTab(opener.substr(6));
             });
+        }
+    },
+
+    Util: {
+
+        saveScrollPosition: function (scope, val)
+        {
+            if (!!window.localStorage) {
+                var key = scope + '_scrollTop'
+                var scrollTop = window.localStorage.setItem(key, val);
+            } else {
+                console.log("LocalStorage is not available");
+            }
+        },
+
+        restoreScrollPosition: function (scope)
+        {
+            if (!!window.localStorage) {
+                var key = scope + '_scrollTop'
+                var scrollTop = window.localStorage.getItem(key);
+                if (scrollTop) {
+                    window.localStorage.removeItem(key);
+                    $(window).scrollTop(scrollTop);
+                }
+
+            }
         }
     }
 

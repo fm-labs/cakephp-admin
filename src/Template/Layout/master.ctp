@@ -92,6 +92,7 @@
                 var _this = $(this);
                 var pane = $(this), target = this.hash;
 
+                var tabId = $(this).parent().data('tabId');
 
                 // ajax load from data-url
                 //if(url) {
@@ -99,7 +100,7 @@
                 //}
 
                 //var $iframeLoader = $('#loader').clone().removeAttr('id').show();
-                var $iframe = $('<iframe>', { 'class': 'tab-frame' });
+                var $iframe = $('<iframe>', { id: 'frame' + tabId, 'class': 'tab-frame' });
                 $(target).html($iframe);
                 $(window).trigger('resize'); //@TODO only resize the new frame
 
@@ -110,6 +111,7 @@
                 $iframe.on('load', function() {
                     console.log("iframe loaded " + url);
                     Backend.Loader.hide();
+                    Backend.setActiveTab(tabId, this.contentWindow);
                     //$iframeLoader.remove();
                     _this.removeClass('tab-loading');
                     _this.addClass('tab-ajax-loaded');
@@ -159,12 +161,13 @@
 
 
         $(document).on('show.bs.tab', '#master-tabs .nav a', function (e) {
-            Backend.Loader.show();
+            //Backend.Loader.show();
         });
 
         $(document).on('shown.bs.tab', '#master-tabs .nav a', function (e) {
-            Backend.Loader.hide();
+            //Backend.Loader.hide();
             document.title = $(this).attr('title') || $(this).text();
+            Backend.setActiveTab($(this).data('tabId'));
         });
 
 
@@ -172,6 +175,7 @@
             e.preventDefault();
 
             var tabId = $(this).parent().data('tabId');
+            Backend.closeTab(tabId);
 
             $('#' + tabId).fadeOut().remove();
             $(this).parent().fadeOut().remove();

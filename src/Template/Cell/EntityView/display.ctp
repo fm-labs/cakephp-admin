@@ -13,9 +13,10 @@ use Cake\Utility\Inflector;
         <thead>
         </thead>
         <tbody>
-        <?php foreach ($entity->toArray() as $field => $val): ?>
+        <?php foreach ($entity->visibleProperties() as $field): ?>
             <?php if (in_array($field, $exclude)) continue; ?>
             <?php
+            $val = $entity->get($field);
             $fieldTitle = (isset($fields[$field]) && isset($fields[$field]['title'])) ? $fields[$field]['title'] : Inflector::humanize($field);
 
             $column = $schema->column($field);
@@ -33,6 +34,7 @@ use Cake\Utility\Inflector;
                 <td>
                     <?= $formattedValue; ?>
                 </td>
+                <!--
                 <?php if (Configure::read('debug')): ?>
                 <td class="right">
                     <small>
@@ -40,6 +42,7 @@ use Cake\Utility\Inflector;
                     </small>
                 </td>
                 <?php endif; ?>
+                -->
             </tr>
         <?php endforeach; ?>
         </tbody>

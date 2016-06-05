@@ -60,14 +60,35 @@ class SettingsController extends AppController
      *
      * @return void
      */
-    public function index()
+    public function index($scope = null)
     {
         if (!Plugin::loaded('Settings')) {
             throw new MissingPluginException(['plugin' => 'Settings']);
         }
 
-        $this->set('settings', $this->Settings->find()->all());
+        $query = $this->Settings->find()
+            ->order(['Settings.scope' => 'ASC', 'Settings.ref' => 'ASC', 'Settings.name' => 'ASC']);
+
+        if ($scope) {
+            $query->where(['scope' => $scope]);
+        }
+
+        $this->set('settings', $query->all());
         $this->set('_serialize', ['settings']);
+    }
+
+    public function reset($id)
+    {
+        $setting = $this->Settings->get($id);
+        $setting->value = null;
+
+
+        if ($this->Settings->save($setting)) {
+            $this->Flash->success(__('Saved'));
+        } else {
+            $this->Flash->error(__('Failed'));
+        }
+        $this->redirect(['action' => 'index']);
     }
 
 
@@ -81,11 +102,8 @@ class SettingsController extends AppController
                 ->where(['scope' => $scope])
                 ->toArray();
 
-            if ($ref == 'App') {
-                $settingsPath = SETTINGS;
-            } else {
-                $settingsPath = Plugin::configPath($ref) . 'settings' . DS;
-            }
+            $settingsPath = ($ref == 'App') ? CONFIG : Plugin::configPath($ref);
+
 
             $schema = SettingsConfig::readSchema($settingsPath);
             $saved = $failed = 0;
@@ -93,15 +111,20 @@ class SettingsController extends AppController
             $settings = [];
             foreach ($schema as $key => $conf) {
                 $setting = array_merge([
-                    'type' => 'string',
+                    'value_type' => 'string',
                     'ref' => $ref,
                     'scope' => $scope,
                     'name' => $key,
+                    'value' => null,
                     'default' => null,
+                    //'system' => false,
                 ], $conf);
+
+                $currentValue = (Configure::read($key)) ?: $setting['default'];
 
                 $setting = $this->Settings->newEntity($setting);
                 $setting->id = (isset($settingsList[$key])) ? $settingsList[$key] : null;
+                $setting->value = $currentValue;
 
                 if ($this->Settings->save($setting)) {
                     $saved++;
@@ -128,7 +151,7 @@ class SettingsController extends AppController
 
         $imports = [];
         foreach ($paths as $_ref => $path) {
-            $file = $path . 'settings/schema.php';
+            $file = $path . 'settings.php';
             if (!file_exists($file)) {
                 continue;
             }
@@ -142,11 +165,11 @@ class SettingsController extends AppController
                 'scope' => $scope
             ];
 
-            $this->set('imports', $imports);
-            $this->set('_serialize', ['imports']);
         }
 
 
+        $this->set('imports', $imports);
+        $this->set('_serialize', ['imports']);
 
     }
 
@@ -155,26 +178,24 @@ class SettingsController extends AppController
         if (!$scope) {
             throw new BadRequestException("Scope not defined");
         }
-        $settings = $this->Settings->find()->where(['Settings.scope' => $scope, 'published' => true])->all()->toArray();
+        $settings = $this->Settings->find()
+            ->where(['Settings.scope' => $scope])
+            ->order(['Settings.ref' => 'ASC', 'Settings.name' => 'ASC'])
+            ->all()
+            ->toArray();
 
         $compiled = [];
         foreach ($settings as $setting) {
             $compiled[$setting->name] = $setting->value;
         }
 
-        $filepath = SettingsConfig::buildSettingsFilePath(SETTINGS, $scope);
-
-        //if (file_exists($filepath)) {
-        //    debug("Setting file $filepath already exists");
-        //    return;
-        //}
-
-        $written = $this->_dump($filepath, $compiled);
+        $config = new SettingsConfig();
+        $written = $config->dump('global', $compiled);
 
         if ($written) {
-            $this->Flash->success(__('Dump settings with scope {0} to {1}: {2} bytes written', $scope, $filepath, $written));
+            $this->Flash->success(__('Dump settings with scope {0}: {1} bytes written', $scope, $written));
         } else {
-            $this->Flash->error(__('Dump settings with scope {0} to {1}: Failed', $scope, $filepath));
+            $this->Flash->error(__('Dump settings with scope {0}: Failed', $scope));
         }
         $this->redirect($this->referer(['action' => 'index']));
     }

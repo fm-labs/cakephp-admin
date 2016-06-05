@@ -27,8 +27,7 @@ unset($defaultJsTree);
         <div class="col-sm-4 col-md-3">
             <?= $this->Html->div('be-index-tree', 'Loading Pages ...', [
                 'id' => 'index-tree',
-                'data-tree-url' => $this->Html->Url->build($dataUrl),
-                'data-view-url' => $this->Html->Url->build($viewUrl)
+                'data-url' => $this->Html->Url->build($dataUrl)
             ]); ?>
         </div>
         <div class="col-sm-8 col-md-9">
@@ -47,13 +46,10 @@ unset($defaultJsTree);
 <script>
 
     var jsTreeConf = JSON.parse('<?= json_encode($jsTree); ?>');
-    console.log(jsTreeConf);
-
     jsTreeConf.core.data.data = function (node) {
-        console.log(node);
         return {'id': node.id};
     };
-    console.log(jsTreeConf);
+
 
     $(document).ready(function() {
 
@@ -80,31 +76,35 @@ unset($defaultJsTree);
                     //console.log('Selected: ' + r.join(', '));
 
                     var config = '';
-                    var url = $tree.data('viewUrl') + '?id=' + r.join(',');
+                    //var url = $tree.data('viewUrl') + '?id=' + r.join(',');
+                    var url = data.node.data.viewUrl;
 
-                    $.ajax({
-                        method: 'GET',
-                        url: url,
-                        dataType: 'html',
-                        data: {'selected': r },
-                        beforeSend: function() {
-                            Backend.Loader.show();
-                        },
-                        complete: function() {
-                            Backend.Loader.hide();
-                        },
-                        success: function(data) {
+                    if (url) {
 
-                            // no files in folder
-                            if (data.length === 0) {
-                                $container.html($noview.html());
-                                return;
+                        $.ajax({
+                            method: 'GET',
+                            url: url,
+                            dataType: 'html',
+                            data: {'selected': r },
+                            beforeSend: function() {
+                                Backend.Loader.show();
+                            },
+                            complete: function() {
+                                Backend.Loader.hide();
+                            },
+                            success: function(data) {
+
+                                // no files in folder
+                                if (data.length === 0) {
+                                    $container.html($noview.html());
+                                    return;
+                                }
+
+                                $container.html(data);
+                                Backend.beautify();
                             }
-
-                            $container.html(data);
-                            Backend.beautify();
-                        }
-                    });
+                        });
+                    }
 
                 }
 

@@ -158,11 +158,13 @@ class UiHelper extends Helper
             //$link = ($url) ? $this->link($item['title'], $url, ['class' => 'btn btn-default', 'role' => 'button']) : null;
 
             $ddAttrs = [
-                'data-toggle' => ($url) ? "dropdown disabled" : "drowdown",
+                //'data-toggle' => ($url) ? "dropdown disabled" : "drowdown",
+                'data-toggle' => 'dropdown',
                 'role' => "button",
                 'aria-haspopup' => "true",
                 'aria-expanded' => "false",
-                'href' => ($url) ? $this->Url->build($url) : null,
+                'href' => '#',
+                'data-href' => ($url) ? $this->Url->build($url) : null,
             ];
             $ddAttrs += $item;
             $ddLink = $this->templater()->format('menuDropdownButton', [

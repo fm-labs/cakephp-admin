@@ -50,7 +50,7 @@ $this->DataTable->init($dataTable);
                     }
 
                     var updateData = { id: ui.item.data().id, after: siblingId, model: dtTable };
-                    console.log(updateData);
+                    //console.log(updateData);
 
                     if (dtTable && dtSortUrl) {
                         $.ajax({

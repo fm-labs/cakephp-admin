@@ -32,8 +32,11 @@ class FormatHelper extends Helper
         parent::__construct($View, $config);
 
         // built-in formatters
+        $this->_formatters['escape'] = function($val, $data) {
+            return h($val);
+        };
+
         $this->_formatters['boolean'] = function($val, $data) {
-            //return ($val === true) ? "Yes" : "No";
             return $this->Ui->statusLabel($val);
         };
 
@@ -65,6 +68,32 @@ class FormatHelper extends Helper
             return $cellData;
         }
 
+        if ($formatter === null) {
+            // fallbacks
+            $type = gettype($cellData);
+            switch (strtolower($type)) {
+                case "null":
+                    return "";
+                case "integer":
+                case "float":
+                case "double":
+                    $formatter = 'number';
+                    break;
+                case "string":
+                case "text":
+                case "boolean":
+                case "array":
+                case "object":
+                    $formatter = $type;
+                    break;
+                case "unknown type":
+                case "resource":
+                default:
+                    return "[" . h($type) . "]";
+
+            }
+        }
+
         if (is_string($formatter)) {
             $formatter = (isset($this->_formatters[$formatter])) ? $this->_formatters[$formatter] : null;
         }
@@ -73,27 +102,6 @@ class FormatHelper extends Helper
             return call_user_func_array($formatter, [$cellData, $rowData, $cellName]);
         }
 
-
-        // fallbacks
-        $type = gettype($cellData);
-        switch ($type) {
-            case "integer":
-            case "float":
-            case "double":
-                $type = 'number';
-            case "boolean":
-            case "array":
-            case "object":
-                return $this->formatDataCell($cellName, $cellData, $type, $rowData);
-            case "unknown type":
-            case "resource":
-                return "[" . $type . "]";
-            case "NULL":
-            case "string":
-            case "text":
-            default:
-                return h($cellData);
-        }
-
+        return h($cellData);
     }
 }

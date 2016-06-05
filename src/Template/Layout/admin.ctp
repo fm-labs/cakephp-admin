@@ -37,7 +37,6 @@
             );
             ?>
         </nav>
-
         <div id="flash" class="container-fluid">
             <?= $this->Flash->render('auth') ?>
             <?= $this->Flash->render('backend') ?>
@@ -45,6 +44,7 @@
     </header>
 
     <main id="page-main">
+
         <div id="page-crumbs">
             <?= $this->element('Backend.Layout/admin/breadcrumbs'); ?>
         </div>

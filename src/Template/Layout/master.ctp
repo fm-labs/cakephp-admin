@@ -59,7 +59,7 @@
         var $nav = $('#header-nav');
 
 
-        $(document).on('click','#header-nav .nav a', function (ev) {
+        $(document).on('click','#header-nav .nav a:not(.link-master)', function (ev) {
         //$('#header-nav .nav a').on('click', function (ev) {
             ev.preventDefault();
             ev.stopPropagation();
@@ -92,6 +92,7 @@
                 var _this = $(this);
                 var pane = $(this), target = this.hash;
 
+                var tabId = $(this).parent().data('tabId');
 
                 // ajax load from data-url
                 //if(url) {
@@ -99,7 +100,7 @@
                 //}
 
                 //var $iframeLoader = $('#loader').clone().removeAttr('id').show();
-                var $iframe = $('<iframe>', { 'class': 'tab-frame' });
+                var $iframe = $('<iframe>', { id: 'frame' + tabId, 'class': 'tab-frame' });
                 $(target).html($iframe);
                 $(window).trigger('resize'); //@TODO only resize the new frame
 
@@ -110,6 +111,7 @@
                 $iframe.on('load', function() {
                     console.log("iframe loaded " + url);
                     Backend.Loader.hide();
+                    Backend.setActiveTab(tabId, this.contentWindow);
                     //$iframeLoader.remove();
                     _this.removeClass('tab-loading');
                     _this.addClass('tab-ajax-loaded');
@@ -118,8 +120,8 @@
                     _this.attr('data-url', this.contentWindow.location);
                 });
 
-                Backend.Loader.show();
                 $iframe.attr('src', url);
+                Backend.Loader.show();
 
             } else {
 
@@ -138,33 +140,32 @@
 
             if (typeof url !== "undefined") {
 
+                //console.log("Reloading Ajax Tab with URL " + url);
+
                 var tabId = $(this).parent().data('tabId');
+                if (!tabId) {
+                    console.error("Tab reload failed: TabId missing");
+                }
 
                 $(this).addClass('tab-loading');
                 $(this).tab('show');
 
-                // @TODO Keep this DRY. (see click event)
-                var _this = $(this);
                 var $iframe = $('#' + tabId).find('iframe.tab-frame').first();
-                $iframe.on('load', function() {
-                    Backend.Loader.hide();
-                    _this.removeClass('tab-loading');
-                });
-
-                Backend.Loader.show();
                 $iframe.attr('src', url);
+                Backend.Loader.show();
             }
 
         });
 
 
         $(document).on('show.bs.tab', '#master-tabs .nav a', function (e) {
-            Backend.Loader.show();
+            //Backend.Loader.show();
         });
 
         $(document).on('shown.bs.tab', '#master-tabs .nav a', function (e) {
-            Backend.Loader.hide();
+            //Backend.Loader.hide();
             document.title = $(this).attr('title') || $(this).text();
+            Backend.setActiveTab($(this).data('tabId'));
         });
 
 
@@ -172,6 +173,7 @@
             e.preventDefault();
 
             var tabId = $(this).parent().data('tabId');
+            Backend.closeTab(tabId);
 
             $('#' + tabId).fadeOut().remove();
             $(this).parent().fadeOut().remove();
@@ -214,9 +216,7 @@
             Backend.Master.parsePostMessage(data, origin, source);
         });
 
-        $(document).on('click', '.test-notify', function() {
-            Backend.Flash.success("Test Notify");
-        });
+        $('#master-tabs .nav a').first().trigger('click');
 
         // clear alerts
         setTimeout(function() {

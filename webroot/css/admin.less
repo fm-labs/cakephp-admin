@@ -41,7 +41,8 @@ body {
  * Top Affix
  */
 #top,
-#top-fixed {
+#top-fixed,
+.fixed-top {
   position: fixed;
   //top: 0;
   //left: 0;
@@ -93,11 +94,18 @@ body.fixed-nav {
  * Toolbar
  */
 
+#top {
+  box-shadow: 0 0 4px #aaa;
+  transition: 300ms;
+
+  &:hover {
+    box-shadow: 0 0 4px #e8e8e8;
+  }
+}
+
 #toolbar {
   padding: 0;
   margin: 0;
-  box-shadow: 0 0 1px #e8e8e8;
-  transition: 300ms;
 
   .nav {
     padding: 4px 15px;
@@ -111,9 +119,6 @@ body.fixed-nav {
     .rounded(0);
   }
 
-  &:hover {
-    box-shadow: 0 0 4px #aaa;
-  }
 }
 
 

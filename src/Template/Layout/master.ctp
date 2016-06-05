@@ -120,8 +120,8 @@
                     _this.attr('data-url', this.contentWindow.location);
                 });
 
-                Backend.Loader.show();
                 $iframe.attr('src', url);
+                Backend.Loader.show();
 
             } else {
 
@@ -140,21 +140,19 @@
 
             if (typeof url !== "undefined") {
 
+                //console.log("Reloading Ajax Tab with URL " + url);
+
                 var tabId = $(this).parent().data('tabId');
+                if (!tabId) {
+                    console.error("Tab reload failed: TabId missing");
+                }
 
                 $(this).addClass('tab-loading');
                 $(this).tab('show');
 
-                // @TODO Keep this DRY. (see click event)
-                var _this = $(this);
                 var $iframe = $('#' + tabId).find('iframe.tab-frame').first();
-                $iframe.on('load', function() {
-                    Backend.Loader.hide();
-                    _this.removeClass('tab-loading');
-                });
-
-                Backend.Loader.show();
                 $iframe.attr('src', url);
+                Backend.Loader.show();
             }
 
         });
@@ -218,9 +216,7 @@
             Backend.Master.parsePostMessage(data, origin, source);
         });
 
-        $(document).on('click', '.test-notify', function() {
-            Backend.Flash.success("Test Notify");
-        });
+        $('#master-tabs .nav a').first().trigger('click');
 
         // clear alerts
         setTimeout(function() {

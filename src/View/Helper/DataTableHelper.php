@@ -133,9 +133,14 @@ class DataTableHelper extends Helper
             'head' => '<thead><tr>{{cells}}{{actionscell}}</tr></thead>'
         ]);
 
+        $actionsCell = '';
+        if ($this->_params['rowActions'] !== false) {
+            $actionsCell = '<th class="actions">' . __('Actions') . '</th>';
+        }
+
         $html = $this->templater()->format('head', [
             'cells' => $this->renderHeadCells(),
-            'actionscell' => '<th class="actions">' . __('Actions') . '</th>'
+            'actionscell' => $actionsCell
         ]);
         return $html;
     }
@@ -203,10 +208,13 @@ class DataTableHelper extends Helper
         $cells = $this->renderRowCells($row);
 
         // action cell
-        $rowActions = $this->renderRowActions($this->_params['rowActions'], $row);
-        $rowActionsCell = $this->templater()->format('rowActionsCell', [
-            'actions' => $rowActions,
-        ]);
+        $rowActions = $rowActionsCell = '';
+        if ($this->_params['rowActions'] !== false) {
+            $rowActions = $this->renderRowActions($this->_params['rowActions'], $row);
+            $rowActionsCell = $this->templater()->format('rowActionsCell', [
+                'actions' => $rowActions,
+            ]);
+        }
 
         // row
         $rowAttributes = [

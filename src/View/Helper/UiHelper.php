@@ -114,7 +114,11 @@ class UiHelper extends Helper
 
     public function menu($menuList = [], $menuOptions = [], $childMenuOptions = [], $itemOptions = [])
     {
-        $menuOptions += ['class' => 'nav navbar-nav'];
+        $menuOptions += [
+            'class' => 'nav navbar-nav',
+            'itemscope' => 'itemscope',
+            'itemtype' => 'http://www.schema.org/SiteNavigationElement'
+        ];
 
         $items = "";
 
@@ -131,7 +135,7 @@ class UiHelper extends Helper
 
     public function menuItem($item = [], $childMenuOptions = [], $itemOptions = [])
     {
-        $item += ['title' => null, 'plugin' => null, 'url' => [], '_children' => []];
+        $item += ['title' => null, 'plugin' => null, 'url' => [], 'itemprop' => 'url', '_children' => []];
 
 
         $plugin = $item['plugin'];

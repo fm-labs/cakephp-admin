@@ -96,6 +96,11 @@ class BackendComponent extends Component
             return (bool) $this->request->query('iframe');
         });
 
+        // Apply Backend theme
+        if (Configure::read('Backend.theme')) {
+            $controller->viewBuilder()->theme(Configure::read('Backend.theme'));
+        }
+
         // Handle iframe and ajax requests
         if ($this->request->is('iframe')) {
             $controller->viewBuilder()->layout('Backend.iframe');
@@ -119,6 +124,7 @@ class BackendComponent extends Component
     public function beforeRender(\Cake\Event\Event $event)
     {
         $controller = $event->subject();
+        $controller->set('be_path', Configure::read('Backend.path'));
         $controller->set('be_title', Configure::read('Backend.Dashboard.title'));
     }
 

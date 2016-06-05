@@ -7,6 +7,11 @@ return [
     'Backend.path' => '/backend',
 
     /**
+     * Backend theme name
+     */
+    'Backend.theme' => null,
+
+    /**
      * Backend Dashboard
      *
      * - title: Dashboard title string

@@ -10,6 +10,12 @@
  *
  */
 $params += ['class' => null, 'dismiss' => true, 'title' => null];
+$classMap = [
+    'error' => 'danger'
+];
+if (isset($classMap[$params['class']])) {
+    $params['class'] = $classMap[$params['class']];
+}
 ?>
 <div class="alert alert-dismissable alert-<?= h($params['class']) ?>" role="alert">
     <?php if (!isset($params['dismiss']) || $params['dismiss'] !== false): ?>

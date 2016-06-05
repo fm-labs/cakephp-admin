@@ -1,3 +1,4 @@
+<?php $this->assign('title', __('Administration')); ?>
 <div id="master-container">
 
     <!-- Master Tabs -->

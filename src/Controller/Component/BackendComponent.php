@@ -62,6 +62,15 @@ class BackendComponent extends Component
             ]);
         }
 
+        // Configure RequestHandler component
+        if (!$this->_registry->has('RequestHandler')) {
+            $this->_registry->load('RequestHandler');
+        }
+        // Iframe request detector
+        $this->request->addDetector('iframe', function($request) {
+            return (bool) $this->request->query('iframe');
+        });
+
         // Configure Backend Authentication
         if (!$this->_registry->has('Auth') || !is_a($this->_registry->get('Auth'), static::$authComponentClass)) {
             $this->_registry->unload('Auth');
@@ -90,11 +99,6 @@ class BackendComponent extends Component
         // Configure controller
         $controller->viewBuilder()->className('Backend.Backend');
         $controller->viewBuilder()->layout('Backend.admin');
-
-        // Iframe request detector
-        $this->request->addDetector('iframe', function($request) {
-            return (bool) $this->request->query('iframe');
-        });
 
         // Apply Backend theme
         if (Configure::read('Backend.theme')) {

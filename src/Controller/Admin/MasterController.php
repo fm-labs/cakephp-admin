@@ -9,6 +9,8 @@
 namespace Backend\Controller\Admin;
 
 
+use Backend\Lib\BackendNav;
+
 class MasterController extends AppController
 {
     public function initialize()
@@ -19,5 +21,12 @@ class MasterController extends AppController
     public function index()
     {
         $this->viewBuilder()->layout('master');
+    }
+
+    public function menu() {
+
+        $menu = BackendNav::getMenu();
+        $this->set('menu', $menu);
+        $this->set('_serialize', 'menu');
     }
 }

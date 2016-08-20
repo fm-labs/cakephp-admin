@@ -33,13 +33,32 @@ class AuthController extends AppController
      */
     public function login()
     {
-        if ($this->Auth->user()) {
-            $this->Flash->success(__('You are already logged in'));
-            $this->redirect(['_name' => 'backend:admin:auth:user']);
-            return;
+        if ($this->components()->get('RequestHandler')->accepts('json')) {
+            $this->viewBuilder()->className('Json');
+
+            $this->Auth->login();
+
+        } else {
+
+            /*
+            if ($this->Auth->user()) {
+                $this->Flash->success(__('You are already logged in'));
+                $this->redirect(['_name' => 'backend:admin:auth:user']);
+                return;
+            }
+            */
+
+            $redirect = $this->Auth->login();
+            if ($redirect) {
+                $this->redirect($redirect);
+            }
         }
 
-        $this->Auth->login();
+        $this->set('_request', $this->request->data);
+        $this->set('data', [
+            'user' => $this->Auth->user()
+        ]);
+        $this->set('_serialize', ['_request', 'data']);
     }
 
     /**

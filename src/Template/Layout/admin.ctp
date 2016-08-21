@@ -38,7 +38,6 @@
             ?>
         </nav>
         <div id="flash" class="container-fluid">
-            <?= $this->Flash->render('auth') ?>
             <?= $this->Flash->render('backend') ?>
         </div>
     </header>

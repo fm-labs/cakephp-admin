@@ -31,9 +31,9 @@
 #sidebar .be-sidebar {
   width: 0;
   overflow-x: hidden;
-  -webkit-box-shadow: -3px -5px 13px #333;
-  -moz-box-shadow: -3px -5px 13px #333;
-  box-shadow: -3px -5px 13px #333;
+  -webkit-box-shadow: -3px -5px 13px #333333;
+  -moz-box-shadow: -3px -5px 13px #333333;
+  box-shadow: -3px -5px 13px #333333;
 }
 #sidebar .be-sidebar .item.trail > .menu {
   display: inherit;

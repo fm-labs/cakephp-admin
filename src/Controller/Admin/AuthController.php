@@ -40,25 +40,16 @@ class AuthController extends AppController
 
         } else {
 
-            /*
-            if ($this->Auth->user()) {
-                $this->Flash->success(__('You are already logged in'));
-                $this->redirect(['_name' => 'backend:admin:auth:user']);
-                return;
-            }
-            */
-
             $redirect = $this->Auth->login();
             if ($redirect) {
                 $this->redirect($redirect);
             }
         }
 
-        $this->set('_request', $this->request->data);
-        $this->set('data', [
+        $this->set('login', [
             'user' => $this->Auth->user()
         ]);
-        $this->set('_serialize', ['_request', 'data']);
+        $this->set('_serialize', ['login']);
     }
 
     /**

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<?= Cake\I18n\I18n::locale(); ?>">
 <head>
     <?= $this->Html->charset() ?>
     <title><?= $this->fetch('title') ?></title>
@@ -11,6 +11,7 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
 
+    <?= $this->Html->css('Backend.font-awesome'); ?>
     <?= $this->Html->css('Backend.bootstrap.min'); ?>
     <?= $this->Html->css('Backend.master'); ?>
     <?= $this->fetch('css') ?>

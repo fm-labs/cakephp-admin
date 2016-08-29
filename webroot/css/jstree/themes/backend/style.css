@@ -1,9 +1,10 @@
+/** cakephp3-backend - v1.4.0-dev - 2016-08-29 **/
 /* jsTree default theme */
 .jstree {
   /** overflow-x: hidden; **/
   overflow: hidden;
   border-right: 1px solid #CCC;
-  overflow-x: scroll;
+  overflow-x: hidden;
 }
 .jstree:hover {
   /** overflow-x: scroll; **/
@@ -1112,9 +1113,4 @@
 }
 .jstree .jstree-icon.unpublished::before {
   color: red;
-}
-.be-index-tree.jstree {
-  border: none;
-  box-shadow: 1px 5px 5px #CCC;
-  padding: 1em 0 2em 0;
 }

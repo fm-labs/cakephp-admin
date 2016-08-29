@@ -26,8 +26,6 @@
 /**
  * Common Backend CSS Stylesheet
  */
-@import "jstree/themes/backend/style.css";
-@import "font-awesome.css";
 body {
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;

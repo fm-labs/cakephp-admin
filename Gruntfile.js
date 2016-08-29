@@ -22,7 +22,8 @@ module.exports = function(grunt) {
           'webroot/css/master.css': 'webroot/less/master.less',
           'webroot/css/admin.css': 'webroot/less/admin.less',
           'webroot/css/auth.css': 'webroot/less/auth.less',
-          'webroot/css/tinymce.css': 'webroot/less/tinymce.less'
+          'webroot/css/tinymce.css': 'webroot/less/tinymce.less',
+          'webroot/css/jstree/themes/backend/style.css': 'webroot/less/jstree.less'
         }
 
       },
@@ -39,7 +40,8 @@ module.exports = function(grunt) {
           'webroot/css/master.min.css': 'webroot/less/master.less',
           'webroot/css/admin.min.css': 'webroot/less/admin.less',
           'webroot/css/auth.min.css': 'webroot/less/auth.less',
-          'webroot/css/tinymce.min.css': 'webroot/less/tinymce.less'
+          'webroot/css/tinymce.min.css': 'webroot/less/tinymce.less',
+          'webroot/css/jstree/themes/backend/style.min.css': 'webroot/less/jstree.less'
         }
       }
     },
@@ -61,7 +63,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   // Default task.
-  //grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
-  grunt.registerTask('default', ['less:development']);
+  grunt.registerTask('default', ['less']);
 
 };

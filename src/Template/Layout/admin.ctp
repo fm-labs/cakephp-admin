@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="<?= Cake\I18n\I18n::locale(); ?>">
 <head>
     <?= $this->Html->charset() ?>
     <title><?= $this->fetch('title') ?></title>
@@ -13,6 +13,8 @@
 
     <?= $this->fetch('cssBackend') ?>
     <?= $this->Html->css('Backend.jqueryui/jquery-ui.min'); ?>
+    <?= $this->Html->css('Backend.jstree/themes/backend/style'); ?>
+    <?= $this->Html->css('Backend.font-awesome'); ?>
     <?= $this->Html->css('Backend.bootstrap.min'); ?>
     <?= $this->Html->css('Backend.admin'); ?>
     <?= $this->fetch('css') ?>
@@ -20,7 +22,6 @@
     <?= $this->fetch('script') ?>
     <?= $this->Html->script('Backend.jqueryui/jquery-ui.min'); ?>
     <?= $this->Html->script('Backend.bootstrap.min'); ?>
-    <?= '' // $this->Html->script('Backend.be-ui'); ?>
     <?= $this->Html->script('Backend.backend'); ?>
     <?= $this->fetch('scriptBackend'); ?>
 

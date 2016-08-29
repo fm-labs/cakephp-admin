@@ -1,2 +1,5 @@
 .idea/
 vendor/
+/webroot/css2
+/webroot/test
+node_modules/

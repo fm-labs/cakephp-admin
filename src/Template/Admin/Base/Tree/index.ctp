@@ -25,10 +25,15 @@ unset($defaultJsTree);
 
     <div class="row">
         <div class="col-sm-4 col-md-3">
-            <?= $this->Html->div('be-index-tree', 'Loading Pages ...', [
-                'id' => 'index-tree',
-                'data-url' => $this->Html->Url->build($dataUrl)
-            ]); ?>
+            <div class="panel panel-primary panel-nopad">
+                <div class="panel-heading">Pages</div>
+                <div class="panel-body">
+                    <?= $this->Html->div('be-index-tree', 'Loading Pages ...', [
+                        'id' => 'index-tree',
+                        'data-url' => $this->Html->Url->build($dataUrl)
+                    ]); ?>
+                </div>
+            </div>
         </div>
         <div class="col-sm-8 col-md-9">
             <div id="index-tree-container">

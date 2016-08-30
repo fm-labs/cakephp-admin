@@ -1,6 +1,7 @@
 @import "elements.less";
 @import "vars.less";
 @import "global.less";
+@import "bootstrap-backend.less";
 @import "navigation.less";
 
 body {
@@ -195,3 +196,15 @@ body.fixed-nav {
   }
 }
 
+/**
+ * Index Tree
+ */
+.index-tree > .row > div {
+  &:first-child {
+    padding-right: 0;
+  }
+
+  &:last-child {
+    //padding-left: 0;
+  }
+}

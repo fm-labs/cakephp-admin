@@ -393,6 +393,22 @@ nav ul.pagination {
   font-size: 10px;
 }
 /**
+ * Bootstrap Theme Backend
+ */
+/* Panels */
+.panel {
+  border-radius: 0;
+  border: none;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+}
+.panel-heading {
+  border-radius: 0;
+}
+.panel-nopad .panel-body {
+  padding-left: 0;
+  padding-right: 0;
+}
+/**
  * Backend Navigation Style Sheet
  *
  * CSS Scope: .be-nav
@@ -620,4 +636,10 @@ body.fixed-nav #top-fixed {
 .be-toolbar a i.icon:hover {
   text-underline: none;
   text-decoration: none;
+}
+/**
+ * Index Tree
+ */
+.index-tree > .row > div:first-child {
+  padding-right: 0;
 }

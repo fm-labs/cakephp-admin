@@ -643,3 +643,7 @@ body.fixed-nav #top-fixed {
 .index-tree > .row > div:first-child {
   padding-right: 0;
 }
+iframe.tree-window-frame {
+  min-width: 500px;
+  min-height: 600px;
+}

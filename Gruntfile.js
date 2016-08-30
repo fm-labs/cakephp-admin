@@ -15,8 +15,7 @@ module.exports = function(grunt) {
       development: {
         options: {
           paths: ['webroot/less', 'webroot/css'],
-          banner: '/** <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
-          '<%= grunt.template.today("yyyy-mm-dd") %> **/\n'
+          banner: '/** <%= pkg.title || pkg.name %> - v<%= pkg.version %> **/\n'
         },
         files: {
           'webroot/css/master.css': 'webroot/less/master.less',

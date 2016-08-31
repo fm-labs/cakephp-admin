@@ -1114,3 +1114,10 @@
 .jstree .jstree-icon.unpublished::before {
   color: red;
 }
+/** Default Overrides **/
+.be-index-tree {
+  border: none;
+}
+.be-index-tree .jstree-wholerow {
+  border-bottom: 1px solid #f5f5f5;
+}

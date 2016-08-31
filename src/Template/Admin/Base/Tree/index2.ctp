@@ -86,6 +86,32 @@ unset($defaultJsTree);
 
                     if (url) {
 
+                        if (url.indexOf('?') > -1){
+                            url += '&iframe=1'
+                        }else{
+                            url += '?iframe=1'
+                        }
+
+                        var $frame = $('<iframe>', {
+                            class: 'tree-window-frame'
+                        });
+                        $container.html($frame);
+                        $frame.attr('src', url).on('load', function() {
+                            console.log("Frame " + url + " loaded");
+                            $(this).width($(this).parent().parent().width());
+
+                            var frame = this;
+                            setTimeout(function() {
+                                frame.height = frame.contentWindow.document.body.scrollHeight + "px";
+                            }, 100);
+                        });
+
+                        var $frameLink = $('<a>',{
+                            href: url,
+                            target: '_blank',
+                            class: 'link link-external'
+                        }).html("Open in new window").appendTo($container);
+                        /*
                         $.ajax({
                             method: 'GET',
                             url: url,
@@ -109,6 +135,7 @@ unset($defaultJsTree);
                                 Backend.beautify();
                             }
                         });
+                        */
                     }
 
                 }

@@ -20,6 +20,7 @@ module.exports = function(grunt) {
         files: {
           'webroot/css/master.css': 'webroot/less/master.less',
           'webroot/css/admin.css': 'webroot/less/admin.less',
+          'webroot/css/iframe.css': 'webroot/less/iframe.less',
           'webroot/css/auth.css': 'webroot/less/auth.less',
           'webroot/css/tinymce.css': 'webroot/less/tinymce.less',
           'webroot/css/jstree/themes/backend/style.css': 'webroot/less/jstree.less'
@@ -38,6 +39,7 @@ module.exports = function(grunt) {
         files: {
           'webroot/css/master.min.css': 'webroot/less/master.less',
           'webroot/css/admin.min.css': 'webroot/less/admin.less',
+          'webroot/css/iframe.min.css': 'webroot/less/iframe.less',
           'webroot/css/auth.min.css': 'webroot/less/auth.less',
           'webroot/css/tinymce.min.css': 'webroot/less/tinymce.less',
           'webroot/css/jstree/themes/backend/style.min.css': 'webroot/less/jstree.less'

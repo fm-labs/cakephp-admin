@@ -56,7 +56,14 @@ var Backend = {
         // catch modal frame links
         $(document).on('click','a.link-frame-modal', function (e) {
 
-            _this.Link.openModalFrame(this.href, {
+            var url = this.href;
+            if (url.indexOf('?') > -1){
+                url += '&iframe=1'
+            }else{
+                url += '?iframe=1'
+            }
+
+            _this.Link.openModalFrame(url, {
                 title: this.title || this.innerText
             });
 

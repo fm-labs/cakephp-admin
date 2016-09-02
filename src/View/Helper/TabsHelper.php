@@ -8,6 +8,7 @@
 
 namespace Backend\View\Helper;
 
+use Cake\Core\Configure;
 use Cake\View\Helper;
 
 class TabsHelper extends Helper
@@ -27,7 +28,7 @@ class TabsHelper extends Helper
     {
         $this->end();
 
-        $params = array_merge(['title' => $title, 'url' => null], $params);
+        $params = array_merge(['title' => $title, 'url' => null, 'debugOnly' => false], $params);
 
         $blockId = uniqid('tab');
         $this->_items[$blockId] = $params;
@@ -54,9 +55,14 @@ class TabsHelper extends Helper
         $js = "";
         $menuItems = "";
 
+        $debugEnabled = Configure::read('debug');
+
         // render tab menu
         $menuClass = "nav nav-tabs";
         foreach ($this->_items as $tabId => $item) {
+
+            if ($debugEnabled !== true && $item['debugOnly'] === true)
+                continue;
 
             $tabMenuId = $tabId . '-menu';
             $href = '#' . $tabId;

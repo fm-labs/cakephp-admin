@@ -408,6 +408,10 @@ nav ul.pagination {
   padding-left: 0;
   padding-right: 0;
 }
+/* Forms */
+.form-group {
+  margin-bottom: 8px;
+}
 body {
   background-color: #fff;
 }

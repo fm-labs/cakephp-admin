@@ -408,6 +408,10 @@ nav ul.pagination {
   padding-left: 0;
   padding-right: 0;
 }
+/* Forms */
+.form-group {
+  margin-bottom: 8px;
+}
 /**
  * Backend Navigation Style Sheet
  *
@@ -646,4 +650,19 @@ body.fixed-nav #top-fixed {
 iframe.tree-window-frame {
   min-width: 500px;
   min-height: 600px;
+}
+/**
+ * Actions
+ */
+.actions ul li {
+  list-style: none;
+}
+.actions.right {
+  text-align: right;
+}
+.actions.right ul li {
+  list-style: none;
+}
+.actions.grouped ul li {
+  display: inline-block;
 }

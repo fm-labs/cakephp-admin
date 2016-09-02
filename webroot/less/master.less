@@ -52,67 +52,60 @@ body {
 #master-tabs {
 
   .nav {
-    padding: 7px 15px 0;
+    padding: 5px 15px 0;
     background-color: #F2F2F2;
 
   }
 
 
   .nav > li > a {
-    padding: 8px 22px 8px 10px;
-    max-width: 150px;
-    white-space: nowrap;
-    overflow: hidden;
+    background-color: transparent;
+    font-size: 1rem;
+    line-height: 1rem;
     text-overflow: ellipsis;
     color: #333;
-    border-color: transparent;
-    border-style: solid;
-    border-width: 1px 1px 0 1px;
+    max-width: 150px;
+    padding: 7px 17px 7px 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    border: 1px solid #DDD;
+    border-bottom-width: 0;
     .border-radius(0);
-    background-color: transparent;
   }
 
   .nav > li > a:hover {
     //text-decoration: underline;
+    background-color: #fcfcfc;
     border-color: #DDD;
   }
 
   .nav > li.active > a {
-    font-weight: bold;
+    font-weight: normal;
     background-color: #FFF;
-    border-color: #FFF;
     border-width: 1px 1px 0 1px;
   }
 
   .nav > li > .tab-loading {
-      &::after {
+      &::before {
         content: "*";
       }
   }
 
   .nav > li > .tab-close {
-    display: none;
     position: absolute;
     right: 5px;
-    top: 10px;
-    font-size: 10px;
-    line-height: 7px;
-    padding: 2px;
-    border: 1px solid #CCC;
-    width: 14px;
-    height: 14px;
+    top: 8px;
+    font-size: 1rem;
+    line-height: 1rem;
+    padding-right: 2px;
     text-align: center;
     vertical-align: middle;
     font-weight: bold;
     .opacity(0.3);
-    .rounded(0);
 
 
     &:hover {
       cursor: pointer;
-      background-color: #333;
-      border-color: #3A3A3A;
-      color: #f2f2f2;
       .opacity(1);
     }
   }

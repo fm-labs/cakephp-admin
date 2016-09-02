@@ -44,7 +44,7 @@ class DataTableCell extends Cell
             if ($data instanceof CollectionInterface) {
                 $firstRow = $data->first();
             } else {
-                $firstRow = (is_array($data) && $data[0]) ? $data[0] : [];
+                $firstRow = (is_array($data) && !empty($data) && $data[0]) ? $data[0] : [];
 
             }
             $firstRow = is_object($firstRow) ? $firstRow->toArray() : $firstRow;

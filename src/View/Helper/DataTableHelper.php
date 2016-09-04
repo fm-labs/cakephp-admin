@@ -371,7 +371,7 @@ class DataTableHelper extends Helper
 
     public function debug()
     {
-        if (isset($this->_params['debug']) && $this->_params['debug']) {
+        if (isset($this->_params['debug']) && $this->_params['debug'] === true) {
             debug($this->_params);
         }
     }

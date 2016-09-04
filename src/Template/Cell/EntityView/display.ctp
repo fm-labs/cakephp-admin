@@ -34,23 +34,21 @@ use Cake\Utility\Inflector;
                 <td>
                     <?= $formattedValue; ?>
                 </td>
-                <!--
-                <?php if (Configure::read('debug')): ?>
+                <?php if ($debug === true): ?>
                 <td class="right">
                     <small>
                         <?= sprintf("(%s:%s)", $column['type'], $formatterName ) ?>
                     </small>
                 </td>
                 <?php endif; ?>
-                -->
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
 
+    <?php if ($debug === true): ?>
     <div class="debug">
         <?php debug($entity->toArray()); ?>
-        <?php //debug($fields); ?>
-        <?php //debug($schema); ?>
     </div>
+    <?php endif; ?>
 </div>

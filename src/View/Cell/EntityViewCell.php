@@ -1,6 +1,7 @@
 <?php
 namespace Backend\View\Cell;
 
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventManager;
 use Cake\Network\Request;
@@ -20,7 +21,7 @@ class EntityViewCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = ['model', 'fields', 'exclude', 'title', 'helpers'];
+    protected $_validCellOptions = ['model', 'fields', 'exclude', 'title', 'helpers', 'debug'];
 
 
     public $model;
@@ -32,6 +33,8 @@ class EntityViewCell extends Cell
     public $title;
 
     public $helpers = [];
+
+    public $debug = false;
 
     public function __construct(
         Request $request = null,
@@ -48,6 +51,7 @@ class EntityViewCell extends Cell
      */
     public function display(EntityInterface $entity)
     {
+        $this->set('debug', $this->debug && Configure::read('debug'));
         $this->set('model', $this->model);
         $this->set('fields', $this->fields);
         $this->set('exclude', $this->exclude);

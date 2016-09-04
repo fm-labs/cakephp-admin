@@ -101,17 +101,15 @@ foreach ($associations as $type => $data) {
     <h2 class="ui header">
         <?= h($<%= $singularVar %>-><%= $displayField %>) ?>
     </h2>
-
-    <?=
-    $this->cell('Backend.EntityView', [ $post ], [
-        'title' => $post->title,
-        'model' => '<%= $pluralVar %>',
-    ]);
-    ?>
-
-<!--
     <table class="ui attached celled striped table">
-
+        <!--
+        <thead>
+        <tr>
+            <th><?= __('Label'); ?></th>
+            <th><?= __('Value'); ?></th>
+        </tr>
+        </thead>
+        -->
 <% if ($groupedFields['string']) : %>
 
 <% foreach ($groupedFields['string'] as $field) : %>
@@ -169,7 +167,6 @@ foreach ($associations as $type => $data) {
 <% endif; %>
     </table>
 </div>
--->
 <%
 $relations = $associations['HasMany'] + $associations['BelongsToMany'];
 foreach ($relations as $alias => $details):
@@ -207,4 +204,3 @@ foreach ($relations as $alias => $details):
     </div>
 </div>
 <% endforeach; %>
-

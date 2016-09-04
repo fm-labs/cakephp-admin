@@ -54,8 +54,7 @@ foreach ($associations as $type => $data) {
     <h2 class="ui header">
         <?= __('<%= Inflector::humanize($action) %> {0}', __('<%= $singularHumanName %>')) ?>
     </h2>
-    <?= $this->Form->create($<%= $singularVar %>); ?>
-    <div class="users ui basic segment">
+    <?= $this->Form->create($<%= $singularVar %>, ['class' => 'no-ajax']); ?>
         <div class="ui form">
         <?php
 <%
@@ -99,10 +98,8 @@ foreach ($associations as $type => $data) {
 %>
         ?>
         </div>
-    </div>
-    <div class="ui bottom attached segment">
-        <?= $this->Form->button(__('Submit')) ?>
-    </div>
+
+    <?= $this->Form->button(__('Submit')) ?>
     <?= $this->Form->end() ?>
 
 </div>

@@ -108,7 +108,7 @@ class DataTableHelper extends Helper
     protected function _parseFields()
     {
 
-        $_defaultHeader = ['title' => null, 'type' => 'string', 'formatter' => null];
+        $_defaultFieldConfig = ['title' => null, 'type' => 'string', 'formatter' => null];
         foreach ($this->_params['fields'] as $field => $conf)
         {
             if (is_numeric($field)) {
@@ -116,7 +116,7 @@ class DataTableHelper extends Helper
                 $conf = [];
             }
 
-            $conf += $_defaultHeader;
+            $conf += $_defaultFieldConfig;
 
 
             if ($conf['title'] === null) {

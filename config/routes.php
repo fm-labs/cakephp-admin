@@ -47,11 +47,6 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
             ['_name' => 'master']
         );
 
-        // backend:admin:dashboard
-        $dashboardUrl = (Configure::read('Backend.Dashboard.url'))
-            ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'];
-        $routes->connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
-
         // Fallbacks
         $routes->connect('/:controller');
         $routes->fallbacks('DashedRoute');
@@ -62,6 +57,12 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
  * Fallback routes for app backend
  * @TODO Use a configuration param to enable/disable fallback routes for app's admin prefixed routes
  */
+
+// backend:admin:dashboard
+$dashboardUrl = (Configure::read('Backend.Dashboard.url'))
+    ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'];
+Router::connect('/dashboard', $dashboardUrl, ['_name' => 'admin:dashboard']);
+
 Router::connect('/admin/:controller/:action/*', ['prefix' => 'admin']);
 Router::connect('/admin/:controller/:action', ['prefix' => 'admin']);
 Router::connect('/admin/:controller', ['prefix' => 'admin', 'action' => 'index']);

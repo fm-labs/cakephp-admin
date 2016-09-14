@@ -12,7 +12,7 @@ if (!$path || !preg_match('/^\/(.*)$/', $path)) {
 }
 
 /**
- * Connect Backend routes
+ * Backend routes
  */
 Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], function ($routes) {
     $routes->scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], function ($routes) {
@@ -57,3 +57,11 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
         $routes->fallbacks('DashedRoute');
     });
 });
+
+/**
+ * Fallback routes for app backend
+ * @TODO Use a configuration param to enable/disable fallback routes for app's admin prefixed routes
+ */
+Router::connect('/admin/:controller/:action/*', ['prefix' => 'admin']);
+Router::connect('/admin/:controller/:action', ['prefix' => 'admin']);
+Router::connect('/admin/:controller', ['prefix' => 'admin', 'action' => 'index']);

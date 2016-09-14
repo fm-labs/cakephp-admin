@@ -1,4 +1,4 @@
-<?php $this->Html->addCrumb(__('Dashboard'), ['controller' => 'Dashboard', 'action' => 'index']); ?>
+<?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Dashboard', 'action' => 'index']); ?>
 <?php $this->Toolbar->addLink(__d('banana','Refresh'), ['action' => 'index'], ['icon' => 'refresh']); ?>
 <div id="backend-user-dashboard" class="backend dashboard index">
     <h1 class="ui header"><i class="rocket icon"></i>Howdy!</h1>

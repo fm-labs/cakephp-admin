@@ -1,7 +1,6 @@
 <?php
 namespace Backend\Controller\Admin;
 
-use Banana\Controller\Admin\AppController;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;

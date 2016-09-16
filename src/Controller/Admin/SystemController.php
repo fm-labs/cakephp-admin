@@ -4,6 +4,7 @@ namespace Backend\Controller\Admin;
 use Backend\Controller\Admin\AppController;
 use Cake\Core\Plugin;
 use Cake\Core\Configure;
+use Cake\Routing\Router;
 
 /**
  * Class SystemController
@@ -40,10 +41,16 @@ class SystemController extends AppController
     public function globals()
     {
         $globals = [
-            'APP', 'APP_DIR', 'CONFIG', 'CACHE', 'CAKE', 'CAKE_VERSION', 'CAKE_CORE_INCLUDE_PATH', 'CORE_PATH',
+            'APP', 'APP_DIR', 'CONFIG', 'CACHE', 'CAKE', 'CAKE_CORE_INCLUDE_PATH', 'CORE_PATH',
             'DS', 'LOGS', 'ROOT', 'TESTS', 'TMP','WWW_ROOT'
         ];
         $this->set(compact('globals'));
+    }
+
+    public function routes()
+    {
+        $this->set('routes', Router::routes());
+        $this->set('_serialize', 'routes');
     }
 
     /**

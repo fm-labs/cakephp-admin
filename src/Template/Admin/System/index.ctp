@@ -40,7 +40,10 @@ use Cake\Core\Configure;
 		
 		<dt><?php echo __d('backend', "Config");?></dt>
 		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'config'));?></dd>
-	
+
+		<dt><?php echo __d('backend', "Routes");?></dt>
+		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'routes'));?></dd>
+
 	</dl>
 
 

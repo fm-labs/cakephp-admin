@@ -57,7 +57,7 @@ class AuthController extends AppController
      */
     public function loginSuccess()
     {
-        $this->redirect(['_name' => 'backend:admin:master']);
+        $this->redirect(['_name' => 'backend:admin:dashboard']);
     }
 
     /**

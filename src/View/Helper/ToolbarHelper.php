@@ -12,7 +12,7 @@ use Cake\View\Helper\HtmlHelper;
  */
 class ToolbarHelper extends Helper
 {
-    public $helpers = ['Html', 'Backend.Ui'];
+    public $helpers = ['Html', 'Bootstrap.Ui'];
 
     protected $_defaultConfig = [
     ];

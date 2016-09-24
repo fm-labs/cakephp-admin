@@ -8,13 +8,13 @@
                 <?= $this->Ui->postLink(
                 __d('banana','Delete'),
                 ['action' => 'delete', $setting->id],
-                ['class' => 'item', 'icon' => 'trash', 'confirm' => __d('banana','Are you sure you want to delete # {0}?', $setting->id)]
+                ['class' => 'item', 'data-icon' => 'trash', 'confirm' => __d('banana','Are you sure you want to delete # {0}?', $setting->id)]
             )
             ?>
                     <?= $this->Ui->link(
                     __d('banana','List {0}', __d('banana','Settings')),
                     ['action' => 'index'],
-                    ['class' => 'item', 'icon' => 'list']
+                    ['class' => 'item', 'data-icon' => 'list']
                 ) ?>
                 <div class="ui dropdown item">
                     <i class="dropdown icon"></i>

@@ -1,6 +1,6 @@
 <?php
-use Backend\Lib\Backend;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 
 /**
  * Automatically load app's backend configuration
@@ -9,3 +9,5 @@ use Cake\Core\Configure;
  * rename to backend.php and adjust contents
  */
 //Configure::load('backend');
+
+Plugin::load('Bootstrap');

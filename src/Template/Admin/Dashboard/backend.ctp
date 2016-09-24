@@ -1,7 +1,7 @@
 <?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Dashboard', 'action' => 'backend']); ?>
 <?php
-$this->Toolbar->addLink('Refresh', ['controller' => 'Dashboard', 'action' => 'index'], ['class' => 'backend-refresh', 'icon' => 'list']);
-$this->Toolbar->addLink('View Logs', ['controller' => 'Logs', 'action' => 'index'], ['class' => 'backend-logs', 'icon' => 'list']);
+$this->Toolbar->addLink('Refresh', ['controller' => 'Dashboard', 'action' => 'index'], ['class' => 'backend-refresh', 'data-icon' => 'list']);
+$this->Toolbar->addLink('View Logs', ['controller' => 'Logs', 'action' => 'index'], ['class' => 'backend-logs', 'data-icon' => 'list']);
 ?>
 <div id="backend-dashboard" class="backend dashboard index">
     <h1 class="ui header"><i class="cubes icon"></i>Backend Dashboard</h1>
@@ -17,12 +17,12 @@ $this->Toolbar->addLink('View Logs', ['controller' => 'Logs', 'action' => 'index
             </div>
             <div class="ui attached segment dashboard-item">
                 <div class="ui list">
-                    <?= $this->Ui->link('Config', ['controller' => 'System', 'action' => 'config'], ['class' => 'item', 'icon' => 'help']); ?>
-                    <?= $this->Ui->link('PHP Info', ['controller' => 'System', 'action' => 'php'], ['class' => 'item', 'icon' => 'help']); ?>
-                    <?= $this->Ui->link('Date & Time Info', ['controller' => 'System', 'action' => 'datetime'], ['class' => 'item', 'icon' => 'help']); ?>
-                    <?= $this->Ui->link('Globals', ['controller' => 'System', 'action' => 'globals'], ['class' => 'item', 'icon' => 'help']); ?>
-                    <?= $this->Ui->link('Session', ['controller' => 'System', 'action' => 'session'], ['class' => 'item', 'icon' => 'help']); ?>
-                    <?= $this->Ui->link('Plugins', ['controller' => 'System', 'action' => 'plugins'], ['class' => 'item', 'icon' => 'help']); ?>
+                    <?= $this->Ui->link('Config', ['controller' => 'System', 'action' => 'config'], ['class' => 'item', 'data-icon' => 'help']); ?>
+                    <?= $this->Ui->link('PHP Info', ['controller' => 'System', 'action' => 'php'], ['class' => 'item', 'data-icon' => 'help']); ?>
+                    <?= $this->Ui->link('Date & Time Info', ['controller' => 'System', 'action' => 'datetime'], ['class' => 'item', 'data-icon' => 'help']); ?>
+                    <?= $this->Ui->link('Globals', ['controller' => 'System', 'action' => 'globals'], ['class' => 'item', 'data-icon' => 'help']); ?>
+                    <?= $this->Ui->link('Session', ['controller' => 'System', 'action' => 'session'], ['class' => 'item', 'data-icon' => 'help']); ?>
+                    <?= $this->Ui->link('Plugins', ['controller' => 'System', 'action' => 'plugins'], ['class' => 'item', 'data-icon' => 'help']); ?>
                 </div>
             </div>
         </div>
@@ -40,12 +40,12 @@ $this->Toolbar->addLink('View Logs', ['controller' => 'Logs', 'action' => 'index
                     <?= $this->Ui->link(
                         'Manage Users',
                         ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
-                        ['class' => 'item', 'icon' => 'male']
+                        ['class' => 'item', 'data-icon' => 'male']
                     ); ?>
                     <?= $this->Ui->link(
                         'Change password',
                         ['plugin' => 'User', 'controller' => 'Users', 'action' => 'password_change'],
-                        ['class' => 'item', 'icon' => 'edit']
+                        ['class' => 'item', 'data-icon' => 'edit']
                     ); ?>
                 </div>
             </div>

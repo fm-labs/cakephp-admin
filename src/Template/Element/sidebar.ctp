@@ -45,7 +45,7 @@ $menuResolver = function ($val) use (&$menu) {
 $requestedPlugin = (isset($this->request->params['plugin'])) ? $this->request->params['plugin'] : null;
 $menuItemBuilder = function ($item, $childBuilder, $level = 0, $trail = false) use ($requestedPlugin) {
 
-    $_default = ['plugin' => null, 'url' => null, 'title' => null, 'icon' => null, '_children' => []];
+    $_default = ['plugin' => null, 'url' => null, 'title' => null, 'data-icon' => null, '_children' => []];
     $item = array_merge($_default, $item);
 
     $plugin = $item['plugin'];
@@ -57,8 +57,8 @@ $menuItemBuilder = function ($item, $childBuilder, $level = 0, $trail = false) u
     $children = $item['_children'];
     unset($item['_children']);
 
-    //$icon = $item['icon'];
-    //unset($item['icon']);
+    //$icon = $item['data-icon'];
+    //unset($item['data-icon']);
 
     $title = $item['title'];
 
@@ -80,8 +80,8 @@ $menuItemBuilder = function ($item, $childBuilder, $level = 0, $trail = false) u
         }
         $subMenu .= '</div>';
 
-        //$icon = ($item['icon']) ? sprintf('<i class="%s icon"></i>', $item['icon']) : '';
-        //unset($item['icon']);
+        //$icon = ($item['data-icon']) ? sprintf('<i class="%s icon"></i>', $item['data-icon']) : '';
+        //unset($item['data-icon']);
         //$title = $title . " (" . count($children) . ")";
 
         $item['escape'] = false;
@@ -155,7 +155,7 @@ $menuBuilder = function ($menu) use ($menuItemBuilder, $menuOrder) {
         <?= $this->Ui->link(
             $this->Html->tag('span', $this->get('be_title')),
             ['_name' => 'backend:admin:dashboard'],
-            ['icon' => 'inverted blue home', 'escape' => false]
+            ['data-icon' => 'inverted blue home', 'escape' => false]
         ); ?>
         <!--
         <a href="#">

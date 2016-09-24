@@ -98,7 +98,7 @@ class BackendComponent extends Component
 
         // Configure controller
         $controller->viewBuilder()->className('Backend.Backend');
-        $controller->viewBuilder()->layout('Backend.admin');
+        $controller->viewBuilder()->layout('Backend.default');
 
         // Apply Backend theme
         if (Configure::read('Backend.theme')) {
@@ -109,9 +109,9 @@ class BackendComponent extends Component
         if ($this->request->is('iframe')) {
             $controller->viewBuilder()->layout('Backend.iframe');
         }
-        elseif ($this->request->is('ajax')) {
-            $controller->viewBuilder()->layout('Backend.ajax');
-        }
+        //elseif ($this->request->is('ajax')) {
+        //    $controller->viewBuilder()->layout('Backend.ajax');
+        //}
 
         $this->_controller =& $controller;
     }

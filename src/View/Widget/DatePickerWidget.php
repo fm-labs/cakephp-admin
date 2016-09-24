@@ -44,7 +44,7 @@ class DatePickerWidget extends CakeDateTimeWidget
 
 
         $pickerOptions = [
-            'format' => 'yyyy-mm-dd',
+            'format' => 'dd.mm.yyyy',
             'formatSubmit' => 'yyyy-mm-dd',
             'hiddenPrefix' => 'pickadate__',
             'hiddenSuffix' =>  null
@@ -53,7 +53,7 @@ class DatePickerWidget extends CakeDateTimeWidget
 
         $this->_templates->add([
             'datepicker' => '<input type="{{type}}" name="{{name}}"{{attrs}}>',
-            'datepicker_script' => '<script>$("{{selector}}").pickadate({{picker}})</script>'
+            'datepicker_script' => '<script>$(document).ready(function() { $("{{selector}}").pickadate({{picker}}); });</script>'
         ]);
 
         $html = $this->_templates->format('datepicker', [

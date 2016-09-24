@@ -9,7 +9,7 @@ $fields = collection($fields)
 %>
 <?php $this->Html->addCrumb(__('<%= $pluralHumanName %>')); ?>
 
-<?php $this->Toolbar->addLink(__('New {0}', __('<%= $singularHumanName %>')), ['action' => 'add'], ['icon' => 'plus']); ?>
+<?php $this->Toolbar->addLink(__('New {0}', __('<%= $singularHumanName %>')), ['action' => 'add'], ['data-icon' => 'plus']); ?>
 <%
 $done = [];
 foreach ($associations as $type => $data):
@@ -19,12 +19,12 @@ foreach ($associations as $type => $data):
 <?= $this->Toolbar->addLink(
     __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details["controller"] %>', 'action' => 'index'],
-    ['icon' => 'list']
+    ['data-icon' => 'list']
 ) ?>
 <?= $this->Toolbar->addLink(
     __('New {0}', __('<%= $this->_singularHumanName($alias) %>')),
     ['controller' => '<%= $details["controller"] %>', 'action' => 'add'],
-    ['icon' => 'plus']
+    ['data-icon' => 'plus']
 ) ?>
 <%
             $done[] = $details['controller'];

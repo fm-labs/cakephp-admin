@@ -6,43 +6,28 @@ use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 
 /**
- * Class BackendHelper
+ * Drop-in HtmlHelper replacement, optimized for usage with Backend plugin
  *
  * @package Backend\View\Helper
- * @property HtmlHelper $Html
  */
-class BackendHelper extends Helper
+class BackendHelper extends HtmlHelper
 {
-    public static $scriptBlockBottom = "scriptBottom";
-
-    public $helpers = ['Html'];
-
-    protected $_defaultConfig = [
-        //'autoload_scripts' => ['jquery', 'semanticui'],
-        //'autoload_css' => []
-    ];
 
     /**
-     * Unstable
      * @var array
      */
     protected $_scripts = [
-        'jquery' => 'Backend.jquery/jquery-1.11.2.min',
-        'jqueryui' => ['Backend.jquery/jquery-ui.min' => ['jquery']],
-        'chosen' => ['Backend.chosen/chosen.jquery.min' => ['jquery']],
-        'pickadate_picker' => ['Backend.pickadate/picker'],
-        'pickadate_date' => ['Backend.pickadate/picker.date'],
-        'pickadate_time' => ['Backend.pickadate/picker.time'],
-        'pickadate' => ['pickadate_picker', 'pickadate_date', 'pickadate_time'],
-        'imagepicker' => ['Backend.imagepicker/image-picker.min'],
-        'semanticui' => ['Backend.semantic/semantic.min'],
-        'tinymce' => ['Backend.tinymce/tinymce.min'],
-        'tinymce_jquery' => ['Backend.tinymce/jquery.tinymce.min'],
-        'admin' => ['Backend.admin'],
-        'admin_chosen' => ['Backend.admin-chosen' => ['chosen'] ],
-        'admin_sidebar' => ['Backend.admin-sidebar' => ['jquery']],
-        'admin_tinymce' => ['Backend.admin-tinymce' => ['tinymce', 'tinymce_jquery']],
-        'shared' => 'Backend.shared'
+        '_jquery' => 'Backend.jquery/jquery-1.11.2.min',
+        '_jqueryui' => ['Backend.jqueryui/jquery-ui.min' => ['_jquery']],
+        '_chosen' => ['Backend.chosen/chosen.jquery.min' => ['_jquery']],
+        '_pickadate_picker' => ['Backend.pickadate/picker'],
+        '_pickadate_date' => ['Backend.pickadate/picker.date'],
+        '_pickadate_time' => ['Backend.pickadate/picker.time'],
+        '_pickadate' => ['_pickadate_picker', '_pickadate_date', '_pickadate_time'],
+        '_imagepicker' => ['Backend.imagepicker/image-picker.min'],
+        '_tinymce_core' => ['Backend.tinymce/tinymce.min'],
+        '_tinymce_jquery' => ['Backend.tinymce/jquery.tinymce.min'],
+        '_tinymce' => ['_tinymce_core', '_tinymce_jquery']
     ];
 
     protected $_css = [
@@ -58,17 +43,15 @@ class BackendHelper extends Helper
      * @param array $options
      * @return mixed|string|void
      */
-    public function script($name, $options = [])
+    public function script($url, array $options = [])
     {
-        if (is_string($name) && isset($this->_scripts[$name])) {
-            $path = $this->_scripts[$name];
-        } else {
-            $path = $name;
+        if (is_string($url) && $url[0] === "_" && isset($this->_scripts[$url])) {
+            $url = $this->_scripts[$url];
         }
 
-        if (is_array($path)) {
+        if (is_array($url)) {
             $out = "";
-            foreach ($path as $_path => $nested) {
+            foreach ($url as $_path => $nested) {
                 if (is_numeric($_path)) {
                     $_path = $nested;
                     $nested = [];
@@ -85,14 +68,12 @@ class BackendHelper extends Helper
 
         $options = array_merge(['block' => null, 'once' => true], $options);
 
-        if (isset($this->_loaded['scripts'][$path]) && $options['once'] === true) {
+        if (isset($this->_loaded['scripts'][$url]) && $options['once'] === true) {
             return;
         }
 
-        //debug("Loading script: " . $path . "::" . $options['block']);
-
-        $this->_loaded['scripts'][$path] = true;
-        return $this->Html->script($path, $options);
+        $this->_loaded['scripts'][$url] = true;
+        return parent::script($url, $options);
     }
 
 }

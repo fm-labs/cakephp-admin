@@ -3,13 +3,13 @@ use Cake\Core\Configure;
 ?>
 <?php $this->Html->addCrumb(__('User'), ['action' => 'user']); ?>
 <?php $this->assign('title', $user['name']); ?>
-<div class="users view">
-    <h2 class="ui header">
+<div class="users view container" style="text-align: center;">
+    <h2>
         <?= h($user['name']); ?>
     </h2>
-    <div class="ui card">
+    <div>
         <div class="image">
-            <img>
+            <?= $this->Ui->icon('user', ['class' => 'fa-5x']); ?>
         </div>
         <div class="content">
             <a class="header"><?= h($user['username']); ?></a>
@@ -23,25 +23,25 @@ use Cake\Core\Configure;
         <div class="extra content">
             <?= $this->Ui->link(__('Goto Dashboard'),
                 ['_name' => 'backend:admin:dashboard'],
-                ['icon' => 'user']);
+                ['data-icon' => 'home', 'class' => 'btn btn-default btn-block']);
             ?>
         </div>
         <div class="extra content">
             <?= $this->Ui->link(__('Edit profile'),
                 ['plugin' => 'User', 'controller' => 'Users', 'action' => 'edit', $user['id']],
-                ['icon' => 'user']);
+                ['data-icon' => 'edit', 'class' => 'btn btn-default btn-block']);
             ?>
         </div>
         <div class="extra content">
             <?= $this->Ui->link(__('Change password'),
                 ['plugin' => 'User', 'controller' => 'Users', 'action' => 'password_change'],
-                ['icon' => 'user']);
+                ['data-icon' => 'key', 'class' => 'btn btn-default btn-block']);
             ?>
         </div>
         <div class="extra content">
             <?= $this->Ui->link(__('Logout'),
                 ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
-                ['icon' => 'user']);
+                ['data-icon' => 'logout', 'class' => 'btn btn-default btn-block']);
             ?>
         </div>
     </div>

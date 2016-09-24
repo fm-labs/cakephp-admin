@@ -44,6 +44,9 @@ use Cake\Core\Configure;
 		<dt><?php echo __d('backend', "Routes");?></dt>
 		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'routes'));?></dd>
 
+		<dt><?php echo __d('backend', "Menus");?></dt>
+		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'menus'));?></dd>
+
 	</dl>
 
 

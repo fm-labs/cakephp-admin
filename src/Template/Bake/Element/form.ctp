@@ -16,14 +16,14 @@ $fields = collection($fields)
 <?= $this->Toolbar->addPostLink(
     __('Delete'),
     ['action' => 'delete', $<%= $singularVar %>-><%= $primaryKey[0] %>],
-    ['icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', $<%= $singularVar %>-><%= $primaryKey[0] %>)]
+    ['data-icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', $<%= $singularVar %>-><%= $primaryKey[0] %>)]
 )
 ?>
 <% endif; %>
 <?= $this->Toolbar->addLink(
     __('List {0}', __('<%= $pluralHumanName %>')),
     ['action' => 'index'],
-    ['icon' => 'list']
+    ['data-icon' => 'list']
 ) ?>
 <?php $this->Toolbar->startGroup('More'); ?>
 <%
@@ -35,13 +35,13 @@ foreach ($associations as $type => $data) {
 <?= $this->Toolbar->addLink(
     __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'index'],
-    ['icon' => 'list']
+    ['data-icon' => 'list']
 ) %>
 
 <?= $this->Toolbar->addLink(
     __('New {0}', __('<%= $this->_singularHumanName($alias) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'add'],
-    ['icon' => 'plus']
+    ['data-icon' => 'plus']
 ) %>
 <%
             $done[] = $details['controller'];

@@ -18,8 +18,7 @@ module.exports = function(grunt) {
           banner: '/** <%= pkg.title || pkg.name %> - v<%= pkg.version %> **/\n'
         },
         files: {
-          'webroot/css/master.css': 'webroot/less/master.less',
-          'webroot/css/admin.css': 'webroot/less/admin.less',
+          'webroot/css/layout.default.css': 'webroot/less/layout.default.less',
           'webroot/css/iframe.css': 'webroot/less/iframe.less',
           'webroot/css/auth.css': 'webroot/less/auth.less',
           'webroot/css/tinymce.css': 'webroot/less/tinymce.less',
@@ -37,8 +36,7 @@ module.exports = function(grunt) {
           ]
         },
         files: {
-          'webroot/css/master.min.css': 'webroot/less/master.less',
-          'webroot/css/admin.min.css': 'webroot/less/admin.less',
+          'webroot/css/layout.default.min.css': 'webroot/less/layout.default.less',
           'webroot/css/iframe.min.css': 'webroot/less/iframe.less',
           'webroot/css/auth.min.css': 'webroot/less/auth.less',
           'webroot/css/tinymce.min.css': 'webroot/less/tinymce.less',

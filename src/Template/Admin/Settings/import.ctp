@@ -3,12 +3,12 @@
 <?= $this->Toolbar->addLink(
     __d('backend','List {0}', __d('backend','Settings')),
     ['action' => 'index'],
-    ['icon' => 'list']
+    ['data-icon' => 'list']
 ) ?>
 <?= $this->Toolbar->addLink(
     __d('backend','New {0}', __d('backend','Setting')),
     ['action' => 'add'],
-    ['icon' => 'plus']
+    ['data-icon' => 'plus']
 ) ?>
 <div class="settings index">
     <h1>Settings Import</h1>

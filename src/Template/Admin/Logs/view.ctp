@@ -4,17 +4,17 @@
 <?= $this->Toolbar->addLink(
     __('List {0}', __('Logs')),
     ['action' => 'index'],
-    ['icon' => 'list']
+    ['data-icon' => 'list']
 ) ?>
 <?= $this->Toolbar->addLink(
     __('Clear'),
     ['action' => 'clear'],
-    ['icon' => 'trash outline']
+    ['data-icon' => 'trash outline']
 ) ?>
 <?= $this->Toolbar->addLink(
     __('Delete'),
     ['action' => 'index'],
-    ['icon' => 'trash']
+    ['data-icon' => 'trash']
 ) ?>
 <div class="view backend logs">
 	<h2 class="ui header">

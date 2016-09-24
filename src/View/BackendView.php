@@ -15,14 +15,16 @@ class BackendView extends View
     public function initialize()
     {
 
-        $this->loadHelper('Html');
+        $this->loadHelper('Html', [
+            'className' => 'Backend\View\Helper\BackendHelper'
+        ]);
         $this->loadHelper('Form', [
             'className' => 'Backend\View\Helper\BackendFormHelper',
             'templates' => 'Backend.form_templates',
             'widgets' => [
                 '_default' => ['Backend\View\Widget\BasicWidget'],
                 'button' => ['Backend\View\Widget\ButtonWidget'],
-                'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
+                //'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
                 'textarea' => ['Backend\View\Widget\TextareaWidget'],
                 'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
                 'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
@@ -32,17 +34,11 @@ class BackendView extends View
                 'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
             ]
         ]);
-        $this->loadHelper('Paginator', []);
-        $this->loadHelper('Backend.Backend', []);
+        //$this->loadHelper('Paginator', []);
+        $this->loadHelper('Backend.Chosen', []);
+        $this->loadHelper('Backend.Ajax', []);
         $this->loadHelper('Backend.Toolbar', []);
-        $this->loadHelper('Backend.Ui', []);
-
-        $this->Html->css('Backend.chosen/chosen.min', ['block' => 'cssBackend']);
-        $this->Html->css('Backend.pickadate/themes/classic', ['block' => 'cssBackend']);
-        $this->Html->css('Backend.pickadate/themes/classic.date', ['block' => 'cssBackend']);
-        $this->Html->css('Backend.pickadate/themes/classic.time', ['block' => 'cssBackend']);
-        $this->Html->css('Backend.imagepicker/image-picker', ['block' => 'cssBackend']);
-        //$this->Html->css('Backend.backend', ['block' => 'cssBackend']);
+        $this->loadHelper('Bootstrap.Ui', []);
 
         $beScript = <<<SCRIPT
 var _backendConf = {
@@ -57,16 +53,10 @@ SCRIPT;
         $beScript = str_replace(['{{ROOTURL}}'], [$this->Url->build('/')], $beScript);
         $this->Html->scriptBlock($beScript, ['block' => true]);
 
-        $this->Html->script('Backend.jquery/jquery-1.11.2.min', ['block' => true]);
+        $this->Html->script('_jquery', ['block' => true]);
 
-        $this->Html->script('Backend.tinymce/tinymce.min', ['block' => 'scriptBackend']);
-        $this->Html->script('Backend.tinymce/jquery.tinymce.min', ['block' => 'scriptBackend']);
-        $this->Html->script('Backend.chosen/chosen.jquery.min', ['block' => 'scriptBackend']);
-        $this->Html->script('Backend.pickadate/picker', ['block' => 'scriptBackend']);
-        $this->Html->script('Backend.pickadate/picker.date', ['block' => 'scriptBackend']);
-        $this->Html->script('Backend.pickadate/picker.time', ['block' => 'scriptBackend']);
-        $this->Html->script('Backend.imagepicker/image-picker.min', ['block' => 'scriptBackend']);
-
+        $this->Html->css('Backend.chosen/chosen.min', ['block' => true]);
+        $this->Html->script('_chosen', ['block' => 'scriptBottom']);
     }
 
     public function renderLayout($content, $layout = null)

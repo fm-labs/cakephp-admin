@@ -40,11 +40,11 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
             [ '_name' => 'auth:user']
         );
 
-        // backend:admin:master
+        // backend:admin:dashboard
         $routes->connect(
             '/',
-            ['plugin' => 'Backend', 'controller' => 'Master', 'action' => 'index'],
-            ['_name' => 'master']
+            ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+            ['_name' => 'dashboard']
         );
 
         // Fallbacks
@@ -59,7 +59,7 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
  */
 
 Router::scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], function($routes) {
-    // backend:admin:dashboard
+    // admin:dashboard
     $dashboardUrl = (Configure::read('Backend.Dashboard.url'))
         ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index', 'prefix' => 'admin'];
     $routes->connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);

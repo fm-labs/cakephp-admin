@@ -79,7 +79,8 @@ class HtmlEditorWidget extends BasicWidget
             'editor' => [],
         ];
 
-        $data['class'] = ($data['class']) ? $data['class'] . ' htmleditor' : 'htmleditor';
+        $defaultClass = 'htmleditor form-control';
+        $data['class'] = ($data['class']) ? $data['class'] . ' ' . $defaultClass : $defaultClass;
         $data['id'] = ($data['id']) ? $data['id'] : uniqid('htmleditor');
 
 
@@ -123,8 +124,9 @@ class HtmlEditorWidget extends BasicWidget
         $selector = $editor['selector'];
         unset($editor['selector']);
         //$editorScript = "$(document).ready(function() { tinymce.init(" . json_encode($editor) .") });";
-        $jsTemplate = '$(document).on("ready", function() { $("%s").tinymce(%s); });';
-        $jsTemplate = ' $("%s").tinymce(%s);';
+        //$jsTemplate = '$(document).on("ready", function() { $("%s").tinymce(%s); });';
+        //$jsTemplate = ' $("%s").tinymce(%s);';
+        $jsTemplate = "";
         $editorScript = sprintf($jsTemplate, $selector, json_encode($editor));
 
         return $this->_templates->format('htmlEditor', [

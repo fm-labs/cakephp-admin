@@ -2,6 +2,8 @@
 namespace Backend\Controller\Admin;
 
 use Backend\Controller\Admin\AppController;
+use Backend\Lib\Backend;
+use Backend\Lib\BackendNav;
 use Cake\Core\Plugin;
 use Cake\Core\Configure;
 use Cake\Routing\Router;
@@ -47,10 +49,21 @@ class SystemController extends AppController
         $this->set(compact('globals'));
     }
 
+    /**
+     * List connected routes
+     */
     public function routes()
     {
         $this->set('routes', Router::routes());
         $this->set('_serialize', 'routes');
+    }
+
+    /**
+     * List backend menus
+     */
+    public function menus()
+    {
+        $this->set('menus', BackendNav::getMenu());
     }
 
     /**

@@ -2,6 +2,9 @@
 use Cake\Error\Debugger;
 
 ?>
+<?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Html->addCrumb(__('Systeminfo'), ['action' => 'index']); ?>
+<?php $this->Html->addCrumb(__d('backend', 'Routes')); ?>
 <div class="index">
     <h2>Connected Routes</h2>
 
@@ -20,5 +23,4 @@ use Cake\Error\Debugger;
         endforeach;
         ?>
     </table>
-    <?php $this->end() ?>
 </div>

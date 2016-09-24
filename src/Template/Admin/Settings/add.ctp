@@ -8,7 +8,7 @@
                     <?= $this->Ui->link(
                     __d('banana','List {0}', __d('banana','Settings')),
                     ['action' => 'index'],
-                    ['class' => 'item', 'icon' => 'list']
+                    ['class' => 'item', 'data-icon' => 'list']
                 ) ?>
                 <div class="ui dropdown item">
                     <i class="dropdown icon"></i>

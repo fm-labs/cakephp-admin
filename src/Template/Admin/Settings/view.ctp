@@ -7,22 +7,22 @@
             <?= $this->Ui->link(
                 __d('banana','Edit {0}', __d('banana','Setting')),
                 ['action' => 'edit', $setting->id],
-                ['class' => 'item', 'icon' => 'edit']
+                ['class' => 'item', 'data-icon' => 'edit']
             ) ?>
             <?= $this->Ui->postLink(
                 __d('banana','Delete {0}', __d('banana','Setting')),
                 ['action' => 'delete', $setting->id],
-                ['class' => 'item', 'icon' => 'trash', 'confirm' => __d('banana','Are you sure you want to delete # {0}?', $setting->id)]) ?>
+                ['class' => 'item', 'data-icon' => 'trash', 'confirm' => __d('banana','Are you sure you want to delete # {0}?', $setting->id)]) ?>
 
             <?= $this->Ui->link(
                 __d('banana','List {0}', __d('banana','Settings')),
                 ['action' => 'index'],
-                ['class' => 'item', 'icon' => 'list']
+                ['class' => 'item', 'data-icon' => 'list']
             ) ?>
             <?= $this->Ui->link(
                 __d('banana','New {0}', __d('banana','Setting')),
                 ['action' => 'add'],
-                ['class' => 'item', 'icon' => 'plus']
+                ['class' => 'item', 'data-icon' => 'plus']
             ) ?>
             <div class="ui item dropdown">
                 <div class="menu">

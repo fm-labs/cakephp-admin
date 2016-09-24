@@ -40,4 +40,37 @@ class BackendFormHelper extends CakeFormHelper
         ]);
         return parent::fieldset($fields, $this->_fieldsetOptions);
     }
+
+    protected function _getInput($fieldName, $options)
+    {
+        if (isset($options['type'])) {
+            switch($options['type']) {
+                case 'select':
+                    //$this->_View->loadHelper('Backend.Chosen');
+                    break;
+
+                case 'datepicker':
+                    $this->Html->css('Backend.pickadate/themes/classic', ['block' => true]);
+                    $this->Html->css('Backend.pickadate/themes/classic.date', ['block' => true]);
+                    $this->Html->css('Backend.pickadate/themes/classic.time', ['block' => true]);
+                    $this->Html->script('Backend.pickadate/picker', ['block' => 'scriptBottom']);
+                    $this->Html->script('Backend.pickadate/picker.date', ['block' => 'scriptBottom']);
+                    $this->Html->script('Backend.pickadate/picker.time', ['block' => 'scriptBottom']);
+                    break;
+
+                case 'htmleditor':
+                case 'htmltext':
+                    $this->Html->script('_tinymce', ['block' => 'scriptBottom']);
+                    break;
+
+                case 'imageselect':
+                case 'imagemodal':
+                    $this->Html->css('Backend.imagepicker/image-picker', ['block' => true]);
+                    $this->Html->script('Backend.imagepicker/image-picker.min', ['block' => 'scriptBottom']);
+                    break;
+            }
+        }
+
+        return parent::_getInput($fieldName, $options);
+    }
 }

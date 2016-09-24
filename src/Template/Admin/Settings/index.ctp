@@ -2,17 +2,17 @@
 <?= $this->Toolbar->addLink(
     __d('backend','New {0}', __d('backend','Setting')),
     ['action' => 'add'],
-    ['icon' => 'plus']
+    ['data-icon' => 'plus']
 ) ?>
 <?= $this->Toolbar->addLink(
     __d('backend','Import {0}', __d('backend','Settings')),
     ['action' => 'import'],
-    ['icon' => 'download']
+    ['data-icon' => 'download']
 ) ?>
 <?= $this->Toolbar->addLink(
     __d('backend','Dump {0}', __d('backend','Settings')),
     ['action' => 'dump'],
-    ['icon' => 'arrow down']
+    ['data-icon' => 'arrow down']
 ) ?>
 
 <div class="settings index">

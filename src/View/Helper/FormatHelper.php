@@ -25,7 +25,7 @@ class FormatHelper extends Helper
 {
     protected $_formatters = [];
 
-    public $helpers = ['Html', 'Number', 'Backend.Ui'];
+    public $helpers = ['Html', 'Number', 'Bootstrap.Ui'];
 
     public function __construct(View $View, array $config = [])
     {

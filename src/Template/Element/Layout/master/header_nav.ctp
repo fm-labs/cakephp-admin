@@ -17,7 +17,7 @@ if (!$this->request->session()->check('Backend.User')) return false;
 
         <?= $this->Html->link(
             $this->get('be_title'),
-            ['_name' => 'backend:admin:master'],
+            ['_name' => 'backend:admin:dashboard'],
             ['class' => 'navbar-brand', 'target' => '_top']
         ); ?>
     </div>

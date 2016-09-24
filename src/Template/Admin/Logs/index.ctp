@@ -32,12 +32,12 @@
                                 <?= $this->Ui->link(
                                     __('Clear'),
                                     ['action' => 'clear', $id],
-                                    ['class' => 'item', 'icon' => 'trash']
+                                    ['class' => 'item', 'data-icon' => 'trash']
                                 ) ?>
                                 <?= $this->Ui->postLink(
                                     __('Delete'),
                                     ['action' => 'delete', $id],
-                                    ['class' => 'item', 'icon' => 'trash', 'confirm' => __('Are you sure you want to delete {0}?', $file['name'])]
+                                    ['class' => 'item', 'data-icon' => 'trash', 'confirm' => __('Are you sure you want to delete {0}?', $file['name'])]
                                 ) ?>
                             </div>
                         </div>

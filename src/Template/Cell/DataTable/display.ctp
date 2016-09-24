@@ -1,5 +1,6 @@
 <?php
 $this->loadHelper('Backend.DataTable');
+$this->Html->script('Backend.jquery/jquery-ui.min', ['block' => 'scriptBottom']);
 $this->DataTable->init($dataTable);
 ?>
 <?= $this->DataTable->pagination(); ?>
@@ -36,48 +37,54 @@ $this->DataTable->init($dataTable);
         //
         if ($el.hasClass('sortable')) {
 
-            $el.find("tbody").sortable({
-                placeholder: "ui-sortable-placeholder", // "ui-state-highlight",
-                helper: fixHelperModified,
-                update: function(event, ui) {
-                    console.log(ui);
-                    console.log(event);
+            if (!$.fn.sortable) {
+                console.warn("JqueryUI sortable not loaded");
+            } else {
 
-                    var sibling = ui.item.prev();
-                    var siblingId = 0;
-                    if (sibling.length > 0) {
-                        siblingId = sibling.data().id;
-                    }
+                $el.find("tbody").sortable({
+                    placeholder: "ui-sortable-placeholder", // "ui-state-highlight",
+                    helper: fixHelperModified,
+                    update: function(event, ui) {
+                        console.log(ui);
+                        console.log(event);
 
-                    var updateData = { id: ui.item.data().id, after: siblingId, model: dtTable };
-                    //console.log(updateData);
+                        var sibling = ui.item.prev();
+                        var siblingId = 0;
+                        if (sibling.length > 0) {
+                            siblingId = sibling.data().id;
+                        }
 
-                    if (dtTable && dtSortUrl) {
-                        $.ajax({
-                            type: 'POST',
-                            url: dtSortUrl,
-                            data: updateData,
-                            dataType: 'json',
-                            success: function(data, textStatus, xhr) {
-                                //console.log(textStatus);
-                                console.log(data);
+                        var updateData = { id: ui.item.data().id, after: siblingId, model: dtTable };
+                        //console.log(updateData);
 
-                                if (data.error !== undefined) {
-                                    alert("Ups. Something went wrong! " + data.error);
-                                    return;
+                        if (dtTable && dtSortUrl) {
+                            $.ajax({
+                                type: 'POST',
+                                url: dtSortUrl,
+                                data: updateData,
+                                dataType: 'json',
+                                success: function(data, textStatus, xhr) {
+                                    //console.log(textStatus);
+                                    console.log(data);
+
+                                    if (data.error !== undefined) {
+                                        alert("Ups. Something went wrong! " + data.error);
+                                        return;
+                                    }
+                                },
+                                error: function(err) {
+                                    alert("Ups. Something went wrong. Please try again");
+                                    console.error(err);
                                 }
-                            },
-                            error: function(err) {
-                                alert("Ups. Something went wrong. Please try again");
-                                console.error(err);
-                            }
-                        });
+                            });
+                        }
+
+
                     }
+                });
+                //.disableSelection();
+            }
 
-
-                }
-            });
-            //.disableSelection();
         }
 
     //});

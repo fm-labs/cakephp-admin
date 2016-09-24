@@ -6,7 +6,7 @@
             <?= $this->Ui->link(
                 __d('banana','New {0}', __d('banana','Setting')),
                 ['action' => 'add'],
-                ['class' => 'item', 'icon' => 'plus']
+                ['class' => 'item', 'data-icon' => 'plus']
             ) ?>
             <div class="ui dropdown item">
                 <i class="dropdown icon"></i>
@@ -59,7 +59,7 @@
                                     <?= $this->Ui->postLink(
                                         __d('banana','Reset to default'),
                                         ['action' => 'delete', $setting->id],
-                                        ['class' => 'item', 'icon' => 'trash', 'confirm' => __d('banana','Are you sure you want to reset # {0}?', $key)]
+                                        ['class' => 'item', 'data-icon' => 'trash', 'confirm' => __d('banana','Are you sure you want to reset # {0}?', $key)]
                                     ) ?>
                                 </div>
                             </div>

@@ -64,7 +64,7 @@ class BackendComponent extends Component
 
         // Configure RequestHandler component
         if (!$this->_registry->has('RequestHandler')) {
-            $this->_registry->load('RequestHandler');
+            //$this->_registry->load('RequestHandler');
         }
         // Iframe request detector
         $this->request->addDetector('iframe', function($request) {
@@ -109,9 +109,9 @@ class BackendComponent extends Component
         if ($this->request->is('iframe')) {
             $controller->viewBuilder()->layout('Backend.iframe');
         }
-        //elseif ($this->request->is('ajax')) {
-        //    $controller->viewBuilder()->layout('Backend.ajax');
-        //}
+        elseif ($this->request->is('ajax')) {
+            $controller->viewBuilder()->layout('Backend.ajax');
+        }
 
         $this->_controller =& $controller;
     }

@@ -34,9 +34,25 @@
         <?= $this->Flash->render('auth') ?>
         <?= $this->Flash->render('backend') ?>
     </div>
-    <main id="main" class="container-fluid">
-        <?= $this->fetch('content'); ?>
-    </main>
+
+    <div id="container">
+
+        <!--
+        <aside id="left">
+            <?php // echo $this->fetch('left'); ?>
+        </aside>
+        //-->
+
+        <main id="main" class="container-fluid">
+            <?= $this->fetch('content'); ?>
+        </main>
+
+        <!--
+        <aside id="right">
+            <?php // echo $this->fetch('right'); ?>
+        </aside>
+        //-->
+    </div>
 
     <footer id="footer" class="container-fluid">
         <?= $this->element('Backend.Layout/master/footer'); ?>

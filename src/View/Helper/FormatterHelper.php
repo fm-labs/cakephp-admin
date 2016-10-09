@@ -14,6 +14,7 @@ use Cake\Core\Configure;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\NumberHelper;
+use Cake\View\Helper\TimeHelper;
 use Cake\View\View;
 use InvalidArgumentException;
 
@@ -23,13 +24,14 @@ use InvalidArgumentException;
  *
  * @property HtmlHelper $Html
  * @property NumberHelper $Number
+ * @property TimeHelper $Time
  * @property UiHelper $Ui
  */
 class FormatterHelper extends Helper
 {
     protected $_formatters = [];
 
-    public $helpers = ['Html', 'Number', 'Bootstrap.Ui'];
+    public $helpers = ['Html', 'Number', 'Time', 'Bootstrap.Ui'];
 
     public function __construct(View $View, array $config = [])
     {
@@ -43,8 +45,14 @@ class FormatterHelper extends Helper
         $this->register('boolean', function($val, $data) {
             return $this->Ui->statusLabel($val);
         });
-        $this->register('link', function($val) {
-            return $this->Html->link($val);
+        $this->register('date', function($val, $data) {
+
+            $format = DATE_W3C;
+            if (isset($data['format'])) {
+                $format = $data['format'];
+            }
+
+            return $this->Time->format($val, $format);
         });
         $this->register('number', function($val) {
             return $this->Number->format($val);
@@ -82,33 +90,60 @@ class FormatterHelper extends Helper
             $type = gettype($value);
             switch (strtolower($type)) {
                 case "null":
-                    return "";
+                    return "NULL";
+
                 case "integer":
                 case "float":
                 case "double":
                     $formatter = 'number';
                     break;
-                case "string":
+
                 case "text":
+                case "string":
+                    $formatter = 'escape';
+                    break;
+
                 case "boolean":
                 case "array":
                 case "object":
                     $formatter = $type;
                     break;
+
                 case "unknown type":
                 case "resource":
-                default:
                     return "[" . h($type) . "]";
+
+                default:
+                    break;
 
             }
         }
 
-        if (is_string($formatter)) {
-            $formatter = (isset($this->_formatters[$formatter])) ? $this->_formatters[$formatter] : null;
+        if (is_array($formatter)) {
+            // ['formatter-name' => 'formatter-data']
+            if (count($formatter) === 1) {
+                $data = current($formatter);
+                $formatter = key($formatter);
+            }
         }
+
+        if (is_string($formatter)) {
+            if (!isset($this->_formatters[$formatter])) {
+                debug("Formatter $formatter not found");
+                $formatter = null;
+            } else {
+                $formatter = $this->_formatters[$formatter];
+            }
+        }
+
 
         if (is_callable($formatter)) {
             return call_user_func_array($formatter, [$value, $data]);
+        }
+
+        if ($formatter) {
+            debug("Uncallable formatter");
+            var_dump($formatter);
         }
 
         return h($value);

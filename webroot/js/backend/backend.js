@@ -1,5 +1,57 @@
 var Backend = Backend || {};
 
+Backend.isFrame = function() {
+    var parent = window.parent || window;
+    return parent !== window;
+};
+
+Backend.parsePostMessage = function (msg, origin, source) {
+
+    // collapse workaround
+    // @TODO: Find out why a message with content 'collapse' is received on page load
+    if (typeof(msg) === 'string' && msg === "collapse") {
+        return false;
+    }
+
+    var parsed;
+    try {
+        parsed = JSON.parse(msg);
+    } catch (ex) {
+        console.log(ex);
+        return;
+    }
+
+    var type = parsed.type;
+    var data = parsed.data;
+
+    switch(type) {
+        case "hello":
+            console.log("hello received");
+            break;
+
+        default:
+            console.log("Unknown message type: " + parsed.type);
+            return;
+    }
+};
+
+Backend.sendPostMessage = function(msg) {
+    console.log("[frame] send msg: " + msg.type);
+
+    // check if current window is a framed window
+    if (!Backend.isFrame()) {
+        console.log("sending aborted: already on master");
+        return;
+    }
+
+    // convert json objects to json strings
+    if (typeof msg === 'object') {
+        msg = JSON.stringify(msg);
+    }
+
+    var hostUrl = window.location.protocol + "//" + window.location.host;
+    parent.postMessage(msg, hostUrl);
+}
 
 /**
  * Loader
@@ -378,6 +430,33 @@ $(document).ajaxComplete(function(event, xhr, options){
  * Bind DOM Events
  */
 
+$(document).on('reload', '.ajax-content', function(ev) {
+
+    if (ev.isPropagationStopped()) {
+        return;
+    }
+
+
+    var $container = $(ev.target);
+    if ($container.hasClass('ajax-content-loaded')) {
+        $container.removeClass('ajax-content-loaded');
+    }
+
+
+    var id = $container.attr('id');
+    var url = $container.data('url');
+    console.log("AJAX content reloading [" + id + "]: " + url);
+
+
+    if (!url) {
+        $container.html('Failed to load ajax content: No data url provided');
+        return;
+    }
+
+    Backend.Ajax.loadHtml($container, url, {});
+
+});
+
 //
 // Tabs (bootstrap)
 //
@@ -446,6 +525,7 @@ $(document).on('click','a.link-external', function (ev) {
     ev.stopPropagation();
 });
 
+
 $(document).on('click','a.link-modal', function (ev) {
 
     var $a = $(ev.target);
@@ -453,17 +533,25 @@ $(document).on('click','a.link-modal', function (ev) {
 
     Backend.Ajax.load(url).done(function(html) {
         var $container = $('<div>', {class: 'ajax-content ajax-content-loaded', 'data-url': url}).html(html);
-        Backend.Modal.open($container, {}, {
+        var $modal = Backend.Modal.open($container, {}, {
             title: ev.target.title || ev.target.innerText
         });
+        $modal.on('shown.bs.modal', function() {
+           console.log("modal shown");
+        });
+        $modal.on('hidden.bs.modal', function() {
+            console.log("modal hidden");
+        });
+        Backend.Renderer.onReady($container);
     });
+
 
     ev.stopPropagation();
     ev.preventDefault();
     return false;
 });
 
-$(document).on('click','a.link-modal-frame', function (ev) {
+$(document).on('click','a.link-modal-frame, a.link-frame-modal', function (ev) {
 
     var $a = $(ev.target);
 
@@ -474,8 +562,20 @@ $(document).on('click','a.link-modal-frame', function (ev) {
         url += '?iframe=1'
     }
 
-    Backend.Modal.openIframe(url, {}, {
+    var $modal = Backend.Modal.openIframe(url, {}, {
         title: ev.target.title || ev.target.innerText
+    });
+
+    $modal.on('shown.bs.modal', function() {
+        console.log("iframe modal shown");
+    });
+    $modal.on('hidden.bs.modal', function() {
+        $a.closest('.ajax-content').trigger('reload');
+        /*
+        if ($a.data('reloadOnClose')) {
+            $a.closest('.ajax-content').trigger('reload');
+        }
+        */
     });
 
     ev.stopPropagation();
@@ -483,9 +583,14 @@ $(document).on('click','a.link-modal-frame', function (ev) {
     return false;
 });
 
+
 $(document).on('click','a', function (ev) {
 
     if (ev.isPropagationStopped()) {
+        return;
+    }
+
+    if (ev.target.nodeName !== "A") {
         return;
     }
 
@@ -550,6 +655,23 @@ $(window).on('popstate', function(ev) {
 //
 // Form fieldset toggle
 //
+$(document).on('change', '.select-ajax', function(ev) {
+    var $select = $(ev.target);
+
+    var target = $select.data('target');
+    var url = $select.data('url');
+
+    Backend.Ajax.loadHtml($('#' + target), url).then(function() {
+        console.log("Select Ajax loaded some html");
+    });
+
+
+    console.log("Select Ajax changed", $select.val(), $select);
+});
+
+//
+// Form fieldset toggle
+//
 $(document).on('click', 'form fieldset > legend', function() {
     $(this).parent().toggleClass('collapsed');
 });
@@ -578,6 +700,31 @@ $(document).on('submit', 'form', function(ev) {
 
 });
 
+// listen for post messages
+$(window).on('message', function(event) {
+
+    console.log(event);
+
+    var hostUrl = window.location.protocol + "//" + window.location.host
+    var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
+    if (origin !== hostUrl) {
+        console.log("message not allowed from " + origin + ". Expects " + hostUrl);
+        return;
+    }
+
+    var data = event.data || event.originalEvent.data;
+    var source = event.source || event.originalEvent.source;
+
+    console.log("[master] received message: " + data);
+
+    Backend.parsePostMessage(data, origin, source);
+});
+
+
+// send hello message from iframes
+$(document).on('ready', function() {
+    Backend.sendPostMessage({ type: 'hello' });
+});
 
 /**
  * Register global Backend.Renderer event listener
@@ -638,5 +785,6 @@ Backend.Renderer.addListener('docready', function(scope) {
 
         Backend.Ajax.loadHtml($('#' + id), url, {});
     });
+
 
 });

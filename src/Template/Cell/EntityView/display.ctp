@@ -2,7 +2,7 @@
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 ?>
-<?php $this->loadHelper('Backend.Format'); ?>
+<?php $this->loadHelper('Backend.Formatter'); ?>
 <div class="entity-view">
 
     <?php if ($title): ?>
@@ -24,7 +24,7 @@ use Cake\Utility\Inflector;
             $formatter = (isset($fields[$field]) && isset($fields[$field]['formatter'])) ? $fields[$field]['formatter'] : null;
             $formatterName = (is_string($formatter)) ? $formatter : gettype($formatter);
 
-            $formattedValue = $this->Format->formatDataCell( $field, $val, $formatter, $entity );
+            $formattedValue = $this->Formatter->formatDataCell( $field, $val, $formatter, $entity );
 
             ?>
             <tr>

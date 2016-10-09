@@ -19,12 +19,13 @@ use Cake\View\StringTemplateTrait;
  * @property HtmlHelper $Html
  * @property FormHelper $Form
  * @property PaginatorHelper $Paginator
+ * @property FormatterHelper $Formatter
  */
 class DataTableHelper extends Helper
 {
     use StringTemplateTrait;
 
-    public $helpers = ['Html', 'Form', 'Paginator'];
+    public $helpers = ['Html', 'Form', 'Paginator', 'Backend.Formatter'];
 
     protected $_params = [];
 
@@ -286,6 +287,7 @@ class DataTableHelper extends Helper
      */
     protected function _formatRowCellData($cellData, $formatter = null, $rowData = [], $fieldName)
     {
+        /*
         if ($formatter === false) {
             return $cellData;
         }
@@ -297,6 +299,8 @@ class DataTableHelper extends Helper
         if (is_callable($formatter)) {
             return call_user_func_array($formatter, [$cellData, $rowData, $fieldName]);
         }
+        */
+        return $this->Formatter->format($cellData, $formatter, $rowData);
     }
 
     public function renderRowActions(array $rowActions, $row = [])

@@ -54,6 +54,21 @@ class FormatterHelper extends Helper
 
             return $this->Time->format($val, $format);
         });
+
+        $this->register('link', function($val, $data) {
+
+            $title = $url = $val;
+            if (isset($data['url'])) {
+                $url = $data['url'];
+                unset($data['url']);
+            }
+            if (!isset($data['title'])) {
+                $data['title'] = $title;
+            }
+            $url = $this->Html->Url->build($url, true);
+            return $this->Html->link($val, $url, $data);
+        });
+
         $this->register('number', function($val) {
             return $this->Number->format($val);
         });

@@ -599,6 +599,11 @@ $(document).on('click','a', function (ev) {
         return;
     }
 
+    // skip links with target attribute set
+    if (ev.target.getAttribute('target')) {
+        return;
+    }
+
     var $a = $(ev.target);
     var href = $a.attr('href');
 

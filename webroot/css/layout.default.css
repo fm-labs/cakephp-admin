@@ -24,6 +24,9 @@
  * Page
  */
 /**
+ * Main Content
+ */
+/**
  * Common Backend CSS Stylesheet
  */
 body {
@@ -71,6 +74,16 @@ h2 {
   width: 30px;
   height: auto;
   vertical-align: middle;
+}
+.view,
+.form {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.view.fluid,
+.form.fluid {
+  max-width: none;
+  margin: inherit;
 }
 /**
  * Links
@@ -396,6 +409,14 @@ nav ul.pagination {
   min-width: 20%;
   font-weight: 700;
   vertical-align: top;
+}
+/**
+ * Ajax loaded content
+ */
+.ajax-content .index,
+.ajax-content .view,
+.ajax-content .form {
+  max-width: none;
 }
 /**
  * Attachments (deprecated)

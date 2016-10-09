@@ -59,6 +59,7 @@ h2 {
 }
 
 .index, .view, .form {
+
   > h1, > h2 {
     margin: 0.5rem 0 1rem;
     //padding: 0;
@@ -68,6 +69,17 @@ h2 {
     width: 30px;
     height: auto;
     vertical-align: middle;
+  }
+}
+
+.view, .form {
+
+  max-width: @content-max-w;
+  margin: 0 auto;
+
+  &.fluid {
+    max-width: none;
+    margin: inherit;
   }
 }
 
@@ -457,6 +469,15 @@ nav ul.pagination {
           font-weight: 700;
           vertical-align: top;
       }
+  }
+}
+
+/**
+ * Ajax loaded content
+ */
+.ajax-content {
+  .index, .view, .form {
+    max-width: none;
   }
 }
 

@@ -24,7 +24,7 @@ use Cake\Utility\Inflector;
             $formatter = (isset($fields[$field]) && isset($fields[$field]['formatter'])) ? $fields[$field]['formatter'] : null;
             $formatterName = (is_string($formatter)) ? $formatter : gettype($formatter);
 
-            $formattedValue = $this->Formatter->formatDataCell( $field, $val, $formatter, $entity );
+            $formattedValue = $this->Formatter->format( $val, $formatter, $entity );
 
             ?>
             <tr>

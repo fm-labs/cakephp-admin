@@ -33,7 +33,7 @@ class AuthController extends AppController
      */
     public function login()
     {
-        if ($this->components()->get('RequestHandler')->accepts('json')) {
+        if ($this->components()->has('RequestHandler') && $this->components()->get('RequestHandler')->accepts('json')) {
             $this->viewBuilder()->className('Json');
 
             $this->Auth->login();

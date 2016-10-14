@@ -72,6 +72,12 @@ class FormatterHelper extends Helper
         $this->register('number', function($val) {
             return $this->Number->format($val);
         });
+
+        $this->register('currency', function($val, $params) {
+            $currency = (isset($params['currency'])) ? $params['currency'] : 'EUR';
+            return $this->Number->currency($val, $currency);
+        });
+
         $this->register('array', function($val) {
             return '<pre>' . print_r($val, true) . '</pre>';
         });
@@ -101,37 +107,38 @@ class FormatterHelper extends Helper
         }
 
         // Fallback to default formatter based on values datatype
-        if ($formatter === null) {
-            $type = gettype($value);
-            switch (strtolower($type)) {
-                case "null":
-                    return "NULL";
+        $dataType = gettype($value);
+        if ($formatter === null || $formatter === 'default') {
+            $formatter = $dataType;
+        }
 
-                case "integer":
-                case "float":
-                case "double":
-                    $formatter = 'number';
-                    break;
+        switch ($formatter) {
+            case "null":
+            case "NULL":
+                return "NULL";
 
-                case "text":
-                case "string":
+            case "integer":
+            case "float":
+            case "double":
+            case "decimal":
+                $formatter = 'number';
+                break;
+
+            case "unknown type":
+            case "resource":
+                return "[" . h($dataType) . "]";
+
+            case "datetime":
+            case "uuid":
+            case "text":
+            case "string":
+                if (!isset($this->_formatters[$formatter])) {
                     $formatter = 'escape';
-                    break;
+                }
+                break;
+            default:
+                break;
 
-                case "boolean":
-                case "array":
-                case "object":
-                    $formatter = $type;
-                    break;
-
-                case "unknown type":
-                case "resource":
-                    return "[" . h($type) . "]";
-
-                default:
-                    break;
-
-            }
         }
 
         if (is_array($formatter)) {
@@ -140,11 +147,12 @@ class FormatterHelper extends Helper
                 $data = current($formatter);
                 $formatter = key($formatter);
             }
+
         }
 
         if (is_string($formatter)) {
             if (!isset($this->_formatters[$formatter])) {
-                debug("Formatter $formatter not found");
+                debug("Formatter $formatter not found for dataType $dataType");
                 $formatter = null;
             } else {
                 $formatter = $this->_formatters[$formatter];
@@ -161,6 +169,6 @@ class FormatterHelper extends Helper
             var_dump($formatter);
         }
 
-        return h($value);
+        return $value;
     }
 }

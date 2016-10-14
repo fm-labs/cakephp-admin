@@ -10,36 +10,25 @@ use Cake\Utility\Inflector;
     <?php endif; ?>
 
     <table class="table table-hover table-entity">
+        <!--
         <thead>
         </thead>
+        -->
         <tbody>
-        <?php foreach ($entity->visibleProperties() as $field): ?>
-            <?php if (in_array($field, $exclude)) continue; ?>
-            <?php
-            $val = $entity->get($field);
-            $fieldTitle = (isset($fields[$field]) && isset($fields[$field]['title'])) ? $fields[$field]['title'] : Inflector::humanize($field);
-
-            $column = $schema->column($field);
-
-            $formatter = (isset($fields[$field]) && isset($fields[$field]['formatter'])) ? $fields[$field]['formatter'] : null;
-            $formatterName = (is_string($formatter)) ? $formatter : gettype($formatter);
-
-            $formattedValue = $this->Formatter->format( $val, $formatter, $entity );
-
-            ?>
+        <?php foreach ($data as $field): ?>
             <tr>
                 <td>
-                    <?= h($fieldTitle); ?>
+                    <?= h($field['label']); ?>
                 </td>
                 <td>
-                    <?= $formattedValue; ?>
+                    <?= $this->Formatter->format( $field['value'], $field['formatter'], $entity ); ?>
                 </td>
                 <?php if ($debug === true): ?>
-                <td class="right">
-                    <small>
-                        <?= sprintf("(%s:%s)", $column['type'], $formatterName ) ?>
-                    </small>
-                </td>
+                    <td class="right">
+                        <small>
+                            <?= sprintf("(%s:%s)", gettype($field['value']), $field['formatter'] ) ?>
+                        </small>
+                    </td>
                 <?php endif; ?>
             </tr>
         <?php endforeach; ?>
@@ -48,6 +37,10 @@ use Cake\Utility\Inflector;
 
     <?php if ($debug === true): ?>
     <div class="debug">
+
+        <?php debug($associations); ?>
+        <?php debug($schema); ?>
+        <?php debug($data); ?>
         <?php debug($entity->toArray()); ?>
     </div>
     <?php endif; ?>

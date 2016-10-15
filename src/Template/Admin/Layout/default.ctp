@@ -30,6 +30,9 @@
     <div id="page-crumbs">
         <?= $this->element('Backend.Layout/admin/breadcrumbs'); ?>
     </div>
+    <div id="page-toolbar">
+        <?= $this->element('Backend.Layout/admin/toolbar'); ?>
+    </div>
     <div id="flash">
         <?= $this->Flash->render('auth') ?>
         <?= $this->Flash->render('backend') ?>
@@ -37,21 +40,21 @@
 
     <div id="container">
 
-        <!--
+        <?php if ($this->fetch('left')): ?>
         <aside id="left">
-            <?php // echo $this->fetch('left'); ?>
+            <?php echo $this->fetch('left'); ?>
         </aside>
-        //-->
+        <?php endif; ?>
 
         <main id="main" class="container-fluid">
             <?= $this->fetch('content'); ?>
         </main>
 
-        <!--
+        <?php if ($this->fetch('right')): ?>
         <aside id="right">
-            <?php // echo $this->fetch('right'); ?>
+            <?php echo $this->fetch('right'); ?>
         </aside>
-        //-->
+        <?php endif; ?>
     </div>
 
     <footer id="footer" class="container-fluid">

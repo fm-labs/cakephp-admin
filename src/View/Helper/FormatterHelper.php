@@ -39,49 +39,50 @@ class FormatterHelper extends Helper
 
         // built-in formatters
 
-        $this->register('escape', function($val, $data) {
+        $this->register('escape', function($val, $extra, $params) {
             return h($val);
         });
-        $this->register('boolean', function($val, $data) {
+        $this->register('boolean', function($val, $extra, $params) {
             return $this->Ui->statusLabel($val);
         });
-        $this->register('date', function($val, $data) {
+        $this->register('date', function($val, $extra, $params) {
 
             $format = DATE_W3C;
-            if (isset($data['format'])) {
-                $format = $data['format'];
+            if (isset($params['format'])) {
+                $format = $params['format'];
             }
 
             return $this->Time->format($val, $format);
         });
 
-        $this->register('link', function($val, $data) {
+        $this->register('link', function($val, $extra, $params) {
 
             $title = $url = $val;
-            if (isset($data['url'])) {
-                $url = $data['url'];
-                unset($data['url']);
+            if (isset($params['url'])) {
+                $url = $params['url'];
+                unset($params['url']);
             }
-            if (!isset($data['title'])) {
-                $data['title'] = $title;
-            }
+
             $url = $this->Html->Url->build($url, true);
-            return $this->Html->link($val, $url, $data);
+            if (isset($params['title'])) {
+                $title = $params['title'];
+            }
+            return $this->Html->link($title, $url, $params);
         });
 
-        $this->register('number', function($val) {
+        $this->register('number', function($val, $extra, $params) {
             return $this->Number->format($val);
         });
 
-        $this->register('currency', function($val, $params) {
+        $this->register('currency', function($val, $extra, $params) {
             $currency = (isset($params['currency'])) ? $params['currency'] : 'EUR';
             return $this->Number->currency($val, $currency);
         });
 
-        $this->register('array', function($val) {
+        $this->register('array', function($val, $extra, $params) {
             return '<pre>' . print_r($val, true) . '</pre>';
         });
-        $this->register('object', function($val) {
+        $this->register('object', function($val, $extra, $params) {
             if (method_exists($val, '__toString')) {
                 return h((string) $val);
             }

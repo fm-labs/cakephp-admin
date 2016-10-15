@@ -15,7 +15,7 @@ use Cake\Utility\Inflector;
                 <?= h($field['label']); ?>
             </td>
             <td>
-                <?= $this->Formatter->format( $field['value'], $field['formatter'], $entity ); ?>
+                <?= $this->Formatter->format( $field['value'], $field['formatter'], $field['formatterArgs'], $entity ); ?>
             </td>
             <?php if ($debug === true): ?>
                 <td class="right">

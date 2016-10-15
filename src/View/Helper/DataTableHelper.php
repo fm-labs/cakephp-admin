@@ -33,13 +33,20 @@ class DataTableHelper extends Helper
 
     protected $_id;
 
-    public function init($params = [])
-    {
-        $params += ['id' => null, 'fields' => null, 'sortable' => false, 'select' => false, 'paginate' => false];
-        $this->_params = $params;
-        $this->_parseParams();
-        $this->_parseFields();
-    }
+    protected $_defaultParams = [
+        'model' => null,
+        'data' => [],
+        'id' => null,
+        'class' => '',
+        'headers' => [],
+        'actions' => [],
+        'rowActions' => [],
+        'paginate' => false,
+        'select' => false,
+        'sortable' => false,
+    ];
+
+    protected $_defaultFieldParams = ['title' => null, 'class' => '', 'formatter' => null, 'formatterArgs' => []];
 
     public function param($key)
     {
@@ -49,29 +56,34 @@ class DataTableHelper extends Helper
         return null;
     }
 
-    public function create($class = null)
+    public function create($params = [])
     {
+        $this->_params = $params + $this->_defaultParams;
+        $this->_parseParams();
+        $this->_parseFields();
+
         $this->templater()->add([
-            'table' => '<table{{attrs}}>'
+            'table' => '<table{{attrs}}>{{head}}{{body}}</table>',
+            'head' => '<thead><tr>{{cells}}{{actionscell}}</tr></thead>',
+            'headCell' => '<th{{attrs}}>{{content}}</th>',
+            'body' => '<tbody>{{rows}}</tbody>',
+            'row' => '<tr{{attrs}}>{{cells}}{{actionscell}}</tr>',
+            'rowCell' => '<td{{attrs}}>{{content}}</td>',
+            'rowActionsCell' => '<td class="actions">
+                <div class="dropdown">
+                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Actions
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                         {{actions}}
+                    </ul>
+                </div>
+            </td>',
+            'rowAction' => '<li>{{content}}</li>',
+            'rowSelectCell' => '<td>{{content}}</td>'
         ]);
 
-        $tableAttributes = [
-            'id' => $this->id(),
-            'class' => $this->_tableClass($class)
-        ];
-
-        $html = $this->templater()->format('table', [
-            'attrs' => $this->templater()->formatAttributes($tableAttributes),
-            //'cells' => $this->renderRows($row),
-        ]);
-
-        return $html;
-
-    }
-
-    public function end()
-    {
-        return '</table>';
     }
 
     public function id()
@@ -82,9 +94,9 @@ class DataTableHelper extends Helper
         return $this->_id;
     }
 
-    protected function _tableClass($defaults = '')
+    protected function _tableClass($class = '')
     {
-        $class = $defaults;
+        $class = 'data-table ' . $class;
         if ($this->_params['sortable']) {
             $class .= ' sortable';
         }
@@ -109,7 +121,6 @@ class DataTableHelper extends Helper
     protected function _parseFields()
     {
 
-        $_defaultFieldConfig = ['title' => null, 'type' => 'string', 'formatter' => null];
         foreach ($this->_params['fields'] as $field => $conf)
         {
             if (is_numeric($field)) {
@@ -117,8 +128,7 @@ class DataTableHelper extends Helper
                 $conf = [];
             }
 
-            $conf += $_defaultFieldConfig;
-
+            $conf += $this->_defaultFieldParams;
 
             if ($conf['title'] === null) {
                 $conf['title'] = Inflector::humanize($field);
@@ -128,12 +138,34 @@ class DataTableHelper extends Helper
         }
     }
 
-    public function renderHead()
+    protected function _getField($fieldName)
     {
-        $this->templater()->add([
-            'head' => '<thead><tr>{{cells}}{{actionscell}}</tr></thead>'
+        if (isset($this->_fields[$fieldName])) {
+            return $this->_fields[$fieldName];
+        }
+
+        return $this->_defaultFieldParams;
+    }
+
+    public function render() {
+
+
+        $tableAttributes = [
+            'id' => $this->id(),
+            'class' => $this->_tableClass($this->_params['class'])
+        ];
+
+        $html = $this->templater()->format('table', [
+            'attrs' => $this->templater()->formatAttributes($tableAttributes),
+            'head' => $this->renderHead(),
+            'body' => $this->renderBody(),
         ]);
 
+        return $html;
+    }
+
+    public function renderHead()
+    {
         $actionsCell = '';
         if ($this->_params['rowActions'] !== false) {
             $actionsCell = '<th class="actions">' . __('Actions') . '</th>';
@@ -148,10 +180,6 @@ class DataTableHelper extends Helper
 
     public function renderHeadCells()
     {
-        $this->templater()->add([
-            'headCell' => '<th>{{content}}</th>'
-        ]);
-
         $html = "";
         foreach ($this->_fields as $fieldName => $field)
         {
@@ -162,7 +190,11 @@ class DataTableHelper extends Helper
             }
 
             $html .= $this->templater()->format('headCell', [
-                'content' => $header
+                'content' => $header,
+                'attrs' => $this->templater()->formatAttributes([
+                    'class' => $field['class'],
+                    'title' => $field['title']
+                ])
             ]);
         }
         return $html;
@@ -170,17 +202,12 @@ class DataTableHelper extends Helper
 
     public function renderBody()
     {
-
-        $this->templater()->add([
-            'head' => '<tbody>{{rows}}</tbody>'
-        ]);
-
         $formattedRows = "";
         foreach ($this->_params['data'] as $row) {
             $formattedRows .= $this->renderRow($row);
         }
 
-        $html = $this->templater()->format('head', [
+        $html = $this->templater()->format('body', [
             'rows' => $formattedRows,
         ]);
         return $html;
@@ -188,23 +215,6 @@ class DataTableHelper extends Helper
 
     public function renderRow($row)
     {
-
-        $this->templater()->add([
-            'row' => '<tr{{attrs}}>{{cells}}{{actionscell}}</tr>',
-            'rowActionsCell' => '<td class="actions">
-                <div class="dropdown">
-                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Actions
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                         {{actions}}
-                    </ul>
-                </div>
-            </td>'
-        ]);
-
-
         // data cells
         $cells = $this->renderRowCells($row);
 
@@ -233,10 +243,6 @@ class DataTableHelper extends Helper
 
     public function renderRowCells($row)
     {
-        $this->templater()->add([
-            'rowCell' => '<td{{attrs}}>{{content}}</td>'
-        ]);
-
         $html = "";
 
         // multiselect checkbox
@@ -246,8 +252,13 @@ class DataTableHelper extends Helper
         {
             $cellData = Hash::get($row, $fieldName);
 
-            $formattedCellData = $this->_formatRowCellData($cellData, $field['formatter'], $row, $fieldName);
-            $cellAttributes = [];
+            $formatter = $field['formatter'];
+            unset($field['formatter']);
+            $formatterArgs = $field['formatterArgs'];
+            unset($field['formatterArgs']);
+
+            $formattedCellData = $this->_formatRowCellData($fieldName, $cellData, $formatter, $formatterArgs, $row);
+            $cellAttributes = $field;
 
             $html .= $this->templater()->format('rowCell', [
                 'content' => $formattedCellData,
@@ -260,11 +271,6 @@ class DataTableHelper extends Helper
     protected function _renderRowSelectCell($row) {
 
         if (isset($this->_params['select']) && $this->_params['select'] === true) {
-
-            $this->templater()->add([
-                'rowSelectCell' => '<td>{{content}}</td>'
-            ]);
-
             $input = $this->Form->checkbox('multiselect_' . $row->id);
 
             return $this->templater()->format('rowCell', [
@@ -282,34 +288,17 @@ class DataTableHelper extends Helper
      *
      * @param $cellData
      * @param null|boolean|callable $formatter
-     * @param array $rowData
+     * @param array $formatterArgs
+     * @param array $row
      * @return string
      */
-    protected function _formatRowCellData($cellData, $formatter = null, $rowData = [], $fieldName)
+    protected function _formatRowCellData($fieldName, $cellData, $formatter = null, $formatterArgs = [], $row = [])
     {
-        /*
-        if ($formatter === false) {
-            return $cellData;
-        }
-
-        if ($formatter === null) {
-            return h($cellData);
-        }
-
-        if (is_callable($formatter)) {
-            return call_user_func_array($formatter, [$cellData, $rowData, $fieldName]);
-        }
-        */
-        return $this->Formatter->format($cellData, $formatter, $rowData);
+        return $this->Formatter->format($cellData, $formatter, $formatterArgs, $row);
     }
 
     public function renderRowActions(array $rowActions, $row = [])
     {
-
-        $this->templater()->add([
-            'rowAction' => '<li>{{content}}</li>'
-        ]);
-
         $html = "";
         $row = (is_object($row)) ? $row->toArray() : $row;
         // rowActions

@@ -9,14 +9,10 @@ use Cake\Utility\Inflector;
     <h1><?= h($title); ?></h1>
     <?php endif; ?>
 
-    <table class="table table-hover table-entity">
-        <!--
-        <thead>
-        </thead>
-        -->
+    <table class="entity-table table table-hover">
         <tbody>
         <?php foreach ($data as $field): ?>
-            <tr>
+            <tr class="<?= $field['class']; ?>">
                 <td>
                     <?= h($field['label']); ?>
                 </td>
@@ -37,7 +33,6 @@ use Cake\Utility\Inflector;
 
     <?php if ($debug === true): ?>
     <div class="debug">
-
         <?php debug($associations); ?>
         <?php debug($schema); ?>
         <?php debug($data); ?>

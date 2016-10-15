@@ -49,6 +49,15 @@ body {
 .strong {
   font-weight: bold;
 }
+.left {
+  text-align: left;
+}
+.centered {
+  text-align: center;
+}
+.right {
+  text-align: right;
+}
 /**
  * Standard views
  */
@@ -401,11 +410,11 @@ nav ul.pagination {
 .entity-view h1 {
   border: none;
 }
-.entity-view .table-entity {
+.entity-view .entity-table {
   max-width: 100%;
   overflow: scroll;
 }
-.entity-view .table-entity tr td:first-child {
+.entity-view .entity-table tr td:first-child {
   min-width: 20%;
   font-weight: 700;
   vertical-align: top;

@@ -1,16 +1,16 @@
 <?php
 $this->loadHelper('Backend.DataTable');
 $this->Html->script('Backend.jquery/jquery-ui.min', ['block' => 'scriptBottom']);
-
-if (empty($dataTable['class'])) {
-    $dataTable['class'] = 'table table-condensed table-striped table-hover';
-}
-$this->DataTable->create($dataTable);
+$this->DataTable->init($dataTable);
 ?>
 <?= $this->DataTable->pagination(); ?>
-<?= $this->DataTable->render(); ?>
-<?= $this->DataTable->pagination(); ?>
 
+<?= $this->DataTable->create('table table-hover table-condensed table-striped'); ?>
+<?= $this->DataTable->renderHead(); ?>
+<?= $this->DataTable->renderBody(); ?>
+<?= $this->DataTable->end(); ?>
+
+<?= $this->DataTable->pagination(); ?>
 <?= $this->DataTable->script(); ?>
 <?= $this->DataTable->debug(); ?>
 

@@ -55,7 +55,7 @@ class EntityViewCell extends Cell
     {
         $this->title = ($this->title === null) ? sprintf("%s #%s", Inflector::singularize(pluginSplit($this->model)[1]), $entity->id) : $this->title;
 
-        $defaultField = ['title' => null, 'formatter' => null, 'formatterArgs' => []];
+        $defaultField = ['title' => null, 'class' => null, 'formatter' => null, 'formatterArgs' => []];
         $fields = [];
         foreach ($this->fields as $field => $config) {
             if (is_numeric($field)) {
@@ -63,7 +63,7 @@ class EntityViewCell extends Cell
                 $config = $defaultField;
             }
 
-            $fields[$field] = $config;
+            $fields[$field] = $config + $defaultField;
         }
         $schema = $this->_getTable()->schema();
         $associations = $this->_getTable()->associations();
@@ -82,7 +82,7 @@ class EntityViewCell extends Cell
             $formatter = ($field['formatter']) ?: null;
             $formatterArgs = ($field['formatterArgs']) ?: [];
 
-            $assoc = $associations->getByProperty($field);
+            $assoc = $associations->getByProperty($property);
             if ($assoc) {
                 $assocType = $assoc->type();
                 switch ($assocType) {
@@ -106,12 +106,13 @@ class EntityViewCell extends Cell
 
 
             $data[] = [
-                'field' => $field,
+                'name' => $property,
                 'label' => $fieldLabel,
                 'formatter' => $formatter,
                 'formatterArgs' => $formatterArgs,
                 'value' => $val,
-                'assoc' => $assoc
+                'assoc' => $assoc,
+                'class' => $field['class']
             ];
         endforeach;
 

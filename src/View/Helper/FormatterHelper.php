@@ -100,7 +100,7 @@ class FormatterHelper extends Helper
         return array_keys($this->_formatters);
     }
 
-    public function format( $value, $formatter = null, $data = [])
+    public function format( $value, $formatter = null, $formatterArgs = [], $extra = [])
     {
         if ($formatter === false) {
             return $value;
@@ -110,6 +110,19 @@ class FormatterHelper extends Helper
         $dataType = gettype($value);
         if ($formatter === null || $formatter === 'default') {
             $formatter = $dataType;
+        }
+
+        if (is_array($formatter)) {
+            // ['formatter-name' => 'formatter-data']
+            if (count($formatter) === 1) {
+                $formatterArgs = current($formatter);
+                $formatter = key($formatter);
+            } elseif (count($formatter) === 2) {
+                list($formatter, $formatterArgs) = $formatter;
+            } else {
+                debug("Unsupported formatter array format");
+                return "[Array]";
+            }
         }
 
         switch ($formatter) {
@@ -141,14 +154,6 @@ class FormatterHelper extends Helper
 
         }
 
-        if (is_array($formatter)) {
-            // ['formatter-name' => 'formatter-data']
-            if (count($formatter) === 1) {
-                $data = current($formatter);
-                $formatter = key($formatter);
-            }
-
-        }
 
         if (is_string($formatter)) {
             if (!isset($this->_formatters[$formatter])) {
@@ -161,7 +166,7 @@ class FormatterHelper extends Helper
 
 
         if (is_callable($formatter)) {
-            return call_user_func_array($formatter, [$value, $data]);
+            return call_user_func_array($formatter, [$value, $extra, $formatterArgs]);
         }
 
         if ($formatter) {

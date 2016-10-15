@@ -3,14 +3,14 @@ use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 ?>
 <?php $this->loadHelper('Backend.Formatter'); ?>
-<table class="table table-hover table-entity">
+<table class="entity-table table table-hover">
     <!--
     <thead>
     </thead>
     -->
     <tbody>
     <?php foreach ($data as $field): ?>
-        <tr>
+        <tr class="<?= $field['class']; ?>">
             <td>
                 <?= h($field['label']); ?>
             </td>

@@ -71,6 +71,7 @@
 <?= $this->Html->script('Bootstrap.bootstrap.min'); ?>
 <?= $this->Html->script('Backend.underscore-min'); ?>
 <?= $this->Html->script('Backend.backend/backend'); ?>
+<?= $this->Html->script('Backend.backend/toolbar'); ?>
 <?= $this->fetch('scriptBottom'); ?>
 
 <script>

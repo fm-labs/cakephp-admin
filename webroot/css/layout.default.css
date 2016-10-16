@@ -460,9 +460,6 @@ nav ul.pagination {
 .attachments.editor .attachments .attachment .actions {
   font-size: 10px;
 }
-.toolbar {
-  position: relative;
-}
 .toolbar > ul {
   float: none;
 }

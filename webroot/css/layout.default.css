@@ -34,6 +34,7 @@ body {
   font-size: 14px;
   background-color: #FFF;
   padding-top: 0;
+  padding-bottom: 3rem;
   padding-left: 0;
 }
 /**
@@ -281,9 +282,9 @@ form div.actions {
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00ffffff', endColorstr='#f7f7f7', GradientType=0);
   /* IE6-9 */
+  border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   padding: 0.5rem;
-  text-align: right;
 }
 form fieldset {
   padding: 0;
@@ -481,9 +482,6 @@ nav.toolbar > ul {
 /* Forms */
 .form-group {
   margin-bottom: 8px;
-}
-body {
-  background-color: #fff;
 }
 #header-nav {
   margin: 0;

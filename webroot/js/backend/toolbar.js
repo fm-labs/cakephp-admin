@@ -21,18 +21,26 @@ Backend.Renderer.addListener('docready', function(scope) {
             },
             target: $(scope)
         });
+        $(scope).addClass('has-toolbar');
     });
 
     // affix.bs.affix => before fixed positioning is applied to an element
     $(document).on('affix.bs.affix', $(scope), function(ev) {
-        console.log("Affix fixed at " + $(ev.target).offset().top);
-        $(ev.target).addClass('navbar-fixed-top navbar-inverse');
+        if ($(ev.target).hasClass('toolbar')) {
+            console.log("Affix attached at " + $(ev.target).offset().top);
+            $(ev.target).addClass('navbar-fixed-top');
+            $('body').addClass('has-toolbar-fixed');
+        }
+
     });
 
     // affix-top.bs.affix => before a top element returns to its original (non-fixed) position
     $(document).on('affixed-top.bs.affix', $(scope), function(ev) {
-        console.log("Affix non-fixed at " + $(ev.target).offset().top);
-        $(ev.target).removeClass('navbar-fixed-top navbar-inverse');
+        if ($(ev.target).hasClass('toolbar')) {
+            console.log("Affix removed at " + $(ev.target).offset().top);
+            $(ev.target).removeClass('navbar-fixed-top');
+            $('body').removeClass('has-toolbar-fixed');
+        }
     })
 
 });

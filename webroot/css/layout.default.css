@@ -35,10 +35,6 @@ body {
   background-color: #FFF;
   padding-top: 0;
   padding-left: 0;
-  -webkit-transition: all 0.5s ease-out;
-  -moz-transition: all 0.5s ease-out;
-  -o-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
 }
 /**
  * Helper classes
@@ -460,7 +456,10 @@ nav ul.pagination {
 .attachments.editor .attachments .attachment .actions {
   font-size: 10px;
 }
-.toolbar > ul {
+body.has-toolbar-fixed {
+  padding-top: 140px;
+}
+nav.toolbar > ul {
   float: none;
 }
 /**

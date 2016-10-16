@@ -17,7 +17,7 @@
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
-<body>
+<body class="has-toolbar">
 
 <div id="page">
     <header id="top">

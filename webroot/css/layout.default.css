@@ -55,6 +55,13 @@ body {
 .right {
   text-align: right;
 }
+.no-border {
+  border: none;
+  border-width: 0;
+}
+.no-border-radius {
+  border-radius: 0;
+}
 /**
  * Standard views
  */
@@ -80,11 +87,6 @@ h2 {
   width: 30px;
   height: auto;
   vertical-align: middle;
-}
-.view,
-.form {
-  max-width: 1000px;
-  margin: 0 auto;
 }
 .view.fluid,
 .form.fluid {
@@ -469,8 +471,6 @@ nav.toolbar > ul {
 /* Panels */
 .panel {
   border-radius: 0;
-  border: none;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
 }
 .panel-heading {
   border-radius: 0;

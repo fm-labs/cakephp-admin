@@ -70,13 +70,20 @@
 
 <?= $this->Html->script('Bootstrap.bootstrap.min'); ?>
 <?= $this->Html->script('Backend.underscore-min'); ?>
+<?= $this->Html->script('Backend.jquery/jquery-ui.min'); ?>
+<?= $this->Html->script('Backend.tinymce/tinymce.min'); ?>
+<?= $this->Html->script('Backend.tinymce/jquery.tinymce.min'); ?>
 <?= $this->Html->script('Backend.backend/backend'); ?>
 <?= $this->Html->script('Backend.backend/toolbar'); ?>
+<?= $this->Html->script('Backend.backend/htmleditor'); ?>
 <?= $this->fetch('scriptBottom'); ?>
 
 <script>
     $(document).ready(function() {
         Backend.Renderer.onReady();
+    });
+    $(window).on('unload', function() {
+        Backend.Renderer.onUnload();
     })
 </script>
 </body>

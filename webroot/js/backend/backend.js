@@ -196,7 +196,11 @@ Backend.Renderer = {
 
     onReady: function(scope) {
         this.trigger('docready', scope);
-    }
+    },
+
+    onUnload: function(scope) {
+        this.trigger('unload', scope);
+    },
 
 };
 
@@ -239,6 +243,17 @@ Backend.Modal = {
         }
 
         $modal.find('.modal-body').html(html);
+
+        $modal.on('hidden.bs.modal', function(ev) {
+
+            console.log("modal " + modalId + " is now hidden");
+            console.log(ev);
+            // http://stackoverflow.com/questions/11570333/how-to-get-twitter-bootstrap-modals-invoker-element
+            var $invoker = $(ev.relatedTarget) || $(window);
+            console.log($invoker);
+
+            $invoker.focus();
+        });
         $modal.modal(modalOptions);
         return $modal;
     },
@@ -278,7 +293,16 @@ Backend.Modal = {
             $iframe.width($modal.width * 0.9);
             $iframe.height($(window).height() * 0.70);
         });
+        $modal.on('hidden.bs.modal', function(ev) {
 
+            console.log("modal " + modalId + " is now hidden");
+            console.log(ev);
+            // http://stackoverflow.com/questions/11570333/how-to-get-twitter-bootstrap-modals-invoker-element
+            var $invoker = $(ev.relatedTarget) || $(window);
+            console.log($invoker);
+
+            $invoker.focus();
+        });
         return $modal;
         //return Backend.Modal.open($iframe, modalOptions, options);
     }
@@ -307,6 +331,7 @@ Backend.Ajax = {
             global: true,
             context: $target,
             beforeSend: function() {
+                Backend.Renderer.onUnload($target);
                 $target
                     .addClass('ajax-content')
                     .addClass('ajax-content-loading')
@@ -444,7 +469,7 @@ $(document).on('reload', '.ajax-content', function(ev) {
 
 
     var id = $container.attr('id');
-    var url = $container.data('url');
+    var url = $container.attr('data-url');
     console.log("AJAX content reloading [" + id + "]: " + url);
 
 
@@ -508,48 +533,6 @@ $(document).on('dblclick','.tabs .nav a', function (ev) {
 });
 
 
-//
-// Bind link events for ajax content loading
-//
-
-$(document).on('click','a.link-window', function (ev) {
-
-    ev.stopPropagation();
-});
-
-$(document).on('click','a.link-external', function (ev) {
-
-    var $a = $(ev.target);
-    $a.attr('target', '_blank');
-
-    ev.stopPropagation();
-});
-
-
-$(document).on('click','a.link-modal', function (ev) {
-
-    var $a = $(ev.target);
-    var url = $a.attr('href');
-
-    Backend.Ajax.load(url).done(function(html) {
-        var $container = $('<div>', {class: 'ajax-content ajax-content-loaded', 'data-url': url}).html(html);
-        var $modal = Backend.Modal.open($container, {}, {
-            title: ev.target.title || ev.target.innerText
-        });
-        $modal.on('shown.bs.modal', function() {
-           console.log("modal shown");
-        });
-        $modal.on('hidden.bs.modal', function() {
-            console.log("modal hidden");
-        });
-        Backend.Renderer.onReady($container);
-    });
-
-
-    ev.stopPropagation();
-    ev.preventDefault();
-    return false;
-});
 
 $(document).on('click','a.link-modal-frame, a.link-frame-modal', function (ev) {
 
@@ -584,54 +567,6 @@ $(document).on('click','a.link-modal-frame, a.link-frame-modal', function (ev) {
 });
 
 
-$(document).on('click','a', function (ev) {
-
-    if (ev.isPropagationStopped()) {
-        return;
-    }
-
-    if (ev.target.nodeName !== "A") {
-        return;
-    }
-
-    // skip anchor links
-    if (ev.target.hash.length > 0 || ev.target.href.indexOf('#') > -1) {
-        return;
-    }
-
-    // skip links with target attribute set
-    if (ev.target.getAttribute('target')) {
-        return;
-    }
-
-    var $a = $(ev.target);
-    var href = $a.attr('href');
-
-    var scopeId;
-    var $scope = $(ev.target).closest('.ajax-content');
-    if ($scope.length > 0) {
-        scopeId = $scope.attr('id') || 'UNKNOWN';
-    } else {
-        $scope = $(document);
-        scopeId = null;
-    }
-
-    console.log("[global] Link clicked in scope: " + href, scopeId);
-
-
-    if (scopeId !== null) {
-
-        Backend.Ajax.loadHtml($scope, href).always(function() {
-
-            if (!!window.history) {
-                history.pushState({ context: 'backend', scopeId: scopeId }, '', href);
-            }
-        });
-        ev.preventDefault();
-        ev.stopPropagation();
-        return false;
-    }
-});
 
 
 //
@@ -736,12 +671,14 @@ $(document).on('ready', function() {
  */
 Backend.Renderer.addListener('docready', function(scope) {
 
+
     //@TODO Remove debug output
     console.log("DOCUMENT IS READY");
     var scopeId;
     switch (scope) {
         case undefined:
-            scopeId = "NOSCOPE"; break;
+            console.error("docready in undefined scope");
+            return;
         case document:
             scopeId = "DOCUMENT"; break;
         default:
@@ -791,5 +728,117 @@ Backend.Renderer.addListener('docready', function(scope) {
         Backend.Ajax.loadHtml($('#' + id), url, {});
     });
 
+//
+// Bind link events for ajax content loading
+//
+
+    $(scope).off('click','a.link-window');
+    $(scope).on('click','a.link-window', function (ev) {
+
+        ev.stopPropagation();
+    });
+
+    $(scope).off('click','a.link-external')
+    $(scope).on('click','a.link-external', function (ev) {
+
+        var $a = $(ev.target);
+        $a.attr('target', '_blank');
+
+        ev.stopPropagation();
+    });
+
+
+    $(scope).off('click','a.link-modal');
+    $(scope).on('click','a.link-modal', function (ev) {
+
+        var $a = $(ev.target);
+        var url = $a.attr('href');
+
+        Backend.Ajax.load(url).done(function(html) {
+            var $container = $('<div>', {class: 'ajax-content ajax-content-loaded', 'data-url': url}).html(html);
+            var $modal = Backend.Modal.open($container, {}, {
+                title: ev.target.title || ev.target.innerText
+            });
+            $modal.on('shown.bs.modal', function() {
+                console.log("modal shown");
+            });
+            $modal.on('hidden.bs.modal', function() {
+                console.log("modal hidden");
+            });
+            Backend.Renderer.onReady($container);
+        });
+
+
+        ev.stopPropagation();
+        ev.preventDefault();
+        return false;
+    });
+
+    $(scope).find('div.flash > div').each(function() {
+        var $flash = $(Backend.Flash.el);
+
+        $(this).appendTo($flash);
+    });
+
+    var linkHandler = function (ev) {
+
+        if (ev.isPropagationStopped()) {
+            return;
+        }
+
+        if (ev.target.nodeName !== "A") {
+            return;
+        }
+
+        // skip anchor links
+        if (ev.target.hash.length > 0 || ev.target.href.indexOf('#') > -1) {
+            return;
+        }
+
+        // skip links with target attribute set
+        if (ev.target.getAttribute('target')) {
+            return;
+        }
+
+        var $a = $(ev.target);
+        var href = $a.attr('href');
+
+        var scopeId;
+        var $scope = $(ev.target).closest('.ajax-content');
+        if ($scope.length > 0) {
+            scopeId = $scope.attr('id') || 'UNKNOWN';
+        } else {
+            $scope = $(document);
+            scopeId = null;
+        }
+
+        console.log("[global] Link clicked in scope: " + href, scopeId);
+
+
+        if (scopeId !== null) {
+
+            Backend.Ajax.loadHtml($scope, href).always(function() {
+                //if (!!window.history) {
+                //    history.pushState({ context: 'backend', scopeId: scopeId }, '', href);
+                //}
+            });
+            ev.preventDefault();
+            ev.stopPropagation();
+            return false;
+        }
+    };
+    $(scope).off('click', 'a', linkHandler);
+    $(scope).on('click','a', linkHandler);
+
+    // scroll to scope container
+    var scopeOffset = 0;
+    if (scope !== document) {
+        scopeOffset = $(scope).offset().top - 100; // this is a bit inconsistent because of the toolbar affix
+        if (scopeOffset < 0) {
+            scopeOffset = 0;
+        }
+    }
+    console.log("Scrolling to offset " + scopeOffset);
+    $(window).scrollTop(scopeOffset);
 
 });

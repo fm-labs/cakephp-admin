@@ -1,6 +1,5 @@
 <?php
 $this->loadHelper('Backend.DataTable');
-$this->Html->script('Backend.jquery/jquery-ui.min', ['block' => 'scriptBottom']);
 
 if (empty($dataTable['class'])) {
     $dataTable['class'] = 'table table-condensed table-striped table-hover';

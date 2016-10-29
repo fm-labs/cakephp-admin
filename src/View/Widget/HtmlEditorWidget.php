@@ -81,7 +81,7 @@ class HtmlEditorWidget extends BasicWidget
 
         $defaultClass = 'htmleditor form-control';
         $data['class'] = ($data['class']) ? $data['class'] . ' ' . $defaultClass : $defaultClass;
-        $data['id'] = ($data['id']) ? $data['id'] : uniqid('htmleditor');
+        $data['id'] = uniqid($data['id'] . '-htmleditor');
 
 
         // load editor config by config reference (@[Config.Key])
@@ -118,20 +118,23 @@ class HtmlEditorWidget extends BasicWidget
         //debug($editor);
 
         $this->_templates->add([
-            'htmlEditor' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea><script>{{editorScript}}</script>',
+            //'htmlEditor' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea><script>{{editorScript}}</script>'
+            'htmlEditor' => '<div class="htmleditor"><textarea  data-htmleditor=\'{{editorConfig}}\' name="{{name}}"{{attrs}}>{{value}}</textarea></div>',
         ]);
 
         $selector = $editor['selector'];
         unset($editor['selector']);
         //$editorScript = "$(document).ready(function() { tinymce.init(" . json_encode($editor) .") });";
-        //$jsTemplate = '$(document).on("ready", function() { $("%s").tinymce(%s); });';
+        $jsTemplate = '$(document).on("ready", function() { $("%s").tinymce(%s); });';
         //$jsTemplate = ' $("%s").tinymce(%s);';
-        $jsTemplate = "";
-        $editorScript = sprintf($jsTemplate, $selector, json_encode($editor));
+        //$jsTemplate = "";
+        $editorConfig = json_encode($editor);
+        $editorScript = sprintf($jsTemplate, $selector, $editorConfig);
 
         return $this->_templates->format('htmlEditor', [
             'name' => $data['name'],
             'value' => $data['escape'] ? h($data['val']) : $data['val'],
+            'editorConfig' => $editorConfig,
             'editorScript' => $editorScript,
             'attrs' => $this->_templates->formatAttributes(
                 $data,

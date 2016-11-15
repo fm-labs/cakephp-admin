@@ -1,9 +1,19 @@
 @import "elements.less";
 @import "vars.less";
-@import "global.less";
-@import "toolbar.less";
-@import "bootstrap-backend.less";
 
+body.fixed-nav-top {
+  margin-top: 50px;
+}
+
+body.be-sidebar  {
+  // add offset to fixed top navbar
+  #header-nav.navbar-fixed-top {
+    //margin-left: @sidebar-w;
+  }
+}
+
+#page {
+}
 
 #header-nav {
   margin: 0;
@@ -58,8 +68,10 @@
 }
 
 #main {
-  margin-top: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 5rem;
 }
+
 
 #footer {
   position: fixed;

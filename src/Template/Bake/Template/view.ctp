@@ -102,10 +102,10 @@ foreach ($associations as $type => $data) {
         <?= h($<%= $singularVar %>-><%= $displayField %>) ?>
     </h2>
 
-    <?=
-    $this->cell('Backend.EntityView', [ $post ], [
+    <?php
+    echo $this->cell('Backend.EntityView', [ $post ], [
         'title' => $post->title,
-        'model' => '<%= $pluralVar %>',
+        'model' => '<%= $modelClass %>',
     ]);
     ?>
 
@@ -208,3 +208,12 @@ foreach ($relations as $alias => $details):
 </div>
 <% endforeach; %>
 
+
+
+<% /**
+<pre>
+    <% debug(get_defined_vars()); %>
+    <% debug($groupedFields); %>
+    <% debug($associations); %>
+</pre>
+**/ %>

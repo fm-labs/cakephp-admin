@@ -11,17 +11,19 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
 
-    <?= $this->Html->css('Backend.font-awesome'); ?>
     <?= $this->Html->css('Bootstrap.bootstrap.min'); ?>
+    <?= $this->Html->css('Backend.font-awesome'); ?>
+    <?= $this->Html->css('Backend.global'); ?>
+    <?= $this->Html->css('Backend.backend'); ?>
     <?= $this->Html->css('Backend.layout.default'); ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
-<body class="has-toolbar">
+<body class="be_sidebar has-toolbar fixed-nav-top">
 
 <div id="page">
     <header id="top">
-        <nav id="header-nav" class="navbar navbar-default navbar-inverse">
+        <nav id="header-nav" class="navbar navbar-default navbar-inverse navbar-fixed-top">
             <?= $this->element('Backend.Layout/master/header_nav'); ?>
         </nav>
 
@@ -30,7 +32,7 @@
     <div id="page-crumbs">
         <?= $this->element('Backend.Layout/admin/breadcrumbs'); ?>
     </div>
-    <div id="page-toolbar">
+    <div id="page-toolbar" style="display: none;">
         <?= $this->element('Backend.Layout/admin/toolbar'); ?>
     </div>
     <div id="flash">
@@ -60,13 +62,18 @@
     <footer id="footer" class="container-fluid">
         <?= $this->element('Backend.Layout/master/footer'); ?>
     </footer>
-
-    <div id="loader" class="loader">
-        <?= $this->Html->image('/backend/img/ring-alt.svg'); ?>
-    </div>
-    <div id="modal-container"></div>
-
 </div> <!-- #page -->
+
+
+<div id="loader" class="loader">
+    <?= $this->Html->image('/backend/img/ring-alt.svg'); ?>
+</div>
+<div id="modal-container"></div>
+
+<aside id="sidebar" class="be-sidebar-container">
+    <?php echo $this->fetch('sidebar'); ?>
+    <?php echo $this->element('Backend.sidebar'); ?>
+</aside>
 
 <?= $this->Html->script('Bootstrap.bootstrap.min'); ?>
 <?= $this->Html->script('Backend.underscore-min'); ?>

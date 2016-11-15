@@ -1,0 +1,82 @@
+@import "../elements.less";
+@import "../vars.less";
+
+/**
+ * Sidebar
+ */
+.be-sidebar {
+}
+
+/** Bootstrap override -> move to bootstrap.less */
+.be-sidebar ul.nav {
+
+}
+
+.be-sidebar ul.nav li {
+
+  > a {
+    padding: 5px 15px;
+    .border-radius(0);
+  }
+
+  > ul {
+    margin-left: 20px;
+    display: none;
+  }
+}
+
+.be-sidebar ul.nav li.trail {
+  > ul {
+    display: inherit;
+  }
+}
+
+
+/* Sidebar Container */
+.be-sidebar-container {
+  width: @sidebar-w;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  background-color: #222222;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  padding-top: 50px;
+}
+
+/* Sidebar body extension */
+body.be_sidebar {
+  margin-left: @sidebar-w;
+}
+
+/*
+body.be-sidebar-sm {
+
+  padding-left: @sidebar-small-w;
+  .transition(@sidebar-transition);
+
+  #sidebar {
+    .be-sidebar {
+      max-width: @sidebar-small-w;
+      width: @sidebar-small-w;
+      .transition(@sidebar-transition);
+
+      .item:before {
+        //background: none;
+      }
+
+      .item > a > span,
+      .item > span,
+      .item > .menu {
+        display: none;
+      }
+    }
+  }
+
+  #headerbar .ui.navbar.menu {
+    //padding-left: @sidebar-small-w + 25px;
+    .transition(@sidebar-transition);
+  }
+}
+*/

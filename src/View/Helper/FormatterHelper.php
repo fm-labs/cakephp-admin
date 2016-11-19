@@ -11,6 +11,8 @@ namespace Backend\View\Helper;
 //@TODO Remove hard dependency on Bootstrap plugin. Use mixin solution
 use Bootstrap\View\Helper\UiHelper;
 use Cake\Core\Configure;
+use Cake\Datasource\EntityInterface;
+use Cake\ORM\ResultSet;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\NumberHelper;
@@ -29,7 +31,13 @@ use InvalidArgumentException;
  */
 class FormatterHelper extends Helper
 {
-    protected $_formatters = [];
+    static protected $_formatters = [];
+
+
+    static public function register($formatterName, callable $formatter)
+    {
+        self::$_formatters[$formatterName] = $formatter;
+    }
 
     public $helpers = ['Html', 'Number', 'Time', 'Bootstrap.Ui'];
 
@@ -39,13 +47,13 @@ class FormatterHelper extends Helper
 
         // built-in formatters
 
-        $this->register('escape', function($val, $extra, $params) {
+        self::register('escape', function($val, $extra, $params) {
             return h($val);
         });
-        $this->register('boolean', function($val, $extra, $params) {
+        self::register('boolean', function($val, $extra, $params) {
             return $this->Ui->statusLabel($val);
         });
-        $this->register('date', function($val, $extra, $params) {
+        self::register('date', function($val, $extra, $params) {
 
             $format = DATE_W3C;
             if (isset($params['format'])) {
@@ -55,7 +63,7 @@ class FormatterHelper extends Helper
             return $this->Time->format($val, $format);
         });
 
-        $this->register('link', function($val, $extra, $params) {
+        self::register('link', function($val, $extra, $params) {
 
             $title = $url = $val;
             if (isset($params['url'])) {
@@ -70,35 +78,42 @@ class FormatterHelper extends Helper
             return $this->Html->link($title, $url, $params);
         });
 
-        $this->register('number', function($val, $extra, $params) {
+        self::register('number', function($val, $extra, $params) {
             return $this->Number->format($val);
         });
 
-        $this->register('currency', function($val, $extra, $params) {
+        self::register('currency', function($val, $extra, $params) {
             $currency = (isset($params['currency'])) ? $params['currency'] : 'EUR';
             return $this->Number->currency($val, $currency);
         });
 
-        $this->register('array', function($val, $extra, $params) {
-            return '<pre>' . print_r($val, true) . '</pre>';
+        self::register('array', function($val, $extra, $params) {
+            return '[Array]';
+            //return '<pre>' . print_r($val, true) . '</pre>';
         });
-        $this->register('object', function($val, $extra, $params) {
+        self::register('object', function($val, $extra, $params) {
             if (method_exists($val, '__toString')) {
                 return h((string) $val);
             }
 
-            return '<pre>' . print_r($val, true) . '</pre>';
+            if ($val instanceof EntityInterface) {
+                return '[entity:' . get_class($val) . ']';
+            }
+
+            if ($val instanceof ResultSet) {
+                return '[resultset]';
+            }
+
+            return '[object:' . get_class($val) . ']';
+
+            //return '<pre>' . print_r($val, true) . '</pre>';
         });
     }
 
-    public function register($formatterName, callable $formatter) {
-
-        $this->_formatters[$formatterName] = $formatter;
-    }
 
     public function getFormatters()
     {
-        return array_keys($this->_formatters);
+        return array_keys(self::$_formatters);
     }
 
     public function format( $value, $formatter = null, $formatterArgs = [], $extra = [])
@@ -146,7 +161,7 @@ class FormatterHelper extends Helper
             case "uuid":
             case "text":
             case "string":
-                if (!isset($this->_formatters[$formatter])) {
+                if (!isset(self::$_formatters[$formatter])) {
                     $formatter = 'escape';
                 }
                 break;
@@ -157,11 +172,11 @@ class FormatterHelper extends Helper
 
 
         if (is_string($formatter)) {
-            if (!isset($this->_formatters[$formatter])) {
+            if (!isset(self::$_formatters[$formatter])) {
                 debug("Formatter $formatter not found for dataType $dataType");
                 $formatter = null;
             } else {
-                $formatter = $this->_formatters[$formatter];
+                $formatter = self::$_formatters[$formatter];
             }
         }
 

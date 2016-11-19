@@ -9,27 +9,19 @@ use Cake\Utility\Inflector;
     <h1><?= h($title); ?></h1>
     <?php endif; ?>
 
-    <table class="entity-table table table-hover">
-        <tbody>
+    <dl class="dl-horizontal dl-striped">
         <?php foreach ($data as $field): ?>
-            <tr class="<?= $field['class']; ?>">
-                <td>
-                    <?= h($field['label']); ?>
-                </td>
-                <td>
-                    <?= $this->Formatter->format( $field['value'], $field['formatter'], $field['formatterArgs'], $entity ); ?>
-                </td>
+
+            <dt class="<?= $field['class']; ?>">
+                <?= h($field['label']); ?>
+            </dt>
+            <dd>
+                <?= $this->Formatter->format( $field['value'], $field['formatter'], $field['formatterArgs'], $entity ); ?>
                 <?php if ($debug === true): ?>
-                    <td class="right">
-                        <small>
-                            <?= sprintf("(%s:%s)", gettype($field['value']), $field['formatter'] ) ?>
-                        </small>
-                    </td>
+                <small><?= sprintf("(%s:%s)", gettype($field['value']), $field['formatter'] ) ?></small>
                 <?php endif; ?>
-            </tr>
         <?php endforeach; ?>
-        </tbody>
-    </table>
+    </dl>
 
     <?php if ($debug === true): ?>
     <div class="debug">

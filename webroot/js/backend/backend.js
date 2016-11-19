@@ -620,7 +620,7 @@ $(document).on('click', 'form fieldset > legend', function() {
 // Form Submission
 // Submit forms via AJAX in scoped context
 //
-$(document).on('submit', 'form', function(ev) {
+$(document).on('submit', 'form.ajax', function(ev) {
 
     var $form = $(ev.target);
     var data = $form.serialize();
@@ -827,8 +827,8 @@ Backend.Renderer.addListener('docready', function(scope) {
             return false;
         }
     };
-    $(scope).off('click', 'a', linkHandler);
-    $(scope).on('click','a', linkHandler);
+    //$(scope).off('click', 'a', linkHandler);
+    //$(scope).on('click','a', linkHandler);
 
     // scroll to scope container
     var scopeOffset = 0;
@@ -838,7 +838,8 @@ Backend.Renderer.addListener('docready', function(scope) {
             scopeOffset = 0;
         }
     }
-    console.log("Scrolling to offset " + scopeOffset);
-    $(window).scrollTop(scopeOffset);
+
+    //console.log("Scrolling to offset " + scopeOffset);
+    //$(window).scrollTop(scopeOffset);
 
 });

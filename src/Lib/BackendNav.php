@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 2/13/16
- * Time: 4:51 PM
- */
 
 namespace Backend\Lib;
 
@@ -14,13 +8,13 @@ use Cake\Utility\Hash;
 
 class BackendNav
 {
-    static public function getMenu()
+    static public function getMenu($scope = 'app')
     {
         $menu = [];
         $plugins = Backend::plugins();
 
         //check each plugin's AppController for a 'backendMenu' method
-        $menuResolver = function ($plugin) use (&$menu) {
+        $menuResolver = function ($plugin) use (&$menu, $scope) {
 
             $configPath = ($plugin) ? Plugin::configPath($plugin) : CONFIG;
             $configFile = $configPath . 'backend.php';
@@ -30,34 +24,22 @@ class BackendNav
                 $config = include $configFile;
                 $config = Hash::expand($config);
 
-                if (Hash::check($config, $configPrefix . 'Menu')) {
-                    $menuKey = ($plugin) ? $plugin : 'app';
-                    $menu = array_merge($menu, [ $menuKey => Hash::get($config, $configPrefix . 'Menu')]);
+                $key = $configPrefix . 'Menu.' . $scope;
+                if (Hash::check($config, $key)) {
+                    //$menuKey = ($plugin) ? $plugin : 'App';
+                    //$menu = array_merge($menu, [ $menuKey => Hash::get($config, $key)]);
+                    foreach (Hash::get($config, $key) as $menuItemKey => $menuItem) {
+                        if (is_numeric($menuItemKey)) {
+                            $menu[] = $menuItem;
+                        } else {
+                            $menu[$menuItemKey] = $menuItem;
+                        }
+                    }
                     return;
                 }
             }
-
-            /**
-             * DEPRECATED BACKEND MENU LOADER
-             * Loads from static AppController::backendMenu() method.
-             * The config method is prefered.
-             */
-            // get AppController classname for app or plugin
-            $className = ($plugin) ? $plugin . '.' . 'App' : 'App';
-            $class = \Cake\Core\App::className($className, 'Controller/Admin', 'Controller');
-            if (!$class) {
-                return;
-            }
-
-            // call static 'AppController::backendMenu()' method
-            // and merge into $menu
-            $callable = [$class, 'backendMenu'];
-            if (is_callable($callable)) {
-                $_menu = call_user_func($callable);
-                //array_push($menu, (array) $_menu);
-                $menu = array_merge($menu, (array) $_menu);
-            }
         };
+
 
         // Resolve app menus
         $menuResolver(null);

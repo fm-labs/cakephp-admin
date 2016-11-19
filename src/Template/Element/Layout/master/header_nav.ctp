@@ -28,8 +28,12 @@ if (!$this->request->session()->check('Backend.User')) return false;
 
 
         <?php
-        $backendNavMenu = BackendNav::getMenu();
-        echo $this->Ui->menu($backendNavMenu, ['class' => 'nav navbar-nav'], ['class' => 'dropdown-menu']);
+        echo $this->Ui->menu(BackendNav::getMenu('app'), ['class' => 'nav navbar-nav'], ['class' => 'dropdown-menu']);
+        ?>
+
+        <?php
+        //$backendNavMenu = BackendNav::getMenu('system');
+        //echo $this->Ui->menu($backendNavMenu, ['class' => 'nav navbar-nav'], ['class' => 'dropdown-menu']);
         ?>
 
         <!--

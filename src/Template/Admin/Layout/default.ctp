@@ -32,7 +32,7 @@
     <div id="page-crumbs">
         <?= $this->element('Backend.Layout/admin/breadcrumbs'); ?>
     </div>
-    <div id="page-toolbar" style="display: none;">
+    <div id="page-toolbar">
         <?= $this->element('Backend.Layout/admin/toolbar'); ?>
     </div>
     <div id="flash">

@@ -1,6 +1,7 @@
 <?php
 namespace Backend\View\Helper;
 
+use Bootstrap\View\Helper\UiHelper;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 
@@ -120,14 +121,7 @@ class ToolbarHelper extends Helper
     }
 
     /**
-     * Render toolbar into view block (configurable block name).
-     * Optionally, set option ['inline' => true] to output html.
-     *
-     * Options:
-     * - inline => false Set to true to return rendered html
-     * - block => config:block Customize view block name
-     * - [custom] Options will be passed to the toolbar element template,
-     *              so additional parameters can be passed to the template
+     * Render toolbar menu
      *
      * @param array $options
      * @return string

@@ -20,7 +20,6 @@ class BackendView extends View
         ]);
         $this->loadHelper('Form', [
             'className' => 'Backend\View\Helper\BackendFormHelper',
-            'templates' => 'Backend.form_templates',
             'widgets' => [
                 '_default' => ['Backend\View\Widget\BasicWidget'],
                 'button' => ['Backend\View\Widget\ButtonWidget'],

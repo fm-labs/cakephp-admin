@@ -2,25 +2,42 @@
 
 namespace Backend\View\Helper;
 
-use Cake\View\Helper\FormHelper as CakeFormHelper;
+use Bootstrap\View\Helper\FormHelper as BootstrapFormHelper;
+use Cake\View\View;
 
-class BackendFormHelper extends CakeFormHelper
+class BackendFormHelper extends BootstrapFormHelper
 {
     private $_fieldsetOptions = [];
 
-    /*
-    public function label($fieldName, $text = null, array $options = [])
+    public function __construct(View $View, array $config = [])
     {
-        if (!isset($options['class'])) {
-            $options['class'] = 'control-label';
+        parent::__construct($View, $config);
+
+        $this->templater()->load('Backend.form_templates');
+
+        $widgets = [
+            //'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
+            'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
+            'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
+            'datepicker' => ['Backend\View\Widget\DatePickerWidget'],
+            'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
+            'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
+            'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
+        ];
+        foreach ($widgets as $type => $config) {
+            $this->addWidget($type, $config);
+        }
+    }
+
+    public function fieldsetStart($legend = null, $options = [])
+    {
+        if (is_array($legend)) {
+            $options = $legend;
+            $legend = null;
+        } else {
+            $options['legend'] = $legend;
         }
 
-        return parent::label($fieldName, $text, $options);
-    }
-    */
-
-    public function fieldsetStart($options = [])
-    {
         if (isset($options['collapsed']) && $options['collapsed'] === true) {
             $options['fieldset']['class'] = (isset($options['fieldset']) && isset($options['fieldset']['class']))
                 ? $options['fieldset']['class'] . ' collapsed' : 'collapsed';

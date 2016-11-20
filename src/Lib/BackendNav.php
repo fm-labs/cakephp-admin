@@ -3,6 +3,7 @@
 namespace Backend\Lib;
 
 
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Utility\Hash;
 
@@ -19,25 +20,33 @@ class BackendNav
             $configPath = ($plugin) ? Plugin::configPath($plugin) : CONFIG;
             $configFile = $configPath . 'backend.php';
             $configPrefix = ($plugin) ? 'Backend.Plugin.' . $plugin . '.' : 'Backend.';
+            $configKey = $configPrefix . 'Menu.' . $scope;
 
-            if (file_exists($configFile)) {
+            $_menu = [];
+            if (Configure::check($configKey)) {
+                $_menu = Configure::read($configKey);
+            }
+
+            elseif (file_exists($configFile)) {
                 $config = include $configFile;
                 $config = Hash::expand($config);
 
-                $key = $configPrefix . 'Menu.' . $scope;
-                if (Hash::check($config, $key)) {
+                if (Hash::check($config, $configKey)) {
                     //$menuKey = ($plugin) ? $plugin : 'App';
                     //$menu = array_merge($menu, [ $menuKey => Hash::get($config, $key)]);
-                    foreach (Hash::get($config, $key) as $menuItemKey => $menuItem) {
-                        if (is_numeric($menuItemKey)) {
-                            $menu[] = $menuItem;
-                        } else {
-                            $menu[$menuItemKey] = $menuItem;
-                        }
-                    }
-                    return;
+                    $_menu = Hash::get($config, $configKey);
+
                 }
             }
+
+            foreach ((array) $_menu as $menuItemKey => $menuItem) {
+                if (is_numeric($menuItemKey)) {
+                    $menu[] = $menuItem;
+                } else {
+                    $menu[$menuItemKey] = $menuItem;
+                }
+            }
+            return;
         };
 
 

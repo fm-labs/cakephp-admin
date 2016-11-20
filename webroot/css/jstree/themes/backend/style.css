@@ -1092,10 +1092,11 @@
 .jstree .jstree-icon.root::before {
   content: "\f015";
 }
-.jstree .jstree-icon.content::before {
+.jstree .jstree-icon.content::before,
+.jstree .jstree-icon.page::before {
   content: "\f016";
 }
-.jstree .jstree-icon.static::before {
+.jstree .jstree-icon.post::before {
   content: "\f1c9";
 }
 .jstree .jstree-icon.redirect::before {

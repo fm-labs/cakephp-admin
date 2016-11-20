@@ -103,8 +103,8 @@ foreach ($associations as $type => $data) {
     </h2>
 
     <?php
-    echo $this->cell('Backend.EntityView', [ $post ], [
-        'title' => $post->title,
+    echo $this->cell('Backend.EntityView', [ $<%= $singularVar %> ], [
+        'title' => $<%= $singularVar %>->title,
         'model' => '<%= $modelClass %>',
     ]);
     ?>

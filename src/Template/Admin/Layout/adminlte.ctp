@@ -19,7 +19,7 @@
     <!-- Theme style -->
     <?= $this->Html->css('/backend/adminlte/dist/css/AdminLTE.min.css'); ?>
 
-    <?= $this->Html->css('Backend.global'); ?>
+    <?= ''//$this->Html->css('Backend.global'); ?>
     <?= $this->Html->css('Backend.backend'); ?>
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
@@ -116,7 +116,7 @@ desired effect
 <!-- Bootstrap 3.3.6 -->
 <?= $this->Html->script('/backend/adminlte/bootstrap/js/bootstrap.min.js'); ?>
 <!-- AdminLTE App -->
-<?= $this->Html->script('/backend/adminlte/dist/js/app.min.js'); ?>
+<?= $this->Html->script('/backend/adminlte/dist/js/app.js'); ?>
 
 <?= $this->Html->script('Backend.underscore-min'); ?>
 <?= $this->Html->script('Backend.jquery/jquery-ui.min'); ?>
@@ -128,12 +128,14 @@ desired effect
 <?= $this->fetch('scriptBottom'); ?>
 
 <script>
+    /*
     $(document).ready(function() {
         Backend.Renderer.onReady();
     });
     $(window).on('unload', function() {
         Backend.Renderer.onUnload();
     })
+    */
 </script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

@@ -16,7 +16,7 @@ class BackendView extends View
     {
 
         $this->loadHelper('Html', [
-            'className' => 'Backend\View\Helper\BackendHelper'
+            //'className' => 'Backend\View\Helper\BackendHelper'
         ]);
         $this->loadHelper('Form', [
             'className' => 'Backend\View\Helper\BackendFormHelper',
@@ -52,10 +52,10 @@ SCRIPT;
         $beScript = str_replace(['{{ROOTURL}}'], [$this->Url->build('/')], $beScript);
         $this->Html->scriptBlock($beScript, ['block' => true]);
 
-        $this->Html->script('_jquery', ['block' => true]);
+        //$this->Html->script('_jquery', ['block' => true]);
 
         $this->Html->css('Backend.chosen/chosen.min', ['block' => true]);
-        $this->Html->script('_chosen', ['block' => 'scriptBottom']);
+        $this->Html->script('Backend.chosen/chosen.jquery.min', ['block' => 'scriptBottom']);
     }
 
     public function renderLayout($content, $layout = null)

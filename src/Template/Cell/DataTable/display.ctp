@@ -1,5 +1,6 @@
 <?php
 $this->loadHelper('Backend.DataTable');
+$this->loadHelper('Backend.DataTableJs');
 
 if (empty($dataTable['class'])) {
     $dataTable['class'] = 'table table-condensed table-striped table-hover';
@@ -13,12 +14,17 @@ $this->DataTable->create($dataTable);
 <?= $this->DataTable->script(); ?>
 <?= $this->DataTable->debug(); ?>
 
+<!-- DataTable JS -->
+<?= $this->DataTableJs->fromHtmlTable($this->DataTable->id()); ?>
+
 <script type="text/javascript">
-    //$(document).ready(function() {
+    $(document).ready(function() {
+
         var dtId = '<?= $this->DataTable->id(); ?>';
         var dtTable = '<?= $this->DataTable->param('model'); ?>';
         var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->param('sortUrl')); ?>';
         var $el = $('#' + dtId);
+
 
         //originally from http://stackoverflow.com/questions/1307705/jquery-ui-sortable-with-table-and-tr-width/1372954#1372954
         var fixHelperModified = function(e, tr) {
@@ -86,7 +92,7 @@ $this->DataTable->create($dataTable);
 
         }
 
-        //$el.DataTable();
+        $el.dataTable();
 
-    //});
+    });
 </script>

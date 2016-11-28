@@ -44,6 +44,14 @@ module.exports = function(grunt) {
         }
       }
     },
+    copy: {
+      adminlte: {
+        files: [
+          // includes files within path
+          {expand: true, cwd: 'bower_components/AdminLTE/', src: ['bootstrap/**', 'dist/**', 'plugins/**'], dest: 'webroot/adminlte/'},
+        ]
+      }
+    },
     watch: {
       assets: {
         files: [
@@ -60,8 +68,9 @@ module.exports = function(grunt) {
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-copy');
 
   // Default task.
-  grunt.registerTask('default', ['less']);
+  grunt.registerTask('default', ['less', 'copy']);
 
 };

@@ -8,6 +8,7 @@ use Cake\Core\Plugin;
  * Copy backend.default.php to your app's config folder,
  * rename to backend.php and adjust contents
  */
-//Configure::load('backend');
+Configure::load('Backend.backend');
 
 Plugin::load('Bootstrap');
+Plugin::load('AdminLte');

@@ -19,7 +19,7 @@ return [
      */
     'Backend.Dashboard' => [
         'title' => 'Backend',
-        'url' => '/backend/admin/Dashboard/index',
+        'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
     ],
 
     /**
@@ -37,6 +37,10 @@ return [
      * Backend AuthComponent config
      */
     'Backend.Auth' => [
+    ],
+
+    'Backend.Search' => [
+        'searchUrl' => ['plugin' => 'Backend', 'controller' => 'Search', 'action' => 'index'],
     ],
 
     /**

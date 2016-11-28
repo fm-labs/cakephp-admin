@@ -86,5 +86,7 @@ $this->DataTable->create($dataTable);
 
         }
 
+        //$el.DataTable();
+
     //});
 </script>

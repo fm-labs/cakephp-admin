@@ -1,23 +1,25 @@
+<?php $this->loadHelper('Time'); ?>
 <li class="dropdown user user-menu">
     <!-- Menu Toggle Button -->
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <!-- The user image in the navbar-->
-        <?= $this->Html->image('/backend/adminlte/dist/img/user2-160x160.jpg', ['class' => 'user-image', 'alt' => 'User Image']); ?>
+        <?php //echo $this->Html->image('/backend/adminlte/dist/img/user2-160x160.jpg', ['class' => 'user-image', 'alt' => 'User Image']); ?>
+        <i class="fa fa-user"></i>
         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-        <span class="hidden-xs">Alexander Pierce</span>
+        <span class="hidden-xs"><?= h($this->request->session()->read('Backend.User.name')); ?></span>
     </a>
     <ul class="dropdown-menu">
         <!-- The user image in the menu -->
         <li class="user-header">
-            <?= $this->Html->image('/backend/adminlte/dist/img/user2-160x160.jpg', ['class' => 'img-circle', 'alt' => 'User Image']); ?>
-
+            <?php //echo $this->Html->image('/backend/adminlte/dist/img/user2-160x160.jpg', ['class' => 'img-circle', 'alt' => 'User Image']); ?>
+            <i class="fa fa-user fa-5x" style="color: #fff;"></i>
             <p>
-                Alexander Pierce - Web Developer
-                <small>Member since Nov. 2012</small>
+                <?= h($this->request->session()->read('Backend.User.name')); ?>
+                <small>Member since <?= $this->Time->nice($this->request->session()->read('Backend.User.created')); ?></small>
             </p>
         </li>
-        <!-- Menu Body -->
-        <li class="user-body">
+        <!-- Menu Body (unused yet)-->
+        <li class="user-body" style="display: none">
             <div class="row">
                 <div class="col-xs-4 text-center">
                     <a href="#">Followers</a>
@@ -34,10 +36,18 @@
         <!-- Menu Footer-->
         <li class="user-footer">
             <div class="pull-left">
-                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                <?= $this->Html->link(
+                    __('Profile'),
+                    ['_name' => 'backend:admin:auth:user'],
+                    ['class' => 'btn btn-default btn-flat']
+                ); ?>
             </div>
             <div class="pull-right">
-                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                <?= $this->Html->link(
+                    __('Sign out'),
+                    ['_name' => 'backend:admin:auth:logout'],
+                    ['class' => 'btn btn-default btn-flat']
+                ); ?>
             </div>
         </li>
     </ul>

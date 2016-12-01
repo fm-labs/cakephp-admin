@@ -8,7 +8,7 @@ use Cake\Event\Event;
 use Cake\Log\Log;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
-use Backend\Controller\BackendControllerInterface;
+use Cake\Routing\Router;
 use User\Controller\Component\AuthComponent;
 
 /**
@@ -27,12 +27,16 @@ class BackendComponent extends Component
     //public $components = ['Backend.Flash', 'User.Auth'];
 
     protected $_defaultConfig = [
+        'backendPath' => '/backend',
+        'backendTitle' => 'Backend',
+        'dashboardUrl' => ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
         'authLoginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
         'authLoginRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
         'authLogoutAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
         'authUnauthorizedRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'unauthorized'],
         'authAuthorize' => ['Controller', 'Backend.Backend', 'User.Roles'],
-        'userModel' => 'Backend.Users'
+        'userModel' => 'Backend.Users',
+        'searchUrl' => ['plugin' => 'Backend', 'controller' => 'Search', 'action' => 'query'],
     ];
 
     /**
@@ -43,6 +47,19 @@ class BackendComponent extends Component
     public function initialize(array $config)
     {
         $controller = $this->_registry->getController();
+
+        // Configure Backend from config
+        $configMap = [
+            'Backend.path' => 'backendPath',
+            'Backend.title' => 'backendTitle',
+            'Backend.Dashboard.url' => 'dashboardUrl',
+            'Backend.Search.url' => 'searchUrl'
+        ];
+        foreach ($configMap as $configKey => $prop) {
+            if (Configure::check($configKey)) {
+                $this->config($prop, Configure::read($configKey));
+            }
+        }
 
         // Configure Backend FlashComponent
         if ($this->_registry->has('Flash') || !is_a($this->_registry->get('Flash'), static::$flashComponentClass)) {
@@ -128,8 +145,9 @@ class BackendComponent extends Component
     public function beforeRender(\Cake\Event\Event $event)
     {
         $controller = $event->subject();
-        $controller->set('be_path', Configure::read('Backend.path'));
-        $controller->set('be_title', Configure::read('Backend.Dashboard.title'));
+        $controller->set('be_path', $this->config('backendPath'));
+        $controller->set('be_title', $this->config('backendTitle'));
+        $controller->set('be_search_url', Router::url($this->config('searchUrl')) );
     }
 
     public function authConfig($key, $val = null, $merge = true)

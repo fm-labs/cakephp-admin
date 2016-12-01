@@ -128,14 +128,12 @@ desired effect
 <?= $this->fetch('scriptBottom'); ?>
 
 <script>
-    /*
     $(document).ready(function() {
         Backend.Renderer.onReady();
     });
     $(window).on('unload', function() {
         Backend.Renderer.onUnload();
     })
-    */
 </script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

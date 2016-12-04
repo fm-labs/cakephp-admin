@@ -32,6 +32,6 @@ class ChosenHelper extends Helper
         public function beforeLayout(Event $event)
     {
         $this->Html->css('Backend.chosen/chosen.min', ['block' => true]);
-        $this->Html->script('_chosen', ['block' => 'scriptBottom']);
+        //$this->Html->script('_chosen', ['block' => 'scriptBottom']);
     }
 }

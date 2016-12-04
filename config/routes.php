@@ -64,6 +64,7 @@ Router::scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], functi
         ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index', 'prefix' => 'admin'];
     $routes->connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
 
+    $routes->extensions(['json']);
     // default admin routes
     $routes->connect('/:controller/:action/*');
     $routes->connect('/:controller/:action');

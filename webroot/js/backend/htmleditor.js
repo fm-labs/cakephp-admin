@@ -27,7 +27,7 @@ Backend.Renderer.addListener('docready', function(scope) {
             console.error(ex);
         }
         **/
-        console.log("Found HtmlEditor", id, configData);
+        //console.log("Found HtmlEditor", id, configData);
 
         $("#" + id).addClass('htmleditor-loaded').tinymce(configData);
     });
@@ -38,7 +38,7 @@ Backend.Renderer.addListener('unload', function(scope) {
     $(scope).find('.htmleditor textarea.htmleditor-loaded').each(function() {
 
         var id = $(this).attr('id');
-        console.log("Unloading HtmlEditor " + id);
+        //console.log("Unloading HtmlEditor " + id);
         tinymce.execCommand('mceRemoveControl', true, id);
         $(this).remove();
     })

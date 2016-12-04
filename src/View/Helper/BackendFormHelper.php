@@ -77,7 +77,7 @@ class BackendFormHelper extends BootstrapFormHelper
 
                 case 'htmleditor':
                 case 'htmltext':
-                    $this->Html->script('_tinymce', ['block' => 'scriptBottom']);
+                    //$this->Html->script('_tinymce', ['block' => 'scriptBottom']);
                     break;
 
                 case 'imageselect':

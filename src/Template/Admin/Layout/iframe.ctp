@@ -11,13 +11,13 @@
     <?= $this->fetch('meta') ?>
 
     <!-- Bootstrap 3.3.6 -->
-    <?= $this->Html->css('/backend/adminlte/bootstrap/css/bootstrap.min.css'); ?>
+    <?= $this->Html->css('/backend/libs/adminlte/bootstrap/css/bootstrap.min.css'); ?>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/backend/libs/fontawesome/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/backend/libs/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <?= $this->Html->css('/backend/adminlte/dist/css/AdminLTE.min.css'); ?>
+    <?= $this->Html->css('/backend/libs/adminlte/dist/css/AdminLTE.min.css'); ?>
 
     <?= ''//$this->Html->css('Backend.global'); ?>
     <?= $this->Html->css('Backend.backend'); ?>
@@ -25,18 +25,21 @@
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <?= $this->Html->css('/backend/adminlte/dist/css/skins/skin-blue.min.css'); ?>
+    <?= $this->Html->css('/backend/libs/adminlte/dist/css/skins/skin-blue.min.css'); ?>
+    <style>
+        .wrapper, .content-wrapper { background: transparent !important;}
+    </style>
     <?= $this->fetch('css') ?>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="/backend/libs/html5shiv/html5shiv.min.js"></script>
+    <script src="/backend/libs/respond/respond.min.js"></script>
     <![endif]-->
 
     <!-- jQuery 2.2.3 -->
-    <?= $this->Html->script('/backend/adminlte/plugins/jQuery/jquery-2.2.3.min.js'); ?>
+    <?= $this->Html->script('/backend/libs/adminlte/plugins/jQuery/jquery-2.2.3.min.js'); ?>
     <?= $this->fetch('script') ?>
 </head>
 <!--
@@ -84,12 +87,6 @@ desired effect
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
-    <!-- Main Footer -->
-    <?= $this->element('Backend.AdminLte/footer'); ?>
-
-    <!-- Control Sidebar -->
-    <?= $this->element('Backend.AdminLte/control_sidebar'); ?>
 
 </div>
 <!-- ./wrapper -->

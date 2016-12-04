@@ -3,6 +3,13 @@
 @import "../vars.less";
 
 /**
+ * General Inputs
+ */
+input[readonly] {
+  cursor: not-allowed;
+}
+
+/**
  * Forms
  */
 form div.required > label {
@@ -134,4 +141,5 @@ form input.timepicker {
   background-size: 20px auto !important;
   background-color: transparent !important;
   padding-left: 40px;
+  cursor: auto;
 }

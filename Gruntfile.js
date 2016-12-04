@@ -45,10 +45,14 @@ module.exports = function(grunt) {
       }
     },
     copy: {
-      adminlte: {
+      bower: {
         files: [
           // includes files within path
-          {expand: true, cwd: 'bower_components/AdminLTE/', src: ['bootstrap/**', 'dist/**', 'plugins/**'], dest: 'webroot/adminlte/'},
+          {expand: true, cwd: 'bower_components/AdminLTE/', src: ['bootstrap/**', 'dist/**', 'plugins/**'], dest: 'webroot/libs/adminlte/'},
+          {expand: true, cwd: 'bower_components/font-awesome/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/fontawesome/'},
+          {expand: true, cwd: 'bower_components/Ionicons/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/ionicons/'},
+          {expand: true, cwd: 'bower_components/html5shiv/dist/', src: ['**'], dest: 'webroot/libs/html5shiv/'},
+          {expand: true, cwd: 'bower_components/respond/dest/', src: ['**'], dest: 'webroot/libs/respond/'}
         ]
       }
     },

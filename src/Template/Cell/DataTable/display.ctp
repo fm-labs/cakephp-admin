@@ -14,9 +14,9 @@ $this->DataTable->create($dataTable);
 <?= $this->DataTable->script(); ?>
 <?= $this->DataTable->debug(); ?>
 
-<!-- DataTable JS -->
+<!-- DataTable JS
 <?= $this->DataTableJs->fromHtmlTable($this->DataTable->id()); ?>
-
+ -->
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -92,7 +92,7 @@ $this->DataTable->create($dataTable);
 
         }
 
-        $el.dataTable();
+        //$el.dataTable();
 
     });
 </script>

@@ -47,6 +47,15 @@
   padding-left: 0;
   padding-right: 0;
 }
+/* Tabs */
+.tabs .nav-tabs li:first-child {
+  margin-left: 10px;
+}
+.tabs .tab-content > .tab-pane {
+  border: 1px solid #DDD;
+  padding: 1rem;
+  border-top-width: 0;
+}
 /* Forms */
 .form-group {
   margin-bottom: 8px;
@@ -142,8 +151,20 @@ dl.dl-striped dd:nth-child(2n+1) {
   background-color: #f3f3f3;
 }
 /**
+ * Buttons
+ */
+.content-wrapper {
+  padding-bottom: 100px;
+}
+/**
  * Backend mixins
  */
+/**
+ * General Inputs
+ */
+input[readonly] {
+  cursor: not-allowed;
+}
 /**
  * Forms
  */
@@ -268,6 +289,7 @@ form input.timepicker {
   background-size: 20px auto !important;
   background-color: transparent !important;
   padding-left: 40px;
+  cursor: auto;
 }
 /**
  * Backend Navigation Style Sheet

@@ -277,7 +277,7 @@ Backend.Modal = {
         var $iframe = $('<iframe>', {
             class: 'modal-iframe',
             src: url,
-            style: 'width: 100%; min-height: 500px;',
+            style: 'width: 100%; min-height: 500px; border: none;',
             height: $(window).height() * 0.70
         });
 
@@ -391,7 +391,7 @@ Backend.Ajax = {
 
         var $target = $(target);
         var $form = $(form);
-        var data = $form.serialize();
+        var data = $form.serializeArray();
         var url = $form.data('url') || $form.attr('action');
         var method = $form.attr('method') || 'POST';
 
@@ -620,9 +620,11 @@ $(document).on('click', 'form fieldset > legend', function() {
 // Form Submission
 // Submit forms via AJAX in scoped context
 //
-$(document).on('submit', 'form.ajax', function(ev) {
+$(document).on('submit', 'form[data-ajax]', function(ev) {
 
-    var $form = $(ev.target);
+    var $form = $(this);
+    var $submitBtn = $form.find('button[type=submit]').first();
+    $submitBtn.data('label', $submitBtn.text());
     var data = $form.serialize();
     var url = $form.data('url') || $(this).attr('action');
     var method = $form.attr('method') || 'POST';
@@ -631,13 +633,45 @@ $(document).on('submit', 'form.ajax', function(ev) {
 
     // If we are in an ajax content container
     // submit form via AJAX
+    /*
     var $container = $form.closest('.ajax-content');
     if ($container.length > 0) {
         Backend.Ajax.submitForm($container, ev.target);
         ev.preventDefault();
         ev.stopPropagation();
     }
+    */
+    var timeout = null;
 
+    $.ajax({
+        url: url,
+        dataType: 'json',
+        data: data,
+        method: 'POST',
+        beforeSend: function() {
+            $submitBtn.addClass('btn-loading').text('Saving ...');
+        }
+    }).done(function(response) {
+        console.log("Ajax form DONE", response)
+        $submitBtn.removeClass('btn-default').addClass('btn-success').html('Saved <i class="fa fa-check"></i> ');
+    }).fail(function(response) {
+        console.log("Ajax form FAIL", response)
+        $submitBtn.removeClass('btn-default').addClass('btn-danger').html("Saving failed :(");
+    }).always(function() {
+        $submitBtn.removeClass('btn-loading');
+        if (timeout) {
+            clearTimeout(timeout);
+        }
+        timeout = setTimeout(function() {
+           $submitBtn
+               .removeClass('btn-success')
+               .removeClass('btn-danger')
+               .html($submitBtn.data('label'));
+        }, 7500);
+    });
+
+    ev.preventDefault();
+    return false;
 });
 
 // listen for post messages

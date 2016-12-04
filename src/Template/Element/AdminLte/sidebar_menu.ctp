@@ -10,9 +10,7 @@ $menuTemplates = [
     'navList' => '<ul class="{{class}}">{{title}}{{items}}</ul>',
     'navListTitle' => '<li class="header">{{content}}</li>',
     'navListItem' => '<li role="presentation" class="{{class}}"{{attrs}}>{{link}}</li>',
-    'navListItemSubmenu' => '<li role="presentation" class="{{class}}"{{attrs}}>{{link}}<span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>{{submenu}}</li>',
+    'navListItemSubmenu' => '<li role="presentation" class="{{class}}"{{attrs}}>{{link}}{{submenu}}</li>',
     'navSubmenuList' => '<ul class="{{class}}">{{items}}</ul>'
 ];
 $menuClasses = [

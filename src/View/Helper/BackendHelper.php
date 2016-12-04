@@ -17,6 +17,7 @@ class BackendHelper extends HtmlHelper
      * @var array
      */
     protected $_scripts = [
+
         '_jquery' => 'Backend.jquery/jquery-1.11.2.min',
         '_jqueryui' => ['Backend.jqueryui/jquery-ui.min' => ['_jquery']],
         '_chosen' => ['Backend.chosen/chosen.jquery.min' => ['_jquery']],
@@ -28,6 +29,7 @@ class BackendHelper extends HtmlHelper
         '_tinymce_core' => ['Backend.tinymce/tinymce.min'],
         '_tinymce_jquery' => ['Backend.tinymce/jquery.tinymce.min'],
         '_tinymce' => ['_tinymce_core', '_tinymce_jquery']
+
     ];
 
     protected $_css = [

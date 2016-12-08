@@ -62,20 +62,13 @@ class BackendComponent extends Component
         }
 
         // Configure Backend FlashComponent
+        /*
+        */
         if ($this->_registry->has('Flash') || !is_a($this->_registry->get('Flash'), static::$flashComponentClass)) {
             $this->_registry->unload('Flash');
             $controller->Flash = $this->_registry->load('Flash', [
                 'className' => static::$flashComponentClass,
-                'key' => 'backend',
-                //'class' => 'info',
-                'plugin' => 'Backend',
-                //'params' => ['dismiss' => true],
-                'elementMap' => [
-                    'default' => ['class' => 'info'],
-                    'info' => ['element' => 'default', 'class' => 'info'],
-                    'warning' => ['element' => 'default', 'class' => 'warning'],
-                    'error' => ['element' => 'default', 'class' => 'danger']
-                ]
+                'key' => 'backend'
             ]);
         }
 
@@ -95,23 +88,6 @@ class BackendComponent extends Component
                 'className' => static::$authComponentClass,
             ]);
         }
-        $controller->Auth->config('loginAction', $this->config('authLoginAction'));
-        $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'));
-        $controller->Auth->config('authenticate', [
-            AuthComponent::ALL => ['userModel' => $this->config('userModel'), 'finder' => 'backendAuthUser'],
-            'Form',
-            //'Basic'
-        ]);
-        // Configure Backend Auth Storage
-        $controller->Auth->config('storage', [
-            'className' => 'Session',
-            'key' => 'Backend.User',
-            'redirect' => 'Backend.redirect'
-        ]);
-
-        // Configure Backend Authorization
-        $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'));
-        $controller->Auth->config('authorize', $this->config('authAuthorize'));
 
         // Configure controller
         $controller->viewBuilder()->className('Backend.Backend');
@@ -135,6 +111,24 @@ class BackendComponent extends Component
 
     public function beforeFilter(Event $event)
     {
+        $controller =& $this->_controller;
+        $controller->Auth->config('loginAction', $this->config('authLoginAction'));
+        $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'));
+        $controller->Auth->config('authenticate', [
+            AuthComponent::ALL => ['userModel' => $this->config('userModel'), 'finder' => 'backendAuthUser'],
+            'Form',
+            //'Basic'
+        ]);
+        // Configure Backend Auth Storage
+        $controller->Auth->config('storage', [
+            'className' => 'Session',
+            'key' => 'Backend.User',
+            'redirect' => 'Backend.redirect'
+        ]);
+
+        // Configure Backend Authorization
+        $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'));
+        $controller->Auth->config('authorize', $this->config('authAuthorize'));
     }
 
     public function startup(Event $event)

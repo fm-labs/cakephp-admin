@@ -23,21 +23,21 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
         $routes->connect(
             '/login',
             ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
-            ['_name' => 'auth:login']
+            ['_name' => 'user:login']
         );
 
         // backend:admin:auth:logout
         $routes->connect(
             '/logout',
             ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
-            [ '_name' => 'auth:logout']
+            [ '_name' => 'user:logout']
         );
 
         // backend:admin:auth:user
         $routes->connect(
             '/user',
             ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user'],
-            [ '_name' => 'auth:user']
+            [ '_name' => 'user:profile']
         );
 
         // backend:admin:dashboard

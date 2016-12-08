@@ -13,9 +13,8 @@
 
     <?= $this->Html->css('Bootstrap.bootstrap.min'); ?>
     <?= $this->Html->css('Backend.font-awesome'); ?>
-    <?= $this->Html->css('Backend.global'); ?>
     <?= $this->Html->css('Backend.backend'); ?>
-    <?= $this->Html->css('Backend.layout.default'); ?>
+    <?= $this->Html->css('Backend.layout/default'); ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>

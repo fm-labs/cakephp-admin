@@ -76,6 +76,16 @@ desired effect
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
+        <div class="flash-wrapper">
+            <!-- Flash Auth -->
+            <?= $this->Flash->render('auth') ?>
+            <!-- Flash Backend -->
+            <?= $this->Flash->render('backend') ?>
+            <!-- Flash Default -->
+            <?= $this->Flash->render() ?>
+        </div>
+
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>

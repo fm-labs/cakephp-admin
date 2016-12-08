@@ -11,11 +11,8 @@
 
     <?= $this->Html->css('Bootstrap.bootstrap.min'); ?>
     <?= $this->Html->css('Backend.font-awesome'); ?>
-    <?= $this->Html->css('Backend.global'); ?>
-    <?= $this->Html->css('Backend.layout.auth'); ?>
+    <?= $this->Html->css('Backend.layout/auth'); ?>
     <?= $this->fetch('css') ?>
-
-    <?= $this->Html->script('Backend.jquery/jquery-1.11.2.min'); ?>
     <?= $this->fetch('script') ?>
 </head>
 <body>
@@ -31,14 +28,5 @@
         <footer>
         </footer>
     </div>
-    <?= ''// $this->Html->script('Bootstrap.bootstrap.min'); ?>
-    <?= $this->Html->script('Backend.backend/backend'); ?>
-    <?= $this->fetch('scriptBottom'); ?>
-
-    <script>
-        $(document).ready(function() {
-            Backend.Renderer.onReady();
-        })
-    </script>
 </body>
 </html>

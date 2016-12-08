@@ -1,77 +1,17 @@
-@import "../elements.less";
+
+@import "../mixins/elements.less";
 @import "../vars.less";
 
 /**
  * Bootstrap Theme Backend
  */
 
-/** Pagination **/
-.pagination {
-  margin: 0;
-}
 
-/* Panels */
-.panel {
-  border-radius: 0;
-  //border: none;
-  //ox-shadow: 0 1px 10px rgba(0,0,0,.05);
-}
 
-.panel-heading {
-  border-radius: 0;
-}
-
-.panel-nopad {
-  .panel-body {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
-/* Tabs */
-.tabs .nav-tabs li:first-child {
-  margin-left: 10px;
-}
-
-.tabs .tab-content > .tab-pane {
-  border: 1px solid #DDD;
-  padding: 1rem;
-  border-top-width: 0
-}
 
 /* Forms */
-.form-group {
-  margin-bottom: 8px;
-}
 
 
-/* Nested Navs */
-ul.nav.nav-nested {
-   > li {
-
-    > a {
-      //padding: 5px 15px;
-      //.border-radius(0);
-    }
-
-    > ul {
-      margin-left: 20px;
-    }
-  }
-
-}
-
-ul.nav.nav-nested.nav-trailed {
-  > ul {
-    display: none;
-  }
-
-  > li.trail {
-    > ul {
-      display: inherit;
-    }
-  }
-}
 
 /** Tables
 table.table {
@@ -140,25 +80,7 @@ table.table {
 }
 **/
 
-// no cell borders for table within a panel
-.panel table.table tr th, table.table tr td {
-  border: none;
-}
 
-/**
- * Lists
- */
-dl.dl-horizontal {
-  dt, dd {
-    padding: 0.3rem;
-  }
-}
-
-dl.dl-striped {
-  dd:nth-child(2n+1) {
-    background-color: #f3f3f3;
-  }
-}
 
 /**
  * Buttons

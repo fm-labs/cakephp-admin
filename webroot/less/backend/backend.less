@@ -2,8 +2,8 @@
  * Common Backend CSS Stylesheet
  */
 
-@import "elements.less";
-@import "vars.less";
+@import "../mixins/elements.less";
+@import "../vars.less";
 
 /*
 body{
@@ -62,6 +62,23 @@ h1 {
 h2 {
   font-size: 1.25em;
 }
+
+
+/**
+ * Lists
+ */
+dl.dl-horizontal {
+  dt, dd {
+    padding: 0.3rem;
+  }
+}
+
+dl.dl-striped {
+  dd:nth-child(2n+1) {
+    background-color: #f3f3f3;
+  }
+}
+
 
 .index, .view, .form {
 
@@ -269,6 +286,11 @@ nav ul.pagination {
       display: inline-block;
     }
   }
+}
+
+/** Pagination **/
+.pagination {
+  margin: 0;
 }
 
 /** Entity View **/

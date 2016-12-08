@@ -54,7 +54,7 @@ if (!$this->request->session()->check('Backend.User')) return false;
                 <ul class="dropdown-menu">
                     <li>
                         <?= $this->Ui->link('Profile',
-                            ['_name' => 'backend:admin:auth:user'],
+                            ['_name' => 'backend:admin:user:profile'],
                             ['class' => 'link-frame-modal']
                         ); ?>
                     </li>
@@ -62,7 +62,7 @@ if (!$this->request->session()->check('Backend.User')) return false;
                     <li>
                         <?= $this->Ui->link(
                             __('Logout'),
-                            ['_name' => 'backend:admin:auth:logout'],
+                            ['_name' => 'backend:admin:user:logout'],
                             ['class' => 'link-master']
                         );
                         ?>

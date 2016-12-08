@@ -18,11 +18,11 @@ module.exports = function(grunt) {
           banner: '/** <%= pkg.title || pkg.name %> - v<%= pkg.version %> **/\n'
         },
         files: {
-          'webroot/css/layout.auth.css': 'webroot/less/layout.auth.less',
-          'webroot/css/layout.default.css': 'webroot/less/layout.default.less',
-          'webroot/css/layout.iframe.css': 'webroot/less/layout.iframe.less',
+          'webroot/css/layout/auth.css': 'webroot/less/layout/auth.less',
+          'webroot/css/layout/default.css': 'webroot/less/layout/default.less',
+          'webroot/css/layout/iframe.css': 'webroot/less/layout/iframe.less',
           'webroot/css/backend.css': 'webroot/less/backend.less',
-          'webroot/css/jstree/themes/backend/style.css': 'webroot/less/jstree.less'
+          'webroot/css/jstree/themes/backend/style.css': 'webroot/less/plugins/jstree/jstree.less'
         }
 
       },
@@ -36,11 +36,11 @@ module.exports = function(grunt) {
           ]
         },
         files: {
-          'webroot/css/layout.auth.min.css': 'webroot/less/layout.auth.less',
-          'webroot/css/layout.default.min.css': 'webroot/less/layout.default.less',
-          'webroot/css/layout.iframe.min.css': 'webroot/less/layout.iframe.less',
+          'webroot/css/layout/auth.min.css': 'webroot/less/layout/auth.less',
+          'webroot/css/layout/default.min.css': 'webroot/less/layout/default.less',
+          'webroot/css/layout/iframe.min.css': 'webroot/less/layout/iframe.less',
           'webroot/css/backend.min.css': 'webroot/less/backend.less',
-          'webroot/css/jstree/themes/backend/style.min.css': 'webroot/less/jstree.less'
+          'webroot/css/jstree/themes/backend/style.min.css': 'webroot/less/plugins/jstree/jstree.less'
         }
       }
     },

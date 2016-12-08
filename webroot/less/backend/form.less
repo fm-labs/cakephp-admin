@@ -1,5 +1,6 @@
-@import "../elements.less";
-@import "../mixins.less";
+
+@import "../mixins/elements.less";
+@import "../mixins/mixins.less";
 @import "../vars.less";
 
 /**
@@ -12,6 +13,10 @@ input[readonly] {
 /**
  * Forms
  */
+form .form-group {
+  margin-bottom: 8px;
+}
+
 form div.required > label {
   font-weight: bold;
 

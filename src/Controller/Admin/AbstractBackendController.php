@@ -3,7 +3,7 @@ namespace Backend\Controller\Admin;
 
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
-use Cake\Controller\Controller;
+use Backend\Controller\Base\BaseBackendController;
 use Cake\Core\Configure;
 use Backend\Controller\Component\FlashComponent;
 
@@ -20,32 +20,8 @@ use Backend\Controller\Component\FlashComponent;
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
  *
+ * @deprecated Use Backend\Controller\Base\BaseBackendController instead;
  */
-abstract class AbstractBackendController extends Controller
+abstract class AbstractBackendController extends BaseBackendController
 {
-    /**
-     * Initialization hook method.
-     *
-     * Use this method to add common initialization code like loading components.
-     *
-     * @throws \Cake\Core\Exception\Exception
-     * @return void
-     */
-    public function initialize()
-    {
-        // Configure Backend component
-        if (!$this->components()->has('Backend')) {
-            $this->loadComponent('Backend.Backend');
-        }
-    }
-
-    /**
-     * Fallback controller authorization
-     *
-     * @return bool|null
-     */
-    public function isAuthorized()
-    {
-        return null;
-    }
 }

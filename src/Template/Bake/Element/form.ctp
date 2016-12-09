@@ -6,11 +6,11 @@ $fields = collection($fields)
         return $schema->columnType($field) !== 'binary';
     });
 %>
-<?php $this->Html->addCrumb(__('<%= $pluralHumanName %>'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__('<%= $pluralHumanName %>'), ['action' => 'index']); ?>
 <% if (strpos($action, 'add') === false): %>
-<?php $this->Html->addCrumb(__('Edit {0}', __('<%= $singularHumanName %>'))); ?>
+<?php $this->Breadcrumbs->add(__('Edit {0}', __('<%= $singularHumanName %>'))); ?>
 <% else: %>
-<?php $this->Html->addCrumb(__('New {0}', __('<%= $singularHumanName %>'))); ?>
+<?php $this->Breadcrumbs->add(__('New {0}', __('<%= $singularHumanName %>'))); ?>
 <% endif; %>
 <% if (strpos($action, 'add') === false): %>
 <?= $this->Toolbar->addPostLink(

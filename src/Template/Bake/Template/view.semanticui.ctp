@@ -51,8 +51,8 @@ $groupedFields = collection($fields)
 $groupedFields += ['number' => [], 'string' => [], 'boolean' => [], 'date' => [], 'text' => []];
 $pk = "\$$singularVar->{$primaryKey[0]}";
 %>
-<?php $this->Html->addCrumb(__('<%= $pluralHumanName %>'), ['action' => 'index']); ?>
-<?php $this->Html->addCrumb($<%= $singularVar %>-><%= $displayField %>); ?>
+<?php $this->Breadcrumbs->add(__('<%= $pluralHumanName %>'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>); ?>
 <?= $this->Toolbar->addLink(
     __('Edit {0}', __('<%= $singularHumanName %>')),
     ['action' => 'edit', <%= $pk %>],

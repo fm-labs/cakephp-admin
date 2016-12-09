@@ -1,4 +1,4 @@
-<?php $this->Html->addCrumb(__d('backend','Settings')); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Settings')); ?>
 <?= $this->Toolbar->addLink(
     __d('backend','New {0}', __d('backend','Setting')),
     ['action' => 'add'],

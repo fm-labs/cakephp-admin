@@ -7,7 +7,7 @@ $fields = collection($fields)
     })
     ->take(7);
 %>
-<?php $this->Html->addCrumb(__('<%= $pluralHumanName %>')); ?>
+<?php $this->Breadcrumbs->add(__('<%= $pluralHumanName %>')); ?>
 
 <?php $this->Toolbar->addLink(__('New {0}', __('<%= $singularHumanName %>')), ['action' => 'add'], ['data-icon' => 'plus']); ?>
 <%

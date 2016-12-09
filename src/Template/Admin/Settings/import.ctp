@@ -1,5 +1,5 @@
-<?php $this->Html->addCrumb(__d('backend','Settings'), ['action' => 'index']); ?>
-<?php $this->Html->addCrumb(__d('backend','Settings Import')); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Settings'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Settings Import')); ?>
 <?= $this->Toolbar->addLink(
     __d('backend','List {0}', __d('backend','Settings')),
     ['action' => 'index'],

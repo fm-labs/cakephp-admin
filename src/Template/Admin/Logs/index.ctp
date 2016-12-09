@@ -1,5 +1,5 @@
-<?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Html->addCrumb(__d('backend', 'Logs')); ?>
+<?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend', 'Logs')); ?>
 <div class="index">
 	<h2><?= __d('backend', 'LogViewer'); ?></h2>
 	

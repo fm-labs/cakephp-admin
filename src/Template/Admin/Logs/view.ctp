@@ -1,6 +1,6 @@
-<?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Html->addCrumb(__d('backend', 'Logs'), ['action' => 'index']); ?>
-<?php $this->Html->addCrumb(h($logFile)); ?>
+<?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend', 'Logs'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(h($logFile)); ?>
 <?= $this->Toolbar->addLink(
     __('List {0}', __('Logs')),
     ['action' => 'index'],

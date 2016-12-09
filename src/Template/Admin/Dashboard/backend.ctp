@@ -1,4 +1,4 @@
-<?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Dashboard', 'action' => 'backend']); ?>
+<?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Dashboard', 'action' => 'backend']); ?>
 <?php
 $this->Toolbar->addLink('Refresh', ['controller' => 'Dashboard', 'action' => 'index'], ['class' => 'backend-refresh', 'data-icon' => 'list']);
 $this->Toolbar->addLink('View Logs', ['controller' => 'Logs', 'action' => 'index'], ['class' => 'backend-logs', 'data-icon' => 'list']);

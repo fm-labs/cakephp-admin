@@ -1,6 +1,6 @@
-<?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Html->addCrumb(__('Systeminfo'), ['action' => 'index']); ?>
-<?php $this->Html->addCrumb(__d('backend', 'Menus')); ?>
+<?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__('Systeminfo'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend', 'Menus')); ?>
 <div class="index">
     <h2>Registered Backend Menus</h2>
 

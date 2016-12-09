@@ -1,6 +1,6 @@
-<?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Html->addCrumb(__('Systeminfo'), ['action' => 'index']); ?>
-<?php $this->Html->addCrumb(__d('backend', 'Globals')); ?>
+<?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__('Systeminfo'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend', 'Globals')); ?>
 <div>
 	<h2><?php echo __d('backend', 'CAKEPHP Globals'); ?></h2>
 	<table class="ui table striped">

@@ -1,5 +1,5 @@
-<?php $this->Html->addCrumb(__d('banana','Settings'), ['action' => 'index']); ?>
-<?php $this->Html->addCrumb(__d('banana','Edit {0}', __d('banana','Setting'))); ?>
+<?php $this->Breadcrumbs->add(__d('banana','Settings'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('banana','Edit {0}', __d('banana','Setting'))); ?>
 <div class="settings">
     <div class="be-toolbar actions">
         <div class="ui secondary menu">

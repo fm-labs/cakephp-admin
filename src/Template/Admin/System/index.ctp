@@ -2,8 +2,8 @@
 use Cake\Core\Configure;
 
 ?>
-<?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Html->addCrumb(__('Systeminfo')); ?>
+<?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__('Systeminfo')); ?>
 <div>
 	<h1><?php echo __d('backend', "System "); ?></h1>
 

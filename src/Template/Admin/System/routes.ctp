@@ -2,9 +2,9 @@
 use Cake\Error\Debugger;
 
 ?>
-<?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Html->addCrumb(__('Systeminfo'), ['action' => 'index']); ?>
-<?php $this->Html->addCrumb(__d('backend', 'Routes')); ?>
+<?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__('Systeminfo'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend', 'Routes')); ?>
 <div class="index">
     <h2>Connected Routes</h2>
 

@@ -1,7 +1,7 @@
 <?php
 use Cake\Core\Configure;
 ?>
-<?php $this->Html->addCrumb(__('User'), ['action' => 'user']); ?>
+<?php $this->Breadcrumbs->add(__('User'), ['action' => 'user']); ?>
 <?php $this->assign('title', $user['name']); ?>
 <div class="users view container" style="text-align: center;">
     <h2>

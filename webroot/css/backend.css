@@ -4,6 +4,7 @@
 **/
 .content-wrapper {
   padding-bottom: 100px;
+  background-color: #FFF;
 }
 .flash-wrapper > .alert {
   margin: 0;

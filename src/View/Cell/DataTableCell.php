@@ -53,6 +53,11 @@ class DataTableCell extends Cell
             }
         }
 
+        // sortable
+        if ($params['sortable'] === true) {
+            $params['sortable'] = ['plugin' => 'Backend', 'controller' => 'DataTable', 'action' => 'tableSort', 'model' => $params['model']];
+        }
+
         $this->set('dataTable', $params);
     }
 }

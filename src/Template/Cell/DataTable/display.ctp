@@ -22,7 +22,7 @@ $this->DataTable->create($dataTable);
 
         var dtId = '<?= $this->DataTable->id(); ?>';
         var dtTable = '<?= $this->DataTable->param('model'); ?>';
-        var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->param('sortUrl')); ?>';
+        var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->param('sortable')); ?>';
         var $el = $('#' + dtId);
 
 

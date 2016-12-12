@@ -90,8 +90,8 @@ desired effect
         <section class="content-header">
             <h1>
                 <?= $this->fetch('heading', $this->fetch('title')); ?>
-                <?php if ($this->fetch('titleDesc')): ?>
-                <small><?= $this->fetch('titleDesc'); ?></small>
+                <?php if ($this->fetch('subheading')): ?>
+                <small><?= $this->fetch('subheading'); ?></small>
                 <?php endif; ?>
             </h1>
             <!-- Bread crumbs -->

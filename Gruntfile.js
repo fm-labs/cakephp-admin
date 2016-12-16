@@ -46,6 +46,11 @@ module.exports = function(grunt) {
     },
     copy: {
       bower: {
+        options: {
+          processContentExclude: ['**/*.{png,gif,jpg,ico,psd,ttf,otf,woff,svg}'],
+          noProcess: ['**/*.{png,gif,jpg,ico,psd,ttf,otf,woff,woff2,svg}'], // processContentExclude has been renamed to noProcess
+          encoding: null
+        },
         files: [
           // includes files within path
           {expand: true, cwd: 'bower_components/AdminLTE/', src: ['bootstrap/**', 'dist/**', 'plugins/**'], dest: 'webroot/libs/adminlte/'},

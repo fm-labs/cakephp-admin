@@ -13,9 +13,9 @@
     <!-- Bootstrap 3.3.6 -->
     <?= $this->Html->css('/backend/libs/adminlte/bootstrap/css/bootstrap.min.css'); ?>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="/backend/libs/fontawesome/css/font-awesome.min.css">
+    <?= $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css'); ?>
     <!-- Ionicons -->
-    <link rel="stylesheet" href="/backend/libs/ionicons/css/ionicons.min.css">
+    <?= $this->Html->css('/backend/libs/ionicons/css/ionicons.min.css'); ?>
     <!-- Theme style -->
     <?= $this->Html->css('/backend/libs/adminlte/dist/css/AdminLTE.min.css'); ?>
 
@@ -31,8 +31,8 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-    <script src="/backend/libs/html5shiv/html5shiv.min.js"></script>
-    <script src="/backend/libs/respond/respond.min.js"></script>
+    <?= $this->Html->script('/backend/libs/html5shiv/html5shiv.min.js'); ?>
+    <?= $this->Html->script('/backend/libs/respond/respond.min.js'); ?>
     <![endif]-->
 
     <!-- jQuery 2.2.3 -->

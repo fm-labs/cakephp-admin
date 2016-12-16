@@ -1,0 +1,29 @@
+{
+  "name": "cakephp3-backend",
+  "description": "CakePHP Administrative GUI",
+  "main": "",
+  "authors": [
+    "[object Object]"
+  ],
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "keywords": [
+    "cakephp",
+    "backend"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "adminlte#^2.3.8",
+    "font-awesome": "^4.7.0",
+    "html5shiv": "^3.7.3",
+    "ionicons": "ionicons#^2.0.1",
+    "respond": "^1.4.2"
+  }
+}

@@ -63,11 +63,6 @@ return [
                         'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
                         'data-icon' => 'info'
                     ],
-                    'settings' => [
-                        'title' => 'Settings',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Settings', 'action' => 'index'],
-                        'data-icon' => 'gears',
-                    ],
                     'logs' => [
                         'title' => 'Logs',
                         'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],

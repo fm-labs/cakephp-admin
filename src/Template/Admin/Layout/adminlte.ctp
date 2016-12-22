@@ -77,6 +77,10 @@ desired effect
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
+        <div class="toolbar-wrapper">
+            <?= $this->element('Backend.Layout/admin/toolbar'); ?>
+        </div>c
+
         <div class="flash-wrapper">
             <!-- Flash Auth -->
             <?= $this->Flash->render('auth') ?>
@@ -85,6 +89,7 @@ desired effect
             <!-- Flash Default -->
             <?= $this->Flash->render() ?>
         </div>
+
 
         <!-- Content Header (Page header) -->
         <section class="content-header">

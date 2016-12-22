@@ -11,11 +11,6 @@ class DashboardController extends AppController
      */
     public function index()
     {
-        $this->Flash->set('Hello');
-        $this->Flash->success('Success');
-        $this->Flash->warning('Warning');
-        $this->Flash->error('Error');
-        $this->Flash->info('Info');
     }
 
     /**

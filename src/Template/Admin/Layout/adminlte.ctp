@@ -79,7 +79,7 @@ desired effect
 
         <div class="toolbar-wrapper">
             <?= $this->element('Backend.Layout/admin/toolbar'); ?>
-        </div>c
+        </div>
 
         <div class="flash-wrapper">
             <!-- Flash Auth -->

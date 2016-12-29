@@ -1,13 +1,20 @@
 <?php
 return [
     'Settings' => [
-        'Backend.Dashboard.title' => [
+        'Backend.title' => [
             'type' => 'string',
             'default' => 'Dashboard'
         ],
-        'Backend.Dashboard.url' => [
+        'Backend.theme' => [
             'type' => 'string',
-            'default' => '/backend/admin/dashboard'
+        ],
+        'Backend.Sidebar.searchEnabled' => [
+            'type' => 'boolean',
+            'default' => true
+        ],
+        'Backend.Sidebar.userEnabled' => [
+            'type' => 'boolean',
+            'default' => true
         ],
     ]
 ];

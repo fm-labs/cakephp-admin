@@ -68,11 +68,6 @@ return [
                         'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
                         'data-icon' => 'file-text-o',
                     ],
-                    [
-                        'title' => 'Access Control',
-                        'url' => ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
-                        'data-icon' => 'lock',
-                    ]
                 ]
             ]
         ],

@@ -141,6 +141,7 @@ class BackendComponent extends Component
         $controller = $event->subject();
         $controller->set('be_path', $this->config('backendPath'));
         $controller->set('be_title', $this->config('backendTitle'));
+        $controller->set('be_dashboard_url', Router::url($this->config('dashboardUrl')) );
         $controller->set('be_search_url', Router::url($this->config('searchUrl')) );
     }
 

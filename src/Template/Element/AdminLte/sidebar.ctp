@@ -4,10 +4,10 @@
     <section class="sidebar">
 
         <!-- Sidebar user panel (optional) -->
-        <?= $this->element('Backend.AdminLte/sidebar_user'); ?>
+        <?= '' // $this->element('Backend.AdminLte/sidebar_user'); ?>
 
         <!-- search form (Optional) -->
-        <?= $this->element('Backend.AdminLte/sidebar_search'); ?>
+        <?= '' // $this->element('Backend.AdminLte/sidebar_search'); ?>
 
         <!-- Sidebar Menu -->
         <?= $this->element('Backend.AdminLte/sidebar_menu'); ?>

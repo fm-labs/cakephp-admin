@@ -1,6 +1,12 @@
 <?php
-$menu = \Cake\ORM\TableRegistry::get('Content.Menus')->toMenu(1);
-$this->loadHelper('Bootstrap.Menu');
+try {
+
+    $menu = \Cake\ORM\TableRegistry::get('Content.Menus')->toMenu(1);
+    $this->loadHelper('Bootstrap.Menu');
+} catch (\Exception $ex) {
+    echo $ex->getMessage();
+    return;
+}
 ?>
 <li class="dropdown messages-menu">
     <!-- Menu toggle button -->

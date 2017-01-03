@@ -100,10 +100,8 @@ desired effect
                 <?php endif; ?>
             </h1>
             <!-- Bread crumbs -->
-            <?= $this->Html->getCrumbList([
-                'class' => 'breadcrumb'
-            ], ['text' => $this->get('be_title'), 'url' => ['_name' => 'admin:dashboard']]);
-            ?>
+            <?php $this->Breadcrumbs->prepend($this->get('be_title'), $this->get('be_dashboard_url')); ?>
+            <?= $this->Breadcrumbs->render(['class' => 'breadcrumb']); ?>
         </section>
 
         <!-- Main content -->

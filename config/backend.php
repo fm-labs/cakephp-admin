@@ -50,26 +50,22 @@ return [
         //'admin' => 'myAdminPa$$w0rd'
     ],
 
-    'Backend.Plugin.Backend.Menu' => [
-        'system' => [
-            [
-                'title' => 'System',
-                'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'backend'],
-                'data-icon' => 'cube',
+    'Backend.Menu' => [
+        'title' => 'System',
+        'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'backend'],
+        'data-icon' => 'cube',
 
-                'children' => [
-                    'system' => [
-                        'title' => 'Systeminfo',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                        'data-icon' => 'info'
-                    ],
-                    'logs' => [
-                        'title' => 'Logs',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
-                        'data-icon' => 'file-text-o',
-                    ],
-                ]
-            ]
-        ],
+        'children' => [
+            'system' => [
+                'title' => 'Systeminfo',
+                'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
+                'data-icon' => 'info'
+            ],
+            'logs' => [
+                'title' => 'Logs',
+                'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
+                'data-icon' => 'file-text-o',
+            ],
+        ]
     ],
 ];

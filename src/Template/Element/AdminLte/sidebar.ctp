@@ -10,7 +10,7 @@
         <?= '' // $this->element('Backend.AdminLte/sidebar_search'); ?>
 
         <!-- Sidebar Menu -->
-        <?= $this->element('Backend.AdminLte/sidebar_menu'); ?>
+        <?= $this->fetch('sidebar_menu', $this->element('Backend.AdminLte/sidebar_menu')); ?>
 
     </section>
     <!-- /.sidebar -->

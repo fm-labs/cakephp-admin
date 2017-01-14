@@ -1,68 +1,78 @@
+@import "../vars.less";
 
-/* Tables
-table {
+/* Tables */
+table.table {
   width: 100%;
   border-collapse: collapse;
-}
-
-table tr th, table tr td, table a {
-  font-size: 0.9em;
-  line-height: 1.1em;
-}
-
-table tr th,
-table tr td {
-  border: 1px solid #CBCBCB;
-  border-collapse: collapse;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-  background-color: #f7f7f7;
-  color: #333;
-}
-
-table tr th {
-  background-color: #D8D8DA;
-  background-repeat: repeat-x;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAIAAACOpGH9AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAl2cEFnAAAAAQAAABYAwhbbewAAAAlwSFlzAAALEAAACxABrSO9dQAAAAZiS0dEAAAAAAAA+UO7fwAAACNJREFUCNdj+P//P9O/f/+YYDQE/wfyITRMDFkeu1qEeiAfAE2gQb0aij7cAAAAAElFTkSuQmCC);
-  height: 22px;
-  font-weight: bold;
-  text-decoration: none;
-  padding: 0 5px;
-  text-align: left;
-  vertical-align: middle;
-}
-
-table tr th a.asc:after {
-  content: ' ⇣';
-}
-
-table tr th a.desc:after {
-  content: ' ⇡';
-}
-
-table tr td {
-  padding: 3px 5px;
-  vertical-align: middle;
-}
-
-table tr:nth-child(2n+1) td,
-table tr:nth-child(2n+1) th[scope="row"] {
-  background-color:#fff;
-}
-
-table tr th[scope="row"] {
-  background-repeat: no-repeat;
-  background-position: top left;
-  background-image: url(data:image/gif;base64,R0lGODlhCQAKAIAAAOrNqf///yH5BAAAAAAALAAAAAAJAAoAAAIOjI+ZwH3NEFyRqgCu3gUAOw==);
-}
 
 
-table tr:HOVER td,
-table tr:HOVER th[scope="row"]{
-  background-color:#E7FF91;
+  tr th, tr td, a {
+    //font-size: 1em;
+    //line-height: 1.2em;
+  }
+
+  tr th,
+  tr td {
+    border: 1px solid @table-border-color;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    background-color: #f7f7f7;
+    color: #333;
+  }
+
+  tr th {
+    background-color: @color-primary;
+    /*
+    background-repeat: repeat-x;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAIAAACOpGH9AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAl2cEFnAAAAAQAAABYAwhbbewAAAAlwSFlzAAALEAAACxABrSO9dQAAAAZiS0dEAAAAAAAA+UO7fwAAACNJREFUCNdj+P//P9O/f/+YYDQE/wfyITRMDFkeu1qEeiAfAE2gQb0aij7cAAAAAElFTkSuQmCC);
+    height: 22px;
+    */
+    font-weight: bold;
+    text-decoration: none;
+    padding: 5px 5px;
+    text-align: left;
+    vertical-align: middle;
+    //border-top: 1px solid @table-border-color !important;
+    color: @color-primary-inverse;
+
+    a {
+      color: @color-primary-inverse;
+    }
+  }
+
+  tr th a.asc:after {
+    content: ' ⇣';
+  }
+
+  tr th a.desc:after {
+    content: ' ⇡';
+  }
+
+  tr td {
+    padding: 3px 5px;
+    vertical-align: middle;
+  }
+
+  tr:nth-child(2n+1) td,
+  tr:nth-child(2n+1) th[scope="row"] {
+    background-color:#fff;
+  }
+
+  tr th[scope="row"] {
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-image: url(data:image/gif;base64,R0lGODlhCQAKAIAAAOrNqf///yH5BAAAAAAALAAAAAAJAAoAAAIOjI+ZwH3NEFyRqgCu3gUAOw==);
+  }
+
+
+  tr:HOVER td,
+  tr:HOVER th[scope="row"]{
+    background-color:#E7FF91;
+  }
 }
- */
+
 
 /**
  * Table

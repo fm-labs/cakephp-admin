@@ -24,11 +24,18 @@ $menuClasses = [
     'trailItem' => 'active'
 ];
 
+if (!isset($menu)) {
+    $plugin = $this->request->param('plugin');
+    $menu = \Backend\Lib\BackendNav::getMenu();
+}
+
+if ($menu) {
+    echo $this->Menu->create(['templates' => $menuTemplates, 'classes' => $menuClasses, 'items' => $menu])->render();
+    return;
+}
+
 ?>
-<?php echo $this->Menu->create(['templates' => $menuTemplates, 'classes' => $menuClasses, 'items' => BackendNav::getMenu('app')])->render(); ?>
-<?php echo $this->Menu->create(['title' => 'Plugins', 'templates' => $menuTemplates, 'classes' => $menuClasses, 'items' => BackendNav::getMenu('plugins')])->render(); ?>
-<?php echo $this->Menu->create(['title' => 'System', 'templates' => $menuTemplates, 'classes' => $menuClasses, 'items' => BackendNav::getMenu('system')])->render(); ?>
-<!-- Example markup below:
+<!-- Example markup below: -->
 <ul class="sidebar-menu">
     <li class="header">HEADER</li>
     <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
@@ -45,5 +52,5 @@ $menuClasses = [
         </ul>
     </li>
 </ul>
--->
+
 <!-- /.sidebar-menu -->

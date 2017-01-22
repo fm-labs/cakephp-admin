@@ -72,7 +72,7 @@ desired effect
         <?= $this->element('Backend.AdminLte/navbar'); ?>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
-    <?= $this->element('Backend.AdminLte/sidebar', [], ['cache' => true]); ?>
+    <?= $this->element('Backend.AdminLte/sidebar'); ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">

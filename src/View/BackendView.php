@@ -16,46 +16,17 @@ class BackendView extends View
     {
 
         $this->loadHelper('Html', [
-            //'className' => 'Backend\View\Helper\BackendHelper'
+            //'className' => 'Backend\View\Helper\BackendHtmlHelper'
         ]);
         $this->loadHelper('Form', [
             'className' => 'Backend\View\Helper\BackendFormHelper',
-            'widgets' => [
-                '_default' => ['Backend\View\Widget\BasicWidget'],
-                'button' => ['Backend\View\Widget\ButtonWidget'],
-                //'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
-                'textarea' => ['Backend\View\Widget\TextareaWidget'],
-                'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
-                'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
-                'datepicker' => ['Backend\View\Widget\DatePickerWidget'],
-                'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
-                'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
-                'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
-            ]
         ]);
-        //$this->loadHelper('Paginator', []);
-        $this->loadHelper('Backend.Chosen', []);
+
+        $this->loadHelper('Backend.Backend', []);
         $this->loadHelper('Backend.Ajax', []);
-        $this->loadHelper('Backend.Toolbar', []);
+        $this->loadHelper('Backend.Toolbar', []); //@TODO Remove hard dependency
         $this->loadHelper('Bootstrap.Ui', []);
 
-        $beScript = <<<SCRIPT
-var _backendConf = {
-    rootUrl: '{{ROOTURL}}'
-};
-var _backend = (function (conf) {
-    return {
-        rootUrl: conf.rootUrl
-            }
-    })(_backendConf);
-SCRIPT;
-        $beScript = str_replace(['{{ROOTURL}}'], [$this->Url->build('/')], $beScript);
-        $this->Html->scriptBlock($beScript, ['block' => true]);
-
-        //$this->Html->script('_jquery', ['block' => true]);
-
-        $this->Html->css('Backend.chosen/chosen.min', ['block' => true]);
-        $this->Html->script('Backend.chosen/chosen.jquery.min', ['block' => 'scriptBottom']);
     }
 
     public function renderLayout($content, $layout = null)

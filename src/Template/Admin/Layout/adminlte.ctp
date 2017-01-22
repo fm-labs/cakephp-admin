@@ -72,7 +72,7 @@ desired effect
         <?= $this->element('Backend.AdminLte/navbar'); ?>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
-    <?= $this->element('Backend.AdminLte/sidebar'); ?>
+    <?= $this->element('Backend.AdminLte/sidebar', [], ['cache' => true]); ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -131,24 +131,7 @@ desired effect
 <?= $this->Html->script('/backend/libs/adminlte/bootstrap/js/bootstrap.min.js'); ?>
 <!-- AdminLTE App -->
 <?= $this->Html->script('/backend/libs/adminlte/dist/js/app.js'); ?>
-
-<?= $this->Html->script('Backend.underscore-min'); ?>
-<?= $this->Html->script('Backend.jquery/jquery-ui.min'); ?>
-<?= $this->Html->script('Backend.tinymce/tinymce.min'); ?>
-<?= $this->Html->script('Backend.tinymce/jquery.tinymce.min'); ?>
-<?= $this->Html->script('Backend.backend/backend'); ?>
-<?= $this->Html->script('Backend.backend/htmleditor'); ?>
-<?= $this->Html->script('Backend.jstree/jstree'); ?>
 <?= $this->fetch('scriptBottom'); ?>
-
-<script>
-    $(document).ready(function() {
-        Backend.Renderer.onReady();
-    });
-    $(window).on('unload', function() {
-        Backend.Renderer.onUnload();
-    })
-</script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

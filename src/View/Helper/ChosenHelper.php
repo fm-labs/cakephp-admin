@@ -25,13 +25,13 @@ class ChosenHelper extends Helper
     {
         parent::__construct($View, $config);
 
-        $this->Form->addWidget('chosen', ['Backend\View\Widget\ChosenSelectBoxWidget']);
-        $this->Form->addWidget('select', ['Backend\View\Widget\ChosenSelectBoxWidget']);
+        //$this->Form->addWidget('chosen', ['Backend\View\Widget\ChosenSelectBoxWidget']);
+        //$this->Form->addWidget('select', ['Backend\View\Widget\ChosenSelectBoxWidget']);
     }
 
-        public function beforeLayout(Event $event)
+    public function beforeLayout(Event $event)
     {
-        $this->Html->css('Backend.chosen/chosen.min', ['block' => true]);
-        //$this->Html->script('_chosen', ['block' => 'scriptBottom']);
+        $this->Html->css('/backend/libs/chosen/chosen', ['block' => true]);
+        $this->Html->script('/backend/libs/chosen/chosen.jquery', ['block' => 'scriptBottom']);
     }
 }

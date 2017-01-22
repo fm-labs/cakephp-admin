@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 9/16/16
- * Time: 9:36 PM
- */
 
 namespace Backend\View\Helper;
 
@@ -14,7 +8,8 @@ use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 
 /**
- * Class TinyMceHelper
+ * Class DatepickerHelper
+ *
  * @package Backend\View\Helper
  *
  * @property HtmlHelper $Html
@@ -25,9 +20,11 @@ class DatepickerHelper extends Helper
 
     public function beforeLayout(Event $event)
     {
-        $this->Html->css('Backend.pickadate/themes/classic', ['block' => true]);
-        $this->Html->css('Backend.pickadate/themes/classic.date', ['block' => true]);
-        $this->Html->css('Backend.pickadate/themes/classic.time', ['block' => true]);
-        $this->Html->script('_pickadate', ['block' => 'scriptBottom']);
+        $this->Html->css('/backend/libs/pickadate/themes/classic', ['block' => true]);
+        $this->Html->css('/backend/libs/pickadate/themes/classic.date', ['block' => true]);
+        $this->Html->css('/backend/libs/pickadate/themes/classic.time', ['block' => true]);
+        $this->Html->script('/backend/libs/pickadate/picker', ['block' => 'scriptBottom']);
+        $this->Html->script('/backend/libs/pickadate/picker.date', ['block' => 'scriptBottom']);
+        $this->Html->script('/backend/libs/pickadate/picker.time', ['block' => 'scriptBottom']);
     }
 }

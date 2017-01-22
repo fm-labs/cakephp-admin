@@ -16,7 +16,7 @@ class BackendFormHelper extends BootstrapFormHelper
         $this->templater()->load('Backend.form_templates');
 
         $widgets = [
-            //'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
+            'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
             'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
             'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
             'datepicker' => ['Backend\View\Widget\DatePickerWidget'],
@@ -58,26 +58,30 @@ class BackendFormHelper extends BootstrapFormHelper
         return parent::fieldset($fields, $this->_fieldsetOptions);
     }
 
+    /**
+     * Override FormHelper::_getInput() to enable lazy loading of helpers for certain input types
+     * @TODO Move helper injection to widget class
+     *
+     *
+     * @param string $fieldName
+     * @param array $options
+     * @return string
+     */
     protected function _getInput($fieldName, $options)
     {
         if (isset($options['type'])) {
             switch($options['type']) {
                 case 'select':
-                    //$this->_View->loadHelper('Backend.Chosen');
+                    $this->_View->loadHelper('Backend.Chosen');
                     break;
 
                 case 'datepicker':
-                    $this->Html->css('Backend.pickadate/themes/classic', ['block' => true]);
-                    $this->Html->css('Backend.pickadate/themes/classic.date', ['block' => true]);
-                    $this->Html->css('Backend.pickadate/themes/classic.time', ['block' => true]);
-                    $this->Html->script('Backend.pickadate/picker', ['block' => 'scriptBottom']);
-                    $this->Html->script('Backend.pickadate/picker.date', ['block' => 'scriptBottom']);
-                    $this->Html->script('Backend.pickadate/picker.time', ['block' => 'scriptBottom']);
+                    $this->_View->loadHelper('Backend.Datepicker');
                     break;
 
                 case 'htmleditor':
                 case 'htmltext':
-                    //$this->Html->script('_tinymce', ['block' => 'scriptBottom']);
+                $this->_View->loadHelper('Backend.HtmlEditor');
                     break;
 
                 case 'imageselect':

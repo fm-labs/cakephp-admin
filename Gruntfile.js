@@ -54,10 +54,20 @@ module.exports = function(grunt) {
         files: [
           // includes files within path
           {expand: true, cwd: 'bower_components/AdminLTE/', src: ['bootstrap/**', 'dist/**', 'plugins/**'], dest: 'webroot/libs/adminlte/'},
+          {expand: true, cwd: 'bower_components/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
+          {expand: true, cwd: 'bower_components/chosen/', src: ['**'], dest: 'webroot/libs/chosen/'},
           {expand: true, cwd: 'bower_components/font-awesome/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/fontawesome/'},
-          {expand: true, cwd: 'bower_components/Ionicons/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/ionicons/'},
           {expand: true, cwd: 'bower_components/html5shiv/dist/', src: ['**'], dest: 'webroot/libs/html5shiv/'},
-          {expand: true, cwd: 'bower_components/respond/dest/', src: ['**'], dest: 'webroot/libs/respond/'}
+          {expand: true, cwd: 'bower_components/ionicons/', src: ['css/**', 'fonts/**', 'png/**'], dest: 'webroot/libs/ionicons/'},
+          {expand: true, cwd: 'bower_components/image-picker/image-picker/', src: ['**'], dest: 'webroot/libs/image-picker/'},
+          {expand: true, cwd: 'bower_components/jquery/dist/', src: ['**'], dest: 'webroot/libs/jquery/'},
+          {expand: true, cwd: 'bower_components/jquery-ui/', src: ['**'], dest: 'webroot/libs/jquery-ui/'},
+          {expand: true, cwd: 'bower_components/jstree/dist/', src: ['**'], dest: 'webroot/libs/jstree/'},
+          {expand: true, cwd: 'bower_components/pickadate/lib/compressed', src: ['**'], dest: 'webroot/libs/pickadate/'},
+          {expand: true, cwd: 'bower_components/respond/dest/', src: ['**'], dest: 'webroot/libs/respond/'},
+          {expand: true, cwd: 'bower_components/tinymce/', src: ['**'], dest: 'webroot/libs/tinymce/'},
+          {expand: true, cwd: 'webroot/js/tinymce/langs/', src: ['**'], dest: 'webroot/libs/tinymce/langs/'},
+          {expand: true, cwd: 'bower_components/underscore/', src: ['**'], dest: 'webroot/libs/underscore/'},
         ]
       }
     },

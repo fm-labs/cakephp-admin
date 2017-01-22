@@ -4,6 +4,12 @@
         <span class="sr-only">Toggle navigation</span>
     </a>
 
+    <div class="navbar-custom-menu" style="float: left;">
+        <ul class="nav navbar-nav">
+            <!-- Content Menu -->
+            <?php echo $this->element('Backend.AdminLte/navbar_content_menu'); ?>
+        </ul>
+    </div>
 
 
     <!-- Navbar Right Menu -->
@@ -13,8 +19,6 @@
             <!-- Search -->
             <?php echo $this->element('Backend.AdminLte/navbar_search'); ?>
 
-            <!-- Content Menu -->
-            <?php //echo $this->element('Backend.AdminLte/navbar_content_menu'); ?>
 
             <!-- Messages Menu -->
             <?php //echo $this->element('Backend.AdminLte/navbar_messages'); ?>

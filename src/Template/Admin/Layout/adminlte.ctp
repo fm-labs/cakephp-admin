@@ -77,9 +77,11 @@ desired effect
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
 
+        <!--
         <div class="toolbar-wrapper">
             <?= $this->element('Backend.Layout/admin/toolbar'); ?>
         </div>
+        -->
 
         <div class="flash-wrapper">
             <!-- Flash Auth -->
@@ -92,20 +94,19 @@ desired effect
 
 
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <div class="content-header">
             <h1>
                 <?= $this->fetch('heading', $this->fetch('title')); ?>
                 <?php if ($this->fetch('subheading')): ?>
                 <small><?= $this->fetch('subheading'); ?></small>
                 <?php endif; ?>
             </h1>
-            <!-- Bread crumbs -->
             <?php $this->Breadcrumbs->prepend($this->get('be_title'), $this->get('be_dashboard_url')); ?>
             <?= $this->Breadcrumbs->render(['class' => 'breadcrumb']); ?>
-        </section>
+        </div>
 
         <!-- Main content -->
-        <section class="content">
+        <section class="<?= $this->fetch('contentClass', 'content'); ?>">
 
             <!-- Your Page Content Here -->
             <?= $this->fetch('content'); ?>

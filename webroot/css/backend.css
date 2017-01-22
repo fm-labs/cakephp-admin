@@ -719,7 +719,7 @@ table.table tr th {
     */
   font-weight: bold;
   text-decoration: none;
-  padding: 5px 5px;
+  padding: 5px;
   text-align: left;
   vertical-align: middle;
   color: #FFF;
@@ -734,7 +734,7 @@ table.table tr th a.desc:after {
   content: ' ⇡';
 }
 table.table tr td {
-  padding: 3px 5px;
+  padding: 5px;
   vertical-align: middle;
 }
 table.table tr:nth-child(2n+1) td,

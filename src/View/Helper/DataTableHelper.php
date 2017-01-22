@@ -64,15 +64,16 @@ class DataTableHelper extends Helper
 
         $this->templater()->add([
             'table' => '<table{{attrs}}>{{head}}{{body}}</table>',
-            'head' => '<thead><tr>{{cells}}{{actionscell}}</tr></thead>',
+            'head' => '<thead><tr>{{cellheads}}{{actionshead}}</tr></thead>',
             'headCell' => '<th{{attrs}}>{{content}}</th>',
+            'headCellActions' => '<th{{attrs}} style="text-align: right;">{{content}}</th>',
             'body' => '<tbody>{{rows}}</tbody>',
             'row' => '<tr{{attrs}}>{{cells}}{{actionscell}}</tr>',
             'rowCell' => '<td{{attrs}}>{{content}}</td>',
             'rowActionsCell' => '<td class="actions">
-                <div class="dropdown">
-                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Actions
+                <div class="dropdown pull-right">
+                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <i class="fa fa-gear"></i>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
@@ -166,14 +167,16 @@ class DataTableHelper extends Helper
 
     public function renderHead()
     {
-        $actionsCell = '';
+        $headCellActions = '';
         if ($this->_params['rowActions'] !== false) {
-            $actionsCell = '<th class="actions">' . __('Actions') . '</th>';
+            $headCellActions = $this->templater()->format('headCellActions', [
+               'content' => __('Actions')
+            ]);
         }
 
         $html = $this->templater()->format('head', [
-            'cells' => $this->renderHeadCells(),
-            'actionscell' => $actionsCell
+            'cellheads' => $this->renderHeadCells(),
+            'actionshead' => $headCellActions
         ]);
         return $html;
     }

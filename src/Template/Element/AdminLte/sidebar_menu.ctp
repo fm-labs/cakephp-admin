@@ -24,18 +24,16 @@ $menuClasses = [
     'trailItem' => 'active'
 ];
 
-if (!isset($menu)) {
+if (!isset($sidebarMenu)) {
     $plugin = $this->request->param('plugin');
-    $menu = \Backend\Lib\BackendNav::getMenu();
+    $sidebarMenu = \Backend\Lib\BackendNav::getMenu();
 }
 
-if ($menu) {
-    echo $this->Menu->create(['templates' => $menuTemplates, 'classes' => $menuClasses, 'items' => $menu])->render();
-    return;
+if ($sidebarMenu) {
+    echo $this->Menu->create(['templates' => $menuTemplates, 'classes' => $menuClasses, 'items' => $sidebarMenu])->render();
 }
-
 ?>
-<!-- Example markup below: -->
+<!-- Example markup below:
 <ul class="sidebar-menu">
     <li class="header">HEADER</li>
     <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>

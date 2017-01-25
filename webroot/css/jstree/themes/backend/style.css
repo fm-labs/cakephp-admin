@@ -1103,6 +1103,9 @@
   content: "\f08e";
   color: #0d71bb;
 }
+.jstree .jstree-icon.category::before {
+  content: "\f24d";
+}
 .jstree .jstree-icon.shop_category::before {
   content: "\f07b";
 }

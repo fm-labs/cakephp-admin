@@ -23,8 +23,8 @@ class DatepickerHelper extends Helper
         $this->Html->css('/backend/libs/pickadate/themes/classic', ['block' => true]);
         $this->Html->css('/backend/libs/pickadate/themes/classic.date', ['block' => true]);
         $this->Html->css('/backend/libs/pickadate/themes/classic.time', ['block' => true]);
-        $this->Html->script('/backend/libs/pickadate/picker', ['block' => 'scriptBottom']);
-        $this->Html->script('/backend/libs/pickadate/picker.date', ['block' => 'scriptBottom']);
-        $this->Html->script('/backend/libs/pickadate/picker.time', ['block' => 'scriptBottom']);
+        $this->Html->script('/backend/libs/pickadate/picker', ['block' => 'script']);
+        $this->Html->script('/backend/libs/pickadate/picker.date', ['block' => 'script']);
+        $this->Html->script('/backend/libs/pickadate/picker.time', ['block' => 'script']);
     }
 }

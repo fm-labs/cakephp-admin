@@ -62,6 +62,7 @@ class DataTableHelper extends Helper
         $this->_parseParams();
         $this->_parseFields();
 
+        /*
         $this->templater()->add([
             'table' => '<table{{attrs}}>{{head}}{{body}}</table>',
             'head' => '<thead><tr>{{cellheads}}{{actionshead}}</tr></thead>',
@@ -83,6 +84,31 @@ class DataTableHelper extends Helper
             </td>',
             'rowAction' => '<li>{{content}}</li>',
             'rowSelectCell' => '<td>{{content}}</td>'
+        ]);
+        */
+
+
+        $this->templater()->add([
+            'table' => '<div class="dtable"{{attrs}}>{{head}}{{body}}</div>',
+            'head' => '<div class="dtable-head">{{cellheads}}{{actionshead}}</div>',
+            'headCell' => '<div class="dtable-head-cell"{{attrs}}>{{content}}</div>',
+            'headCellActions' => '<div class="dtable-head-cell"{{attrs}} style="text-align: right;">{{content}}</div>',
+            'body' => '<div class="dtable-body">{{rows}}</div>',
+            'row' => '<div class="dtable-row"{{attrs}}>{{cells}}{{actionscell}}</div>',
+            'rowCell' => '<div class="dtable-cell"{{attrs}}>{{content}}</div>',
+            'rowActionsCell' => '<div class="dtable-cell dtable-row-actions">
+                <div class="dropdown pull-right">
+                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <i class="fa fa-gear"></i>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                         {{actions}}
+                    </ul>
+                </div>
+            </div>',
+            'rowAction' => '<li>{{content}}</li>',
+            'rowSelectCell' => '<div class="dtable-row-select">{{content}}</div>'
         ]);
 
     }
@@ -153,7 +179,7 @@ class DataTableHelper extends Helper
 
         $tableAttributes = [
             'id' => $this->id(),
-            'class' => $this->_tableClass($this->_params['class'])
+            //'class' => $this->_tableClass($this->_params['class'])
         ];
 
         $html = $this->templater()->format('table', [
@@ -233,7 +259,7 @@ class DataTableHelper extends Helper
         // row
         $rowAttributes = [
             'data-id' => $row['id'],
-            'class' => ''
+            //'class' => ''
         ];
         $html = $this->templater()->format('row', [
             'attrs' => $this->templater()->formatAttributes($rowAttributes),

@@ -21,7 +21,7 @@ class BackendHelper extends Helper
         parent::__construct($View, $config);
 
         // Load backendjs script
-        $this->Html->script('Backend.backend', ['block' => 'scriptBottom']);
+        $this->Html->script('Backend.backend', ['block' => 'script']);
 
         // Inject backendjs init script
         $backendjs = [
@@ -29,6 +29,6 @@ class BackendHelper extends Helper
             'debug' => Configure::read('debug')
         ];
         $script = sprintf('Backend.init(%s)', json_encode($backendjs));
-        $this->Html->scriptBlock($script, ['block' => 'scriptBottom']);
+        $this->Html->scriptBlock($script, ['block' => 'script']);
     }
 }

@@ -19,6 +19,6 @@ class JsTreeHelper extends Helper
     public function beforeLayout(Event $event)
     {
         $this->Html->css('/backend/css/jstree/themes/backend/style', ['block' => true]);
-        $this->Html->script('/backend/libs/jstree/jstree.min', ['block' => 'scriptBottom']);
+        $this->Html->script('/backend/libs/jstree/jstree.min', ['block' => 'script']);
     }
 }

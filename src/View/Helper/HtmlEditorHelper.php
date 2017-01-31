@@ -19,8 +19,8 @@ class HtmlEditorHelper extends Helper
 
     public function beforeLayout(Event $event)
     {
-        $this->Html->script('/backend/libs/tinymce/tinymce.min', ['block' => 'scriptBottom']);
-        $this->Html->script('/backend/libs/tinymce/jquery.tinymce.min', ['block' => 'scriptBottom']);
-        $this->Html->script('Backend.htmleditor', ['block' => 'scriptBottom']);
+        $this->Html->script('/backend/libs/tinymce/tinymce.min', ['block' => 'script']);
+        $this->Html->script('/backend/libs/tinymce/jquery.tinymce.min', ['block' => 'script']);
+        $this->Html->script('Backend.htmleditor', ['block' => 'script']);
     }
 }

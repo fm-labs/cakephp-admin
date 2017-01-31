@@ -105,7 +105,7 @@ desired effect
 <?= $this->Html->script('Backend.backend/backend'); ?>
 <?= $this->Html->script('Backend.backend/htmleditor'); ?>
 <?= $this->Html->script('Backend.jstree/jstree'); ?>
-<?= $this->fetch('scriptBottom'); ?>
+<?= $this->fetch('script'); ?>
 
 <script>
     $(document).ready(function() {

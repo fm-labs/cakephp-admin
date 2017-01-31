@@ -91,7 +91,7 @@ class BackendComponent extends Component
 
         // Configure controller
         $controller->viewBuilder()->className('Backend.Backend');
-        $controller->viewBuilder()->layout('Backend.adminlte');
+        $controller->viewBuilder()->layout('Backend.admin');
 
         // Apply Backend theme
         if (Configure::read('Backend.theme')) {

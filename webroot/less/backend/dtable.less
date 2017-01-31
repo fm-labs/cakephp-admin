@@ -1,0 +1,47 @@
+@dtable-cell-border-color: darkgray;
+@dtable-cell-padding: 5px;
+
+.dtable {
+  display: table;
+  width: 100%;
+}
+
+.dtable-head {
+  display: table-header-group;
+  background-color: #FFF;
+}
+
+
+.dtable-body {
+  display: table-row-group;
+}
+
+.dtable-row {
+  display: table-row;
+
+  &:hover {
+    background-color:#E7FF91;
+  }
+}
+
+.dtable-cell,
+.dtable-head-cell {
+  border-top: 1px solid @dtable-cell-border-color;
+  display: table-cell;
+  vertical-align: middle;
+  padding: @dtable-cell-padding;
+  border-collapse: collapse;
+}
+
+.dtable-head-cell {
+  font-weight: 600;
+}
+
+/** Hide Actions **/
+.dtable-row .dtable-row-actions > * {
+  opacity: 0.4;
+}
+
+.dtable-row:hover .dtable-row-actions > * {
+  opacity: 1;
+}

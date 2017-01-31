@@ -1,6 +1,6 @@
 <?php
 $this->loadHelper('Backend.DataTable');
-$this->Html->script('Backend.jquery/jquery-ui.min', ['block' => 'scriptBottom']);
+$this->Html->script('Backend.jquery/jquery-ui.min', ['block' => 'script']);
 $this->DataTable->init($dataTable);
 ?>
 <?= $this->DataTable->pagination(); ?>

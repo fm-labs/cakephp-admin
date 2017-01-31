@@ -87,7 +87,7 @@ class BackendFormHelper extends BootstrapFormHelper
                 case 'imageselect':
                 case 'imagemodal':
                     $this->Html->css('Backend.imagepicker/image-picker', ['block' => true]);
-                    $this->Html->script('Backend.imagepicker/image-picker.min', ['block' => 'scriptBottom']);
+                    $this->Html->script('Backend.imagepicker/image-picker.min', ['block' => 'script']);
                     break;
             }
         }

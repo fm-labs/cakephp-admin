@@ -177,7 +177,7 @@ class DataTableJsHelper extends Helper
 
     public function render()
     {
-        $script = ($this->_renderScript) ? $this->_renderScript('scriptBottom') : '';
+        $script = ($this->_renderScript) ? $this->_renderScript('script') : '';
         $html = ($this->_renderTable) ? $this->_renderTable() : '';
         return $html . $script;
     }

@@ -2,9 +2,70 @@
 /**
  * Combined backend less element
 **/
+.content-left,
+.content-right {
+  -webkit-transition: -webkit-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+  -moz-transition: -moz-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+  -o-transition: -o-transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, margin 0.3s ease-in-out;
+}
+/*
+.content-left {
+  margin-left: @left-margin;
+  //color: #FFF;
+  position: absolute;
+  width: @left-w;
+  background: @left-bg-color;
+  //height: 1000px
+}
+
+.content-left ~ .content-wrapper {
+  margin-left: @left-margin + @left-w;
+}
+
+.content-right {
+  //color: #FFF;
+  position: absolute;
+  right: 0;
+  width: @left-w;
+  background: @left-bg-color;
+  //height: 1000px
+}
+
+.content-left ~ .content-wrapper {
+  margin-right: @left-w;
+}
+
+.sidebar-mini.sidebar-collapse .content-left {
+  margin-left: @left-margin-sidebar-collapse !important;
+  z-index: 840;
+}
+
+.sidebar-mini.sidebar-collapse .content-left ~ .content-wrapper {
+  margin-left: @left-margin-sidebar-collapse + @left-w !important;
+  z-index: 840;
+}
+
+*/
+.content-left {
+  position: absolute;
+  width: 200px;
+  background: transparent;
+}
+.content-left ~ main {
+  margin-left: 200px;
+}
+.content-right {
+  position: absolute;
+  right: 0;
+  width: 200px;
+  background: transparent;
+}
+.content-left ~ main {
+  margin-right: 200px;
+}
 .content-wrapper {
   padding-bottom: 100px;
-  background-color: #FFF;
 }
 .flash-wrapper > .alert {
   margin: 0;
@@ -777,4 +838,39 @@ nav.toolbar {
 }
 nav.toolbar > ul {
   float: none;
+}
+.dtable {
+  display: table;
+  width: 100%;
+}
+.dtable-head {
+  display: table-header-group;
+  background-color: #FFF;
+}
+.dtable-body {
+  display: table-row-group;
+}
+.dtable-row {
+  display: table-row;
+}
+.dtable-row:hover {
+  background-color: #E7FF91;
+}
+.dtable-cell,
+.dtable-head-cell {
+  border-top: 1px solid darkgray;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 5px;
+  border-collapse: collapse;
+}
+.dtable-head-cell {
+  font-weight: 600;
+}
+/** Hide Actions **/
+.dtable-row .dtable-row-actions > * {
+  opacity: 0.4;
+}
+.dtable-row:hover .dtable-row-actions > * {
+  opacity: 1;
 }

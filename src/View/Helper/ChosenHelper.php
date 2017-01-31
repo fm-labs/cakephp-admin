@@ -32,6 +32,6 @@ class ChosenHelper extends Helper
     public function beforeLayout(Event $event)
     {
         $this->Html->css('/backend/libs/chosen/chosen', ['block' => true]);
-        $this->Html->script('/backend/libs/chosen/chosen.jquery', ['block' => 'scriptBottom']);
+        $this->Html->script('/backend/libs/chosen/chosen.jquery', ['block' => 'script']);
     }
 }

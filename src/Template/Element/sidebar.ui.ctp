@@ -5,7 +5,7 @@
  * Check Admin/AppController in application dir and plugin paths
  * if class exists and has a public static 'backendMenu' method.
  *
- * @TODO Refactor with Cell
+ * @deprecated
  */
 use Cake\Routing\Router;
 use Cake\Core\Configure;

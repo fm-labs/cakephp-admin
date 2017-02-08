@@ -82,7 +82,7 @@ class ToolbarHelper extends Helper
 
         $item = [
             'title' => $title,
-            'url' => $url
+            'url' => $url,
         ];
 
         $item += $attr;

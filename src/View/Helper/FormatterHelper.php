@@ -108,6 +108,11 @@ class FormatterHelper extends Helper
 
             //return '<pre>' . print_r($val, true) . '</pre>';
         });
+
+        self::register('html', function($val, $extra, $params) {
+            //@todo sanitation
+            return sprintf('<div class="html">' . $val . '</div>', $val);
+        });
     }
 
 

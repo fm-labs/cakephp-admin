@@ -64,11 +64,6 @@ desired effect
     <!-- Content Wrapper. Contains page content -->
     <div id="content" class="content-wrapper">
 
-        <!--
-        <div class="toolbar-wrapper">
-            <?= $this->element('Backend.Layout/admin/toolbar'); ?>
-        </div>
-        -->
 
         <div class="flash-wrapper">
             <!-- Flash Auth -->
@@ -92,6 +87,10 @@ desired effect
             <?= $this->Breadcrumbs->render(['class' => 'breadcrumb']); ?>
         </div>
 
+        <!-- Toolbar wrapper -->
+        <div class="toolbar-wrapper">
+            <?= $this->element('Backend.Layout/admin/toolbar'); ?>
+        </div>
 
         <!-- Left container -->
         <?php if ($this->fetch('left')): ?>
@@ -133,7 +132,9 @@ desired effect
 
 <?= $this->Html->script('/backend/libs/adminlte/bootstrap/js/bootstrap.min.js'); ?>
 <?= $this->Html->script('/backend/libs/adminlte/dist/js/app.js'); ?>
+<?= $this->Html->script('/backend/libs/underscore/underscore-min.js'); ?>
 <?= $this->fetch('script'); ?>
+<?= $this->Html->script('/backend/js/iconify.js'); // must be after the script block as we need backend js to be present ?>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

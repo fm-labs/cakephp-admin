@@ -48,6 +48,8 @@ class DataTableHelper extends Helper
 
     protected $_defaultFieldParams = ['title' => null, 'class' => '', 'formatter' => null, 'formatterArgs' => []];
 
+    protected $_tableArgs = [];
+
     public function param($key)
     {
         if (isset($this->_params[$key])) {
@@ -140,8 +142,12 @@ class DataTableHelper extends Helper
             $this->_id = $this->_params['id'];
         }
         if ($this->_params['sortable']) {
-            //$this->_params = $this->Html->addClass('sortable', $this->_params);
-            //$this->scriptBlock('$("#' . $this->id() . ' tr").sortable()');
+            //$this->_params = $this->Html->addClass($this->_params, 'sortable');
+            //$this->Html->script('$("#' . $this->id() . ' .dtable-row").sortable()', ['block' => true]);
+            $this->_tableArgs['data-sortable'] = 1;
+        }
+        if ($this->_params['select']) {
+            $this->_tableArgs['data-selectable'] = 1;
         }
     }
 
@@ -174,13 +180,9 @@ class DataTableHelper extends Helper
         return $this->_defaultFieldParams;
     }
 
-    public function render() {
-
-
-        $tableAttributes = [
-            'id' => $this->id(),
-            //'class' => $this->_tableClass($this->_params['class'])
-        ];
+    public function render()
+    {
+        $tableAttributes = $this->_tableArgs + ['id' => $this->id()];
 
         $html = $this->templater()->format('table', [
             'attrs' => $this->templater()->formatAttributes($tableAttributes),

@@ -15,7 +15,7 @@ $this->DataTable->create($dataTable);
 <?= $this->DataTable->debug(); ?>
 
 <!-- DataTable JS
-<?= $this->DataTableJs->fromHtmlTable($this->DataTable->id()); ?>
+<?php //echo $this->DataTableJs->fromHtmlTable($this->DataTable->id()); ?>
  -->
 <script type="text/javascript">
     $(document).ready(function() {
@@ -24,6 +24,8 @@ $this->DataTable->create($dataTable);
         var dtTable = '<?= $this->DataTable->param('model'); ?>';
         var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->param('sortable')); ?>';
         var $el = $('#' + dtId);
+
+        console.log("loading datatable js for " + dtId);
 
 
         //originally from http://stackoverflow.com/questions/1307705/jquery-ui-sortable-with-table-and-tr-width/1372954#1372954
@@ -40,13 +42,15 @@ $this->DataTable->create($dataTable);
         //
         // Jquery UI Sortable DataTable
         //
-        if ($el.hasClass('sortable')) {
+        if ($el.attr('data-sortable') == 1) {
+
+            console.log("init sortable for dt " + dtId);
 
             if (!$.fn.sortable) {
                 console.warn("JqueryUI sortable not loaded");
             } else {
-
-                $el.find("tbody").sortable({
+                console.log("initialize sortable")
+                $el.find(".dtable-body").sortable({
                     placeholder: "ui-sortable-placeholder", // "ui-state-highlight",
                     helper: fixHelperModified,
                     update: function(event, ui) {
@@ -60,7 +64,7 @@ $this->DataTable->create($dataTable);
                         }
 
                         var updateData = { id: ui.item.data().id, after: siblingId, model: dtTable };
-                        //console.log(updateData);
+                        console.log(updateData);
 
                         if (dtTable && dtSortUrl) {
                             $.ajax({
@@ -90,6 +94,8 @@ $this->DataTable->create($dataTable);
                 //.disableSelection();
             }
 
+        } else {
+            console.log("Datatable " + dtId + " is not sortable");
         }
 
         //$el.dataTable();

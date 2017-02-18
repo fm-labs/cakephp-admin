@@ -747,9 +747,9 @@
         //
         // Jquery UI Sortable
         //
-        if ($.fn.sortable) {
-            $('.sortable').sortable();
-        }
+        //if ($.fn.sortable) {
+        //    $('.sortable').sortable();
+        //}
 
         //
         // Ajax Content

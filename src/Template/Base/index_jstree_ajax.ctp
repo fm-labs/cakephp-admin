@@ -37,9 +37,9 @@ $dataUrl = $this->get('dataUrl', ['action' => 'treeData']);
 $defaultJsTree = [
     'core' => [
         'multiple' => false,
-        'data' => [
-            'url' => $this->Html->Url->build($dataUrl)
-        ],
+        //'data' => [
+        //    'url' => $this->Html->Url->build($dataUrl)
+        //],
         'check_callback' => true,
     ],
     'plugins' => ['wholerow', 'state']
@@ -97,11 +97,36 @@ echo $this->fetch('jsTreeScript');
 
     jsTreeConf = jsTreeConf || JSON.parse('<?= json_encode($jsTree); ?>');
 
+    /*
     if (!jsTreeConf.core || !jsTreeConf.core.data || !jsTreeConf.core.data.data) {
         jsTreeConf.core.data.data = function (node) {
             return {'id': node.id};
         };
     }
+    */
+    if (!jsTreeConf.core || !jsTreeConf.core.data) {
+        jsTreeConf.core.data = {};
+        jsTreeConf.core.data.data = function (node) {
+            console.log("data");
+            return {'id': node.id};
+        };
+        jsTreeConf.core.data.url = function (node) {
+            console.log("url");
+            console.log(node);
+            var dataUrl = '<?php echo $this->Html->Url->build($dataUrl); ?>';
+            if (node.id == '#') {
+                return dataUrl;
+            }
+            var childrenUrl = node.data.children_url;
+            if (!childrenUrl) {
+                console.warn("No children url has been set");
+                return dataUrl;
+            }
+            return childrenUrl;
+        };
+    }
+    console.log("hello");
+    console.log(jsTreeConf);
 
 
     $(document).ready(function() {

@@ -2,6 +2,7 @@
 
 namespace Backend\Controller\Admin;
 
+use Banana\Model\Behavior\SortableBehavior;
 use Cake\Core\Exception\Exception;
 use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\NotFoundException;
@@ -26,6 +27,30 @@ class DataTableController extends AppController
             $this->Flash->error(__d('content', 'Reordering failed'));
         }
         $this->redirect($this->referer());
+    }
+
+    public function sort()
+    {
+        $modelName = $this->request->query('model');
+
+        if (!$modelName || !$this->_getModel($modelName)) {
+            throw new BadRequestException("Table not found");
+        }
+
+        $model = $this->_getModel($modelName);
+        if (!$model->behaviors()->has('Sortable')) {
+            $this->Flash->warning("Model $modelName is not an instance of Sortable Behavior");
+        }
+
+        $queryArgs = $this->request->query;
+        unset($queryArgs['model']);
+
+        $data = $model->find()
+            ->where($queryArgs)
+            ->order(['pos' => 'ASC'])
+            ->all();
+
+        $this->set(compact('data', 'modelName'));
     }
 
     public function tableSort()

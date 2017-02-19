@@ -11,7 +11,7 @@ use Cake\Utility\Inflector;
     <tbody>
     <?php foreach ($data as $field): ?>
         <tr class="<?= $field['class']; ?>">
-            <td>
+            <td style="width: 25%;">
                 <?= h($field['label']); ?>
             </td>
             <td>

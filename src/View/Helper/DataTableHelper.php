@@ -44,11 +44,14 @@ class DataTableHelper extends Helper
         'paginate' => false,
         'select' => false,
         'sortable' => false,
+        'reduce' => []
     ];
 
     protected $_defaultFieldParams = ['title' => null, 'class' => '', 'formatter' => null, 'formatterArgs' => []];
 
     protected $_tableArgs = [];
+
+    protected $_reduceStack = [];
 
     public function param($key)
     {
@@ -241,6 +244,44 @@ class DataTableHelper extends Helper
         $html = $this->templater()->format('body', [
             'rows' => $formattedRows,
         ]);
+
+        $html .= $this->renderReducedCells();
+
+        return $html;
+    }
+
+    public function renderReducedCells()
+    {
+        if (empty($this->_params['reduce'])) {
+            return '';
+        }
+
+        $html = '';
+
+        foreach ($this->_fields as $fieldName => $field)
+        {
+            $reducedData = null;
+            if (isset($this->_params['reduce'][$fieldName])) {
+                $reduce = $this->_params['reduce'][$fieldName] + ['formatter' => null, 'callable' => null];
+
+                $rawData = null;
+                if (isset($this->_reduceStack[$fieldName])) {
+                    $rawData = $this->_reduceStack[$fieldName];
+                }
+
+                $reducedData = $this->_formatRowCellData($fieldName, $rawData, $reduce['formatter'], [], null);
+            }
+
+            $html .= $this->templater()->format('rowCell', [
+                'content' => (string) $reducedData,
+                'attrs' => $this->templater()->formatAttributes([
+                    //'class' => $field['class'],
+                    //'title' => $field['title']
+                ])
+            ]);
+
+        }
+        $html .= $this->templater()->format('rowCell', ['content' => '']); // actions cell stub
         return $html;
     }
 
@@ -269,6 +310,7 @@ class DataTableHelper extends Helper
             'actionscell' => $rowActionsCell
         ]);
 
+
         return $html;
     }
 
@@ -295,6 +337,17 @@ class DataTableHelper extends Helper
                 'content' => $formattedCellData,
                 'attrs' => $this->templater()->formatAttributes($cellAttributes)
             ]);
+
+
+            // reducer
+            if (isset($this->_params['reduce'][$fieldName]) && isset($this->_params['reduce'][$fieldName]['callable'])) {
+                $reducer = $this->_params['reduce'][$fieldName]['callable'];
+                if (!is_callable($reducer)) {
+                    debug("Reducer for $fieldName is not callable");
+                } else {
+                    call_user_func_array($reducer, [$cellData, $row, &$this->_reduceStack]);
+                }
+            }
         }
         return $html;
     }

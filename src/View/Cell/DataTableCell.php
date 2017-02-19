@@ -23,6 +23,7 @@ class DataTableCell extends Cell
             'paginate' => false,
             'select' => false,
             'sortable' => false,
+            'reduce' => []
         ];
 
         // model context

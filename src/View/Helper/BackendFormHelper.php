@@ -19,7 +19,7 @@ class BackendFormHelper extends BootstrapFormHelper
             'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
             'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
             'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
-            'datepicker' => ['Backend\View\Widget\DatePickerWidget'],
+            'datepicker' => ['Backend\View\Widget\DatePickerWidget', 'text'],
             'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
             'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
             'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],

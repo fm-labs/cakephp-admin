@@ -21,7 +21,7 @@ class BackendHelper extends Helper
         parent::__construct($View, $config);
 
         // Load backendjs script
-        $this->Html->script('Backend.backend', ['block' => 'script']);
+        //$this->Html->script('Backend.backend', ['block' => 'script']);
 
         // Inject backendjs init script
         $backendjs = [

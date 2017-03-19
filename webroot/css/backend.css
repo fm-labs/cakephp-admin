@@ -86,6 +86,14 @@
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
+.content-header {
+  padding: 5px 15px 0 15px;
+}
+.content-header > h1 ul {
+  margin: 0 0 5px 0;
+  padding: 0;
+  background-color: transparent;
+}
 /**
  * Common Backend CSS Stylesheet
  */
@@ -462,6 +470,14 @@ input[readonly] {
 /**
  * Forms
  */
+form label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+  font-variant-caps: all-small-caps;
+  color: #444;
+}
 form .form-group {
   margin-bottom: 8px;
 }
@@ -495,9 +511,10 @@ form div.actions {
 form fieldset {
   padding: 0;
   margin: 0.5em 0;
+  transition: height 1s;
 }
 form fieldset legend {
-  background-color: #e8e8e8;
+  background-color: #f8f8f8;
   border: medium none;
   display: block;
   margin: 0 0 0 0;
@@ -531,8 +548,14 @@ form fieldset legend::after {
 form fieldset legend ~ * {
   margin-top: 1em;
 }
-form fieldset.collapsed > * {
-  display: none;
+form fieldset > .body {
+  padding: 0 1.18em;
+  transition: height 1s;
+  overflow: hidden;
+  height: auto;
+}
+form fieldset.collapsed > .body {
+  height: 0;
 }
 form fieldset.collapsed > legend {
   display: block;
@@ -558,6 +581,9 @@ form fieldset.collapsed > legend::before {
 }
 form fieldset.collapsed > legend ~ * {
   margin-top: 0.3em;
+}
+.form-horizontal .control-label {
+  text-align: left;
 }
 /**
  * Imagepicker
@@ -880,4 +906,20 @@ nav.toolbar > ul {
 }
 .dtable-row:hover .dtable-row-actions > * {
   opacity: 1;
+}
+/**
+ * Backend specific Chosen select overrides
+ */
+.chosen-container-single .chosen-single {
+  box-shadow: none;
+  line-height: 28px;
+  height: 30px;
+  border-radius: 0;
+}
+.chosen-container-single .chosen-drop {
+  margin-top: -4px;
+  border-radius: 0;
+}
+.chosen-container-single .chosen-single div b {
+  background-position-y: 4px;
 }

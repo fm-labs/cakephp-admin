@@ -15,8 +15,8 @@
     <?= $this->Html->css('/backend/libs/ionicons/css/ionicons.min.css'); ?>
     <?= $this->Html->css('/backend/libs/adminlte/dist/css/AdminLTE.min.css'); ?>
     <?= $this->Html->css('/backend/libs/adminlte/dist/css/skins/skin-blue.min.css'); ?>
-    <?= $this->Html->css('Backend.backend'); ?>
     <?= $this->fetch('css') ?>
+    <?= $this->Html->css('Backend.backend'); // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views ?>
 
     <!-- scripts -->
     <!--[if lt IE 9]>
@@ -46,7 +46,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
 <div class="wrapper">
 
     <!-- Main Header -->
@@ -77,14 +77,7 @@ desired effect
 
         <!-- Content Header (Page header) -->
         <div class="content-header">
-            <h1>
-                <?= $this->fetch('heading', $this->fetch('title')); ?>
-                <?php if ($this->fetch('subheading')): ?>
-                <small><?= $this->fetch('subheading'); ?></small>
-                <?php endif; ?>
-            </h1>
-            <?php $this->Breadcrumbs->prepend($this->get('be_title'), $this->get('be_dashboard_url')); ?>
-            <?= $this->Breadcrumbs->render(['class' => 'breadcrumb']); ?>
+            <?= $this->element('Backend.Layout/admin/header'); ?>
         </div>
 
         <!-- Toolbar wrapper -->
@@ -129,12 +122,17 @@ desired effect
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-
+<script>
+    var AdminLTEOptions = {
+        sidebarExpandOnHover: false
+    };
+</script>
 <?= $this->Html->script('/backend/libs/adminlte/bootstrap/js/bootstrap.min.js'); ?>
 <?= $this->Html->script('/backend/libs/adminlte/dist/js/app.js'); ?>
 <?= $this->Html->script('/backend/libs/underscore/underscore-min.js'); ?>
+<?= $this->Html->script('/backend/js/backend.js'); ?>
+<?= $this->Html->script('/backend/js/iconify.js'); ?>
 <?= $this->fetch('script'); ?>
-<?= $this->Html->script('/backend/js/iconify.js'); // must be after the script block as we need backend js to be present ?>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
@@ -147,6 +145,23 @@ desired effect
             console.log("Resize to ", h);
             $('.content-aside').height(h);
         }).trigger('resize');
+
+        if (typeof(Storage) !== "undefined" && window.localStorage) {
+            var collapse = Number(localStorage.getItem('sidebar_collapse'));
+            if (collapse !== 1) {
+                $('body').removeClass('sidebar-collapse');
+            }
+
+            $('a[data-toggle="offcanvas"]').click(function() {
+                var collapse = $('body').hasClass('sidebar-collapse');
+                collapse = (collapse != 1) ? 1 : 0;
+
+                localStorage.setItem("sidebar_collapse", collapse);
+            })
+        } else {
+            // Sorry! No Web Storage support..
+        }
+
     })
 </script>
 </body>

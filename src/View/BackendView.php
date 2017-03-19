@@ -8,6 +8,7 @@
 
 namespace Backend\View;
 
+use Cake\Event\Event;
 use Cake\View\View;
 
 class BackendView extends View
@@ -27,6 +28,7 @@ class BackendView extends View
         $this->loadHelper('Backend.Toolbar', []); //@TODO Remove hard dependency
         $this->loadHelper('Bootstrap.Ui', []);
 
+        $this->eventManager()->dispatch(new Event('Backend.View.initialize', $this));
     }
 
     public function renderLayout($content, $layout = null)

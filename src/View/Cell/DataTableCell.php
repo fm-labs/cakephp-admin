@@ -66,7 +66,7 @@ class DataTableCell extends Cell
             $this->set($viewVar, $val);
         }
         unset($params['viewVars']);
-
+        
         $this->set('dataTable', $params);
     }
 }

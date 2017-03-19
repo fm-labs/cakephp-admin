@@ -29,18 +29,23 @@ class EntityController extends AppController
             //    $query->find('media');
             //}
 
-            if ($Model->behaviors()->has('Attributes')) {
-                $query->find('attributes');
+            if (!$Model->behaviors()->has('Attributes')) {
+                $Model->behaviors()->load('Eav.Attributes');
             }
+
+            $query->find('attributes');
 
             $entity = $query->first();
             if (!$entity) {
                 throw new NotFoundException();
             }
 
-            if ($Model->behaviors()->has('Attributes')) {
-                $this->set('entityAttributes', $Model->getAttributes($entity)->toArray());
-            }
+            // inject attribute set id for debugging
+            $entity->eav_attribute_set_id = 2;
+
+
+            $this->set('attributes', $Model->getAttributes($entity)->toArray());
+            $this->set('attributesAvailable', $Model->getAttributesAvailable($entity)->toArray());
 
         } catch (\Exception $ex) {
             $exception = $ex;

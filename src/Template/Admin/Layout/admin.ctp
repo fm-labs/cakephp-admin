@@ -53,13 +53,13 @@ desired effect
     <header class="main-header">
 
         <!-- Logo -->
-        <?= $this->element('Backend.AdminLte/logo'); ?>
+        <?= $this->element('Backend.Layout/admin/logo'); ?>
 
         <!-- Header Navbar -->
-        <?= $this->element('Backend.AdminLte/navbar'); ?>
+        <?= $this->element('Backend.Layout/admin/navbar'); ?>
     </header>
     <!-- Left side column. contains the logo and sidebar -->
-    <?= $this->element('Backend.AdminLte/sidebar'); ?>
+    <?= $this->element('Backend.Layout/admin/sidebar'); ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div id="content" class="content-wrapper">
@@ -119,11 +119,11 @@ desired effect
 
     <!-- Main Footer -->
     <footer id="main-footer" class="main-footer">
-        <?= $this->element('Backend.AdminLte/footer'); ?>
+        <?= $this->element('Backend.Layout/admin/footer'); ?>
     </footer>
 
     <!-- Control Sidebar -->
-    <?= $this->element('Backend.AdminLte/control_sidebar'); ?>
+    <?= $this->element('Backend.Layout/admin/control_sidebar'); ?>
 
 </div>
 <!-- ./wrapper -->

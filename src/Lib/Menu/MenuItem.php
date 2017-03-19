@@ -16,8 +16,6 @@ use Cake\View\View;
  */
 class MenuItem implements \ArrayAccess
 {
-    protected $_parent;
-
     protected $_title;
 
     protected $_url;
@@ -26,13 +24,21 @@ class MenuItem implements \ArrayAccess
 
     protected $_children;
 
-    public function __construct($title, $url = null, array $attr = [], $parent = null)
+    public function __construct($title, $url = null, array $attr = [], $children = [])
     {
-        $this->_parent = $parent;
+        if (is_array($title)) {
+            if (isset($title['data-icon'])) {
+                $title['attr'] = ['data-icon' => $title['data-icon']];
+                unset($title['data-icon']);
+            }
+
+            extract($title, EXTR_IF_EXISTS);
+        }
+
         $this->_title = $title;
         $this->_url = $url;
         $this->_attr = $attr;
-        $this->_children = new Menu($this);
+        $this->_children = new Menu($children);
     }
 
     public function getTitle()

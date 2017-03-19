@@ -21,13 +21,15 @@ $this->loadHelper('Bootstrap.Tabs');
     <?= $this->Form->input('id', ['type' => 'text']); ?>
     <?= $this->Form->input('name', ['type' => 'text']); ?>
     <?= $this->Form->input('test', ['type' => 'text']); ?>
+    <?= $this->Form->input('test_attribute', ['type' => 'text']); ?>
     <?= $this->Form->end(); ?>
     -->
 
     <?= $this->cell('Eav.AttributesFormInputs', [$entity, $modelName]); ?>
 
     <?php $this->Tabs->add(__('Attributes')); ?>
-        <?php debug($entityAttributes); ?>
+        <?php debug($attributes); ?>
+        <?php debug($attributesAvailable); ?>
         <?php debug($entity->entity_attribute_values); ?>
     <?php $this->Tabs->add(__('Entity view')); ?>
         <?= $this->cell('Backend.EntityView', [ $entity ], [

@@ -7,11 +7,18 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Utility\Hash;
 
+/**
+ * Class BackendNav
+ * @package Backend\Lib
+ * @deprecated
+ */
 class BackendNav
 {
 
     static public function getMenu()
     {
+        trigger_error('Class BackendNav is DEPRECATED', E_USER_DEPRECATED);
+
         $menu = [];
         $plugins = Backend::plugins();
 

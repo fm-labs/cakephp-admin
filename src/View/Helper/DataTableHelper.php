@@ -3,6 +3,7 @@
 namespace Backend\View\Helper;
 
 
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
@@ -44,7 +45,8 @@ class DataTableHelper extends Helper
         'paginate' => false,
         'select' => false,
         'sortable' => false,
-        'reduce' => []
+        'reduce' => [],
+        'filter' => true
     ];
 
     protected $_defaultFieldParams = ['title' => null, 'class' => '', 'formatter' => null, 'formatterArgs' => []];
@@ -187,13 +189,20 @@ class DataTableHelper extends Helper
     {
         $tableAttributes = $this->_tableArgs + ['id' => $this->id()];
 
-        $html = $this->templater()->format('table', [
+        $entity = null;
+        if ($this->_params['model']) {
+            $entity = TableRegistry::get($this->_params['model'])->newEntity();
+        }
+
+        $formStart = $this->Form->create($entity, ['method' => 'GET', 'novalidate' => true]);
+        $table = $this->templater()->format('table', [
             'attrs' => $this->templater()->formatAttributes($tableAttributes),
             'head' => $this->renderHead(),
             'body' => $this->renderBody(),
         ]);
+        $formEnd = $this->Form->end();
 
-        return $html;
+        return $formStart . $table . $formEnd;
     }
 
     public function renderHead()
@@ -236,28 +245,83 @@ class DataTableHelper extends Helper
 
     public function renderBody()
     {
-        $formattedRows = "";
+        $rows = "";
+
+        // filter cells
+        $rows .= $this->renderFilterRow();
+
+        // data cells
         foreach ($this->_params['data'] as $row) {
-            $formattedRows .= $this->renderRow($row);
+            $rows .= $this->renderRow($row);
         }
 
-        $html = $this->templater()->format('body', [
-            'rows' => $formattedRows,
+        // reduce row
+        $rows .= $this->renderReduceRow();
+
+
+        return $this->templater()->format('body', [
+            'rows' => $rows,
         ]);
-
-        $html .= $this->renderReducedCells();
-
-        return $html;
     }
 
-    public function renderReducedCells()
+    public function renderFilterRow()
+    {
+        if (!$this->_params['filter'] || empty($this->_params['filter'])) {
+            return '';
+        }
+
+        $cells = "";
+        foreach ($this->_fields as $fieldName => $field)
+        {
+            $filterInput = '';
+
+
+            if ($this->_params['filter'] == true || in_array($fieldName, $this->_params['filter'])) {
+
+                $filterInputOptions = ['label' => false];
+
+
+                $column = TableRegistry::get($this->_params['model'])->schema()->column($fieldName);
+                //debug($column);
+
+                if ($column['type'] == 'boolean') {
+                    $filterInputOptions['type'] = 'select';
+                    $filterInputOptions['options'] = [ 0 => __('No'), 1 => __('Yes')];
+                    $filterInputOptions['empty'] = __('All');
+                } elseif ($column['type'] == 'select' || substr($fieldName, -3) == '_id') {
+                    $filterInputOptions['empty'] = __('All');
+                }
+
+                $filterInput = $this->Form->input($fieldName, $filterInputOptions);
+
+            }
+            $cells .= $this->templater()->format('rowCell', [
+                'content' => (string) $filterInput,
+                'attrs' => $this->templater()->formatAttributes([
+                    //'class' => $field['class'],
+                    //'title' => $field['title']
+                ])
+            ]);
+        }
+
+        $actionCell = $this->templater()->format('rowCell', ['content' => $this->Form->button(__('Filter'))]); // actions cell stub
+
+        $row = $this->templater()->format('row', [
+            'attrs' => '',
+            'cells' => $cells,
+            'actionscell' => $actionCell
+        ]);
+
+        return $row;
+    }
+
+    public function renderReduceRow()
     {
         if (empty($this->_params['reduce'])) {
             return '';
         }
 
-        $html = '';
-
+        $html = "<tr>";
         foreach ($this->_fields as $fieldName => $field)
         {
             $reducedData = null;
@@ -282,6 +346,7 @@ class DataTableHelper extends Helper
 
         }
         $html .= $this->templater()->format('rowCell', ['content' => '']); // actions cell stub
+        $html .= "</tr>";
         return $html;
     }
 

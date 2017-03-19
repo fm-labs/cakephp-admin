@@ -5,14 +5,9 @@ namespace Backend\Lib\Menu;
 class Menu implements \Iterator
 {
     /**
-     * @var null
+     * @var MenuItem[]
      */
-    protected $_parent;
-
-    /**
-     * @var array
-     */
-    protected $_items;
+    protected $_items = [];
 
     /**
      * @var array
@@ -29,10 +24,11 @@ class Menu implements \Iterator
      */
     private $_itpos;
 
-    public function __construct($parent = null, $attr = [])
+    public function __construct($items = [], $attr = [])
     {
-        $this->_parent = $parent;
-        $this->_items = [];
+        foreach ($items as $item) {
+            $this->addItem($item);
+        }
         $this->_attr = $attr;
     }
 
@@ -58,21 +54,21 @@ class Menu implements \Iterator
         return $this->_items;
     }
 
-    public function &add($title, $url = null, $attr = [])
+    public function &addItem($title, $url = null, $attr = [], $children = [])
     {
         if (!is_object($title)) {
-            $item = new MenuItem($title, $url, $attr, $this);
+            $item = new MenuItem($title, $url, $attr, $children);
         } elseif ($title instanceof MenuItem) {
             $item = $title;
         } else {
-            throw new \InvalidArgumentException("Can not add item: Not a menu item");
+            throw new \InvalidArgumentException("Menu::addItem failed: Invalid MenuItem instance");
         }
         $hash = spl_object_hash($item);
         $this->_items[$hash] = $item;
         return $this->_items[$hash];
     }
 
-    public function remove(MenuItem $item)
+    public function removeItem(MenuItem $item)
     {
         $hash = spl_object_hash($item);
         if (isset($this->_items[$hash])) {

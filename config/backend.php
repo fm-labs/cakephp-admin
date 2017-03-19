@@ -17,10 +17,8 @@ return [
      * - title: Dashboard title string
      * - url: Url to Dashboard
      */
-    'Backend.Dashboard' => [
-        'title' => 'Backend',
-        'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
-    ],
+    'Backend.Dashboard.title' => 'Backend',
+    'Backend.Dashboard.url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
 
     /**
      * Backend Security
@@ -28,20 +26,18 @@ return [
      * - enabled: Enables SecurityComponent
      * - forceSSL: Force https scheme for all backend requests
      */
-    'Backend.Security' => [
-        'enabled' => false,
-        'forceSSL' => false
-    ],
+    'Backend.Security.enabled' => false,
+    'Backend.Security.forceSSL' => false,
 
     /**
      * Backend AuthComponent config
      */
-    'Backend.Auth' => [
-    ],
+    'Backend.Auth' => [],
 
-    'Backend.Search' => [
-        'searchUrl' => ['plugin' => 'Backend', 'controller' => 'Search', 'action' => 'index'],
-    ],
+    /**
+     * Backend Search config
+     */
+    'Backend.Search.searchUrl' => ['plugin' => 'Backend', 'controller' => 'Search', 'action' => 'index'],
 
     /**
      * Backend Basic Auth Users

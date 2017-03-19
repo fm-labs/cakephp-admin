@@ -14,7 +14,7 @@ class DataTableCell extends Cell
 
     public function display($params = [])
     {
-        $params += [
+        $params = array_merge([
             'model' => null,
             'headers' => [],
             'data' => [],
@@ -23,8 +23,10 @@ class DataTableCell extends Cell
             'paginate' => false,
             'select' => false,
             'sortable' => false,
-            'reduce' => []
-        ];
+            'reduce' => [],
+            'filter' => [],
+            'viewVars' => []
+        ], $params);
 
         // model context
         $this->modelClass = $params['model'];
@@ -58,6 +60,12 @@ class DataTableCell extends Cell
         if ($params['sortable'] === true) {
             $params['sortable'] = ['plugin' => 'Backend', 'controller' => 'DataTable', 'action' => 'tableSort', 'model' => $params['model']];
         }
+
+        // additional view vars for the view cell
+        foreach ($params['viewVars'] as $viewVar => $val) {
+            $this->set($viewVar, $val);
+        }
+        unset($params['viewVars']);
 
         $this->set('dataTable', $params);
     }

@@ -7,7 +7,7 @@
     <div class="navbar-custom-menu" style="float: left;">
         <ul class="nav navbar-nav">
             <!-- Content Menu -->
-            <?php echo $this->element('Backend.AdminLte/navbar_content_menu'); ?>
+            <?php echo $this->element('Backend.Layout/admin/navbar_content_menu'); ?>
         </ul>
     </div>
 
@@ -17,20 +17,20 @@
         <ul class="nav navbar-nav">
 
             <!-- Search -->
-            <?php echo $this->element('Backend.AdminLte/navbar_search'); ?>
+            <?php echo $this->element('Backend.Layout/admin/navbar_search'); ?>
 
 
             <!-- Messages Menu -->
-            <?php //echo $this->element('Backend.AdminLte/navbar_messages'); ?>
+            <?php //echo $this->element('Backend.Layout/admin/navbar_messages'); ?>
 
             <!-- Notifications Menu -->
-            <?php //echo $this->element('Backend.AdminLte/navbar_notifications'); ?>
+            <?php //echo $this->element('Backend.Layout/admin/navbar_notifications'); ?>
 
             <!-- Tasks Menu -->
-            <?php //echo $this->element('Backend.AdminLte/navbar_tasks'); ?>
+            <?php //echo $this->element('Backend.Layout/admin/navbar_tasks'); ?>
 
             <!-- User Account Menu -->
-            <?php echo $this->element('Backend.AdminLte/navbar_user'); ?>
+            <?php echo $this->element('Backend.Layout/admin/navbar_user'); ?>
 
             <!-- Control Sidebar Toggle Button
             <li>

@@ -169,9 +169,15 @@ h2 {
 /**
  * Lists
  */
+dl dt,
 dl.dl-horizontal dt,
+dl dd,
 dl.dl-horizontal dd {
   padding: 0.3rem;
+}
+dl dt,
+dl.dl-horizontal dt {
+  text-align: left;
 }
 dl.dl-striped dd:nth-child(2n+1) {
   background-color: #f3f3f3;

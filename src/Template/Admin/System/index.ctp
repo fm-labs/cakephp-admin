@@ -5,8 +5,6 @@ use Cake\Core\Configure;
 <?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(__('Systeminfo')); ?>
 <div>
-	<h1><?php echo __d('backend', "System "); ?></h1>
-
 	<dl>
 		<dt><?php echo __d('backend', "PHP Version")?></dt>
 		<dd><?php echo phpversion();?></dd>
@@ -24,13 +22,13 @@ use Cake\Core\Configure;
 		<dd><?php echo $this->request->clientIp();?></dd>
 		
 		<dt><?php echo __d('backend', "PHP Info");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'php'), ['class' => 'link-frame', 'title' => 'PHP Info']);?></dd>
+		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'php'));?></dd>
 		
 		<dt><?php echo __d('backend', "Date & Time Info");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'datetime'), ['class' => 'link-modal']);?></dd>
+		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'datetime'));?></dd>
 	
 		<dt><?php echo __d('backend', "Plugins");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'plugins'), ['class' => 'link-frame-modal']);?></dd>
+		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'plugins'));?></dd>
 		
 		<dt><?php echo __d('backend', "Globals");?></dt>
 		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'globals'));?></dd>

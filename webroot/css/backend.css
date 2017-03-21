@@ -510,19 +510,21 @@ form div.actions {
 }
 form fieldset {
   padding: 0;
-  margin: 0.5em 0;
+  margin: 0 0 1em 0;
   transition: height 1s;
 }
 form fieldset legend {
-  background-color: #f8f8f8;
-  border: medium none;
+  background-color: transparent;
   display: block;
   margin: 0 0 0 0;
   width: 100%;
   padding: 0 0.3em;
-  border-top: 2px solid #3c8dbc;
+  border-top: 1px solid #3c8dbc;
+  border-bottom: none;
   line-height: 30px;
   font-size: 1em;
+  font-variant: all-small-caps;
+  color: #3c8dbc;
 }
 form fieldset legend::before {
   display: inline-block;
@@ -549,10 +551,13 @@ form fieldset legend ~ * {
   margin-top: 1em;
 }
 form fieldset > .body {
-  padding: 0 1.18em;
+  padding: 0;
   transition: height 1s;
   height: auto;
   overflow: visible;
+}
+form fieldset.collapsed {
+  margin-bottom: 0.5em;
 }
 form fieldset.collapsed > .body {
   height: 0;

@@ -61,21 +61,28 @@ form fieldset {
   //border-bottom: 1px solid @color-primary !important;
   //border-width: 0 0 1px 0 !important;
   padding: 0;
-  margin: 0.5em 0;
+  margin: 0 0 1em 0;
   transition: height 1s;
+  //border-bottom: 1px solid #CCC;
+
+  &:hover {
+    //box-shadow: 2px 2px 2px #CCC;
+  }
 }
 
 form fieldset legend {
 
-  background-color: #f8f8f8;
-  border: medium none;
+  background-color: transparent; //#f8f8f8;
   display: block;
   margin: 0 0 0 0;
   width: 100%;
   padding: 0 0.3em;
-  border-top: 2px solid @color-primary;
+  border-top: 1px solid @color-primary;
+  border-bottom: none;
   line-height: 30px;
   font-size: 1em;
+  font-variant: all-small-caps;
+  color: @color-primary;
 
   &::before {
     .faicon(" \f078");
@@ -94,13 +101,15 @@ form fieldset legend {
 }
 
 form fieldset > .body {
-  padding: 0 1.18em;
+  padding: 0;
   transition: height 1s;
   height: auto;
   overflow: visible;
 }
 
 form fieldset.collapsed {
+
+  margin-bottom: 0.5em;
 
   > .body {
      height: 0;
@@ -111,6 +120,7 @@ form fieldset.collapsed {
     display: block;
     visibility: visible;
     height: auto !important;
+    //border-bottom: 1px solid #f8f8f8;
 
     &::before {
       .faicon(" \f054");

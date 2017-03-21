@@ -1,4 +1,4 @@
-@dtable-cell-border-color: darkgray;
+@dtable-cell-border-color: #e8e8e8;
 @dtable-cell-padding: 5px;
 
 .dtable {
@@ -26,15 +26,18 @@
 
 .dtable-cell,
 .dtable-head-cell {
-  border-top: 1px solid @dtable-cell-border-color;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  border-color: @dtable-cell-border-color;
+  border-collapse: collapse;
   display: table-cell;
   vertical-align: middle;
   padding: @dtable-cell-padding;
-  border-collapse: collapse;
 }
 
 .dtable-head-cell {
   font-weight: 600;
+  //background-color: @dtable-cell-border-color;
 }
 
 /** Hide Actions **/

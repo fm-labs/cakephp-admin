@@ -10,7 +10,7 @@
     <?= $this->fetch('meta') ?>
 
     <?= $this->Html->css('Bootstrap.bootstrap.min'); ?>
-    <?= $this->Html->css('Backend.font-awesome'); ?>
+    <?= $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min'); ?>
     <?= $this->Html->css('Backend.layout/auth'); ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>

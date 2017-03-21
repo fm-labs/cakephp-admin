@@ -891,11 +891,13 @@ nav.toolbar > ul {
 }
 .dtable-cell,
 .dtable-head-cell {
-  border-top: 1px solid darkgray;
+  border-style: solid;
+  border-width: 1px 0 0 0;
+  border-color: #e8e8e8;
+  border-collapse: collapse;
   display: table-cell;
   vertical-align: middle;
   padding: 5px;
-  border-collapse: collapse;
 }
 .dtable-head-cell {
   font-weight: 600;

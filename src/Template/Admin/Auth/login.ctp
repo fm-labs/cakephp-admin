@@ -5,7 +5,9 @@
 
     <?= $this->Form->create(null, ['class' => 'form-signin']); ?>
 
-    <h2 class="form-signin-heading">Please sign in</h2>
+    <h2 class="form-signin-heading">
+        <i class="fa fa-cubes fa-3x"></i>
+    </h2>
 
     <?= $this->Form->input('username', [
         'label' => false,

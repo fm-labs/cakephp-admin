@@ -28,7 +28,7 @@ class BackendHelper extends Helper
             'rootUrl' => $this->Url->build('/'),
             'debug' => Configure::read('debug')
         ];
-        $script = sprintf('Backend.init(%s)', json_encode($backendjs));
+        $script = sprintf('if (window.Backend !== undefined) { Backend.init(%s); }', json_encode($backendjs));
         $this->Html->scriptBlock($script, ['block' => 'script']);
     }
 }

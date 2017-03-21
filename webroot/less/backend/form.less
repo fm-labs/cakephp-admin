@@ -96,14 +96,15 @@ form fieldset legend {
 form fieldset > .body {
   padding: 0 1.18em;
   transition: height 1s;
-  overflow: hidden;
   height: auto;
+  overflow: visible;
 }
 
 form fieldset.collapsed {
 
   > .body {
      height: 0;
+     overflow: hidden;
   }
 
   > legend {

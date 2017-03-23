@@ -48,7 +48,7 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
         );
 
         // Fallbacks
-        $routes->connect('/:controller');
+        //$routes->connect('/:controller');
         $routes->fallbacks('DashedRoute');
     });
 });

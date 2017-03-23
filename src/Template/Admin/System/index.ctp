@@ -1,51 +1,91 @@
 <?php
 use Cake\Core\Configure;
 
+$this->loadHelper('Bootstrap.Tabs');
 ?>
 <?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(__('Systeminfo')); ?>
-<div>
-	<dl>
-		<dt><?php echo __d('backend', "PHP Version")?></dt>
-		<dd><?php echo phpversion();?></dd>
-	
-		<dt><?php echo __d('backend', "Cake Version");?></dt>
-		<dd><?php echo Configure::version();?></dd>
-		
-		<dt><?php echo __d('backend', "Magic quotes");?></dt>
-		<dd><?php echo (get_magic_quotes_gpc()) ? __d('backend', 'Enabled') : __d('backend', 'Disabled') ;?></dd>
-		
-		<dt><?php echo __d('backend', "User Agent");?></dt>
-		<dd><?php echo env('HTTP_USER_AGENT') ;?></dd>
-		
-		<dt><?php echo __d('backend', "Client IP");?></dt>
-		<dd><?php echo $this->request->clientIp();?></dd>
-		
-		<dt><?php echo __d('backend', "PHP Info");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'php'));?></dd>
-		
-		<dt><?php echo __d('backend', "Date & Time Info");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'datetime'));?></dd>
-	
-		<dt><?php echo __d('backend', "Plugins");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'plugins'));?></dd>
-		
-		<dt><?php echo __d('backend', "Globals");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'globals'));?></dd>
-		
-		<dt><?php echo __d('backend', "Session");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'session'));?></dd>
-		
-		<dt><?php echo __d('backend', "Config");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'config'));?></dd>
+<div class="index">
 
-		<dt><?php echo __d('backend', "Routes");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'routes'));?></dd>
+	<?php $this->Tabs->create(); ?>
+	<?php $this->Tabs->add(__('System')); ?>
 
-		<dt><?php echo __d('backend', "Menus");?></dt>
-		<dd><?php echo $this->Html->link(__d('backend', 'Open'), array('action' => 'menus'));?></dd>
+	<h2>PHP</h2>
+	<dl class="dl-horizontal">
 
+		<dt><?= __d('backend', "PHP Version")?></dt>
+		<dd><?= phpversion();?></dd>
+
+		<dt><?= __d('backend', "Magic quotes");?></dt>
+		<dd><?= (get_magic_quotes_gpc()) ? __d('backend', 'Enabled') : __d('backend', 'Disabled') ;?></dd>
+
+		<dt><?= __d('backend', "Memory limit");?></dt>
+		<dd><?= ini_get('memory_limit'); ?></dd>
+
+		<dt><?= __d('backend', "Max execution time");?></dt>
+		<dd><?= ini_get('max_execution_time'); ?></dd>
+
+		<dt><?= __d('backend', "Max input time");?></dt>
+		<dd><?= ini_get('max_input_time'); ?></dd>
+
+		<dt><?= __d('backend', "Max input vars");?></dt>
+		<dd><?= ini_get('max_input_vars'); ?></dd>
+
+		<dt><?= __d('backend', "Post max size");?></dt>
+		<dd><?= ini_get('post_max_size'); ?></dd>
+
+		<dt><?= __d('backend', "Safe mode");?></dt>
+		<dd><?= ini_get('safe_mode'); ?></dd>
+
+		<dt><?= __d('backend', "Allow url fopen");?></dt>
+		<dd><?= ini_get('allow_url_fopen'); ?></dd>
+
+		<dt><?= __d('backend', "Allow url include");?></dt>
+		<dd><?= ini_get('allow_url_include'); ?></dd>
+
+		<dt><?= __d('backend', "File uploads");?></dt>
+		<dd><?= ini_get('file_uploads'); ?></dd>
+
+		<dt><?= __d('backend', "Upload max filesize");?></dt>
+		<dd><?= ini_get('upload_max_filesize'); ?></dd>
+
+
+		<dt><?= __d('backend', "Log errors");?></dt>
+		<dd><?= ini_get('log_errors'); ?></dd>
+	</dl>
+
+	<h2>Date & Time</h2>
+	<dl class="dl-horizontal">
+		<dt><?= __d('backend', "Default Timezone");?></dt>
+		<dd><?= date_default_timezone_get();?></dd>
+
+		<dt><?= __d('backend', "Timezone");?></dt>
+		<dd><?= ini_get('date.timezone');?></dd>
+	</dl>
+
+	<h2>CakePHP</h2>
+	<dl class="dl-horizontal">
+		<dt><?= __d('backend', "Cake Version");?></dt>
+		<dd><?= Configure::version();?></dd>
 	</dl>
 
 
+	<h2>Client</h2>
+	<dl class="dl-horizontal">
+		<dt><?= __d('backend', "User Agent");?></dt>
+		<dd><?= env('HTTP_USER_AGENT') ;?></dd>
+		
+		<dt><?= __d('backend', "Client IP");?></dt>
+		<dd><?= $this->request->clientIp();?></dd>
+
+	</dl>
+
+	<?php $this->Tabs->add(__('Config'), ['url' => ['action' => 'config']]); ?>
+	<?php $this->Tabs->add(__('Plugins'), ['url' => ['action' => 'plugins']]); ?>
+	<?php $this->Tabs->add(__('Routes'), ['url' => ['action' => 'routes']]); ?>
+	<?php $this->Tabs->add(__('Menus'), ['url' => ['action' => 'menus']]); ?>
+	<?php $this->Tabs->add(__('Globals'), ['url' => ['action' => 'globals']]); ?>
+	<?php $this->Tabs->add(__('Session'), ['url' => ['action' => 'session']]); ?>
+	<?php $this->Tabs->add(__('PHP Info'), ['url' => ['action' => 'php']]); ?>
+	<?php echo $this->Tabs->render(); ?>
 </div>

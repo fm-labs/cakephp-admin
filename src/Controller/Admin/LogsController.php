@@ -18,11 +18,16 @@ class LogsController extends AppController
 
     protected function _getFilePath($logFile)
     {
+        $logFile .= '.log';
         $path = realpath($this->logDir . $logFile);
         if (!$path) {
             return false;
         }
-        
+
+        if (strpos($path, '..') !== false) {
+            return false;
+        }
+
         if (!preg_match('/^'.preg_quote($this->logDir, '/') . '/', $path)) {
             return false;
         }
@@ -42,6 +47,7 @@ class LogsController extends AppController
             $F = new File($logDir.$logFile);
 
             $file = array(
+                'id' => basename($logFile, '.log'),
                 'name' => $logFile,
                 //'dir' => $logDir,
                 'size' => $F->size(),
@@ -66,13 +72,20 @@ class LogsController extends AppController
 
         $filePath = $this->_getFilePath($logFile);
         if (!$filePath || !file_exists($filePath)) {
-            $this->Flash->error(__d('backend', 'Logfile {0} not found', $logFile));
-            return $this->redirect(array('action' => 'index'));
+            $this->Flash->error(__d('backend', 'Logfile {0} not found in {1}', $logFile, $filePath));
+            //return $this->redirect(array('action' => 'index'));
+            return;
         }
 
+        $page = ($this->request->query('page')) ?: 1;
+        $length = 409600; // 400 kB
+        $offset = ($page - 1) * $length;
+
         $File = new File($filePath, false);
-        $log = $File->read();
-        $this->set(compact('logFile', 'log'));
+        $File->offset($offset);
+        $log = $File->read($length); // read max 400 kB
+        $File->close();
+        $this->set(compact('logFile', 'log', 'page'));
     }
 
     public function clear($logFile = null)
@@ -113,9 +126,9 @@ class LogsController extends AppController
         $this->redirect(array('action' => 'index'));
     }
 
+    /*
     public function rotate($alias = null)
     {
-        App::uses('LogRotation', 'Backend.Log');
         $L = new LogRotation($alias);
         if ($L->rotate()) {
             $this->Flash->success(__('Ok'));
@@ -125,4 +138,5 @@ class LogsController extends AppController
 
         $this->redirect($this->referer());
     }
+    */
 }

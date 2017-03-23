@@ -1,8 +1,11 @@
+<?php $this->loadHelper('Bootstrap.Tabs'); ?>
 <?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(__d('backend', 'Logs')); ?>
 <div class="index">
+
+    <?php $this->Tabs->create(); ?>
+    <?php $this->Tabs->add(__d('backend', 'LogViewer')); ?>
 	<h2><?= __d('backend', 'LogViewer'); ?></h2>
-	
 	<table class="ui table striped">
         <thead>
             <tr>
@@ -14,44 +17,32 @@
             </tr>
         </thead>
         <?php foreach ($this->get('files') as $file):?>
-            <?php $id = basename($file['name']); ?>
             <tr>
-                <td><?= $this->Html->link($file['name'], ['action' => 'view', $id]); ?></td>
+                <td><?= $this->Html->link($file['name'], ['action' => 'view', $file['id']]); ?></td>
                 <td><?= $this->Number->toReadableSize($file['size']); ?></td>
                 <td><?= $this->Time->timeAgoInWords($file['last_modified']); ?></td>
                 <td><?= $this->Time->timeAgoInWords($file['last_access']); ?></td>
 
                 <td class="actions">
-                    <div class="ui basic small buttons">
-                        <div class="ui button">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $id]) ?>
-                        </div>
-                        <div class="ui floating dropdown icon button">
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <?= $this->Ui->link(
-                                    __('Clear'),
-                                    ['action' => 'clear', $id],
-                                    ['class' => 'item', 'data-icon' => 'trash']
-                                ) ?>
-                                <?= $this->Ui->postLink(
-                                    __('Delete'),
-                                    ['action' => 'delete', $id],
-                                    ['class' => 'item', 'data-icon' => 'trash', 'confirm' => __('Are you sure you want to delete {0}?', $file['name'])]
-                                ) ?>
-                            </div>
-                        </div>
-                    </div>
+                    <?= $this->Html->link(__('View'), ['action' => 'view', $file['id']]) ?>
+                    <?= $this->Ui->link(
+                        __('Clear'),
+                        ['action' => 'clear', $file['id']],
+                        ['class' => 'item', 'data-icon' => 'trash']
+                    ) ?>
+                    <?= $this->Ui->postLink(
+                        __('Delete'),
+                        ['action' => 'delete', $file['id']],
+                        ['class' => 'item', 'data-icon' => 'trash', 'confirm' => __('Are you sure you want to delete {0}?', $file['name'])]
+                    ) ?>
                 </td>
             </tr>
         <?php endforeach; ?>
 	</table>
-	
-	<br />
-	<hr />
-	<br />
-	
-	<h2>LogRotation</h2>
+
+
+    <?php $this->Tabs->add(__d('backend', 'Log Rotation')); ?>
+	<h2><?= __d('backend', 'Log Rotation'); ?></h2>
 	<table class="ui table striped">
         <thead>
             <tr>
@@ -85,5 +76,9 @@
             </tr>
 		<?php endforeach; ?>
 	</table>
-	
+
+    <?php $this->Tabs->add(__('Debug'), ['debugOnly' => true]); ?>
+	<?php debug($this->get('files')); ?>
+
+    <?php echo $this->Tabs->render(); ?>
 </div>

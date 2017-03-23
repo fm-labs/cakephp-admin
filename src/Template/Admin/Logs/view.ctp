@@ -23,5 +23,7 @@
 
 	<div class="log-text">
 		<textarea name="log" style="width:98%; height:90%; min-height: 500px;"><?= $this->get('log'); ?></textarea>
+
+        <?= $this->Html->link(__('Load more logs'), ['action' => 'view', $logFile, 'page' => $page + 1]); ?>
 	</div>
 </div>

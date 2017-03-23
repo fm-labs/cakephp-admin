@@ -146,6 +146,7 @@ desired effect
             $('.content-aside').height(h);
         }).trigger('resize');
 
+        /*
         if (typeof(Storage) !== "undefined" && window.localStorage) {
             var collapse = Number(localStorage.getItem('sidebar_collapse'));
             if (collapse !== 1) {
@@ -161,6 +162,7 @@ desired effect
         } else {
             // Sorry! No Web Storage support..
         }
+        */
 
     })
 </script>

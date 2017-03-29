@@ -2,9 +2,7 @@
   "name": "cakephp3-backend",
   "description": "CakePHP Administrative GUI",
   "main": "",
-  "authors": [
-    "[object Object]"
-  ],
+  "authors": [],
   "license": "SEE LICENSE IN LICENSE.txt",
   "keywords": [
     "cakephp",

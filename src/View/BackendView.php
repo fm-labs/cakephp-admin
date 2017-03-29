@@ -1,18 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 5/25/15
- * Time: 6:05 PM
- */
 
 namespace Backend\View;
 
 use Cake\Event\Event;
 use Cake\View\View;
+use Banana\View\ViewModuleTrait;
 
 class BackendView extends View
 {
+    use ViewModuleTrait;
+
     public function initialize()
     {
 

@@ -39,7 +39,8 @@ class DataTableHelper extends Helper
         'data' => [],
         'id' => null,
         'class' => '',
-        'headers' => [],
+        'fields' => [],
+        'exclude' => [],
         'actions' => [],
         'rowActions' => [],
         'paginate' => false,
@@ -63,10 +64,33 @@ class DataTableHelper extends Helper
         return null;
     }
 
+    /**
+     * @param array $params
+     * - `model` string Model name
+     * - `data` array|Collection Table data
+     * - `id` string Html element id attribute
+     * - `class` string Html element class attribute
+     * - `fields` string|array List of entity fields used as columns. Accepts '*' as wildcard field. MUST BE used as
+     *      string parameter or as first item in list
+     * - `exclude` array List of entity fields to ignore.
+     * - `actions` array List of actions link. Accepts entity fields as string templates in url arrays (:[field])
+     *      e.g. [__('Edit'), ['action' => 'edit', 'id' => ':id']]
+     * - `paginate` boolean
+     * - `sortable` boolean
+     * - `filter` boolean
+     * - `reduce` array
+     *
+     */
     public function create($params = [])
     {
         $this->_params = $params + $this->_defaultParams;
         $this->_parseParams();
+
+
+        if (!$this->_params['model']) {
+            throw new \InvalidArgumentException('Missing parameter \'modelName\'');
+        }
+
         $this->_parseFields();
 
         /*
@@ -128,6 +152,14 @@ class DataTableHelper extends Helper
         return $this->_id;
     }
 
+    protected function &_table()
+    {
+        if ($this->_table === null) {
+            $this->_table = TableRegistry::get($this->_params['model']);
+        }
+        return $this->_table;
+    }
+
     protected function _tableClass($class = '')
     {
         $class = 'data-table ' . $class;
@@ -154,26 +186,69 @@ class DataTableHelper extends Helper
         if ($this->_params['select']) {
             $this->_tableArgs['data-selectable'] = 1;
         }
+
     }
 
     protected function _parseFields()
     {
+        $fields = (array) $this->_params['fields'];
+        $exclude = (array) $this->_params['exclude'];
 
-        foreach ($this->_params['fields'] as $field => $conf)
+        $wildcardInclude = false;
+        if (isset($fields['*'])) {
+            $wildcardInclude = $fields['*'];
+            unset($fields['*']);
+        }
+
+        if ($wildcardInclude) {
+            $_props = $this->_table()->schema()->columns();
+            foreach ($_props as $_prop) {
+                // skip if already configured
+                if (isset($fields[$_prop])) {
+                    continue;
+                }
+                // skip if excluded
+                if (in_array($_prop, $exclude)) {
+                    continue;
+                }
+
+                $fields[$_prop] = [];
+            }
+        }
+
+        $this->_configureFields($fields);
+    }
+
+    protected function _configureFields($fields)
+    {
+        foreach ($fields as $field => $conf)
         {
             if (is_numeric($field)) {
                 $field = $conf;
                 $conf = [];
             }
 
-            $conf += $this->_defaultFieldParams;
-
-            if ($conf['title'] === null) {
-                $conf['title'] = Inflector::humanize($field);
+            if (!is_array($conf)) {
+                $conf = [];
             }
 
-            $this->_fields[$field] = $conf;
+            $this->_configureField($field, $conf);
         }
+    }
+
+    protected function _configureField($field, array $conf = [])
+    {
+        if ($field == '*' || !is_string($field)) {
+            throw new \InvalidArgumentException('Field parameter MUST be a string value');
+        };
+
+        $conf += $this->_defaultFieldParams;
+
+        if ($conf['title'] === null) {
+            $conf['title'] = Inflector::humanize($field);
+        }
+
+        $this->_fields[$field] = $conf;
     }
 
     protected function _getField($fieldName)

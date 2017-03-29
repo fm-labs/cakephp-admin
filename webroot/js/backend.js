@@ -64,6 +64,25 @@
         parent.postMessage(msg, hostUrl);
     };
 
+    Backend.Frame = {
+
+        /**
+         * Reload the closest frame (window or ajax-content container)
+         *
+         * @param el
+         */
+        reloadClosest: function(el) {
+
+            if (el && el !== window && $(el).closest('.ajax-content').length > 0) {
+                $(el).closest('.ajax-content').trigger('reload');
+                return;
+            }
+
+            window.location.href = window.location.href;
+        }
+
+    },
+
     /**
      * Loader
      */
@@ -220,7 +239,7 @@
      */
     Backend.Modal = {
 
-        _modalTemplate: '<div class="modal-dialog modal-lg" style="width: 95%;"> \
+        _modalTemplate: '<div class="modal-dialog modal-lg"> \
     <div class="modal-content"> \
     <div class="modal-header"> \
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> \
@@ -279,7 +298,7 @@
             var modalId = Backend.Util.uniqueDomId('modal');
             var $modal = $('<div>', {
                 id: 'modal' + modalId,
-                class: 'modal fade',
+                class: ((options.class) ? options.class + ' ' : '') + 'modal fade',
                 tabIndex: -1,
                 role: 'dialog'
             }).html(this._modalTemplate);
@@ -301,8 +320,8 @@
 
             $modal.modal(modalOptions);
             $modal.on('shown.bs.modal', function (ev) {
-                $iframe.width($modal.width * 0.9);
-                $iframe.height($(window).height() * 0.70);
+                //$iframe.width($modal.width * 0.9);
+                //$iframe.height($(window).height() * 0.70);
             });
             $modal.on('hidden.bs.modal', function(ev) {
 
@@ -545,31 +564,40 @@
 
 
 
-    $(document).on('click','a.link-modal-frame, a.link-frame-modal', function (ev) {
+    $(document).on('click','a[data-modal], a.link-modal-frame, a.link-frame-modal', function (ev) {
 
-        var $a = $(ev.target);
+        var $target = $(ev.target);
+        var modalOptions = {
+            //backdrop: $target.data('modalBackdrop'),
+            //show: $target.data('modalShow'),
+            //keyboard: $target.data('modalKeyboard')
+        };
+        var modalClass = $target.data('modalClass');
+        var modalTitle = $target.data('modalTitle') || ev.target.title || ev.target.innerText;
+        var modalReloadOnClose = $target.data('modalReload');
 
-        var url = $a.attr('href');
+        var url = $target.attr('href');
         if (url.indexOf('?') > -1){
             url += '&iframe=1'
         }else{
             url += '?iframe=1'
         }
 
-        var $modal = Backend.Modal.openIframe(url, {}, {
-            title: ev.target.title || ev.target.innerText
+        var $modal = Backend.Modal.openIframe(url, modalOptions, {
+            title: modalTitle,
+            class: modalClass
         });
 
         $modal.on('shown.bs.modal', function() {
             console.log("iframe modal shown");
         });
         $modal.on('hidden.bs.modal', function() {
-            $a.closest('.ajax-content').trigger('reload');
-            /*
-             if ($a.data('reloadOnClose')) {
-             $a.closest('.ajax-content').trigger('reload');
+            $target.closest('.ajax-content').trigger('reload');
+
+             if (modalReloadOnClose) {
+                //$target.closest('.ajax-content').trigger('reload');
+                 Backend.Frame.reloadClosest($target);
              }
-             */
         });
 
         ev.stopPropagation();

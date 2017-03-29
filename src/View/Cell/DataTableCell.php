@@ -58,7 +58,7 @@ class DataTableCell extends Cell
 
         // sortable
         if ($params['sortable'] === true) {
-            $params['sortable'] = ['plugin' => 'Backend', 'controller' => 'DataTable', 'action' => 'tableSort', 'model' => $params['model']];
+            $params['sortable'] = ['plugin' => 'Backend', 'controller' => 'SimpleTree', 'action' => 'treeSort', 'model' => $params['model']];
         }
 
         // additional view vars for the view cell

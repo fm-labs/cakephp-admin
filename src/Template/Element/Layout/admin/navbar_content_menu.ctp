@@ -1,4 +1,5 @@
 <?php
+return;
 try {
 
     $menu = \Cake\ORM\TableRegistry::get('Content.Menus')->toMenu(1);

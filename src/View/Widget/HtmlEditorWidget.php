@@ -44,9 +44,9 @@ class HtmlEditorWidget extends BasicWidget
             'undo redo | cut copy paste | link image media | table'
         ],
         // URL Handling
-        'convert_urls' => true, // TinyMCE default: true
+        'convert_urls' => false, // TinyMCE default: true
         'relative_urls' => false, // TinyMCE default: true
-        'remove_script_host' => true, // TinyMCE default: true
+        'remove_script_host' => false, // TinyMCE default: true
         'document_base_url' => '/',
         //'importcss_append' => true,
         'cache_suffix' => null,

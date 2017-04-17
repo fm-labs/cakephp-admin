@@ -2,6 +2,7 @@
 
 namespace Backend\Lib\Menu;
 
+use Cake\Collection\Collection;
 use Cake\View\View;
 
 /**
@@ -38,7 +39,7 @@ class MenuItem implements \ArrayAccess
         $this->_title = $title;
         $this->_url = $url;
         $this->_attr = $attr;
-        $this->_children = new Menu($children);
+        $this->_children = new Collection($children);
     }
 
     public function getTitle()

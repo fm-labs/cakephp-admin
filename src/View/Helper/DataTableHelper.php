@@ -3,6 +3,8 @@
 namespace Backend\View\Helper;
 
 
+use Cake\Event\Event;
+use Cake\Event\EventManager;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -56,6 +58,19 @@ class DataTableHelper extends Helper
 
     protected $_reduceStack = [];
 
+    protected $_setup = null;
+
+    protected function _setup()
+    {
+        if ($this->_setup === null) {
+            $event = new Event('Backend.DataTable.setup');
+            $event = $this->_View->eventManager()->dispatch($event);
+            $this->_setup = (array) $event->data();
+        }
+
+        return $this->_setup;
+    }
+
     public function param($key)
     {
         if (isset($this->_params[$key])) {
@@ -83,6 +98,8 @@ class DataTableHelper extends Helper
      */
     public function create($params = [])
     {
+        $this->_setup();
+
         $this->_params = $params + $this->_defaultParams;
         $this->_parseParams();
 
@@ -185,6 +202,16 @@ class DataTableHelper extends Helper
         }
         if ($this->_params['select']) {
             $this->_tableArgs['data-selectable'] = 1;
+        }
+
+        $modelName = pluginSplit($this->_params['model']);
+        if (isset($this->_setup[$modelName[1]])) {
+            $setup = $this->_setup[$modelName[1]];
+            if (isset($setup['rowActions'])) {
+                array_walk($setup['rowActions'], function($action) {
+                    $this->_params['rowActions'][] = $action;
+                });
+            }
         }
 
     }

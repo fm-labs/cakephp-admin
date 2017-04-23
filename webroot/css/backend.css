@@ -61,7 +61,7 @@
   width: 200px;
   background: transparent;
 }
-.content-left ~ main {
+.content-right ~ main {
   margin-right: 200px;
 }
 .content-wrapper {
@@ -178,17 +178,18 @@ h2 {
  * Lists
  */
 dl dt,
-dl.dl-horizontal dt,
-dl dd,
-dl.dl-horizontal dd {
-  padding: 0.3rem;
-}
-dl dt,
 dl.dl-horizontal dt {
   text-align: left;
+  padding-top: 0.3rem;
+  width: 220px;
 }
-dl.dl-striped dd:nth-child(2n+1) {
-  background-color: #f3f3f3;
+dl dd,
+dl.dl-horizontal dd {
+  margin-left: 0;
+  padding-left: 220px;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #e8e8e8;
 }
 .index > h1,
 .view > h1,

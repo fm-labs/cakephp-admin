@@ -13,14 +13,14 @@ $fields = collection($fields)
 <?php $this->Breadcrumbs->add(__('New {0}', __('<%= $singularHumanName %>'))); ?>
 <% endif; %>
 <% if (strpos($action, 'add') === false): %>
-<?= $this->Toolbar->addPostLink(
+<?php $this->Toolbar->addPostLink(
     __('Delete'),
     ['action' => 'delete', $<%= $singularVar %>-><%= $primaryKey[0] %>],
     ['data-icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', $<%= $singularVar %>-><%= $primaryKey[0] %>)]
 )
 ?>
 <% endif; %>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('List {0}', __('<%= $pluralHumanName %>')),
     ['action' => 'index'],
     ['data-icon' => 'list']
@@ -32,13 +32,13 @@ foreach ($associations as $type => $data) {
     foreach ($data as $alias => $details) {
         if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
 %>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'index'],
     ['data-icon' => 'list']
 ) %>
 
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('New {0}', __('<%= $this->_singularHumanName($alias) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'add'],
     ['data-icon' => 'plus']

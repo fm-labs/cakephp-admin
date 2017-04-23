@@ -92,19 +92,11 @@ desired effect
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-
-<!-- Bootstrap 3.3.6 -->
-<?= $this->Html->script('/backend/adminlte/bootstrap/js/bootstrap.min.js'); ?>
-<!-- AdminLTE App -->
-<?= $this->Html->script('/backend/adminlte/dist/js/app.js'); ?>
-
-<?= $this->Html->script('Backend.underscore-min'); ?>
-<?= $this->Html->script('Backend.jquery/jquery-ui.min'); ?>
-<?= $this->Html->script('Backend.tinymce/tinymce.min'); ?>
-<?= $this->Html->script('Backend.tinymce/jquery.tinymce.min'); ?>
-<?= $this->Html->script('Backend.backend/backend'); ?>
-<?= $this->Html->script('Backend.backend/htmleditor'); ?>
-<?= $this->Html->script('Backend.jstree/jstree'); ?>
+<?= $this->Html->script('/backend/libs/adminlte/bootstrap/js/bootstrap.min.js'); ?>
+<?= $this->Html->script('/backend/libs/adminlte/dist/js/app.js'); ?>
+<?= $this->Html->script('/backend/libs/underscore/underscore-min.js'); ?>
+<?= $this->Html->script('/backend/js/backend.js'); ?>
+<?= $this->Html->script('/backend/js/iconify.js'); ?>
 <?= $this->fetch('script'); ?>
 
 <script>

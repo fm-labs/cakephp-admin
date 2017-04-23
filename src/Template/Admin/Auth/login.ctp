@@ -3,7 +3,7 @@
 <div class="container">
 
 
-    <?= $this->Form->create(null, ['class' => 'form-signin']); ?>
+    <?= $this->Form->create(null, ['class' => 'form-signin', 'horizontal' => false]); ?>
 
     <h2 class="form-signin-heading">
         <i class="fa fa-cubes fa-3x"></i>

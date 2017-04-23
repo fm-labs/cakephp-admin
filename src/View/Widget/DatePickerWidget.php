@@ -48,8 +48,9 @@ class DatePickerWidget extends CakeDateTimeWidget
         $pickerOptions = [
             'format' => 'dd.mm.yyyy',
             'formatSubmit' => 'yyyy-mm-dd',
-            'hiddenPrefix' => 'pickadate__',
-            'hiddenSuffix' =>  null
+            'hiddenPrefix' => null,
+            'hiddenSuffix' =>  null,
+            'hiddenName' => true,
         ];
         $scriptTemplate = '<script>$(document).ready(function() { $("#%s").pickadate(%s); });</script>';
         $script = sprintf($scriptTemplate, $data['id'], json_encode($pickerOptions));

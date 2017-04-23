@@ -53,39 +53,39 @@ $pk = "\$$singularVar->{$primaryKey[0]}";
 %>
 <?php $this->Breadcrumbs->add(__('<%= $pluralHumanName %>'), ['action' => 'index']); ?>
 <?php $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>); ?>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('Edit {0}', __('<%= $singularHumanName %>')),
     ['action' => 'edit', <%= $pk %>],
     ['data-icon' => 'edit']
 ) ?>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('Delete {0}', __('<%= $singularHumanName %>')),
     ['action' => 'delete', <%= $pk %>],
     ['data-icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]) ?>
 
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('List {0}', __('<%= $pluralHumanName %>')),
     ['action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('New {0}', __('<%= $singularHumanName %>')),
     ['action' => 'add'],
     ['data-icon' => 'plus']
 ) ?>
-<?= $this->Toolbar->startGroup(__('More')); ?>
+<?php $this->Toolbar->startGroup(__('More')); ?>
 <%
 $done = [];
 foreach ($associations as $type => $data) {
     foreach ($data as $alias => $details) {
         if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
 %>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('New {0}', __('<%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'add'],
     ['data-icon' => 'plus']
@@ -96,7 +96,7 @@ foreach ($associations as $type => $data) {
     }
 }
 %>
-<?= $this->Toolbar->endGroup(); ?>
+<?php $this->Toolbar->endGroup(); ?>
 <div class="<%= $pluralVar %> view">
     <h2 class="ui header">
         <?= h($<%= $singularVar %>-><%= $displayField %>) ?>

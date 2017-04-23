@@ -1,17 +1,17 @@
 <?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(__d('backend', 'Logs'), ['action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(h($logFile)); ?>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('List {0}', __('Logs')),
     ['action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('Clear'),
     ['action' => 'clear'],
     ['data-icon' => 'trash outline']
 ) ?>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('Delete'),
     ['action' => 'index'],
     ['data-icon' => 'trash']

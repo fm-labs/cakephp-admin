@@ -70,18 +70,24 @@ h2 {
 
 dl,
 dl.dl-horizontal {
-  dt, dd {
-    padding: 0.3rem;
-  }
-
   dt {
     text-align: left;
+    padding-top: 0.3rem;
+    width: 220px;
   }
+  dd {
+    margin-left: 0; // bootstrap override
+    padding-left: 220px;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
 }
 
 dl.dl-striped {
-  dd:nth-child(2n+1) {
-    background-color: #f3f3f3;
+  dd:nth-child(2n-1) {
+    //background-color: #f3f3f3;
   }
 }
 

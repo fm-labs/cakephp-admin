@@ -6,6 +6,8 @@
 
     <div class="navbar-custom-menu" style="float: left;">
         <ul class="nav navbar-nav">
+            <li><?= $this->Html->link(__('Frontend'), '/', ['target' => '_blank']); ?></li>
+
             <!-- Content Menu -->
             <?php echo $this->element('Backend.Layout/admin/navbar_content_menu'); ?>
         </ul>

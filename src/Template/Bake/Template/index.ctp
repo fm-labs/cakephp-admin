@@ -16,12 +16,12 @@ foreach ($associations as $type => $data):
     foreach ($data as $alias => $details):
         if ($details['controller'] != $this->name && !in_array($details['controller'], $done)):
 %>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details["controller"] %>', 'action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
-<?= $this->Toolbar->addLink(
+<?php $this->Toolbar->addLink(
     __('New {0}', __('<%= $this->_singularHumanName($alias) %>')),
     ['controller' => '<%= $details["controller"] %>', 'action' => 'add'],
     ['data-icon' => 'plus']

@@ -417,6 +417,11 @@
             return $.ajax(ajaxOptions);
         },
 
+        /**
+         * @param target
+         * @param form
+         * @deprecated Use Backend.Ajax.postForm() instead
+         */
         submitForm: function(target, form) {
 
             var $target = $(target);
@@ -440,6 +445,16 @@
                 }
             });
 
+        },
+
+        postForm: function(form) {
+
+            var $form = $(form);
+            var data = $form.serializeArray();
+            var url = $form.data('url') || $form.attr('action');
+            var method = $form.attr('method') || 'POST';
+
+            console.log("POST AJAX form", method, url, data);
         }
     };
 
@@ -532,6 +547,7 @@
             }
 
             // ajax load from data-url
+            $tab.html("Loading ...").tab('show');
             Backend.Ajax.loadHtml($tab, url, {}).then(function() {
 
                 console.log("Tab " + target + " loaded");

@@ -498,6 +498,12 @@ form div.input {
 form div.checkbox {
   padding: 0.5em 0 0.5em;
 }
+form textarea {
+  min-height: 120px;
+}
+form textarea ~ button {
+  margin-top: 0.5em;
+}
 form div.actions {
   background-color: #f7f7f7;
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f7f7f7+100&0+0,1+100 */

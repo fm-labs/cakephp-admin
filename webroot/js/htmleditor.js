@@ -18,11 +18,27 @@ Backend.Renderer.addListener('docready', function(scope) {
     $(scope).find('.htmleditor textarea[data-htmleditor]:not(.htmleditor-loaded)').each(function() {
 
         var id = $(this).attr('id');
-        var configData = $(this).data('htmleditor');
-        if (Backend.settings.debug) {
-            console.log("Loading HtmlEditor", id, configData);
-        }
-        $("#" + id).addClass('htmleditor-loaded').tinymce(configData);
+
+        $btn = $('<button>', {'class': 'btn btn-default', 'data-editor': id})
+            .text('Open in Editor')
+            .insertAfter($(this))
+            .on('click', function(ev) {
+                var target = $(ev.target).data('editor');
+                var $target = $('#' + target);
+
+                var configData = $target.data('htmleditor');
+                if (Backend.settings.debug) {
+                    console.log("Loading HtmlEditor", target, configData);
+                }
+                $target.addClass('htmleditor-loaded').tinymce(configData);
+
+                $(this).hide();
+                $(this).off('click');
+
+                ev.preventDefault();
+                return false;
+            });
+
     });
 
 });

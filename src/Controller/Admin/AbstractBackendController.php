@@ -1,11 +1,17 @@
 <?php
 namespace Backend\Controller\Admin;
 
+use Backend\Action\ActionInterface;
+use Backend\Controller\BackendActionsTrait;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
 use Backend\Controller\Base\BaseBackendController;
+use Cake\Controller\Exception\MissingActionException;
+use Cake\Core\App;
 use Cake\Core\Configure;
 use Backend\Controller\Component\FlashComponent;
+use Cake\Network\Exception\NotFoundException;
+use RuntimeException;
 
 
 /**
@@ -24,4 +30,14 @@ use Backend\Controller\Component\FlashComponent;
  */
 abstract class AbstractBackendController extends BaseBackendController
 {
+    use BackendActionsTrait;
+
+    public $actions = [
+        'index' => 'Backend.Index',
+        'view' => 'Backend.View',
+        'search' => [
+            'className' => 'Backend.Search',
+            'foo' => 'bar'
+        ]
+    ];
 }

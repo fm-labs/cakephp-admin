@@ -2,10 +2,23 @@
 namespace Backend\View\Widget;
 
 use Cake\View\Form\ContextInterface;
+use Cake\View\View;
 use Cake\View\Widget\SelectBoxWidget;
 
 class ChosenSelectBoxWidget extends SelectBoxWidget
 {
+    /**
+     * Constructor.
+     *
+     * @param \Cake\View\StringTemplate $templates Templates list.
+     */
+    public function __construct($templates, View $view)
+    {
+        parent::__construct($templates);
+
+        $view->loadHelper('Backend.Chosen');
+    }
+
     public function render(array $data, ContextInterface $context)
     {
         if (!isset($data['id'])) {

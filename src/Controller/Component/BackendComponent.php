@@ -2,6 +2,7 @@
 
 namespace Backend\Controller\Component;
 
+use Backend\Action\ActionRegistry;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
@@ -9,6 +10,7 @@ use Cake\Log\Log;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Routing\Router;
+use Cake\Utility\Inflector;
 use User\Controller\Component\AuthComponent;
 
 /**
@@ -24,6 +26,8 @@ class BackendComponent extends Component
 
     public static $authComponentClass = '\User\Controller\Component\AuthComponent';
 
+    public $actions = [];
+
     //public $components = ['Backend.Flash', 'User.Auth'];
 
     protected $_defaultConfig = [
@@ -34,7 +38,7 @@ class BackendComponent extends Component
         'authLoginRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
         'authLogoutAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
         'authUnauthorizedRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'unauthorized'],
-        'authAuthorize' => ['Controller', 'Backend.Backend', 'User.Roles'],
+        'authAuthorize' => ['Backend.Backend', 'User.Roles'],
         'userModel' => 'Backend.Users',
         'searchUrl' => ['plugin' => 'Backend', 'controller' => 'Search', 'action' => 'query'],
     ];
@@ -43,6 +47,11 @@ class BackendComponent extends Component
      * @var Controller
      */
     protected $_controller;
+
+    /**
+     * @var ActionRegistry
+     */
+    protected $_actionRegistry;
 
     public function initialize(array $config)
     {
@@ -107,6 +116,29 @@ class BackendComponent extends Component
         }
 
         $this->_controller =& $controller;
+
+        $this->_initActions();
+    }
+
+    protected function _initActions()
+    {
+        $this->_actionRegistry = new ActionRegistry();
+
+        // use controller actions, if defined
+        if ($this->_controller->actions) {
+            $this->actions = $this->_controller->actions;
+        }
+
+        // normalize action configs and add actions to actions registry
+        $actions = [];
+        foreach ($this->actions as $action => $actionConfig) {
+            if (is_string($actionConfig)) {
+                $actionConfig = ['className' => $actionConfig];
+            }
+            $this->_actionRegistry->load($action, $actionConfig);
+            $actions[$action] = $actionConfig;
+        }
+        $this->actions = $actions;
     }
 
     public function beforeFilter(Event $event)
@@ -145,29 +177,67 @@ class BackendComponent extends Component
         $controller->set('be_search_url', Router::url($this->config('searchUrl')) );
     }
 
-    public function authConfig($key, $val = null, $merge = true)
+    /**
+     * Convenience method to configure auth component
+     *
+     * @param $key
+     * @param null $val
+     * @param bool|true $merge
+     */
+    public function configAuth($key, $val = null, $merge = true)
     {
         $this->_controller->Auth->config($key, $val, $merge);
     }
 
-    public function flashConfig($key, $val = null, $merge = true)
+    /**
+     * Convenience method to configure flash component
+     *
+     * @param $key
+     * @param null $val
+     * @param bool|true $merge
+     */
+    public function configFlash($key, $val = null, $merge = true)
     {
         $this->_controller->Flash->config($key, $val, $merge);
     }
 
-    public function implementedEvents()
+    /**
+     * @param $action
+     * @return bool
+     */
+    public function hasAction($action)
     {
-        $events = parent::implementedEvents();
-
-        //@TODO Implement implementedEvents (disabled)
-        //$events['User.login'] = 'onUserLogin';
-
-        return $events;
+        return $this->_actionRegistry->has($action);
     }
 
-    public function onUserLogin(Event $event)
+    /**
+     * @param $action
+     * @return mixed
+     */
+    public function executeAction($action = null)
     {
-        //@TODO Implement event callback for 'User.login' (disabled)
-        //Log::debug('Backend:Event: User.login');
+        if ($action === null) {
+            $action = $this->request->params['action'];
+        }
+
+        if ($this->_actionRegistry->has($action)) {
+            $config = $this->actions[$action];
+            $actionObj = $this->_actionRegistry->get($action);
+
+            $templatePath = 'Action';
+            if ($this->request->params['prefix']) {
+                $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
+            }
+
+            list($plugin,) = pluginSplit($config['className']);
+            $template = ($plugin) ? $plugin . '.' . $action : $action;
+
+            $this->_controller->viewBuilder()->templatePath($templatePath);
+            $this->_controller->viewBuilder()->template($template);
+
+            return $actionObj->execute($this->_controller);
+        }
+
+        throw new \RuntimeException('Action ' . $action . ' not loaded');
     }
 }

@@ -12,7 +12,7 @@ class DataTableCell extends Cell
 
     public $model;
 
-    public function display($params = [])
+    public function display($params = [], $data = [])
     {
         $params = array_merge([
             'model' => null,
@@ -35,25 +35,11 @@ class DataTableCell extends Cell
         }
 
         // data
-        if (is_object($params['data'])) {
-            //$params['data'] = $params['data']->toArray();
+        if ($params['data']) {
+            $data = $params['data'];
         }
-
-        $data =& $params['data'];
-
-        // headers
-        if (!$params['headers']) {
-
-            if ($data instanceof CollectionInterface) {
-                $firstRow = $data->first();
-            } else {
-                $firstRow = (is_array($data) && !empty($data) && $data[0]) ? $data[0] : [];
-
-            }
-            $firstRow = is_object($firstRow) ? $firstRow->toArray() : $firstRow;
-            if ($firstRow) {
-                $params['headers'] = array_keys($firstRow);
-            }
+        if (is_object($data)) {
+            //$data = $data->toArray();
         }
 
         // sortable
@@ -66,7 +52,8 @@ class DataTableCell extends Cell
             $this->set($viewVar, $val);
         }
         unset($params['viewVars']);
-        
+
         $this->set('dataTable', $params);
+        $this->set('data', $data);
     }
 }

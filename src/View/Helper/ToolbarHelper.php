@@ -2,6 +2,7 @@
 namespace Backend\View\Helper;
 
 use Bootstrap\View\Helper\UiHelper;
+use Cake\Event\Event;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 
@@ -70,19 +71,24 @@ class ToolbarHelper extends Helper
     /**
      * Add a toolbar item.
      *
-     * @param $name
+     * @param $title
      * @param array $options
      * @return $this
      */
-    public function add($name, $options = [])
+    public function add($title, $options = [])
     {
         $options = array_merge([
             'type' => null,
-            'name' => $name
+            'title' => $title,
+            'url' => null,
+            'attr' => []
         ], $options);
 
         switch ($options['type'])
         {
+            case "postLink":
+            case "post":
+                $this->addPostLink($options);
             case "link":
             default:
                 $this->addLink($options);
@@ -171,6 +177,31 @@ class ToolbarHelper extends Helper
     public function getMenuItems()
     {
         return $this->_items;
+    }
+
+    public function beforeLayout(Event $event)
+    {
+        // parse toolbar actions defined in 'toolbar.actions' view-var
+        $toolbarActions = (array) $event->subject()->get('toolbar.actions');
+
+        if ($toolbarActions) {
+            array_walk($toolbarActions, function($action) {
+                $title = $url = null;
+                $attr = [];
+                if (!is_array($action)) {
+                    throw new \RuntimeException('Invalid toolbar action item');
+                }
+                if (count($action) == 2) {
+                    list($title, $url) = $action;
+                } elseif (count($action) === 3) {
+                    list($title, $url, $attr) = $action;
+                } else {
+                    extract($action, EXTR_IF_EXISTS); // maybe it's an assoc array. try to extract available vars from action
+                }
+
+                $this->add($title, compact('url', 'attr'));
+            });
+        }
     }
 
     /**

@@ -27,6 +27,7 @@ class ChosenHelper extends Helper
 
         //$this->Form->addWidget('chosen', ['Backend\View\Widget\ChosenSelectBoxWidget']);
         //$this->Form->addWidget('select', ['Backend\View\Widget\ChosenSelectBoxWidget']);
+
     }
 
     public function beforeLayout(Event $event)

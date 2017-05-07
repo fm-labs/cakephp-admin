@@ -47,12 +47,17 @@ class FormatterHelper extends Helper
 
         // built-in formatters
 
+        // escape
         self::register('escape', function($val, $extra, $params) {
             return h($val);
         });
+
+        // boolean
         self::register('boolean', function($val, $extra, $params) {
             return $this->Ui->statusLabel($val);
         });
+
+        // date
         self::register('date', function($val, $extra, $params) {
 
             $format = DATE_W3C;
@@ -63,6 +68,7 @@ class FormatterHelper extends Helper
             return $this->Time->format($val, $format);
         });
 
+        // link
         self::register('link', function($val, $extra, $params) {
 
             $title = $url = $val;
@@ -78,19 +84,34 @@ class FormatterHelper extends Helper
             return $this->Html->link($title, $url, $params);
         });
 
+        // number
         self::register('number', function($val, $extra, $params) {
             return $this->Number->format($val);
         });
 
+        // currency
         self::register('currency', function($val, $extra, $params) {
             $currency = (isset($params['currency'])) ? $params['currency'] : 'EUR';
             return $this->Number->currency($val, $currency);
         });
 
+        // email
+        self::register('email', function($val, $extra, $params) {
+            return ($val) ? $this->Html->link($val, 'mailto:' . $val) : null;
+        });
+
+        // array
         self::register('array', function($val, $extra, $params) {
             return '[Array]';
             //return '<pre>' . print_r($val, true) . '</pre>';
         });
+
+        // NULL
+        self::register('null', function($val, $extra, $params) {
+            return '[NULL]';
+        });
+
+        // object
         self::register('object', function($val, $extra, $params) {
             if (method_exists($val, '__toString')) {
                 return h((string) $val);
@@ -109,6 +130,7 @@ class FormatterHelper extends Helper
             //return '<pre>' . print_r($val, true) . '</pre>';
         });
 
+        // html
         self::register('html', function($val, $extra, $params) {
             //@todo sanitation
             return sprintf('<div class="html">' . $val . '</div>', $val);
@@ -149,7 +171,7 @@ class FormatterHelper extends Helper
         switch ($formatter) {
             case "null":
             case "NULL":
-                return "NULL";
+                return "null";
 
             case "integer":
             case "float":
@@ -178,7 +200,7 @@ class FormatterHelper extends Helper
 
         if (is_string($formatter)) {
             if (!isset(self::$_formatters[$formatter])) {
-                debug("Formatter $formatter not found for dataType $dataType");
+                //debug("Formatter $formatter not found for dataType $dataType");
                 $formatter = null;
             } else {
                 $formatter = self::$_formatters[$formatter];
@@ -187,7 +209,7 @@ class FormatterHelper extends Helper
 
 
         if (is_callable($formatter)) {
-            return call_user_func_array($formatter, [$value, $extra, $formatterArgs]);
+            return call_user_func_array($formatter, [$value, $extra, $formatterArgs, $this->_View]);
         }
 
         if ($formatter) {

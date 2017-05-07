@@ -5,7 +5,7 @@ $this->loadHelper('Backend.DataTableJs');
 if (empty($dataTable['class'])) {
     $dataTable['class'] = 'table table-condensed table-striped table-hover';
 }
-$this->DataTable->create($dataTable);
+$this->DataTable->create($dataTable, $data);
 ?>
 <?= $this->DataTable->pagination(); ?>
 <?= $this->DataTable->render(); ?>

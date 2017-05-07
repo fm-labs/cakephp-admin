@@ -3,6 +3,7 @@
 namespace Backend\View\Helper;
 
 
+use Cake\Collection\CollectionInterface;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
 use Cake\ORM\TableRegistry;
@@ -38,11 +39,13 @@ class DataTableHelper extends Helper
 
     protected $_defaultParams = [
         'model' => null,
-        'data' => [],
+        'data' => null,
         'id' => null,
         'class' => '',
         'fields' => [],
-        'exclude' => [],
+        'fieldsWhitelist' => [],
+        'fieldsBlacklist' => [],
+        'exclude' => [], //@deprecated Use Blacklist instead
         'actions' => [],
         'rowActions' => [],
         'paginate' => false,
@@ -52,7 +55,7 @@ class DataTableHelper extends Helper
         'filter' => true
     ];
 
-    protected $_defaultFieldParams = ['title' => null, 'class' => '', 'formatter' => null, 'formatterArgs' => []];
+    protected $_defaultFieldParams = ['label' => null, 'class' => '', 'formatter' => null, 'formatterArgs' => []];
 
     protected $_tableArgs = [];
 
@@ -96,19 +99,62 @@ class DataTableHelper extends Helper
      * - `reduce` array
      *
      */
-    public function create($params = [])
+    public function create($params = [], $data = [])
     {
         $this->_setup();
 
-        $this->_params = $params + $this->_defaultParams;
-        $this->_parseParams();
-
-
-        if (!$this->_params['model']) {
-            throw new \InvalidArgumentException('Missing parameter \'modelName\'');
+        if (isset($params['data']) && $params['data']) {
+            $data = $params['data'];
+            unset($params['data']);
         }
 
-        $this->_parseFields();
+        // parse params
+        $this->_params = $params + $this->_defaultParams;
+        if (!$this->_params['id']) {
+            $this->_id = $this->_params['id'];
+        }
+        if ($this->_params['sortable']) {
+            //$this->_params = $this->Html->addClass($this->_params, 'sortable');
+            //$this->Html->script('$("#' . $this->id() . ' .dtable-row").sortable()', ['block' => true]);
+            $this->_tableArgs['data-sortable'] = 1;
+        }
+        if ($this->_params['select']) {
+            $this->_tableArgs['data-selectable'] = 1;
+        }
+        $modelName = pluginSplit($this->_params['model']);
+        if (isset($this->_setup[$modelName[1]])) {
+            $setup = $this->_setup[$modelName[1]];
+            if (isset($setup['rowActions'])) {
+                array_walk($setup['rowActions'], function($action) {
+                    $this->_params['rowActions'][] = $action;
+                });
+            }
+        }
+
+
+        // @TODO Deprecated. Use white- and blacklist instead
+        if (isset($this->_params['exclude']) && !empty($this->_params['exclude'])) {
+            $this->_params['fieldsBlacklist'] = $this->_params['exclude'];
+            $this->_params['exclude'] = [];
+        }
+        // @TODO Deprecated. Use white- and blacklist instead
+        if (isset($this->_params['fields']['*'])) {
+            $this->_params['fieldsWhitelist'] = [];
+            unset($this->_params['fields']['*']);
+        }
+
+        if ($this->_params['fieldsWhitelist'] === true) {
+            $this->_params['fieldsWhitelist'] = array_keys($this->_params['fields']);
+        }
+
+        // check model
+        //if (!$this->_params['model']) {
+        //    throw new \InvalidArgumentException('Missing parameter \'model\'');
+        //}
+
+        // apply data
+        $this->data($data);
+
 
         /*
         $this->templater()->add([
@@ -169,9 +215,35 @@ class DataTableHelper extends Helper
         return $this->_id;
     }
 
+    public function data($data = null)
+    {
+        if ($data === null) {
+            return $this->_params['data'];
+        }
+
+        $this->_params['data'] = $data;
+
+        if (empty($this->_params['fieldsWhitelist'])) {
+
+            if ($data instanceof CollectionInterface) {
+                $firstRow = $data->first();
+            } else {
+                $firstRow = (is_array($data) && !empty($data) && $data[0]) ? $data[0] : [];
+
+            }
+            $firstRow = is_object($firstRow) ? $firstRow->toArray() : $firstRow;
+            if ($firstRow) {
+                $this->_params['fieldsWhitelist'] = array_keys($firstRow);
+            }
+        }
+        $this->_parseFields();
+
+        return $this;
+    }
+
     protected function &_table()
     {
-        if ($this->_table === null) {
+        if ($this->_table === null && $this->_params['model']) {
             $this->_table = TableRegistry::get($this->_params['model']);
         }
         return $this->_table;
@@ -190,76 +262,21 @@ class DataTableHelper extends Helper
         return trim($class);
     }
 
-    protected function _parseParams()
-    {
-        if (!$this->_params['id']) {
-            $this->_id = $this->_params['id'];
-        }
-        if ($this->_params['sortable']) {
-            //$this->_params = $this->Html->addClass($this->_params, 'sortable');
-            //$this->Html->script('$("#' . $this->id() . ' .dtable-row").sortable()', ['block' => true]);
-            $this->_tableArgs['data-sortable'] = 1;
-        }
-        if ($this->_params['select']) {
-            $this->_tableArgs['data-selectable'] = 1;
-        }
-
-        $modelName = pluginSplit($this->_params['model']);
-        if (isset($this->_setup[$modelName[1]])) {
-            $setup = $this->_setup[$modelName[1]];
-            if (isset($setup['rowActions'])) {
-                array_walk($setup['rowActions'], function($action) {
-                    $this->_params['rowActions'][] = $action;
-                });
-            }
-        }
-
-    }
 
     protected function _parseFields()
     {
         $fields = (array) $this->_params['fields'];
-        $exclude = (array) $this->_params['exclude'];
 
-        $wildcardInclude = false;
-        if (isset($fields['*'])) {
-            $wildcardInclude = $fields['*'];
-            unset($fields['*']);
-        }
+        // configure each white-listed field
+        foreach ($this->_params['fieldsWhitelist'] as $field) {
 
-        if ($wildcardInclude) {
-            $_props = $this->_table()->schema()->columns();
-            foreach ($_props as $_prop) {
-                // skip if already configured
-                if (isset($fields[$_prop])) {
-                    continue;
-                }
-                // skip if excluded
-                if (in_array($_prop, $exclude)) {
-                    continue;
-                }
-
-                $fields[$_prop] = [];
-            }
-        }
-
-        $this->_configureFields($fields);
-    }
-
-    protected function _configureFields($fields)
-    {
-        foreach ($fields as $field => $conf)
-        {
-            if (is_numeric($field)) {
-                $field = $conf;
-                $conf = [];
+            // check black list
+            if (in_array($field, $this->_params['fieldsBlacklist'])) {
+                continue;
             }
 
-            if (!is_array($conf)) {
-                $conf = [];
-            }
-
-            $this->_configureField($field, $conf);
+            $fieldConfig = (isset($fields[$field])) ? $fields[$field] : [];
+            $this->_configureField($field, $fieldConfig);
         }
     }
 
@@ -271,8 +288,11 @@ class DataTableHelper extends Helper
 
         $conf += $this->_defaultFieldParams;
 
-        if ($conf['title'] === null) {
-            $conf['title'] = Inflector::humanize($field);
+        if (isset($conf['title']) && !isset($conf['label'])) {
+            $conf['label'] = $conf['title'];
+        }
+        if ($conf['label'] === null) {
+            $conf['label'] = Inflector::humanize($field);
         }
 
         $this->_fields[$field] = $conf;
@@ -331,14 +351,14 @@ class DataTableHelper extends Helper
             if ($this->_params['paginate']) {
                 $header = $this->Paginator->sort($fieldName);
             } else {
-                $header = h($field['title']);
+                $header = h($field['label']);
             }
 
             $html .= $this->templater()->format('headCell', [
                 'content' => $header,
                 'attrs' => $this->templater()->formatAttributes([
                     'class' => $field['class'],
-                    'title' => $field['title']
+                    'title' => $field['label']
                 ])
             ]);
         }
@@ -382,16 +402,39 @@ class DataTableHelper extends Helper
 
                 $filterInputOptions = ['label' => false];
 
+                // get current filter value from request query
+                $filterInputOptions['value'] = $this->_View->request->query($fieldName);
 
-                $column = TableRegistry::get($this->_params['model'])->schema()->column($fieldName);
+
+                $Model = $this->_table();
+                if ($Model) {
+                    $column = $Model->schema()->column($fieldName);
+                } else {
+                    $column = ['type' => 'string', 'null' => true, 'default' => null];
+                }
                 //debug($column);
 
                 if ($column['type'] == 'boolean') {
                     $filterInputOptions['type'] = 'select';
                     $filterInputOptions['options'] = [ 0 => __('No'), 1 => __('Yes')];
                     $filterInputOptions['empty'] = __('All');
-                } elseif ($column['type'] == 'select' || substr($fieldName, -3) == '_id') {
-                    $filterInputOptions['empty'] = __('All');
+
+                //} elseif ($column['type'] == 'select' || substr($fieldName, -3) == '_id') {
+                //    $filterInputOptions['empty'] = __('All');
+
+                } elseif ($column['type'] == 'date' || $column['type'] == 'datetime') {
+                    $filterInputOptions['type'] = 'hidden';
+
+                } elseif ($column['type'] == 'text') {
+                    $filterInputOptions['type'] = 'text';
+                }
+
+                if ($Model && method_exists($Model, 'sources')) {
+                    $sources = call_user_func([$Model, 'sources'], $fieldName);
+                    if ($sources) {
+                        $filterInputOptions['empty'] = __('All');
+                        $filterInputOptions['options'] = $sources;
+                    }
                 }
 
                 $filterInput = $this->Form->input($fieldName, $filterInputOptions);
@@ -406,7 +449,13 @@ class DataTableHelper extends Helper
             ]);
         }
 
-        $actionCell = $this->templater()->format('rowCell', ['content' => $this->Form->button(__('Filter'))]); // actions cell stub
+        $actionCell = $this->templater()->format('rowCell', [
+            'content' => $this->Form->button(__('Filter'), ['class' => 'btn btn-sm']),
+            'attrs' => $this->templater()->formatAttributes([
+                'style' => 'text-align: right;',
+                //'title' => $field['title']
+            ])
+        ]); // actions cell stub
 
         $row = $this->templater()->format('row', [
             'attrs' => '',
@@ -468,7 +517,7 @@ class DataTableHelper extends Helper
 
         // row
         $rowAttributes = [
-            'data-id' => $row['id'],
+            'data-id' => (isset($row['id'])) ? $row['id'] : null,
             //'class' => ''
         ];
         $html = $this->templater()->format('row', [
@@ -554,7 +603,9 @@ class DataTableHelper extends Helper
         $row = (is_object($row)) ? $row->toArray() : $row;
         // rowActions
         foreach ($rowActions as $rowAction) {
-            $title = $url = $attr = null;
+            $title = $url = null;
+            $attr = [];
+
             if (count($rowAction) == 1) {
                 list($title) = $rowAction;
             } elseif (count($rowAction) == 2) {

@@ -2,15 +2,25 @@
 
 namespace Backend\Controller\Admin;
 
+use Backend\Controller\BackendActionsTrait;
+use Cake\Controller\Controller;
 use Cake\Event\Event;
 
-class AppController extends AbstractBackendController
+class AppController extends Controller
 {
+    use BackendActionsTrait;
+
+    public function initialize()
+    {
+        $this->loadComponent('Backend.Backend');
+    }
+
+    /*
     public function beforeRender(Event $event)
     {
-        //@TODO Move to a CORSComponent
         $this->response->header("Access-Control-Allow-Headers", "Content-Type");
         $this->response->header("Access-Control-Allow-Origin", "*");
         $this->response->header("Access-Control-Allow-Credentials", "true");
     }
+    */
 }

@@ -22,13 +22,21 @@ class EntityViewCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = ['model', 'fields', 'exclude', 'title', 'helpers', 'debug'];
+    protected $_validCellOptions = ['model', 'fields', 'whitelist', 'blacklist', 'title', 'helpers', 'debug', 'exclude'];
 
 
     public $model;
 
     public $fields = [];
 
+    public $whitelist = [];
+
+    public $blacklist = [];
+
+    /**
+     * @var array
+     * @deprecated Use blacklist instead
+     */
     public $exclude = [];
 
     public $title;
@@ -53,7 +61,20 @@ class EntityViewCell extends Cell
      */
     public function display(EntityInterface $entity)
     {
-        $this->title = ($this->title === null) ? sprintf("%s #%s", Inflector::singularize(pluginSplit($this->model)[1]), $entity->id) : $this->title;
+        // legacy support for 'exclude' property.
+        if ($this->exclude === '*') {
+        } elseif (!empty($this->exclude)) {
+            $this->blacklist = $this->exclude;
+        }
+        $this->exclude = [];
+
+        if ($this->title === null) {
+            $displayField = $this->_getTable()->displayField();
+            $this->title = $entity->get($displayField);
+        }
+        if (!$this->title === null) {
+            $this->title = sprintf("%s #%s", Inflector::singularize(pluginSplit($this->model)[1]), $entity->id);
+        }
 
         $defaultField = ['title' => null, 'class' => null, 'formatter' => null, 'formatterArgs' => []];
         $fields = [];
@@ -69,13 +90,22 @@ class EntityViewCell extends Cell
         $associations = $this->_getTable()->associations();
 
         $data = [];
-        foreach ($entity->visibleProperties() as $property):
+        $properties = $entity->visibleProperties();
+        $virtualProperties = $entity->virtualProperties();
 
-            if (!isset($fields[$property]) && $this->exclude === '*') continue;
-            if (is_array($this->exclude) && in_array($property, $this->exclude)) continue;
+        $propDataFormatter = function($property) use (&$data, $entity, $fields, $associations, $schema, $defaultField, $virtualProperties) {
+
+            if (!empty($this->whitelist) && !in_array($property, $this->whitelist)) {
+                return false;
+            }
+
+            if (!empty($this->blacklist) && in_array($property, $this->blacklist)) {
+                return false;
+            }
 
             $field = (isset($fields[$property])) ? $fields[$property] : $defaultField;
             $fieldLabel = ($field['title']) ?: Inflector::humanize($property);
+            $isVirtual = in_array($property, $virtualProperties);
 
             $val = $entity->get($property);
 
@@ -112,9 +142,11 @@ class EntityViewCell extends Cell
                 'formatterArgs' => $formatterArgs,
                 'value' => $val,
                 'assoc' => $assoc,
-                'class' => $field['class']
+                'class' => $field['class'],
+                'virtual' => $isVirtual
             ];
-        endforeach;
+        };
+        array_walk($properties, $propDataFormatter);
 
         $this->set('debug', $this->debug && Configure::read('debug'));
         $this->set('model', $this->model);

@@ -16,7 +16,7 @@ class BackendFormHelper extends BootstrapFormHelper
         $this->templater()->load('Backend.form_templates');
 
         $widgets = [
-            'select' => ['Backend\View\Widget\ChosenSelectBoxWidget'],
+            'select' => ['Backend\View\Widget\ChosenSelectBoxWidget', '_view'],
             'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
             'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
             'datepicker' => ['Backend\View\Widget\DatePickerWidget', 'text'],
@@ -72,7 +72,7 @@ class BackendFormHelper extends BootstrapFormHelper
         if (isset($options['type'])) {
             switch($options['type']) {
                 case 'select':
-                    $this->_View->loadHelper('Backend.Chosen');
+                    //$this->_View->loadHelper('Backend.Chosen');
                     break;
 
                 case 'datepicker':

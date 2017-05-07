@@ -19,7 +19,6 @@ use Backend\Controller\Component\FlashComponent;
  * @property AuthComponent $Auth
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
- *
  */
 abstract class BaseBackendController extends Controller
 {

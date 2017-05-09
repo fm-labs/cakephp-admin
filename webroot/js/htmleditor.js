@@ -19,8 +19,8 @@ Backend.Renderer.addListener('docready', function(scope) {
 
         var id = $(this).attr('id');
 
-        $btn = $('<button>', {'class': 'btn btn-default', 'data-editor': id})
-            .text('Open in Editor')
+        $('<button>', {'class': '_btn _btn-sm', 'data-editor': id})
+            .text('Use Editor')
             .insertAfter($(this))
             .on('click', function(ev) {
                 var target = $(ev.target).data('editor');

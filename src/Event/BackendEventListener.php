@@ -42,6 +42,11 @@ class BackendEventListener implements EventListenerInterface
                     'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
                     'data-icon' => 'file-text-o',
                 ],
+                'cache' => [
+                    'title' => 'Cache',
+                    'url' => ['plugin' => 'Backend', 'controller' => 'Cache', 'action' => 'index'],
+                    'data-icon' => 'file-text-o',
+                ]
             ]
         ]);
     }

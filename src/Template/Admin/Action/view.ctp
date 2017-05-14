@@ -24,7 +24,7 @@ $this->Toolbar->addLink(__('Edit'), ['action' => 'edit', $entity->id], ['class' 
 $this->Toolbar->addPostLink(__('Delete'), ['action' => 'delete', $entity->id], ['class' => 'delete']);
 ?>
 <div class="view">
-    <?= $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render('table'); ?>
+    <?= $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render(); ?>
 
     <?php if (\Cake\Core\Configure::read('debug')): ?>
         <small><?php echo h(__FILE__); ?></small>

@@ -29,8 +29,13 @@ abstract class BaseAction implements ActionInterface
         }
 
         // detect model class
-        if (!isset($this->_config['modelClass'])) {
+        if (!isset($controller->viewVars['modelClass'])) {
             $this->_config['modelClass'] = $controller->modelClass;
+        }
+
+        // load helpers
+        if (isset($controller->viewVars['helpers'])) {
+            $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
         }
 
         // @TODO Dispatch beforeAction event

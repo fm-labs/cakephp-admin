@@ -108,7 +108,7 @@ class FormatterHelper extends Helper
 
         // NULL
         self::register('null', function($val, $extra, $params) {
-            return '[NULL]';
+            return /*(Configure::read('debug')) ? 'null' :*/ '-';
         });
 
         // object
@@ -171,7 +171,8 @@ class FormatterHelper extends Helper
         switch ($formatter) {
             case "null":
             case "NULL":
-                return "null";
+                $formatter = "null";
+                break;
 
             case "integer":
             case "float":

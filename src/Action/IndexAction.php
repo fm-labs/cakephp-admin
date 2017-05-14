@@ -9,7 +9,6 @@ use Cake\Core\Plugin;
 class IndexAction extends BaseAction
 {
     protected $_defaultConfig = [
-        'modelClass' => null,
         'paginate' => true,
         'filter' => true,
         'fields' => [],

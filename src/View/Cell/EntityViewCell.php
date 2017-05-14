@@ -52,7 +52,6 @@ class EntityViewCell extends Cell
         array $cellOptions = []
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
-
     }
     /**
      * Default display method.
@@ -86,11 +85,21 @@ class EntityViewCell extends Cell
 
             $fields[$field] = $config + $defaultField;
         }
+
+
+        if ($this->whitelist === true) {
+            $this->whitelist = array_keys($fields);
+        }
+        if (empty($this->whitelist)) {
+            $this->whitelist = $entity->visibleProperties();
+        }
+
+
         $schema = $this->_getTable()->schema();
         $associations = $this->_getTable()->associations();
 
         $data = [];
-        $properties = $entity->visibleProperties();
+        //$properties = $entity->visibleProperties();
         $virtualProperties = $entity->virtualProperties();
 
         $propDataFormatter = function($property) use (&$data, $entity, $fields, $associations, $schema, $defaultField, $virtualProperties) {
@@ -146,7 +155,9 @@ class EntityViewCell extends Cell
                 'virtual' => $isVirtual
             ];
         };
-        array_walk($properties, $propDataFormatter);
+
+
+        array_walk($this->whitelist, $propDataFormatter);
 
         $this->set('debug', $this->debug && Configure::read('debug'));
         $this->set('model', $this->model);

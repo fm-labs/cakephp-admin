@@ -16,6 +16,7 @@
     <?= $this->Html->css('/backend/libs/adminlte/dist/css/AdminLTE.min.css'); ?>
     <?= $this->Html->css('/backend/libs/adminlte/dist/css/skins/skin-blue.min.css'); ?>
     <?= $this->fetch('css') ?>
+    <?= $this->Html->css('Backend.layout/default'); ?>
     <?= $this->Html->css('Backend.backend'); // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views ?>
 
     <!-- scripts -->

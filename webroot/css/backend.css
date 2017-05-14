@@ -904,6 +904,10 @@ nav.toolbar > ul {
   display: table-cell;
   vertical-align: middle;
   padding: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
 }
 .dtable-head-cell {
   font-weight: 600;

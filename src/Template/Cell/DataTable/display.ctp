@@ -7,6 +7,9 @@ if (empty($dataTable['class'])) {
 }
 $this->DataTable->create($dataTable, $data);
 ?>
+<?php if (isset($dataTable['title'])): ?>
+<h4><?= h($dataTable['title']); ?></h4>
+<?php endif; ?>
 <?= $this->DataTable->pagination(); ?>
 <?= $this->DataTable->render(); ?>
 <?= $this->DataTable->pagination(); ?>

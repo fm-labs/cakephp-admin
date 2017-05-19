@@ -20,7 +20,7 @@ class BackendPlugin implements EventListenerInterface
     public function implementedEvents()
     {
         return [
-            'Backend.Menu.get' => ['callable' => 'getBackendMenu' ]
+            'Backend.Menu.get' => ['callable' => 'getBackendMenu', 'priority' => 99 ]
         ];
     }
 

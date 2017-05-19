@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Event;
+namespace Backend;
 
 
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 
-class BackendEventListener implements EventListenerInterface
+class BackendPlugin implements EventListenerInterface
 {
 
     /**

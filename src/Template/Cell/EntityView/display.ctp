@@ -17,9 +17,7 @@ use Cake\Utility\Inflector;
             </dt>
             <dd>
                 <?= $this->Formatter->format( $field['value'], $field['formatter'], $field['formatterArgs'], $entity ); ?>
-                <?php if ($debug === true): ?>
-                <small><?= sprintf("(%s:%s)", gettype($field['value']), $field['formatter'] ) ?></small>
-                <?php endif; ?>
+            </dd>
         <?php endforeach; ?>
     </dl>
 

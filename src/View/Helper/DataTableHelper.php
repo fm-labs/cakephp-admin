@@ -311,12 +311,12 @@ class DataTableHelper extends Helper
     {
         $tableAttributes = $this->_tableArgs + ['id' => $this->id()];
 
-        $entity = null;
-        if ($this->_params['model']) {
-            $entity = TableRegistry::get($this->_params['model'])->newEntity();
-        }
+        //$entity = null;
+        //if ($this->_params['model']) {
+        //    $entity = TableRegistry::get($this->_params['model'])->newEntity();
+        //}
 
-        $formStart = $this->Form->create($entity, ['method' => 'GET', 'novalidate' => true]);
+        $formStart = $this->Form->create(null, ['method' => 'GET', 'novalidate' => true, 'context' => false]);
         $table = $this->templater()->format('table', [
             'attrs' => $this->templater()->formatAttributes($tableAttributes),
             'head' => $this->renderHead(),
@@ -404,15 +404,14 @@ class DataTableHelper extends Helper
 
                 // get current filter value from request query
                 $filterInputOptions['value'] = $this->_View->request->query($fieldName);
-
+                $column = ['type' => 'string', 'null' => true, 'default' => null];
 
                 $Model = $this->_table();
                 if ($Model) {
                     $column = $Model->schema()->column($fieldName);
-                } else {
-                    $column = ['type' => 'string', 'null' => true, 'default' => null];
                 }
-                //debug($column);
+                //$column['null'] = true;
+                //$column['default'] = null;
 
                 if ($column['type'] == 'boolean') {
                     $filterInputOptions['type'] = 'select';
@@ -436,7 +435,6 @@ class DataTableHelper extends Helper
                         $filterInputOptions['options'] = $sources;
                     }
                 }
-
                 $filterInput = $this->Form->input($fieldName, $filterInputOptions);
 
             }

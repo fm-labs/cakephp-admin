@@ -14,6 +14,7 @@
  */
 Backend.Renderer.addListener('docready', function(scope) {
 
+    /*
     $(scope).find('.htmleditor textarea').off();
     $(scope).find('.htmleditor textarea[data-htmleditor]:not(.htmleditor-loaded)').each(function() {
 
@@ -40,6 +41,7 @@ Backend.Renderer.addListener('docready', function(scope) {
             });
 
     });
+    */
 
 });
 

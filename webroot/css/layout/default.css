@@ -32,9 +32,6 @@
 body.fixed-nav-top {
   margin-top: 50px;
 }
-main {
-  overflow-x: scroll;
-}
 #header-nav {
   margin: 0;
   -webkit-border-top-right-radius: 0;

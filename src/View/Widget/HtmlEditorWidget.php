@@ -118,8 +118,8 @@ class HtmlEditorWidget extends BasicWidget
         //debug($editor);
 
         $this->_templates->add([
-            //'htmlEditor' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea><script>{{editorScript}}</script>'
-            'htmlEditor' => '<div class="htmleditor"><textarea  data-htmleditor=\'{{editorConfig}}\' name="{{name}}"{{attrs}}>{{value}}</textarea></div>',
+            'htmlEditor' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea><script>{{editorScript}}</script>'
+            //'htmlEditor' => '<div class="htmleditor"><textarea  data-htmleditor=\'{{editorConfig}}\' name="{{name}}"{{attrs}}>{{value}}</textarea></div>',
         ]);
 
         $selector = $editor['selector'];

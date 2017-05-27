@@ -20,7 +20,44 @@ class BackendPlugin implements EventListenerInterface
     public function implementedEvents()
     {
         return [
+            'Settings.get' => 'getSettings',
             'Backend.Menu.get' => ['callable' => 'getBackendMenu', 'priority' => 99 ]
+        ];
+    }
+
+    public function getSettings(Event $event)
+    {
+        $event->result['Backend'] = [
+            'Dashboard.title' => [
+                'type' => 'string',
+                'input' => [
+                    'type' => 'text',
+                    'placeholder' => 'Foo'
+                ],
+                'default' => 'Backend'
+            ],
+            'Security.enabled' => [
+                'type' => 'boolean',
+                'inputType' => null,
+                'input' => [
+                    'placeholder' => 'Foo'
+                ],
+                'default' => 'Backend'
+            ],
+            'Site.description' => [
+                'type' => 'text',
+                'inputType' => null,
+                'input' => [
+                ],
+                'default' => 'Backend'
+            ],
+            'Site.html' => [
+                'type' => 'text',
+                'inputType' => 'htmleditor',
+                'input' => [
+                ],
+                'default' => 'Backend'
+            ],
         ];
     }
 

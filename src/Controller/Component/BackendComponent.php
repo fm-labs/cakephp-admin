@@ -60,7 +60,7 @@ class BackendComponent extends Component
         // Configure Backend from config
         $configMap = [
             'Backend.path' => 'backendPath',
-            'Backend.title' => 'backendTitle',
+            'Backend.Dashboard.title' => 'backendTitle',
             'Backend.Dashboard.url' => 'dashboardUrl',
             'Backend.Search.url' => 'searchUrl'
         ];

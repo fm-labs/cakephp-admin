@@ -42,22 +42,7 @@ class BackendPlugin implements EventListenerInterface
                 'input' => [
                     'placeholder' => 'Foo'
                 ],
-                'default' => 'Backend'
-            ],
-            'Site.description' => [
-                'type' => 'text',
-                'inputType' => null,
-                'input' => [
-                ],
-                'default' => 'Backend'
-            ],
-            'Site.html' => [
-                'type' => 'text',
-                'inputType' => 'htmleditor',
-                'input' => [
-                ],
-                'default' => 'Backend'
-            ],
+            ]
         ];
     }
 

@@ -75,15 +75,15 @@ desired effect
             <?= $this->Flash->render() ?>
         </div>
 
+        <!-- Toolbar wrapper -->
+        <div class="toolbar-wrapper">
+            <?= $this->element('Backend.Layout/admin/toolbar'); ?>
+        </div>
+
 
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <?= $this->element('Backend.Layout/admin/header'); ?>
-        </div>
-
-        <!-- Toolbar wrapper -->
-        <div class="toolbar-wrapper">
-            <?= $this->element('Backend.Layout/admin/toolbar'); ?>
         </div>
 
         <!-- Left container -->

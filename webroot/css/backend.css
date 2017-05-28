@@ -480,7 +480,7 @@ form label {
   max-width: 100%;
   margin-bottom: 5px;
   font-weight: 700;
-  font-variant-caps: all-small-caps;
+  font-variant: normal;
   color: #444;
 }
 form .form-group {
@@ -860,10 +860,14 @@ table.info.table tr td:first-child {
 .tabs .nav-tabs li:first-child {
   margin-left: 10px;
 }
+.tabs .tab-content > .tab-pane.active {
+  box-shadow: 0px 2px 1px #CCC;
+}
 .tabs .tab-content > .tab-pane {
   border: 1px solid #DDD;
-  padding: 1rem;
+  padding: 2rem;
   border-top-width: 0;
+  overflow-x: auto;
 }
 body {
   font-family: 'Open Sans', sans-serif;
@@ -873,6 +877,7 @@ body.has-toolbar-fixed {
   padding-top: 140px;
 }
 nav.toolbar {
+  background-color: #e3e3e3;
   margin: 0;
 }
 nav.toolbar > ul {

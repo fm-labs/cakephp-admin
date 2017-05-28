@@ -241,7 +241,7 @@ class DataTableHelper extends Helper
         return $this;
     }
 
-    protected function &_table()
+    protected function _table()
     {
         if ($this->_table === null && $this->_params['model']) {
             $this->_table = TableRegistry::get($this->_params['model']);

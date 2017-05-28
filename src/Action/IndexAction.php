@@ -9,8 +9,10 @@ use Cake\Core\Plugin;
 class IndexAction extends BaseAction
 {
     protected $_defaultConfig = [
+        'modelClass' => null,
         'paginate' => true,
         'filter' => true,
+        'data' => [],
         'fields' => [],
         'fields.blacklist' => [],
         'fields.whitelist' => [],
@@ -20,14 +22,40 @@ class IndexAction extends BaseAction
 
     public function _execute(Controller $controller)
     {
-        $Model = $this->model();
-
         if ($this->_config['paginate'] === true) {
             $this->_config['paginate'] = (array) $controller->paginate;
         }
-        if ($this->_config['filter'] === true && !$Model->behaviors()->has('Search')) {
-            $this->_config['filter'] = false;
+
+        $Model = $this->model();
+        $result = [];
+
+        if ($this->_config['data']) {
+            $result = $this->_config['data'];
+
+        } elseif ($Model) {
+
+            if ($this->_config['filter'] === true && !$Model->behaviors()->has('Search')) {
+                $this->_config['filter'] = false;
+            }
+
+            $query = $Model->find();
+
+            // search support with FriendsOfCake/Search plugin
+            if ($this->_config['filter']) {
+                if ($controller->request->is(['post','put'])) {
+                    $query->find('search', ['search' => $controller->request->data]);
+                } elseif ($controller->request->query) {
+                    $query->find('search', ['search' => $controller->request->query]);
+                }
+            }
+
+            if ($this->_config['paginate']) {
+                $result = $controller->paginate($query, $this->_config['paginate']);
+            } else {
+                $result = $query->all();
+            }
         }
+
 
         if ($this->_config['rowActions'] !== false && empty($this->_config['rowActions'])) {
             $this->_config['rowActions'] = [
@@ -35,23 +63,6 @@ class IndexAction extends BaseAction
                 [__d('backend','Edit'), ['action' => 'edit', ':id'], ['class' => 'edit']],
                 [__d('backend','Delete'), ['action' => 'delete', ':id'], ['class' => 'delete', 'confirm' => __d('shop','Are you sure you want to delete # {0}?', ':id')]]
             ];
-        }
-
-        $query = $Model->find();
-
-        // search support with FriendsOfCake/Search plugin
-        if ($this->_config['filter']) {
-            if ($controller->request->is(['post','put'])) {
-                $query->find('search', ['search' => $controller->request->data]);
-            } elseif ($controller->request->query) {
-                $query->find('search', ['search' => $controller->request->query]);
-            }
-        }
-
-        if ($this->_config['paginate']) {
-            $result = $controller->paginate($query, $this->_config['paginate']);
-        } else {
-            $result = $query->all();
         }
 
         // we use Toolbar helper to render actions

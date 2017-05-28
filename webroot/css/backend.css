@@ -608,6 +608,17 @@ form .imageselect ul.image_picker_selector .thumbnail p {
   font-size: 0.6rem;
 }
 /**
+ * Checkbox / Radio
+ */
+input[type=checkbox],
+input[type=radio] {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  margin: 0;
+  padding: 0;
+}
+/**
  * Datepicker
  */
 form input.datepicker,
@@ -861,7 +872,7 @@ table.info.table tr td:first-child {
   margin-left: 10px;
 }
 .tabs .tab-content > .tab-pane.active {
-  box-shadow: 0px 2px 1px #CCC;
+  box-shadow: 0px 2px 2px #CCC;
 }
 .tabs .tab-content > .tab-pane {
   border: 1px solid #DDD;
@@ -877,7 +888,7 @@ body.has-toolbar-fixed {
   padding-top: 140px;
 }
 nav.toolbar {
-  background-color: #e3e3e3;
+  background-color: #F0F0F0;
   margin: 0;
 }
 nav.toolbar > ul {

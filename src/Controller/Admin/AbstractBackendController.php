@@ -30,14 +30,4 @@ use RuntimeException;
  */
 abstract class AbstractBackendController extends BaseBackendController
 {
-    use BackendActionsTrait;
-
-    public $actions = [
-        'index' => 'Backend.Index',
-        'view' => 'Backend.View',
-        'search' => [
-            'className' => 'Backend.Search',
-            'foo' => 'bar'
-        ]
-    ];
 }

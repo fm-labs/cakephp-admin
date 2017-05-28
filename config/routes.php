@@ -65,8 +65,11 @@ Router::scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], functi
     $routes->connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
 
     $routes->extensions(['json']);
+
     // default admin routes
     $routes->connect('/:controller/:action/*');
     $routes->connect('/:controller/:action');
     $routes->connect('/:controller', ['action' => 'index']);
+
+    $routes->fallbacks('DashedRoute');
 });

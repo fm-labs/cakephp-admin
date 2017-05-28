@@ -1,6 +1,7 @@
 <?php
 namespace Backend\Controller\Base;
 
+use Backend\Controller\BackendActionsTrait;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
 use Cake\Controller\Controller;
@@ -22,6 +23,17 @@ use Backend\Controller\Component\FlashComponent;
  */
 abstract class BaseBackendController extends Controller
 {
+    use BackendActionsTrait;
+
+    public $actions = [
+        'index' => 'Backend.Index',
+        'view' => 'Backend.View',
+        'search' => [
+            'className' => 'Backend.Search',
+            'foo' => 'bar'
+        ]
+    ];
+
     /**
      * Initialization hook method.
      *

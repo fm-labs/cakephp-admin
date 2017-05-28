@@ -53,7 +53,8 @@ abstract class BaseAction implements ActionInterface
     public function model()
     {
         if (!$this->_config['modelClass']) {
-            throw new \Exception(get_class($this) . ' has no model class defined');
+            //throw new \Exception(get_class($this) . ' has no model class defined');
+            return false;
         }
 
         return TableRegistry::get($this->_config['modelClass']);

@@ -77,13 +77,11 @@ $this->loadHelper('Bootstrap.Tabs');
 		
 		<dt><?= __d('backend', "Client IP");?></dt>
 		<dd><?= $this->request->clientIp();?></dd>
-
 	</dl>
 
 	<?php $this->Tabs->add(__('Config'), ['url' => ['action' => 'config']]); ?>
 	<?php $this->Tabs->add(__('Plugins'), ['url' => ['action' => 'plugins']]); ?>
 	<?php $this->Tabs->add(__('Routes'), ['url' => ['action' => 'routes']]); ?>
-	<?php $this->Tabs->add(__('Menus'), ['url' => ['action' => 'menus']]); ?>
 	<?php $this->Tabs->add(__('Globals'), ['url' => ['action' => 'globals']]); ?>
 	<?php $this->Tabs->add(__('Session'), ['url' => ['action' => 'session']]); ?>
 	<?php $this->Tabs->add(__('PHP Info'), ['url' => ['action' => 'php']]); ?>

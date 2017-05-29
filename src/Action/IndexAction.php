@@ -5,6 +5,7 @@ namespace Backend\Action;
 
 use Cake\Controller\Controller;
 use Cake\Core\Plugin;
+use Cake\Event\Event;
 
 class IndexAction extends BaseAction
 {
@@ -58,11 +59,8 @@ class IndexAction extends BaseAction
 
 
         if ($this->_config['rowActions'] !== false && empty($this->_config['rowActions'])) {
-            $this->_config['rowActions'] = [
-                [__d('backend','View'), ['action' => 'view', ':id'], ['class' => 'view']],
-                [__d('backend','Edit'), ['action' => 'edit', ':id'], ['class' => 'edit']],
-                [__d('backend','Delete'), ['action' => 'delete', ':id'], ['class' => 'delete', 'confirm' => __d('shop','Are you sure you want to delete # {0}?', ':id')]]
-            ];
+            $event = $controller->dispatchEvent('Action.Index.getRowActions');
+            $this->_config['rowActions'] = (array) $event->result;
         }
 
         // we use Toolbar helper to render actions
@@ -89,5 +87,19 @@ class IndexAction extends BaseAction
         ]);
         $controller->set('_serialize', ['result']);
 
+    }
+
+    public function implementedEvents()
+    {
+        return [
+            'Action.Index.getRowActions' => [ 'callable' => 'getDefaultRowActions', 'priority' => 5 ]
+        ];
+    }
+
+    public function getDefaultRowActions(Event $event)
+    {
+        $event->result[] = [__d('backend','View'), ['action' => 'view', ':id'], ['class' => 'view']];
+        $event->result[] = [__d('backend','Edit'), ['action' => 'edit', ':id'], ['class' => 'edit']];
+        $event->result[] = [__d('backend','Delete'), ['action' => 'delete', ':id'], ['class' => 'delete', 'confirm' => __d('shop','Are you sure you want to delete # {0}?', ':id')]];
     }
 }

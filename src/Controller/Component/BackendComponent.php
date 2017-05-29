@@ -6,9 +6,11 @@ use Backend\Action\ActionRegistry;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Event\EventListenerInterface;
 use Cake\Log\Log;
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
+use Cake\Network\Response;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use User\Controller\Component\AuthComponent;
@@ -224,6 +226,14 @@ class BackendComponent extends Component
             $config = $this->actions[$action];
             $actionObj = $this->_actionRegistry->get($action);
 
+
+            $event = $this->_registry->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $actionObj ]);
+            if ($event->result instanceof Response) {
+                return $event->result;
+            }
+
+            //@TODO Refactor with ActionView
+            //--
             $templatePath = 'Action';
             if ($this->request->params['prefix']) {
                 $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
@@ -234,8 +244,26 @@ class BackendComponent extends Component
 
             $this->_controller->viewBuilder()->templatePath($templatePath);
             $this->_controller->viewBuilder()->template($template);
+            //--
 
-            return $actionObj->execute($this->_controller);
+            // attach Action instance to controllers event manager
+            if ($actionObj instanceof EventListenerInterface) {
+                $this->_controller->eventManager()->on($actionObj);
+            }
+
+            $response = $actionObj->execute($this->_controller);
+
+            // detach Action instance from controllers event manager
+            if ($actionObj instanceof EventListenerInterface) {
+                $this->_controller->eventManager()->off($actionObj);
+            }
+
+            $event = $this->_registry->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $actionObj ]);
+            if ($event->result instanceof Response) {
+                return $event->result;
+            }
+
+            return $response;
         }
 
         throw new \RuntimeException('Action ' . $action . ' not loaded');

@@ -5,9 +5,10 @@ namespace Backend\Action;
 
 use Cake\Controller\Controller;
 use Cake\Core\Plugin;
+use Cake\Event\EventListenerInterface;
 use Cake\ORM\TableRegistry;
 
-abstract class BaseAction implements ActionInterface
+abstract class BaseAction implements ActionInterface, EventListenerInterface
 {
     /**
      * @var array
@@ -38,11 +39,7 @@ abstract class BaseAction implements ActionInterface
             $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
         }
 
-        // @TODO Dispatch beforeAction event
-
         return $this->_execute($controller);
-
-        // @TODO Dispatch afterAction event
     }
 
     protected function _execute(Controller $controller)
@@ -58,5 +55,10 @@ abstract class BaseAction implements ActionInterface
         }
 
         return TableRegistry::get($this->_config['modelClass']);
+    }
+
+    public function implementedEvents()
+    {
+        return [];
     }
 }

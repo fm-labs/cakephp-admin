@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Action;
+namespace Backend\Action\Interfaces;
 
 
 use Cake\Controller\Controller;

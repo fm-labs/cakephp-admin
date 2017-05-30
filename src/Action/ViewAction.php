@@ -3,12 +3,13 @@
 namespace Backend\Action;
 
 
+use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Network\Exception\BadRequestException;
 
-class ViewAction extends BaseAction
+class ViewAction extends BaseEntityAction
 {
     protected $_defaultConfig = [
         'modelClass' => null,
@@ -17,6 +18,7 @@ class ViewAction extends BaseAction
         'fields.whitelist' => [],
         'fields.blacklist' => [],
         'viewOptions' => [],
+        'actions' => []
     ];
 
     public function _execute(Controller $controller)
@@ -43,6 +45,7 @@ class ViewAction extends BaseAction
         $controller->set('viewOptions', $this->_config['viewOptions']);
 
         $controller->set('entity', $entity);
+        $controller->set('actions', $this->_config['actions']);
         $controller->set('_serialize', ['entity']);
     }
 }

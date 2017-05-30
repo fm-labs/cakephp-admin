@@ -894,9 +894,15 @@ nav.toolbar {
 nav.toolbar > ul {
   float: none;
 }
+.dtable-container {
+  width: 100%;
+  max-width: 100%;
+}
 .dtable {
   display: table;
   width: 100%;
+  max-width: 100%;
+  overflow: visible;
 }
 .dtable-head {
   display: table-header-group;

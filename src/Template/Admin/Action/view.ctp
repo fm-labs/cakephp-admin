@@ -15,13 +15,6 @@ $viewOptions = (array) $this->get('viewOptions');
  * Helpers
  */
 $this->loadHelper('Backend.Chosen');
-
-/**
- * Toolbar
- */
-$this->Toolbar->addLink(__('List'), ['action' => 'index'], ['class' => 'list']);
-$this->Toolbar->addLink(__('Edit'), ['action' => 'edit', $entity->id], ['class' => 'edit']);
-$this->Toolbar->addPostLink(__('Delete'), ['action' => 'delete', $entity->id], ['class' => 'delete']);
 ?>
 <div class="view">
     <?= $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render(); ?>

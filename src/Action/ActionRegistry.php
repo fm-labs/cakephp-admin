@@ -1,10 +1,10 @@
 <?php
 namespace Backend\Action;
 
+use Backend\Action\Interfaces\ActionInterface;
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
 use RuntimeException;
-use Shop\Controller\Component\CheckoutComponent;
 
 /**
  * Registry of loaded log engines
@@ -73,7 +73,7 @@ class ActionRegistry extends ObjectRegistry
         }
 
         throw new RuntimeException(
-            'Action must implement ActionInterface.'
+            'Action ' . $alias . ' must implement ActionInterface.'
         );
     }
 

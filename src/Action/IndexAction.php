@@ -4,10 +4,8 @@ namespace Backend\Action;
 
 
 use Cake\Controller\Controller;
-use Cake\Core\Plugin;
-use Cake\Event\Event;
 
-class IndexAction extends BaseAction
+class IndexAction extends BaseTableAction
 {
     protected $_defaultConfig = [
         'modelClass' => null,
@@ -18,15 +16,12 @@ class IndexAction extends BaseAction
         'fields.blacklist' => [],
         'fields.whitelist' => [],
         'rowActions' => [],
-        'actions' => true
+        'actions' => []
     ];
 
     public function _execute(Controller $controller)
     {
-        if ($this->_config['paginate'] === true) {
-            $this->_config['paginate'] = (array) $controller->paginate;
-        }
-
+        // data
         $Model = $this->model();
         $result = [];
 
@@ -34,6 +29,10 @@ class IndexAction extends BaseAction
             $result = $this->_config['data'];
 
         } elseif ($Model) {
+
+            if ($this->_config['paginate'] === true) {
+                $this->_config['paginate'] = (array) $controller->paginate;
+            }
 
             if ($this->_config['filter'] === true && !$Model->behaviors()->has('Search')) {
                 $this->_config['filter'] = false;
@@ -57,49 +56,20 @@ class IndexAction extends BaseAction
             }
         }
 
-
-        if ($this->_config['rowActions'] !== false && empty($this->_config['rowActions'])) {
-            $event = $controller->dispatchEvent('Action.Index.getRowActions');
-            $this->_config['rowActions'] = (array) $event->result;
-        }
-
-        // we use Toolbar helper to render actions
-        if ($this->_config['actions'] === true) {
-            $this->_config['actions'] = [
-                [__('Add'), ['action' => 'add'], ['class' => 'add']],
-            ];
-        }
-        if ($this->_config['actions']) {
-            $controller->set('toolbar.actions', $this->_config['actions']);
-        }
-
+        // render
         $controller->set('result', $result);
         $controller->set('dataTable', [
-            //'viewVars' => ['shopCategories' => $controller->get('shopCategories')],
             'filter' => $this->_config['filter'],
             'paginate' => ($this->_config['paginate']) ? true : false,
             'model' => $this->_config['modelClass'],
-            //'data' => $result,
             'fields' => $this->_config['fields'],
             'fieldsWhitelist' => $this->_config['fields.whitelist'],
             'fieldsBlacklist' => $this->_config['fields.blacklist'],
             'rowActions' => $this->_config['rowActions'],
+            //'data' => $result,
         ]);
+        $controller->set('actions', $this->_config['actions']);
         $controller->set('_serialize', ['result']);
 
-    }
-
-    public function implementedEvents()
-    {
-        return [
-            'Action.Index.getRowActions' => [ 'callable' => 'getDefaultRowActions', 'priority' => 5 ]
-        ];
-    }
-
-    public function getDefaultRowActions(Event $event)
-    {
-        $event->result[] = [__d('backend','View'), ['action' => 'view', ':id'], ['class' => 'view']];
-        $event->result[] = [__d('backend','Edit'), ['action' => 'edit', ':id'], ['class' => 'edit']];
-        $event->result[] = [__d('backend','Delete'), ['action' => 'delete', ':id'], ['class' => 'delete', 'confirm' => __d('shop','Are you sure you want to delete # {0}?', ':id')]];
     }
 }

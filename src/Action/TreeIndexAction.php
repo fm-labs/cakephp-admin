@@ -5,6 +5,7 @@ namespace Backend\Action;
 
 use Cake\Controller\Controller;
 use Cake\Core\Plugin;
+use Cake\Event\Event;
 
 class TreeIndexAction extends IndexAction
 {
@@ -24,16 +25,6 @@ class TreeIndexAction extends IndexAction
 
         if (!$this->_config['fields.whitelist']) {
             $this->_config['fields.whitelist'] = true;
-        }
-
-        if ($this->_config['rowActions'] !== false && empty($this->_config['rowActions'])) {
-            $this->_config['rowActions'] = [
-                [__d('backend','View'), ['action' => 'view', ':id'], ['class' => 'view']],
-                [__d('backend','Edit'), ['action' => 'edit', ':id'], ['class' => 'edit']],
-                [__d('backend','Move Up'), ['action' => 'moveUp', ':id'], ['class' => 'move-up']],
-                [__d('backend','Move Down'), ['action' => 'moveDown', ':id'], ['class' => 'move-down']],
-                [__d('backend','Delete'), ['action' => 'delete', ':id'], ['class' => 'delete', 'confirm' => __d('shop','Are you sure you want to delete # {0}?', ':id')]]
-            ];
         }
 
         $controller->viewBuilder()->template('Backend.tree_index');

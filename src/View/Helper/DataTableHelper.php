@@ -183,7 +183,7 @@ class DataTableHelper extends Helper
 
 
         $this->templater()->add([
-            'table' => '<div class="dtable"{{attrs}}>{{head}}{{body}}</div>',
+            'table' => '<div class="dtable-container"><div class="dtable"{{attrs}}>{{head}}{{body}}</div></div>',
             'head' => '<div class="dtable-head">{{cellheads}}{{actionshead}}</div>',
             'headCell' => '<div class="dtable-head-cell"{{attrs}}>{{content}}</div>',
             'headCellActions' => '<div class="dtable-head-cell"{{attrs}} style="text-align: right;">{{content}}</div>',

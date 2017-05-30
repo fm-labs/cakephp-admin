@@ -3,6 +3,8 @@
 namespace Backend\Controller\Component;
 
 use Backend\Action\ActionRegistry;
+use Backend\Action\Interfaces\EntityActionInterface;
+use Backend\Action\Interfaces\TableActionInterface;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
@@ -212,6 +214,26 @@ class BackendComponent extends Component
         return $this->_actionRegistry->has($action);
     }
 
+    public function getAction($action)
+    {
+        return $this->_actionRegistry->get($action);
+    }
+
+    public function listActions()
+    {
+        return $this->_actionRegistry->loaded();
+    }
+
+    public function getActionUrl($action)
+    {
+        $actionObj = $this->getAction($action);
+        if ($actionObj instanceof EntityActionInterface) {
+            return ['action' => $action, ':id'];
+        } else {
+            return ['action' => $action];
+        }
+    }
+
     /**
      * @param $action
      * @return mixed
@@ -267,5 +289,53 @@ class BackendComponent extends Component
         }
 
         throw new \RuntimeException('Action ' . $action . ' not loaded');
+    }
+
+
+    public function implementedEvents()
+    {
+        return [
+            'Controller.initialize' => 'beforeFilter',
+            'Controller.startup' => 'startup',
+            'Controller.beforeRender' => 'beforeRender',
+            //'Controller.beforeRedirect' => 'beforeRedirect',
+            //'Controller.shutdown' => 'shutdown',
+            'Backend.Table.Actions.get' => [ 'callable' => 'getTableActions', 'priority' => 5 ],
+            'Backend.Table.RowActions.get' => [ 'callable' => 'getTableRowActions', 'priority' => 5 ],
+            'Backend.Entity.Actions.get' => [ 'callable' => 'getEntityActions', 'priority' => 5 ]
+        ];
+    }
+
+    public function getTableActions(Event $event)
+    {
+        foreach ($this->listActions() as $action) {
+            if ($action == "index" || (!$event->subject()->Backend->getAction($action) instanceof TableActionInterface)) {
+                continue;
+            }
+            $event->result[] = [Inflector::humanize($action), ['action' => $action]];
+        }
+    }
+
+    public function getTableRowActions(Event $event)
+    {
+        foreach ($this->listActions() as $action) {
+            if ($action == "index" || (!$event->subject()->Backend->getAction($action) instanceof EntityActionInterface)) {
+                continue;
+            }
+            $event->result[] = [Inflector::humanize($action), ['action' => $action, ':id']];
+        }
+    }
+
+    public function getEntityActions(Event $event)
+    {
+        $entity = $event->data['entity'];
+        foreach ($this->listActions() as $action) {
+            if (($this->getAction($action) instanceof TableActionInterface)) {
+                $event->result[] = [Inflector::humanize($action), ['action' => $action]];
+            }
+            if (($this->getAction($action) instanceof EntityActionInterface)) {
+                $event->result[] = [Inflector::humanize($action), ['action' => $action, $entity->id]];
+            }
+        }
     }
 }

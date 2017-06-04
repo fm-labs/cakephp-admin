@@ -1,5 +1,6 @@
 <?php
 use Cake\Core\Configure;
+use Cake\Event\EventManager;
 use Cake\Routing\Router;
 
 /**
@@ -53,23 +54,6 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
     });
 });
 
-/**
- * Fallback routes for app backend
- * @TODO Use a configuration param to enable/disable fallback routes for app's admin prefixed routes
- */
 
-Router::scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], function($routes) {
-    // admin:dashboard
-    $dashboardUrl = (Configure::read('Backend.Dashboard.url'))
-        ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index', 'prefix' => 'admin'];
-    $routes->connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
-
-    $routes->extensions(['json']);
-
-    // default admin routes
-    $routes->connect('/:controller/:action/*');
-    $routes->connect('/:controller/:action');
-    $routes->connect('/:controller', ['action' => 'index']);
-
-    $routes->fallbacks('DashedRoute');
-});
+// collect backend routes
+EventManager::instance()->dispatch(new \Backend\Event\RouteBuilderEvent('Backend.Routes.build'));

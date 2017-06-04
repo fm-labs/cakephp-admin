@@ -3,8 +3,14 @@
 namespace Backend;
 
 
+use Backend\Event\ConnectRoutesEvent;
+use Backend\Event\RouteBuilderEvent;
+use Backend\Event\SetupEvent;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
+use Cake\Event\EventManager;
+use Cake\Routing\Router;
 
 class BackendPlugin implements EventListenerInterface
 {
@@ -21,7 +27,8 @@ class BackendPlugin implements EventListenerInterface
     {
         return [
             'Settings.get' => 'getSettings',
-            'Backend.Menu.get' => ['callable' => 'getBackendMenu', 'priority' => 99 ]
+            'Backend.Menu.get' => ['callable' => 'getBackendMenu', 'priority' => 99 ],
+            'Backend.Routes.build' => 'buildBackendRoutes'
         ];
     }
 
@@ -44,6 +51,30 @@ class BackendPlugin implements EventListenerInterface
                 ],
             ]
         ];
+    }
+
+    public function buildBackendRoutes(RouteBuilderEvent $event)
+    {
+        // admin:dashboard
+        $dashboardUrl = (Configure::read('Backend.Dashboard.url'))
+            ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index', 'prefix' => 'admin'];
+        Router::connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
+
+        /**
+         * Fallback routes for app backend
+         * @TODO Use a configuration param to enable/disable fallback routes for app's admin prefixed routes
+         * @TODO Move to separate (high priority) event listener
+         */
+        Router::scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], function($routes) {
+
+            // default admin routes
+            $routes->extensions(['json']);
+            $routes->connect('/:controller/:action/*');
+            $routes->connect('/:controller/:action');
+            $routes->connect('/:controller', ['action' => 'index']);
+
+            $routes->fallbacks('DashedRoute');
+        });
     }
 
     public function getBackendMenu(Event $event)
@@ -71,5 +102,9 @@ class BackendPlugin implements EventListenerInterface
                 ]
             ]
         ]);
+    }
+
+    public function __invoke()
+    {
     }
 }

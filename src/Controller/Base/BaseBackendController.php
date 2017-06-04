@@ -20,11 +20,15 @@ use Backend\Controller\Component\FlashComponent;
  * @property AuthComponent $Auth
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
+ * @deprecated Use BackendComponent instead
  */
 abstract class BaseBackendController extends Controller
 {
     use BackendActionsTrait;
 
+    /**
+     * @var array
+     */
     public $actions = [
         'index' => 'Backend.Index',
         'view' => 'Backend.View',

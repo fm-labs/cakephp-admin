@@ -2,16 +2,27 @@
 
 namespace Backend\Controller\Admin;
 
-
 use Cake\Cache\Cache;
 use Cake\Network\Exception\BadRequestException;
 
+/**
+ * Class CacheController
+ *
+ * @package Backend\Controller\Admin
+ */
 class CacheController extends AppController
 {
+    /**
+     *
+     */
     public function index()
     {
     }
 
+    /**
+     * @param null $config
+     * @param bool|false $check
+     */
     public function clear($config = null, $check = false)
     {
         if ($config === null && Cache::config($config) === null) {

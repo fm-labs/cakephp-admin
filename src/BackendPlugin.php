@@ -28,7 +28,7 @@ class BackendPlugin implements EventListenerInterface
         return [
             'Settings.get' => 'getSettings',
             'Backend.Menu.get' => ['callable' => 'getBackendMenu', 'priority' => 99 ],
-            'Backend.Routes.build' => 'buildBackendRoutes'
+            'Backend.Routes.build' => ['callable' => 'buildBackendRoutes', 'priority' => 99 ]
         ];
     }
 
@@ -69,10 +69,6 @@ class BackendPlugin implements EventListenerInterface
 
             // default admin routes
             $routes->extensions(['json']);
-            $routes->connect('/:controller/:action/*');
-            $routes->connect('/:controller/:action');
-            $routes->connect('/:controller', ['action' => 'index']);
-
             $routes->fallbacks('DashedRoute');
         });
     }

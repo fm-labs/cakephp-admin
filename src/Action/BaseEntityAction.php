@@ -47,20 +47,28 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
             $modelId = ($modelId) ?: $controller->request->param('pass')[0]; // @TODO request param 'pass' might be empty or unset
             $this->_config['modelId'] = $modelId;
         }
-        $entity = $this->entity();
 
-        // load helpers
-        if (isset($controller->viewVars['helpers'])) {
-            $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
+        try {
+
+            $entity = $this->entity();
+
+            // load helpers
+            if (isset($controller->viewVars['helpers'])) {
+                $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
+            }
+
+            // actions
+            if ($this->_config['actions'] !== false) {
+                $event = $controller->dispatchEvent('Backend.Entity.Actions.get', ['entity' => $entity]);
+                $this->_config['actions'] = (array) $event->result;
+            }
+
+            return $this->_execute($controller);
+
+        } catch (\Exception $ex) {
+            $controller->Flash->error($ex->getMessage());
+            $controller->redirect($controller->referer());
         }
-
-        // actions
-        if ($this->_config['actions'] !== false) {
-            $event = $controller->dispatchEvent('Backend.Entity.Actions.get', ['entity' => $entity]);
-            $this->_config['actions'] = (array) $event->result;
-        }
-
-        return $this->_execute($controller);
     }
 
     protected function _execute(Controller $controller)

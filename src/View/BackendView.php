@@ -44,7 +44,6 @@ class BackendView extends View
 
     public function render($view = null, $layout = null)
     {
-
         return parent::render($view, $layout);
     }
 

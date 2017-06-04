@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         },
         files: [
           // includes files within path
-          {expand: true, cwd: 'bower_components/AdminLTE/', src: ['bootstrap/**', 'dist/**', 'plugins/**'], dest: 'webroot/libs/adminlte/'},
+          {expand: true, cwd: 'bower_components/AdminLTE/', src: ['plugins/**'], dest: 'webroot/libs/adminlte/'},
           {expand: true, cwd: 'bower_components/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
           {expand: true, cwd: 'bower_components/chosen/', src: ['**'], dest: 'webroot/libs/chosen/'},
           {expand: true, cwd: 'bower_components/font-awesome/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/fontawesome/'},

@@ -10,11 +10,11 @@
     <?= $this->fetch('meta') ?>
 
     <!-- styles -->
-    <?= $this->Html->css('/backend/libs/adminlte/bootstrap/css/bootstrap.min.css'); ?>
+    <?= $this->Html->css('/backend/css/adminlte/bootstrap/css/bootstrap.min.css'); ?>
     <?= $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css'); ?>
     <?= $this->Html->css('/backend/libs/ionicons/css/ionicons.min.css'); ?>
-    <?= $this->Html->css('/backend/libs/adminlte/dist/css/AdminLTE.min.css'); ?>
-    <?= $this->Html->css('/backend/libs/adminlte/dist/css/skins/skin-blue.min.css'); ?>
+    <?= $this->Html->css('/backend/css/adminlte/AdminLTE.min.css'); ?>
+    <?= $this->Html->css('/backend/css/adminlte/skins/skin-blue.min.css'); ?>
     <?= $this->fetch('css') ?>
     <?= $this->Html->css('Backend.layout/default'); ?>
     <?= $this->Html->css('Backend.backend'); // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views ?>
@@ -128,8 +128,8 @@ desired effect
         sidebarExpandOnHover: false
     };
 </script>
-<?= $this->Html->script('/backend/libs/adminlte/bootstrap/js/bootstrap.min.js'); ?>
-<?= $this->Html->script('/backend/libs/adminlte/dist/js/app.js'); ?>
+<?= $this->Html->script('/backend/js/adminlte/bootstrap/bootstrap.min.js'); ?>
+<?= $this->Html->script('/backend/js/adminlte/app.js'); ?>
 <?= $this->Html->script('/backend/libs/underscore/underscore-min.js'); ?>
 <?= $this->Html->script('/backend/js/backend.js'); ?>
 <?= $this->Html->script('/backend/js/iconify.js'); ?>

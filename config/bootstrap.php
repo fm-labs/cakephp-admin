@@ -1,5 +1,4 @@
 <?php
-use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 
@@ -13,12 +12,3 @@ Configure::load('Backend.backend');
 
 Plugin::load('Bootstrap');
 Plugin::load('AdminLte');
-
-/*
-Cache::config('backend', [
-    'className' => 'File',
-    'duration' => '+1 hours',
-    'path' => CACHE,
-    'prefix' => 'backend_'
-]);
-*/

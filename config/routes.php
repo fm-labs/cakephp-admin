@@ -54,6 +54,5 @@ Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], func
     });
 });
 
-
 // collect backend routes
 EventManager::instance()->dispatch(new \Backend\Event\RouteBuilderEvent('Backend.Routes.build'));

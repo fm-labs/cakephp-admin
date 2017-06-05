@@ -1,7 +1,12 @@
 <?php
 
-namespace Backend\Lib\Menu;
+namespace Backend\Menu;
 
+/**
+ * Class Menu
+ *
+ * @package Backend\Menu
+ */
 class Menu implements \Iterator
 {
     /**
@@ -24,6 +29,10 @@ class Menu implements \Iterator
      */
     private $_itpos;
 
+    /**
+     * @param array $items
+     * @param array $attr
+     */
     public function __construct($items = [], $attr = [])
     {
         foreach ($items as $item) {
@@ -32,11 +41,19 @@ class Menu implements \Iterator
         $this->_attr = $attr;
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function __get($key)
     {
         return $this->getAttribute($key);
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function getAttribute($key)
     {
         if (isset($this->_attr[$key])) {
@@ -44,16 +61,29 @@ class Menu implements \Iterator
         }
     }
 
+    /**
+     * @return array
+     */
     public function getAttributes()
     {
         return $this->_attr;
     }
 
+    /**
+     * @return MenuItem[]
+     */
     public function getItems()
     {
         return $this->_items;
     }
 
+    /**
+     * @param $title
+     * @param null $url
+     * @param array $attr
+     * @param array $children
+     * @return MenuItem
+     */
     public function &addItem($title, $url = null, $attr = [], $children = [])
     {
         if (!is_object($title)) {
@@ -68,6 +98,9 @@ class Menu implements \Iterator
         return $this->_items[$hash];
     }
 
+    /**
+     * @param MenuItem $item
+     */
     public function removeItem(MenuItem $item)
     {
         $hash = spl_object_hash($item);
@@ -76,11 +109,17 @@ class Menu implements \Iterator
         }
     }
 
+    /**
+     * @return int
+     */
     public function count()
     {
         return count($this->_items);
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         $list = [];

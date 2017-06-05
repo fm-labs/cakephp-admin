@@ -1,13 +1,12 @@
 <?php
 
-namespace Backend\Lib\Menu;
+namespace Backend\Menu;
 
 use Cake\Collection\Collection;
-use Cake\View\View;
 
 /**
  * Class MenuItem
- * @package Backend\Lib\Menu
+ * @package Backend\Menu
  *
  * @property string $title Title
  * @property mixed $url Url
@@ -17,14 +16,32 @@ use Cake\View\View;
  */
 class MenuItem implements \ArrayAccess
 {
+    /**
+     * @var string
+     */
     protected $_title;
 
+    /**
+     * @var null|string|array
+     */
     protected $_url;
 
+    /**
+     * @var array
+     */
     protected $_attr;
 
+    /**
+     * @var Collection
+     */
     protected $_children;
 
+    /**
+     * @param $title
+     * @param null $url
+     * @param array $attr
+     * @param array $children
+     */
     public function __construct($title, $url = null, array $attr = [], $children = [])
     {
         if (is_array($title)) {
@@ -42,26 +59,41 @@ class MenuItem implements \ArrayAccess
         $this->_children = new Collection($children);
     }
 
+    /**
+     * @return array|string
+     */
     public function getTitle()
     {
         return $this->_title;
     }
 
+    /**
+     * @return array|null|string
+     */
     public function getUrl()
     {
         return $this->_url;
     }
 
+    /**
+     * @return array
+     */
     public function getAttributes()
     {
         return $this->_attr;
     }
 
+    /**
+     * @return Collection
+     */
     public function &getChildren()
     {
         return $this->_children;
     }
 
+    /**
+     * @return array
+     */
     public function toArray()
     {
         return [
@@ -72,6 +104,10 @@ class MenuItem implements \ArrayAccess
         ];
     }
 
+    /**
+     * @param $key
+     * @return mixed
+     */
     public function __get($key)
     {
         return $this->offsetGet($key);

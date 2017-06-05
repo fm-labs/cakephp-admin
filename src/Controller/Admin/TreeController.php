@@ -2,18 +2,22 @@
 
 namespace Backend\Controller\Admin;
 
-
 use Cake\Log\Log;
 use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\InternalErrorException;
-use Cake\Routing\Router;
 
+/**
+ * Class TreeController
+ *
+ * @package Backend\Controller\Admin
+ */
 class TreeController extends AppController
 {
 
+    /**
+     * Index method
+     */
     public function index()
     {
-
         $modelName = $this->request->query('model');
         if (!$modelName) {
             $this->Flash->error(__('No model selected'));
@@ -33,6 +37,9 @@ class TreeController extends AppController
         $this->set('sortUrl', ['action' => 'jstreeSort', 'model' => $modelName]);
     }
 
+    /**
+     * JSON jsTree data
+     */
     public function jstreeData()
     {
         $this->viewBuilder()->className('Json');
@@ -57,7 +64,9 @@ class TreeController extends AppController
         $this->set('_serialize', 'tree');
     }
 
-
+    /**
+     * jsTree sort
+     */
     public function jstreeSort()
     {
         $this->viewBuilder()->className('Json');

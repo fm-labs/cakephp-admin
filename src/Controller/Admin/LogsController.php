@@ -4,8 +4,16 @@ namespace Backend\Controller\Admin;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 
+/**
+ * Class LogsController
+ *
+ * @package Backend\Controller\Admin
+ */
 class LogsController extends AppController
 {
+    /**
+     * @var array
+     */
     public $permissions = [
         'index' => ['logs.view'],
         'view' => ['logs.view'],
@@ -14,8 +22,15 @@ class LogsController extends AppController
         'delete' => ['logs.delete']
     ];
 
+    /**
+     * @var string
+     */
     public $logDir = LOGS;
 
+    /**
+     * @param $logFile
+     * @return bool|string
+     */
     protected function _getFilePath($logFile)
     {
         $logFile .= '.log';
@@ -35,6 +50,9 @@ class LogsController extends AppController
         return $path;
     }
 
+    /**
+     * List log files
+     */
     public function index()
     {
         $logDir = $this->logDir;
@@ -63,6 +81,11 @@ class LogsController extends AppController
         $this->set(compact('files', 'logRotation'));
     }
 
+    /**
+     * View log file
+     *
+     * @param null $logFile
+     */
     public function view($logFile = null)
     {
         if (!$logFile) {
@@ -88,6 +111,12 @@ class LogsController extends AppController
         $this->set(compact('logFile', 'log', 'page'));
     }
 
+    /**
+     * Clear log file
+     *
+     * @param null $logFile
+     * @return \Cake\Network\Response|null
+     */
     public function clear($logFile = null)
     {
         if (!$logFile) {
@@ -110,6 +139,11 @@ class LogsController extends AppController
         $this->redirect(array('action' => 'index'));
     }
 
+    /**
+     * Delete log file
+     *
+     * @param null $logFile
+     */
     public function delete($logFile = null)
     {
         if (!$logFile) {
@@ -126,17 +160,21 @@ class LogsController extends AppController
         $this->redirect(array('action' => 'index'));
     }
 
-    /*
+    /**
+     * @param null $alias
+     * @deprecated
+     */
     public function rotate($alias = null)
     {
+        /*
         $L = new LogRotation($alias);
         if ($L->rotate()) {
             $this->Flash->success(__('Ok'));
         } else {
             $this->Flash->error(__('LogRotation for {0} failed', $alias));
         }
-
+        */
+        $this->Flash->error('LogRotation is deprecated. Use log engine features instead');
         $this->redirect($this->referer());
     }
-    */
 }

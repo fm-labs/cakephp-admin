@@ -4,23 +4,21 @@ namespace Backend\Controller\Admin;
 
 use Backend\Controller\BackendActionsTrait;
 use Cake\Controller\Controller;
-use Cake\Event\Event;
 
+/**
+ * Class AppController
+ *
+ * @package Backend\Controller\Admin
+ */
 class AppController extends Controller
 {
     use BackendActionsTrait;
 
+    /**
+     * Initialize BackendComponent
+     */
     public function initialize()
     {
         $this->loadComponent('Backend.Backend');
     }
-
-    /*
-    public function beforeRender(Event $event)
-    {
-        $this->response->header("Access-Control-Allow-Headers", "Content-Type");
-        $this->response->header("Access-Control-Allow-Origin", "*");
-        $this->response->header("Access-Control-Allow-Credentials", "true");
-    }
-    */
 }

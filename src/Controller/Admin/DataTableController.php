@@ -2,14 +2,23 @@
 
 namespace Backend\Controller\Admin;
 
-use Banana\Model\Behavior\SortableBehavior;
 use Cake\Core\Exception\Exception;
 use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
+//use Tree\Model\Behavior\SimpleTreeBehavior;
 
+/**
+ * Class DataTableController
+ *
+ * @package Backend\Controller\Admin
+ * @deprecated Use SimpleTreeController instead
+ */
 class DataTableController extends AppController
 {
+    /**
+     * Reorder
+     */
     public function reorder()
     {
         $modelName = $this->request->query('model');
@@ -29,6 +38,9 @@ class DataTableController extends AppController
         $this->redirect($this->referer());
     }
 
+    /**
+     * Sort
+     */
     public function sort()
     {
         $modelName = $this->request->query('model');
@@ -38,8 +50,8 @@ class DataTableController extends AppController
         }
 
         $model = $this->_getModel($modelName);
-        if (!$model->behaviors()->has('Sortable')) {
-            $this->Flash->warning("Model $modelName is not an instance of Sortable Behavior");
+        if (!$model->behaviors()->has('SimpleTree')) {
+            $this->Flash->warning("Model $modelName is not an instance of SimpleTree Behavior");
         }
 
         $queryArgs = $this->request->query;
@@ -53,6 +65,9 @@ class DataTableController extends AppController
         $this->set(compact('data', 'modelName'));
     }
 
+    /**
+     * TableSort
+     */
     public function tableSort()
     {
         $this->viewBuilder()->className('Json');
@@ -81,8 +96,8 @@ class DataTableController extends AppController
                 }
 
                 $model = $this->_getModel($modelName);
-                if (!$model->behaviors()->has('Sortable')) {
-                    throw new Exception('Table has no Sortable behavior attached');
+                if (!$model->behaviors()->has('SimpleTree')) {
+                    throw new Exception('Table has no SimpleTree behavior attached');
                 }
 
                 $node = $model->get($id);
@@ -113,5 +128,4 @@ class DataTableController extends AppController
     {
         return TableRegistry::get($tableName);
     }
-
 }

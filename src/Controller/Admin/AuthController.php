@@ -8,24 +8,21 @@ use User\Controller\Component\AuthComponent;
 
 /**
  * Class AuthController
+ * d
  * @package Backend\Controller\Admin
  * @property AuthComponent $Auth
  */
 class AuthController extends AppController
 {
-
+    /**
+     * @param Event $event
+     * @return \Cake\Network\Response|null|void
+     */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-
         $this->Auth->allow(['login', 'unauthorized']);
-
         $this->viewBuilder()->layout('Backend.auth');
-    }
-
-    public function beforeRender(Event $event)
-    {
-        parent::beforeRender($event);
     }
 
     /**
@@ -39,7 +36,6 @@ class AuthController extends AppController
             $this->Auth->login();
 
         } else {
-
             $redirect = $this->Auth->login();
             if ($redirect) {
                 $this->redirect($redirect);

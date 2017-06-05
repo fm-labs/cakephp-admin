@@ -2,17 +2,30 @@
 
 namespace Backend\Controller\Admin;
 
-
 use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\NotFoundException;
 
+/**
+ * Class EntityController
+ *
+ * @package Backend\Controller\Admin
+ */
 class EntityController extends AppController
 {
+    /**
+     * Index method
+     */
     public function index()
     {
         //@TODO List available tables
     }
 
+    /**
+     * View method
+     *
+     * @param null $modelName
+     * @param null $modelId
+     */
     public function view($modelName = null, $modelId = null)
     {
         if (!$modelName || !$modelId) {
@@ -51,11 +64,9 @@ class EntityController extends AppController
             $exception = $ex;
         }
 
-
         $this->set('modelName', $modelName);
         $this->set('modelId', $modelId);
         $this->set('entity', $entity);
         $this->set('exception', $exception);
     }
-
 }

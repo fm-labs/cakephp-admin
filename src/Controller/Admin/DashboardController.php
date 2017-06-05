@@ -4,6 +4,13 @@ namespace Backend\Controller\Admin;
 
 use Cake\Core\Configure;
 
+/**
+ * Class DashboardController
+ *
+ * Default Dashboard controller
+ *
+ * @package Backend\Controller\Admin
+ */
 class DashboardController extends AppController
 {
     /**
@@ -15,6 +22,7 @@ class DashboardController extends AppController
 
     /**
      * Backend Dashboard
+     * @deprecated
      */
     public function backend()
     {

@@ -13,13 +13,15 @@ use Cake\Network\Exception\BadRequestException;
 class CacheController extends AppController
 {
     /**
-     *
+     * List cache configs
      */
     public function index()
     {
     }
 
     /**
+     * Clear cache by config name
+     *
      * @param null $config
      * @param bool|false $check
      */

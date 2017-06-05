@@ -8,7 +8,6 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Backend\Controller\Component\FlashComponent;
 
-
 /**
  * Class BaseBackendController
  *
@@ -20,6 +19,7 @@ use Backend\Controller\Component\FlashComponent;
  * @property AuthComponent $Auth
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
+ *
  * @deprecated Use BackendComponent instead
  */
 abstract class BaseBackendController extends Controller
@@ -32,10 +32,8 @@ abstract class BaseBackendController extends Controller
     public $actions = [
         'index' => 'Backend.Index',
         'view' => 'Backend.View',
-        'search' => [
-            'className' => 'Backend.Search',
-            'foo' => 'bar'
-        ]
+        'add' => 'Backend.View',
+        'edit' => 'Backend.View',
     ];
 
     /**

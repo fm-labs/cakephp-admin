@@ -1,20 +1,20 @@
 <?php
 namespace Backend\Controller\Admin;
 
-use Backend\Controller\Admin\AppController;
-use Backend\Lib\Backend;
-use Backend\Lib\BackendNav;
-use Cake\Core\Plugin;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Routing\Router;
 
 /**
  * Class SystemController
- * @package Backend\Controller
  *
+ * @package Backend\Controller
  */
 class SystemController extends AppController
 {
+    /**
+     * Index method
+     */
     public function index()
     {
     }
@@ -59,14 +59,6 @@ class SystemController extends AppController
     }
 
     /**
-     * List backend menus
-     */
-    public function menus()
-    {
-        $this->set('menus', BackendNav::getMenu());
-    }
-
-    /**
      * Displays information about loaded Cake plugins
      */
     public function plugins()
@@ -87,6 +79,9 @@ class SystemController extends AppController
         $this->set('_serialize', $plugins);
     }
 
+    /**
+     * Display date and time
+     */
     public function datetime()
     {
         $data = array();
@@ -97,14 +92,19 @@ class SystemController extends AppController
         $this->set(compact('data'));
     }
 
+    /**
+     * Display session data
+     */
     public function session()
     {
         $this->set('session', $this->request->session()->read());
     }
 
+    /**
+     * Display current configuration
+     */
     public function config()
     {
         $this->set('config', Configure::read());
     }
-
 }

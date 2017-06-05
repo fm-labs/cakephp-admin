@@ -2,16 +2,20 @@
 
 namespace Backend\Controller\Admin;
 
-
-use Cake\Log\Log;
 use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\InternalErrorException;
 use Cake\Network\Exception\NotFoundException;
-use Cake\Routing\Router;
 
+/**
+ * Class SimpleTreeController
+ *
+ * @package Backend\Controller\Admin
+ */
 class SimpleTreeController extends AppController
 {
 
+    /**
+     * Index method
+     */
     public function index()
     {
         $query = $this->request->query;
@@ -37,7 +41,9 @@ class SimpleTreeController extends AppController
         $this->set('sortUrl', ['controller' => 'SimpleTree', 'action' => 'treeSort', 'model' => $modelName]);
     }
 
-
+    /**
+     * TreeSort method
+     */
     public function treeSort()
     {
         $this->viewBuilder()->className('Json');
@@ -89,5 +95,4 @@ class SimpleTreeController extends AppController
         $this->set('result', $responseData);
         $this->set('_serialize', 'result');
     }
-
 }

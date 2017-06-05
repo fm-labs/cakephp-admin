@@ -1,17 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 4/22/17
- * Time: 7:41 PM
- */
-
 namespace Backend\Controller;
 
-
 use Cake\Core\Exception\Exception;
-use Cake\View\ViewVarsTrait;
 
+/**
+ * Class EntityInfoActionTrait
+ *
+ * @package Backend\Controller
+ */
 trait EntityInfoActionTrait
 {
     public function info($entityId = null)

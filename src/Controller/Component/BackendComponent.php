@@ -7,11 +7,9 @@ use Backend\Action\Interfaces\EntityActionInterface;
 use Backend\Action\Interfaces\TableActionInterface;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
-use Cake\Log\Log;
-use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
 use Cake\Network\Response;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
@@ -26,14 +24,24 @@ use User\Controller\Component\AuthComponent;
  */
 class BackendComponent extends Component
 {
+    /**
+     * @var string
+     */
     public static $flashComponentClass = '\Backend\Controller\Component\FlashComponent';
 
+    /**
+     * @var string
+     */
     public static $authComponentClass = '\User\Controller\Component\AuthComponent';
 
+    /**
+     * @var array
+     */
     public $actions = [];
 
-    //public $components = ['Backend.Flash', 'User.Auth'];
-
+    /**
+     * @var array
+     */
     protected $_defaultConfig = [
         'backendPath' => '/backend',
         'backendTitle' => 'Backend',
@@ -57,6 +65,9 @@ class BackendComponent extends Component
      */
     protected $_actionRegistry;
 
+    /**
+     * @param array $config
+     */
     public function initialize(array $config)
     {
         $controller = $this->_registry->getController();
@@ -75,8 +86,6 @@ class BackendComponent extends Component
         }
 
         // Configure Backend FlashComponent
-        /*
-        */
         if ($this->_registry->has('Flash') || !is_a($this->_registry->get('Flash'), static::$flashComponentClass)) {
             $this->_registry->unload('Flash');
             $controller->Flash = $this->_registry->load('Flash', [
@@ -124,6 +133,9 @@ class BackendComponent extends Component
         $this->_initActions();
     }
 
+    /**
+     * Initialize action registry
+     */
     protected function _initActions()
     {
         $this->_actionRegistry = new ActionRegistry();
@@ -145,6 +157,9 @@ class BackendComponent extends Component
         $this->actions = $actions;
     }
 
+    /**
+     * @param Event $event
+     */
     public function beforeFilter(Event $event)
     {
         $controller =& $this->_controller;
@@ -167,11 +182,16 @@ class BackendComponent extends Component
         $controller->Auth->config('authorize', $this->config('authAuthorize'));
     }
 
+    /**
+     * @param Event $event
+     */
     public function startup(Event $event)
     {
     }
 
-
+    /**
+     * @param Event $event
+     */
     public function beforeRender(\Cake\Event\Event $event)
     {
         $controller = $event->subject();
@@ -214,16 +234,27 @@ class BackendComponent extends Component
         return $this->_actionRegistry->has($action);
     }
 
+    /**
+     * @param $action
+     * @return null|object
+     */
     public function getAction($action)
     {
         return $this->_actionRegistry->get($action);
     }
 
+    /**
+     * @return array
+     */
     public function listActions()
     {
         return $this->_actionRegistry->loaded();
     }
 
+    /**
+     * @param $action
+     * @return array
+     */
     public function getActionUrl($action)
     {
         $actionObj = $this->getAction($action);
@@ -291,7 +322,9 @@ class BackendComponent extends Component
         throw new \RuntimeException('Action ' . $action . ' not loaded');
     }
 
-
+    /**
+     * @return array
+     */
     public function implementedEvents()
     {
         return [
@@ -306,6 +339,9 @@ class BackendComponent extends Component
         ];
     }
 
+    /**
+     * @param Event $event
+     */
     public function getTableActions(Event $event)
     {
         foreach ($this->listActions() as $action) {
@@ -316,6 +352,9 @@ class BackendComponent extends Component
         }
     }
 
+    /**
+     * @param Event $event
+     */
     public function getTableRowActions(Event $event)
     {
         foreach ($this->listActions() as $action) {
@@ -326,6 +365,9 @@ class BackendComponent extends Component
         }
     }
 
+    /**
+     * @param Event $event
+     */
     public function getEntityActions(Event $event)
     {
         $entity = $event->data['entity'];

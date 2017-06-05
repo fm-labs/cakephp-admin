@@ -2,7 +2,9 @@
 
 namespace Backend\Controller;
 
+use Backend\Controller\Component\BackendComponent;
 use Cake\Controller\Exception\MissingActionException;
+use Cake\Network\Response;
 
 /**
  * Class BackendActionsTrait
@@ -11,12 +13,15 @@ use Cake\Controller\Exception\MissingActionException;
  * Requires BackendComponent loaded in the controller
  *
  * @package Backend\Controller
+ * @property BackendComponent $Backend
  *
  * @TODO Remove hard dependency on BackendComponent
  */
 trait BackendActionsTrait
 {
-
+    /**
+     * @return null|Response
+     */
     public function invokeAction()
     {
         try {

@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 4/18/15
- * Time: 11:25 PM
- */
 
 namespace Backend\Shell;
 
@@ -20,10 +14,16 @@ use User\Model\Table\UsersTable;
  */
 class BackendShell extends Shell
 {
+    /**
+     * @var array
+     */
     public $tasks = [
         'Backend.RootUser'
     ];
 
+    /**
+     * @return \Cake\Console\ConsoleOptionParser
+     */
     public function getOptionParser()
     {
         $parser = parent::getOptionParser();

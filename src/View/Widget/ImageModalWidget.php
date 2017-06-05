@@ -1,19 +1,22 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 12/2/15
- * Time: 6:06 PM
- */
 
 namespace Backend\View\Widget;
-
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\BasicWidget;
 
+/**
+ * Class ImageModalWidget
+ * @package Backend\View\Widget
+ * @deprecated Unused class
+ */
 class ImageModalWidget extends BasicWidget
 {
+    /**
+     * @param array $data
+     * @param ContextInterface $context
+     * @return string
+     */
     public function render(array $data, ContextInterface $context)
     {
         $data += [

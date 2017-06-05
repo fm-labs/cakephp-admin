@@ -1,14 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 4/18/16
- * Time: 10:11 PM
- */
 
 namespace Backend\View\Helper;
 
-//@TODO Remove hard dependency on Bootstrap plugin. Use mixin solution
 use Bootstrap\View\Helper\UiHelper;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
@@ -18,7 +11,6 @@ use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\NumberHelper;
 use Cake\View\Helper\TimeHelper;
 use Cake\View\View;
-use InvalidArgumentException;
 
 /**
  * Class FormatHelper
@@ -28,19 +20,34 @@ use InvalidArgumentException;
  * @property NumberHelper $Number
  * @property TimeHelper $Time
  * @property UiHelper $Ui
+ *
+ * @TODO Remove hard dependency on Bootstrap plugin. Use mixin solution
  */
 class FormatterHelper extends Helper
 {
+    /**
+     * @var array
+     */
     static protected $_formatters = [];
 
-
+    /**
+     * @param $formatterName
+     * @param callable $formatter
+     */
     static public function register($formatterName, callable $formatter)
     {
         self::$_formatters[$formatterName] = $formatter;
     }
 
+    /**
+     * @var array
+     */
     public $helpers = ['Html', 'Number', 'Time', 'Bootstrap.Ui'];
 
+    /**
+     * @param View $View
+     * @param array $config
+     */
     public function __construct(View $View, array $config = [])
     {
         parent::__construct($View, $config);
@@ -48,12 +55,12 @@ class FormatterHelper extends Helper
         // built-in formatters
 
         // escape
-        self::register('escape', function($val, $extra, $params) {
+        self::register('escape', function ($val, $extra, $params) {
             return h($val);
         });
 
         // boolean
-        self::register('boolean', function($val, $extra, $params) {
+        self::register('boolean', function ($val, $extra, $params) {
             return $this->Ui->statusLabel($val);
         });
 
@@ -69,7 +76,7 @@ class FormatterHelper extends Helper
         });
 
         // link
-        self::register('link', function($val, $extra, $params) {
+        self::register('link', function ($val, $extra, $params) {
 
             $title = $url = $val;
             if (isset($params['url'])) {
@@ -85,34 +92,34 @@ class FormatterHelper extends Helper
         });
 
         // number
-        self::register('number', function($val, $extra, $params) {
+        self::register('number', function ($val, $extra, $params) {
             return $this->Number->format($val);
         });
 
         // currency
-        self::register('currency', function($val, $extra, $params) {
+        self::register('currency', function ($val, $extra, $params) {
             $currency = (isset($params['currency'])) ? $params['currency'] : 'EUR';
             return $this->Number->currency($val, $currency);
         });
 
         // email
-        self::register('email', function($val, $extra, $params) {
+        self::register('email', function ($val, $extra, $params) {
             return ($val) ? $this->Html->link($val, 'mailto:' . $val) : null;
         });
 
         // array
-        self::register('array', function($val, $extra, $params) {
+        self::register('array', function ($val, $extra, $params) {
             return '[Array]';
             //return '<pre>' . print_r($val, true) . '</pre>';
         });
 
         // NULL
-        self::register('null', function($val, $extra, $params) {
+        self::register('null', function ($val, $extra, $params) {
             return /*(Configure::read('debug')) ? 'null' :*/ '-';
         });
 
         // object
-        self::register('object', function($val, $extra, $params) {
+        self::register('object', function ($val, $extra, $params) {
             if (method_exists($val, '__toString')) {
                 return h((string) $val);
             }
@@ -131,18 +138,27 @@ class FormatterHelper extends Helper
         });
 
         // html
-        self::register('html', function($val, $extra, $params) {
+        self::register('html', function ($val, $extra, $params) {
             //@todo sanitation
             return sprintf('<div class="html">' . $val . '</div>', $val);
         });
     }
 
-
+    /**
+     * @return array
+     */
     public function getFormatters()
     {
         return array_keys(self::$_formatters);
     }
 
+    /**
+     * @param $value
+     * @param null $formatter
+     * @param array $formatterArgs
+     * @param array $extra
+     * @return mixed
+     */
     public function format( $value, $formatter = null, $formatterArgs = [], $extra = [])
     {
         if ($formatter === false) {
@@ -195,9 +211,7 @@ class FormatterHelper extends Helper
                 break;
             default:
                 break;
-
         }
-
 
         if (is_string($formatter)) {
             if (!isset(self::$_formatters[$formatter])) {
@@ -207,7 +221,6 @@ class FormatterHelper extends Helper
                 $formatter = self::$_formatters[$formatter];
             }
         }
-
 
         if (is_callable($formatter)) {
             return call_user_func_array($formatter, [$value, $extra, $formatterArgs, $this->_View]);

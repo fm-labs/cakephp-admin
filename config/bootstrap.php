@@ -11,4 +11,3 @@ use Cake\Core\Plugin;
 Configure::load('Backend.backend');
 
 Plugin::load('Bootstrap');
-Plugin::load('AdminLte');

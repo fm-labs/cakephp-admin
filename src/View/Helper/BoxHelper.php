@@ -88,9 +88,13 @@ class BoxHelper extends Helper
     /**
      * Start body block
      */
-    public function body()
+    public function body($bodyStr = null)
     {
         $this->start('body');
+
+        if ($bodyStr) {
+            echo $bodyStr;
+        }
     }
 
     /**

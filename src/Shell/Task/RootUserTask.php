@@ -2,7 +2,6 @@
 
 namespace Backend\Shell\Task;
 
-
 class RootUserTask extends BackendTask
 {
 
@@ -26,7 +25,7 @@ class RootUserTask extends BackendTask
     public function main()
     {
         $this->out("-- Setup root user --");
-        foreach  ($this->args as $key => $val) {
+        foreach ($this->args as $key => $val) {
             $this->out("Arg: $key - $val");
         }
 
@@ -39,11 +38,10 @@ class RootUserTask extends BackendTask
         $email = "";
         do {
             $email = trim($this->in("Enter root email address: "));
-        } while(strlen($email) < 1);
+        } while (strlen($email) < 1);
 
         $pass1 = $pass2 = "";
         do {
-
             $pass1 = trim($this->in("Choose root password: "));
             if (strlen($pass1) < 1) {
                 $this->out("Please enter a password");
@@ -56,9 +54,7 @@ class RootUserTask extends BackendTask
             if (!$match) {
                 $this->out("Passwords do not match. Please try again.");
             }
-
         } while (!$match);
-
 
         $root = $this->Users->createRootUser($email, $pass1);
         if ($root === false) {

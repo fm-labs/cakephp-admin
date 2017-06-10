@@ -21,6 +21,7 @@ class SimpleTreeController extends AppController
         $query = $this->request->query;
         if (!isset($query['model'])) {
             $this->Flash->error(__('No model selected'));
+
             return;
         }
         $modelName = $query['model'];
@@ -33,6 +34,7 @@ class SimpleTreeController extends AppController
             }
         } catch (\Exception $ex) {
             $this->Flash->error(__('Failed to load model {0}', $modelName));
+
             return;
         }
 
@@ -53,9 +55,9 @@ class SimpleTreeController extends AppController
             if ($this->request->is(['post', 'put'])) {
                 $data = $this->request->data;
 
-                $modelName = (isset($data['model'])) ? (string) $data['model'] : null;
-                $id = (isset($data['id'])) ? (int) $data['id'] : null;
-                $after = (isset($data['after'])) ? (int) $data['after'] : false;
+                $modelName = (isset($data['model'])) ? (string)$data['model'] : null;
+                $id = (isset($data['id'])) ? (int)$data['id'] : null;
+                $after = (isset($data['after'])) ? (int)$data['after'] : false;
 
                 $responseData = [
                     'model' => $modelName,
@@ -82,7 +84,7 @@ class SimpleTreeController extends AppController
                 $node = $model->moveAfter($node, $after);
                 $responseData['newPos'] = $node->pos;
 
-                $responseData['success'] = (bool) $node;
+                $responseData['success'] = (bool)$node;
             }
         } catch (\Exception $ex) {
             $responseData['success'] = false;

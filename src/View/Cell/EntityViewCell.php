@@ -24,7 +24,6 @@ class EntityViewCell extends Cell
      */
     protected $_validCellOptions = ['model', 'fields', 'whitelist', 'blacklist', 'title', 'helpers', 'debug', 'exclude'];
 
-
     public $model;
 
     public $fields = [];
@@ -86,14 +85,12 @@ class EntityViewCell extends Cell
             $fields[$field] = $config + $defaultField;
         }
 
-
         if ($this->whitelist === true) {
             $this->whitelist = array_keys($fields);
         }
         if (empty($this->whitelist)) {
             $this->whitelist = $entity->visibleProperties();
         }
-
 
         $schema = $this->_getTable()->schema();
         $associations = $this->_getTable()->associations();
@@ -102,7 +99,7 @@ class EntityViewCell extends Cell
         //$properties = $entity->visibleProperties();
         $virtualProperties = $entity->virtualProperties();
 
-        $propDataFormatter = function($property) use (&$data, $entity, $fields, $associations, $schema, $defaultField, $virtualProperties) {
+        $propDataFormatter = function ($property) use (&$data, $entity, $fields, $associations, $schema, $defaultField, $virtualProperties) {
 
             if (!empty($this->whitelist) && !in_array($property, $this->whitelist)) {
                 return false;
@@ -135,14 +132,12 @@ class EntityViewCell extends Cell
                     default:
                         $formatter = $assocType;
                         break;
-
                 }
             } else {
                 $column = $schema->column($property);
                 $type = ($column) ? $column['type'] : gettype($val); // fallback to data type
                 $formatter = ($formatter) ?: $type; // fallback to column type
             }
-
 
             $data[] = [
                 'name' => $property,
@@ -156,13 +151,11 @@ class EntityViewCell extends Cell
             ];
         };
 
-
         array_walk($this->whitelist, $propDataFormatter);
 
         $this->set('debug', $this->debug && Configure::read('debug'));
         $this->set('model', $this->model);
         $this->set('entity', $entity);
-
 
         $this->set('associations', $associations);
         $this->set('schema', $schema);

@@ -2,7 +2,6 @@
 
 namespace Backend\Action;
 
-
 use Cake\Controller\Controller;
 
 class TreeMoveDownAction extends BaseEntityAction
@@ -24,5 +23,4 @@ class TreeMoveDownAction extends BaseEntityAction
 
         return $controller->redirect($controller->referer(['action' => 'index']));
     }
-
 }

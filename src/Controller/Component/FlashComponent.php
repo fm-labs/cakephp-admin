@@ -39,7 +39,8 @@ class FlashComponent extends CakeFlashComponent
      * @param string $msg
      * @param array $options
      */
-    public function success($msg, array $options = []) {
+    public function success($msg, array $options = [])
+    {
         $options += ['element' => 'Backend.success'];
         $this->set($msg, $options);
     }
@@ -48,7 +49,8 @@ class FlashComponent extends CakeFlashComponent
      * @param $msg
      * @param array $options
      */
-    public function warning($msg, array $options = []) {
+    public function warning($msg, array $options = [])
+    {
         $options += ['element' => 'Backend.warning'];
         $this->set($msg, $options);
     }
@@ -57,7 +59,8 @@ class FlashComponent extends CakeFlashComponent
      * @param string $msg
      * @param array $options
      */
-    public function error($msg, array $options = []) {
+    public function error($msg, array $options = [])
+    {
         $options += ['element' => 'Backend.error'];
         $this->set($msg, $options);
     }
@@ -66,7 +69,8 @@ class FlashComponent extends CakeFlashComponent
      * @param $msg
      * @param array $options
      */
-    public function info($msg, array $options = []) {
+    public function info($msg, array $options = [])
+    {
         $options += ['element' => 'Backend.info'];
         $this->set($msg, $options);
     }

@@ -55,8 +55,6 @@ class DatePickerWidget extends CakeDateTimeWidget
         $scriptTemplate = '<script>$(document).ready(function() { $("#%s").pickadate(%s); });</script>';
         $script = sprintf($scriptTemplate, $data['id'], json_encode($pickerOptions));
 
-
         return $input . $script;
     }
-
 }

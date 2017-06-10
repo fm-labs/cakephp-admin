@@ -60,18 +60,18 @@ class LogsController extends AppController
         $Folder = new Folder($logDir, false);
         $logFiles = $Folder->find('.*.log(\.[0-9])?', true);
 
-        $files = array();
+        $files = [];
         foreach ($logFiles as $logFile) {
             $F = new File($logDir.$logFile);
 
-            $file = array(
+            $file = [
                 'id' => basename($logFile, '.log'),
                 'name' => $logFile,
                 //'dir' => $logDir,
                 'size' => $F->size(),
                 'last_modified' => $F->lastChange(),
                 'last_access' => $F->lastAccess(),
-            );
+            ];
             array_push($files, $file);
         }
 
@@ -90,7 +90,7 @@ class LogsController extends AppController
     {
         if (!$logFile) {
             $this->Flash->error(__d('backend', 'No logFile selected'));
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $filePath = $this->_getFilePath($logFile);
@@ -121,13 +121,14 @@ class LogsController extends AppController
     {
         if (!$logFile) {
             $this->Flash->error(__d('backend', 'No logFile selected'));
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $filePath = $this->_getFilePath($logFile);
         if (!$filePath) {
             $this->Flash->error(__d('backend', 'Logfile {0} not found', $logFile));
-            return $this->redirect($this->referer(array('action' => 'index')));
+
+            return $this->redirect($this->referer(['action' => 'index']));
         }
 
         $File = new File($filePath, false);
@@ -136,7 +137,7 @@ class LogsController extends AppController
         } else {
             $this->Flash->error(__d('backend', 'Failed to clear logFile {0}', $logFile));
         }
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -148,7 +149,7 @@ class LogsController extends AppController
     {
         if (!$logFile) {
             $this->Flash->error(__d('backend', 'No logFile selected'));
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $filePath = $this->_getFilePath($logFile);
@@ -157,7 +158,7 @@ class LogsController extends AppController
         } else {
             $this->Flash->error(__d('backend', 'Logfile {0} could not be deleted', $logFile));
         }
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
     /**

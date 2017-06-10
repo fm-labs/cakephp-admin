@@ -2,7 +2,6 @@
 
 namespace Backend\View\Helper;
 
-
 use Cake\Event\Event;
 use Cake\View\Helper;
 use Cake\View\Helper\FormHelper;
@@ -20,14 +19,12 @@ class ChosenHelper extends Helper
 {
     public $helpers = ['Html', 'Form'];
 
-
     public function __construct(View $View, array $config = [])
     {
         parent::__construct($View, $config);
 
         //$this->Form->addWidget('chosen', ['Backend\View\Widget\ChosenSelectBoxWidget']);
         //$this->Form->addWidget('select', ['Backend\View\Widget\ChosenSelectBoxWidget']);
-
     }
 
     public function beforeLayout(Event $event)

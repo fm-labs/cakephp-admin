@@ -1,7 +1,6 @@
 <?php
 namespace Backend\View\Cell;
 
-
 use Cake\Collection\CollectionInterface;
 use Cake\ORM\TableRegistry;
 use Cake\View\Cell;

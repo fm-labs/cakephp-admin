@@ -99,8 +99,8 @@ class BackendComponent extends Component
             //$this->_registry->load('RequestHandler');
         }
         // Iframe request detector
-        $this->request->addDetector('iframe', function($request) {
-            return (bool) $this->request->query('iframe');
+        $this->request->addDetector('iframe', function ($request) {
+            return (bool)$this->request->query('iframe');
         });
 
         // Configure Backend Authentication
@@ -123,8 +123,7 @@ class BackendComponent extends Component
         // Handle iframe and ajax requests
         if ($this->request->is('iframe')) {
             $controller->viewBuilder()->layout('Backend.iframe');
-        }
-        elseif ($this->request->is('ajax')) {
+        } elseif ($this->request->is('ajax')) {
             $controller->viewBuilder()->layout('Backend.ajax');
         }
 
@@ -197,8 +196,8 @@ class BackendComponent extends Component
         $controller = $event->subject();
         $controller->set('be_path', $this->config('backendPath'));
         $controller->set('be_title', $this->config('backendTitle'));
-        $controller->set('be_dashboard_url', Router::url($this->config('dashboardUrl')) );
-        $controller->set('be_search_url', Router::url($this->config('searchUrl')) );
+        $controller->set('be_dashboard_url', Router::url($this->config('dashboardUrl')));
+        $controller->set('be_search_url', Router::url($this->config('searchUrl')));
     }
 
     /**
@@ -279,7 +278,6 @@ class BackendComponent extends Component
             $config = $this->actions[$action];
             $actionObj = $this->_actionRegistry->get($action);
 
-
             $event = $this->_registry->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $actionObj ]);
             if ($event->result instanceof Response) {
                 return $event->result;
@@ -292,7 +290,7 @@ class BackendComponent extends Component
                 $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
             }
 
-            list($plugin,) = pluginSplit($config['className']);
+            list($plugin, ) = pluginSplit($config['className']);
             $template = ($plugin) ? $plugin . '.' . $action : $action;
 
             $this->_controller->viewBuilder()->templatePath($templatePath);

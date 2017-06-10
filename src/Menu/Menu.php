@@ -95,6 +95,7 @@ class Menu implements \Iterator
         }
         $hash = spl_object_hash($item);
         $this->_items[$hash] = $item;
+
         return $this->_items[$hash];
     }
 
@@ -126,6 +127,7 @@ class Menu implements \Iterator
         foreach ($this->_items as $item) {
             $list[] = $item->toArray();
         }
+
         return $list;
     }
 
@@ -138,6 +140,7 @@ class Menu implements \Iterator
     public function current()
     {
         $pos = $this->_itpos;
+
         return $this->_items[$this->_it[$pos]];
     }
 
@@ -161,6 +164,7 @@ class Menu implements \Iterator
     public function key()
     {
         $pos = $this->_itpos;
+
         return (isset($this->_it[$pos])) ? $this->_it[$pos] : null;
     }
 
@@ -174,6 +178,7 @@ class Menu implements \Iterator
     public function valid()
     {
         $pos = $this->_itpos;
+
         return (isset($this->_it[$pos])) ? true : false;
     }
 

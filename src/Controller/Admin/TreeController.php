@@ -21,6 +21,7 @@ class TreeController extends AppController
         $modelName = $this->request->query('model');
         if (!$modelName) {
             $this->Flash->error(__('No model selected'));
+
             return;
         }
         try {
@@ -30,6 +31,7 @@ class TreeController extends AppController
             }
         } catch (\Exception $ex) {
             $this->Flash->error(__('Failed to load model {0}', $modelName));
+
             return;
         }
 
@@ -54,7 +56,6 @@ class TreeController extends AppController
             $Model = $this->loadModel($modelName);
             $Model->addBehavior('Backend.JsTree');
             $tree = $Model->find('jstree')->toArray();
-
         } catch (\Exception $ex) {
             Log::error('TreeController::treeData: ' . $ex->getMessage());
             //throw new InternalErrorException($ex->getMessage());
@@ -94,7 +95,7 @@ class TreeController extends AppController
         }
 
         $this->set('request', $request);
-        $this->set('node',$node);
+        $this->set('node', $node);
         $this->set('result', $result);
         $this->set('_serialize', ['request', 'message', 'node']);
     }

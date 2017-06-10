@@ -62,7 +62,6 @@ class ImageModalWidget extends BasicWidget
 </div>
 MODAL;
 
-
         $scriptTemplate = <<<SCRIPT
 <script>
 $(document).ready(function() {
@@ -82,7 +81,6 @@ SCRIPT;
             'imagemodalModal' => $modalTemplate,
             'imagemodalScript' => $scriptTemplate
         ]);
-
 
         $modal = $this->_templates->format('imagemodalModal', [
             'modalId' => $modalId

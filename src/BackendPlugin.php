@@ -2,7 +2,6 @@
 
 namespace Backend;
 
-
 use Backend\Event\ConnectRoutesEvent;
 use Backend\Event\RouteBuilderEvent;
 use Backend\Event\SetupEvent;
@@ -65,7 +64,7 @@ class BackendPlugin implements EventListenerInterface
          * @TODO Use a configuration param to enable/disable fallback routes for app's admin prefixed routes
          * @TODO Move to separate (high priority) event listener
          */
-        Router::scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], function($routes) {
+        Router::scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], function ($routes) {
 
             // default admin routes
             $routes->extensions(['json']);

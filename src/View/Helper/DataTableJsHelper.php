@@ -2,7 +2,6 @@
 
 namespace Backend\View\Helper;
 
-
 use Cake\ORM\ResultSet;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
@@ -64,6 +63,7 @@ class DataTableJsHelper extends Helper
 
         $this->_renderTable = false;
         $this->_renderScript = true;
+
         return $this->_renderScript();
     }
 
@@ -75,6 +75,7 @@ class DataTableJsHelper extends Helper
         $this->id(uniqid('dtjs'));
         $this->options($options);
         $this->columns($columns);
+
         return $this;
     }
 
@@ -85,6 +86,7 @@ class DataTableJsHelper extends Helper
         }
 
         $this->_dataTableId = $id;
+
         return $this;
     }
 
@@ -95,6 +97,7 @@ class DataTableJsHelper extends Helper
         }
 
         $this->_dataTable = array_merge($this->_dataTable, $options);
+
         return $this;
     }
 
@@ -121,6 +124,7 @@ class DataTableJsHelper extends Helper
 
             $this->_columns[$column] = array_merge($_default, $config);
         }
+
         return $this;
     }
 
@@ -158,8 +162,12 @@ class DataTableJsHelper extends Helper
         $domId = $this->_dataTableId;
 
         $this->_processColumnsConfig();
-        $script = sprintf('$(document).ready(function(){ var %s = $("#%s").dataTable(%s); });',
-            $domId, $domId, json_encode($this->_dataTable));
+        $script = sprintf(
+            '$(document).ready(function(){ var %s = $("#%s").dataTable(%s); });',
+            $domId,
+            $domId,
+            json_encode($this->_dataTable)
+        );
 
         return $this->Html->scriptBlock($script, ['safe' => false, 'block' => $block]);
     }
@@ -179,6 +187,7 @@ class DataTableJsHelper extends Helper
     {
         $script = ($this->_renderScript) ? $this->_renderScript('script') : '';
         $html = ($this->_renderTable) ? $this->_renderTable() : '';
+
         return $html . $script;
     }
 }

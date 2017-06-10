@@ -81,5 +81,4 @@ class BackendHelper extends HtmlHelper
         */
         return parent::script($url, $options);
     }
-
 }

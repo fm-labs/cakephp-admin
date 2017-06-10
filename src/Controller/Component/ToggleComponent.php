@@ -27,8 +27,7 @@ class ToggleComponent extends Component
     {
         $entity = $table->find()->select(['id', $field])->where(['id' => $id])->first();
         if ($entity) {
-
-            $val = (bool) $entity->{$field};
+            $val = (bool)$entity->{$field};
             $new = !$val;
 
             $entity->{$field} = $new;

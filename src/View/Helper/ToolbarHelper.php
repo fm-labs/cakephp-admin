@@ -84,8 +84,7 @@ class ToolbarHelper extends Helper
             'attr' => []
         ], $options);
 
-        switch ($options['type'])
-        {
+        switch ($options['type']) {
             case "postLink":
             case "post":
                 $this->addPostLink($options);
@@ -182,10 +181,10 @@ class ToolbarHelper extends Helper
     public function beforeLayout(Event $event)
     {
         // parse toolbar actions defined in 'toolbar.actions' view-var
-        $toolbarActions = (array) $event->subject()->get('actions');
+        $toolbarActions = (array)$event->subject()->get('actions');
 
         if ($toolbarActions) {
-            array_walk($toolbarActions, function($action) {
+            array_walk($toolbarActions, function ($action) {
                 $title = $url = null;
                 $attr = [];
                 if (!is_array($action)) {
@@ -225,5 +224,4 @@ class ToolbarHelper extends Helper
     {
         return $this->render($options);
     }
-
 }

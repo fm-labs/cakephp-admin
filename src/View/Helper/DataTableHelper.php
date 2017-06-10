@@ -2,7 +2,6 @@
 
 namespace Backend\View\Helper;
 
-
 use Cake\Collection\CollectionInterface;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
@@ -68,7 +67,7 @@ class DataTableHelper extends Helper
         if ($this->_setup === null) {
             $event = new Event('Backend.DataTable.setup');
             $event = $this->_View->eventManager()->dispatch($event);
-            $this->_setup = (array) $event->data();
+            $this->_setup = (array)$event->data();
         }
 
         return $this->_setup;
@@ -79,6 +78,7 @@ class DataTableHelper extends Helper
         if (isset($this->_params[$key])) {
             return $this->_params[$key];
         }
+
         return null;
     }
 
@@ -125,12 +125,11 @@ class DataTableHelper extends Helper
         if (isset($this->_setup[$modelName[1]])) {
             $setup = $this->_setup[$modelName[1]];
             if (isset($setup['rowActions'])) {
-                array_walk($setup['rowActions'], function($action) {
+                array_walk($setup['rowActions'], function ($action) {
                     $this->_params['rowActions'][] = $action;
                 });
             }
         }
-
 
         // @TODO Deprecated. Use white- and blacklist instead
         if (isset($this->_params['exclude']) && !empty($this->_params['exclude'])) {
@@ -154,7 +153,6 @@ class DataTableHelper extends Helper
 
         // apply data
         $this->data($data);
-
 
         /*
         $this->templater()->add([
@@ -181,7 +179,6 @@ class DataTableHelper extends Helper
         ]);
         */
 
-
         $this->templater()->add([
             'table' => '<div class="dtable-container"><div class="dtable"{{attrs}}>{{head}}{{body}}</div></div>',
             'head' => '<div class="dtable-head">{{cellheads}}{{actionshead}}</div>',
@@ -204,7 +201,6 @@ class DataTableHelper extends Helper
             'rowAction' => '<li>{{content}}</li>',
             'rowSelectCell' => '<div class="dtable-row-select">{{content}}</div>'
         ]);
-
     }
 
     public function id()
@@ -212,6 +208,7 @@ class DataTableHelper extends Helper
         if (!$this->_id) {
             $this->_id = uniqid('dt');
         }
+
         return $this->_id;
     }
 
@@ -224,12 +221,10 @@ class DataTableHelper extends Helper
         $this->_params['data'] = $data;
 
         if (empty($this->_params['fieldsWhitelist'])) {
-
             if ($data instanceof CollectionInterface) {
                 $firstRow = $data->first();
             } else {
                 $firstRow = (is_array($data) && !empty($data) && $data[0]) ? $data[0] : [];
-
             }
             $firstRow = is_object($firstRow) ? $firstRow->toArray() : $firstRow;
             if ($firstRow) {
@@ -246,6 +241,7 @@ class DataTableHelper extends Helper
         if ($this->_table === null && $this->_params['model']) {
             $this->_table = TableRegistry::get($this->_params['model']);
         }
+
         return $this->_table;
     }
 
@@ -259,17 +255,16 @@ class DataTableHelper extends Helper
         if ($this->_params['select']) {
             $class .= ' select';
         }
+
         return trim($class);
     }
 
-
     protected function _parseFields()
     {
-        $fields = (array) $this->_params['fields'];
+        $fields = (array)$this->_params['fields'];
 
         // configure each white-listed field
         foreach ($this->_params['fieldsWhitelist'] as $field) {
-
             // check black list
             if (in_array($field, $this->_params['fieldsBlacklist'])) {
                 continue;
@@ -340,14 +335,14 @@ class DataTableHelper extends Helper
             'cellheads' => $this->renderHeadCells(),
             'actionshead' => $headCellActions
         ]);
+
         return $html;
     }
 
     public function renderHeadCells()
     {
         $html = "";
-        foreach ($this->_fields as $fieldName => $field)
-        {
+        foreach ($this->_fields as $fieldName => $field) {
             if ($this->_params['paginate']) {
                 $header = $this->Paginator->sort($fieldName);
             } else {
@@ -362,6 +357,7 @@ class DataTableHelper extends Helper
                 ])
             ]);
         }
+
         return $html;
     }
 
@@ -380,7 +376,6 @@ class DataTableHelper extends Helper
         // reduce row
         $rows .= $this->renderReduceRow();
 
-
         return $this->templater()->format('body', [
             'rows' => $rows,
         ]);
@@ -393,13 +388,10 @@ class DataTableHelper extends Helper
         }
 
         $cells = "";
-        foreach ($this->_fields as $fieldName => $field)
-        {
+        foreach ($this->_fields as $fieldName => $field) {
             $filterInput = '';
 
-
             if ($this->_params['filter'] == true || in_array($fieldName, $this->_params['filter'])) {
-
                 $filterInputOptions = ['label' => false];
 
                 // get current filter value from request query
@@ -420,10 +412,8 @@ class DataTableHelper extends Helper
 
                 //} elseif ($column['type'] == 'select' || substr($fieldName, -3) == '_id') {
                 //    $filterInputOptions['empty'] = __('All');
-
                 } elseif ($column['type'] == 'date' || $column['type'] == 'datetime') {
                     $filterInputOptions['type'] = 'hidden';
-
                 } elseif ($column['type'] == 'text') {
                     $filterInputOptions['type'] = 'text';
                 }
@@ -436,10 +426,9 @@ class DataTableHelper extends Helper
                     }
                 }
                 $filterInput = $this->Form->input($fieldName, $filterInputOptions);
-
             }
             $cells .= $this->templater()->format('rowCell', [
-                'content' => (string) $filterInput,
+                'content' => (string)$filterInput,
                 'attrs' => $this->templater()->formatAttributes([
                     //'class' => $field['class'],
                     //'title' => $field['title']
@@ -471,8 +460,7 @@ class DataTableHelper extends Helper
         }
 
         $html = "<tr>";
-        foreach ($this->_fields as $fieldName => $field)
-        {
+        foreach ($this->_fields as $fieldName => $field) {
             $reducedData = null;
             if (isset($this->_params['reduce'][$fieldName])) {
                 $reduce = $this->_params['reduce'][$fieldName] + ['formatter' => null, 'callable' => null];
@@ -486,16 +474,16 @@ class DataTableHelper extends Helper
             }
 
             $html .= $this->templater()->format('rowCell', [
-                'content' => (string) $reducedData,
+                'content' => (string)$reducedData,
                 'attrs' => $this->templater()->formatAttributes([
                     //'class' => $field['class'],
                     //'title' => $field['title']
                 ])
             ]);
-
         }
         $html .= $this->templater()->format('rowCell', ['content' => '']); // actions cell stub
         $html .= "</tr>";
+
         return $html;
     }
 
@@ -524,7 +512,6 @@ class DataTableHelper extends Helper
             'actionscell' => $rowActionsCell
         ]);
 
-
         return $html;
     }
 
@@ -535,8 +522,7 @@ class DataTableHelper extends Helper
         // multiselect checkbox
         $html .= $this->_renderRowSelectCell($row);
 
-        foreach ($this->_fields as $fieldName => $field)
-        {
+        foreach ($this->_fields as $fieldName => $field) {
             $cellData = Hash::get($row, $fieldName);
 
             $formatter = $field['formatter'];
@@ -552,7 +538,6 @@ class DataTableHelper extends Helper
                 'attrs' => $this->templater()->formatAttributes($cellAttributes)
             ]);
 
-
             // reducer
             if (isset($this->_params['reduce'][$fieldName]) && isset($this->_params['reduce'][$fieldName]['callable'])) {
                 $reducer = $this->_params['reduce'][$fieldName]['callable'];
@@ -563,10 +548,12 @@ class DataTableHelper extends Helper
                 }
             }
         }
+
         return $html;
     }
 
-    protected function _renderRowSelectCell($row) {
+    protected function _renderRowSelectCell($row)
+    {
 
         if (isset($this->_params['select']) && $this->_params['select'] === true) {
             $input = $this->Form->checkbox('multiselect_' . $row->id);
@@ -575,7 +562,6 @@ class DataTableHelper extends Helper
                 'content' => $input
             ]);
         }
-
     }
 
     /**
@@ -585,9 +571,9 @@ class DataTableHelper extends Helper
      * If $formatter is NULL, the default formatter will be used (escape text)
      *
      * @param $cellData
-     * @param null|boolean|callable $formatter
+     * @param bool $cellData
+     * @param array $formatter
      * @param array $formatterArgs
-     * @param array $row
      * @return string
      */
     protected function _formatRowCellData($fieldName, $cellData, $formatter = null, $formatterArgs = [], $row = [])
@@ -675,14 +661,15 @@ class DataTableHelper extends Helper
             foreach ($tokenStr as &$_tokenStr) {
                 $_tokenStr = $this->_replaceTokens($_tokenStr, $data);
             }
+
             return $tokenStr;
         }
 
         // extract tokenized vars from data and cast them to their string representation
         preg_match_all('/\:(\w+)/', $tokenStr, $matches);
         $inserts = array_intersect_key($data, array_flip(array_values($matches[1])));
-        array_walk($inserts, function(&$val, $key) {
-            $val = (string) $val;
+        array_walk($inserts, function (&$val, $key) {
+            $val = (string)$val;
         });
 
         return Text::insert($tokenStr, $inserts);

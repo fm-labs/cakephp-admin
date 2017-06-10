@@ -83,22 +83,20 @@ class HtmlEditorWidget extends BasicWidget
         $data['class'] = ($data['class']) ? $data['class'] . ' ' . $defaultClass : $defaultClass;
         $data['id'] = uniqid($data['id'] . '-htmleditor');
 
-
         // load editor config by config reference (@[Config.Key])
         //@deprecated
         if ($data['editor'] && is_string($data['editor']) && preg_match('/^\@(.*)/', $data['editor'], $matches)) {
             $data['editor'] = Configure::read($matches[1]);
-        }
-        elseif ($data['editor'] && is_string($data['editor'])) {
+        } elseif ($data['editor'] && is_string($data['editor'])) {
             $confKey = 'HtmlEditor.' . $data['editor'];
-            $data['editor'] = (array) Configure::read($confKey);
+            $data['editor'] = (array)Configure::read($confKey);
         }
 
         $data['editor'] = array_merge(static::$defaultConfig, $data['editor']);
 
         // convert urls
         $editor = [];
-        array_walk($data['editor'], function($val, $key) use (&$editor) {
+        array_walk($data['editor'], function ($val, $key) use (&$editor) {
             if (preg_match('/^\@(.*)$/', $key, $matches)) {
                 $_key = $matches[1];
 
@@ -112,7 +110,6 @@ class HtmlEditorWidget extends BasicWidget
                         $list[] = Router::url($_url, true);
                     });
                 }
-
             } else {
                 $editor[$key] = $val;
             }

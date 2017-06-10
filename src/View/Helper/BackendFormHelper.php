@@ -55,6 +55,7 @@ class BackendFormHelper extends BootstrapFormHelper
             'content' => $this->_View->Blocks->get('_fieldset'),
             'attrs' => $this->templater()->formatAttributes([])
         ]);
+
         return parent::fieldset($fields, $this->_fieldsetOptions);
     }
 
@@ -70,7 +71,7 @@ class BackendFormHelper extends BootstrapFormHelper
     protected function _getInput($fieldName, $options)
     {
         if (isset($options['type'])) {
-            switch($options['type']) {
+            switch ($options['type']) {
                 case 'select':
                     //$this->_View->loadHelper('Backend.Chosen');
                     break;
@@ -81,7 +82,7 @@ class BackendFormHelper extends BootstrapFormHelper
 
                 case 'htmleditor':
                 case 'htmltext':
-                $this->_View->loadHelper('Backend.HtmlEditor');
+                    $this->_View->loadHelper('Backend.HtmlEditor');
                     break;
 
                 case 'imageselect':

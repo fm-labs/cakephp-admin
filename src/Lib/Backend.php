@@ -25,6 +25,7 @@ class Backend
         if (!isset(static::$_version)) {
             static::$_version = @file_get_contents(Plugin::path('Backend') . DS . 'VERSION.txt');
         }
+
         return static::$_version;
     }
 }

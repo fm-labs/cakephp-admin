@@ -6,6 +6,7 @@ use Cake\Core\Exception\Exception;
 use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
+
 //use Tree\Model\Behavior\SimpleTreeBehavior;
 
 /**
@@ -77,9 +78,9 @@ class DataTableController extends AppController
             if ($this->request->is(['post', 'put'])) {
                 $data = $this->request->data;
 
-                $modelName = (isset($data['model'])) ? (string) $data['model'] : null;
-                $id = (isset($data['id'])) ? (int) $data['id'] : null;
-                $after = (isset($data['after'])) ? (int) $data['after'] : false;
+                $modelName = (isset($data['model'])) ? (string)$data['model'] : null;
+                $id = (isset($data['id'])) ? (int)$data['id'] : null;
+                $after = (isset($data['after'])) ? (int)$data['after'] : false;
 
                 $responseData = [
                     'model' => $modelName,
@@ -106,7 +107,7 @@ class DataTableController extends AppController
                 $node = $model->moveAfter($node, $after);
                 $responseData['newPos'] = $node->pos;
 
-                $responseData['success'] = (bool) $node;
+                $responseData['success'] = (bool)$node;
             }
         } catch (\Exception $ex) {
             $responseData['success'] = false;

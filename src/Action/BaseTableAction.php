@@ -2,7 +2,6 @@
 
 namespace Backend\Action;
 
-
 use Backend\Action\Interfaces\TableActionInterface;
 use Cake\Controller\Controller;
 use Cake\Event\EventListenerInterface;
@@ -42,16 +41,15 @@ abstract class BaseTableAction implements TableActionInterface, EventListenerInt
             $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
         }
 
-
         // actions
         if ($this->_config['actions'] !== false) {
             $event = $controller->dispatchEvent('Backend.Table.Actions.get');
-            $this->_config['actions'] = (array) $event->result;
+            $this->_config['actions'] = (array)$event->result;
         }
 
         if ($this->_config['rowActions'] !== false) {
             $event = $controller->dispatchEvent('Backend.Table.RowActions.get');
-            $this->_config['rowActions'] = (array) $event->result;
+            $this->_config['rowActions'] = (array)$event->result;
         }
 
         return $this->_execute($controller);

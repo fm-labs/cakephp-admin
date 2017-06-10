@@ -2,7 +2,6 @@
 
 namespace Backend\Action\Interfaces;
 
-
 use Cake\Controller\Controller;
 
 interface ActionInterface

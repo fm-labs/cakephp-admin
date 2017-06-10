@@ -2,7 +2,6 @@
 
 namespace Backend\Model\Behavior;
 
-
 use Cake\Collection\Collection;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\ResultSetInterface;
@@ -38,8 +37,6 @@ class JsTreeBehavior extends Behavior
         return $this->formatJsTree($query, $options);
     }
 
-
-
     /**
      * Formats query as a flat list of sitemap locations
      *
@@ -51,13 +48,14 @@ class JsTreeBehavior extends Behavior
     {
         $query->find('threaded');
         $query->order(['lft' => 'ASC']);
+
         return $query->formatResults(function ($results) use ($options) {
-;
+            ;
             $jstree = $this->_format($results);
+
             return new Collection($jstree);
         });
     }
-
 
     protected function _format($entities)
     {
@@ -72,7 +70,7 @@ class JsTreeBehavior extends Behavior
             $dataFields = array_keys($dataFields);
         }
 
-        $entityFormatter = function(EntityInterface $entity) use ($fields, $dataFields) {
+        $entityFormatter = function (EntityInterface $entity) use ($fields, $dataFields) {
 
             $class = "";
             //$publishedClass = ($entity->isPagePublished()) ? 'published' : 'unpublished';
@@ -100,7 +98,7 @@ class JsTreeBehavior extends Behavior
             ];
         };
 
-        $entitiesFormatter = function($entities) use ($entityFormatter, &$entitiesFormatter) {
+        $entitiesFormatter = function ($entities) use ($entityFormatter, &$entitiesFormatter) {
             $formatted = [];
             foreach ($entities as $entity) {
                 $_node = $entityFormatter($entity);
@@ -112,10 +110,12 @@ class JsTreeBehavior extends Behavior
                 //}
                 $formatted[] = $_node;
             }
+
             return $formatted;
         };
 
         $entitiesFormatted = $entitiesFormatter($entities);
+
         return $entitiesFormatted;
     }
 }

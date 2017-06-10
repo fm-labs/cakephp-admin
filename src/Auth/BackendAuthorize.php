@@ -48,7 +48,7 @@ class BackendAuthorize extends BaseAuthorize
 
         // configured backend users
         //@TODO Refactor this dirty UserId-hack with actual http basic auth
-        $backendUsersIds = (array) Configure::read('Backend.Users');
+        $backendUsersIds = (array)Configure::read('Backend.Users');
         if (in_array($userId, $backendUsersIds)) {
             return true;
         }

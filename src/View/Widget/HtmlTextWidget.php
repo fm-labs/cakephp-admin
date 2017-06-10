@@ -38,6 +38,7 @@ class HtmlTextWidget extends BasicWidget
                 ['name', 'val', 'type']
             )
         ]);
+
         return $html;
     }
 }

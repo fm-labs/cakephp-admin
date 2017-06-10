@@ -14,5 +14,4 @@ class BackendTask extends Shell
     public function startup()
     {
     }
-
 }

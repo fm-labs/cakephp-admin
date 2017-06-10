@@ -99,6 +99,7 @@ class BoxHelper extends Helper
     public function render()
     {
         $this->end();
+
         return $this->templater()->format('box', [
             'collapsedClass' => ($this->_params['collapsed']) ? ' collapsed-box' : '',
             'header' => $this->_renderHeader(),
@@ -123,6 +124,7 @@ class BoxHelper extends Helper
     protected function _renderTitle()
     {
         $title = ($this->getContent('heading')) ?: $this->_params['title'];
+
         return $this->templater()->format('boxTitle', ['title' => $title]);
     }
 
@@ -145,6 +147,7 @@ class BoxHelper extends Helper
             $collapseTempl = ($this->_params['collapsed']) ? 'boxToolExpandButton' : 'boxToolCollapseButton';
             $tools .= $this->templater()->format($collapseTempl, []);
         }
+
         return $this->templater()->format('boxTools', ['tools' => $tools]);
     }
 

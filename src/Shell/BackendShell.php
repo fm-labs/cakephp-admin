@@ -31,6 +31,7 @@ class BackendShell extends Shell
             'help' => 'Execute The RootUser Task.',
             'parser' => $this->RootUser->getOptionParser()
         ]);
+
         return $parser;
     }
 }

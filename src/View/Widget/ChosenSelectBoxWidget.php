@@ -40,7 +40,7 @@ class ChosenSelectBoxWidget extends SelectBoxWidget
         ];
 
         if (isset($data['chosen'])) {
-            $chosen = array_merge($chosen, (array) $data['chosen']);
+            $chosen = array_merge($chosen, (array)$data['chosen']);
         }
 
         $js = sprintf('<script>$(document).ready(function() { $("#%s").chosen(%s); });</script>', $data['id'], json_encode($chosen));

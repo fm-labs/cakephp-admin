@@ -44,7 +44,7 @@ class SystemController extends AppController
     {
         $globals = [
             'APP', 'APP_DIR', 'CONFIG', 'CACHE', 'CAKE', 'CAKE_CORE_INCLUDE_PATH', 'CORE_PATH',
-            'DS', 'LOGS', 'ROOT', 'TESTS', 'TMP','WWW_ROOT'
+            'DS', 'LOGS', 'ROOT', 'TESTS', 'TMP', 'WWW_ROOT'
         ];
         $this->set(compact('globals'));
     }
@@ -84,7 +84,7 @@ class SystemController extends AppController
      */
     public function datetime()
     {
-        $data = array();
+        $data = [];
 
         $data['dateDefaultTimezoneGet'] = date_default_timezone_get();
         $data['dateTimeZoneIniGet'] = ini_get('date.timezone');

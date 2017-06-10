@@ -2,7 +2,6 @@
 
 namespace Backend\Action;
 
-
 use Cake\Controller\Controller;
 
 class PublishAction extends BaseEntityAction
@@ -20,9 +19,9 @@ class PublishAction extends BaseEntityAction
             }
         } else {
             $controller->Flash->error('Publishable behavior not loaded for model ' . $this->model()->alias());
+
             return $controller->redirect($controller->referer(['action' => 'index']));
         }
-
 
         return $controller->redirect($controller->referer(['action' => 'index']));
     }

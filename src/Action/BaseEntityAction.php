@@ -2,7 +2,6 @@
 
 namespace Backend\Action;
 
-
 use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
@@ -49,7 +48,6 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
         }
 
         try {
-
             $entity = $this->entity();
 
             // load helpers
@@ -60,11 +58,10 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
             // actions
             if ($this->_config['actions'] !== false) {
                 $event = $controller->dispatchEvent('Backend.Entity.Actions.get', ['entity' => $entity]);
-                $this->_config['actions'] = (array) $event->result;
+                $this->_config['actions'] = (array)$event->result;
             }
 
             return $this->_execute($controller);
-
         } catch (\Exception $ex) {
             $controller->Flash->error($ex->getMessage());
             $controller->redirect($controller->referer());

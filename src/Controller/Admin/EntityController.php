@@ -34,7 +34,6 @@ class EntityController extends AppController
 
         $entity = $exception = null;
         try {
-
             $Model = $this->loadModel($modelName);
             $query = $Model->find()->where([$Model->alias() . '.id' => $modelId]);
 
@@ -56,10 +55,8 @@ class EntityController extends AppController
             // inject attribute set id for debugging
             $entity->eav_attribute_set_id = 2;
 
-
             $this->set('attributes', $Model->getAttributes($entity)->toArray());
             $this->set('attributesAvailable', $Model->getAttributesAvailable($entity)->toArray());
-
         } catch (\Exception $ex) {
             $exception = $ex;
         }

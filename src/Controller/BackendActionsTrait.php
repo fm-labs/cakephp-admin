@@ -26,9 +26,7 @@ trait BackendActionsTrait
     {
         try {
             return parent::invokeAction();
-
         } catch (MissingActionException $ex) {
-
             $action = $this->request->params['action'];
 
             if (!$this->Backend->hasAction($action)) {

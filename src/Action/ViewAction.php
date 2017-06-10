@@ -2,7 +2,6 @@
 
 namespace Backend\Action;
 
-
 use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
@@ -32,7 +31,7 @@ class ViewAction extends BaseEntityAction
         }
 
         if (!$this->_config['modelId']) {
-           throw new BadRequestException('ViewAction: Model ID missing');
+            throw new BadRequestException('ViewAction: Model ID missing');
         }
         $entity = $this->model()->get($this->_config['modelId']);
 

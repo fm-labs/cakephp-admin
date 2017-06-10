@@ -41,7 +41,6 @@ trait JsTreeAwareTrait
         $Model = null;
         if ($Model === null && method_exists($this, 'model')) {
             $Model = $this->model();
-
         } elseif (isset($this->modelClass)) {
             list(, $alias) = pluginSplit($this->modelClass, true);
 
@@ -51,7 +50,6 @@ trait JsTreeAwareTrait
 
             $Model = $this->{$alias};
         }
-
 
         if ($Model === null) {
             throw new MissingModelException("No primary model found");

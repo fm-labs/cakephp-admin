@@ -25,6 +25,7 @@ class ActionRegistry extends ObjectRegistry
         if (is_object($class)) {
             return $class;
         }
+
         return App::className($class, 'Action', 'Action');
     }
 

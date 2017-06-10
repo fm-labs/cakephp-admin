@@ -2,7 +2,6 @@
 
 namespace Backend\Action;
 
-
 use Backend\Action\Interfaces\TableActionInterface;
 use Cake\Controller\Controller;
 

@@ -2,7 +2,6 @@
 
 namespace Backend\Action;
 
-
 use Cake\Controller\Controller;
 
 class IndexAction extends BaseTableAction
@@ -27,11 +26,9 @@ class IndexAction extends BaseTableAction
 
         if ($this->_config['data']) {
             $result = $this->_config['data'];
-
         } elseif ($Model) {
-
             if ($this->_config['paginate'] === true) {
-                $this->_config['paginate'] = (array) $controller->paginate;
+                $this->_config['paginate'] = (array)$controller->paginate;
             }
 
             if ($this->_config['filter'] === true && !$Model->behaviors()->has('Search')) {
@@ -42,7 +39,7 @@ class IndexAction extends BaseTableAction
 
             // search support with FriendsOfCake/Search plugin
             if ($this->_config['filter']) {
-                if ($controller->request->is(['post','put'])) {
+                if ($controller->request->is(['post', 'put'])) {
                     $query->find('search', ['search' => $controller->request->data]);
                 } elseif ($controller->request->query) {
                     $query->find('search', ['search' => $controller->request->query]);
@@ -70,6 +67,5 @@ class IndexAction extends BaseTableAction
         ]);
         $controller->set('actions', $this->_config['actions']);
         $controller->set('_serialize', ['result']);
-
     }
 }

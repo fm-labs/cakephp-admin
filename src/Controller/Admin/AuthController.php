@@ -34,7 +34,6 @@ class AuthController extends AppController
             $this->viewBuilder()->className('Json');
 
             $this->Auth->login();
-
         } else {
             $redirect = $this->Auth->login();
             if ($redirect) {

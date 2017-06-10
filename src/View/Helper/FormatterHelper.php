@@ -34,7 +34,7 @@ class FormatterHelper extends Helper
      * @param $formatterName
      * @param callable $formatter
      */
-    static public function register($formatterName, callable $formatter)
+    public static function register($formatterName, callable $formatter)
     {
         self::$_formatters[$formatterName] = $formatter;
     }
@@ -65,7 +65,7 @@ class FormatterHelper extends Helper
         });
 
         // date
-        self::register('date', function($val, $extra, $params) {
+        self::register('date', function ($val, $extra, $params) {
 
             $format = DATE_W3C;
             if (isset($params['format'])) {
@@ -88,6 +88,7 @@ class FormatterHelper extends Helper
             if (isset($params['title'])) {
                 $title = $params['title'];
             }
+
             return $this->Html->link($title, $url, $params);
         });
 
@@ -99,6 +100,7 @@ class FormatterHelper extends Helper
         // currency
         self::register('currency', function ($val, $extra, $params) {
             $currency = (isset($params['currency'])) ? $params['currency'] : 'EUR';
+
             return $this->Number->currency($val, $currency);
         });
 
@@ -121,7 +123,7 @@ class FormatterHelper extends Helper
         // object
         self::register('object', function ($val, $extra, $params) {
             if (method_exists($val, '__toString')) {
-                return h((string) $val);
+                return h((string)$val);
             }
 
             if ($val instanceof EntityInterface) {
@@ -159,7 +161,7 @@ class FormatterHelper extends Helper
      * @param array $extra
      * @return mixed
      */
-    public function format( $value, $formatter = null, $formatterArgs = [], $extra = [])
+    public function format($value, $formatter = null, $formatterArgs = [], $extra = [])
     {
         if ($formatter === false) {
             return $value;
@@ -180,6 +182,7 @@ class FormatterHelper extends Helper
                 list($formatter, $formatterArgs) = $formatter;
             } else {
                 debug("Unsupported formatter array format");
+
                 return "[Array]";
             }
         }

@@ -29,9 +29,6 @@
 /**
  * Main Content
  */
-body {
-  height: 100%;
-}
 body.fixed-nav-top {
   margin-top: 50px;
 }

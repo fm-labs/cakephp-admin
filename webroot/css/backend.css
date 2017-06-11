@@ -878,7 +878,6 @@ table.info.table tr td:first-child {
   border: 1px solid #DDD;
   padding: 2rem;
   border-top-width: 0;
-  overflow-x: auto;
 }
 body {
   font-family: 'Open Sans', sans-serif;

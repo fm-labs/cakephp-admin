@@ -2,9 +2,21 @@
 
 namespace Backend\Action;
 
-use Backend\Action\Interfaces\EntityActionInterface;
-
 class DeleteAction extends BaseEntityAction
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function getLabel()
+    {
+        return __('Delete');
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributes()
+    {
+        return ['data-icon' => 'trash'];
+    }
 }

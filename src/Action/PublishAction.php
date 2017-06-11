@@ -4,8 +4,32 @@ namespace Backend\Action;
 
 use Cake\Controller\Controller;
 
+/**
+ * Class PublishAction
+ *
+ * @package Backend\Action
+ */
 class PublishAction extends BaseEntityAction
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function getLabel()
+    {
+        return __('Publish');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributes()
+    {
+        return ['data-icon' => 'eye'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function _execute(Controller $controller)
     {
         if ($this->model()->hasBehavior('Publishable')) {

@@ -1,7 +1,7 @@
 <?php
 namespace Backend\View\Cell;
 
-use Backend\Menu\Menu;
+use Banana\Menu\Menu;
 use Cake\Event\Event;
 use Cake\View\Cell;
 

@@ -7,6 +7,7 @@ use Cake\Controller\Controller;
 use Cake\Event\EventListenerInterface;
 use Cake\Network\Exception\NotImplementedException;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Inflector;
 
 abstract class BaseTableAction implements TableActionInterface, EventListenerInterface
 {
@@ -14,7 +15,8 @@ abstract class BaseTableAction implements TableActionInterface, EventListenerInt
      * @var array
      */
     protected $_defaultConfig = [
-        'actions' => []
+        'actions' => [],
+        'rowActions' => []
     ];
 
     /**
@@ -22,6 +24,27 @@ abstract class BaseTableAction implements TableActionInterface, EventListenerInt
      */
     protected $_config = [];
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getLabel()
+    {
+        $class = explode('\\', get_class($this));
+        $class = array_pop($class);
+        $name = substr($class, 0, -6);
+        return Inflector::humanize($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributes()
+    {
+        return [];
+    }
+    /**
+     * {@inheritDoc}
+     */
     public function execute(Controller $controller)
     {
         // read config from controller view vars

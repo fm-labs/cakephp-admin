@@ -6,7 +6,25 @@ use Cake\Controller\Controller;
 
 class TreeMoveUpAction extends BaseEntityAction
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function getLabel()
+    {
+        return __('Move Up');
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributes()
+    {
+        return ['data-icon' => 'chevron-up'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function _execute(Controller $controller)
     {
         if ($this->model()->hasBehavior('Tree')) {

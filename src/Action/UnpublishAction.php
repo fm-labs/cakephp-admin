@@ -4,8 +4,32 @@ namespace Backend\Action;
 
 use Cake\Controller\Controller;
 
+/**
+ * Class UnpublishAction
+ *
+ * @package Backend\Action
+ */
 class UnpublishAction extends BaseEntityAction
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function getLabel()
+    {
+        return __('Unpublish');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributes()
+    {
+        return ['data-icon' => 'eye-slash'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function _execute(Controller $controller)
     {
         if ($this->model()->hasBehavior('Publishable')) {

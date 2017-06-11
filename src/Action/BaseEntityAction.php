@@ -5,9 +5,11 @@ namespace Backend\Action;
 use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
+use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Network\Exception\NotImplementedException;
 use Cake\ORM\TableRegistry;
+use Cake\Utility\Inflector;
 
 abstract class BaseEntityAction implements EntityActionInterface, EventListenerInterface
 {
@@ -27,6 +29,25 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
      * @var EntityInterface
      */
     protected $_entity;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLabel()
+    {
+        $class = explode('\\', get_class($this));
+        $class = array_pop($class);
+        $name = substr($class, 0, -6);
+        return Inflector::humanize($name);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributes()
+    {
+        return [];
+    }
 
     public function execute(Controller $controller)
     {
@@ -96,8 +117,13 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
         return $this->_entity;
     }
 
+    public function buildActions(Event $event)
+    {
+
+    }
+
     public function implementedEvents()
     {
-        return [];
+        return ['Backend.Entity.Actions.get' => 'buildActions'];
     }
 }

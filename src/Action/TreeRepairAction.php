@@ -5,18 +5,18 @@ namespace Backend\Action;
 use Cake\Controller\Controller;
 
 /**
- * Class TreeMoveDownAction
+ * Class TreeRepairAction
  *
  * @package Backend\Action
  */
-class TreeMoveDownAction extends BaseEntityAction
+class TreeRepairAction extends BaseTableAction
 {
     /**
      * {@inheritDoc}
      */
     public function getLabel()
     {
-        return __('Move Down');
+        return __('Repair Tree');
     }
 
     /**
@@ -24,7 +24,7 @@ class TreeMoveDownAction extends BaseEntityAction
      */
     public function getAttributes()
     {
-        return ['data-icon' => 'chevron-down'];
+        return ['data-icon' => 'wrench'];
     }
 
     /**
@@ -33,13 +33,8 @@ class TreeMoveDownAction extends BaseEntityAction
     public function _execute(Controller $controller)
     {
         if ($this->model()->hasBehavior('Tree')) {
-            $entity = $this->entity();
-
-            if ($this->model()->moveDown($entity)) {
-                $controller->Flash->success(__d('backend', 'The {0} has been moved down.', $this->model()->alias()));
-            } else {
-                $controller->Flash->error(__d('backend', 'The {0} could not be moved. Please, try again.', $this->model()->alias()));
-            }
+            $this->model()->recover();
+            $controller->Flash->success(__d('content', 'Tree for model {0} has been repaired', $this->model()->alias()));
         } else {
             $controller->Flash->error('Tree behavior not loaded for model ' . $this->model()->alias());
         }

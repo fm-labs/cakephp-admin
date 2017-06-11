@@ -343,10 +343,11 @@ class BackendComponent extends Component
     public function getTableActions(Event $event)
     {
         foreach ($this->listActions() as $action) {
-            if ($action == "index" || (!$event->subject()->Backend->getAction($action) instanceof TableActionInterface)) {
+            $_action = $event->subject()->Backend->getAction($action);
+            if ($action == "index" || (!($_action instanceof TableActionInterface))) {
                 continue;
             }
-            $event->result[] = [Inflector::humanize($action), ['action' => $action]];
+            $event->result[] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
         }
     }
 
@@ -356,10 +357,11 @@ class BackendComponent extends Component
     public function getTableRowActions(Event $event)
     {
         foreach ($this->listActions() as $action) {
-            if ($action == "index" || (!$event->subject()->Backend->getAction($action) instanceof EntityActionInterface)) {
+            $_action = $this->getAction($action);
+            if ($action == "index" || (!($_action instanceof EntityActionInterface))) {
                 continue;
             }
-            $event->result[] = [Inflector::humanize($action), ['action' => $action, ':id']];
+            $event->result[] = [$_action->getLabel(), ['action' => $action, ':id'], $_action->getAttributes()];
         }
     }
 
@@ -370,11 +372,12 @@ class BackendComponent extends Component
     {
         $entity = $event->data['entity'];
         foreach ($this->listActions() as $action) {
-            if (($this->getAction($action) instanceof TableActionInterface)) {
-                $event->result[] = [Inflector::humanize($action), ['action' => $action]];
+            $_action = $this->getAction($action);
+            if (($_action instanceof TableActionInterface)) {
+                $event->result[] = [$_action->getLabel(), ['action' => $action]];
             }
-            if (($this->getAction($action) instanceof EntityActionInterface)) {
-                $event->result[] = [Inflector::humanize($action), ['action' => $action, $entity->id]];
+            if (($_action instanceof EntityActionInterface)) {
+                $event->result[] = [$_action->getLabel(), ['action' => $action, $entity->id]];
             }
         }
     }

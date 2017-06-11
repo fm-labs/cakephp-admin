@@ -19,7 +19,25 @@ class ViewAction extends BaseEntityAction
         'viewOptions' => [],
         'actions' => []
     ];
+    /**
+     * {@inheritDoc}
+     */
+    public function getLabel()
+    {
+        return __('Details');
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function getAttributes()
+    {
+        return ['data-icon' => 'file-o'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function _execute(Controller $controller)
     {
         // attempt to get model ID from request if not set

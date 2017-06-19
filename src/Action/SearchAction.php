@@ -2,14 +2,14 @@
 
 namespace Backend\Action;
 
-use Backend\Action\Interfaces\TableActionInterface;
+use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
 
 /**
  * Class SearchAction
  * @package Backend\Action
  */
-class SearchAction implements TableActionInterface
+class SearchAction implements IndexActionInterface
 {
     /**
      * {@inheritDoc}

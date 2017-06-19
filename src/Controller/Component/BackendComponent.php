@@ -2,17 +2,12 @@
 
 namespace Backend\Controller\Component;
 
-use Backend\Action\ActionRegistry;
-use Backend\Action\Interfaces\EntityActionInterface;
-use Backend\Action\Interfaces\TableActionInterface;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
+use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Event\EventListenerInterface;
-use Cake\Network\Response;
 use Cake\Routing\Router;
-use Cake\Utility\Inflector;
 use User\Controller\Component\AuthComponent;
 
 /**
@@ -61,11 +56,6 @@ class BackendComponent extends Component
     protected $_controller;
 
     /**
-     * @var ActionRegistry
-     */
-    protected $_actionRegistry;
-
-    /**
      * @param array $config
      */
     public function initialize(array $config)
@@ -88,7 +78,7 @@ class BackendComponent extends Component
         // Configure Backend FlashComponent
         if ($this->_registry->has('Flash') || !is_a($this->_registry->get('Flash'), static::$flashComponentClass)) {
             $this->_registry->unload('Flash');
-            $controller->Flash = $this->_registry->load('Flash', [
+            $controller->Flash = $controller->loadComponent('Flash', [
                 'className' => static::$flashComponentClass,
                 'key' => 'backend'
             ]);
@@ -106,7 +96,7 @@ class BackendComponent extends Component
         // Configure Backend Authentication
         if (!$this->_registry->has('Auth') || !is_a($this->_registry->get('Auth'), static::$authComponentClass)) {
             $this->_registry->unload('Auth');
-            $controller->Auth = $this->_registry->load('Auth', [
+            $controller->Auth = $controller->loadComponent('Auth', [
                 'className' => static::$authComponentClass,
             ]);
         }
@@ -127,34 +117,14 @@ class BackendComponent extends Component
             $controller->viewBuilder()->layout('Backend.ajax');
         }
 
+        // Auto-load ActionComponent if controller defines actions
+        if (isset($controller->actions) && !$this->_registry->has('Action')) {
+            $controller->loadComponent('Backend.Action');
+        }
+
         $this->_controller =& $controller;
-
-        $this->_initActions();
     }
 
-    /**
-     * Initialize action registry
-     */
-    protected function _initActions()
-    {
-        $this->_actionRegistry = new ActionRegistry();
-
-        // use controller actions, if defined
-        if ($this->_controller->actions) {
-            $this->actions = $this->_controller->actions;
-        }
-
-        // normalize action configs and add actions to actions registry
-        $actions = [];
-        foreach ($this->actions as $action => $actionConfig) {
-            if (is_string($actionConfig)) {
-                $actionConfig = ['className' => $actionConfig];
-            }
-            $this->_actionRegistry->load($action, $actionConfig);
-            $actions[$action] = $actionConfig;
-        }
-        $this->actions = $actions;
-    }
 
     /**
      * @param Event $event
@@ -179,13 +149,6 @@ class BackendComponent extends Component
         // Configure Backend Authorization
         $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'));
         $controller->Auth->config('authorize', $this->config('authAuthorize'));
-    }
-
-    /**
-     * @param Event $event
-     */
-    public function startup(Event $event)
-    {
     }
 
     /**
@@ -225,99 +188,16 @@ class BackendComponent extends Component
     }
 
     /**
-     * @param $action
-     * @return bool
-     */
-    public function hasAction($action)
-    {
-        return $this->_actionRegistry->has($action);
-    }
-
-    /**
-     * @param $action
-     * @return null|object
-     */
-    public function getAction($action)
-    {
-        return $this->_actionRegistry->get($action);
-    }
-
-    /**
-     * @return array
-     */
-    public function listActions()
-    {
-        return $this->_actionRegistry->loaded();
-    }
-
-    /**
-     * @param $action
-     * @return array
-     */
-    public function getActionUrl($action)
-    {
-        $actionObj = $this->getAction($action);
-        if ($actionObj instanceof EntityActionInterface) {
-            return ['action' => $action, ':id'];
-        } else {
-            return ['action' => $action];
-        }
-    }
-
-    /**
-     * @param $action
-     * @return mixed
+     * @param null $action
+     * @deprecated Use ActionComponent instead
      */
     public function executeAction($action = null)
     {
-        if ($action === null) {
-            $action = $this->request->params['action'];
+        if (!$this->_registry->has('Action')) {
+            throw new MissingComponentException(['class' => 'ActionComponent']);
         }
 
-        if ($this->_actionRegistry->has($action)) {
-            $config = $this->actions[$action];
-            $actionObj = $this->_actionRegistry->get($action);
-
-            $event = $this->_registry->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $actionObj ]);
-            if ($event->result instanceof Response) {
-                return $event->result;
-            }
-
-            //@TODO Refactor with ActionView
-            //--
-            $templatePath = 'Action';
-            if ($this->request->params['prefix']) {
-                $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
-            }
-
-            list($plugin, ) = pluginSplit($config['className']);
-            $template = ($plugin) ? $plugin . '.' . $action : $action;
-
-            $this->_controller->viewBuilder()->templatePath($templatePath);
-            $this->_controller->viewBuilder()->template($template);
-            //--
-
-            // attach Action instance to controllers event manager
-            if ($actionObj instanceof EventListenerInterface) {
-                $this->_controller->eventManager()->on($actionObj);
-            }
-
-            $response = $actionObj->execute($this->_controller);
-
-            // detach Action instance from controllers event manager
-            if ($actionObj instanceof EventListenerInterface) {
-                $this->_controller->eventManager()->off($actionObj);
-            }
-
-            $event = $this->_registry->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $actionObj ]);
-            if ($event->result instanceof Response) {
-                return $event->result;
-            }
-
-            return $response;
-        }
-
-        throw new \RuntimeException('Action ' . $action . ' not loaded');
+        return $this->_registry->get('Action')->execute($action);
     }
 
     /**
@@ -327,58 +207,10 @@ class BackendComponent extends Component
     {
         return [
             'Controller.initialize' => 'beforeFilter',
-            'Controller.startup' => 'startup',
+            //'Controller.startup' => 'startup',
             'Controller.beforeRender' => 'beforeRender',
             //'Controller.beforeRedirect' => 'beforeRedirect',
             //'Controller.shutdown' => 'shutdown',
-            'Backend.Table.Actions.get' => [ 'callable' => 'getTableActions', 'priority' => 5 ],
-            'Backend.Table.RowActions.get' => [ 'callable' => 'getTableRowActions', 'priority' => 5 ],
-            'Backend.Entity.Actions.get' => [ 'callable' => 'getEntityActions', 'priority' => 5 ]
         ];
-    }
-
-    /**
-     * @param Event $event
-     */
-    public function getTableActions(Event $event)
-    {
-        foreach ($this->listActions() as $action) {
-            $_action = $event->subject()->Backend->getAction($action);
-            if ($action == "index" || (!($_action instanceof TableActionInterface))) {
-                continue;
-            }
-            $event->result[] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
-        }
-    }
-
-    /**
-     * @param Event $event
-     */
-    public function getTableRowActions(Event $event)
-    {
-        foreach ($this->listActions() as $action) {
-            $_action = $this->getAction($action);
-            if ($action == "index" || (!($_action instanceof EntityActionInterface))) {
-                continue;
-            }
-            $event->result[] = [$_action->getLabel(), ['action' => $action, ':id'], $_action->getAttributes()];
-        }
-    }
-
-    /**
-     * @param Event $event
-     */
-    public function getEntityActions(Event $event)
-    {
-        $entity = $event->data['entity'];
-        foreach ($this->listActions() as $action) {
-            $_action = $this->getAction($action);
-            if (($_action instanceof TableActionInterface)) {
-                $event->result[] = [$_action->getLabel(), ['action' => $action]];
-            }
-            if (($_action instanceof EntityActionInterface)) {
-                $event->result[] = [$_action->getLabel(), ['action' => $action, $entity->id]];
-            }
-        }
     }
 }

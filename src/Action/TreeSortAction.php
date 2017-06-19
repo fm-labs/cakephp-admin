@@ -10,7 +10,7 @@ use Cake\Event\Event;
  * Class TreeSortAction
  * @package Backend\Action
  */
-class TreeSortAction extends BaseTableAction
+class TreeSortAction extends BaseIndexAction
 {
     /**
      * {@inheritDoc}

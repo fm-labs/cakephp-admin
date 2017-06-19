@@ -4,8 +4,16 @@ namespace Backend\Action;
 
 use Cake\Controller\Controller;
 
-class IndexAction extends BaseTableAction
+/**
+ * Class IndexAction
+ *
+ * @package Backend\Action
+ */
+class IndexAction extends BaseIndexAction
 {
+    /**
+     * @var array
+     */
     protected $_defaultConfig = [
         'modelClass' => null,
         'paginate' => true,
@@ -18,6 +26,9 @@ class IndexAction extends BaseTableAction
         'actions' => []
     ];
 
+    /**
+     * @param Controller $controller
+     */
     public function _execute(Controller $controller)
     {
         // data

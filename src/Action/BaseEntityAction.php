@@ -78,7 +78,7 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
 
             // actions
             if ($this->_config['actions'] !== false) {
-                $event = $controller->dispatchEvent('Backend.Entity.Actions.get', ['entity' => $entity]);
+                $event = $controller->dispatchEvent('Backend.Action.Entity.getActions', ['entity' => $entity]);
                 $this->_config['actions'] = (array)$event->result;
             }
 
@@ -124,6 +124,6 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
 
     public function implementedEvents()
     {
-        return ['Backend.Entity.Actions.get' => 'buildActions'];
+        return ['Backend.Action.Entity.getActions' => 'buildActions'];
     }
 }

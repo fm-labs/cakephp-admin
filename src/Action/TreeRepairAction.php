@@ -9,7 +9,7 @@ use Cake\Controller\Controller;
  *
  * @package Backend\Action
  */
-class TreeRepairAction extends BaseTableAction
+class TreeRepairAction extends BaseIndexAction
 {
     /**
      * {@inheritDoc}

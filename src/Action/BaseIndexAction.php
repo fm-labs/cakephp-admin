@@ -2,14 +2,19 @@
 
 namespace Backend\Action;
 
-use Backend\Action\Interfaces\TableActionInterface;
+use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
 use Cake\Event\EventListenerInterface;
 use Cake\Network\Exception\NotImplementedException;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
-abstract class BaseTableAction implements TableActionInterface, EventListenerInterface
+/**
+ * Class BaseIndexAction
+ *
+ * @package Backend\Action
+ */
+abstract class BaseIndexAction implements IndexActionInterface, EventListenerInterface
 {
     /**
      * @var array
@@ -66,23 +71,29 @@ abstract class BaseTableAction implements TableActionInterface, EventListenerInt
 
         // actions
         if ($this->_config['actions'] !== false) {
-            $event = $controller->dispatchEvent('Backend.Table.Actions.get');
+            $event = $controller->dispatchEvent('Backend.Action.Index.getActions');
             $this->_config['actions'] = (array)$event->result;
         }
 
         if ($this->_config['rowActions'] !== false) {
-            $event = $controller->dispatchEvent('Backend.Table.RowActions.get');
+            $event = $controller->dispatchEvent('Backend.Action.Index.getRowActions');
             $this->_config['rowActions'] = (array)$event->result;
         }
 
         return $this->_execute($controller);
     }
 
+    /**
+     * @param Controller $controller
+     */
     protected function _execute(Controller $controller)
     {
         throw new NotImplementedException(get_class($this) . ' has no _execute() method implemented');
     }
 
+    /**
+     * @return bool|\Cake\ORM\Table
+     */
     public function model()
     {
         if (!$this->_config['modelClass']) {
@@ -93,6 +104,9 @@ abstract class BaseTableAction implements TableActionInterface, EventListenerInt
         return TableRegistry::get($this->_config['modelClass']);
     }
 
+    /**
+     * @return array
+     */
     public function implementedEvents()
     {
         return [];

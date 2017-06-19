@@ -7,7 +7,7 @@ namespace Backend\Action;
  *
  * @package Backend\Action
  */
-class AddAction extends BaseTableAction
+class AddAction extends BaseIndexAction
 {
     /**
      * {@inheritDoc}

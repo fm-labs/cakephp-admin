@@ -98,6 +98,9 @@
 .sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right) {
   border-radius: 0;
 }
+.sidebar-menu .treeview-menu > li > a {
+  font-size: 12px;
+}
 /**
  * Common Backend CSS Stylesheet
  */
@@ -390,79 +393,9 @@ nav ul.pagination {
 .attachments.editor .attachments .attachment .actions {
   font-size: 10px;
 }
-/**
- * Bootstrap Theme Backend
- */
-/* Forms */
-/** Tables
-table.table {
-
-  width: 100%;
-  border-collapse: collapse;
-
-  tr th, table tr td, table a {
-    font-size: 0.9em;
-    line-height: 1.1em;
-  }
-
-  tr th,
-  tr td {
-    border: 1px solid #CBCBCB;
-    border-collapse: collapse;
-    margin: 0;
-    padding: 0;
-    text-align: left;
-    background-color: #f7f7f7;
-    color: #333;
-  }
-
-  tr th {
-    background-color: #D8D8DA;
-    background-repeat: repeat-x;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAIAAACOpGH9AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAl2cEFnAAAAAQAAABYAwhbbewAAAAlwSFlzAAALEAAACxABrSO9dQAAAAZiS0dEAAAAAAAA+UO7fwAAACNJREFUCNdj+P//P9O/f/+YYDQE/wfyITRMDFkeu1qEeiAfAE2gQb0aij7cAAAAAElFTkSuQmCC);
-    height: 22px;
-    font-weight: bold;
-    text-decoration: none;
-    padding: 0 5px;
-    text-align: left;
-    vertical-align: middle;
-  }
-
-  tr th a.asc:after {
-    content: ' ⇣';
-  }
-
-  tr th a.desc:after {
-    content: ' ⇡';
-  }
-
-  tr td {
-    padding: 3px 5px;
-    vertical-align: middle;
-  }
-
-  tr:nth-child(2n+1) td,
-  tr:nth-child(2n+1) th[scope="row"] {
-    background-color:#fff;
-  }
-
-  tr th[scope="row"] {
-    background-repeat: no-repeat;
-    background-position: top left;
-    background-image: url(data:image/gif;base64,R0lGODlhCQAKAIAAAOrNqf///yH5BAAAAAAALAAAAAAJAAoAAAIOjI+ZwH3NEFyRqgCu3gUAOw==);
-  }
-
-
-  tr:HOVER td,
-  tr:HOVER th[scope="row"]{
-    background-color:#E7FF91;
-  }
-
+.form-control {
+  font-size: 12px;
 }
-**/
-/**
- * Buttons
- */
 /**
  * Backend mixins
  */
@@ -646,7 +579,7 @@ form input.timepicker {
   display: block;
   text-decoration: none;
   font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   color: #333;
 }
 .be-nav ul {
@@ -881,7 +814,7 @@ table.info.table tr td:first-child {
 }
 body {
   font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
 }
 body.has-toolbar-fixed {
   padding-top: 140px;
@@ -896,6 +829,7 @@ nav.toolbar > ul {
 .dtable-container {
   width: 100%;
   max-width: 100%;
+  overflow-x: scroll;
 }
 .dtable {
   display: table;
@@ -919,12 +853,12 @@ nav.toolbar > ul {
 .dtable-cell,
 .dtable-head-cell {
   border-style: solid;
-  border-width: 1px 0 0 0;
+  border-width: 1px;
   border-color: #e8e8e8;
   border-collapse: collapse;
   display: table-cell;
   vertical-align: middle;
-  padding: 5px;
+  padding: 2px 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -932,6 +866,7 @@ nav.toolbar > ul {
 }
 .dtable-head-cell {
   font-weight: 600;
+  overflow: visible;
 }
 /** Hide Actions **/
 .dtable-row .dtable-row-actions {
@@ -942,6 +877,10 @@ nav.toolbar > ul {
 }
 .dtable-row:hover .dtable-row-actions > * {
   opacity: 1;
+}
+.dtable-cell .form-control,
+.dtable-cell .form-group {
+  margin: 0;
 }
 /**
  * Backend specific Chosen select overrides

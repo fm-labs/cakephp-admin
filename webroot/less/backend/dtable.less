@@ -1,10 +1,10 @@
 @dtable-cell-border-color: #e8e8e8;
-@dtable-cell-padding: 5px;
+@dtable-cell-padding: 2px 5px;
 
 .dtable-container {
   width: 100%;
   max-width: 100%;
-  //overflow-x: scroll;
+  overflow-x: scroll;
   //overflow-y: visible;
 }
 
@@ -36,7 +36,7 @@
 .dtable-cell,
 .dtable-head-cell {
   border-style: solid;
-  border-width: 1px 0 0 0;
+  border-width: 1px;
   border-color: @dtable-cell-border-color;
   border-collapse: collapse;
   display: table-cell;
@@ -50,6 +50,7 @@
 
 .dtable-head-cell {
   font-weight: 600;
+  overflow: visible;
   //background-color: @dtable-cell-border-color;
 }
 
@@ -64,4 +65,9 @@
 
 .dtable-row:hover .dtable-row-actions > * {
   opacity: 1;
+}
+
+.dtable-cell .form-control,
+.dtable-cell .form-group {
+  margin: 0;
 }

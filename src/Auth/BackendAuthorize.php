@@ -7,6 +7,11 @@ use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 use Cake\Network\Request;
 
+/**
+ * Class BackendAuthorize
+ * s
+ * @package Backend\Auth
+ */
 class BackendAuthorize extends BaseAuthorize
 {
     /**
@@ -29,10 +34,7 @@ class BackendAuthorize extends BaseAuthorize
      */
     public function authorize($user, Request $request)
     {
-        return true;
-
-        $userId = $user['id'];
-        if (!$userId) {
+        if (!$user['id']) {
             return null;
         }
 
@@ -47,9 +49,9 @@ class BackendAuthorize extends BaseAuthorize
         }
 
         // configured backend users
-        //@TODO Refactor this dirty UserId-hack with actual http basic auth
-        $backendUsersIds = (array)Configure::read('Backend.Users');
-        if (in_array($userId, $backendUsersIds)) {
+        //@TODO Refactor this dirty UserId-hack with http basic auth
+        $backendUsers = (array)Configure::read('Backend.Users');
+        if (in_array($user['username'], $backendUsers)) {
             return true;
         }
 

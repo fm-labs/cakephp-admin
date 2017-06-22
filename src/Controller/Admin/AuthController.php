@@ -3,7 +3,7 @@ namespace Backend\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Routing\Router;
+use Cake\Network\Response;
 use User\Controller\Component\AuthComponent;
 
 /**
@@ -27,17 +27,19 @@ class AuthController extends AppController
 
     /**
      * Login method
+     *
+     * @return null|Response
      */
     public function login()
     {
         if ($this->components()->has('RequestHandler') && $this->components()->get('RequestHandler')->accepts('json')) {
             $this->viewBuilder()->className('Json');
-
             $this->Auth->login();
+
         } else {
             $redirect = $this->Auth->login();
             if ($redirect) {
-                $this->redirect($redirect);
+                return $this->redirect($redirect);
             }
         }
 
@@ -49,14 +51,18 @@ class AuthController extends AppController
 
     /**
      * Login success method
+     *
+     * @return Response
      */
     public function loginSuccess()
     {
-        $this->redirect(['_name' => 'backend:admin:dashboard']);
+        return $this->redirect(['_name' => 'backend:admin:dashboard']);
     }
 
     /**
      * Logout method
+     *
+     * @return Response
      */
     public function logout()
     {
@@ -65,6 +71,8 @@ class AuthController extends AppController
 
     /**
      * Unauthorized
+     *
+     * @return null
      */
     public function unauthorized()
     {
@@ -73,6 +81,8 @@ class AuthController extends AppController
 
     /**
      * Current user
+     *
+     * @return null
      */
     public function user()
     {

@@ -7,14 +7,15 @@ use Cake\Controller\Controller;
 use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Network\Response;
 use Cake\Routing\Router;
 use User\Controller\Component\AuthComponent;
 
 /**
  * Class BackendComponent
- * @package Backend\Controller\Component
  *
- * @property \User\Controller\Component\AuthComponent $Auth
+ * @package Backend\Controller\Component
+ * @property \Backend\Controller\Component\AuthComponent $Auth
  * @property \Backend\Controller\Component\FlashComponent $Flash
  */
 class BackendComponent extends Component
@@ -27,7 +28,7 @@ class BackendComponent extends Component
     /**
      * @var string
      */
-    public static $authComponentClass = '\User\Controller\Component\AuthComponent';
+    public static $authComponentClass = '\Backend\Controller\Component\AuthComponent';
 
     /**
      * @var array
@@ -57,6 +58,7 @@ class BackendComponent extends Component
 
     /**
      * @param array $config
+     * @return void
      */
     public function initialize(array $config)
     {
@@ -125,13 +127,15 @@ class BackendComponent extends Component
         $this->_controller =& $controller;
     }
 
-
     /**
      * @param Event $event
+     * @return void
      */
     public function beforeFilter(Event $event)
     {
         $controller =& $this->_controller;
+
+        //@TODO Move auth config to Backend's built-in AuthComponent
         $controller->Auth->config('loginAction', $this->config('authLoginAction'));
         $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'));
         $controller->Auth->config('authenticate', [
@@ -153,6 +157,7 @@ class BackendComponent extends Component
 
     /**
      * @param Event $event
+     * @return void
      */
     public function beforeRender(\Cake\Event\Event $event)
     {
@@ -169,6 +174,7 @@ class BackendComponent extends Component
      * @param $key
      * @param null $val
      * @param bool|true $merge
+     * @return void
      */
     public function configAuth($key, $val = null, $merge = true)
     {
@@ -181,6 +187,7 @@ class BackendComponent extends Component
      * @param $key
      * @param null $val
      * @param bool|true $merge
+     * @return void
      */
     public function configFlash($key, $val = null, $merge = true)
     {
@@ -190,6 +197,7 @@ class BackendComponent extends Component
     /**
      * @param null $action
      * @deprecated Use ActionComponent instead
+     * @return null|Response
      */
     public function executeAction($action = null)
     {

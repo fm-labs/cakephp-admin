@@ -11,38 +11,6 @@ use Cake\Event\Event;
  */
 class AuthComponent extends \User\Controller\Component\AuthComponent
 {
-
-    /**
-     * @param array $config
-     * @return void
-     */
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
-
-        // default login action
-        if (!$this->config('loginAction')) {
-            $this->config('loginAction', ['plugin' => 'User', 'controller' => 'User', 'action' => 'login']);
-        }
-
-        // default authenticate
-        if (!$this->config('authenticate')) {
-            $this->config('authenticate', [
-                self::ALL => ['userModel' => $this->config('userModel'), 'finder' => 'authUser'],
-                'Form' => ['userModel' => $this->config('userModel')]
-            ]);
-        }
-
-        // default authorize
-        if (!$this->config('authorize')) {
-            //$this->config('authorize', [
-            //    'Controller'
-            //]);
-        }
-
-        $this->Users = $this->_registry->getController()->loadModel($this->config('userModel'));
-    }
-
     /**
      * Login method
      *

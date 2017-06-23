@@ -4,43 +4,28 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="noindex,nofollow">
     <title><?= $this->fetch('title') ?></title>
-    <!-- Tell the browser to be responsive to screen width -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
 
-    <!-- Bootstrap 3.3.6 -->
-    <?= $this->Html->css('/backend/libs/adminlte/bootstrap/css/bootstrap.min.css'); ?>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="/backend/libs/fontawesome/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="/backend/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
-    <?= $this->Html->css('/backend/libs/adminlte/dist/css/AdminLTE.min.css'); ?>
-
-    <?= ''//$this->Html->css('Backend.global'); ?>
-    <?= $this->Html->css('Backend.backend'); ?>
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-          page. However, you can choose any other skin. Make sure you
-          apply the skin class to the body tag so the changes take effect.
-    -->
-    <?= $this->Html->css('/backend/libs/adminlte/dist/css/skins/skin-blue.min.css'); ?>
-    <style>
-        .wrapper, .content-wrapper { background: transparent !important;}
-    </style>
+    <!-- styles -->
+    <?= $this->Html->css('/backend/css/adminlte/bootstrap/css/bootstrap.min.css'); ?>
+    <?= $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css'); ?>
+    <?= $this->Html->css('/backend/libs/ionicons/css/ionicons.min.css'); ?>
+    <?= $this->Html->css('/backend/css/adminlte/AdminLTE.min.css'); ?>
+    <?= $this->Html->css('/backend/css/adminlte/skins/skin-blue.min.css'); ?>
     <?= $this->fetch('css') ?>
+    <?= $this->Html->css('Backend.layout/default'); ?>
+    <?= $this->Html->css('Backend.backend'); // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views ?>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!-- scripts -->
     <!--[if lt IE 9]>
-    <script src="/backend/libs/html5shiv/html5shiv.min.js"></script>
-    <script src="/backend/libs/respond/respond.min.js"></script>
+    <?= $this->Html->script('/backend/libs/html5shiv/html5shiv.min.js'); ?>
+    <?= $this->Html->script('/backend/libs/respond/respond.min.js'); ?>
     <![endif]-->
-
-    <!-- jQuery 2.2.3 -->
     <?= $this->Html->script('/backend/libs/adminlte/plugins/jQuery/jquery-2.2.3.min.js'); ?>
-    <?= $this->fetch('script') ?>
+    <?= $this->fetch('headjs') ?>
 </head>
 <!--
 BODY TAG OPTIONS:

@@ -195,9 +195,25 @@ class BackendComponent extends Component
     }
 
     /**
-     * @param null $action
+     * @param $action
+     * @return bool
+     * @throws MissingComponentException
      * @deprecated Use ActionComponent instead
+     */
+    public function hasAction($action)
+    {
+        if (!$this->_registry->has('Action')) {
+            throw new MissingComponentException(['class' => 'ActionComponent']);
+        }
+
+        return $this->_registry->get('Action')->hasAction($action);
+    }
+
+    /**
+     * @param null $action
      * @return null|Response
+     * @throws MissingComponentException
+     * @deprecated Use ActionComponent instead
      */
     public function executeAction($action = null)
     {

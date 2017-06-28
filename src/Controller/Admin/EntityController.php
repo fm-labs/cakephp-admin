@@ -2,6 +2,7 @@
 
 namespace Backend\Controller\Admin;
 
+use Banana\Form\EntityForm;
 use Cake\Network\Exception\BadRequestException;
 use Cake\Network\Exception\NotFoundException;
 
@@ -18,6 +19,37 @@ class EntityController extends AppController
     public function index()
     {
         //@TODO List available tables
+    }
+
+    /**
+     * @param null $modelName
+     * @param null $modelId
+     */
+    public function edit($modelName = null, $modelId = null)
+    {
+        if (!$modelName || !$modelId) {
+            throw new BadRequestException('Modelname or Model ID missing');
+        }
+
+        $entity = $exception = null;
+        try {
+            $Model = $this->loadModel($modelName);
+            $query = $Model->find()->where([$Model->alias() . '.id' => $modelId]);
+
+            $entity = $query->firstOrFail();
+
+            $form = new EntityForm($entity);
+
+            $this->set('modelName', $modelName);
+            $this->set('modelId', $modelId);
+            $this->set('entity', $entity);
+            $this->set('exception', $exception);
+            $this->set('form', $form);
+
+        } catch(\Exception $ex) {
+            $this->Flash->error($modelName . ":" . $ex->getMessage());
+        }
+
     }
 
     /**

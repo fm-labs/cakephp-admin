@@ -154,9 +154,8 @@ class DataTableHelper extends Helper
         // apply data
         $this->data($data);
 
-        /*
         $this->templater()->add([
-            'table' => '<table{{attrs}}>{{head}}{{body}}</table>',
+            'table' => '<table class="table table-striped"{{attrs}}>{{head}}{{body}}</table>',
             'head' => '<thead><tr>{{cellheads}}{{actionshead}}</tr></thead>',
             'headCell' => '<th{{attrs}}>{{content}}</th>',
             'headCellActions' => '<th{{attrs}} style="text-align: right;">{{content}}</th>',
@@ -177,8 +176,8 @@ class DataTableHelper extends Helper
             'rowAction' => '<li>{{content}}</li>',
             'rowSelectCell' => '<td>{{content}}</td>'
         ]);
-        */
 
+        /*
         $this->templater()->add([
             'table' => '<div class="dtable-container"><div class="dtable"{{attrs}}>{{head}}{{body}}</div></div>',
             'head' => '<div class="dtable-head">{{cellheads}}{{actionshead}}</div>',
@@ -201,6 +200,7 @@ class DataTableHelper extends Helper
             'rowAction' => '<li>{{content}}</li>',
             'rowSelectCell' => '<div class="dtable-row-select">{{content}}</div>'
         ]);
+        */
     }
 
     public function id()
@@ -247,7 +247,7 @@ class DataTableHelper extends Helper
 
     protected function _tableClass($class = '')
     {
-        $class = 'data-table ' . $class;
+        $class = 'table data-table' . $class;
         if ($this->_params['sortable']) {
             $class .= ' sortable';
         }

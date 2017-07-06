@@ -396,6 +396,19 @@ nav ul.pagination {
 .form-control {
   font-size: 12px;
 }
+.dashboard-item {
+  padding: 1em;
+  margin: 0 0 1em 0;
+  border: 1px solid #eee;
+  box-shadow: 0px 0px 3px #ccc;
+}
+.dashboard-item h3 {
+  margin: 0 0 1rem 0;
+}
+.dashboard-item h3 ~ h4 {
+  margin: 0.33rem;
+  font-size: 1.1em;
+}
 /**
  * Backend mixins
  */

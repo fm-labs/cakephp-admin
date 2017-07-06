@@ -14,7 +14,7 @@
     <?= $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css'); ?>
     <?= $this->Html->css('/backend/libs/ionicons/css/ionicons.min.css'); ?>
     <?= $this->Html->css('/backend/css/adminlte/AdminLTE.min.css'); ?>
-    <?= $this->Html->css('/backend/css/adminlte/skins/skin-blue.min.css'); ?>
+    <?= ''//$this->Html->css('/backend/css/adminlte/skins/skin-blue.min.css'); ?>
     <?= $this->fetch('css') ?>
     <?= $this->Html->css('Backend.layout/default'); ?>
     <?= $this->Html->css('Backend.backend'); // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views ?>
@@ -47,7 +47,7 @@ desired effect
 |               | sidebar-mini                            |
 |---------------------------------------------------------|
 -->
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition <?= $this->get('be_layout_body_class'); ?>">
 <div class="wrapper">
 
     <!-- Main Header -->

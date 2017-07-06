@@ -6,6 +6,7 @@ use Backend\View\Helper\AjaxHelper;
 use Backend\View\Helper\BackendHelper;
 use Backend\View\Helper\ToolbarHelper;
 use Bootstrap\View\Helper\UiHelper;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Utility\Inflector;
 use Cake\View\View;
@@ -54,6 +55,19 @@ class BackendView extends View
         if ($title === '') {
             $this->Blocks->set('title', $this->request['controller']);
         }
+
+        // AdminLTE layout options
+        $themeSkinClass = (Configure::read('Backend.AdminLte.skin_class')) ?: 'skin-blue';
+        $themeLayoutClass = (Configure::read('Backend.AdminLte.layout_class')) ?: '';
+        $themeSidebarClass = (Configure::read('Backend.AdminLte.sidebar_class')) ?: 'sidebar-mini';
+
+        $this->set('be_adminlte_skin_class', $themeSkinClass);
+        $this->set('be_adminlte_layout_class', $themeLayoutClass);
+        $this->set('be_adminlte_sidebar_class', $themeSidebarClass);
+        $this->set('be_layout_body_class',
+            trim(join(' ', [$themeSkinClass, $themeSidebarClass, $themeLayoutClass])));
+
+        $this->Html->css('/backend/css/adminlte/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
 
         return parent::renderLayout($content, $layout);
     }

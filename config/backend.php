@@ -38,4 +38,11 @@ return [
      * Backend Search config
      */
     'Backend.Search.searchUrl' => ['plugin' => 'Backend', 'controller' => 'Search', 'action' => 'index'],
+
+    /**
+     * Backend AdminLTE theme options
+     */
+    'Backend.AdminLte.skin_class' => 'skin-blue',
+    'Backend.AdminLte.layout_class' => '',
+    'Backend.AdminLte.sidebare_class' => 'sidebar-mini'
 ];

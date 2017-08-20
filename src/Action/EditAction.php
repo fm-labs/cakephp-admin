@@ -1,6 +1,7 @@
 <?php
 
 namespace Backend\Action;
+use Cake\Controller\Controller;
 
 /**
  * Class EditAction
@@ -9,6 +10,8 @@ namespace Backend\Action;
  */
 class EditAction extends BaseEntityAction
 {
+    public $noTemplate = true;
+
     /**
      * {@inheritDoc}
      */
@@ -23,5 +26,10 @@ class EditAction extends BaseEntityAction
     public function getAttributes()
     {
         return ['data-icon' => 'pencil'];
+    }
+
+    protected function _execute(Controller $controller)
+    {
+        return $controller->render();
     }
 }

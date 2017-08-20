@@ -64,6 +64,15 @@ class IndexAction extends BaseIndexAction
             }
         }
 
+
+        if ($this->_config['rowActions'] !== false) {
+            //$event = $controller->dispatchEvent('Backend.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
+            $event = $controller->dispatchEvent('Backend.Controller.buildEntityActions', [
+                'actions' => $this->_config['rowActions'],
+            ]);
+            $this->_config['rowActions'] = (array)$event->data['actions'];
+        }
+
         // render
         $controller->set('result', $result);
         $controller->set('dataTable', [

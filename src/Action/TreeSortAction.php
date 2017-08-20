@@ -17,7 +17,7 @@ class TreeSortAction extends BaseIndexAction
      */
     public function getLabel()
     {
-        return __('Sort');
+        return __d('Backend', 'Sort');
     }
 
     /**

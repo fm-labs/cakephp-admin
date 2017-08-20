@@ -1,7 +1,7 @@
-<?= $this->assign('heading', __('Entity Info for {0} ID:{1}', $modelClass, $entityId)); ?>
+<?php $this->assign('heading', __('Entity Info for {0} ID:{1}', $modelName, $modelId)); ?>
 <div class="backend-entity-view backend-view view">
-    <?= $this->cell('Backend.EntityView', [ $entity ], [
+    <?php echo $this->cell('Backend.EntityView', [ $entity ], [
         'title' => false,
-        'model' => $this->get('modelClass'),
-    ]); ?>
+        'model' => $this->get('modelName'),
+    ]);  ?>
 </div>

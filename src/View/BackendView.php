@@ -53,7 +53,7 @@ class BackendView extends View
 
         $title = $this->Blocks->get('title');
         if ($title === '') {
-            $this->Blocks->set('title', $this->request['controller']);
+            $this->Blocks->set('title', Inflector::humanize(Inflector::tableize($this->request['controller'])));
         }
 
         // AdminLTE layout options

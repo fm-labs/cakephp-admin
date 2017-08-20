@@ -9,7 +9,9 @@ use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Network\Exception\NotImplementedException;
 use Cake\ORM\TableRegistry;
+use Cake\Routing\Router;
 use Cake\Utility\Inflector;
+use Cake\Utility\Text;
 
 abstract class BaseEntityAction implements EntityActionInterface, EventListenerInterface
 {
@@ -33,12 +35,20 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
     /**
      * {@inheritDoc}
      */
-    public function getLabel()
+    public function getAlias()
     {
         $class = explode('\\', get_class($this));
         $class = array_pop($class);
-        $name = substr($class, 0, -6);
-        return Inflector::humanize($name);
+        return substr($class, 0, -6);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLabel()
+    {
+        $alias = $this->getAlias();
+        return Inflector::humanize($alias);
     }
 
     /**
@@ -78,21 +88,33 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
 
             // actions
             if ($this->_config['actions'] !== false) {
-                $event = $controller->dispatchEvent('Backend.Action.Entity.getActions', ['entity' => $entity]);
-                $this->_config['actions'] = (array)$event->result;
+                $event = $controller->dispatchEvent('Backend.Controller.buildEntityActions', [
+                    'entity' => $entity,
+                    'actions' => (array) $this->_config['actions']
+                ]);
+                $this->_config['actions'] = (array)$event->data['actions'];
+
+                foreach ($this->_config['actions'] as $idx => &$action) {
+                    list($title, $url, $attr) = $action;
+                    $url = $this->_replaceTokens($url, $entity->toArray());
+                    $action = [$title, $url, $attr];
+                }
+
+                $controller->set('actions', $this->_config['actions']);
             }
 
             return $this->_execute($controller);
         } catch (\Exception $ex) {
+            die($ex->getMessage());
             $controller->Flash->error($ex->getMessage());
-            $controller->redirect($controller->referer());
+            //$controller->redirect($controller->referer());
         }
     }
 
-    protected function _execute(Controller $controller)
-    {
-        throw new NotImplementedException(get_class($this) . ' has no _execute() method implemented');
-    }
+    abstract protected function _execute(Controller $controller);
+    //{
+    //    throw new NotImplementedException(get_class($this) . ' has no _execute() method implemented');
+    //}
 
     public function model()
     {
@@ -117,13 +139,42 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
         return $this->_entity;
     }
 
-    public function buildActions(Event $event)
+    public function buildEntityActions(Event $event)
     {
+        // Override in subclasses
+    }
 
+    public function beforeRender(Event $event)
+    {
+        // Override in subclasses
     }
 
     public function implementedEvents()
     {
-        return ['Backend.Action.Entity.getActions' => 'buildActions'];
+        return [
+            'Backend.Controller.buildEntityActions' => 'buildEntityActions',
+            'Controller.beforeRender' => 'beforeRender'
+        ];
+    }
+
+
+    protected function _replaceTokens($tokenStr, $data = [])
+    {
+        if (is_array($tokenStr)) {
+            foreach ($tokenStr as &$_tokenStr) {
+                $_tokenStr = $this->_replaceTokens($_tokenStr, $data);
+            }
+
+            return $tokenStr;
+        }
+
+        // extract tokenized vars from data and cast them to their string representation
+        preg_match_all('/\:(\w+)/', $tokenStr, $matches);
+        $inserts = array_intersect_key($data, array_flip(array_values($matches[1])));
+        array_walk($inserts, function (&$val, $key) {
+            $val = (string)$val;
+        });
+
+        return Text::insert($tokenStr, $inserts);
     }
 }

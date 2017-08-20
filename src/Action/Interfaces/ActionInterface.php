@@ -14,6 +14,11 @@ interface ActionInterface
     /**
      * @return string
      */
+    public function getAlias();
+
+    /**
+     * @return string
+     */
     public function getLabel();
 
     /**

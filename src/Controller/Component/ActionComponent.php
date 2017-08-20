@@ -30,9 +30,14 @@ class ActionComponent extends Component
     protected $_actionRegistry;
 
     /**
-     * @var Controller
+     * @var Controller Active controller
      */
     protected $_controller;
+
+    /**
+     * @var EntityActionInterface|object Active action
+     */
+    protected $_action;
 
     /**
      * Initialize actions
@@ -50,13 +55,35 @@ class ActionComponent extends Component
             $actions = $this->_controller->actions;
         }
 
+        // detect actions from model
+        $this->_initModelActions($actions);
+
         // normalize action configs and add actions to actions registry
         foreach ($actions as $action => $actionConfig) {
+            if ($actionConfig === false) {
+                continue;
+            }
             if (is_string($actionConfig)) {
                 $actionConfig = ['className' => $actionConfig];
             }
             $this->_actionRegistry->load($action, $actionConfig);
             $this->actions[$action] = $actionConfig;
+        }
+    }
+
+    protected function _initModelActions(&$actions)
+    {
+        $modelClass = $this->_controller->modelClass;
+        if ($modelClass) {
+            $Model = $this->_controller->loadModel($modelClass);
+
+            $event = $this->_registry->getController()->dispatchEvent('Backend.Controller.setupActions', [
+                'modelClass' => $modelClass,
+                'model' => $Model,
+                'actions' => $actions
+            ]);
+
+            $actions = $event->data['actions'];
         }
     }
 
@@ -122,7 +149,7 @@ class ActionComponent extends Component
 
         if ($this->_actionRegistry->has($action)) {
             $config = $this->actions[$action];
-            $actionObj = $this->_actionRegistry->get($action);
+            $this->_action = $actionObj = $this->_actionRegistry->get($action);
 
             $event = $this->_registry->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $actionObj ]);
             if ($event->result instanceof Response) {
@@ -131,16 +158,18 @@ class ActionComponent extends Component
 
             //@TODO Refactor with ActionView
             //--
-            $templatePath = 'Action';
-            if ($this->request->params['prefix']) {
-                $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
+            if ($this->_controller->noActionTemplate === false && !isset($this->_action->noTemplate)) {
+                $templatePath = 'Action';
+                if ($this->request->params['prefix']) {
+                    $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
+                }
+
+                list($plugin, ) = pluginSplit($config['className']);
+                $template = ($plugin) ? $plugin . '.' . $action : $action;
+
+                $this->_controller->viewBuilder()->templatePath($templatePath);
+                $this->_controller->viewBuilder()->template($template);
             }
-
-            list($plugin, ) = pluginSplit($config['className']);
-            $template = ($plugin) ? $plugin . '.' . $action : $action;
-
-            $this->_controller->viewBuilder()->templatePath($templatePath);
-            $this->_controller->viewBuilder()->template($template);
             //--
 
             // attach Action instance to controllers event manager
@@ -169,45 +198,42 @@ class ActionComponent extends Component
     /**
      * @param Event $event
      */
-    public function getIndexActions(Event $event)
+    public function buildIndexActions(Event $event)
     {
         foreach ($this->listActions() as $action) {
             $_action = $this->getAction($action);
             if ($action == "index" || (!($_action instanceof IndexActionInterface))) {
                 continue;
             }
-            $event->result[] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
+            $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
         }
     }
 
     /**
      * @param Event $event
      */
-    public function getIndexRowActions(Event $event)
+    public function buildEntityActions(Event $event)
     {
+        //$entity = (isset($event->data['entity'])) ? $event->data['entity'] : null;
         foreach ($this->listActions() as $action) {
             $_action = $this->getAction($action);
-            if ($action == "index" || (!($_action instanceof EntityActionInterface))) {
+            if ($_action == $this->_action) {
                 continue;
             }
-            $event->result[] = [$_action->getLabel(), ['action' => $action, ':id'], $_action->getAttributes()];
-        }
-    }
 
-    /**
-     * @param Event $event
-     */
-    public function getEntityActions(Event $event)
-    {
-        $entity = $event->data['entity'];
-        foreach ($this->listActions() as $action) {
-            $_action = $this->getAction($action);
-            if (($_action instanceof IndexActionInterface)) {
-                $event->result[] = [$_action->getLabel(), ['action' => $action]];
+            if ($action == "index") {
+                $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
             }
-            if (($_action instanceof EntityActionInterface)) {
-                $event->result[] = [$_action->getLabel(), ['action' => $action, $entity->id]];
+            //elseif ($entity && ($_action instanceof EntityActionInterface)) {
+            //    $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action, $entity->id], $_action->getAttributes()];
+            //}
+            elseif ($_action instanceof EntityActionInterface) {
+                $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action, ':id'], $_action->getAttributes()];
             }
+        }
+
+        if (method_exists($event->subject(), 'buildEntityActions')) {
+            call_user_func([$event->subject(), 'buildEntityActions'], $event);
         }
     }
 
@@ -222,9 +248,8 @@ class ActionComponent extends Component
             //'Controller.beforeRender' => 'beforeRender',
             //'Controller.beforeRedirect' => 'beforeRedirect',
             //'Controller.shutdown' => 'shutdown',
-            'Backend.Action.Index.getActions' => [ 'callable' => 'getIndexActions', 'priority' => 5 ],
-            'Backend.Action.Index.getRowActions' => [ 'callable' => 'getIndexRowActions', 'priority' => 5 ],
-            'Backend.Action.Entity.getActions' => [ 'callable' => 'getEntityActions', 'priority' => 5 ]
+            'Backend.Controller.buildIndexActions' => [ 'callable' => 'buildIndexActions', 'priority' => 4 ],
+            'Backend.Controller.buildEntityActions' => [ 'callable' => 'buildEntityActions', 'priority' => 4 ]
         ];
     }
 }

@@ -112,13 +112,6 @@ class BackendComponent extends Component
             $controller->viewBuilder()->theme(Configure::read('Backend.theme'));
         }
 
-        // Handle iframe and ajax requests
-        if ($this->request->is('iframe')) {
-            $controller->viewBuilder()->layout('Backend.iframe');
-        } elseif ($this->request->is('ajax')) {
-            $controller->viewBuilder()->layout('Backend.ajax');
-        }
-
         // Auto-load ActionComponent if controller defines actions
         if (isset($controller->actions) && !$this->_registry->has('Action')) {
             $controller->loadComponent('Backend.Action');
@@ -134,6 +127,14 @@ class BackendComponent extends Component
     public function beforeFilter(Event $event)
     {
         $controller =& $this->_controller;
+
+
+        // Handle iframe and ajax requests
+        if ($this->request->is('iframe')) {
+            $controller->viewBuilder()->layout('Backend.iframe');
+        } elseif ($this->request->is('ajax') && !$this->_registry->has('RequestHandler')) {
+            $controller->viewBuilder()->layout('Backend.ajax/admin');
+        }
 
         //@TODO Move auth config to Backend's built-in AuthComponent
         $controller->Auth->config('loginAction', $this->config('authLoginAction'));

@@ -8,6 +8,11 @@ use Cake\Event\Event;
 
 class TreeIndexAction extends IndexAction
 {
+    public function getLabel()
+    {
+        return __d('backend', 'Index');
+    }
+
     public function _execute(Controller $controller)
     {
         $displayField = $this->model()->displayField();

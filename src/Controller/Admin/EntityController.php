@@ -66,6 +66,8 @@ class EntityController extends AppController
 
         $entity = $exception = null;
         try {
+            //$modelName = pluginSplit($modelName);
+
             $Model = $this->loadModel($modelName);
             $query = $Model->find()->where([$Model->alias() . '.id' => $modelId]);
 
@@ -73,6 +75,7 @@ class EntityController extends AppController
             //    $query->find('media');
             //}
 
+            /*
             if (!$Model->behaviors()->has('Attributes')) {
                 $Model->behaviors()->load('Eav.Attributes');
             }
@@ -89,6 +92,12 @@ class EntityController extends AppController
 
             $this->set('attributes', $Model->getAttributes($entity)->toArray());
             $this->set('attributesAvailable', $Model->getAttributesAvailable($entity)->toArray());
+            */
+
+            $entity = $query->first();
+            if (!$entity) {
+                throw new NotFoundException();
+            }
         } catch (\Exception $ex) {
             $exception = $ex;
         }

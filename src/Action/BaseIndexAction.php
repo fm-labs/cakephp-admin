@@ -4,6 +4,7 @@ namespace Backend\Action;
 
 use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
+use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Network\Exception\NotImplementedException;
 use Cake\ORM\TableRegistry;
@@ -32,12 +33,20 @@ abstract class BaseIndexAction implements IndexActionInterface, EventListenerInt
     /**
      * {@inheritDoc}
      */
-    public function getLabel()
+    public function getAlias()
     {
         $class = explode('\\', get_class($this));
         $class = array_pop($class);
-        $name = substr($class, 0, -6);
-        return Inflector::humanize($name);
+        return substr($class, 0, -6);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getLabel()
+    {
+        $alias = $this->getAlias();
+        return Inflector::humanize($alias);
     }
 
     /**
@@ -45,7 +54,7 @@ abstract class BaseIndexAction implements IndexActionInterface, EventListenerInt
      */
     public function getAttributes()
     {
-        return [];
+        return ['data-icon' => 'list'];
     }
     /**
      * {@inheritDoc}
@@ -71,14 +80,15 @@ abstract class BaseIndexAction implements IndexActionInterface, EventListenerInt
 
         // actions
         if ($this->_config['actions'] !== false) {
-            $event = $controller->dispatchEvent('Backend.Action.Index.getActions');
-            $this->_config['actions'] = (array)$event->result;
+            $event = $controller->dispatchEvent('Backend.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);
+            $this->_config['actions'] = (array)$event->data['actions'];
         }
 
-        if ($this->_config['rowActions'] !== false) {
-            $event = $controller->dispatchEvent('Backend.Action.Index.getRowActions');
-            $this->_config['rowActions'] = (array)$event->result;
-        }
+
+        //if ($this->_config['rowActions'] !== false) {
+        //    $event = $controller->dispatchEvent('Backend.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
+        //    $this->_config['rowActions'] = (array)$event->data['actions'];
+        //}
 
         return $this->_execute($controller);
     }
@@ -104,11 +114,29 @@ abstract class BaseIndexAction implements IndexActionInterface, EventListenerInt
         return TableRegistry::get($this->_config['modelClass']);
     }
 
+
+    /**
+     * @param Event $event
+     */
+    public function buildIndexActions(Event $event)
+    {
+    }
+
+    /**
+     * @param Event $event
+     */
+    public function buildEntityActions(Event $event)
+    {
+    }
+
     /**
      * @return array
      */
     public function implementedEvents()
     {
-        return [];
+        return [
+            'Backend.Controller.buildIndexActions' => [ 'callable' => 'buildIndexActions', 'priority' => 5 ],
+            'Backend.Controller.buildEntityActions' => [ 'callable' => 'buildEntityActions', 'priority' => 5 ]
+        ];
     }
 }

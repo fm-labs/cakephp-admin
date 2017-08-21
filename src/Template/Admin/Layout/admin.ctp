@@ -13,6 +13,7 @@
     <?= $this->Html->css('/backend/css/adminlte/bootstrap/css/bootstrap.min.css'); ?>
     <?= $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css'); ?>
     <?= $this->Html->css('/backend/libs/ionicons/css/ionicons.min.css'); ?>
+    <?= $this->Html->css('/backend/libs/flag-icon-css/css/flag-icon.min.css'); ?>
     <?= $this->Html->css('/backend/css/adminlte/AdminLTE.min.css'); ?>
     <?= ''//$this->Html->css('/backend/css/adminlte/skins/skin-blue.min.css'); ?>
     <?= $this->fetch('css') ?>

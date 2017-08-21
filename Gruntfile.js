@@ -68,6 +68,7 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'bower_components/tinymce/', src: ['**'], dest: 'webroot/libs/tinymce/'},
           {expand: true, cwd: 'webroot/js/tinymce/langs/', src: ['**'], dest: 'webroot/libs/tinymce/langs/'},
           {expand: true, cwd: 'bower_components/underscore/', src: ['**'], dest: 'webroot/libs/underscore/'},
+          {expand: true, cwd: 'bower_components/flag-icon-css/', src: ['css/**', 'flags/**'], dest: 'webroot/libs/flag-icon-css/'},
         ]
       }
     },

@@ -3,7 +3,10 @@
         init: false,
         settings: {
             rootUrl: '/'
-        }
+        },
+
+        _cssLoaded: [],
+        _jsLoaded: []
     };
 
     Backend.init = function(settings) {
@@ -62,6 +65,37 @@
 
         var hostUrl = window.location.protocol + "//" + window.location.host;
         parent.postMessage(msg, hostUrl);
+    };
+
+    Backend.loadCss = function(filename) {
+
+        if (this._cssLoaded.find(function(f) { return f == filename})) {
+            console.log("[loadCss] File " + filename + " already loaded");
+            return;
+        }
+
+        var fileref = document.createElement("link");
+        fileref.setAttribute("rel", "stylesheet");
+        fileref.setAttribute("type", "text/css");
+        fileref.setAttribute("href", filename);
+
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+        this._cssLoaded.push(filename);
+    };
+
+    Backend.loadJs = function(filename) {
+
+        if (this._jsLoaded.find(function(f) { return f == filename})) {
+            console.log("[loadJs] File " + filename + " already loaded");
+            return;
+        }
+
+        var fileref = document.createElement('script');
+        fileref.setAttribute("type", "text/javascript");
+        fileref.setAttribute("src", filename);
+
+        document.getElementsByTagName("head")[0].appendChild(fileref);
+        this._jsLoaded.push(filename);
     };
 
     Backend.Frame = {
@@ -776,12 +810,12 @@
         console.log("Renderer docready in scope: " + scopeId);
 
         // icon links
-        $(scope).find("a[data-icon]:not(.icon-loaded)").each(function() {
+        //$(scope).find("a[data-icon]:not(.icon-loaded)").each(function() {
             //console.log("link " + this.href + " has icon " + $(this).data('icon'));
 
-            var $ico = $('<i>', { "class": 'fa fa-' + $(this).data('icon') }).html("");
-            $(this).prepend($ico.prop('outerHTML') + "&nbsp").addClass('icon-loaded');
-        });
+        //    var $ico = $('<i>', { "class": 'fa fa-' + $(this).data('icon') }).html("");
+        //    $(this).prepend($ico.prop('outerHTML') + "&nbsp").addClass('icon-loaded');
+        //});
 
         //
         // Tabs: Auto-enable first tab

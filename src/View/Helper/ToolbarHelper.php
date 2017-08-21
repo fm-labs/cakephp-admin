@@ -178,7 +178,7 @@ class ToolbarHelper extends Helper
         return $this->_items;
     }
 
-    public function beforeLayout(Event $event)
+    public function beforeRender(Event $event)
     {
         // parse toolbar actions defined in 'toolbar.actions' view-var
         $toolbarActions = (array)$event->subject()->get('actions');
@@ -211,6 +211,11 @@ class ToolbarHelper extends Helper
      */
     public function render($options = [])
     {
+        //if ($this->_rendered === true) {
+        //    return null;
+        //}
+
+        //$this->_rendered = true;
         return $this->Ui->menu($this->getMenuItems(), $options);
     }
 

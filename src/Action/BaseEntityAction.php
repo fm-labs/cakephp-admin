@@ -13,7 +13,7 @@ use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 
-abstract class BaseEntityAction implements EntityActionInterface, EventListenerInterface
+abstract class BaseEntityAction implements EntityActionInterface
 {
     /**
      * @var array
@@ -31,6 +31,16 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
      * @var EntityInterface
      */
     protected $_entity;
+
+    /**
+     * @var array List of enabled scopes
+     */
+    protected $_scope = [];
+
+    public function __construct(Controller $controller, array $config = [])
+    {
+
+    }
 
     /**
      * {@inheritDoc}
@@ -59,6 +69,31 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
         return [];
     }
 
+    public function hasForm()
+    {
+        return false;
+    }
+
+    public function setScope($scope)
+    {
+        $this->_scope = (array) $scope;
+    }
+
+    public function getScope()
+    {
+        return $this->_scope;
+    }
+
+    public function hasScope($scope)
+    {
+        return in_array($scope, $this->_scope);
+    }
+
+    public function isUsable(EntityInterface $entity)
+    {
+        return true;
+    }
+
     public function execute(Controller $controller)
     {
         // read config from controller view vars
@@ -77,6 +112,9 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
             $modelId = ($modelId) ?: $controller->request->param('pass')[0]; // @TODO request param 'pass' might be empty or unset
             $this->_config['modelId'] = $modelId;
         }
+        if (isset($controller->viewVars['entity'])) {
+            $this->_entity = $controller->viewVars['entity'];
+        }
 
         try {
             $entity = $this->entity();
@@ -86,24 +124,10 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
                 $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
             }
 
-            // actions
-            if ($this->_config['actions'] !== false) {
-                $event = $controller->dispatchEvent('Backend.Controller.buildEntityActions', [
-                    'entity' => $entity,
-                    'actions' => (array) $this->_config['actions']
-                ]);
-                $this->_config['actions'] = (array)$event->data['actions'];
 
-                foreach ($this->_config['actions'] as $idx => &$action) {
-                    list($title, $url, $attr) = $action;
-                    $url = $this->_replaceTokens($url, $entity->toArray());
-                    $action = [$title, $url, $attr];
-                }
-
-                $controller->set('actions', $this->_config['actions']);
-            }
-
+            $controller->set('entity', $entity);
             return $this->_execute($controller);
+
         } catch (\Exception $ex) {
             die($ex->getMessage());
             $controller->Flash->error($ex->getMessage());
@@ -128,35 +152,17 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
 
     public function entity()
     {
-        if (!$this->_config['modelId']) {
-            throw new \Exception(get_class($this) . ' has no model ID defined');
-        }
-
         if (!$this->_entity) {
+
+            if (!$this->_config['modelId']) {
+                throw new \Exception(get_class($this) . ' has no model ID defined');
+            }
+
             $this->_entity = $this->model()->get($this->_config['modelId']);
         }
 
         return $this->_entity;
     }
-
-    public function buildEntityActions(Event $event)
-    {
-        // Override in subclasses
-    }
-
-    public function beforeRender(Event $event)
-    {
-        // Override in subclasses
-    }
-
-    public function implementedEvents()
-    {
-        return [
-            'Backend.Controller.buildEntityActions' => 'buildEntityActions',
-            'Controller.beforeRender' => 'beforeRender'
-        ];
-    }
-
 
     protected function _replaceTokens($tokenStr, $data = [])
     {
@@ -177,4 +183,32 @@ abstract class BaseEntityAction implements EntityActionInterface, EventListenerI
 
         return Text::insert($tokenStr, $inserts);
     }
+
+    public function beforeRender(Event $event) {
+
+        debug("before Render");
+
+        /*
+        // actions
+        $controller = $event->subject();
+        $entity = $this->entity();
+
+        if ($this->_config['actions'] !== false) {
+            //$event = $controller->dispatchEvent('Backend.Controller.buildEntityActions', [
+            //    'entity' => $entity,
+            //    'actions' => (array) $this->_config['actions']
+            //]);
+            //$this->_config['actions'] = (array)$event->data['actions'];
+
+            foreach ($this->_config['actions'] as $idx => &$action) {
+                list($title, $url, $attr) = $action;
+                $url = $this->_replaceTokens($url, $entity->toArray());
+                $action = [$title, $url, $attr];
+            }
+
+            $controller->set('actions', $this->_config['actions']);
+        }
+        */
+    }
+
 }

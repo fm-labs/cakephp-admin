@@ -1,6 +1,8 @@
 <?php
 
 namespace Backend\Action;
+use Cake\Controller\Controller;
+use Cake\Network\Exception\NotImplementedException;
 
 /**
  * Class CopyAction
@@ -9,6 +11,8 @@ namespace Backend\Action;
  */
 class CopyAction extends BaseEntityAction
 {
+    protected $_scope = ['table'];
+
     /**
      * {@inheritDoc}
      */
@@ -23,5 +27,10 @@ class CopyAction extends BaseEntityAction
     public function getAttributes()
     {
         return ['data-icon' => 'clone'];
+    }
+
+    protected function _execute(Controller $controller)
+    {
+        throw new NotImplementedException(__CLASS__ . " not implemented");
     }
 }

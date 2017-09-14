@@ -1,12 +1,17 @@
 <?php
 $this->loadHelper('Backend.Chosen');
+$this->loadHelper('Backend.DataTable');
 
 //$this->Toolbar->addLink(__('Add'), ['action' => 'add'], ['class' => 'add']);
 ?>
 <div class="index">
     <div class="row">
         <div class="col-md-12">
-            <?= $this->cell('Backend.DataTable', [$this->get('dataTable'), $this->get('result')->toArray()]); ?>
+            <?php //echo $this->cell('Backend.DataTable', [$this->get('dataTable'), $this->get('result')->toArray()]); ?>
+            <?php
+            $this->DataTable->create($this->get('dataTable'), $this->get('result'));
+            echo $this->DataTable->renderAll();
+            ?>
         </div>
     </div>
 

@@ -3,6 +3,7 @@
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
+use Cake\Datasource\EntityInterface;
 
 /**
  * Class UnpublishAction
@@ -11,6 +12,8 @@ use Cake\Controller\Controller;
  */
 class UnpublishAction extends BaseEntityAction
 {
+    protected $_scope = ['table'];
+
     /**
      * {@inheritDoc}
      */
@@ -25,6 +28,14 @@ class UnpublishAction extends BaseEntityAction
     public function getAttributes()
     {
         return ['data-icon' => 'eye-slash'];
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function isUsable(EntityInterface $entity)
+    {
+        return ($entity->get('is_published'));
     }
 
     /**

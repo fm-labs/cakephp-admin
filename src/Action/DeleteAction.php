@@ -7,6 +7,8 @@ use Cake\Network\Exception\NotImplementedException;
 
 class DeleteAction extends BaseEntityAction
 {
+    protected $_scope = ['table', 'form'];
+
     /**
      * {@inheritDoc}
      */
@@ -25,6 +27,7 @@ class DeleteAction extends BaseEntityAction
 
     protected function _execute(Controller $controller)
     {
-        throw new NotImplementedException(get_class($this) . ' has no _execute() method implemented');
+        $controller->Flash->error("Not implemented or not allowed");
+        return $controller->redirect($controller->referer(['action' => 'index']));
     }
 }

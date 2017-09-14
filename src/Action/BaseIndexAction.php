@@ -15,7 +15,7 @@ use Cake\Utility\Inflector;
  *
  * @package Backend\Action
  */
-abstract class BaseIndexAction implements IndexActionInterface, EventListenerInterface
+abstract class BaseIndexAction implements IndexActionInterface
 {
     /**
      * @var array
@@ -29,6 +29,13 @@ abstract class BaseIndexAction implements IndexActionInterface, EventListenerInt
      * @var array
      */
     protected $_config = [];
+
+    protected $_controller;
+
+    public function __construct(Controller $controller, array $config = [])
+    {
+        $this->_controller = $controller;
+    }
 
     /**
      * {@inheritDoc}
@@ -114,29 +121,4 @@ abstract class BaseIndexAction implements IndexActionInterface, EventListenerInt
         return TableRegistry::get($this->_config['modelClass']);
     }
 
-
-    /**
-     * @param Event $event
-     */
-    public function buildIndexActions(Event $event)
-    {
-    }
-
-    /**
-     * @param Event $event
-     */
-    public function buildEntityActions(Event $event)
-    {
-    }
-
-    /**
-     * @return array
-     */
-    public function implementedEvents()
-    {
-        return [
-            'Backend.Controller.buildIndexActions' => [ 'callable' => 'buildIndexActions', 'priority' => 5 ],
-            'Backend.Controller.buildEntityActions' => [ 'callable' => 'buildEntityActions', 'priority' => 5 ]
-        ];
-    }
 }

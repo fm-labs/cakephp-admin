@@ -30,4 +30,5 @@ class BackendHelper extends Helper
         $script = sprintf('if (window.Backend !== undefined) { Backend.init(%s); }', json_encode($backendjs));
         $this->Html->scriptBlock($script, ['block' => 'script']);
     }
+
 }

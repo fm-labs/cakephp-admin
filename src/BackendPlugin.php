@@ -2,16 +2,11 @@
 
 namespace Backend;
 
-use Backend\Event\ConnectRoutesEvent;
-use Backend\Event\CrudControllerListener;
-use Backend\Event\PublishableControllerListener;
 use Backend\Event\RouteBuilderEvent;
-use Backend\Event\SetupEvent;
-use Backend\Event\TreeControllerListener;
+use Backend\Lib\Backend;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
-use Cake\Event\EventManager;
 use Cake\Routing\Router;
 
 class BackendPlugin implements EventListenerInterface
@@ -147,8 +142,11 @@ class BackendPlugin implements EventListenerInterface
 
     public function __invoke()
     {
-        EventManager::instance()->on(new CrudControllerListener());
-        EventManager::instance()->on(new TreeControllerListener());
-        EventManager::instance()->on(new PublishableControllerListener());
+        Backend::registerListener('Controller', '\\Backend\\Mod\\ModTree');
+        Backend::registerListener('Controller', '\\Backend\\Mod\\ModCrud');
+        Backend::registerListener('Controller', '\\Backend\\Mod\\ModPublishable');
+        Backend::registerListener('Controller', '\\Backend\\Mod\\ModUi');
+        Backend::registerListener('Controller', '\\Backend\\Mod\\ModUiNavbar');
+        Backend::registerListener('Controller', '\\Backend\\Mod\\ModUiSidebar');
     }
 }

@@ -14,6 +14,7 @@ use Cake\View\Helper\FormHelper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\PaginatorHelper;
 use Cake\View\StringTemplateTrait;
+use Composer\Script\ScriptEvents;
 
 /**
  * Class DataTableHelper
@@ -28,7 +29,7 @@ class DataTableHelper extends Helper
 {
     use StringTemplateTrait;
 
-    public $helpers = ['Html', 'Form', 'Paginator', 'Backend.Formatter'];
+    public $helpers = ['Html', 'Form', 'Paginator', 'Backend.Formatter', 'Bootstrap.Button', 'Bootstrap.Icon'];
 
     protected $_params = [];
 
@@ -60,17 +61,16 @@ class DataTableHelper extends Helper
 
     protected $_reduceStack = [];
 
+    protected $_rowCallbacks = [];
+
     protected $_setup = null;
 
-    protected function _setup()
+    protected function _initialize()
     {
         if ($this->_setup === null) {
-            $event = new Event('Backend.DataTable.setup');
+            $event = new Event('Backend.DataTable.setup', $this);
             $event = $this->_View->eventManager()->dispatch($event);
-            $this->_setup = (array)$event->data();
         }
-
-        return $this->_setup;
     }
 
     public function param($key)
@@ -80,6 +80,12 @@ class DataTableHelper extends Helper
         }
 
         return null;
+    }
+
+    public function addRowCallback(callable $callable)
+    {
+        $this->_rowCallbacks[] = $callable;
+        return $this;
     }
 
     /**
@@ -101,7 +107,6 @@ class DataTableHelper extends Helper
      */
     public function create($params = [], $data = [])
     {
-        $this->_setup();
 
         if (isset($params['data']) && $params['data']) {
             $data = $params['data'];
@@ -122,6 +127,7 @@ class DataTableHelper extends Helper
             $this->_tableArgs['data-selectable'] = 1;
         }
         $modelName = pluginSplit($this->_params['model']);
+        /*
         if (isset($this->_setup[$modelName[1]])) {
             $setup = $this->_setup[$modelName[1]];
             if (isset($setup['rowActions'])) {
@@ -130,6 +136,7 @@ class DataTableHelper extends Helper
                 });
             }
         }
+        */
 
         // @TODO Deprecated. Use white- and blacklist instead
         if (isset($this->_params['exclude']) && !empty($this->_params['exclude'])) {
@@ -144,6 +151,13 @@ class DataTableHelper extends Helper
 
         if ($this->_params['fieldsWhitelist'] === true) {
             $this->_params['fieldsWhitelist'] = array_keys($this->_params['fields']);
+        }
+
+        // callback listeners
+        if (isset($this->_params['rowActionCallbacks'])) {
+            foreach ($this->_params['rowActionCallbacks'] as $callback) {
+                $this->addRowCallback($callback);
+            }
         }
 
         // check model
@@ -162,9 +176,10 @@ class DataTableHelper extends Helper
             'body' => '<tbody>{{rows}}</tbody>',
             'row' => '<tr{{attrs}}>{{cells}}{{actionscell}}</tr>',
             'rowCell' => '<td{{attrs}}>{{content}}</td>',
-            'rowActionsCell' => '<td class="actions">
+            'rowActionsCell' => '<td class="actions" style="text-align: right;">{{actions}}</td>',
+            '_rowActionsCell' => '<td class="actions">
                 <div class="dropdown pull-right">
-                    <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         <i class="fa fa-gear"></i>
                         <span class="caret"></span>
                     </button>
@@ -201,6 +216,8 @@ class DataTableHelper extends Helper
             'rowSelectCell' => '<div class="dtable-row-select">{{content}}</div>'
         ]);
         */
+
+        $this->_initialize();
     }
 
     public function id()
@@ -302,6 +319,32 @@ class DataTableHelper extends Helper
         return $this->_defaultFieldParams;
     }
 
+    public function beforeRenderFile(Event $event)
+    {
+        //debug("beforeRenderFile");
+    }
+
+    public function beforeRender(Event $event)
+    {
+        //debug("beforeRender");
+    }
+
+    public function beforeLayout(Event $event)
+    {
+        //debug("beforeLayout");
+    }
+
+    public function renderAll()
+    {
+        $out = "";
+        $out .= $this->pagination();
+        $out .= $this->render();
+        $out .= $this->pagination();
+        $out .= $this->_renderScript();
+        $out .= $this->debug();
+        return $out;
+    }
+
     public function render()
     {
         $tableAttributes = $this->_tableArgs + ['id' => $this->id()];
@@ -344,7 +387,7 @@ class DataTableHelper extends Helper
         $html = "";
         foreach ($this->_fields as $fieldName => $field) {
             if ($this->_params['paginate']) {
-                $header = $this->Paginator->sort($fieldName);
+                $header = $this->Paginator->sort($fieldName, $field['label']);
             } else {
                 $header = h($field['label']);
             }
@@ -495,9 +538,9 @@ class DataTableHelper extends Helper
         // action cell
         $rowActions = $rowActionsCell = '';
         if ($this->_params['rowActions'] !== false) {
-            $rowActions = $this->renderRowActions($this->_params['rowActions'], $row);
+            $rowActionsHtml = $this->renderRowActions($row);
             $rowActionsCell = $this->templater()->format('rowActionsCell', [
-                'actions' => $rowActions,
+                'actions' => $rowActionsHtml,
             ]);
         }
 
@@ -532,10 +575,13 @@ class DataTableHelper extends Helper
 
             $formattedCellData = $this->_formatRowCellData($fieldName, $cellData, $formatter, $formatterArgs, $row);
             $cellAttributes = $field;
+            $cellAttributes['data-row-id'] = $row->id;
+            $cellAttributes['data-field'] = $fieldName;
+            $cellAttributes['data-label'] = $field['label'];
 
             $html .= $this->templater()->format('rowCell', [
                 'content' => $formattedCellData,
-                'attrs' => $this->templater()->formatAttributes($cellAttributes)
+                'attrs' => $this->templater()->formatAttributes($cellAttributes, ['label', 'formatter', 'formatterArgs'])
             ]);
 
             // reducer
@@ -581,7 +627,32 @@ class DataTableHelper extends Helper
         return $this->Formatter->format($cellData, $formatter, $formatterArgs, $row);
     }
 
-    public function renderRowActions(array $rowActions, $row = [])
+    public function renderRowActions($row = [])
+    {
+        $row = (is_object($row)) ? $row->toArray() : $row;
+        $actions = [];
+
+        foreach ($this->_rowCallbacks as $callback) {
+            if ($result = call_user_func($callback, $row)) {
+                foreach ($result as $actionId => $action) {
+                    $actions[$actionId] = $action;
+                }
+            }
+        }
+
+        //$this->_View->loadHelper('Bootstrap.Button');
+        //$this->_View->loadHelper('Bootstrap.Ui');
+
+        $icon = $this->Icon->create('gear');
+        $button = $this->Button->create($icon, [
+            'size' => 'xs',
+            'dropdown' => $actions
+        ]);
+
+        return $button;
+    }
+
+    public function renderRowActionsOld(array $rowActions, $row = [])
     {
         $html = "";
         $row = (is_object($row)) ? $row->toArray() : $row;
@@ -653,6 +724,105 @@ class DataTableHelper extends Helper
         if (isset($this->_params['debug']) && $this->_params['debug'] === true) {
             //debug($this->_params);
         }
+    }
+
+    protected function _renderScript()
+    {
+        $script = <<<SCRIPT
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        var dtId = '__DATATABLE_ID__';
+        var dtTable = '__DATATABLE_MODEL__';
+        var dtSortUrl = '__DATATABLE_SORTURL__';
+        var el = $('#' + dtId);
+
+        console.log("loading datatable js for " + dtId);
+
+
+        //originally from http://stackoverflow.com/questions/1307705/jquery-ui-sortable-with-table-and-tr-width/1372954#1372954
+        var fixHelperModified = function(e, tr) {
+            var originals = tr.children();
+            var helper = tr.clone();
+            helper.children().each(function(index)
+            {
+                $(this).width(originals.eq(index).width())
+            });
+            return helper;
+        };
+
+        //
+        // Jquery UI Sortable DataTable
+        //
+        if (el.attr('data-sortable') == 1) {
+
+            console.log("init sortable for dt " + dtId);
+
+            if (!$.fn.sortable) {
+                console.warn("JqueryUI sortable not loaded");
+            } else {
+                console.log("initialize sortable")
+                el.find(".dtable-body").sortable({
+                    placeholder: "ui-sortable-placeholder", // "ui-state-highlight",
+                    helper: fixHelperModified,
+                    update: function(event, ui) {
+                        console.log(ui);
+                        console.log(event);
+
+                        var sibling = ui.item.prev();
+                        var siblingId = 0;
+                        if (sibling.length > 0) {
+                            siblingId = sibling.data().id;
+                        }
+
+                        var updateData = { id: ui.item.data().id, after: siblingId, model: dtTable };
+                        console.log(updateData);
+
+                        if (dtTable && dtSortUrl) {
+                            $.ajax({
+                                type: 'POST',
+                                url: dtSortUrl,
+                                data: updateData,
+                                dataType: 'json',
+                                success: function(data, textStatus, xhr) {
+                                    //console.log(textStatus);
+                                    console.log(data);
+
+                                    if (data.error !== undefined) {
+                                        alert("Ups. Something went wrong! " + data.error);
+                                        return;
+                                    }
+                                },
+                                error: function(err) {
+                                    alert("Ups. Something went wrong. Please try again");
+                                    console.error(err);
+                                }
+                            });
+                        }
+
+
+                    }
+                });
+                //.disableSelection();
+            }
+
+        } else {
+            console.log("Datatable " + dtId + " is not sortable");
+        }
+
+        //el.dataTable();
+
+    });
+</script>
+SCRIPT;
+
+        $replace = [
+            '/__DATATABLE_ID__/' => $this->id(),
+            '/__DATATABLE_MODEL__/' => $this->param('model'),
+            '/__DATATABLE_SORTURL__/' => $this->Html->Url->build($this->param('sortable'))
+        ];
+
+        return preg_replace(array_keys($replace), array_values($replace), $script);
     }
 
     protected function _replaceTokens($tokenStr, $data = [])

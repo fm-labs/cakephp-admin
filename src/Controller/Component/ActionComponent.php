@@ -3,13 +3,18 @@
 namespace Backend\Controller\Component;
 
 use Backend\Action\ActionRegistry;
+use Backend\Action\ExternalEntityAction;
+use Backend\Action\InlineEntityAction;
 use Backend\Action\Interfaces\EntityActionInterface;
 use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Network\Response;
+use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
 /**
@@ -40,6 +45,11 @@ class ActionComponent extends Component
     protected $_action;
 
     /**
+     * @var Table Active primary table
+     */
+    protected $_model;
+
+    /**
      * Initialize actions
      * @param array $config
      * @return void
@@ -47,7 +57,7 @@ class ActionComponent extends Component
     public function initialize(array $config)
     {
         $this->_controller = $this->_registry->getController();
-        $this->_actionRegistry = new ActionRegistry();
+        $this->_actionRegistry = new ActionRegistry($this->_controller);
 
         // use controller actions, if defined
         $actions = [];
@@ -56,7 +66,7 @@ class ActionComponent extends Component
         }
 
         // detect actions from model
-        $this->_initModelActions($actions);
+        //$this->_initModelActions($actions);
 
         // normalize action configs and add actions to actions registry
         foreach ($actions as $action => $actionConfig) {
@@ -71,6 +81,18 @@ class ActionComponent extends Component
         }
     }
 
+    public function startup()
+    {
+        if (Configure::read('debug') && !isset($this->actions['debug'])) {
+            $actionConfig = ['className' => 'Backend.Debug'];
+            $this->_actionRegistry->load('debug', $actionConfig);
+            $this->actions['debug'] = $actionConfig;
+        }
+    }
+
+    /**
+     * @deprecated Not in use
+     */
     protected function _initModelActions(&$actions)
     {
         $modelClass = $this->_controller->modelClass;
@@ -85,6 +107,32 @@ class ActionComponent extends Component
 
             $actions = $event->data['actions'];
         }
+    }
+
+    public function registerInline($action, array $options = [])
+    {
+        if ($action instanceof InlineEntityAction) {
+            $instance = $action;
+            $action = $instance->action;
+        } else {
+            $instance = new InlineEntityAction($action, $options);
+        }
+        $config = ['className' => $instance];
+        $this->_actionRegistry->load($action, $config);
+        $this->actions[$action] = [];
+    }
+
+    public function registerExternal($action, array $options = [])
+    {
+        if ($action instanceof ExternalEntityAction) {
+            $instance = $action;
+            $action = $instance->action;
+        } else {
+            $instance = new ExternalEntityAction($action, $options);
+        }
+        $config = ['className' => $instance];
+        $this->_actionRegistry->load($action, $config);
+        $this->actions[$action] = [];
     }
 
     /**
@@ -116,6 +164,7 @@ class ActionComponent extends Component
     /**
      * @param $action
      * @return array
+     * @deprecated Not in use
      */
     public function getActionUrl($action)
     {
@@ -148,10 +197,15 @@ class ActionComponent extends Component
         }
 
         if ($this->_actionRegistry->has($action)) {
-            $config = $this->actions[$action];
-            $this->_action = $actionObj = $this->_actionRegistry->get($action);
+            $this->_action = $this->_actionRegistry->get($action);
+            $this->model(); // init primary model
 
-            $event = $this->_registry->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $actionObj ]);
+            // attach Action instance to controllers event manager
+            if ($this->_action instanceof EventListenerInterface) {
+                $this->_controller->eventManager()->on($this->_action);
+            }
+
+            $event = $this->_registry->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
             if ($event->result instanceof Response) {
                 return $event->result;
             }
@@ -164,6 +218,7 @@ class ActionComponent extends Component
                     $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
                 }
 
+                $config = $this->actions[$action];
                 list($plugin, ) = pluginSplit($config['className']);
                 $template = ($plugin) ? $plugin . '.' . $action : $action;
 
@@ -172,21 +227,16 @@ class ActionComponent extends Component
             }
             //--
 
-            // attach Action instance to controllers event manager
-            if ($actionObj instanceof EventListenerInterface) {
-                $this->_controller->eventManager()->on($actionObj);
-            }
+            $response = $this->_action->execute($this->_controller);
 
-            $response = $actionObj->execute($this->_controller);
-
-            // detach Action instance from controllers event manager
-            if ($actionObj instanceof EventListenerInterface) {
-                $this->_controller->eventManager()->off($actionObj);
-            }
-
-            $event = $this->_registry->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $actionObj ]);
+            $event = $this->_registry->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
             if ($event->result instanceof Response) {
                 return $event->result;
+            }
+
+            // detach Action instance from controllers event manager
+            if ($this->_action instanceof EventListenerInterface) {
+                //$this->_controller->eventManager()->off($this->_action);
             }
 
             return $response;
@@ -195,8 +245,23 @@ class ActionComponent extends Component
         throw new \RuntimeException('Action ' . $action . ' not loaded');
     }
 
-    /**
-     * @param Event $event
+    public function model()
+    {
+        if (!$this->_model) {
+
+            $modelClass = $this->_registry->getController()->modelClass;
+            if (!$modelClass) {
+                return null;
+            }
+
+            $this->_model = TableRegistry::get($modelClass);
+        }
+
+        return $this->_model;
+    }
+
+    /*
+     * @deprecated
      */
     public function buildIndexActions(Event $event)
     {
@@ -209,8 +274,8 @@ class ActionComponent extends Component
         }
     }
 
-    /**
-     * @param Event $event
+    /*
+     * @deprecated
      */
     public function buildEntityActions(Event $event)
     {
@@ -237,6 +302,47 @@ class ActionComponent extends Component
         }
     }
 
+    public function beforeRender(Event $event) {
+
+        $controller = $event->subject();
+
+        // actions
+        //@todo Move to ActionToolbar component
+        $actions = [];
+        if ($this->_action) {
+            if ($this->_action instanceof EntityActionInterface) {
+
+                $entity = $this->_action->entity();
+
+                foreach ($this->listActions() as $action) {
+                    $_action = $this->getAction($action);
+                    if ($_action == $this->_action) {
+                        continue;
+                    }
+
+                    if ($action == "index") {
+                        $actions[$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
+                    }
+                    elseif ($_action instanceof EntityActionInterface && $_action->isUsable($entity)) {
+                        $actions[$action] = [$_action->getLabel(), ['action' => $action, $entity->id], $_action->getAttributes()];
+                    }
+                }
+
+            }
+            elseif ($this->_action instanceof IndexActionInterface) {
+
+                foreach ($this->listActions() as $action) {
+                    $_action = $this->getAction($action);
+                    if ($action == "index" || (!($_action instanceof IndexActionInterface))) {
+                        continue;
+                    }
+                    $actions[$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
+                }
+            }
+        }
+        $controller->set('actions', $actions);
+    }
+
     /**
      * @return array
      */
@@ -244,12 +350,12 @@ class ActionComponent extends Component
     {
         return [
             //'Controller.initialize' => 'beforeFilter',
-            //'Controller.startup' => 'startup',
-            //'Controller.beforeRender' => 'beforeRender',
+            'Controller.startup' => 'startup',
+            'Controller.beforeRender' => 'beforeRender',
             //'Controller.beforeRedirect' => 'beforeRedirect',
             //'Controller.shutdown' => 'shutdown',
-            'Backend.Controller.buildIndexActions' => [ 'callable' => 'buildIndexActions', 'priority' => 4 ],
-            'Backend.Controller.buildEntityActions' => [ 'callable' => 'buildEntityActions', 'priority' => 4 ]
+            //'Backend.Controller.buildIndexActions' => [ 'callable' => 'buildIndexActions', 'priority' => 4 ],
+            //'Backend.Controller.buildEntityActions' => [ 'callable' => 'buildEntityActions', 'priority' => 4 ]
         ];
     }
 }

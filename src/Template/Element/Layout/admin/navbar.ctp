@@ -9,7 +9,8 @@
             <li><?= $this->Html->link(__('Frontend'), '/', ['target' => '_blank']); ?></li>
 
             <!-- Content Menu -->
-            <?php echo $this->element('Backend.Layout/admin/navbar_content_menu'); ?>
+            <?php //echo $this->element('Backend.Layout/admin/navbar/navbar_content_menu'); ?>
+            <?= $this->fetch('backend_navbar_left'); ?>
         </ul>
     </div>
 
@@ -18,8 +19,10 @@
     <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
 
+            <?= $this->fetch('backend_navbar_right'); ?>
+
             <!-- Search -->
-            <?php echo $this->element('Backend.Layout/admin/navbar_search'); ?>
+            <?php //echo $this->element('Backend.Layout/admin/navbar_search'); ?>
 
 
             <!-- Messages Menu -->
@@ -32,7 +35,7 @@
             <?php //echo $this->element('Backend.Layout/admin/navbar_tasks'); ?>
 
             <!-- User Account Menu -->
-            <?php echo $this->element('Backend.Layout/admin/navbar_user'); ?>
+            <?php //echo $this->element('Backend.Layout/admin/navbar_user'); ?>
 
             <!-- Control Sidebar Toggle Button
             <li>

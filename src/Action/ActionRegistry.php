@@ -2,8 +2,10 @@
 namespace Backend\Action;
 
 use Backend\Action\Interfaces\ActionInterface;
+use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
+use Cake\Event\EventListenerInterface;
 use RuntimeException;
 
 /**
@@ -11,6 +13,12 @@ use RuntimeException;
  */
 class ActionRegistry extends ObjectRegistry
 {
+    protected $_controller;
+
+    public function __construct(Controller $controller)
+    {
+        $this->_controller = $controller;
+    }
 
     /**
      * Resolve a checkout step classname.
@@ -66,8 +74,12 @@ class ActionRegistry extends ObjectRegistry
         }
 
         if (!isset($instance)) {
-            $instance = new $class($settings);
+            $instance = new $class($this->_controller, $settings);
         }
+
+        //if ($instance instanceof EventListenerInterface) {
+        //    $this->_controller->eventManager()->on($instance);
+        //}
 
         if ($instance instanceof ActionInterface) {
             return $instance;

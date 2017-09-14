@@ -2,11 +2,14 @@
 
 namespace Backend\Controller\Component;
 
+use Backend\Lib\Backend;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
 use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Event\EventListenerInterface;
+use Cake\Log\Log;
 use Cake\Network\Response;
 use Cake\Routing\Router;
 use User\Controller\Component\AuthComponent;
@@ -34,6 +37,8 @@ class BackendComponent extends Component
      * @var array
      */
     public $actions = [];
+
+    protected $_mods;
 
     /**
      * @var array
@@ -110,6 +115,20 @@ class BackendComponent extends Component
         // Apply Backend theme
         if (Configure::read('Backend.theme')) {
             $controller->viewBuilder()->theme(Configure::read('Backend.theme'));
+        }
+
+
+        // Attach listeners
+        foreach (Backend::getListeners('Controller') as $listenerClass) {
+            try {
+                $modobj = new $listenerClass();
+                if ($modobj instanceof EventListenerInterface) {
+                    $controller->eventManager()->on($modobj);
+                }
+            } catch (\Exception $ex) {
+                Log::alert("Failed to load class $listenerClass: " . $ex->getMessage());
+                continue;
+            }
         }
 
         // Auto-load ActionComponent if controller defines actions

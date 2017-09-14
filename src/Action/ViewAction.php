@@ -7,10 +7,13 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
+use Cake\Event\EventListenerInterface;
 use Cake\Network\Exception\BadRequestException;
 
-class ViewAction extends BaseEntityAction
+class ViewAction extends BaseEntityAction implements EventListenerInterface
 {
+    protected $_scope = ['table'];
+
     protected $_defaultConfig = [
         'entity' => null,
         'modelClass' => null,
@@ -87,6 +90,13 @@ class ViewAction extends BaseEntityAction
         $event->subject()->viewVars['tabs']['data'] = [
             'title' => __('Data'),
             'url' => ['plugin' => 'Backend', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id]
+        ];
+    }
+
+    public function implementedEvents()
+    {
+        return [
+            'Controller.beforeRender' => 'beforeRender'
         ];
     }
 }

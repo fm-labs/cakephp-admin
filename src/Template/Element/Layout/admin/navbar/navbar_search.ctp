@@ -5,14 +5,14 @@ if (!$searchUrl) {
     return;
 }
 ?>
-<div class="navbar-form navbar-left">
-<form id="header-search-form" method="get" action="<?= $this->Html->Url->build(); ?>">
+<li>
+<form class="navbar-form navbar-left" id="header-search-form" method="get" action="<?= $this->Html->Url->build(); ?>">
     <div class="form-group">
         <input type="text" class="form-control" name="q" placeholder="Search">
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
-</div>
+</li>
 <script>
     $(document).ready(function() {
         var $form = $('#header-search-form');

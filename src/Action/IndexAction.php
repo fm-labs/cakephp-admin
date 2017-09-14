@@ -2,6 +2,7 @@
 
 namespace Backend\Action;
 
+use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 
 /**
@@ -32,7 +33,8 @@ class IndexAction extends BaseIndexAction
     public function _execute(Controller $controller)
     {
         // data
-        $Model = $this->model();
+        $this->_controller = $controller;
+        $this->_model = $Model = $this->model();
         $result = [];
 
         if ($this->_config['data']) {
@@ -64,7 +66,7 @@ class IndexAction extends BaseIndexAction
             }
         }
 
-
+        /*
         if ($this->_config['rowActions'] !== false) {
             //$event = $controller->dispatchEvent('Backend.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
             $event = $controller->dispatchEvent('Backend.Controller.buildEntityActions', [
@@ -72,6 +74,7 @@ class IndexAction extends BaseIndexAction
             ]);
             $this->_config['rowActions'] = (array)$event->data['actions'];
         }
+        */
 
         // render
         $controller->set('result', $result);
@@ -84,8 +87,24 @@ class IndexAction extends BaseIndexAction
             'fieldsBlacklist' => $this->_config['fields.blacklist'],
             'rowActions' => $this->_config['rowActions'],
             //'data' => $result,
+            'rowActionCallbacks' => [
+                [$this, 'buildTableRowActions']
+            ]
         ]);
         $controller->set('actions', $this->_config['actions']);
         $controller->set('_serialize', ['result']);
+    }
+
+    public function buildTableRowActions($row)
+    {
+        $actions = [];
+        foreach ($this->_controller->Action->listActions() as $action) {
+            $_action = $this->_controller->Action->getAction($action);
+
+            if ($_action instanceof EntityActionInterface && $_action->hasScope('table') /*&& $_action->isUsable($row)*/) {
+                $actions[$action] = ['title' => $_action->getLabel(), 'url' => ['action' => $action, $row['id']], 'attrs' => $_action->getAttributes()];
+            }
+        }
+        return $actions;
     }
 }

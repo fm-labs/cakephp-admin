@@ -15,6 +15,7 @@ if (!$path || !preg_match('/^\/(.*)$/', $path)) {
 /**
  * Backend routes
  */
+Router::extensions(['json', 'xml']);
 Router::plugin('Backend', [ 'path' => $path, '_namePrefix' => 'backend:' ], function ($routes) {
     $routes->scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], function ($routes) {
 

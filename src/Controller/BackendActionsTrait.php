@@ -38,7 +38,7 @@ trait BackendActionsTrait
                 ]);
             }
 
-            $this->Action->execute($action);
+            return $this->Action->execute($action);
         }
     }
 }

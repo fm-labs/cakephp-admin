@@ -9,7 +9,7 @@
  * - viewOptions: EntityView options array
  */
 $entity = $this->get('entity');
-$title = $this->get('title', get_class($entity));
+$title = $this->get('title', @array_pop(explode('\\', get_class($entity))));
 $viewOptions = (array) $this->get('viewOptions');
 
 /**
@@ -50,7 +50,6 @@ $this->loadHelper('Bootstrap.Tabs');
         </div>
     </div>
 
-    <?php debug($this->get('tabs')); ?>
     <?php if ($this->get('tabs')): ?>
         <?php foreach ((array) $this->get('tabs') as $tabId => $tab): ?>
             <?php $this->Tabs->add($tab['title'], $tab); ?>

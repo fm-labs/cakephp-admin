@@ -11,7 +11,7 @@ use Cake\Event\Event;
  */
 class MediaAction extends BaseEntityAction
 {
-    protected $_scope = ['form'];
+    protected $_scope = [];
 
     /**
      * {@inheritDoc}
@@ -46,7 +46,7 @@ class MediaAction extends BaseEntityAction
             }
         }
 
-        debug($fields);
+        //debug($fields);
 
         $controller->set('fields', $fields);
         $controller->set('modelClass', $controller->modelClass);

@@ -1,4 +1,4 @@
-(function() {
+(function($) {
     var Backend = {
         init: false,
         settings: {
@@ -981,4 +981,4 @@
     $(window).on('unload', function() {
         Backend.Renderer.onUnload();
     })
-})();
+})(jQuery);

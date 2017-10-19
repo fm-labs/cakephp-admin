@@ -3,6 +3,13 @@
 @left-w: 200px;
 @left-bg-color: transparent;
 
+body {
+  color: #000;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+}
+
 .content-left, .content-right {
   -webkit-transition: -webkit-transform .3s ease-in-out,margin .3s ease-in-out;
   -moz-transition: -moz-transform .3s ease-in-out,margin .3s ease-in-out;
@@ -106,4 +113,13 @@
 
 .sidebar-menu .treeview-menu > li > a {
   font-size: @font-size-default;
+}
+
+/** Tables **/
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td, .table > tfoot > tr > td {
+  border-top: 1px solid #ddd;
 }

@@ -2,6 +2,7 @@
 
     <?= $this->Html->link('Index', ['action' => 'index']); ?>
 
+    <!-- Controller -->
     <section>
         <h3>Controller Actions</h3>
         <table class="table table-stripped">
@@ -20,6 +21,7 @@
         </table>
     </section>
 
+    <!-- Actions -->
     <section>
         <h3>Loaded Actions</h3>
         <table class="table table-stripped">
@@ -43,5 +45,29 @@
             <?php endforeach; ?>
         </table>
     </section>
-    <?php debug($this->get('loaded_actions')); ?>
+
+    <!-- Model -->
+    <?php if ($this->get('model_class')): ?>
+        <?php $schema = $this->get('model_schema'); ?>
+        <section>
+            <h3>Primary Model: <?= $this->get('model_class'); ?></h3>
+            <table class="table table-stripped">
+                <tr>
+                    <th>Column Name</th>
+                    <th>Type</th>
+                    <th>Length</th>
+                    <th>Debug</th>
+                </tr>
+                <?php foreach ($schema->columns() as $colName): ?>
+                    <?php $column = $schema->column($colName); ?>
+                    <tr>
+                        <td><?= h($colName); ?></td>
+                        <td><?= h($column['type']); ?></td>
+                        <td><?= h($column['length']); ?></td>
+                        <td><?= join(', ', array_map(function($k, $v) { return sprintf("%s: %s", (string)$k, (string)$v); }, array_keys($column), $column)); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        </section>
+    <?php endif; ?>
 </div>

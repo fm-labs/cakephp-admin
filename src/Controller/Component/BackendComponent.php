@@ -136,6 +136,12 @@ class BackendComponent extends Component
             $controller->loadComponent('Backend.Action');
         }
 
+        $this->response->header([
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Headers' => 'POST, GET, OPTIONS',
+            'Access-Control-Allow-Methods' => 'Origin, Authorization, X-Requested-With, Content-Type, Accept'
+        ]);
+
         $this->_controller =& $controller;
     }
 

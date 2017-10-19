@@ -35,9 +35,10 @@ class BackendView extends View
         ]);
 
         $this->loadHelper('Backend.Backend', []);
-        $this->loadHelper('Backend.Ajax', []);
+        $this->loadHelper('Backend.Ajax', []); //@todo Remove hard depdency
+        $this->loadHelper('Backend.FooTable', []); //@todo Remove hard depdency
         $this->loadHelper('Backend.Toolbar', []); //@todo Remove hard depdency
-        $this->loadHelper('Bootstrap.Ui', []);
+        $this->loadHelper('Bootstrap.Ui', []); //@todo Remove hard depdency
 
         $this->eventManager()->dispatch(new Event('Backend.View.initialize', $this));
     }

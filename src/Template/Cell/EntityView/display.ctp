@@ -21,7 +21,7 @@ use Cake\Utility\Inflector;
         <?php endforeach; ?>
     </dl>
 
-    <?php if ($debug === true): ?>
+    <?php if ($debug === true && 1 == 2): ?>
     <div class="debug">
         <?php debug($associations); ?>
         <?php debug($schema); ?>

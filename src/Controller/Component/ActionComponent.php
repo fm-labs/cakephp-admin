@@ -16,6 +16,7 @@ use Cake\Network\Response;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
+use Cake\View\Exception\MissingTemplateException;
 
 /**
  * Class ActionComponent
@@ -212,6 +213,7 @@ class ActionComponent extends Component
 
             //@TODO Refactor with ActionView
             //--
+            /*
             if ($this->_controller->noActionTemplate === false && !isset($this->_action->noTemplate)) {
                 $templatePath = 'Action';
                 if ($this->request->params['prefix']) {
@@ -225,9 +227,43 @@ class ActionComponent extends Component
                 $this->_controller->viewBuilder()->templatePath($templatePath);
                 $this->_controller->viewBuilder()->template($template);
             }
+            */
             //--
 
+            // execute the action in context of current controller
             $response = $this->_action->execute($this->_controller);
+
+            // force rendering to capture template exception and fallback to Action template path
+            if (!$response && $this->_controller->autoRender) {
+                try {
+                    $response = $this->_controller->render($this->_action->template);
+
+                } catch (MissingTemplateException $ex) {
+
+                    // Action template path
+                    $templatePath = 'Action';
+                    if ($this->request->params['prefix']) {
+                        $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
+                    }
+
+                    // check if action instance has a template defined
+                    $template = $this->_action->template;
+
+                    // use action class name as default template name
+                    if (!$template) {
+                        $config = $this->actions[$action];
+                        list($plugin, $actionClass) = pluginSplit($config['className']);
+                        //$template = ($plugin) ? $plugin . '.' . $action : $action;
+                        $actionClass = Inflector::underscore($actionClass);
+                        $template = ($plugin) ? $plugin . '.' . $actionClass : $actionClass;
+
+                    }
+
+                    $this->_controller->viewBuilder()->templatePath($templatePath);
+                    $this->_controller->viewBuilder()->template($template);
+                    $response = $this->_controller->render();
+                }
+            }
 
             $event = $this->_registry->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
             if ($event->result instanceof Response) {
@@ -323,7 +359,7 @@ class ActionComponent extends Component
                     if ($action == "index") {
                         $actions[$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
                     }
-                    elseif ($_action instanceof EntityActionInterface && $_action->isUsable($entity)) {
+                    elseif ($_action instanceof EntityActionInterface && in_array('form', $_action->getScope()) && $_action->isUsable($entity)) {
                         $actions[$action] = [$_action->getLabel(), ['action' => $action, $entity->id], $_action->getAttributes()];
                     }
                 }

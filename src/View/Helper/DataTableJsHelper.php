@@ -3,6 +3,7 @@
 namespace Backend\View\Helper;
 
 use Cake\ORM\ResultSet;
+use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\StringTemplateTrait;
@@ -13,12 +14,9 @@ use Cake\View\View;
  * @package Backend\View\Helper
  * @property HtmlHelper $Html
  */
-class DataTableJsHelper extends Helper
+class DataTableJsHelper extends DataTableHelper
 {
-    use StringTemplateTrait;
-
-    public $helpers = ['Html'];
-
+    /*
     protected $_defaultParams = [
         'processing' => false,
         'serverside' => false,
@@ -29,13 +27,28 @@ class DataTableJsHelper extends Helper
         'info' => true,
     ];
 
-    protected $_dataTableId;
-    protected $_dataTable = [];
+    protected $_jsOptionsId;
+    protected $_jsOptions = [];
     protected $_columns = [];
     protected $_data = [];
 
     protected $_renderTable = true;
     protected $_renderScript = true;
+    */
+
+    protected $_jsOptions = [
+        'processing' => true,
+        //'serverSide' => true,
+        //'ajax' => Router::url($url),
+        'columns' => [], // array_values($columns),
+        //'order' => $this->_buildDataTableOrder($order, $columns),
+        'ordering' => false,
+        'searching' => false,
+        'paging' => false,
+        'lengthChange' => false,
+        //'lengthMenu' => $this->_config['lengthMenu'],
+        //'pageLength' => 10,
+    ];
 
     /**
      * @param View $View
@@ -45,149 +58,125 @@ class DataTableJsHelper extends Helper
     {
         parent::__construct($View, $config);
 
-        $this->templates([
-            'datatablesTable' => '<table{{attrs}}>{{content}}</table>'
-        ]);
+        //$this->Html->css('/backend/adminlte/plugins/datatables/jquery.dataTables.min.css', ['block' => true]);
+        //$this->Html->css('/backend/adminlte/plugins/datatables/dataTables.bootstrap.css', ['block' => true]);
+        //$this->Html->script('/backend/adminlte/plugins/datatables/jquery.dataTables.js', ['block' => true]);
+        //$this->Html->script('/backend/adminlte/plugins/datatables/dataTables.bootstrap.js', ['block' => true]);
 
-        $this->Html->css('/backend/adminlte/plugins/datatables/jquery.dataTables.min.css', ['block' => true]);
-        $this->Html->css('/backend/adminlte/plugins/datatables/dataTables.bootstrap.css', ['block' => true]);
-        $this->Html->script('/backend/adminlte/plugins/datatables/jquery.dataTables.js', ['block' => true]);
-        $this->Html->script('/backend/adminlte/plugins/datatables/dataTables.bootstrap.js', ['block' => true]);
-    }
-
-    public function fromHtmlTable($domId, $options = [])
-    {
-        $this->_dataTableId = $domId;
-        $this->_dataTable = $this->_defaultParams;
-        $this->options($options);
-
-        $this->_renderTable = false;
-        $this->_renderScript = true;
-
-        return $this->_renderScript();
-    }
-
-    public function create($table, $columns = [], $options = [])
-    {
-        $this->_renderTable = true;
-        $this->_renderScript = true;
-        $this->_dataTable = $this->_defaultParams;
-        $this->id(uniqid('dtjs'));
-        $this->options($options);
-        $this->columns($columns);
-
-        return $this;
-    }
-
-    public function id($id = null)
-    {
-        if ($id === null) {
-            return $this->_dataTableId;
-        }
-
-        $this->_dataTableId = $id;
-
-        return $this;
+        $this->Html->css('Backend./js/datatables/dataTables.bootstrap.css', ['block' => true]);
+        $this->Html->script('Backend.datatables/jquery.dataTables', ['block' => true]);
+        $this->Html->script('Backend.datatables/dataTables.bootstrap', ['block' => true]);
     }
 
     public function options($options = null)
     {
         if ($options === null) {
-            return $this->_dataTable;
+            return $this->_jsOptions;
         }
 
-        $this->_dataTable = array_merge($this->_dataTable, $options);
+        $this->_jsOptions = array_merge($this->_jsOptions, $options);
 
         return $this;
     }
 
-    public function columns($columns = null)
+    protected function _initialize()
     {
+        $jsOpts = (array) $this->param('extra');
 
-        if ($columns === null) {
-            return $this->_columns;
+        // filtering
+        if ($this->_params['filter']) {
+            $jsOpts['searching'] = true;
         }
 
-        $_default = [
-            'class' => null,
-            'orderable' => true,
-            'data' => null,
-            'defaultContent' => '',
+        // paging
+        if ($this->_params['paginate']) {
+            $jsOpts['paging'] = true;
+        }
+
+        // sorting
+        if ($this->_params['sortable']) {
+            $jsOpts['ordering'] = true;
+            $jsOpts['order'] = [0, 'desc'];
+        }
+
+        // ajax
+        //if ($this->_params['ajax']) {
+        //}
+
+        // language
+        $jsOpts['language'] = [
+            'processing' => __('Loading ...')
         ];
 
-        $this->_columns = [];
-        foreach ($columns as $column => $config) {
-            if (is_numeric($column)) {
-                $column = $config;
-                $config = [];
-            }
-
-            $this->_columns[$column] = array_merge($_default, $config);
-        }
-
-        return $this;
+        $this->options($jsOpts);
     }
 
-    public function data($data = null)
+    protected function _renderFilterRow()
     {
-        if ($data === null) {
-            return $this->_data;
-        }
-
-        if ($data instanceof ResultSet) {
-            $data = $data->toArray();
-        }
-
-        $this->_data = $data;
-        $this->_dataTable['data'] = $this->_data;
+        // Search is injected by DataTable JS
+        return '';
     }
 
-    protected function _processColumnsConfig()
+    protected function _renderPagination()
     {
-        $columns = [];
-
-        foreach ($this->_columns as $columnName => $config) {
-            $columns[] = ['data' => $columnName];
-        }
-
-        $this->_dataTable['columns'] = $columns;
+        // Pagination is injected by DataTable JS
+        return '';
     }
 
-    protected function _processDataSourceConfig()
+
+    protected function _buildPaginationFieldLabel($fieldName, $field)
     {
+        // Pagination is injected by DataTable JS
+        return h($field['label']);
     }
 
     protected function _renderScript($block = null)
     {
-        $domId = $this->_dataTableId;
 
-        $this->_processColumnsConfig();
+        $jsTable = $this->_jsOptions;
+        if (empty($jsTable['columns'])) {
+            $columns = $this->_buildDataTableColumns();
+            $jsTable['columns'] = array_values($columns);
+        }
         $script = sprintf(
-            '$(document).ready(function(){ var %s = $("#%s").dataTable(%s); });',
-            $domId,
-            $domId,
-            json_encode($this->_dataTable)
+            '$(document).ready(function(){ $("#%s").dataTable(%s); });',
+            $this->param('id'), json_encode($jsTable)
         );
 
         return $this->Html->scriptBlock($script, ['safe' => false, 'block' => $block]);
     }
 
-    protected function _renderTable()
+    protected function _buildDataTableColumns()
     {
-        $attrs = [
-          'id' => $this->_dataTableId
-        ];
-
-        return $this->templater()->format('datatablesTable', [
-            'attrs' => $this->_templater->formatAttributes($attrs)
-        ]);
+        $columns = [];
+        foreach ($this->_fields as $fieldName => $field) {
+            $columns[$fieldName] = [
+                'data' => $fieldName,
+                'title' => Inflector::humanize($fieldName),
+                'filterable' => false,
+                'visible' => true,
+                'sortable' => true
+            ];
+        }
+        return $columns;
     }
 
-    public function render()
+    protected function _buildDataTableOrder(&$order, &$columns)
     {
-        $script = ($this->_renderScript) ? $this->_renderScript('script') : '';
-        $html = ($this->_renderTable) ? $this->_renderTable() : '';
-
-        return $html . $script;
+        $_order = [];
+        foreach ($order as $col => $dir) {
+            $i = 0;
+            reset($columns);
+            do {
+                if (key($columns) == $col) {
+                    $_order[] = [$i, $dir];
+                    break;
+                }
+                $i++;
+            } while(next($columns));
+        }
+        return $_order;
     }
+
+
 }

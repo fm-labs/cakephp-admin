@@ -42,6 +42,8 @@ abstract class BaseEntityAction implements EntityActionInterface
 
     }
 
+    public $template = null;
+
     /**
      * {@inheritDoc}
      */
@@ -129,7 +131,6 @@ abstract class BaseEntityAction implements EntityActionInterface
             return $this->_execute($controller);
 
         } catch (\Exception $ex) {
-            die($ex->getMessage());
             $controller->Flash->error($ex->getMessage());
             //$controller->redirect($controller->referer());
         }

@@ -25,6 +25,9 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         'actions' => [],
         'tabs' => [],
     ];
+
+    public $template = "Backend.view";
+
     /**
      * {@inheritDoc}
      */
@@ -79,7 +82,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         $controller->set('actions', $this->_config['actions']);
         $controller->set('tabs', $this->_config['tabs']);
         $controller->set('_serialize', ['entity']);
-        $controller->render();
+        //$controller->render();
     }
 
     public function beforeRender(Event $event)

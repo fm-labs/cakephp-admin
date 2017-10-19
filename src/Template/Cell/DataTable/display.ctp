@@ -1,25 +1,22 @@
 <?php
 $this->loadHelper('Backend.DataTable');
-$this->loadHelper('Backend.DataTableJs');
+//$this->loadHelper('Backend.DataTableJs');
 
 if (empty($dataTable['class'])) {
     $dataTable['class'] = 'table table-condensed table-striped table-hover';
 }
-$this->DataTable->create($dataTable, $data);
 ?>
 <?php if (isset($dataTable['title'])): ?>
 <h4><?= h($dataTable['title']); ?></h4>
 <?php endif; ?>
-<?= $this->DataTable->pagination(); ?>
-<?= $this->DataTable->render(); ?>
-<?= $this->DataTable->pagination(); ?>
 
-<?= $this->DataTable->script(); ?>
-<?= $this->DataTable->debug(); ?>
+<?php
+echo $this->DataTable->create($dataTable)
+    ->setData($data)
+    ->render();
+?>
 
 <!-- DataTable JS
-<?php //echo $this->DataTableJs->fromHtmlTable($this->DataTable->id()); ?>
- -->
 <script type="text/javascript">
     $(document).ready(function() {
 
@@ -104,4 +101,5 @@ $this->DataTable->create($dataTable, $data);
         //$el.dataTable();
 
     });
+ -->
 </script>

@@ -5,6 +5,7 @@ namespace Backend\View\Helper;
 use Cake\Collection\CollectionInterface;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -14,6 +15,7 @@ use Cake\View\Helper\FormHelper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\PaginatorHelper;
 use Cake\View\StringTemplateTrait;
+use Cake\View\View;
 use Composer\Script\ScriptEvents;
 
 /**
@@ -35,8 +37,6 @@ class DataTableHelper extends Helper
 
     protected $_fields = [];
 
-    protected $_id;
-
     protected $_defaultParams = [
         'model' => null,
         'data' => null,
@@ -49,13 +49,15 @@ class DataTableHelper extends Helper
         'actions' => [],
         'rowActions' => [],
         'paginate' => false,
+        'pagingLimit' => 20,
         'select' => false,
         'sortable' => false,
         'reduce' => [],
-        'filter' => true
+        'filter' => true,
+        'ajax' => false,
     ];
 
-    protected $_defaultFieldParams = ['label' => null, 'class' => '', 'formatter' => null, 'formatterArgs' => []];
+    protected $_defaultField = ['type' => null, 'label' => null, 'class' => null, 'formatter' => null, 'formatterArgs' => [], 'schema' => null];
 
     protected $_tableArgs = [];
 
@@ -65,110 +67,12 @@ class DataTableHelper extends Helper
 
     protected $_setup = null;
 
-    protected function _initialize()
+    public function __construct(View $View, array $config = [])
     {
-        if ($this->_setup === null) {
-            $event = new Event('Backend.DataTable.setup', $this);
-            $event = $this->_View->eventManager()->dispatch($event);
-        }
-    }
-
-    public function param($key)
-    {
-        if (isset($this->_params[$key])) {
-            return $this->_params[$key];
-        }
-
-        return null;
-    }
-
-    public function addRowCallback(callable $callable)
-    {
-        $this->_rowCallbacks[] = $callable;
-        return $this;
-    }
-
-    /**
-     * @param array $params
-     * - `model` string Model name
-     * - `data` array|Collection Table data
-     * - `id` string Html element id attribute
-     * - `class` string Html element class attribute
-     * - `fields` string|array List of entity fields used as columns. Accepts '*' as wildcard field. MUST BE used as
-     *      string parameter or as first item in list
-     * - `exclude` array List of entity fields to ignore.
-     * - `actions` array List of actions link. Accepts entity fields as string templates in url arrays (:[field])
-     *      e.g. [__('Edit'), ['action' => 'edit', 'id' => ':id']]
-     * - `paginate` boolean
-     * - `sortable` boolean
-     * - `filter` boolean
-     * - `reduce` array
-     *
-     */
-    public function create($params = [], $data = [])
-    {
-
-        if (isset($params['data']) && $params['data']) {
-            $data = $params['data'];
-            unset($params['data']);
-        }
-
-        // parse params
-        $this->_params = $params + $this->_defaultParams;
-        if (!$this->_params['id']) {
-            $this->_id = $this->_params['id'];
-        }
-        if ($this->_params['sortable']) {
-            //$this->_params = $this->Html->addClass($this->_params, 'sortable');
-            //$this->Html->script('$("#' . $this->id() . ' .dtable-row").sortable()', ['block' => true]);
-            $this->_tableArgs['data-sortable'] = 1;
-        }
-        if ($this->_params['select']) {
-            $this->_tableArgs['data-selectable'] = 1;
-        }
-        $modelName = pluginSplit($this->_params['model']);
-        /*
-        if (isset($this->_setup[$modelName[1]])) {
-            $setup = $this->_setup[$modelName[1]];
-            if (isset($setup['rowActions'])) {
-                array_walk($setup['rowActions'], function ($action) {
-                    $this->_params['rowActions'][] = $action;
-                });
-            }
-        }
-        */
-
-        // @TODO Deprecated. Use white- and blacklist instead
-        if (isset($this->_params['exclude']) && !empty($this->_params['exclude'])) {
-            $this->_params['fieldsBlacklist'] = $this->_params['exclude'];
-            $this->_params['exclude'] = [];
-        }
-        // @TODO Deprecated. Use white- and blacklist instead
-        if (isset($this->_params['fields']['*'])) {
-            $this->_params['fieldsWhitelist'] = [];
-            unset($this->_params['fields']['*']);
-        }
-
-        if ($this->_params['fieldsWhitelist'] === true) {
-            $this->_params['fieldsWhitelist'] = array_keys($this->_params['fields']);
-        }
-
-        // callback listeners
-        if (isset($this->_params['rowActionCallbacks'])) {
-            foreach ($this->_params['rowActionCallbacks'] as $callback) {
-                $this->addRowCallback($callback);
-            }
-        }
-
-        // check model
-        //if (!$this->_params['model']) {
-        //    throw new \InvalidArgumentException('Missing parameter \'model\'');
-        //}
-
-        // apply data
-        $this->data($data);
+        parent::__construct($View, $config);
 
         $this->templater()->add([
+            'table_container' => '<div class="datatable-container">{{table}}{{pagination}}{{script}}</div>',
             'table' => '<table class="table table-striped"{{attrs}}>{{head}}{{body}}</table>',
             'head' => '<thead><tr>{{cellheads}}{{actionshead}}</tr></thead>',
             'headCell' => '<th{{attrs}}>{{content}}</th>',
@@ -176,7 +80,7 @@ class DataTableHelper extends Helper
             'body' => '<tbody>{{rows}}</tbody>',
             'row' => '<tr{{attrs}}>{{cells}}{{actionscell}}</tr>',
             'rowCell' => '<td{{attrs}}>{{content}}</td>',
-            'rowActionsCell' => '<td class="actions" style="text-align: right;">{{actions}}</td>',
+            'rowActionsCell' => '<td class="actions" style="text-align: right;"{{attrs}}>{{actions}}</td>',
             '_rowActionsCell' => '<td class="actions">
                 <div class="dropdown pull-right">
                     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -217,26 +121,161 @@ class DataTableHelper extends Helper
         ]);
         */
 
+    }
+
+    /**
+     * @param array $params
+     * - `model` string Model name
+     * - `data` array|Collection Table data
+     * - `id` string Html element id attribute
+     * - `class` string Html element class attribute
+     * - `fields` string|array List of entity fields used as columns. Accepts '*' as wildcard field. MUST BE used as
+     *      string parameter or as first item in list
+     * - `exclude` array List of entity fields to ignore.
+     * - `actions` array List of actions link. Accepts entity fields as string templates in url arrays (:[field])
+     *      e.g. [__('Edit'), ['action' => 'edit', 'id' => ':id']]
+     * - `paginate` boolean
+     * - `sortable` boolean
+     * - `filter` boolean
+     * - `reduce` array
+     *
+     */
+    public function create($params = [], $data = [])
+    {
+        if (isset($params['data']) && $params['data']) {
+            $data = $params['data'];
+            unset($params['data']);
+        }
+
+        $this->init($params);
+        $this->data($data);
+
+        return $this;
+    }
+
+    public function init($params)
+    {
+        // parse params
+        $this->setParam($this->_defaultParams, null, false);
+        $this->setParam($params);
+        //$this->_params = $params + $this->_defaultParams;
+        if (!$this->_params['id']) {
+            $this->_params['id'] = uniqid('dt');
+        }
+
+        // fields
+        // @TODO Deprecated. Use white- and blacklist instead
+        if (isset($this->_params['exclude']) && !empty($this->_params['exclude'])) {
+            $this->_params['fieldsBlacklist'] = $this->_params['exclude'];
+            $this->_params['exclude'] = [];
+        }
+        // @TODO Deprecated. Use white- and blacklist instead
+        if (isset($this->_params['fields']['*'])) {
+            $this->_params['fieldsWhitelist'] = [];
+            unset($this->_params['fields']['*']);
+        }
+
+        if ($this->_params['fieldsWhitelist'] === true) {
+            $this->_params['fieldsWhitelist'] = array_keys($this->_params['fields']);
+        }
+
+        // callback listeners
+        if (isset($this->_params['rowActionCallbacks'])) {
+            foreach ($this->_params['rowActionCallbacks'] as $callback) {
+                $this->addRowCallback($callback);
+            }
+        }
+
+        if (isset($this->_params['rowActions'])) {
+            $rowActions = $this->_params['rowActions'];
+            $this->addRowCallback(function($row) use ($rowActions) {
+                return $this->_applyRowActions($rowActions, $row);
+            });
+        }
+
+
+        $this->_initializeFields();
         $this->_initialize();
-    }
 
-    public function id()
-    {
-        if (!$this->_id) {
-            $this->_id = uniqid('dt');
+        if ($this->_setup === null) {
+            $event = $this->_View->eventManager()->dispatch(new Event('Backend.DataTable.create', $this));
         }
 
-        return $this->_id;
+        return $this;
     }
 
-    public function data($data = null)
+    /**
+     * Set datatable parameter
+     */
+    public function setParam($key, $val = null, $merge = true)
     {
-        if ($data === null) {
-            return $this->_params['data'];
+        if (is_array($key)) {
+            if ($merge === false) {
+                $this->_params = $key;
+            } else {
+                foreach($key as $_key => $_val) {
+                    $this->setParam($_key, $_val, $merge);
+                }
+            }
+            return $this;
         }
 
+        switch($key) {
+
+        }
+
+        $this->_params[$key] = $val;
+        return $this;
+    }
+
+    /**
+     * Get datatable parameter
+     *
+     * @param string|null $key Pass NULL to return all params
+     * @return mixed
+     */
+    public function getParam($key)
+    {
+        if ($key === null) {
+            return $this->_params;
+        }
+
+        if (isset($this->_params[$key])) {
+            return $this->_params[$key];
+        }
+
+        return null;
+    }
+
+    /**
+     * Alias for getParam()
+     */
+    public function param($key)
+    {
+        return $this->getParam($key);
+    }
+
+    /**
+     * Get data
+     *
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->_params['data'];
+    }
+
+    /**
+     * Set data
+     *
+     * @param mixed $data
+     * @return $this
+     */
+    public function setData($data)
+    {
         $this->_params['data'] = $data;
 
+        /*
         if (empty($this->_params['fieldsWhitelist'])) {
             if ($data instanceof CollectionInterface) {
                 $firstRow = $data->first();
@@ -248,11 +287,157 @@ class DataTableHelper extends Helper
                 $this->_params['fieldsWhitelist'] = array_keys($firstRow);
             }
         }
-        $this->_parseFields();
-
+        */
         return $this;
     }
 
+    /**
+     * Alias for get/setData()
+     */
+    public function data($data = null)
+    {
+        if ($data === null) {
+            return $this->getData();
+        }
+
+        return $this->setData($data);
+    }
+
+    public function addRowCallback(callable $callable)
+    {
+        $this->_rowCallbacks[] = $callable;
+        return $this;
+    }
+
+    public function beforeRenderFile(Event $event)
+    {
+        //debug("beforeRenderFile");
+    }
+
+    public function beforeRender(Event $event)
+    {
+        //debug("beforeRender");
+    }
+
+    public function beforeLayout(Event $event)
+    {
+        //debug("beforeLayout");
+    }
+
+    public function render($options = [])
+    {
+        $options += ['pagination' => null, 'script' => null];
+
+        $table = $this->_renderTable();
+
+        $pagination = "";
+        if ($this->_params['paginate'] && $options['pagination'] !== false) {
+            $pagination = $this->_renderPagination();
+        }
+
+        $script = "";
+        if ($options['script'] !== false) {
+            $script = $this->_renderScript();
+        }
+
+        $container = $this->templater()->format('table_container', [
+            'attrs' => $this->templater()->formatAttributes($options, ['pagination', 'table', 'script']),
+            'pagination' => $pagination,
+            'table' => $table,
+            'script' => $script
+        ]);
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use render() instread
+     */
+    public function renderAll()
+    {
+        return $this->render();
+    }
+
+    /**
+     * Implementation specific initializer method
+     * May be overridden in subclasses for different initialization
+     */
+    protected function _initialize()
+    {
+        // feature sorting
+        if ($this->_params['sortable']) {
+            //$this->_params = $this->Html->addClass($this->_params, 'sortable');
+            //$this->Html->script('$("#' . $this->param('id') . ' .dtable-row").sortable()', ['block' => true]);
+            //$this->_tableArgs['data-sortable'] = "true";
+        }
+
+        // feature row selection
+        if ($this->_params['select']) {
+            $this->_tableArgs['data-selectable'] = "true";
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function _initializeFields()
+    {
+        $fields = (array)$this->_params['fields'];
+        $this->_fields = [];
+        // configure each white-listed field
+        foreach ($this->_params['fieldsWhitelist'] as $field) {
+            // check black list
+            if (in_array($field, $this->_params['fieldsBlacklist'])) {
+                continue;
+            }
+
+            $fieldConfig = (isset($fields[$field])) ? $fields[$field] : [];
+            $this->_configureField($field, $fieldConfig);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function _configureField($field, array $conf = [])
+    {
+        if ($field == '*' || !is_string($field)) {
+            throw new \InvalidArgumentException('Field parameter MUST be a string value');
+        };
+
+        $conf += $this->_defaultField;
+
+        // defaults from table column schema
+        if (!isset($conf['schema']) && $this->_table()) {
+            $conf['schema'] = $column = $this->_table()->schema()->column($field);
+            if ($column && !$conf['type']) {
+                $conf['type'] = $column['type'];
+            }
+        }
+
+        // defaults
+        if (isset($conf['title']) && !isset($conf['label'])) {
+            $conf['label'] = $conf['title'];
+        }
+        if ($conf['label'] === null) {
+            $conf['label'] = Inflector::humanize($field);
+        }
+
+        $this->_fields[$field] = $conf;
+    }
+
+    protected function _getField($fieldName)
+    {
+        if (isset($this->_fields[$fieldName])) {
+            return $this->_fields[$fieldName];
+        }
+
+        return $this->_defaultField;
+    }
+
+    /**
+     * @return Table
+     */
     protected function _table()
     {
         if ($this->_table === null && $this->_params['model']) {
@@ -276,78 +461,9 @@ class DataTableHelper extends Helper
         return trim($class);
     }
 
-    protected function _parseFields()
+    protected function _renderTable()
     {
-        $fields = (array)$this->_params['fields'];
-
-        // configure each white-listed field
-        foreach ($this->_params['fieldsWhitelist'] as $field) {
-            // check black list
-            if (in_array($field, $this->_params['fieldsBlacklist'])) {
-                continue;
-            }
-
-            $fieldConfig = (isset($fields[$field])) ? $fields[$field] : [];
-            $this->_configureField($field, $fieldConfig);
-        }
-    }
-
-    protected function _configureField($field, array $conf = [])
-    {
-        if ($field == '*' || !is_string($field)) {
-            throw new \InvalidArgumentException('Field parameter MUST be a string value');
-        };
-
-        $conf += $this->_defaultFieldParams;
-
-        if (isset($conf['title']) && !isset($conf['label'])) {
-            $conf['label'] = $conf['title'];
-        }
-        if ($conf['label'] === null) {
-            $conf['label'] = Inflector::humanize($field);
-        }
-
-        $this->_fields[$field] = $conf;
-    }
-
-    protected function _getField($fieldName)
-    {
-        if (isset($this->_fields[$fieldName])) {
-            return $this->_fields[$fieldName];
-        }
-
-        return $this->_defaultFieldParams;
-    }
-
-    public function beforeRenderFile(Event $event)
-    {
-        //debug("beforeRenderFile");
-    }
-
-    public function beforeRender(Event $event)
-    {
-        //debug("beforeRender");
-    }
-
-    public function beforeLayout(Event $event)
-    {
-        //debug("beforeLayout");
-    }
-
-    public function renderAll()
-    {
-        $out = "";
-        $out .= $this->pagination();
-        $out .= $this->render();
-        $out .= $this->pagination();
-        $out .= $this->_renderScript();
-        $out .= $this->debug();
-        return $out;
-    }
-
-    public function render()
-    {
-        $tableAttributes = $this->_tableArgs + ['id' => $this->id()];
+        $tableAttributes = $this->_tableArgs + ['id' => $this->param('id')];
 
         //$entity = null;
         //if ($this->_params['model']) {
@@ -357,74 +473,74 @@ class DataTableHelper extends Helper
         $formStart = $this->Form->create(null, ['method' => 'GET', 'novalidate' => true, 'context' => false]);
         $table = $this->templater()->format('table', [
             'attrs' => $this->templater()->formatAttributes($tableAttributes),
-            'head' => $this->renderHead(),
-            'body' => $this->renderBody(),
+            'head' => $this->_renderHead(),
+            'body' => $this->_renderBody(),
         ]);
         $formEnd = $this->Form->end();
 
         return $formStart . $table . $formEnd;
     }
 
-    public function renderHead()
+    protected function _renderHead()
     {
         $headCellActions = '';
         if ($this->_params['rowActions'] !== false) {
             $headCellActions = $this->templater()->format('headCellActions', [
-               'content' => __('Actions')
+                'content' => __('Actions'),
+                'attrs' => $this->_buildFieldAttributes('_actions_', [
+                    'type' => 'object',
+                    'label' => 'Actions',
+                    'formatter' => 'actions',
+                    'formatterArgs' => []
+                ])
             ]);
         }
 
         $html = $this->templater()->format('head', [
-            'cellheads' => $this->renderHeadCells(),
+            'cellheads' => $this->_renderHeadCells(),
             'actionshead' => $headCellActions
         ]);
 
         return $html;
     }
 
-    public function renderHeadCells()
+    protected function _renderHeadCells()
     {
         $html = "";
         foreach ($this->_fields as $fieldName => $field) {
-            if ($this->_params['paginate']) {
-                $header = $this->Paginator->sort($fieldName, $field['label']);
-            } else {
-                $header = h($field['label']);
-            }
 
             $html .= $this->templater()->format('headCell', [
-                'content' => $header,
-                'attrs' => $this->templater()->formatAttributes([
-                    'class' => $field['class'],
-                    'title' => $field['label']
-                ])
+                'content' => $this->_buildPaginationFieldLabel($fieldName, $field),
+                'attrs' => $this->_buildFieldAttributes($fieldName, $field)
             ]);
         }
 
         return $html;
     }
 
-    public function renderBody()
+    protected function _renderBody()
     {
         $rows = "";
 
         // filter cells
-        $rows .= $this->renderFilterRow();
+        $rows .= $this->_renderFilterRow();
 
         // data cells
-        foreach ($this->_params['data'] as $row) {
-            $rows .= $this->renderRow($row);
+        if ($this->_params['data']) {
+            foreach ($this->_params['data'] as $row) {
+                $rows .= $this->_renderRow($row);
+            }
         }
 
         // reduce row
-        $rows .= $this->renderReduceRow();
+        $rows .= $this->_renderReduceRow();
 
         return $this->templater()->format('body', [
             'rows' => $rows,
         ]);
     }
 
-    public function renderFilterRow()
+    protected function _renderFilterRow()
     {
         if (!$this->_params['filter'] || empty($this->_params['filter'])) {
             return '';
@@ -496,7 +612,7 @@ class DataTableHelper extends Helper
         return $row;
     }
 
-    public function renderReduceRow()
+    protected function _renderReduceRow()
     {
         if (empty($this->_params['reduce'])) {
             return '';
@@ -518,10 +634,7 @@ class DataTableHelper extends Helper
 
             $html .= $this->templater()->format('rowCell', [
                 'content' => (string)$reducedData,
-                'attrs' => $this->templater()->formatAttributes([
-                    //'class' => $field['class'],
-                    //'title' => $field['title']
-                ])
+                'attrs' => ''
             ]);
         }
         $html .= $this->templater()->format('rowCell', ['content' => '']); // actions cell stub
@@ -530,35 +643,59 @@ class DataTableHelper extends Helper
         return $html;
     }
 
-    public function renderRow($row)
+    protected function _renderRow($row)
     {
         // data cells
-        $cells = $this->renderRowCells($row);
+        $cells = $this->_renderRowCells($row);
 
         // action cell
-        $rowActions = $rowActionsCell = '';
+        $rowActionsCell = '';
         if ($this->_params['rowActions'] !== false) {
-            $rowActionsHtml = $this->renderRowActions($row);
-            $rowActionsCell = $this->templater()->format('rowActionsCell', [
-                'actions' => $rowActionsHtml,
-            ]);
+            $rowActionsCell = $this->_renderRowActionsCell($row);
         }
 
         // row
-        $rowAttributes = [
-            'data-id' => (isset($row['id'])) ? $row['id'] : null,
-            //'class' => ''
-        ];
         $html = $this->templater()->format('row', [
-            'attrs' => $this->templater()->formatAttributes($rowAttributes),
             'cells' => $cells,
-            'actionscell' => $rowActionsCell
+            'actionscell' => $rowActionsCell,
+            'attrs' => $this->_buildRowAttributes($row)
         ]);
 
         return $html;
     }
 
-    public function renderRowCells($row)
+    protected function _renderRowActionsCell($row)
+    {
+        $rowActionsHtml = $this->_renderRowActions($row);
+        return $this->templater()->format('rowActionsCell', [
+            'actions' => $rowActionsHtml,
+            'attrs' => $this->_buildFieldAttributes('_actions_', ['type' => 'actions', 'label' => 'Actions', 'formatter' => null, 'formatterArgs' => []])
+        ]);
+    }
+
+    protected function _renderRowActions($row)
+    {
+        $row = (is_object($row)) ? $row->toArray() : $row;
+        $actions = [];
+
+        foreach ($this->_rowCallbacks as $callback) {
+            if ($result = call_user_func($callback, $row)) {
+                foreach ($result as $actionId => $action) {
+                    $actions[$actionId] = $action;
+                }
+            }
+        }
+
+        $icon = $this->Icon->create('gear');
+        $button = $this->Button->create($icon, [
+            'size' => 'xs',
+            'dropdown' => $actions
+        ]);
+
+        return $button;
+    }
+
+    protected function _renderRowCells($row)
     {
         $html = "";
 
@@ -568,20 +705,18 @@ class DataTableHelper extends Helper
         foreach ($this->_fields as $fieldName => $field) {
             $cellData = Hash::get($row, $fieldName);
 
-            $formatter = $field['formatter'];
-            unset($field['formatter']);
-            $formatterArgs = $field['formatterArgs'];
-            unset($field['formatterArgs']);
-
-            $formattedCellData = $this->_formatRowCellData($fieldName, $cellData, $formatter, $formatterArgs, $row);
-            $cellAttributes = $field;
-            $cellAttributes['data-row-id'] = $row->id;
-            $cellAttributes['data-field'] = $fieldName;
-            $cellAttributes['data-label'] = $field['label'];
+            // If formatter is passed as an array (and no callable construct)
+            // extract formatter name and args
+            // e.g. ['formatterName', 'arg1', 'arg2', ... ]
+            if (is_array($field['formatter']) && !is_object($field['formatter'][0])) {
+                $field['formatterArgs'] = $field['formatter'];
+                $field['formatter'] = array_pop($field['formatterArgs']);
+            }
+            $cellData = $this->_formatRowCellData($fieldName, $cellData, $field['formatter'], $field['formatterArgs'], $row);
 
             $html .= $this->templater()->format('rowCell', [
-                'content' => $formattedCellData,
-                'attrs' => $this->templater()->formatAttributes($cellAttributes, ['label', 'formatter', 'formatterArgs'])
+                'content' => $cellData,
+                'attrs' => $this->_buildFieldAttributes($fieldName, $field)
             ]);
 
             // reducer
@@ -610,86 +745,16 @@ class DataTableHelper extends Helper
         }
     }
 
-    /**
-     * Format cell data
-     *
-     * If $formatter is FALSE, no formatting will be done
-     * If $formatter is NULL, the default formatter will be used (escape text)
-     *
-     * @param $cellData
-     * @param bool $cellData
-     * @param array $formatter
-     * @param array $formatterArgs
-     * @return string
-     */
-    protected function _formatRowCellData($fieldName, $cellData, $formatter = null, $formatterArgs = [], $row = [])
+    protected function _renderPagination()
     {
-        return $this->Formatter->format($cellData, $formatter, $formatterArgs, $row);
-    }
+        //if (!$this->_params['paginate']) {
+        //    return '';
+        //}
 
-    public function renderRowActions($row = [])
-    {
-        $row = (is_object($row)) ? $row->toArray() : $row;
-        $actions = [];
-
-        foreach ($this->_rowCallbacks as $callback) {
-            if ($result = call_user_func($callback, $row)) {
-                foreach ($result as $actionId => $action) {
-                    $actions[$actionId] = $action;
-                }
-            }
-        }
-
-        //$this->_View->loadHelper('Bootstrap.Button');
-        //$this->_View->loadHelper('Bootstrap.Ui');
-
-        $icon = $this->Icon->create('gear');
-        $button = $this->Button->create($icon, [
-            'size' => 'xs',
-            'dropdown' => $actions
+        return $this->_View->element('Backend.Pagination/default', [
+            'counter' => ['format' => __('Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records')],
+            'numbers' => []
         ]);
-
-        return $button;
-    }
-
-    public function renderRowActionsOld(array $rowActions, $row = [])
-    {
-        $html = "";
-        $row = (is_object($row)) ? $row->toArray() : $row;
-        // rowActions
-        foreach ($rowActions as $rowAction) {
-            $title = $url = null;
-            $attr = [];
-
-            if (count($rowAction) == 1) {
-                list($title) = $rowAction;
-            } elseif (count($rowAction) == 2) {
-                list($title, $url) = $rowAction;
-            } elseif (count($rowAction) >= 3) {
-                list($title, $url, $attr) = $rowAction;
-            }
-
-            $title = $this->_replaceTokens($title, $row);
-            $url = $this->_replaceTokens($url, $row);
-            $attr = $this->_replaceTokens($attr, $row);
-
-            $rowActionLink = $this->Html->link($title, $url, $attr);
-
-            $html .= $this->templater()->format('rowAction', [
-                'content' => $rowActionLink
-            ]);
-        }
-
-        return $html;
-    }
-
-    public function pagination()
-    {
-        if (!$this->_params['paginate']) {
-            return;
-        }
-
-        return $this->_View->element('Backend.Pagination/default');
     }
 
     /**
@@ -719,11 +784,46 @@ class DataTableHelper extends Helper
         $this->Html->scriptBlock($script, $options);
     }
 
-    public function debug()
+    protected function _buildPaginationFieldLabel($fieldName, $field)
     {
-        if (isset($this->_params['debug']) && $this->_params['debug'] === true) {
-            //debug($this->_params);
+        if ($this->_params['paginate'] && $this->_params['sortable']) {
+            return $this->Paginator->sort($fieldName, $field['label']);
         }
+
+        return h($field['label']);
+    }
+
+    protected function _buildRowAttributes($row)
+    {
+        $rowAttributes = [
+            'data-id' => (isset($row['id'])) ? $row['id'] : null,
+        ];
+        return $this->templater()->formatAttributes($rowAttributes);
+    }
+
+    protected function _buildFieldAttributes($fieldName, $field)
+    {
+        $field['data-name'] = $fieldName;
+        $field['data-label'] = $field['label'];
+        $field['data-type'] = $field['type'];
+        return $this->templater()->formatAttributes($field, array_keys($this->_defaultField));
+    }
+
+    /**
+     * Format cell data
+     *
+     * If $formatter is FALSE, no formatting will be done
+     * If $formatter is NULL, the default formatter will be used (escape text)
+     *
+     * @param $cellData
+     * @param bool $cellData
+     * @param array $formatter
+     * @param array $formatterArgs
+     * @return string
+     */
+    protected function _formatRowCellData($fieldName, $cellData, $formatter = null, $formatterArgs = [], $row = [])
+    {
+        return $this->Formatter->format($cellData, $formatter, $formatterArgs, $row);
     }
 
     protected function _renderScript()
@@ -754,7 +854,7 @@ class DataTableHelper extends Helper
         //
         // Jquery UI Sortable DataTable
         //
-        if (el.attr('data-sortable') == 1) {
+        if (el.attr('data-ui-sortable') == 1) {
 
             console.log("init sortable for dt " + dtId);
 
@@ -817,7 +917,7 @@ class DataTableHelper extends Helper
 SCRIPT;
 
         $replace = [
-            '/__DATATABLE_ID__/' => $this->id(),
+            '/__DATATABLE_ID__/' => $this->param('id'),
             '/__DATATABLE_MODEL__/' => $this->param('model'),
             '/__DATATABLE_SORTURL__/' => $this->Html->Url->build($this->param('sortable'))
         ];
@@ -825,6 +925,74 @@ SCRIPT;
         return preg_replace(array_keys($replace), array_values($replace), $script);
     }
 
+    protected function _applyRowActions(array $rowActions, $row = [])
+    {
+        $row = (is_object($row)) ? $row->toArray() : $row;
+        // rowActions
+        $actions = [];
+        foreach ($rowActions as $actionId => $rowAction) {
+            $title = $url = null;
+            $attr = [];
+
+            if (count($rowAction) == 1) {
+                list($title) = $rowAction;
+            } elseif (count($rowAction) == 2) {
+                list($title, $url) = $rowAction;
+            } elseif (count($rowAction) >= 3) {
+                list($title, $url, $attr) = $rowAction;
+            }
+
+            $title = $this->_replaceTokens($title, $row);
+            $url = $this->_replaceTokens($url, $row);
+            $attr = $this->_replaceTokens($attr, $row);
+
+            //$rowActionLink = $this->Html->link($title, $url, $attr);
+
+            //$html .= $this->templater()->format('rowAction', [
+            //    'content' => $rowActionLink
+            //]);
+            $actions[$actionId] = compact('title', 'url', 'attr');
+        }
+
+        return $actions;
+    }
+
+    /*
+     * @deprecated
+     */
+    protected function _renderRowActionsOld(array $rowActions, $row = [])
+    {
+        $html = "";
+        $row = (is_object($row)) ? $row->toArray() : $row;
+        // rowActions
+        foreach ($rowActions as $rowAction) {
+            $title = $url = null;
+            $attr = [];
+
+            if (count($rowAction) == 1) {
+                list($title) = $rowAction;
+            } elseif (count($rowAction) == 2) {
+                list($title, $url) = $rowAction;
+            } elseif (count($rowAction) >= 3) {
+                list($title, $url, $attr) = $rowAction;
+            }
+
+            $title = $this->_replaceTokens($title, $row);
+            $url = $this->_replaceTokens($url, $row);
+            $attr = $this->_replaceTokens($attr, $row);
+
+            $rowActionLink = $this->Html->link($title, $url, $attr);
+
+            $html .= $this->templater()->format('rowAction', [
+                'content' => $rowActionLink
+            ]);
+        }
+
+        return $html;
+    }
+    /**
+     * @deprecated Unused
+     */
     protected function _replaceTokens($tokenStr, $data = [])
     {
         if (is_array($tokenStr)) {

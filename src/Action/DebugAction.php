@@ -10,6 +10,7 @@ use Cake\Network\Response;
 
 class DebugAction implements ActionInterface, IndexActionInterface
 {
+    public $template;
 
     /**
      * @return string
@@ -67,6 +68,7 @@ class DebugAction implements ActionInterface, IndexActionInterface
     {
         $controller->set('controller_actions', $controller->actions);
 
+        // Actions
         $actionsLoaded = [];
         $actions = $controller->Action->listActions();
         array_walk($actions, function($action) use (&$actionsLoaded, &$controller) {
@@ -80,5 +82,13 @@ class DebugAction implements ActionInterface, IndexActionInterface
             ];
         });
         $controller->set('loaded_actions', $actionsLoaded);
+
+        // Model
+        if ($controller->modelClass) {
+            $Model = $controller->loadModel($controller->modelClass);
+            $schema = $Model->schema();
+            $controller->set('model_class', $controller->modelClass);
+            $controller->set('model_schema', $schema);
+        }
     }
 }

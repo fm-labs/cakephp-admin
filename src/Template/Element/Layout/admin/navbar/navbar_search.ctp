@@ -1,4 +1,5 @@
 <?php
+return;
 $searchUrl = Cake\Core\Configure::read('Backend.Search.searchUrl');
 if (!$searchUrl) {
     //echo 'Backend.Search: Search Url not defined';

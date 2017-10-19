@@ -132,6 +132,7 @@ desired effect
 <?= $this->Html->script('/backend/js/adminlte/bootstrap/bootstrap.min.js'); ?>
 <?= $this->Html->script('/backend/js/adminlte/app.js'); ?>
 <?= $this->Html->script('/backend/libs/underscore/underscore-min.js'); ?>
+<?= $this->Html->script('/backend/js/momentjs/moment.min.js'); ?>
 <?= $this->Html->script('/backend/js/backend.js'); ?>
 <?= $this->Html->script('/backend/js/iconify.js'); ?>
 <?= $this->fetch('script'); ?>

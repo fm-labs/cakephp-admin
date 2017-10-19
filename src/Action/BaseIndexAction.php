@@ -32,9 +32,14 @@ abstract class BaseIndexAction implements IndexActionInterface
 
     protected $_controller;
 
+    public $template = null;
+
+    protected $_request;
+
     public function __construct(Controller $controller, array $config = [])
     {
         $this->_controller = $controller;
+        $this->_request =& $controller->request;
     }
 
     /**
@@ -83,6 +88,11 @@ abstract class BaseIndexAction implements IndexActionInterface
         // load helpers
         if (isset($controller->viewVars['helpers'])) {
             $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
+        }
+
+        // custom template
+        if (isset($controller->viewVars['template'])) {
+            $this->template = $controller->viewVars['template'];
         }
 
         // actions

@@ -205,6 +205,14 @@ class DataTableHelper extends Helper
     }
 
     /**
+     * Convenience wrapper to get ID param
+     */
+    public function id()
+    {
+        return $this->getParam('id');
+    }
+
+    /**
      * Set datatable parameter
      */
     public function setParam($key, $val = null, $merge = true)

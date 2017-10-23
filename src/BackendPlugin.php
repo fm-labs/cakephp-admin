@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Routing\Router;
+use Settings\SettingsManager;
 
 class BackendPlugin implements EventListenerInterface
 {
@@ -23,10 +24,80 @@ class BackendPlugin implements EventListenerInterface
     public function implementedEvents()
     {
         return [
-            'Settings.get' => 'getSettings',
+            'Settings.build' => 'buildSettings',
             'Backend.Menu.get' => ['callable' => 'getBackendMenu', 'priority' => 99 ],
             'Backend.Routes.build' => ['callable' => 'buildBackendRoutes', 'priority' => 99 ]
         ];
+    }
+
+
+    /**
+     * @param Event $event
+     */
+    public function buildSettings(Event $event)
+    {
+        if ($event->subject() instanceof SettingsManager) {
+            $event->subject()->add('Backend', [
+                'Dashboard.title' => [
+                    'type' => 'string',
+                    'input' => [
+                        'type' => 'text',
+                        'placeholder' => 'Foo'
+                    ],
+                    'default' => 'Backend'
+                ],
+                'Security.enabled' => [
+                    'type' => 'boolean',
+                    'inputType' => null,
+                    'input' => [
+                        'placeholder' => 'Foo'
+                    ],
+                ],
+
+                'AdminLte.skin_class' => [
+                    'type' => 'string',
+                    'input' => [
+                        'type' => 'select',
+                        'options' => [
+                            'skin-blue'     => 'Blue',
+                            'skin-yellow'   => 'Yellow',
+                            'skin-red'      => 'Red',
+                            'skin-purple'   => 'Purple',
+                            'skin-black'    => 'Blue',
+                            'skin-green'    => 'Green',
+                        ]
+                    ],
+                    'default' => 'skin-blue'
+                ],
+
+                'AdminLte.layout_class' => [
+                    'type' => 'string',
+                    'input' => [
+                        'type' => 'select',
+                        'empty' => true,
+                        'options' => [
+                            'fixed'             => 'Fixed',
+                            'layout-boxed'      => 'Layout Boxed',
+                            'layout-top-nav'    => 'Layout Top Nav',
+                        ]
+                    ],
+                    'default' => null
+                ],
+
+                'AdminLte.sidebar_class' => [
+                    'type' => 'string',
+                    'input' => [
+                        'type' => 'select',
+                        'empty' => true,
+                        'options' => [
+                            'sidebar-mini'     => 'Sidebar Mini',
+                            'sidebar-collapse'     => 'Sidebar Collapse',
+                        ]
+                    ],
+                    'default' => null
+                ]
+            ]);
+        }
     }
 
     public function getSettings(Event $event)

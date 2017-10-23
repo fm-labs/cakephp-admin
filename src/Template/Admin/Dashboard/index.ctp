@@ -4,7 +4,13 @@
     <div class="row">
         <?php foreach ((array) \Cake\Core\Configure::read('Backend.Dashboard.elements') as $element => $elementConfig): ?>
         <div class="col-md-6">
-            <?= $this->element($element, $elementConfig); ?>
+            <?php
+            try {
+                $this->element($element, $elementConfig);
+            } catch (\Exception $ex) {
+                debug($ex->getMessage());
+            }
+            ?>
         </div>
         <?php endforeach; ?>
     </div>

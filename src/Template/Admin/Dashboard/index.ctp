@@ -8,23 +8,11 @@
             try {
                 $this->element($element, $elementConfig);
             } catch (\Exception $ex) {
-                debug($ex->getMessage());
+                echo '<div class="alert alert-danger">' . $ex->getMessage() . '</div>';
             }
             ?>
         </div>
         <?php endforeach; ?>
     </div>
-
-    <!--
-    <p>
-        This is the default template for your personal dashboard page.
-        <br /><br />
-        If you want to customize this page,<br />
-        create <span style="font-style: italic;">src/Template/Plugin/Backend/Dashboard/index.ctp</span>
-        <br /><br />
-        Or set the 'Backend.Dashboard.url' value in <span style="font-style: italic;">config/backend.php</span>
-        to a custom controller action
-    </p>
-    -->
 
 </div>

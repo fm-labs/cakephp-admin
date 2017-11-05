@@ -95,6 +95,12 @@ abstract class BaseIndexAction implements IndexActionInterface
             $this->template = $controller->viewVars['template'];
         }
 
+        // fields
+        if (empty($this->_config['fields'])) {
+            $cols = $this->model()->schema()->columns();
+            $this->_config['fields'] = $cols;
+        }
+
         // actions
         if ($this->_config['actions'] !== false) {
             $event = $controller->dispatchEvent('Backend.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);

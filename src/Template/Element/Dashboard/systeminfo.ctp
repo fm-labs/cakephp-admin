@@ -2,7 +2,7 @@
     <h3>Systeminfo</h3>
     <dl class="dl-horizontal">
         <dt>Backend Version</dt>
-        <dd><?= h(\Backend\Lib\Backend::version()); ?></dd>
+        <dd><?= h(\Backend\Backend::version()); ?></dd>
         <dt>Cake PHP Version</dt>
         <dd><?= h(\Cake\Core\Configure::version()); ?></dd>
     </dl>

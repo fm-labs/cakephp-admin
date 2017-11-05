@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Mod;
+namespace Backend\Service;
 
+use Backend\BackendService;
 use Cake\Event\Event;
-use Cake\Event\EventListenerInterface;
 
-class ModTree implements EventListenerInterface
+class TreeService extends BackendService
 {
     public function implementedEvents()
     {

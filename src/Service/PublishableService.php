@@ -1,12 +1,12 @@
 <?php
 
-namespace Backend\Mod;
+namespace Backend\Service;
 
 use Backend\Action\EditAction;
+use Backend\BackendService;
 use Cake\Event\Event;
-use Cake\Event\EventListenerInterface;
 
-class ModPublishable implements EventListenerInterface
+class PublishableService extends BackendService
 {
     public function implementedEvents()
     {

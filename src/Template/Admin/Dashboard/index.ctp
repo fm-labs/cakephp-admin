@@ -1,4 +1,6 @@
 <?php $this->Breadcrumbs->add(__('Dashboard'), ['controller' => 'Dashboard', 'action' => 'index']); ?>
+<?php $this->assign('title', "Dashboard"); ?>
+
 <div id="backend-user-dashboard" class="backend dashboard index">
 
     <div class="row">
@@ -6,7 +8,8 @@
         <div class="col-md-6">
             <?php
             try {
-                $this->element($element, $elementConfig);
+                echo $this->element($element, $elementConfig);
+                echo '<p>' . $element . '</p>';
             } catch (\Exception $ex) {
                 echo '<div class="alert alert-danger">' . $ex->getMessage() . '</div>';
             }

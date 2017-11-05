@@ -2,16 +2,20 @@
 $this->loadHelper('Backend.FooTable');
 ?>
 <div class="index">
-    <?php
-    $table = $this->get('dataTable');
-    //$table['id'] = 'foo-table';
-    echo $this->FooTable->create($table)
-        //->setData($this->get('result'))
-        ->render(['script' => false]);
-    $domId = $this->FooTable->param('id');
-    //$rowsUrl = \Cake\Routing\Router::url(['plugin' => 'Backend', 'controller' => 'FooTables', 'action' => 'rows', 'model' => $table['model']]);
-    $rowsUrl = $this->get('rowsUrl', '');
-    ?>
+    <div class="box">
+        <div class="box-body">
+            <?php
+            $table = $this->get('dataTable');
+            //$table['id'] = 'foo-table';
+            echo $this->FooTable->create($table)
+                ->setData($this->get('result'))
+                ->render(['script' => false]);
+            $domId = $this->FooTable->param('id');
+            //$rowsUrl = \Cake\Routing\Router::url(['plugin' => 'Backend', 'controller' => 'FooTables', 'action' => 'rows', 'model' => $table['model']]);
+            $rowsUrl = $this->get('rowsUrl', '');
+            ?>
+        </div>
+    </div>
     <?php debug($rowsUrl); ?>
     <?php debug($table); ?>
 </div>
@@ -100,8 +104,12 @@ $this->loadHelper('Backend.FooTable');
                         ft.pageCount(rows.pageCount);
                         ft.rows.load(rows.data);
 
+                        setTimeout(function() {
+                            Backend.Renderer.trigger('docready', ft.$el);
+                        }, 50);
+
                     });
-                })
+                });
             },
 
             predraw: function() {

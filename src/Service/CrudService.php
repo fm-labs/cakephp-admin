@@ -1,11 +1,11 @@
 <?php
 
-namespace Backend\Mod;
+namespace Backend\Service;
 
+use Backend\BackendService;
 use Cake\Event\Event;
-use Cake\Event\EventListenerInterface;
 
-class ModCrud implements EventListenerInterface
+class CrudService extends BackendService
 {
     public function implementedEvents()
     {

@@ -3,15 +3,21 @@
 namespace Backend;
 
 use Backend\Event\RouteBuilderEvent;
-use Backend\Lib\Backend;
+use Backend\Backend;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
+use Cake\Event\EventManager;
 use Cake\Routing\Router;
 use Settings\SettingsManager;
 
 class BackendPlugin implements EventListenerInterface
 {
+
+    /**
+     * @var Backend Instance of Backend
+     */
+    protected $backend;
 
     /**
      * Returns a list of events this object is implementing. When the class is registered
@@ -213,11 +219,8 @@ class BackendPlugin implements EventListenerInterface
 
     public function __invoke()
     {
-        Backend::registerListener('Controller', '\\Backend\\Mod\\ModTree');
-        Backend::registerListener('Controller', '\\Backend\\Mod\\ModCrud');
-        Backend::registerListener('Controller', '\\Backend\\Mod\\ModPublishable');
-        Backend::registerListener('Controller', '\\Backend\\Mod\\ModUi');
-        Backend::registerListener('Controller', '\\Backend\\Mod\\ModUiNavbar');
-        Backend::registerListener('Controller', '\\Backend\\Mod\\ModUiSidebar');
+        $this->backend = new Backend(EventManager::instance(), []);
+        $this->backend->loadServices();
+        $this->backend->initializeServices();
     }
 }

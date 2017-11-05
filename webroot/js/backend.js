@@ -9,7 +9,8 @@
         _jsLoaded: []
     };
 
-    Backend.init = function(settings) {
+    Backend.initialize = function(settings) {
+        console.log("Backend INIT");
         this.settings = settings;
         this.init = true;
     };
@@ -612,52 +613,6 @@
         return false;
     });
 
-
-
-    $(document).on('click','a[data-modal], a.link-modal-frame, a.link-frame-modal', function (ev) {
-
-        var $target = $(ev.target);
-        var modalOptions = {
-            //backdrop: $target.data('modalBackdrop'),
-            //show: $target.data('modalShow'),
-            //keyboard: $target.data('modalKeyboard')
-        };
-        var modalClass = $target.data('modalClass');
-        var modalTitle = $target.data('modalTitle') || ev.target.title || ev.target.innerText;
-        var modalReloadOnClose = $target.data('modalReload');
-
-        var url = $target.attr('href');
-        if (url.indexOf('?') > -1){
-            url += '&iframe=1'
-        }else{
-            url += '?iframe=1'
-        }
-
-        var $modal = Backend.Modal.openIframe(url, modalOptions, {
-            title: modalTitle,
-            class: modalClass
-        });
-
-        $modal.on('shown.bs.modal', function() {
-            console.log("iframe modal shown");
-        });
-        $modal.on('hidden.bs.modal', function() {
-            $target.closest('.ajax-content').trigger('reload');
-
-             if (modalReloadOnClose) {
-                //$target.closest('.ajax-content').trigger('reload');
-                 Backend.Frame.reloadClosest($target);
-             }
-        });
-
-        ev.stopPropagation();
-        ev.preventDefault();
-        return false;
-    });
-
-
-
-
 //
 // Bind history events
 // @TODO Move functionality to Backend.History
@@ -871,8 +826,8 @@
         });
 
 
-        $(scope).off('click','a.link-modal');
-        $(scope).on('click','a.link-modal', function (ev) {
+        $(scope).off('click','a[data-modal], a.link-modal');
+        $(scope).on('click','a[data-modal], a.link-modal', function (ev) {
 
             var $a = $(ev.target);
             var url = $a.attr('href');
@@ -896,6 +851,54 @@
             ev.preventDefault();
             return false;
         });
+
+
+
+        $(scope).off('click','a[data-modal-frame], a.link-modal-frame');
+        $(scope).on('click','a[data-modal-frame], a.link-modal-frame', function (ev) {
+
+            var $target = $(ev.target);
+            var modalOptions = {
+                //backdrop: $target.data('modalBackdrop'),
+                //show: $target.data('modalShow'),
+                //keyboard: $target.data('modalKeyboard')
+            };
+            var modalClass = $target.data('modalClass');
+            var modalTitle = $target.data('modalTitle') || ev.target.title || ev.target.innerText;
+            var modalReloadOnClose = $target.data('modalReload');
+
+            var url = $target.attr('href');
+            if (url.indexOf('?') > -1){
+                url += '&iframe=1'
+            }else{
+                url += '?iframe=1'
+            }
+
+            var $modal = Backend.Modal.openIframe(url, modalOptions, {
+                title: modalTitle,
+                class: modalClass
+            });
+
+            $modal.on('shown.bs.modal', function() {
+                console.log("iframe modal shown");
+            });
+            $modal.on('hidden.bs.modal', function() {
+                //$target.closest('.ajax-content').trigger('reload');
+
+                if (modalReloadOnClose) {
+                    //$target.closest('.ajax-content').trigger('reload');
+                    Backend.Frame.reloadClosest($target);
+                }
+            });
+
+            ev.stopPropagation();
+            ev.preventDefault();
+            return false;
+        });
+
+
+
+
 
         $(scope).find('div.flash > div').each(function() {
             var $flash = $(Backend.Flash.el);
@@ -967,6 +970,7 @@
 
     });
 
+    Backend.initialize();
     window.Backend = Backend;
 
 

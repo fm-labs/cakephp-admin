@@ -34,6 +34,7 @@ $this->loadHelper('Bootstrap.Tabs');
         </div>
         <div class="col-md-3">
             <?php
+            /*
             foreach((array) $this->get('form_elements') as $element) {
                 $element += ['helpers' => null, 'cell' => null, 'element' => null];
                 foreach ((array) $element['helpers'] as $helper) {
@@ -45,6 +46,7 @@ $this->loadHelper('Bootstrap.Tabs');
                     echo $this->element($element['element'], ['entity' => $entity, 'modelClass' => $modelClass]);
                 }
             }
+            */
             ?>
             <?php echo $this->fetch('form_elements', '--NO FORM ELEMENTS--'); ?>
         </div>

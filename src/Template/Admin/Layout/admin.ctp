@@ -8,18 +8,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
-
-    <!-- styles -->
-    <?= $this->Html->css('/backend/css/adminlte/bootstrap/css/bootstrap.min.css'); ?>
-    <?= $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css'); ?>
-    <?= $this->Html->css('/backend/libs/ionicons/css/ionicons.min.css'); ?>
-    <?= $this->Html->css('/backend/libs/flag-icon-css/css/flag-icon.min.css'); ?>
-    <?= $this->Html->css('/backend/css/adminlte/AdminLTE.min.css'); ?>
-    <?= ''//$this->Html->css('/backend/css/adminlte/skins/skin-blue.min.css'); ?>
     <?= $this->fetch('css') ?>
-    <?= $this->Html->css('Backend.layout/default'); ?>
-    <?= $this->Html->css('Backend.backend'); // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views ?>
-
     <!-- scripts -->
     <!--[if lt IE 9]>
     <?= $this->Html->script('/backend/libs/html5shiv/html5shiv.min.js'); ?>
@@ -52,16 +41,10 @@ desired effect
 <div class="wrapper">
 
     <!-- Main Header -->
-    <header class="main-header">
+    <?= $this->fetch('header'); ?>
 
-        <!-- Logo -->
-        <?= $this->element('Backend.Layout/admin/logo'); ?>
-
-        <!-- Header Navbar -->
-        <?= $this->element('Backend.Layout/admin/navbar'); ?>
-    </header>
     <!-- Left side column. contains the logo and sidebar -->
-    <?= $this->element('Backend.Layout/admin/sidebar'); ?>
+    <?= $this->fetch('sidebar'); ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div id="content" class="content-wrapper">
@@ -78,14 +61,11 @@ desired effect
 
         <!-- Toolbar wrapper -->
         <div class="toolbar-wrapper">
-            <?= $this->element('Backend.Layout/admin/toolbar'); ?>
+            <?= $this->fetch('toolbar'); ?>
         </div>
-
 
         <!-- Content Header (Page header) -->
-        <div class="content-header">
-            <?= $this->element('Backend.Layout/admin/header'); ?>
-        </div>
+        <?= $this->fetch('content_header'); ?>
 
         <!-- Left container -->
         <?php if ($this->fetch('left')): ?>
@@ -114,11 +94,11 @@ desired effect
 
     <!-- Main Footer -->
     <footer id="main-footer" class="main-footer">
-        <?= $this->element('Backend.Layout/admin/footer'); ?>
+        <?= $this->fetch('footer'); ?>
     </footer>
 
     <!-- Control Sidebar -->
-    <?= $this->element('Backend.Layout/admin/control_sidebar'); ?>
+    <?= $this->fetch('control_sidebar'); ?>
 
 </div>
 <!-- ./wrapper -->
@@ -129,12 +109,6 @@ desired effect
         sidebarExpandOnHover: false
     };
 </script>
-<?= $this->Html->script('/backend/js/adminlte/bootstrap/bootstrap.min.js'); ?>
-<?= $this->Html->script('/backend/js/adminlte/app.js'); ?>
-<?= $this->Html->script('/backend/libs/underscore/underscore-min.js'); ?>
-<?= $this->Html->script('/backend/js/momentjs/moment.min.js'); ?>
-<?= $this->Html->script('/backend/js/backend.js'); ?>
-<?= $this->Html->script('/backend/js/iconify.js'); ?>
 <?= $this->fetch('script'); ?>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

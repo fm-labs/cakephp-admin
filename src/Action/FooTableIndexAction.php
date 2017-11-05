@@ -121,26 +121,31 @@ class FooTableIndexAction extends IndexAction
     {
         $data = parent::_fetchResult()->toArray();
 
-        if ($this->_config['paginate']) {
-            $_modelName = pluginSplit($this->_config['modelClass']);
-            $count = $this->_request['paging'][$_modelName[1]]['count'];
-            $page = $this->_request['paging'][$_modelName[1]]['page'];
-            $pageCount = $this->_request['paging'][$_modelName[1]]['pageCount'];
-        } else {
-            $count = $pageCount = count($data);
-            $page = 1;
-        }
 
-        array_walk($data, function(&$row) {
+        if ($this->_config['ajax'] == true) {
+            if ($this->_config['paginate']) {
+                $_modelName = pluginSplit($this->_config['modelClass']);
+                $count = $this->_request['paging'][$_modelName[1]]['count'];
+                $page = $this->_request['paging'][$_modelName[1]]['page'];
+                $pageCount = $this->_request['paging'][$_modelName[1]]['pageCount'];
+            } else {
+                $count = $pageCount = count($data);
+                $page = 1;
+            }
 
-            $aRow = $row->toArray();
-            array_walk($aRow, function(&$val, $key) {
-                //$val = ['options' => ['expanded' => false, 'classes' => '_'], 'value' => $val];
+            array_walk($data, function(&$row) {
+
+                $aRow = $row->toArray();
+                array_walk($aRow, function(&$val, $key) {
+                    //$val = ['options' => ['expanded' => false, 'classes' => '_'], 'value' => $val];
+                });
+
+                $row = ['options' => ['expanded' => false, 'classes' => '_'], 'value' => $aRow];
             });
 
-            $row = ['options' => ['expanded' => false, 'classes' => '_'], 'value' => $aRow];
-        });
+            return compact('data', 'count', 'page', 'pageCount');
+        }
 
-        return compact('data', 'count', 'page', 'pageCount');
+        return $data;
     }
 }

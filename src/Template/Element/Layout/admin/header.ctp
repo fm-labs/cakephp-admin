@@ -1,11 +1,7 @@
-<?php
-if ($this->get('_no_header')) {
-    return;
-}
+<header class="main-header">
+    <!-- Logo -->
+    <?= $this->element('Backend.Layout/admin/header_logo'); ?>
 
-$this->loadHelpers('Breadcrumbs');
-$breadcrumbs = $this->Breadcrumbs->render(['class' => 'breadcrumb']);
-?>
-<h1>
-    <?= ($breadcrumbs) ?: $this->fetch('heading', $this->fetch('title')) ?>
-</h1>
+    <!-- Header Navbar -->
+    <?= $this->element('Backend.Layout/admin/header_navbar'); ?>
+</header>

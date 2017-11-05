@@ -43,8 +43,8 @@ class DataTableHelper extends Helper
         'id' => null,
         'class' => '',
         'fields' => [],
-        'fieldsWhitelist' => [],
-        'fieldsBlacklist' => [],
+        'fieldsWhitelist' => null,
+        'fieldsBlacklist' => null,
         'exclude' => [], //@deprecated Use Blacklist instead
         'actions' => [],
         'rowActions' => [],
@@ -170,13 +170,21 @@ class DataTableHelper extends Helper
             $this->_params['exclude'] = [];
         }
         // @TODO Deprecated. Use white- and blacklist instead
-        if (isset($this->_params['fields']['*'])) {
-            $this->_params['fieldsWhitelist'] = [];
-            unset($this->_params['fields']['*']);
+        //if (isset($this->_params['fields']['*'])) {
+        //    unset($this->_params['fields']['*']);
+        //    $this->_params['fieldsWhitelist'] = true;
+        //}
+
+
+        if (is_array($this->_params['fieldsWhitelist']) && empty($this->_params['fieldsWhitelist'])) {
+            $this->_params['fieldsWhitelist'] = null;
+        }
+        elseif ($this->_params['fieldsWhitelist'] === true) {
+            $this->_params['fieldsWhitelist'] = null;
         }
 
-        if ($this->_params['fieldsWhitelist'] === true) {
-            $this->_params['fieldsWhitelist'] = array_keys($this->_params['fields']);
+        if (is_array($this->_params['fieldsBlacklist']) && empty($this->_params['fieldsBlacklist'])) {
+            $this->_params['fieldsBlacklist'] = null;
         }
 
         // callback listeners
@@ -192,7 +200,6 @@ class DataTableHelper extends Helper
                 return $this->_applyRowActions($rowActions, $row);
             });
         }
-
 
         $this->_initializeFields();
         $this->_initialize();
@@ -392,14 +399,23 @@ class DataTableHelper extends Helper
     {
         $fields = (array)$this->_params['fields'];
         $this->_fields = [];
-        // configure each white-listed field
-        foreach ($this->_params['fieldsWhitelist'] as $field) {
-            // check black list
-            if (in_array($field, $this->_params['fieldsBlacklist'])) {
+
+        foreach ($fields as $field => $fieldConfig) {
+            if (is_numeric($field)) {
+                $field = $fieldConfig;
+                $fieldConfig = [];
+            }
+
+            if (is_array($this->_params['fieldsWhitelist']) && !in_array($field, $this->_params['fieldsWhitelist'])) {
+                //debug("field $field is NOT whitelisted");
                 continue;
             }
 
-            $fieldConfig = (isset($fields[$field])) ? $fields[$field] : [];
+            if (is_array($this->_params['fieldsBlacklist']) && in_array($field, $this->_params['fieldsBlacklist'])) {
+                //debug("field $field is blacklisted");
+                continue;
+            }
+
             $this->_configureField($field, $fieldConfig);
         }
     }

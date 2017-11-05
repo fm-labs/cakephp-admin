@@ -72,7 +72,6 @@ body {
 }
 .content-wrapper {
   padding-bottom: 100px;
-  background-color: #FFF;
 }
 .flash-wrapper > .alert {
   margin: 0;
@@ -92,13 +91,14 @@ body {
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
 }
-.content-header {
-  padding: 5px 15px 0 15px;
-}
-.content-header > h1 ul {
-  margin: 0 0 5px 0;
-  padding: 0;
-  background-color: transparent;
+.content-header > h1 {
+  /*
+  ul {
+    margin: 0 0 5px 0;
+    padding: 0;
+    background-color: transparent;
+  }
+  */
 }
 /** Sidebar **/
 .sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right) {
@@ -193,8 +193,6 @@ body{
  */
 h1 {
   font-size: 1.5em;
-  border-bottom: 1px solid #CCC;
-  padding: 0.2em 0;
 }
 h2 {
   font-size: 1.25em;
@@ -773,6 +771,9 @@ body.be-sidebar-sm {
 /* Tabs */
 .tabs .nav-tabs li:first-child {
   margin-left: 10px;
+}
+.tabs .tab-content {
+  background-color: #FFF;
 }
 .tabs .tab-content > .tab-pane.active {
   box-shadow: 0px 2px 2px #CCC;

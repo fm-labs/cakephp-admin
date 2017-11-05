@@ -2,7 +2,7 @@
 
 namespace Backend\Controller\Component;
 
-use Backend\Lib\Backend;
+use Backend\Backend;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
 use Cake\Controller\Exception\MissingComponentException;

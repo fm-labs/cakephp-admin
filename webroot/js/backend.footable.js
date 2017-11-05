@@ -1,4 +1,4 @@
-(function($, Backend) {
+(function($) {
 
 
     if (typeof FooTable === "undefined") {
@@ -28,11 +28,11 @@
 
 
 
-    if (typeof Backend === "undefined") {
+    if (typeof window.Backend === "undefined") {
         console.warn("Backend FooTable: Missing Backend instance");
     }
 
-    Backend = Backend || {};
+    Backend = window.Backend || {};
     Backend.FooTable = Backend.FooTable || {};
     Backend.FooTable.Formatters = Backend.FooTable.Formatters || {};
 
@@ -56,7 +56,7 @@
         return '<span class="related">' + val + '</span>';
     };
 
-    Backend.FooTable.Formatters.mediafile = function(value, options, rowData){
+    Backend.FooTable.Formatters.media_file = Backend.FooTable.Formatters.mediafile = function(value, options, rowData){
         if (value === null || typeof value !== "object") return '<img width="30" src="" />';
 
         return  '<a href="' + value.full_url +'" target="_blank" data-original-value="' + value.path +'">' +
@@ -136,4 +136,4 @@
         }
     };
 
-})(jQuery, Backend);
+})(jQuery);

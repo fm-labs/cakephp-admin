@@ -1,19 +1,23 @@
 <?php
 
-namespace Backend\Mod;
+namespace Backend\Service;
 
+use Backend\BackendService;
 use Backend\View\BackendView;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Event\EventListenerInterface;
-use Cake\Utility\Inflector;
 
-class ModUiNavbar implements EventListenerInterface
+class LayoutNavbarService extends BackendService
 {
     public function implementedEvents()
     {
-        return ['View.beforeLayout' => ['callable' => 'beforeLayout']];
+        return [
+            'View.beforeRender' => ['callable' => 'beforeRender'],
+            'View.beforeLayout' => ['callable' => 'beforeLayout']
+        ];
     }
+
+    public function beforeRender(Event $event) {}
 
     public function beforeLayout(Event $event)
     {
@@ -24,10 +28,10 @@ class ModUiNavbar implements EventListenerInterface
 
                 ],
                 'backend_navbar_right' => [
-                    'search' => ['element' => 'Backend.Layout/admin/navbar/navbar_search'],
-                    'messages' => ['element' => 'Backend.Layout/admin/navbar/navbar_messages'],
-                    'notifications' => ['element' => 'Backend.Layout/admin/navbar/navbar_notifications'],
-                    'tasks' => ['element' => 'Backend.Layout/admin/navbar/navbar_tasks'],
+                    //'search' => ['element' => 'Backend.Layout/admin/navbar/navbar_search'],
+                    //'messages' => ['element' => 'Backend.Layout/admin/navbar/navbar_messages'],
+                    //'notifications' => ['element' => 'Backend.Layout/admin/navbar/navbar_notifications'],
+                    //'tasks' => ['element' => 'Backend.Layout/admin/navbar/navbar_tasks'],
                     'user' => ['element' => 'Backend.Layout/admin/navbar/navbar_user'],
                 ],
             ];

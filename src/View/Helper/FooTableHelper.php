@@ -2,6 +2,7 @@
 
 namespace Backend\View\Helper;
 
+use Cake\Event\Event;
 use Cake\View\View;
 
 class FooTableHelper extends DataTableHelper
@@ -20,6 +21,12 @@ class FooTableHelper extends DataTableHelper
     public function __construct(View $View, array $config = [])
     {
         parent::__construct($View, $config);
+
+    }
+
+    public function beforeLayout(Event $event)
+    {
+        parent::beforeLayout($event);
 
         $this->Html->css('Backend./js/footable-bootstrap/css/footable.bootstrap.css', ['block' => true]);
         $this->Html->script('Backend./js/footable-bootstrap/js/footable.js', ['block' => true]);
@@ -41,7 +48,7 @@ class FooTableHelper extends DataTableHelper
     {
         $extra = $this->_params['extra'];
 
-        $this->_tableArgs['data-empty'] = "No data available";
+        $this->_tableArgs['data-empty'] = "Loading ...";
 
         // paging component
         //@todo Record start and -end in paging count format

@@ -26,5 +26,6 @@ class DashboardController extends AppController
      */
     public function backend()
     {
+        $this->Flash->warning('Dashboard::backend is deprecated');
     }
 }

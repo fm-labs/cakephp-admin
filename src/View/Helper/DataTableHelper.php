@@ -5,6 +5,7 @@ namespace Backend\View\Helper;
 use Cake\Collection\CollectionInterface;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
+use Cake\ORM\Association;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Hash;
@@ -45,7 +46,6 @@ class DataTableHelper extends Helper
         'fields' => [],
         'fieldsWhitelist' => null,
         'fieldsBlacklist' => null,
-        'exclude' => [], //@deprecated Use Blacklist instead
         'actions' => [],
         'rowActions' => [],
         'paginate' => false,
@@ -163,19 +163,16 @@ class DataTableHelper extends Helper
             $this->_params['id'] = uniqid('dt');
         }
 
-        // fields
-        // @TODO Deprecated. Use white- and blacklist instead
-        if (isset($this->_params['exclude']) && !empty($this->_params['exclude'])) {
-            $this->_params['fieldsBlacklist'] = $this->_params['exclude'];
-            $this->_params['exclude'] = [];
+        // model
+        if ($this->_params['model'] instanceof Table) {
+            $this->_table = $this->_params['model'];
+            $this->_params['model'] = $this->_table->alias();
+        } elseif ($this->_params['model'] instanceof Association) {
+            $this->_table = $this->_params['model']->target();
+            $this->_params['model'] = $this->_table->alias();
         }
-        // @TODO Deprecated. Use white- and blacklist instead
-        //if (isset($this->_params['fields']['*'])) {
-        //    unset($this->_params['fields']['*']);
-        //    $this->_params['fieldsWhitelist'] = true;
-        //}
 
-
+        // fields whitelist
         if (is_array($this->_params['fieldsWhitelist']) && empty($this->_params['fieldsWhitelist'])) {
             $this->_params['fieldsWhitelist'] = null;
         }
@@ -183,8 +180,14 @@ class DataTableHelper extends Helper
             $this->_params['fieldsWhitelist'] = null;
         }
 
+        // fields blacklist
         if (is_array($this->_params['fieldsBlacklist']) && empty($this->_params['fieldsBlacklist'])) {
             $this->_params['fieldsBlacklist'] = null;
+        }
+
+        // fields
+        if (empty($this->_params['fields']) && $this->_params['model']) {
+            $this->_params['fields'] = $this->_table()->schema()->columns();
         }
 
         // callback listeners

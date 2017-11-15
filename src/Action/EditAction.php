@@ -4,6 +4,8 @@ namespace Backend\Action;
 use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\ORM\Association;
+use Cake\Utility\Inflector;
 
 /**
  * Class EditAction
@@ -34,12 +36,33 @@ class EditAction extends BaseEntityAction
 
     protected function _execute(Controller $controller)
     {
-        //return $controller->render();
         if (isset($controller->viewVars['_entity']) && isset($controller->viewVars[$controller->viewVars['_entity']])) {
-            $controller->set('entity', $controller->viewVars[$controller->viewVars['_entity']]);
+            $entity = $controller->viewVars[$controller->viewVars['_entity']];
+        } else {
+            $entity = $this->entity();
         }
 
+        if ($this->_request->is(['put', 'post'])) {
+            $entity = $this->model()->patchEntity($entity, $this->_request->data);
+            if ($this->model()->save($entity)) {
+                $this->_flashSuccess(__('Records updated'));
+                $this->_redirect(['action' => 'index']);
+            } else {
+                $this->_flashError();
+            }
+        }
+
+        $controller->set('entity', $entity);
         $controller->set('modelClass', $controller->modelClass);
+
+        // associated
+        foreach ($this->model()->associations() as $assoc) {
+            if ($assoc->type() == Association::MANY_TO_ONE) {
+                $var = Inflector::pluralize($assoc->property());
+                $list = $assoc->target()->find('list')->toArray();
+                $controller->set($var, $list);
+            }
+        }
 
         /*
         foreach ($controller->Action->listActions() as $actionName) {

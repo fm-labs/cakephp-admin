@@ -27,8 +27,6 @@ $this->loadHelper('Bootstrap.Tabs');
             <?php if ($this->fetch('content')) {
                 echo $this->fetch('content');
             } else {
-                //echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render();
-
                 echo $this->Form->create($entity);
                 echo $this->Form->allInputs();
                 echo $this->Form->button(__('Submit'));
@@ -38,22 +36,7 @@ $this->loadHelper('Bootstrap.Tabs');
 
         </div>
         <div class="col-md-3">
-            <?php
-            /*
-            foreach((array) $this->get('form_elements') as $element) {
-                $element += ['helpers' => null, 'cell' => null, 'element' => null];
-                foreach ((array) $element['helpers'] as $helper) {
-                    $this->loadHelper($helper);
-                }
-                if (isset($element['cell'])) {
-                    echo $this->cell($element['cell'], [['entity' => $entity, 'modelClass' => $modelClass]]);
-                } elseif (isset($element['element'])) {
-                    echo $this->element($element['element'], ['entity' => $entity, 'modelClass' => $modelClass]);
-                }
-            }
-            */
-            ?>
-            <?php echo $this->fetch('form_elements', '--NO FORM ELEMENTS--'); ?>
+            <?php echo $this->fetch('form_elements'); ?>
         </div>
     </div>
 

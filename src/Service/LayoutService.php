@@ -62,9 +62,9 @@ class LayoutService extends BackendService
             // header
             $event->subject()->Blocks->set('header', $event->subject()->element('Backend.Layout/admin/header'));
             // toolbar
-            $event->subject()->Blocks->set('toolbar', $event->subject()->element('Backend.Layout/admin/toolbar'));
+            //$event->subject()->Blocks->set('toolbar', $event->subject()->element('Backend.Layout/admin/toolbar'));
             // sidebar
-            $event->subject()->Blocks->set('toolbar', $event->subject()->element('Backend.Layout/admin/sidebar'));
+            $event->subject()->Blocks->set('sidebar', $event->subject()->element('Backend.Layout/admin/sidebar'));
             // content_header
             $event->subject()->Blocks->set('content_header', $event->subject()->element('Backend.Layout/admin/content_header'));
             // footer

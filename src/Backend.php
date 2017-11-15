@@ -40,6 +40,7 @@ class Backend
             'Backend.Tree' => true,
             'Backend.LayoutNavbar' => true,
             'Backend.LayoutSidebar' => true,
+            'Backend.LayoutToolbar' => true,
             'Backend.Layout' => true,
         ]
     ];

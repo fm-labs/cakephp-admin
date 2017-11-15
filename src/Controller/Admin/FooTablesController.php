@@ -11,7 +11,7 @@ class FooTablesController extends AppController
 
     public function index()
     {
-        $this->viewBuilder()->layout(false);
+        //$this->viewBuilder()->layout(false);
     }
 
     public function columns()

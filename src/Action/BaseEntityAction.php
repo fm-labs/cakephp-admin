@@ -13,7 +13,7 @@ use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 
-abstract class BaseEntityAction implements EntityActionInterface
+abstract class BaseEntityAction extends BaseAction implements EntityActionInterface
 {
     /**
      * @var array
@@ -21,11 +21,6 @@ abstract class BaseEntityAction implements EntityActionInterface
     protected $_defaultConfig = [
         'actions' => []
     ];
-
-    /**
-     * @var array
-     */
-    protected $_config = [];
 
     /**
      * @var EntityInterface
@@ -36,40 +31,6 @@ abstract class BaseEntityAction implements EntityActionInterface
      * @var array List of enabled scopes
      */
     protected $_scope = [];
-
-    public function __construct(Controller $controller, array $config = [])
-    {
-
-    }
-
-    public $template = null;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAlias()
-    {
-        $class = explode('\\', get_class($this));
-        $class = array_pop($class);
-        return substr($class, 0, -6);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLabel()
-    {
-        $alias = $this->getAlias();
-        return Inflector::humanize($alias);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAttributes()
-    {
-        return [];
-    }
 
     public function hasForm()
     {
@@ -135,11 +96,6 @@ abstract class BaseEntityAction implements EntityActionInterface
             //$controller->redirect($controller->referer());
         }
     }
-
-    abstract protected function _execute(Controller $controller);
-    //{
-    //    throw new NotImplementedException(get_class($this) . ' has no _execute() method implemented');
-    //}
 
     public function model()
     {

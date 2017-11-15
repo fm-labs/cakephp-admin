@@ -6,6 +6,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\EventManager;
 use Cake\Network\Request;
 use Cake\Network\Response;
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use Cake\View\Cell;
@@ -22,7 +23,7 @@ class EntityViewCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = ['model', 'fields', 'whitelist', 'blacklist', 'title', 'helpers', 'debug', 'exclude'];
+    protected $_validCellOptions = ['model', 'fields', 'whitelist', 'blacklist', 'title', 'related', 'helpers', 'debug', 'exclude'];
 
     public $model;
 
@@ -40,10 +41,23 @@ class EntityViewCell extends Cell
 
     public $title;
 
+    public $related = [];
+
     public $helpers = [];
 
     public $debug = false;
 
+    /**
+     * @var Table
+     */
+    protected $_table;
+
+    /**
+     * @param Request|null $request
+     * @param Response|null $response
+     * @param EventManager|null $eventManager
+     * @param array $cellOptions
+     */
     public function __construct(
         Request $request = null,
         Response $response = null,
@@ -66,8 +80,10 @@ class EntityViewCell extends Cell
         }
         $this->exclude = [];
 
-        if ($this->title === null) {
-            $displayField = $this->_getTable()->displayField();
+        $Table = $this->_getTable();
+
+        if ($this->title === null && $Table) {
+            $displayField = $Table->displayField();
             $this->title = $entity->get($displayField);
         }
         if (!$this->title === null) {
@@ -92,8 +108,12 @@ class EntityViewCell extends Cell
             $this->whitelist = $entity->visibleProperties();
         }
 
-        $schema = $this->_getTable()->schema();
-        $associations = $this->_getTable()->associations();
+        if ($Table) {
+            $schema = $Table->schema();
+            $associations = $Table->associations();
+        } else {
+            $schema = $associations = null;
+        }
 
         $data = [];
         //$properties = $entity->visibleProperties();
@@ -118,28 +138,31 @@ class EntityViewCell extends Cell
             $formatter = ($field['formatter']) ?: null;
             $formatterArgs = ($field['formatterArgs']) ?: [];
 
-            $assoc = $associations->getByProperty($property);
-            if ($assoc) {
-                $assocType = $assoc->type();
-                switch ($assocType) {
-                    case "oneToMany":
-                    case "manyToMany":
-                        $formatter = "array";
-                        break;
-                    case "manyToOne":
-                        $formatter = "object";
-                        break;#
-                    default:
-                        $formatter = $assocType;
-                        break;
+            $assoc = null;
+            if ($associations) {
+                $assoc = $associations->getByProperty($property);
+                if ($assoc) {
+                    $assocType = $assoc->type();
+                    switch ($assocType) {
+                        case "oneToMany":
+                        case "manyToMany":
+                            $formatter = "array";
+                            break;
+                        case "manyToOne":
+                            $formatter = "object";
+                            break;#
+                        default:
+                            $formatter = $assocType;
+                            break;
+                    }
+                } else {
+                    $column = $schema->column($property);
+                    $type = ($column) ? $column['type'] : gettype($val); // fallback to data type
+                    $formatter = ($formatter) ?: $type; // fallback to column type
                 }
-            } else {
-                $column = $schema->column($property);
-                $type = ($column) ? $column['type'] : gettype($val); // fallback to data type
-                $formatter = ($formatter) ?: $type; // fallback to column type
             }
 
-            $data[] = [
+            $data[$property] = [
                 'name' => $property,
                 'label' => $fieldLabel,
                 'formatter' => $formatter,
@@ -157,6 +180,16 @@ class EntityViewCell extends Cell
         $this->set('model', $this->model);
         $this->set('entity', $entity);
 
+        $related = [];
+        foreach ($this->related as $_related => $_relatedConf) {
+            if (is_numeric($_related)) {
+                $_related = $_relatedConf;
+                $_relatedConf = [];
+            }
+            $related[$_related] = $_relatedConf;
+        }
+        $this->set('related', $related);
+
         $this->set('associations', $associations);
         $this->set('schema', $schema);
 
@@ -169,6 +202,9 @@ class EntityViewCell extends Cell
      */
     protected function _getTable()
     {
-        return TableRegistry::get($this->model);
+        if (!$this->_table && $this->model) {
+            $this->_table = TableRegistry::get($this->model);
+        }
+        return $this->_table;
     }
 }

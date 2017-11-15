@@ -15,7 +15,7 @@ use Cake\Utility\Inflector;
  *
  * @package Backend\Action
  */
-abstract class BaseIndexAction implements IndexActionInterface
+abstract class BaseIndexAction extends BaseAction implements IndexActionInterface
 {
     /**
      * @var array
@@ -25,49 +25,7 @@ abstract class BaseIndexAction implements IndexActionInterface
         'rowActions' => []
     ];
 
-    /**
-     * @var array
-     */
-    protected $_config = [];
 
-    protected $_controller;
-
-    public $template = null;
-
-    protected $_request;
-
-    public function __construct(Controller $controller, array $config = [])
-    {
-        $this->_controller = $controller;
-        $this->_request =& $controller->request;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAlias()
-    {
-        $class = explode('\\', get_class($this));
-        $class = array_pop($class);
-        return substr($class, 0, -6);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLabel()
-    {
-        $alias = $this->getAlias();
-        return Inflector::humanize($alias);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAttributes()
-    {
-        return ['data-icon' => 'list'];
-    }
     /**
      * {@inheritDoc}
      */
@@ -116,13 +74,6 @@ abstract class BaseIndexAction implements IndexActionInterface
         return $this->_execute($controller);
     }
 
-    /**
-     * @param Controller $controller
-     */
-    protected function _execute(Controller $controller)
-    {
-        throw new NotImplementedException(get_class($this) . ' has no _execute() method implemented');
-    }
 
     /**
      * @return bool|\Cake\ORM\Table

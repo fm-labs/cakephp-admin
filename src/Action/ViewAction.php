@@ -21,6 +21,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         'fields' => [],
         'fields.whitelist' => [],
         'fields.blacklist' => [],
+        'related' => [],
         'viewOptions' => [],
         'actions' => [],
         'tabs' => [],
@@ -75,6 +76,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         $this->_config['viewOptions']['fields'] = $this->_config['fields'];
         $this->_config['viewOptions']['whitelist'] = $this->_config['fields.whitelist'];
         $this->_config['viewOptions']['blacklist'] = $this->_config['fields.blacklist'];
+        $this->_config['viewOptions']['related'] = $this->_config['related'];
         $controller->set('viewOptions', $this->_config['viewOptions']);
         $controller->set('title', $entity->get($this->model()->displayField()));
         $controller->set('modelClass', $this->_config['modelClass']);

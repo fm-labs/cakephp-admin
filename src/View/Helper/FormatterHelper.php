@@ -122,9 +122,6 @@ class FormatterHelper extends Helper
 
         // object
         self::register('object', function ($val, $extra, $params) {
-            if (method_exists($val, '__toString')) {
-                return h((string)$val);
-            }
 
             if ($val instanceof EntityInterface) {
                 return '[entity:' . get_class($val) . ']';
@@ -132,6 +129,10 @@ class FormatterHelper extends Helper
 
             if ($val instanceof ResultSet) {
                 return '[resultset]';
+            }
+
+            if (method_exists($val, '__toString')) {
+                return h((string)$val);
             }
 
             return '[object:' . get_class($val) . ']';
@@ -143,6 +144,23 @@ class FormatterHelper extends Helper
         self::register('html', function ($val, $extra, $params) {
             //@todo sanitation
             return sprintf('<div class="html">' . $val . '</div>', $val);
+        });
+
+        self::register('related', function($val, $extra, $params) {
+
+            if (!$val) return $val;
+
+            $params = array_merge(['field' => 'name'], $params);
+
+            if ($val instanceof EntityInterface) {
+                return $val->get($params['field']);
+            } elseif (is_array($val)) {
+                return (isset($val[$params['field']])) ? $val[$params['field']] : null;
+            } elseif (is_object($val)) {
+                return (isset($val->{$params['field']})) ? $val->{$params['field']} : null;
+            }
+
+            return (string) $val;
         });
     }
 

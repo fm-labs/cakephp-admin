@@ -55,5 +55,6 @@ return [
     'Backend.services' => [
         'Backend.LayoutNavbar' => true,
         'Backend.LayoutSidebar' => true,
+        'Backend.LayoutToolbar' => true,
     ]
 ];

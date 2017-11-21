@@ -150,6 +150,7 @@ class FormatterHelper extends Helper
 
             if (!$val) return $val;
 
+            $params = (is_string($params)) ? ['field' => $params] : $params;
             $params = array_merge(['field' => 'name'], $params);
 
             if ($val instanceof EntityInterface) {

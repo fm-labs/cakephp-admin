@@ -386,7 +386,7 @@ class DataTableHelper extends Helper
         if ($this->_params['sortable']) {
             //$this->_params = $this->Html->addClass($this->_params, 'sortable');
             //$this->Html->script('$("#' . $this->param('id') . ' .dtable-row").sortable()', ['block' => true]);
-            //$this->_tableArgs['data-sortable'] = "true";
+            $this->_tableArgs['data-ui-sortable'] = true;
         }
 
         // feature row selection
@@ -735,10 +735,10 @@ class DataTableHelper extends Helper
             // If formatter is passed as an array (and no callable construct)
             // extract formatter name and args
             // e.g. ['formatterName', 'arg1', 'arg2', ... ]
-            if (is_array($field['formatter']) && !is_object($field['formatter'][0])) {
-                $field['formatterArgs'] = $field['formatter'];
-                $field['formatter'] = array_pop($field['formatterArgs']);
-            }
+            //if (is_array($field['formatter']) && !is_object($field['formatter'][0])) {
+            //    $field['formatterArgs'] = $field['formatter'];
+            //    $field['formatter'] = array_pop($field['formatterArgs']);
+            //}
             $cellData = $this->_formatRowCellData($fieldName, $cellData, $field['formatter'], $field['formatterArgs'], $row);
 
             $html .= $this->templater()->format('rowCell', [
@@ -889,7 +889,7 @@ class DataTableHelper extends Helper
                 console.warn("JqueryUI sortable not loaded");
             } else {
                 console.log("initialize sortable")
-                el.find(".dtable-body").sortable({
+                el.find("tbody").sortable({
                     placeholder: "ui-sortable-placeholder", // "ui-state-highlight",
                     helper: fixHelperModified,
                     update: function(event, ui) {

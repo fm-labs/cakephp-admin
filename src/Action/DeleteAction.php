@@ -3,6 +3,7 @@
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
+use Cake\Datasource\EntityInterface;
 use Cake\Network\Exception\NotImplementedException;
 
 class DeleteAction extends BaseEntityAction
@@ -27,7 +28,16 @@ class DeleteAction extends BaseEntityAction
 
     protected function _execute(Controller $controller)
     {
-        $controller->Flash->error("Not implemented or not allowed");
+        $entity = $this->entity();
+        if ($entity instanceof EntityInterface) {
+            if ($this->model()->delete($entity)) {
+                $controller->Flash->success(__('Deleted'));
+            } else {
+                $controller->Flash->error("Delete failed");
+            }
+        } else {
+            $controller->Flash->error("Delete failed. No entity selected");
+        }
         return $controller->redirect($controller->referer(['action' => 'index']));
     }
 }

@@ -143,6 +143,7 @@ class EntityViewCell extends Cell
                 $assoc = $associations->getByProperty($property);
                 if ($assoc) {
                     $assocType = $assoc->type();
+                    //debug($property . "->" . $assocType);
                     switch ($assocType) {
                         case "oneToMany":
                         case "manyToMany":

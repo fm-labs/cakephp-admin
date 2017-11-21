@@ -91,10 +91,10 @@ class IndexAction extends BaseIndexAction
             }
 
             if ($this->_config['paginate']) {
-                $maxLimit = $this->_maxLimit;
-                $limit = (isset($this->_config['query']['limit'])) ? $this->_config['query']['limit'] : $this->_defaultLimit;
-                $limit = ($limit <= $maxLimit) ? $limit : $maxLimit;
-                $this->_config['query']['limit'] = $limit;
+                //$maxLimit = $this->_maxLimit;
+                //$limit = (isset($this->_config['query']['limit'])) ? $this->_config['query']['limit'] : $this->_defaultLimit;
+                //$limit = ($limit <= $maxLimit) ? $limit : $maxLimit;
+                //$this->_config['query']['limit'] = $limit;
             }
 
             // build query
@@ -130,6 +130,7 @@ class IndexAction extends BaseIndexAction
                 $row->set('_actions_', $this->buildTableRowActions($row));
             });
         }
+
         return $result;
     }
 

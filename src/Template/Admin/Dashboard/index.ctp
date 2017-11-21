@@ -9,7 +9,7 @@
             <?php
             try {
                 echo $this->element($element, $elementConfig);
-                echo '<p>' . $element . '</p>';
+                //echo '<p>' . $element . '</p>';
             } catch (\Exception $ex) {
                 echo '<div class="alert alert-danger">' . $ex->getMessage() . '</div>';
             }

@@ -70,19 +70,32 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
             $entity = $this->model()->get($this->_config['modelId']);
         }
 
+
+        $related = [];
+        foreach ($this->_config['related'] as $_related => $_relatedConf) {
+            if (is_numeric($_related)) {
+                $_related = $_relatedConf;
+                $_relatedConf = [];
+            }
+            $related[$_related] = $_relatedConf;
+        }
+        $this->_config['related'] = $related;
+
         $this->_config['viewOptions']['model'] = $this->_config['modelClass'];
         $this->_config['viewOptions']['title'] = $entity->get($this->model()->displayField());
         $this->_config['viewOptions']['debug'] = Configure::read('debug');
         $this->_config['viewOptions']['fields'] = $this->_config['fields'];
         $this->_config['viewOptions']['whitelist'] = $this->_config['fields.whitelist'];
         $this->_config['viewOptions']['blacklist'] = $this->_config['fields.blacklist'];
-        $this->_config['viewOptions']['related'] = $this->_config['related'];
+        //$this->_config['viewOptions']['related'] = $this->_config['related'];
         $controller->set('viewOptions', $this->_config['viewOptions']);
         $controller->set('title', $entity->get($this->model()->displayField()));
         $controller->set('modelClass', $this->_config['modelClass']);
         $controller->set('entity', $entity);
         $controller->set('actions', $this->_config['actions']);
         $controller->set('tabs', $this->_config['tabs']);
+        $controller->set('associations', $this->model()->associations());
+        $controller->set('related', $this->_config['related']);
         $controller->set('_serialize', ['entity']);
         //$controller->render();
     }

@@ -26,6 +26,7 @@ use Cake\Utility\Inflector;
     <!-- Related -->
     <?php foreach ($associations as $assoc): ?>
         <?php
+        //debug($assoc->name() . " -> " . $assoc->property());
         if ($assoc instanceof \Cake\ORM\Association) {
 
             if (!isset($data[$assoc->property()])) {

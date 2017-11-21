@@ -16,32 +16,88 @@ $viewOptions = (array) $this->get('viewOptions');
  * Helpers
  */
 $this->loadHelper('Backend.Chosen');
+$this->loadHelper('Backend.DataTable');
 $this->loadHelper('Bootstrap.Tabs');
 ?>
 <div class="view">
 
     <?php
-    echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render('tabs');
-    ?>
-
-    <?php
     if ($this->fetch('content')) {
-        $this->Tabs->create();
-        $this->Tabs->add($this->fetch('title', $title));
         echo $this->fetch('content');
+    } else {
+        echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render('display');
     }
     ?>
 
+    <!-- Related -->
+    <?php foreach ($associations as $assoc): ?>
+        <?php
+        //debug($assoc->name() . " -> " . $assoc->property());
+        if ($assoc instanceof \Cake\ORM\Association) {
+
+            if (!$entity->get($assoc->property())) {
+                //debug("not set");
+                continue;
+            }
+
+            if (!array_key_exists($assoc->name(), $related)) {
+                //debug("not enabled");
+                continue;
+            }
+
+            $_entity = $entity->get($assoc->property());
+            $title = __('Related {0}', $assoc->name());
+            $html = __("No data available");
+
+            $template = '<div class="box"><div class="box-header with-border"><h3 class="box-title">%s</h3></div><div class="box-body">%s</div></div>';
+
+            switch($assoc->type()) {
+                case \Cake\ORM\Association::MANY_TO_ONE:
+                case \Cake\ORM\Association::ONE_TO_ONE:
+                    $html = $this->cell('Backend.EntityView', [ $_entity ] , [
+                        //'model' => $assoc->target()->alias(),
+                        'title' => $title,
+                    ]);
+                    $template = '%2$s';
+
+                    break;
+
+                case \Cake\ORM\Association::ONE_TO_MANY:
+
+                    $dataTable = array_merge([
+                        'model' => $assoc->target(),
+                        'data' => $_entity,
+                        'fieldsBlacklist' => [$assoc->foreignKey()],
+                        'filter' => false,
+                    ], $related[$assoc->name()]);
+
+                    $this->DataTable->create($dataTable);
+                    $html = $this->DataTable->render();
+                    break;
+
+
+                case \Cake\ORM\Association::MANY_TO_MANY:
+                default:
+                    $html = __('Association type not implemented {0}', $type);
+                    break;
+            }
+
+            echo sprintf($template, $title, $html);
+        }
+        ?>
+    <?php endforeach; ?>
+
     <?php if ($this->get('tabs')): ?>
-        <hr />
+        <?php $this->Tabs->create(); ?>
         <?php foreach ((array) $this->get('tabs') as $tabId => $tab): ?>
             <?php $this->Tabs->add($tab['title'], $tab); ?>
         <?php endforeach; ?>
+        <?php echo $this->Tabs->render(); ?>
     <?php endif; ?>
 
-    <?php echo $this->Tabs->render(); ?>
 
     <?php if (\Cake\Core\Configure::read('debug')): ?>
+        <?php debug($entity); ?>
         <small><?php echo h(__FILE__); ?></small>
     <?php endif; ?>
 </div>

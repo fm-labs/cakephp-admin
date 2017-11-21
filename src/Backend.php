@@ -48,7 +48,7 @@ class Backend
     /**
      * @var string
      */
-    protected static $_version = '0.0.0';
+    protected static $_version = null;
 
     protected static $_listeners = [];
 

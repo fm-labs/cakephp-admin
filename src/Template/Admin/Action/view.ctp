@@ -100,4 +100,6 @@ $this->loadHelper('Bootstrap.Tabs');
         <?php debug($entity); ?>
         <small><?php echo h(__FILE__); ?></small>
     <?php endif; ?>
+
+
 </div>

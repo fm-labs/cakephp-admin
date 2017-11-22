@@ -79,6 +79,11 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             $this->_entity = $controller->viewVars['entity'];
         }
 
+        // custom template
+        if (isset($controller->viewVars['template'])) {
+            $this->template = $controller->viewVars['template'];
+        }
+
         try {
             $entity = $this->entity();
 

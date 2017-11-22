@@ -12,7 +12,7 @@
             var icon = $( this).data('icon');
 
             if (icon) {
-                $(this).prepend('<i class="fa fa-' + icon + '"></i>');
+                $(this).prepend('<i class="fa fa-' + icon + '"></i>&nbsp;');
             }
         });
 

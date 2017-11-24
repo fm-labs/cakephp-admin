@@ -116,6 +116,10 @@ body {
 .table > tfoot > tr > td {
   border-top: 1px solid #ddd;
 }
+/** Invoice Template **/
+.invoice {
+  margin: 10px 0;
+}
 /**
  * Common Backend CSS Stylesheet
  */

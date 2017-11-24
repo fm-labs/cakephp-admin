@@ -13,6 +13,8 @@ $this->loadHelper('Backend.DataTable');
         </div>
     </div>
 
+    <?php debug($this->get('result')); ?>
+
     <?php if (\Cake\Core\Configure::read('debug')): ?>
     <small><?php echo h(__FILE__); ?></small>
     <?php endif; ?>

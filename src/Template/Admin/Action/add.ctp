@@ -28,7 +28,13 @@ $this->loadHelper('Bootstrap.Tabs');
                 echo $this->fetch('content');
             } else {
                 echo $this->Form->create($entity);
-                echo $this->Form->allInputs();
+                if ($this->get('fields.whitelist')) {
+                    foreach($this->get('fields.whitelist') as $field) {
+                        echo $this->Form->input($field);
+                    }
+                } else {
+                    echo $this->Form->allInputs();
+                }
                 echo $this->Form->button(__('Submit'));
                 echo $this->Form->end();
             }

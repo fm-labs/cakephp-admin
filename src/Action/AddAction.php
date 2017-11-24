@@ -12,6 +12,18 @@ use Cake\Utility\Inflector;
  */
 class AddAction extends BaseIndexAction
 {
+
+    /**
+     * @var array
+     */
+    protected $_defaultConfig = [
+        'actions' => [],
+        'rowActions' => [],
+        'fields' => [],
+        'fields.whitelist' => []
+    ];
+
+
     /**
      * {@inheritDoc}
      */
@@ -60,6 +72,9 @@ class AddAction extends BaseIndexAction
                 $controller->set($var, $list);
             }
         }
+
+        // config
+        $controller->set($this->_config);
     }
 
 }

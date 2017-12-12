@@ -70,9 +70,20 @@ class BackendFormHelper extends BootstrapFormHelper
      */
     protected function _getInput($fieldName, $options)
     {
+        //@TODO Dispatch Form.getInput event
+
+        //$options = $this->_getMagicInput($fieldName, $options);
+
+        $context = $this->_getContext();
+
+        //debug($fieldName);
+        //debug($options);
         if (isset($options['type'])) {
             switch ($options['type']) {
                 case 'select':
+                    if (!$context->isRequired($fieldName)) {
+                        $options['empty'] = true;
+                    }
                     //$this->_View->loadHelper('Backend.Chosen');
                     break;
 
@@ -94,5 +105,41 @@ class BackendFormHelper extends BootstrapFormHelper
         }
 
         return parent::_getInput($fieldName, $options);
+    }
+
+    /**
+     * Magically get input options
+     */
+    protected function _parseOptions($fieldName, $options)
+    {
+        //@TODO Dispatch Form.parseInput event
+
+        //debug($fieldName);
+        //debug($options);
+        if (isset($options['type'])) {
+            return parent::_parseOptions($fieldName, $options);
+        }
+
+        if ($fieldName == "created" || $fieldName == "modified" || $fieldName == "updated") {
+            $options['type'] = 'hidden';
+            $options['disabled'] = true;
+        }
+
+        if (preg_match('/_datetime$/', $fieldName)) {
+            //$options['type'] = ['datetimepicker'];
+            $options['type'] = 'datepicker';
+        }
+        elseif (preg_match('/_date$/', $fieldName)) {
+            $options['type'] = 'datepicker';
+        }
+        //elseif (preg_match('/_time$/', $fieldName)) {
+        //    $options['type'] = ['timepicker'];
+        //}
+        elseif (preg_match('/_url$/', $fieldName)) {
+            $options['type'] = 'url';
+            $options['placeholder'] = 'https://';
+        }
+
+        return parent::_parseOptions($fieldName, $options);
     }
 }

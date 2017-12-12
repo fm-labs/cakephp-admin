@@ -83,13 +83,17 @@ class BackendComponent extends Component
         }
 
         // Configure Backend FlashComponent
-        if ($this->_registry->has('Flash') || !is_a($this->_registry->get('Flash'), static::$flashComponentClass)) {
+        if ($this->_registry->has('Flash') && !is_a($this->_registry->get('Flash'), static::$flashComponentClass)) {
             $this->_registry->unload('Flash');
-            $controller->Flash = $controller->loadComponent('Flash', [
-                'className' => static::$flashComponentClass,
-                'key' => 'backend'
-            ]);
         }
+        //$this->_registry->load('Flash', [
+        //    'className' => static::$flashComponentClass,
+        //    'key' => 'backend'
+        //]);
+        $controller->loadComponent('Flash', [
+            'className' => static::$flashComponentClass,
+            'key' => 'backend'
+        ]);
 
         // Configure RequestHandler component
         if (!$this->_registry->has('RequestHandler')) {
@@ -101,12 +105,15 @@ class BackendComponent extends Component
         });
 
         // Configure Backend Authentication
-        if (!$this->_registry->has('Auth') || !is_a($this->_registry->get('Auth'), static::$authComponentClass)) {
+        if ($this->_registry->has('Auth') && !is_a($this->_registry->get('Auth'), static::$authComponentClass)) {
             $this->_registry->unload('Auth');
-            $controller->Auth = $controller->loadComponent('Auth', [
-                'className' => static::$authComponentClass,
-            ]);
         }
+        //$this->_registry->load('Auth', [
+        //    'className' => static::$authComponentClass,
+        //]);
+        $controller->loadComponent('Auth', [
+            'className' => static::$authComponentClass,
+        ]);
 
         // Configure controller
         $controller->viewBuilder()->className('Backend.Backend');
@@ -152,6 +159,7 @@ class BackendComponent extends Component
     public function beforeFilter(Event $event)
     {
         $controller =& $this->_controller;
+        //$controller = $event->subject();
 
 
         // Handle iframe and ajax requests
@@ -162,23 +170,25 @@ class BackendComponent extends Component
         }
 
         //@TODO Move auth config to Backend's built-in AuthComponent
-        $controller->Auth->config('loginAction', $this->config('authLoginAction'));
-        $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'));
-        $controller->Auth->config('authenticate', [
-            AuthComponent::ALL => ['userModel' => $this->config('userModel'), 'finder' => 'backendAuthUser'],
-            'Form',
-            //'Basic'
-        ]);
-        // Configure Backend Auth Storage
-        $controller->Auth->config('storage', [
-            'className' => 'Session',
-            'key' => 'Backend.User',
-            'redirect' => 'Backend.redirect'
-        ]);
+        if ($controller->Auth) {
+            $controller->Auth->config('loginAction', $this->config('authLoginAction'));
+            $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'));
+            $controller->Auth->config('authenticate', [
+                AuthComponent::ALL => ['userModel' => $this->config('userModel'), 'finder' => 'backendAuthUser'],
+                'Form',
+                //'Basic'
+            ]);
+            // Configure Backend Auth Storage
+            $controller->Auth->config('storage', [
+                'className' => 'Session',
+                'key' => 'Backend.User',
+                'redirect' => 'Backend.redirect'
+            ]);
 
-        // Configure Backend Authorization
-        $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'));
-        $controller->Auth->config('authorize', $this->config('authAuthorize'));
+            // Configure Backend Authorization
+            $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'));
+            $controller->Auth->config('authorize', $this->config('authAuthorize'));
+        }
     }
 
     /**

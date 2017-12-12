@@ -70,6 +70,13 @@ class AddAction extends BaseIndexAction
                 $var = Inflector::pluralize($assoc->property());
                 $list = $assoc->target()->find('list')->toArray();
                 $controller->set($var, $list);
+
+            } elseif ($assoc->type() == Association::ONE_TO_MANY) {
+                $var = Inflector::pluralize($assoc->property());
+                $list = $assoc->target()->find('list')->toArray();
+                $controller->set($var, $list);
+            } else {
+                debug($assoc->type());
             }
         }
 

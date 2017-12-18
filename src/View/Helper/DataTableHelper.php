@@ -762,7 +762,6 @@ class DataTableHelper extends Helper
 
     protected function _renderRowSelectCell($row)
     {
-
         if (isset($this->_params['select']) && $this->_params['select'] === true) {
             $input = $this->Form->checkbox('multiselect_' . $row->id);
 
@@ -959,26 +958,26 @@ SCRIPT;
         $actions = [];
         foreach ($rowActions as $actionId => $rowAction) {
             $title = $url = null;
-            $attr = [];
+            $attrs = [];
 
             if (count($rowAction) == 1) {
                 list($title) = $rowAction;
             } elseif (count($rowAction) == 2) {
                 list($title, $url) = $rowAction;
             } elseif (count($rowAction) >= 3) {
-                list($title, $url, $attr) = $rowAction;
+                list($title, $url, $attrs) = $rowAction;
             }
 
             $title = $this->_replaceTokens($title, $row);
             $url = $this->_replaceTokens($url, $row);
-            $attr = $this->_replaceTokens($attr, $row);
+            $attrs = $this->_replaceTokens($attrs, $row);
 
             //$rowActionLink = $this->Html->link($title, $url, $attr);
 
             //$html .= $this->templater()->format('rowAction', [
             //    'content' => $rowActionLink
             //]);
-            $actions[$actionId] = compact('title', 'url', 'attr');
+            $actions[$actionId] = compact('title', 'url', 'attrs');
         }
 
         return $actions;
@@ -1031,12 +1030,11 @@ SCRIPT;
         }
 
         // extract tokenized vars from data and cast them to their string representation
-        preg_match_all('/\:(\w+)/', $tokenStr, $matches);
-        $inserts = array_intersect_key($data, array_flip(array_values($matches[1])));
-        array_walk($inserts, function (&$val, $key) {
-            $val = (string)$val;
+        preg_match_all('/\:([\w\.]+)/', $tokenStr, $matches);
+        $inserts = array_fill_keys($matches[1], null);
+        array_walk($inserts, function (&$val, $key) use ($data) {
+            $val = Hash::get($data, $key);
         });
-
         return Text::insert($tokenStr, $inserts);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 namespace Backend\Action;
+
 use Cake\Controller\Controller;
 use Cake\ORM\Association;
 use Cake\Utility\Inflector;
@@ -68,12 +69,12 @@ class AddAction extends BaseIndexAction
         foreach ($this->model()->associations() as $assoc) {
             if ($assoc->type() == Association::MANY_TO_ONE) {
                 $var = Inflector::pluralize($assoc->property());
-                $list = $assoc->target()->find('list')->toArray();
+                $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
                 $controller->set($var, $list);
 
             } elseif ($assoc->type() == Association::ONE_TO_MANY) {
                 $var = Inflector::pluralize($assoc->property());
-                $list = $assoc->target()->find('list')->toArray();
+                $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
                 $controller->set($var, $list);
             } else {
                 debug($assoc->type());

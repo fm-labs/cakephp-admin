@@ -97,7 +97,7 @@ $this->loadHelper('Bootstrap.Tabs');
 
 
     <?php if (\Cake\Core\Configure::read('debug')): ?>
-        <?php debug($entity); ?>
+        <?php //debug($entity); ?>
         <small><?php echo h(__FILE__); ?></small>
     <?php endif; ?>
 

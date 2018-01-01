@@ -119,7 +119,7 @@ desired effect
     $(document).ready(function() {
         $(window).on('resize', function(ev) {
             var h = $('#content').outerHeight() - $('#main-footer').outerHeight();
-            console.log("Resize to ", h);
+            //console.log("Resize to ", h);
             $('.content-aside').height(h);
         }).trigger('resize');
 
@@ -140,7 +140,6 @@ desired effect
             // Sorry! No Web Storage support..
         }
         */
-
     })
 </script>
 </body>

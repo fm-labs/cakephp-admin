@@ -41,7 +41,7 @@
 
         switch(type) {
             case "hello":
-                console.log("hello received");
+                //console.log("hello received");
                 break;
 
             default:
@@ -207,7 +207,7 @@
                 var key = scope + '_scrollTop'
                 var scrollTop = window.localStorage.setItem(key, val);
             } else {
-                console.log("LocalStorage is not available");
+                console.log("[backendjs] LocalStorage is not available");
             }
         },
 
@@ -239,7 +239,7 @@
             }
 
             if (typeof callback !== "function") {
-                console.warn("[backend|renderer] ERROR Given callback is not a valid function");
+                console.warn("[backendjs|renderer] ERROR Given callback is not a valid function");
                 return;
             }
 
@@ -274,7 +274,7 @@
      */
     Backend.Modal = {
 
-        _modalTemplate: '<div class="modal-dialog modal-lg"> \
+        _modalTemplate: '<div class="modal-dialog"> \
     <div class="modal-content"> \
     <div class="modal-header"> \
     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> \
@@ -311,7 +311,7 @@
 
             $modal.on('hidden.bs.modal', function(ev) {
 
-                console.log("modal " + modalId + " is now hidden");
+                console.log("[backendjs] modal " + modalId + " is now hidden");
                 console.log(ev);
                 // http://stackoverflow.com/questions/11570333/how-to-get-twitter-bootstrap-modals-invoker-element
                 var $invoker = $(ev.relatedTarget) || $(window);
@@ -325,7 +325,7 @@
 
         openIframe: function (url, modalOptions, options)
         {
-            console.log("Open Iframe Modal with URL " + url);
+            console.log("[backendjs] Open Iframe Modal with URL " + url);
 
             modalOptions = modalOptions || {};
             options = options || {};
@@ -360,12 +360,11 @@
             });
             $modal.on('hidden.bs.modal', function(ev) {
 
-                console.log("modal " + modalId + " is now hidden");
-                console.log(ev);
+                console.log("[backendjs] modal " + modalId + " is now hidden");
+                //console.log(ev);
                 // http://stackoverflow.com/questions/11570333/how-to-get-twitter-bootstrap-modals-invoker-element
                 var $invoker = $(ev.relatedTarget) || $(window);
-                console.log($invoker);
-
+                //console.log($invoker);
                 $invoker.focus();
             });
             return $modal;

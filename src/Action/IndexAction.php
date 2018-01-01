@@ -86,9 +86,9 @@ class IndexAction extends BaseIndexAction
             //    $this->_config['paginate'] = (array)$controller->paginate;
             //}
 
-            if ($this->_config['filter'] === true && !$this->model()->behaviors()->has('Search')) {
-                $this->_config['filter'] = false;
-            }
+            //if ($this->_config['filter'] === true && !$this->model()->behaviors()->has('Search')) {
+            //    $this->_config['filter'] = false;
+            //}
 
             if ($this->_config['paginate']) {
                 //$maxLimit = $this->_maxLimit;
@@ -112,7 +112,7 @@ class IndexAction extends BaseIndexAction
 
 
             // search support with FriendsOfCake/Search plugin
-            if ($this->_config['filter']) {
+            if ($this->_config['filter'] && $this->model()->behaviors()->has('Search')) {
                 if ($this->_controller->request->is(['post', 'put'])) {
                     $query->find('search', ['search' => $this->_controller->request->data]);
                 } elseif ($this->_controller->request->query) {

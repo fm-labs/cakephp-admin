@@ -67,6 +67,12 @@ class DataTableHelper extends Helper
 
     protected $_setup = null;
 
+    /**
+     * Table instance
+     * @var Table
+     */
+    protected $_table;
+
     public function __construct(View $View, array $config = [])
     {
         parent::__construct($View, $config);
@@ -569,32 +575,43 @@ class DataTableHelper extends Helper
 
     protected function _renderFilterRow()
     {
-        if (!$this->_params['filter'] || empty($this->_params['filter'])) {
+        if ($this->_params['filter'] === false) {
             return '';
         }
 
+        $Model = $this->_table();
+        $filters = ($this->_params['filter'] === true) ? [] : (array) $this->_params['filter'];
+        if (empty($filters) && $Model->behaviors()->has('Search')) {
+            $searchFilters = $Model->searchManager()->all();
+            $filters = array_keys($searchFilters);
+        }
         $cells = "";
         foreach ($this->_fields as $fieldName => $field) {
             $filterInput = '';
 
-            if ($this->_params['filter'] == true || in_array($fieldName, $this->_params['filter'])) {
+            //if ($this->_params['filter'] == true || in_array($fieldName, $this->_params['filter'])) {
+            if (in_array($fieldName, $filters)) {
                 $filterInputOptions = ['label' => false];
 
                 // get current filter value from request query
                 $filterInputOptions['value'] = $this->_View->request->query($fieldName);
                 $column = ['type' => 'string', 'null' => true, 'default' => null];
 
-                $Model = $this->_table();
                 if ($Model) {
                     $column = $Model->schema()->column($fieldName);
                 }
                 //$column['null'] = true;
                 //$column['default'] = null;
 
+                $filterInputOptions['title'] = json_encode($column);
+                $filterInputOptions['data-filter'] = $fieldName;
+                $filterInputOptions['class'] = 'filter';
+
                 if ($column['type'] == 'boolean') {
                     $filterInputOptions['type'] = 'select';
                     $filterInputOptions['options'] = [ 0 => __('No'), 1 => __('Yes')];
-                    $filterInputOptions['empty'] = __('All');
+                    //$filterInputOptions['empty'] = __('All');
+                    $filterInputOptions['data-placeholder'] = __('All');
 
                 //} elseif ($column['type'] == 'select' || substr($fieldName, -3) == '_id') {
                 //    $filterInputOptions['empty'] = __('All');
@@ -604,11 +621,12 @@ class DataTableHelper extends Helper
                     $filterInputOptions['type'] = 'text';
                 }
 
-                if ($Model && method_exists($Model, 'sources')) {
-                    $sources = call_user_func([$Model, 'sources'], $fieldName);
+                if ($Model instanceof \Banana\Model\TableInputDataSourceInterface) {
+                    $sources = $Model->getInputList($fieldName);
                     if ($sources) {
-                        $filterInputOptions['empty'] = __('All');
                         $filterInputOptions['options'] = $sources;
+                        //$filterInputOptions['empty'] = __('All');
+                        $filterInputOptions['data-placeholder'] = __('All');
                     }
                 }
                 $filterInput = $this->Form->input($fieldName, $filterInputOptions);
@@ -623,7 +641,7 @@ class DataTableHelper extends Helper
         }
 
         $actionCell = $this->templater()->format('rowCell', [
-            'content' => $this->Form->button(__('Filter'), ['class' => 'btn btn-sm']),
+            'content' => $this->Form->button(__('Filter'), ['class' => 'btn btn-default btn-xs']),
             'attrs' => $this->templater()->formatAttributes([
                 'style' => 'text-align: right;',
                 //'title' => $field['title']
@@ -937,6 +955,15 @@ class DataTableHelper extends Helper
         }
 
         //el.dataTable();
+
+        /**
+         * FILTER FORM
+         * Auto-submit when select input changes
+         */
+        el.on('change', 'select.filter', function(ev) {
+            //console.log("a filter select has changed");
+            $(this).closest('form').submit();
+        });
 
     });
 </script>

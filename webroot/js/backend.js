@@ -10,7 +10,7 @@
     };
 
     Backend.initialize = function(settings) {
-        console.log("Backend INIT");
+        //console.log("[backendjs] INIT");
         this.settings = settings;
         this.init = true;
     };
@@ -51,11 +51,11 @@
     };
 
     Backend.sendPostMessage = function(msg) {
-        console.log("[frame] send msg: " + msg.type);
+        //console.log("[frame] send msg: " + msg.type);
 
         // check if current window is a framed window
         if (!Backend.isFrame()) {
-            console.log("sending aborted: already on master");
+            //console.log("sending aborted: already on master");
             return;
         }
 
@@ -748,9 +748,7 @@
      */
     Backend.Renderer.addListener('docready', function(scope) {
 
-
-        //@TODO Remove debug output
-        console.log("DOCUMENT IS READY");
+        //console.log("[backendjs] DOCUMENT IS READY");
         var scopeId;
         switch (scope) {
             case undefined:
@@ -761,7 +759,7 @@
             default:
                 scopeId = $(scope).attr('id');
         }
-        console.log("Renderer docready in scope: " + scopeId);
+        //console.log("[backendjs] Renderer docready in scope: " + scopeId);
 
         // icon links
         //$(scope).find("a[data-icon]:not(.icon-loaded)").each(function() {

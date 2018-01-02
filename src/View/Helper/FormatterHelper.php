@@ -6,6 +6,7 @@ use Bootstrap\View\Helper\UiHelper;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\ResultSet;
+use Cake\Utility\Hash;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\NumberHelper;
@@ -94,14 +95,17 @@ class FormatterHelper extends Helper
 
         // number
         self::register('number', function ($val, $extra, $params) {
-            return $this->Number->format($val);
+            return $this->Number->format($val, $params);
         });
 
         // currency
         self::register('currency', function ($val, $extra, $params) {
-            $currency = (isset($params['currency'])) ? $params['currency'] : 'EUR';
+            $currency = (isset($params['currency']))
+                ? $params['currency'] : null; // @TODO Use App-level default currency
+            $currency = (!$currency && $extra && isset($params['currency_field']))
+                ? Hash::get($extra, $params['currency_field']) : $currency;
 
-            return $this->Number->currency($val, $currency);
+            return $this->Number->currency($val, $currency, $params);
         });
 
         // email

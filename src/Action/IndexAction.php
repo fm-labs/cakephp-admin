@@ -44,7 +44,6 @@ class IndexAction extends BaseIndexAction
     {
         // data
         $this->_controller = $controller;
-        $this->_model = $Model = $this->model();
 
         /*
         if ($this->_config['rowActions'] !== false) {
@@ -56,7 +55,6 @@ class IndexAction extends BaseIndexAction
         }
         */
 
-        // render
         $controller->set('result', $this->_fetchResult());
         $controller->set('dataTable', [
             'filter' => $this->_config['filter'],
@@ -73,6 +71,11 @@ class IndexAction extends BaseIndexAction
             ]
         ]);
         $controller->set('actions', $this->_config['actions']);
+
+        if ($this->model() && $this->model()->hasBehavior('Stats')) {
+            $controller->set('tableStats', $this->model()->getStats());
+        }
+
         $controller->set('_serialize', ['result']);
     }
 

@@ -75,17 +75,6 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
     }
 
 
-    /**
-     * @return bool|\Cake\ORM\Table
-     */
-    public function model()
-    {
-        if (!$this->_config['modelClass']) {
-            //throw new \Exception(get_class($this) . ' has no model class defined');
-            return false;
-        }
 
-        return TableRegistry::get($this->_config['modelClass']);
-    }
 
 }

@@ -6,6 +6,13 @@ $this->loadHelper('Backend.DataTable');
 
     <div class="box">
         <div class="box-body">
+            <!-- Table stats -->
+            <?php
+            if (isset($tableStats)) {
+                echo $this->element('Backend.Action/Index/stats', ['stats' => $tableStats]);
+            }
+            ?>
+            <!-- Data table -->
             <?php
             $this->DataTable->create($this->get('dataTable'), $this->get('result'));
             echo $this->DataTable->renderAll();

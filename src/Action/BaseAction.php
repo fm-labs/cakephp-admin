@@ -6,6 +6,7 @@ namespace Backend\Action;
 use Cake\Controller\Controller;
 use Cake\Network\Exception\NotImplementedException;
 use Cake\Network\Response;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
 abstract class BaseAction
@@ -24,6 +25,11 @@ abstract class BaseAction
      * @var \Cake\Controller\Controller
      */
     protected $_controller;
+
+    /**
+     * @var \Cake\ORM\Table
+     */
+    protected $_table;
 
     /**
      * @var \Cake\Network\Request
@@ -70,6 +76,21 @@ abstract class BaseAction
     {
         $alias = $this->getAlias();
         return Inflector::humanize($alias);
+    }
+    /**
+     * @return bool|\Cake\ORM\Table
+     */
+    public function model()
+    {
+        if (!$this->_config['modelClass']) {
+            //throw new \Exception(get_class($this) . ' has no model class defined');
+            return false;
+        }
+
+        if (!$this->_table) {
+            $this->_table = TableRegistry::get($this->_config['modelClass']);
+        }
+        return $this->_table;
     }
 
     /**

@@ -195,7 +195,7 @@ class BackendPlugin implements EventListenerInterface
         $event->subject()->addItem([
             'title' => 'System',
             'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'backend'],
-            'data-icon' => 'cube',
+            'data-icon' => 'gears',
 
             'children' => [
                 'system' => [
@@ -211,8 +211,13 @@ class BackendPlugin implements EventListenerInterface
                 'cache' => [
                     'title' => 'Cache',
                     'url' => ['plugin' => 'Backend', 'controller' => 'Cache', 'action' => 'index'],
-                    'data-icon' => 'file-text-o',
-                ]
+                    'data-icon' => 'hourglass-o',
+                ],
+                'users' => [
+                    'title' => 'Users',
+                    'url' => ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
+                    'data-icon' => 'users',
+                ],
             ]
         ]);
     }

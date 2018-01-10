@@ -105,70 +105,70 @@ class BackendPlugin implements EventListenerInterface
             ]);
         }
     }
-
-    public function getSettings(Event $event)
-    {
-        $event->result['Backend'] = [
-            'Dashboard.title' => [
-                'type' => 'string',
-                'input' => [
-                    'type' => 'text',
-                    'placeholder' => 'Foo'
-                ],
-                'default' => 'Backend'
-            ],
-            'Security.enabled' => [
-                'type' => 'boolean',
-                'inputType' => null,
-                'input' => [
-                    'placeholder' => 'Foo'
-                ],
-            ],
-
-            'AdminLte.skin_class' => [
-                'type' => 'string',
-                'input' => [
-                    'type' => 'select',
-                    'options' => [
-                        'skin-blue'     => 'Blue',
-                        'skin-yellow'   => 'Yellow',
-                        'skin-red'      => 'Red',
-                        'skin-purple'   => 'Purple',
-                        'skin-black'    => 'Blue',
-                        'skin-green'    => 'Green',
-                    ]
-                ],
-                'default' => 'skin-blue'
-            ],
-
-            'AdminLte.layout_class' => [
-                'type' => 'string',
-                'input' => [
-                    'type' => 'select',
-                    'empty' => true,
-                    'options' => [
-                        'fixed'             => 'Fixed',
-                        'layout-boxed'      => 'Layout Boxed',
-                        'layout-top-nav'    => 'Layout Top Nav',
-                    ]
-                ],
-                'default' => 'skin-blue'
-            ],
-
-            'AdminLte.sidebar_class' => [
-                'type' => 'string',
-                'input' => [
-                    'type' => 'select',
-                    'empty' => true,
-                    'options' => [
-                        'sidebar-mini'     => 'Sidebar Mini',
-                        'sidebar-collapse'     => 'Sidebar Collapse',
-                    ]
-                ],
-                'default' => 'skin-blue'
-            ]
-        ];
-    }
+//
+//    public function getSettings(Event $event)
+//    {
+//        $event->result['Backend'] = [
+//            'Dashboard.title' => [
+//                'type' => 'string',
+//                'input' => [
+//                    'type' => 'text',
+//                    'placeholder' => 'Foo'
+//                ],
+//                'default' => 'Backend'
+//            ],
+//            'Security.enabled' => [
+//                'type' => 'boolean',
+//                'inputType' => null,
+//                'input' => [
+//                    'placeholder' => 'Foo'
+//                ],
+//            ],
+//
+//            'AdminLte.skin_class' => [
+//                'type' => 'string',
+//                'input' => [
+//                    'type' => 'select',
+//                    'options' => [
+//                        'skin-blue'     => 'Blue',
+//                        'skin-yellow'   => 'Yellow',
+//                        'skin-red'      => 'Red',
+//                        'skin-purple'   => 'Purple',
+//                        'skin-black'    => 'Blue',
+//                        'skin-green'    => 'Green',
+//                    ]
+//                ],
+//                'default' => 'skin-blue'
+//            ],
+//
+//            'AdminLte.layout_class' => [
+//                'type' => 'string',
+//                'input' => [
+//                    'type' => 'select',
+//                    'empty' => true,
+//                    'options' => [
+//                        'fixed'             => 'Fixed',
+//                        'layout-boxed'      => 'Layout Boxed',
+//                        'layout-top-nav'    => 'Layout Top Nav',
+//                    ]
+//                ],
+//                'default' => 'skin-blue'
+//            ],
+//
+//            'AdminLte.sidebar_class' => [
+//                'type' => 'string',
+//                'input' => [
+//                    'type' => 'select',
+//                    'empty' => true,
+//                    'options' => [
+//                        'sidebar-mini'     => 'Sidebar Mini',
+//                        'sidebar-collapse'     => 'Sidebar Collapse',
+//                    ]
+//                ],
+//                'default' => 'skin-blue'
+//            ]
+//        ];
+//    }
 
     public function buildBackendRoutes(RouteBuilderEvent $event)
     {

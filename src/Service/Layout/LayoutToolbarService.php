@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Service;
+namespace Backend\Service\Layout;
 
 use Backend\BackendService;
 use Backend\View\BackendView;
@@ -12,8 +12,8 @@ class LayoutToolbarService extends BackendService
     public function implementedEvents()
     {
         return [
-            'View.beforeRender' => ['callable' => 'beforeRender'],
-            'View.beforeLayout' => ['callable' => 'beforeLayout']
+            'View.beforeRender' => ['callable' => 'beforeRender', 'priority' => 9],
+            'View.beforeLayout' => ['callable' => 'beforeLayout', 'priority' => 9]
         ];
     }
 

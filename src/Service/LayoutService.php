@@ -3,20 +3,63 @@
 namespace Backend\Service;
 
 use Backend\BackendService;
+use Backend\Event\LocalEventManager;
 use Backend\View\BackendView;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Event\EventManager;
 use Cake\Utility\Inflector;
 
 class LayoutService extends BackendService
 {
+    /**
+     * Event manager for sub services
+     * @var EventManager
+     */
+    protected $_localEventManager;
+
+    /**
+     * Layout sub services
+     * @var ServiceRegistry
+     */
+    protected $_services;
+
+    public function initialize()
+    {
+        $this->_localEventManager = new LocalEventManager();
+        $this->_services = new ServiceRegistry($this->_localEventManager);
+        $this->_loadServices();
+    }
+
+    public function getSubservices() {
+        return [
+            'Backend.Layout/LayoutHeaderNavbar',
+            'Backend.Layout/LayoutSidebar',
+            'Backend.Layout/LayoutToolbar',
+        ];
+    }
+
+    protected function _loadServices()
+    {
+        foreach ($this->getSubservices() as $service => $enabled) {
+            list($service, $enabled) = (is_numeric($service)) ? [$enabled, true] : [$service, $enabled];
+            if ($enabled) {
+                $service = $this->_services->load($service);
+                $service->initialize();
+            }
+        }
+    }
+
     public function implementedEvents()
     {
-        return ['View.beforeLayout' => ['callable' => 'beforeLayout']];
+        return ['View.beforeLayout' => ['callable' => 'beforeLayout', 'priority' => 10]];
     }
 
     public function beforeLayout(Event $event)
     {
+        // delete event to sub services first
+        $this->_localEventManager->dispatch($event);
+
         if ($event->subject() instanceof BackendView) {
 
             // title
@@ -25,7 +68,7 @@ class LayoutService extends BackendService
                 $event->subject()->Blocks->set('title', Inflector::humanize(Inflector::tableize($event->subject()->request['controller'])));
             }
 
-            // AdminLTE layout options
+            // AdminLTE layout options @TODO Move to AdminLTE Backend Theme
             $themeSkinClass = (Configure::read('Backend.AdminLte.skin_class')) ?: 'skin-blue';
             $themeLayoutClass = (Configure::read('Backend.AdminLte.layout_class')) ?: '';
             $themeSidebarClass = (Configure::read('Backend.AdminLte.sidebar_class')) ?: 'sidebar-mini';
@@ -64,7 +107,7 @@ class LayoutService extends BackendService
             // toolbar
             //$event->subject()->Blocks->set('toolbar', $event->subject()->element('Backend.Layout/admin/toolbar'));
             // sidebar
-            $event->subject()->Blocks->set('sidebar', $event->subject()->element('Backend.Layout/admin/sidebar'));
+            //$event->subject()->Blocks->set('sidebar', $event->subject()->element('Backend.Layout/admin/sidebar'));
             // content_header
             $event->subject()->Blocks->set('content_header', $event->subject()->element('Backend.Layout/admin/content_header'));
             // footer
@@ -72,8 +115,8 @@ class LayoutService extends BackendService
             // control_sidebar
             $event->subject()->Blocks->set('control_sidebar', $event->subject()->element('Backend.Layout/admin/control_sidebar'));
 
-
         }
+
 
     }
 }

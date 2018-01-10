@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Service;
+namespace Backend\Service\Layout;
 
 use Backend\BackendService;
 use Backend\View\BackendView;
@@ -9,6 +9,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventDispatcherInterface;
 use Cake\Event\EventDispatcherTrait;
+use Cake\Event\EventManager;
 
 class LayoutSidebarService extends BackendService implements EventDispatcherInterface
 {
@@ -17,8 +18,8 @@ class LayoutSidebarService extends BackendService implements EventDispatcherInte
     public function implementedEvents()
     {
         return [
-            'View.beforeRender' => ['callable' => 'beforeRender'],
-            'View.beforeLayout' => ['callable' => 'beforeLayout']
+            'View.beforeRender' => ['callable' => 'beforeRender', 'priority' => 9],
+            'View.beforeLayout' => ['callable' => 'beforeLayout', 'priority' => 9]
         ];
     }
 
@@ -32,6 +33,7 @@ class LayoutSidebarService extends BackendService implements EventDispatcherInte
             $menu = new Menu();
             $_event = new Event('Backend.Menu.get', $menu);
             $this->eventManager()->dispatch($_event);
+            //EventManager::instance()->dispatch($_event);
             $event->subject()->set('backend.sidebar.menu', $menu);
 
             // inject sidebar elements
@@ -48,6 +50,9 @@ class LayoutSidebarService extends BackendService implements EventDispatcherInte
                     $event->subject()->append($blockName, $event->subject()->element($element['element']));
                 }
             }
+
+            // inject sidebar into view block
+            $event->subject()->Blocks->set('sidebar', $event->subject()->element('Backend.Layout/admin/sidebar'));
         }
     }
 }

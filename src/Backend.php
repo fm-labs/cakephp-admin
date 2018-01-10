@@ -38,9 +38,9 @@ class Backend
             'Backend.Crud' => true,
             'Backend.Publishable' => false,
             'Backend.Tree' => true,
-            'Backend.LayoutNavbar' => true,
-            'Backend.LayoutSidebar' => true,
-            'Backend.LayoutToolbar' => true,
+            //'Backend.LayoutNavbar' => true,
+            //'Backend.LayoutSidebar' => true,
+            //'Backend.LayoutToolbar' => true,
             'Backend.Layout' => true,
         ]
     ];

@@ -1,19 +1,19 @@
 <?php
 
-namespace Backend\Service;
+namespace Backend\Service\Layout;
 
 use Backend\BackendService;
 use Backend\View\BackendView;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 
-class LayoutNavbarService extends BackendService
+class LayoutHeaderNavbarService extends BackendService
 {
     public function implementedEvents()
     {
         return [
-            'View.beforeRender' => ['callable' => 'beforeRender'],
-            'View.beforeLayout' => ['callable' => 'beforeLayout']
+            'View.beforeRender' => ['callable' => 'beforeRender', 'priority' => 9],
+            'View.beforeLayout' => ['callable' => 'beforeLayout', 'priority' => 9]
         ];
     }
 
@@ -28,11 +28,11 @@ class LayoutNavbarService extends BackendService
 
                 ],
                 'backend_navbar_right' => [
-                    //'search' => ['element' => 'Backend.Layout/admin/navbar/navbar_search'],
-                    //'messages' => ['element' => 'Backend.Layout/admin/navbar/navbar_messages'],
-                    //'notifications' => ['element' => 'Backend.Layout/admin/navbar/navbar_notifications'],
-                    //'tasks' => ['element' => 'Backend.Layout/admin/navbar/navbar_tasks'],
-                    'user' => ['element' => 'Backend.Layout/admin/navbar/navbar_user'],
+                    'search' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_search'],
+                    'messages' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_messages'],
+                    'notifications' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_notifications'],
+                    'tasks' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_tasks'],
+                    'user' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_user'],
                 ],
             ];
 

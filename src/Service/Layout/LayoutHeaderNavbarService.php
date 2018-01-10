@@ -28,10 +28,10 @@ class LayoutHeaderNavbarService extends BackendService
 
                 ],
                 'backend_navbar_right' => [
-                    'search' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_search'],
-                    'messages' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_messages'],
-                    'notifications' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_notifications'],
-                    'tasks' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_tasks'],
+                    //'search' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_search'],
+                    //'messages' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_messages'],
+                    //'notifications' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_notifications'],
+                    //'tasks' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_tasks'],
                     'user' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_user'],
                 ],
             ];

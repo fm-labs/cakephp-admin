@@ -12,6 +12,12 @@ $entity = $this->get('entity');
 //$title = $this->get('title', @array_pop(explode('\\', get_class($entity))));
 $viewOptions = (array) $this->get('viewOptions');
 
+$formOptions = $this->get('form.options', []);
+$inputFields = $this->get('inputs.fields', []);
+$inputOptions = $this->get('inputs.options', []);
+
+debug($inputFields);
+
 /**
  * Helpers
  */
@@ -34,8 +40,8 @@ $this->loadHelper('Bootstrap.Tabs');
                     } else {
                         //echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render();
 
-                        echo $this->Form->create($entity);
-                        echo $this->Form->allInputs();
+                        echo $this->Form->create($entity, $formOptions);
+                        echo $this->Form->allInputs($inputFields, $inputOptions);
                         echo $this->Form->button(__('Submit'));
                         echo $this->Form->end();
                     }

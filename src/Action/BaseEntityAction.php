@@ -8,6 +8,7 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Network\Exception\NotImplementedException;
+use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
@@ -31,6 +32,11 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
      * @var array List of enabled scopes
      */
     protected $_scope = [];
+
+    /**
+     * @var Table
+     */
+    protected $_model;
 
     public function hasForm()
     {
@@ -109,7 +115,10 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             return false;
         }
 
-        return TableRegistry::get($this->_config['modelClass']);
+        if (!$this->_model) {
+            $this->_model = TableRegistry::get($this->_config['modelClass']);
+        }
+        return $this->_model;
     }
 
     public function entity()

@@ -42,11 +42,13 @@ class EditAction extends BaseEntityAction
             $entity = $this->entity();
         }
 
+        debug($this->_request->data);
         if ($this->_request->is(['put', 'post'])) {
             $entity = $this->model()->patchEntity($entity, $this->_request->data);
             if ($this->model()->save($entity)) {
+                debug($entity->toArray());
                 $this->_flashSuccess(__('Records updated'));
-                $this->_redirect(['action' => 'index']);
+                //$this->_redirect(['action' => 'index']);
             } else {
                 $this->_flashError();
             }

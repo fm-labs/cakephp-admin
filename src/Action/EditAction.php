@@ -42,7 +42,6 @@ class EditAction extends BaseEntityAction
             $entity = $this->entity();
         }
 
-        debug($this->_request->data);
         if ($this->_request->is(['put', 'post'])) {
             $entity = $this->model()->patchEntity($entity, $this->_request->data);
             if ($this->model()->save($entity)) {

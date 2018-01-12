@@ -16,8 +16,6 @@ $formOptions = $this->get('form.options', []);
 $inputFields = $this->get('inputs.fields', []);
 $inputOptions = $this->get('inputs.options', []);
 
-debug($inputFields);
-
 /**
  * Helpers
  */

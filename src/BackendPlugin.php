@@ -8,6 +8,7 @@ use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Settings\SettingsManager;
 
@@ -31,8 +32,8 @@ class BackendPlugin implements EventListenerInterface
     {
         return [
             'Settings.build' => 'buildSettings',
-            'Backend.Menu.get' => ['callable' => 'getBackendMenu', 'priority' => 99 ],
-            'Backend.Routes.build' => ['callable' => 'buildBackendRoutes', 'priority' => 99 ]
+            'Backend.Menu.get' => ['callable' => 'getBackendMenu', 'priority' => 80 ],
+            'Backend.Routes.build' => ['callable' => 'buildBackendRoutes', 'priority' => 1 ]
         ];
     }
 
@@ -107,7 +108,8 @@ class BackendPlugin implements EventListenerInterface
 
     public function buildBackendRoutes(RouteBuilderEvent $event)
     {
-        Router::scope('/backend', ['_namePrefix' => 'backend:admin:', 'prefix' => 'admin', 'plugin' => 'Backend'], function($routes) {
+        $event->subject()->scope('/backend',
+            ['_namePrefix' => 'backend:admin:', 'prefix' => 'admin', 'plugin' => 'Backend'], function(RouteBuilder $routes) {
 
             // backend:admin:auth:login
             $routes->connect(
@@ -175,7 +177,7 @@ class BackendPlugin implements EventListenerInterface
     {
         $event->subject()->addItem([
             'title' => 'System',
-            'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'backend'],
+            'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
             'data-icon' => 'gears',
 
             'children' => [

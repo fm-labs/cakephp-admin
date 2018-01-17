@@ -11,9 +11,9 @@ if (empty($dataTable['class'])) {
 <?php endif; ?>
 
 <?php
-echo $this->DataTable->create($dataTable)
-    ->setData($data)
-    ->render();
+$html = $this->DataTable->create($dataTable, $data)->render();
+echo $html;
+return;
 ?>
 
 <!-- DataTable JS
@@ -101,5 +101,5 @@ echo $this->DataTable->create($dataTable)
         //$el.dataTable();
 
     });
- -->
 </script>
+ -->

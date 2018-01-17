@@ -36,7 +36,6 @@ class BackendPlugin implements EventListenerInterface
         ];
     }
 
-
     /**
      * @param Event $event
      */
@@ -105,89 +104,71 @@ class BackendPlugin implements EventListenerInterface
             ]);
         }
     }
-//
-//    public function getSettings(Event $event)
-//    {
-//        $event->result['Backend'] = [
-//            'Dashboard.title' => [
-//                'type' => 'string',
-//                'input' => [
-//                    'type' => 'text',
-//                    'placeholder' => 'Foo'
-//                ],
-//                'default' => 'Backend'
-//            ],
-//            'Security.enabled' => [
-//                'type' => 'boolean',
-//                'inputType' => null,
-//                'input' => [
-//                    'placeholder' => 'Foo'
-//                ],
-//            ],
-//
-//            'AdminLte.skin_class' => [
-//                'type' => 'string',
-//                'input' => [
-//                    'type' => 'select',
-//                    'options' => [
-//                        'skin-blue'     => 'Blue',
-//                        'skin-yellow'   => 'Yellow',
-//                        'skin-red'      => 'Red',
-//                        'skin-purple'   => 'Purple',
-//                        'skin-black'    => 'Blue',
-//                        'skin-green'    => 'Green',
-//                    ]
-//                ],
-//                'default' => 'skin-blue'
-//            ],
-//
-//            'AdminLte.layout_class' => [
-//                'type' => 'string',
-//                'input' => [
-//                    'type' => 'select',
-//                    'empty' => true,
-//                    'options' => [
-//                        'fixed'             => 'Fixed',
-//                        'layout-boxed'      => 'Layout Boxed',
-//                        'layout-top-nav'    => 'Layout Top Nav',
-//                    ]
-//                ],
-//                'default' => 'skin-blue'
-//            ],
-//
-//            'AdminLte.sidebar_class' => [
-//                'type' => 'string',
-//                'input' => [
-//                    'type' => 'select',
-//                    'empty' => true,
-//                    'options' => [
-//                        'sidebar-mini'     => 'Sidebar Mini',
-//                        'sidebar-collapse'     => 'Sidebar Collapse',
-//                    ]
-//                ],
-//                'default' => 'skin-blue'
-//            ]
-//        ];
-//    }
 
     public function buildBackendRoutes(RouteBuilderEvent $event)
     {
-        // admin:dashboard
+        Router::scope('/backend', ['_namePrefix' => 'backend:admin:', 'prefix' => 'admin', 'plugin' => 'Backend'], function($routes) {
+
+            // backend:admin:auth:login
+            $routes->connect(
+                '/login',
+                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
+                ['_name' => 'user:login']
+            );
+            $routes->connect(
+                '/login-success',
+                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
+                ['_name' => 'user:loginsuccess']
+            );
+
+            // backend:admin:auth:logout
+            $routes->connect(
+                '/logout',
+                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
+                [ '_name' => 'user:logout']
+            );
+
+            // backend:admin:auth:user
+            $routes->connect(
+                '/user',
+                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user'],
+                [ '_name' => 'user:profile']
+            );
+
+            // backend:admin:dashboard
+            $routes->connect(
+                '/',
+                ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+                ['_name' => 'dashboard']
+            );
+
+            // Fallbacks
+            //$routes->connect('/:controller/:action');
+            //$routes->connect('/:controller');
+            $routes->fallbacks('DashedRoute');
+
+        });
+
+
         $dashboardUrl = (Configure::read('Backend.Dashboard.url'))
             ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index', 'prefix' => 'admin'];
-        Router::connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
+        $event->subject()->connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
 
-        /**
-         * Fallback routes for app backend
-         * @TODO Use a configuration param to enable/disable fallback routes for app's admin prefixed routes
-         * @TODO Move to separate (high priority) event listener
-         */
-        Router::scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], function ($routes) {
 
-            // default admin routes
-            $routes->extensions(['json']);
-            $routes->fallbacks('DashedRoute');
-        });
+
+
+
+//        /**
+//         * Fallback routes for app backend
+//         * @TODO Use a configuration param to enable/disable fallback routes for app's admin prefixed routes
+//         * @TODO Move to separate (high priority) event listener
+//         */
+//        Router::scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], function ($routes) {
+//
+//            // default admin routes
+//            $routes->extensions(['json']);
+//            $routes->fallbacks('DashedRoute');
+//        });
     }
 
     public function getBackendMenu(Event $event)
@@ -224,8 +205,5 @@ class BackendPlugin implements EventListenerInterface
 
     public function __invoke()
     {
-        $this->backend = new Backend(EventManager::instance(), []);
-        $this->backend->loadServices();
-        $this->backend->initializeServices();
     }
 }

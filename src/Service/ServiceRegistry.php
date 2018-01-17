@@ -15,12 +15,12 @@ class ServiceRegistry extends ObjectRegistry
     /**
      * Constructor
      *
-     * @param \Cake\Event\EventManager $events Event Manager that services should bind to.
-     *   Typically this is the global manager.
+     * @param EventManager $eventManager EventManager instances that services subscribe to.
+     *   Typically this is the global event manager.
      */
-    public function __construct(EventManager $events)
+    public function __construct(EventManager $eventManager)
     {
-        $this->eventManager($events);
+        $this->eventManager($eventManager);
     }
 
     /**

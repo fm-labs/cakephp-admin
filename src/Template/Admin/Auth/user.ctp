@@ -28,13 +28,13 @@ use Cake\Core\Configure;
         </div>
         <div class="extra content">
             <?= $this->Ui->link(__('Edit profile'),
-                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'edit', $user['id']],
+                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'edit', $user['id'], 'prefix' => false],
                 ['data-icon' => 'edit', 'class' => 'btn btn-default btn-block']);
             ?>
         </div>
         <div class="extra content">
             <?= $this->Ui->link(__('Change password'),
-                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'password_change'],
+                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'password_change', 'prefix' => false],
                 ['data-icon' => 'key', 'class' => 'btn btn-default btn-block']);
             ?>
         </div>

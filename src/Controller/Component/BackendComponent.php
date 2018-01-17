@@ -125,7 +125,7 @@ class BackendComponent extends Component
         }
 
 
-        // Attach listeners
+        // Attach listeners @todo Remove deprecated code
         foreach (Backend::getListeners('Controller') as $listenerClass) {
             try {
                 $modobj = new $listenerClass();
@@ -143,6 +143,7 @@ class BackendComponent extends Component
             $controller->loadComponent('Backend.Action');
         }
 
+        //@todo use CORS-Component/-Middleware
         $this->response->header([
             'Access-Control-Allow-Origin' => '*',
             'Access-Control-Allow-Headers' => 'POST, GET, OPTIONS',
@@ -189,6 +190,7 @@ class BackendComponent extends Component
             $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'));
             $controller->Auth->config('authorize', $this->config('authAuthorize'));
         }
+
     }
 
     /**
@@ -201,7 +203,7 @@ class BackendComponent extends Component
         $controller->set('be_path', $this->config('backendPath'));
         $controller->set('be_title', $this->config('backendTitle'));
         $controller->set('be_dashboard_url', Router::url($this->config('dashboardUrl')));
-        $controller->set('be_search_url', Router::url($this->config('searchUrl')));
+        //$controller->set('be_search_url', Router::url($this->config('searchUrl')));
     }
 
     /**

@@ -11,3 +11,7 @@ use Cake\Core\Plugin;
 Configure::load('Backend.backend');
 
 Plugin::load('Bootstrap');
+
+/*if (Plugin::loaded('Banana')) {
+    \Banana\Banana::register('Backend', new \Backend\BackendPlugin());
+}*/

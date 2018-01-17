@@ -10,13 +10,15 @@ use Cake\Core\Plugin;
 use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
+use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
 /**
  * Class Backend
  *
  * @package Backend
  */
-class Backend
+class Backend implements EventListenerInterface
 {
 
     use InstanceConfigTrait;
@@ -94,14 +96,23 @@ class Backend
 
     /**
      * Constructor
-     *
-     * @param \Cake\Event\EventManager $events The event manager to use defaults to the global manager
-     * @param array $config The configuration data for DebugKit.
      */
-    public function __construct(EventManager $events, array $config)
+    public function __construct()
     {
-        $this->config($config);
-        $this->services = new ServiceRegistry($events);
+        $this->services = new ServiceRegistry(EventManager::instance());
+    }
+
+    public function implementedEvents()
+    {
+        return ['Banana.init' => 'init'];
+    }
+
+    public function init()
+    {
+        //debug("Backend init");
+        $this->loadRoutes();
+        $this->loadServices();
+        $this->initializeServices();
     }
 
     /**
@@ -135,7 +146,7 @@ class Backend
     }
 
     /**
-     * Call the initialize method onl all the loaded services.
+     * Call the initialize method on all the loaded services.
      *
      * @return void
      */
@@ -146,5 +157,14 @@ class Backend
         }
     }
 
-
+    /**
+     * Load backend routes
+     */
+    public function loadRoutes()
+    {
+        Router::routes(); // <-- required workaround. need to call routes() first, otherwise all existing routes are vanished
+        Router::scope('/admin', ['prefix' => 'admin'], function(RouteBuilder $routes) {
+            EventManager::instance()->dispatch(new \Backend\Event\RouteBuilderEvent('Backend.Routes.build', $routes));
+        });
+    }
 }

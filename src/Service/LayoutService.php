@@ -3,8 +3,8 @@
 namespace Backend\Service;
 
 use Backend\BackendService;
-use Backend\Event\LocalEventManager;
 use Backend\View\BackendView;
+use Banana\Event\LocalEventManager;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventManager;

@@ -32,7 +32,7 @@ class BackendPlugin implements EventListenerInterface
     {
         return [
             'Settings.build' => 'buildSettings',
-            'Backend.Menu.get' => ['callable' => 'getBackendMenu', 'priority' => 80 ],
+            'Backend.Sidebar.get' => ['callable' => 'getBackendSidebarMenu', 'priority' => 80 ],
             'Backend.Routes.build' => ['callable' => 'buildBackendRoutes', 'priority' => 1 ]
         ];
     }
@@ -96,8 +96,8 @@ class BackendPlugin implements EventListenerInterface
                         'type' => 'select',
                         'empty' => true,
                         'options' => [
-                            'sidebar-mini'     => 'Sidebar Mini',
-                            'sidebar-collapse'     => 'Sidebar Collapse',
+                            'sidebar-mini' => 'Sidebar Mini',
+                            'sidebar-mini sidebar-collapse' => 'Sidebar Mini Collapsed',
                         ]
                     ],
                     'default' => null
@@ -173,7 +173,7 @@ class BackendPlugin implements EventListenerInterface
 //        });
     }
 
-    public function getBackendMenu(Event $event)
+    public function getBackendSidebarMenu(Event $event)
     {
         $event->subject()->addItem([
             'title' => 'System',

@@ -31,7 +31,7 @@ class LayoutSidebarService extends BackendService implements EventDispatcherInte
 
             // inject sidebar menu
             $menu = new Menu();
-            $_event = new Event('Backend.Menu.get', $menu);
+            $_event = new Event('Backend.Sidebar.get', $menu);
             $this->eventManager()->dispatch($_event);
             //EventManager::instance()->dispatch($_event);
             $event->subject()->set('backend.sidebar.menu', $menu);

@@ -50,7 +50,7 @@ return [
      */
     'Backend.AdminLte.skin_class' => 'skin-blue',
     'Backend.AdminLte.layout_class' => '',
-    'Backend.AdminLte.sidebare_class' => 'sidebar-mini',
+    'Backend.AdminLte.sidebar_class' => 'sidebar-mini',
 
     'Backend.services' => [
         'Backend.LayoutNavbar' => true,

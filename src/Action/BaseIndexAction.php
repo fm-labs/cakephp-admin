@@ -71,7 +71,14 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
         //    $this->_config['rowActions'] = (array)$event->data['actions'];
         //}
 
-        return $this->_execute($controller);
+        try {
+            $response = $this->_execute($controller);
+            //return $response;
+
+        } catch (\Exception $ex) {
+            $controller->Flash->error($ex->getMessage());
+            //$controller->redirect($controller->referer());
+        }
     }
 
 

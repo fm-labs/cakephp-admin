@@ -17,55 +17,36 @@
     <?= $this->Html->script('/backend/libs/adminlte/plugins/jQuery/jquery-2.2.3.min.js'); ?>
     <?= $this->fetch('headjs') ?>
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
 <body class="hold-transition <?= $this->get('be_layout_body_class'); ?>">
 <div class="wrapper">
 
     <!-- Main Header -->
-    <?= $this->fetch('header'); ?>
+    <?php echo $this->fetch('header'); ?>
 
     <!-- Left side column. contains the logo and sidebar -->
-    <?= $this->fetch('sidebar'); ?>
+    <?php echo $this->fetch('sidebar'); ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div id="content" class="content-wrapper">
 
-
         <div class="flash-wrapper">
             <!-- Flash Auth -->
-            <?= $this->Flash->render('auth') ?>
+            <?php echo $this->Flash->render('auth') ?>
             <!-- Flash Backend -->
-            <?= $this->Flash->render('backend') ?>
+            <?php echo $this->Flash->render('backend') ?>
             <!-- Flash Default -->
-            <?= $this->Flash->render() ?>
+            <?php echo $this->Flash->render() ?>
         </div>
 
-        <!-- Toolbar wrapper -->
+        <!-- Content Header -->
+        <div class="content-header-wrapper">
+            <?php echo $this->fetch('content_header'); ?>
+        </div>
+
+        <!-- Toolbar -->
         <div class="toolbar-wrapper">
-            <?= $this->fetch('toolbar'); ?>
+            <?php echo $this->fetch('toolbar'); ?>
         </div>
-
-        <!-- Content Header (Page header) -->
-        <?= $this->fetch('content_header'); ?>
 
         <!-- Left container -->
         <?php if ($this->fetch('left')): ?>
@@ -84,7 +65,7 @@ desired effect
 
         <!-- Main content -->
         <main id="main" class="<?= $this->fetch('contentClass', 'content'); ?>">
-            <?= $this->fetch('content'); ?>
+            <?php echo  $this->fetch('content'); ?>
         </main>
         <!-- /.content -->
 
@@ -94,11 +75,11 @@ desired effect
 
     <!-- Main Footer -->
     <footer id="main-footer" class="main-footer">
-        <?= $this->fetch('footer'); ?>
+        <?php echo $this->fetch('footer'); ?>
     </footer>
 
     <!-- Control Sidebar -->
-    <?= $this->fetch('control_sidebar'); ?>
+    <?php //echo $this->fetch('control_sidebar'); ?>
 
 </div>
 <!-- ./wrapper -->

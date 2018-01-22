@@ -4,7 +4,7 @@ namespace Backend\View;
 
 use Backend\View\Helper\AjaxHelper;
 use Backend\View\Helper\BackendHelper;
-use Backend\View\Helper\ToolbarHelper;
+use Backend\View\Helper\Layout\ToolbarHelper;
 use Bootstrap\View\Helper\UiHelper;
 use Cake\Core\Configure;
 use Cake\Event\Event;
@@ -26,20 +26,16 @@ class BackendView extends View
 
     public function initialize()
     {
+        $this->loadHelper('Html', [/*'className' => 'Backend\View\Helper\BackendHtmlHelper'*/]);
+        $this->loadHelper('Form', ['className' => 'Backend\View\Helper\BackendFormHelper']);
 
-        $this->loadHelper('Html', [
-            //'className' => 'Backend\View\Helper\BackendHtmlHelper'
-        ]);
-        $this->loadHelper('Form', [
-            'className' => 'Backend\View\Helper\BackendFormHelper',
-        ]);
-
+        //@todo Remove hard dependencies of Backend helpers
+        $this->loadHelper('Bootstrap.Ui', []);
+        $this->loadHelper('Bootstrap.Button', []);
         $this->loadHelper('Backend.Backend', []);
-        $this->loadHelper('Backend.Ajax', []); //@todo Remove hard depdency
-        $this->loadHelper('Backend.FooTable', []); //@todo Remove hard depdency
-        $this->loadHelper('Backend.Toolbar', []); //@todo Remove hard depdency
-        $this->loadHelper('Bootstrap.Ui', []); //@todo Remove hard depdency
-        $this->loadHelper('Bootstrap.Button', []); //@todo Remove hard depdency
+        $this->loadHelper('Backend.Ajax', []);
+        $this->loadHelper('Backend.FooTable', []);
+        $this->loadHelper('Backend.BackendLayout', []);
 
         $this->eventManager()->dispatch(new Event('Backend.View.initialize', $this));
     }

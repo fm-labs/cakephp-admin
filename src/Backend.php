@@ -7,7 +7,6 @@ use Banana\Exception\ClassNotFoundException;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin;
-use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
 use Cake\Routing\RouteBuilder;
@@ -40,10 +39,6 @@ class Backend implements EventListenerInterface
             'Backend.Crud' => true,
             'Backend.Publishable' => false,
             'Backend.Tree' => true,
-            //'Backend.LayoutNavbar' => true,
-            //'Backend.LayoutSidebar' => true,
-            //'Backend.LayoutToolbar' => true,
-            'Backend.Layout' => true,
         ]
     ];
 
@@ -109,7 +104,6 @@ class Backend implements EventListenerInterface
 
     public function init()
     {
-        //debug("Backend init");
         $this->loadRoutes();
         $this->loadServices();
         $this->initializeServices();

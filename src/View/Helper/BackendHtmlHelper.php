@@ -11,9 +11,8 @@ use Cake\View\Helper\HtmlHelper;
  * @package Backend\View\Helper
  * @deprecated This class is currently unused.
  */
-class BackendHelper extends HtmlHelper
+class BackendHtmlHelper extends HtmlHelper
 {
-
     /**
      * @var array
      */

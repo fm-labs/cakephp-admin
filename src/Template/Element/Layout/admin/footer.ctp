@@ -1,9 +1,9 @@
 <div class="footer hidden-xs">
     <div class="pull-left">
-        <small>Backend version: <?= h(\Backend\Backend::version()); ?> | CakePHP version: <?= h(\Cake\Core\Configure::version()); ?></small>
+        &nbsp;
     </div>
     <div class="pull-right">
         <small><a href="http://flowmotion-labs.com" target="_blank">fm-labs</a></small>
     </div>
-    <span>&nbsp;</span>
+    <div class="clearfix"></div>
 </div>

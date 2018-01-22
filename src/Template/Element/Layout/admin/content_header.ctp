@@ -12,11 +12,12 @@
 if ($this->get('_no_header')) {
     return;
 }
-
-$this->loadHelpers('Breadcrumbs');
-$breadcrumbs = $this->Breadcrumbs->render(['class' => 'breadcrumb']);
 ?>
 <section class="content-header">
+    <?php if (!$this->get('_no_breadcrumbs')): ?>
+        <?php // echo $breadcrumbs; ?>
+        <?php echo $this->fetch('breadcrumbs'); ?>
+    <?php endif; ?>
     <h1>
         <?= $this->fetch('heading', $this->fetch('title')); ?>&nbsp;
         <?php if ($this->fetch('heading_small')): ?>
@@ -24,7 +25,4 @@ $breadcrumbs = $this->Breadcrumbs->render(['class' => 'breadcrumb']);
         <?php endif; ?>
     </h1>
 
-    <?php if (!$this->get('_no_breadcrumbs')): ?>
-    <?= $breadcrumbs; ?>
-    <?php endif; ?>
 </section>

@@ -14,15 +14,12 @@
     -->
 
     <div class="be-navbar-menu-left" style="float: left;">
-        <!-- Content Menu -->
-        <?= $this->fetch('backend_navbar_left'); ?>
-
+        <?php echo $this->fetch('header_navbar_menu'); ?>
     </div>
 
-    <!-- Navbar Right Menu -->
     <div class="be-navbar-menu-right navbar-custom-menu" style="float: right;">
         <ul class="nav navbar-nav">
-            <?= $this->fetch('backend_navbar_right'); ?>
+            <?= $this->fetch('header_navbar_items'); ?>
 
             <!-- Control Sidebar Toggle Button
             <li>

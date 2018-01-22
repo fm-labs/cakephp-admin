@@ -1,6 +1,7 @@
 <?php
-namespace Backend\View\Helper;
+namespace Backend\View\Helper\Layout;
 
+use Backend\View\BackendView;
 use Bootstrap\View\Helper\UiHelper;
 use Cake\Event\Event;
 use Cake\View\Helper;
@@ -17,10 +18,11 @@ class ToolbarHelper extends Helper
 {
     public $helpers = ['Html', 'Bootstrap.Ui'];
 
-    /**
-     * @var array Default config
-     */
-    protected $_defaultConfig = [];
+    protected $_defaultConfig = [
+        'element' => 'Backend.Layout/admin/toolbar',
+        'block' => 'toolbar',
+        'options' => ['class' => 'nav nav-pills']
+    ];
 
     /**
      * @var array List of toolbar menu items
@@ -203,6 +205,15 @@ class ToolbarHelper extends Helper
         }
     }
 
+    public function beforeLayout(Event $event)
+    {
+        if ($event->subject() instanceof BackendView) {
+            $event->subject()->Blocks->set($this->config('block'), $this->_View->element($this->config('element'), [
+                'toolbar' => $this->render($this->config('options'))
+            ]));
+        }
+    }
+
     /**
      * Render toolbar menu
      *
@@ -219,14 +230,22 @@ class ToolbarHelper extends Helper
         return $this->Ui->menu($this->getMenuItems(), $options);
     }
 
+    public function implementedEvents()
+    {
+        return [
+            'View.beforeRender' => ['callable' => 'beforeRender'],
+            'View.beforeLayout' => ['callable' => 'beforeLayout']
+        ];
+    }
+
     /**
      * Trigger rendering method by self invocation
      *
      * @param array $options
      * @return string Rendered HTML string
      */
-    public function __invoke($options = [])
-    {
-        return $this->render($options);
-    }
+//    public function __invoke($options = [])
+//    {
+//        return $this->render($options);
+//    }
 }

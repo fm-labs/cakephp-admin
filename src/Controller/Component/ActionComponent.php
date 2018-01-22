@@ -235,12 +235,21 @@ class ActionComponent extends Component
 
             // force rendering to capture template exception and fallback to Action template path
             if (!$response && $this->_controller->autoRender) {
+
+                // create a clone of the controller eventManager
+                // we need this as a workaround, when the MissingTemplateException is thrown,
+                // to prevent view events to get triggered twice.
+                $eventManager = clone $this->_controller->eventManager();
+
                 try {
                     $response = $this->_controller->render($this->_action->template);
 
                 } catch (MissingTemplateException $ex) {
 
-                    // Action template path
+                    // restore event manager from backup clone
+                    $this->_controller->eventManager($eventManager);
+
+                    // build action template path
                     $templatePath = 'Action';
                     if ($this->request->params['prefix']) {
                         $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
@@ -272,7 +281,7 @@ class ActionComponent extends Component
 
             // detach Action instance from controllers event manager
             if ($this->_action instanceof EventListenerInterface) {
-                //$this->_controller->eventManager()->off($this->_action);
+                $this->_controller->eventManager()->off($this->_action);
             }
 
             return $response;

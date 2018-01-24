@@ -100,10 +100,15 @@ class FormatterHelper extends Helper
 
         // currency
         self::register('currency', function ($val, $extra, $params) {
+
             $currency = (isset($params['currency']))
-                ? $params['currency'] : null; // @TODO Use App-level default currency
-            $currency = (!$currency && $extra && isset($params['currency_field']))
+                ? $params['currency'] : Configure::read('Shop.defaultCurrency'); // @TODO Use App-level default currency
+            $currency = (!$currency && $extra && isset($extra, $params['currency_field']))
                 ? Hash::get($extra, $params['currency_field']) : $currency;
+
+            //$params['useIntlCode'] = true;
+            $params['fractionPosition'] = 'before';
+            $params['fractionSymbol'] = $currency;
 
             return $this->Number->currency($val, $currency, $params);
         });

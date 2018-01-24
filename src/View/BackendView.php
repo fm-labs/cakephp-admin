@@ -4,6 +4,7 @@ namespace Backend\View;
 
 use Backend\View\Helper\AjaxHelper;
 use Backend\View\Helper\BackendHelper;
+use Backend\View\Helper\FormatterHelper;
 use Backend\View\Helper\Layout\ToolbarHelper;
 use Bootstrap\View\Helper\UiHelper;
 use Cake\Core\Configure;
@@ -36,6 +37,12 @@ class BackendView extends View
         $this->loadHelper('Backend.Ajax', []);
         $this->loadHelper('Backend.FooTable', []);
         $this->loadHelper('Backend.BackendLayout', []);
+
+
+        $this->loadHelper('Banana.Status', []);
+        FormatterHelper::register('status', function($val, $extra, $params) {
+            return $this->Status->label($val);
+        });
 
         $this->eventManager()->dispatch(new Event('Backend.View.initialize', $this));
     }

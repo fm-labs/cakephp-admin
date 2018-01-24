@@ -20,7 +20,9 @@ $this->loadHelper('Backend.DataTable');
         </div>
     </div>
 
-    <?php //debug($this->get('result')); ?>
+    <?php if ($this->get('debug')): ?>
+    <?php debug($this->get('result')->toArray()); ?>
+    <?php endif; ?>
 
     <?php if (\Cake\Core\Configure::read('debug')): ?>
     <small><?php echo h(__FILE__); ?></small>

@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
+use Cake\Utility\Text;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\NumberHelper;
@@ -96,6 +97,14 @@ class FormatterHelper extends Helper
         // number
         self::register('number', function ($val, $extra, $params) {
             return $this->Number->format($val, $params);
+        });
+
+        // truncate
+        // @todo make span html wrapper optional
+        self::register('truncate', function ($val, $extra, $params) {
+            $length = (is_int($params)) ? $params : 300;
+            $str = Text::truncate((string) $val, $length);
+            return '<span title="' . (string) $val . '">' . $str . '</span>';
         });
 
         // currency

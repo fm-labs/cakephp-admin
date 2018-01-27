@@ -147,13 +147,18 @@ class EntityViewCell extends Cell
                     switch ($assocType) {
                         case "oneToMany":
                         case "manyToMany":
-                            $formatter = "array";
+                            //$formatter = "array";
+                            $formatter = function($val) use ($assoc) {
+                                //return sprintf("%d %s", count($val), $assoc->name());
+                                return sprintf("%d records", count($val));
+                            };
                             break;
                         case "manyToOne":
                             $formatter = "object";
                             break;#
                         default:
                             $formatter = $assocType;
+                            //debug($assocType . ":" . $formatter);
                             break;
                     }
                 } else {

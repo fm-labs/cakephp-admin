@@ -35,13 +35,13 @@ $this->loadHelper('Bootstrap.Tabs');
         //debug($assoc->name() . " -> " . $assoc->property());
         if ($assoc instanceof \Cake\ORM\Association) {
 
-            if (!$entity->get($assoc->property())) {
-                //debug("not set");
+            if ($entity->get($assoc->property()) === null) {
+                //debug("not set: " . $assoc->property());
                 continue;
             }
 
             if (!array_key_exists($assoc->name(), $related)) {
-                //debug("not enabled");
+                //debug("not enabled: " . $assoc->name());
                 continue;
             }
 
@@ -54,10 +54,9 @@ $this->loadHelper('Bootstrap.Tabs');
             switch($assoc->type()) {
                 case \Cake\ORM\Association::MANY_TO_ONE:
                 case \Cake\ORM\Association::ONE_TO_ONE:
-                    $html = $this->cell('Backend.EntityView', [ $_entity ] , [
-                        //'model' => $assoc->target()->alias(),
-                        'title' => $title,
-                    ]);
+
+                    $config = ['title' => $title] + $related[$assoc->name()];
+                    $html = $this->cell('Backend.EntityView', [ $_entity ] , $config);
                     $template = '%2$s';
 
                     break;

@@ -38,7 +38,7 @@ class HeaderHelper extends Helper
 
             // load backend menu
             $menu = new Menu();
-            $this->_View->eventManager()->dispatch(new Event('Backend.Menu.get', $menu));
+            $this->_View->eventManager()->dispatch(new Event('Backend.Menu.build', $menu));
             $event->subject()->set('backend.navbar.menu', $menu);
 
             // inject view elements

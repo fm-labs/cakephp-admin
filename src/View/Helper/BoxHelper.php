@@ -28,11 +28,12 @@ class BoxHelper extends Helper
      */
     protected $_defaultConfig = [
         'templates' => [
-            'box' => '<div class="box box-default{{collapsedClass}}">{{header}}{{body}}</div>',
+            'box' => '<div class="box box-default{{collapsedClass}}">{{header}}{{body}}{{footer}}</div>',
             'boxHeader' => '<div class="box-header with-border">{{title}}{{tools}}</div>',
             'boxTitle' => '<h3 class="box-title">{{title}}</h3>',
             'boxTools' => '<div class="box-tools pull-right">{{tools}}</div>',
             'boxBody' => '<div class="box-body">{{contents}}</div>',
+            'boxFooter' => '<div class="box-footer">{{contents}}</div>',
             'boxToolCollapseButton' => '<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>',
             'boxToolExpandButton' => '<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>'
         ],
@@ -98,6 +99,19 @@ class BoxHelper extends Helper
     }
 
     /**
+     * Start footer block
+     */
+    public function footer($footerStr = null)
+    {
+        $this->start('footer');
+
+        if ($footerStr) {
+            echo $footerStr;
+        }
+    }
+
+
+    /**
      * @return null|string
      */
     public function render()
@@ -107,7 +121,8 @@ class BoxHelper extends Helper
         return $this->templater()->format('box', [
             'collapsedClass' => ($this->_params['collapsed']) ? ' collapsed-box' : '',
             'header' => $this->_renderHeader(),
-            'body' => $this->_renderBody()
+            'body' => $this->_renderBody(),
+            'footer' => $this->_renderFooter()
         ]);
     }
 
@@ -138,6 +153,19 @@ class BoxHelper extends Helper
     protected function _renderBody()
     {
         return $this->templater()->format('boxBody', ['contents' => $this->getContent('body')]);
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function _renderFooter()
+    {
+        $contents = $this->getContent('footer');
+        if (!$contents) {
+            return "";
+        }
+
+        return $this->templater()->format('boxFooter', ['contents' => $contents]);
     }
 
     /**

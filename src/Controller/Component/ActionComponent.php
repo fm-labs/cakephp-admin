@@ -110,13 +110,14 @@ class ActionComponent extends Component
         }
     }
 
-    public function registerInline($action, array $options = [])
+    public function registerInline($action, array $options = [], $callable = null)
     {
         if ($action instanceof InlineEntityAction) {
             $instance = $action;
             $action = $instance->action;
         } else {
-            $instance = new InlineEntityAction($action, $options);
+            $options += ['action' => $action];
+            $instance = new InlineEntityAction($this->_controller, $options, $callable);
         }
         $config = ['className' => $instance];
         $this->_actionRegistry->load($action, $config);
@@ -241,8 +242,11 @@ class ActionComponent extends Component
                 // to prevent view events to get triggered twice.
                 $eventManager = clone $this->_controller->eventManager();
 
+                // check if action instance has a template defined
+                $template = ($this->_action->template) ?? null;
+
                 try {
-                    $response = $this->_controller->render($this->_action->template);
+                    $response = $this->_controller->render($template);
 
                 } catch (MissingTemplateException $ex) {
 
@@ -254,9 +258,6 @@ class ActionComponent extends Component
                     if ($this->request->params['prefix']) {
                         $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
                     }
-
-                    // check if action instance has a template defined
-                    $template = $this->_action->template;
 
                     // use action class name as default template name
                     if (!$template) {

@@ -102,6 +102,10 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             $controller->set('entity', $entity);
             return $this->_execute($controller);
 
+        } catch (\Cake\Core\Exception\Exception $ex) {
+
+            throw $ex;
+
         } catch (\Exception $ex) {
             $controller->Flash->error($ex->getMessage());
             //$controller->redirect($controller->referer());

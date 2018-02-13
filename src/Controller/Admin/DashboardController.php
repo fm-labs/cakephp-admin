@@ -13,11 +13,18 @@ use Cake\Core\Configure;
  */
 class DashboardController extends AppController
 {
+    public $actions = [
+        'index' => 'Backend.Dashboard'
+    ];
+
     /**
      * Default Dashboard
      */
     public function index()
     {
+        $this->set('dashboard.title', __('System Dashboard'));
+        $this->set('dashboard.panels', Configure::read('Backend.Dashboard.Panels'));
+        $this->Action->execute();
     }
 
     /**

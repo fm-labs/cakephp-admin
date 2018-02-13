@@ -1,9 +1,8 @@
-<?php $this->Breadcrumbs->add(__('Dashboard'), ['controller' => 'Dashboard', 'action' => 'index']); ?>
-<?php $this->assign('title', "Dashboard"); ?>
+<?php $this->Breadcrumbs->add(__('Dashboard')); ?>
+<?php $this->assign('title', $this->get('dashboard.title', __('Dashboard'))); ?>
 <div id="backend-user-dashboard" class="backend dashboard index">
-
     <div class="row">
-        <?php foreach ((array) \Cake\Core\Configure::read('Backend.Dashboard.Panels') as $panel): ?>
+        <?php foreach ((array) $this->get('dashboard.panels') as $panel): ?>
             <?php $panel = array_merge(['cols' => 12, 'elements' => []], $panel); ?>
             <?php foreach ($panel['elements'] as $element): ?>
                 <?php $element = array_merge(['type' => null, 'path' => null, 'data' => []], $element); ?>

@@ -4,8 +4,10 @@ namespace Backend;
 
 use Backend\Event\RouteBuilderEvent;
 use Backend\Backend;
+use Banana\Menu\Menu;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
 use Cake\Routing\RouteBuilder;
@@ -14,6 +16,8 @@ use Settings\SettingsManager;
 
 class BackendPlugin implements EventListenerInterface
 {
+
+    use EventDispatcherTrait;
 
     /**
      * @var Backend Instance of Backend
@@ -32,7 +36,9 @@ class BackendPlugin implements EventListenerInterface
     {
         return [
             'Settings.build' => 'buildSettings',
-            'Backend.Sidebar.get' => ['callable' => 'getBackendSidebarMenu', 'priority' => 80 ],
+            'Backend.Sidebar.build' => ['callable' => 'buildBackendSidebarMenu', 'priority' => 99 ],
+            'Backend.SysMenu.build' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
+            'Backend.Menu.build' => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
             'Backend.Routes.build' => ['callable' => 'buildBackendRoutes', 'priority' => 1 ]
         ];
     }
@@ -173,14 +179,43 @@ class BackendPlugin implements EventListenerInterface
 //        });
     }
 
-    public function getBackendSidebarMenu(Event $event)
-    {
-        $event->subject()->addItem([
-            'title' => 'System',
-            'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
-            'data-icon' => 'gears',
 
-            'children' => [
+    /**
+     * @param Event $event
+     */
+    public function buildBackendSidebarMenu(Event $event)
+    {
+        if ($event->subject() instanceof \Banana\Menu\Menu) {
+
+
+            $settingsMenu = new Menu();
+            $this->eventManager()->dispatch(new Event('Backend.SysMenu.build', $settingsMenu));
+
+
+            $event->subject()->addItem([
+                'title' => 'System',
+                'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
+                'data-icon' => 'gears',
+                'children' => $settingsMenu->getItems(),
+            ]);
+        }
+    }
+
+    public function buildBackendMenu(Event $event)
+    {
+        if ($event->subject() instanceof \Banana\Menu\Menu) {}
+    }
+
+    public function buildBackendSystemMenu(Event $event)
+    {
+        if ($event->subject() instanceof \Banana\Menu\Menu) {
+
+            $items = [
+//                'overview' => [
+//                    'title' => 'Overview',
+//                    'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+//                    'data-icon' => 'info'
+//                ],
                 'system' => [
                     'title' => 'Systeminfo',
                     'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
@@ -201,8 +236,17 @@ class BackendPlugin implements EventListenerInterface
                     'url' => ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
                     'data-icon' => 'users',
                 ],
-            ]
-        ]);
+                'settings' => [
+                    'title' => 'Settings',
+                    'url' => ['plugin' => 'Banana', 'controller' => 'Settings', 'action' => 'manage'],
+                    'data-icon' => 'sliders',
+                ]
+            ];
+
+            foreach ($items as $item) {
+                $event->subject()->addItem($item);
+            }
+        }
     }
 
     public function __invoke()

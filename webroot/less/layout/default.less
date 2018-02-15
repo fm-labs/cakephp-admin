@@ -18,19 +18,25 @@ main {
   //width: 100%;
 }
 
-#page {
-}
+//#page {
+//}
+//
+//#header-nav {
+//  margin: 0;
+//  .border-radius(0);
+//
+//  .navbar-nav > li > a {
+//    color: #DDD;
+//
+//    &:hover {
+//      color: #FFF;
+//    }
+//  }
+//}
 
-#header-nav {
-  margin: 0;
-  .border-radius(0);
-
-  .navbar-nav > li > a {
-    color: #DDD;
-
-    &:hover {
-      color: #FFF;
-    }
+@media (min-width: 979px) {
+  .main-header .navbar ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;
   }
 }
 

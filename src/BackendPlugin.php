@@ -4,6 +4,7 @@ namespace Backend;
 
 use Backend\Event\RouteBuilderEvent;
 use Backend\Backend;
+use Backend\View\BackendView;
 use Banana\Menu\Menu;
 use Cake\Core\Configure;
 use Cake\Event\Event;
@@ -39,8 +40,17 @@ class BackendPlugin implements EventListenerInterface
             'Backend.Sidebar.build' => ['callable' => 'buildBackendSidebarMenu', 'priority' => 99 ],
             'Backend.SysMenu.build' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
             'Backend.Menu.build' => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
-            'Backend.Routes.build' => ['callable' => 'buildBackendRoutes', 'priority' => 1 ]
+            'Backend.Routes.build' => ['callable' => 'buildBackendRoutes', 'priority' => 1 ],
+            'View.beforeLayout' => ['callable' => 'beforeLayout']
         ];
+    }
+
+    public function beforeLayout(Event $event)
+    {
+        if ($event->subject() instanceof BackendView && $event->subject()->plugin == "Backend") {
+            $menu = new Menu($this->_getMenuItems());
+            $event->subject()->set('backend.sidebar.menu', $menu);
+        }
     }
 
     /**
@@ -162,10 +172,6 @@ class BackendPlugin implements EventListenerInterface
             ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index', 'prefix' => 'admin'];
         $event->subject()->connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
 
-
-
-
-
 //        /**
 //         * Fallback routes for app backend
 //         * @TODO Use a configuration param to enable/disable fallback routes for app's admin prefixed routes
@@ -186,18 +192,14 @@ class BackendPlugin implements EventListenerInterface
     public function buildBackendSidebarMenu(Event $event)
     {
         if ($event->subject() instanceof \Banana\Menu\Menu) {
-
-
-            $settingsMenu = new Menu();
-            $this->eventManager()->dispatch(new Event('Backend.SysMenu.build', $settingsMenu));
-
-
-            $event->subject()->addItem([
-                'title' => 'System',
-                'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                'data-icon' => 'gears',
-                'children' => $settingsMenu->getItems(),
-            ]);
+//            $settingsMenu = new Menu();
+//            $this->eventManager()->dispatch(new Event('Backend.SysMenu.build', $settingsMenu));
+//            $event->subject()->addItem([
+//                'title' => 'System',
+//                'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
+//                'data-icon' => 'gears',
+//                'children' => $settingsMenu->getItems(),
+//            ]);
         }
     }
 
@@ -210,43 +212,48 @@ class BackendPlugin implements EventListenerInterface
     {
         if ($event->subject() instanceof \Banana\Menu\Menu) {
 
-            $items = [
-//                'overview' => [
-//                    'title' => 'Overview',
-//                    'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
-//                    'data-icon' => 'info'
-//                ],
-                'system' => [
-                    'title' => 'Systeminfo',
-                    'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                    'data-icon' => 'info'
-                ],
-                'logs' => [
-                    'title' => 'Logs',
-                    'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
-                    'data-icon' => 'file-text-o',
-                ],
-                'cache' => [
-                    'title' => 'Cache',
-                    'url' => ['plugin' => 'Backend', 'controller' => 'Cache', 'action' => 'index'],
-                    'data-icon' => 'hourglass-o',
-                ],
-                'users' => [
-                    'title' => 'Users',
-                    'url' => ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
-                    'data-icon' => 'users',
-                ],
-                'settings' => [
-                    'title' => 'Settings',
-                    'url' => ['plugin' => 'Banana', 'controller' => 'Settings', 'action' => 'manage'],
-                    'data-icon' => 'sliders',
-                ]
-            ];
+            $items = $this->_getMenuItems();
 
             foreach ($items as $item) {
                 $event->subject()->addItem($item);
             }
         }
+    }
+
+    protected function _getMenuItems()
+    {
+        return $items = [
+//                'overview' => [
+//                    'title' => 'Overview',
+//                    'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+//                    'data-icon' => 'info'
+//                ],
+            'system' => [
+                'title' => 'Systeminfo',
+                'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
+                'data-icon' => 'info'
+            ],
+            'logs' => [
+                'title' => 'Logs',
+                'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
+                'data-icon' => 'file-text-o',
+            ],
+            'cache' => [
+                'title' => 'Cache',
+                'url' => ['plugin' => 'Backend', 'controller' => 'Cache', 'action' => 'index'],
+                'data-icon' => 'hourglass-o',
+            ],
+            'users' => [
+                'title' => 'Users',
+                'url' => ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
+                'data-icon' => 'users',
+            ],
+            'settings' => [
+                'title' => 'Settings',
+                'url' => ['plugin' => 'Banana', 'controller' => 'Settings', 'action' => 'manage'],
+                'data-icon' => 'sliders',
+            ]
+        ];
     }
 
     public function __invoke()

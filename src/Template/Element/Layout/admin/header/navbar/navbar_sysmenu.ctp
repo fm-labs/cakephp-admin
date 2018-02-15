@@ -10,7 +10,7 @@ $this->loadHelper('Bootstrap.Menu');
 //    return;
 //}
 
-$menu = $this->get('backend.navbar.menu');
+$menu = $this->get('backend.navbar.sysmenu');
 if (!isset($menu)) {
     echo "No menu";
     return;

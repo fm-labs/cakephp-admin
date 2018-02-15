@@ -35,29 +35,10 @@
 body.fixed-nav-top {
   margin-top: 50px;
 }
-#header-nav {
-  margin: 0;
-  -webkit-border-top-right-radius: 0;
-  -webkit-border-bottom-right-radius: 0;
-  -webkit-border-bottom-left-radius: 0;
-  -webkit-border-top-left-radius: 0;
-  -moz-border-radius-topright: 0;
-  -moz-border-radius-bottomright: 0;
-  -moz-border-radius-bottomleft: 0;
-  -moz-border-radius-topleft: 0;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-left-radius: 0;
-  -moz-background-clip: padding-box;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-}
-#header-nav .navbar-nav > li > a {
-  color: #DDD;
-}
-#header-nav .navbar-nav > li > a:hover {
-  color: #FFF;
+@media (min-width: 979px) {
+  .main-header .navbar ul.nav li.dropdown:hover > ul.dropdown-menu {
+    display: block;
+  }
 }
 #flash > .alert {
   margin: 0;

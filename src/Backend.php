@@ -7,6 +7,7 @@ use Banana\Exception\ClassNotFoundException;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin;
+use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
 use Cake\Routing\RouteBuilder;
@@ -99,10 +100,10 @@ class Backend implements EventListenerInterface
 
     public function implementedEvents()
     {
-        return ['Banana.init' => 'init'];
+        return ['Banana.startup' => 'startup'];
     }
 
-    public function init()
+    public function startup(Event $event)
     {
         $this->loadRoutes();
         $this->loadServices();

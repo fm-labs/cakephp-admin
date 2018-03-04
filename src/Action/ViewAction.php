@@ -34,7 +34,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
      */
     public function getLabel()
     {
-        return __('Details');
+        return __d('backend','Details');
     }
 
     /**
@@ -106,7 +106,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         $modelClass = $event->subject()->viewVars['modelClass'];
 
         $event->subject()->viewVars['tabs']['data'] = [
-            'title' => __('Data'),
+            'title' => __d('backend','Data'),
             'url' => ['plugin' => 'Backend', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id]
         ];
     }

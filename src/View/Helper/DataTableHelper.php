@@ -139,7 +139,7 @@ class DataTableHelper extends Helper
      *      string parameter or as first item in list
      * - `exclude` array List of entity fields to ignore.
      * - `actions` array List of actions link. Accepts entity fields as string templates in url arrays (:[field])
-     *      e.g. [__('Edit'), ['action' => 'edit', 'id' => ':id']]
+     *      e.g. [__d('backend','Edit'), ['action' => 'edit', 'id' => ':id']]
      * - `paginate` boolean
      * - `sortable` boolean
      * - `filter` boolean
@@ -519,7 +519,7 @@ class DataTableHelper extends Helper
         $headCellActions = '';
         if ($this->_params['rowActions'] !== false) {
             $headCellActions = $this->templater()->format('headCellActions', [
-                'content' => __('Actions'),
+                'content' => __d('backend','Actions'),
                 'attrs' => $this->_buildFieldAttributes('_actions_', [
                     'type' => 'object',
                     'label' => 'Actions',
@@ -609,12 +609,12 @@ class DataTableHelper extends Helper
 
                 if ($column['type'] == 'boolean') {
                     $filterInputOptions['type'] = 'select';
-                    $filterInputOptions['options'] = [ 0 => __('No'), 1 => __('Yes')];
-                    //$filterInputOptions['empty'] = __('All');
-                    $filterInputOptions['data-placeholder'] = __('All');
+                    $filterInputOptions['options'] = [ 0 => __d('backend','No'), 1 => __d('backend','Yes')];
+                    //$filterInputOptions['empty'] = __d('backend','All');
+                    $filterInputOptions['data-placeholder'] = __d('backend','All');
 
                 //} elseif ($column['type'] == 'select' || substr($fieldName, -3) == '_id') {
-                //    $filterInputOptions['empty'] = __('All');
+                //    $filterInputOptions['empty'] = __d('backend','All');
                 } elseif ($column['type'] == 'date' || $column['type'] == 'datetime') {
                     $filterInputOptions['type'] = 'hidden';
                 } elseif ($column['type'] == 'text') {
@@ -625,8 +625,8 @@ class DataTableHelper extends Helper
                     $sources = $Model->getInputList($fieldName);
                     if ($sources) {
                         $filterInputOptions['options'] = $sources;
-                        //$filterInputOptions['empty'] = __('All');
-                        $filterInputOptions['data-placeholder'] = __('All');
+                        //$filterInputOptions['empty'] = __d('backend','All');
+                        $filterInputOptions['data-placeholder'] = __d('backend','All');
                     }
                 }
                 $filterInput = $this->Form->input($fieldName, $filterInputOptions);
@@ -641,7 +641,7 @@ class DataTableHelper extends Helper
         }
 
         $actionCell = $this->templater()->format('rowCell', [
-            'content' => $this->Form->button(__('Filter'), ['class' => 'btn btn-default btn-xs']),
+            'content' => $this->Form->button(__d('backend','Filter'), ['class' => 'btn btn-default btn-xs']),
             'attrs' => $this->templater()->formatAttributes([
                 'style' => 'text-align: right;',
                 //'title' => $field['title']
@@ -796,7 +796,7 @@ class DataTableHelper extends Helper
         //}
 
         return $this->_View->element('Backend.Pagination/default', [
-            'counter' => ['format' => __('Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records')],
+            'counter' => ['format' => __d('backend','Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records')],
             'numbers' => []
         ]);
     }

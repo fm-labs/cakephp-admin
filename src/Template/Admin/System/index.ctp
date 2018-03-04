@@ -3,12 +3,12 @@ use Cake\Core\Configure;
 
 $this->loadHelper('Bootstrap.Tabs');
 ?>
-<?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__('Systeminfo')); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Systeminfo')); ?>
 <div class="index">
 
 	<?php $this->Tabs->create(); ?>
-	<?php $this->Tabs->add(__('System')); ?>
+	<?php $this->Tabs->add(__d('backend','System')); ?>
 
 	<h2>PHP</h2>
 	<dl class="dl-horizontal">
@@ -79,11 +79,11 @@ $this->loadHelper('Bootstrap.Tabs');
 		<dd><?= $this->request->clientIp();?></dd>
 	</dl>
 
-	<?php $this->Tabs->add(__('Config'), ['url' => ['action' => 'config']]); ?>
-	<?php $this->Tabs->add(__('Plugins'), ['url' => ['action' => 'plugins']]); ?>
-	<?php $this->Tabs->add(__('Routes'), ['url' => ['action' => 'routes']]); ?>
-	<?php $this->Tabs->add(__('Globals'), ['url' => ['action' => 'globals']]); ?>
-	<?php $this->Tabs->add(__('Session'), ['url' => ['action' => 'session']]); ?>
-	<?php $this->Tabs->add(__('PHP Info'), ['url' => ['action' => 'php']]); ?>
+	<?php $this->Tabs->add(__d('backend','Config'), ['url' => ['action' => 'config']]); ?>
+	<?php $this->Tabs->add(__d('backend','Plugins'), ['url' => ['action' => 'plugins']]); ?>
+	<?php $this->Tabs->add(__d('backend','Routes'), ['url' => ['action' => 'routes']]); ?>
+	<?php $this->Tabs->add(__d('backend','Globals'), ['url' => ['action' => 'globals']]); ?>
+	<?php $this->Tabs->add(__d('backend','Session'), ['url' => ['action' => 'session']]); ?>
+	<?php $this->Tabs->add(__d('backend','PHP Info'), ['url' => ['action' => 'php']]); ?>
 	<?php echo $this->Tabs->render(); ?>
 </div>

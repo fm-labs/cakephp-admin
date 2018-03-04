@@ -28,21 +28,21 @@ class PublishableService extends BackendService
                     $elements = (isset($event->subject()->viewVars['form_elements'])) ? $event->subject()->viewVars['form_elements'] : [];
 
                     $elements['translate'] = [
-                        'title' => __('Translations'),
+                        'title' => __d('backend','Translations'),
                         //'cell' => 'Banana.TranslateEntityForm',
                         'element' => 'Backend.Action/Edit/info_translate',
 
                     ];
 
                     $elements['publishable'] = [
-                        'title' => __('Publishing'),
+                        'title' => __d('backend','Publishing'),
                         'helpers' => [],
                         //'cell' => 'Banana.PublishEntityForm',
                         'element' => 'Backend.Action/Edit/info_publish',
                     ];
 
                     $elements['media'] = [
-                        'title' => __('Media'),
+                        'title' => __d('backend','Media'),
                         'helpers' => ['Media.Media', 'Media.MediaPicker'],
                         'cell' => 'Banana.MediaEntityForm',
                     ];

@@ -1,5 +1,5 @@
-<?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__('Systeminfo'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Systeminfo'), ['action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(__d('backend', 'Globals')); ?>
 <div>
 	<h2><?php echo __d('backend', 'CAKEPHP Globals'); ?></h2>

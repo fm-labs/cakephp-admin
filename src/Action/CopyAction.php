@@ -18,7 +18,7 @@ class CopyAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __('Copy');
+        return __d('backend','Copy');
     }
 
     /**

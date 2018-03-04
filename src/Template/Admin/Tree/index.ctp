@@ -1,6 +1,6 @@
-<?php $this->Breadcrumbs->add(__('Tree Viewer')); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Tree Viewer')); ?>
 <?php $this->loadHelper('Backend.JsTree'); ?>
-<?php $this->assign('heading', __('Tree Viewer')); ?>
+<?php $this->assign('heading', __d('backend','Tree Viewer')); ?>
 <div class="form">
 
     <div class="row" style="margin-top: 1rem;">

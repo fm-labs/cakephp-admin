@@ -1,5 +1,5 @@
 <?php $this->loadHelper('Bootstrap.Tabs'); ?>
-<?php $this->Breadcrumbs->add(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(__d('backend', 'Logs')); ?>
 <div class="index">
 
@@ -24,16 +24,16 @@
                 <td><?= $this->Time->timeAgoInWords($file['last_access']); ?></td>
 
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $file['id']]) ?>
+                    <?= $this->Html->link(__d('backend','View'), ['action' => 'view', $file['id']]) ?>
                     <?= $this->Ui->link(
-                        __('Clear'),
+                        __d('backend','Clear'),
                         ['action' => 'clear', $file['id']],
                         ['class' => 'item', 'data-icon' => 'trash']
                     ) ?>
                     <?= $this->Ui->postLink(
-                        __('Delete'),
+                        __d('backend','Delete'),
                         ['action' => 'delete', $file['id']],
-                        ['class' => 'item', 'data-icon' => 'trash', 'confirm' => __('Are you sure you want to delete {0}?', $file['name'])]
+                        ['class' => 'item', 'data-icon' => 'trash', 'confirm' => __d('backend','Are you sure you want to delete {0}?', $file['name'])]
                     ) ?>
                 </td>
             </tr>
@@ -77,7 +77,7 @@
 		<?php endforeach; ?>
 	</table>
 
-    <?php $this->Tabs->add(__('Debug'), ['debugOnly' => true]); ?>
+    <?php $this->Tabs->add(__d('backend','Debug'), ['debugOnly' => true]); ?>
 	<?php debug($this->get('files')); ?>
 
     <?php echo $this->Tabs->render(); ?>

@@ -99,13 +99,15 @@ abstract class BaseAction
      */
     abstract protected function _execute(Controller $controller);
 
-    protected function _flashSuccess($msg = 'Ok')
+    protected function _flashSuccess($msg = null)
     {
+        $msg = ($msg) ?: __d('backend','Ok');
         $this->_controller->Flash->success($msg);
     }
 
-    protected function _flashError($msg = 'Failed')
+    protected function _flashError($msg = null)
     {
+        $msg = ($msg) ?: __d('backend','Failed');
         $this->_controller->Flash->error($msg);
     }
 

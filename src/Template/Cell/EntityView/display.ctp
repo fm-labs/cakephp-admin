@@ -28,5 +28,4 @@ use Cake\Utility\Inflector;
             </dl>
         </div>
     </div>
-
 </div>

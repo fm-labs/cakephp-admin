@@ -48,7 +48,7 @@
                 ?>
                 <div class="ui divider"></div>
                 <?= $this->Ui->link(
-                    __('Publish Item'),
+                    __d('backend','Publish Item'),
                     '#',
                     ['class' => 'item']);
                 ?>
@@ -66,7 +66,7 @@
                         ?>
                         <div class="ui divider"></div>
                         <?= $this->Ui->link(
-                            __('Publish Item'),
+                            __d('backend','Publish Item'),
                             '#',
                             ['class' => 'item']);
                         ?>

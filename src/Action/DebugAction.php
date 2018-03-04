@@ -25,7 +25,7 @@ class DebugAction implements ActionInterface, IndexActionInterface
      */
     public function getLabel()
     {
-        return __('Debug');
+        return __d('backend','Debug');
     }
 
     /**

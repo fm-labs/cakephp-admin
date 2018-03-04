@@ -119,7 +119,16 @@ class EntityViewCell extends Cell
         //$properties = $entity->visibleProperties();
         $virtualProperties = $entity->virtualProperties();
 
-        $propDataFormatter = function ($property) use (&$data, $entity, $fields, $associations, $schema, $defaultField, $virtualProperties) {
+        $belongsTo = [];
+        if ($associations) {
+            foreach ($associations as $assoc) {
+                if ($assoc->type() == "manyToOne") {
+                    $belongsTo[$assoc->foreignKey()] = $assoc->name();
+                }
+            }
+        }
+
+        $propDataFormatter = function ($property) use (&$data, $entity, $fields, $associations, $schema, $defaultField, $virtualProperties, $belongsTo) {
 
             if (!empty($this->whitelist) && !in_array($property, $this->whitelist)) {
                 return false;
@@ -128,6 +137,7 @@ class EntityViewCell extends Cell
             if (!empty($this->blacklist) && in_array($property, $this->blacklist)) {
                 return false;
             }
+
 
             $field = (isset($fields[$property])) ? $fields[$property] : $defaultField;
             $fieldLabel = ($field['title']) ?: Inflector::humanize($property);
@@ -139,7 +149,22 @@ class EntityViewCell extends Cell
             $formatterArgs = ($field['formatterArgs']) ?: [];
 
             $assoc = null;
-            if ($associations) {
+            if (isset($belongsTo[$property])) {
+                $assoc = $associations->get($belongsTo[$property]);
+                //debug("$property belongsTo " . $belongsTo[$property] . " -> " . $assoc->property());
+                if ($entity->get($assoc->property())) {
+                //    $val = sprintf("%s (%s)", $val, $entity->get($assoc->property())->get($assoc->target()->displayField()));
+                //    $formatter = ['related', $assoc->target()->displayField()];
+
+                    $related = $entity->get($assoc->property());
+                    $formatter = function($val, $row, $args, $view) use ($related, $assoc) {
+                        return $view->Html->link($related->get($assoc->target()->displayField()),
+                            ['controller' => $assoc->name(), 'action' => 'view', $related->id]
+                        );
+                    };
+                }
+            }
+            elseif ($associations) {
                 $assoc = $associations->getByProperty($property);
                 if ($assoc) {
                     $assocType = $assoc->type();
@@ -154,11 +179,12 @@ class EntityViewCell extends Cell
                             };
                             break;
                         case "manyToOne":
-                            $formatter = "object";
+                            //$formatter = "object";
+                            $formatter = ['related', $assoc->target()->displayField()];
                             break;#
                         default:
                             $formatter = $assocType;
-                            //debug($assocType . ":" . $formatter);
+                            debug($assocType . ":" . $formatter);
                             break;
                     }
                 } else {

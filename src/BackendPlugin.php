@@ -124,53 +124,53 @@ class BackendPlugin implements EventListenerInterface
 
     public function buildBackendRoutes(RouteBuilderEvent $event)
     {
-        $event->subject()->scope('/backend',
-            ['_namePrefix' => 'backend:admin:', 'prefix' => 'admin', 'plugin' => 'Backend'], function(RouteBuilder $routes) {
-
-            // backend:admin:auth:login
-            $routes->connect(
-                '/login',
-                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
-                ['_name' => 'user:login']
-            );
-            $routes->connect(
-                '/login-success',
-                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
-                ['_name' => 'user:loginsuccess']
-            );
-
-            // backend:admin:auth:logout
-            $routes->connect(
-                '/logout',
-                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
-                [ '_name' => 'user:logout']
-            );
-
-            // backend:admin:auth:user
-            $routes->connect(
-                '/user',
-                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user'],
-                [ '_name' => 'user:profile']
-            );
-
-            // backend:admin:dashboard
-            $routes->connect(
-                '/',
-                ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
-                ['_name' => 'dashboard']
-            );
-
-            // Fallbacks
-            //$routes->connect('/:controller/:action');
-            //$routes->connect('/:controller');
-            $routes->fallbacks('DashedRoute');
-
-        });
-
-
-        $dashboardUrl = (Configure::read('Backend.Dashboard.url'))
-            ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index', 'prefix' => 'admin'];
-        $event->subject()->connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
+//        $event->subject()->scope('/backend',
+//            ['_namePrefix' => 'backend:admin:', 'prefix' => 'admin', 'plugin' => 'Backend'], function(RouteBuilder $routes) {
+//
+//            // backend:admin:auth:login
+//            $routes->connect(
+//                '/login',
+//                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
+//                ['_name' => 'user:login']
+//            );
+//            $routes->connect(
+//                '/login-success',
+//                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
+//                ['_name' => 'user:loginsuccess']
+//            );
+//
+//            // backend:admin:auth:logout
+//            $routes->connect(
+//                '/logout',
+//                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
+//                [ '_name' => 'user:logout']
+//            );
+//
+//            // backend:admin:auth:user
+//            $routes->connect(
+//                '/user',
+//                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user'],
+//                [ '_name' => 'user:profile']
+//            );
+//
+//            // backend:admin:dashboard
+//            $routes->connect(
+//                '/',
+//                ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+//                ['_name' => 'dashboard']
+//            );
+//
+//            // Fallbacks
+//            //$routes->connect('/:controller/:action');
+//            //$routes->connect('/:controller');
+//            $routes->fallbacks('DashedRoute');
+//
+//        });
+//
+//
+//        $dashboardUrl = (Configure::read('Backend.Dashboard.url'))
+//            ?: ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index', 'prefix' => 'admin'];
+//        $event->subject()->connect('/dashboard', $dashboardUrl, ['_name' => 'dashboard']);
 
 //        /**
 //         * Fallback routes for app backend
@@ -248,9 +248,14 @@ class BackendPlugin implements EventListenerInterface
                 'url' => ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
                 'data-icon' => 'users',
             ],
+            'plugins' => [
+                'title' => 'Plugins',
+                'url' => ['plugin' => 'Backend', 'controller' => 'Plugins', 'action' => 'index'],
+                'data-icon' => 'puzzle-piece',
+            ],
             'settings' => [
                 'title' => 'Settings',
-                'url' => ['plugin' => 'Banana', 'controller' => 'Settings', 'action' => 'manage'],
+                'url' => ['plugin' => 'Backend', 'controller' => 'Settings', 'action' => 'manage'],
                 'data-icon' => 'sliders',
             ]
         ];

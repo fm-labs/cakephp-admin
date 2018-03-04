@@ -27,8 +27,7 @@ class SidebarHelper extends Helper
 
     public function beforeLayout(Event $event)
     {
-
-
+        //debug("SidebarHelper::beforeLayout");
         $elements = [
             'menu' => ['element' => 'Backend.Layout/admin/sidebar/sidebar_menu', 'block' => 'sidebar_items'],
             //'search' => ['element' => 'Backend.Layout/admin/sidebar/sidebar_search', 'block' => 'sidebar_items'],
@@ -38,7 +37,7 @@ class SidebarHelper extends Helper
         // load sidebar menu
         if (!isset($this->_View->viewVars['backend.sidebar.menu'])) {
             $menu = new Menu();
-            $this->_View->eventManager()->dispatch(new Event('Backend.Sidebar.build', $menu));
+            $this->_View->eventManager()->dispatch(new Event('Backend.Sidebar.build', $menu, ['request' => $this->_View->request]));
             $this->_View->set('backend.sidebar.menu', $menu);
         }
 

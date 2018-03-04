@@ -11,7 +11,7 @@ class TreeMoveUpAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __('Move Up');
+        return __d('backend','Move Up');
     }
 
     /**

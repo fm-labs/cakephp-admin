@@ -7,9 +7,9 @@ $fields = collection($fields)
     })
     ->take(7);
 %>
-<?php $this->Breadcrumbs->add(__('<%= $pluralHumanName %>')); ?>
+<?php $this->Breadcrumbs->add(__d('backend','<%= $pluralHumanName %>')); ?>
 
-<?php $this->Toolbar->addLink(__('New {0}', __('<%= $singularHumanName %>')), ['action' => 'add'], ['data-icon' => 'plus']); ?>
+<?php $this->Toolbar->addLink(__d('backend','New {0}', __d('backend','<%= $singularHumanName %>')), ['action' => 'add'], ['data-icon' => 'plus']); ?>
 <%
 $done = [];
 foreach ($associations as $type => $data):
@@ -17,12 +17,12 @@ foreach ($associations as $type => $data):
         if ($details['controller'] != $this->name && !in_array($details['controller'], $done)):
 %>
 <?php $this->Toolbar->addLink(
-    __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
+    __d('backend','List {0}', __d('backend','<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details["controller"] %>', 'action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
 <?php $this->Toolbar->addLink(
-    __('New {0}', __('<%= $this->_singularHumanName($alias) %>')),
+    __d('backend','New {0}', __d('backend','<%= $this->_singularHumanName($alias) %>')),
     ['controller' => '<%= $details["controller"] %>', 'action' => 'add'],
     ['data-icon' => 'plus']
 ) ?>

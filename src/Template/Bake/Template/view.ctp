@@ -51,29 +51,29 @@ $groupedFields = collection($fields)
 $groupedFields += ['number' => [], 'string' => [], 'boolean' => [], 'date' => [], 'text' => []];
 $pk = "\$$singularVar->{$primaryKey[0]}";
 %>
-<?php $this->Breadcrumbs->add(__('<%= $pluralHumanName %>'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend','<%= $pluralHumanName %>'), ['action' => 'index']); ?>
 <?php $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>); ?>
 <?php $this->Toolbar->addLink(
-    __('Edit {0}', __('<%= $singularHumanName %>')),
+    __d('backend','Edit {0}', __d('backend','<%= $singularHumanName %>')),
     ['action' => 'edit', <%= $pk %>],
     ['data-icon' => 'edit']
 ) ?>
 <?php $this->Toolbar->addLink(
-    __('Delete {0}', __('<%= $singularHumanName %>')),
+    __d('backend','Delete {0}', __d('backend','<%= $singularHumanName %>')),
     ['action' => 'delete', <%= $pk %>],
-    ['data-icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]) ?>
+    ['data-icon' => 'trash', 'confirm' => __d('backend','Are you sure you want to delete # {0}?', <%= $pk %>)]) ?>
 
 <?php $this->Toolbar->addLink(
-    __('List {0}', __('<%= $pluralHumanName %>')),
+    __d('backend','List {0}', __d('backend','<%= $pluralHumanName %>')),
     ['action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
 <?php $this->Toolbar->addLink(
-    __('New {0}', __('<%= $singularHumanName %>')),
+    __d('backend','New {0}', __d('backend','<%= $singularHumanName %>')),
     ['action' => 'add'],
     ['data-icon' => 'plus']
 ) ?>
-<?php $this->Toolbar->startGroup(__('More')); ?>
+<?php $this->Toolbar->startGroup(__d('backend','More')); ?>
 <%
 $done = [];
 foreach ($associations as $type => $data) {
@@ -81,12 +81,12 @@ foreach ($associations as $type => $data) {
         if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
 %>
 <?php $this->Toolbar->addLink(
-    __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
+    __d('backend','List {0}', __d('backend','<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
 <?php $this->Toolbar->addLink(
-    __('New {0}', __('<%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>')),
+    __d('backend','New {0}', __d('backend','<%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'add'],
     ['data-icon' => 'plus']
 ) ?>
@@ -119,12 +119,12 @@ foreach ($associations as $type => $data) {
             $details = $associationFields[$field];
 %>
         <tr>
-            <td><?= __('<%= Inflector::humanize($details['property']) %>') ?></td>
+            <td><?= __d('backend','<%= Inflector::humanize($details['property']) %>') ?></td>
             <td><?= $<%= $singularVar %>->has('<%= $details['property'] %>') ? $this->Html->link($<%= $singularVar %>-><%= $details['property'] %>-><%= $details['displayField'] %>, ['controller' => '<%= $details['controller'] %>', 'action' => 'view', $<%= $singularVar %>-><%= $details['property'] %>-><%= $details['primaryKey'][0] %>]) : '' ?></td>
         </tr>
 <% else : %>
         <tr>
-            <td><?= __('<%= Inflector::humanize($field) %>') ?></td>
+            <td><?= __d('backend','<%= Inflector::humanize($field) %>') ?></td>
             <td><?= h($<%= $singularVar %>-><%= $field %>) ?></td>
         </tr>
 <% endif; %>
@@ -135,7 +135,7 @@ foreach ($associations as $type => $data) {
 
 <% foreach ($groupedFields['number'] as $field) : %>
         <tr>
-            <td><?= __('<%= Inflector::humanize($field) %>') ?></td>
+            <td><?= __d('backend','<%= Inflector::humanize($field) %>') ?></td>
             <td><?= $this->Number->format($<%= $singularVar %>-><%= $field %>) ?></td>
         </tr>
 <% endforeach; %>
@@ -145,7 +145,7 @@ foreach ($associations as $type => $data) {
 
 <% foreach ($groupedFields['date'] as $field) : %>
         <tr class="date">
-            <td><%= "<%= __('" . Inflector::humanize($field) . "') %>" %></td>
+            <td><%= "<%= __d('backend','" . Inflector::humanize($field) . "') %>" %></td>
             <td><?= h($<%= $singularVar %>-><%= $field %>) ?></td>
         </tr>
 <% endforeach; %>
@@ -154,15 +154,15 @@ foreach ($associations as $type => $data) {
 <% if ($groupedFields['boolean']) : %>
 <% foreach ($groupedFields['boolean'] as $field) : %>
         <tr class="boolean">
-            <td><?= __('<%= Inflector::humanize($field) %>') ?></td>
-            <td><?= $<%= $singularVar %>-><%= $field %> ? __('Yes') : __('No'); ?></td>
+            <td><?= __d('backend','<%= Inflector::humanize($field) %>') ?></td>
+            <td><?= $<%= $singularVar %>-><%= $field %> ? __d('backend','Yes') : __d('backend','No'); ?></td>
         </tr>
 <% endforeach; %>
 <% endif; %>
 <% if ($groupedFields['text']) : %>
 <% foreach ($groupedFields['text'] as $field) : %>
         <tr class="text">
-            <td><?= __('<%= Inflector::humanize($field) %>') ?></td>
+            <td><?= __d('backend','<%= Inflector::humanize($field) %>') ?></td>
             <td><?= $this->Text->autoParagraph(h($<%= $singularVar %>-><%= $field %>)); ?></td>
         </tr>
 <% endforeach; %>
@@ -178,14 +178,14 @@ foreach ($relations as $alias => $details):
     %>
 <div class="related">
     <div class="ui basic segment">
-    <h4 class="ui header"><?= __('Related {0}', __('<%= $otherPluralHumanName %>')) ?></h4>
+    <h4 class="ui header"><?= __d('backend','Related {0}', __d('backend','<%= $otherPluralHumanName %>')) ?></h4>
     <?php if (!empty($<%= $singularVar %>-><%= $details['property'] %>)): ?>
     <table class="ui table">
         <tr>
 <% foreach ($details['fields'] as $field): %>
-            <th><?= __('<%= Inflector::humanize($field) %>') ?></th>
+            <th><?= __d('backend','<%= Inflector::humanize($field) %>') ?></th>
 <% endforeach; %>
-            <th class="actions"><?= __('Actions') ?></th>
+            <th class="actions"><?= __d('backend','Actions') ?></th>
         </tr>
         <?php foreach ($<%= $singularVar %>-><%= $details['property'] %> as $<%= $otherSingularVar %>): ?>
         <tr>
@@ -195,9 +195,9 @@ foreach ($relations as $alias => $details):
 
             <%- $otherPk = "\${$otherSingularVar}->{$details['primaryKey'][0]}"; %>
             <td class="actions">
-                <?= $this->Html->link(__('View'), ['controller' => '<%= $details['controller'] %>', 'action' => 'view', <%= $otherPk %>]) %>
-                <?= $this->Html->link(__('Edit'), ['controller' => '<%= $details['controller'] %>', 'action' => 'edit', <%= $otherPk %>]) %>
-                <?= $this->Form->postLink(__('Delete'), ['controller' => '<%= $details['controller'] %>', 'action' => 'delete', <%= $otherPk %>], ['confirm' => __('Are you sure you want to delete # {0}?', <%= $otherPk %>)]) %>
+                <?= $this->Html->link(__d('backend','View'), ['controller' => '<%= $details['controller'] %>', 'action' => 'view', <%= $otherPk %>]) %>
+                <?= $this->Html->link(__d('backend','Edit'), ['controller' => '<%= $details['controller'] %>', 'action' => 'edit', <%= $otherPk %>]) %>
+                <?= $this->Form->postLink(__d('backend','Delete'), ['controller' => '<%= $details['controller'] %>', 'action' => 'delete', <%= $otherPk %>], ['confirm' => __d('backend','Are you sure you want to delete # {0}?', <%= $otherPk %>)]) %>
             </td>
         </tr>
 

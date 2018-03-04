@@ -16,6 +16,17 @@ class EditAction extends BaseEntityAction
 {
     protected $_scope = ['table', 'form'];
 
+    /**
+     * @var array
+     */
+    protected $_defaultConfig = [
+        'actions' => [],
+        'rowActions' => [],
+        'fields' => [],
+        'fields.whitelist' => [],
+        'fieldsets' => [],
+    ];
+
     //public $noTemplate = true;
 
     /**
@@ -23,7 +34,7 @@ class EditAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __('Edit');
+        return __d('backend','Edit');
     }
 
     /**
@@ -42,25 +53,48 @@ class EditAction extends BaseEntityAction
             $entity = $this->entity();
         }
 
+        $fields = $this->model()->schema()->columns();
+        if (isset($controller->viewVars['fields'])) {
+            $fields = array_merge($fields, $controller->viewVars['fields']);
+        }
+
         if ($this->_request->is(['put', 'post'])) {
             $entity = $this->model()->patchEntity($entity, $this->_request->data);
             if ($this->model()->save($entity)) {
-                $this->_flashSuccess(__('Records updated'));
+                $this->_flashSuccess(__d('backend','Saved!'));
                 //$this->_redirect(['action' => 'index']);
             } else {
                 $this->_flashError();
             }
         }
 
+        $controller->set('fields', $fields);
         $controller->set('entity', $entity);
         $controller->set('modelClass', $controller->modelClass);
 
         // associated
+        // associated
         foreach ($this->model()->associations() as $assoc) {
             if ($assoc->type() == Association::MANY_TO_ONE) {
-                $var = Inflector::pluralize($assoc->property());
-                $list = $assoc->target()->find('list')->toArray();
-                $controller->set($var, $list);
+                $fKey = $assoc->foreignKey();
+                if (strrpos($fKey, '_id') !== false) {
+                    $var = substr($fKey, 0, strrpos($fKey, '_id'));
+                    $var = lcfirst(Inflector::camelize(Inflector::pluralize($var)));
+
+                    $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
+                    $controller->set($var, $list);
+                }
+            } elseif ($assoc->type() == Association::ONE_TO_MANY) {
+                //$var = Inflector::pluralize($assoc->property());
+                $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
+                $controller->set($assoc->foreignKey(), $list);
+            } elseif ($assoc->type() == Association::ONE_TO_ONE) {
+                //$list = ['foo' => 'bar'];
+                //debug($assoc);
+                //$controller->set($assoc->foreignKey(), $list);
+                //debug($assoc->type());
+            } else {
+                //debug($assoc->type());
             }
         }
 
@@ -74,5 +108,8 @@ class EditAction extends BaseEntityAction
             }
         }
         */
+
+        // config
+        $controller->set($this->_config);
     }
 }

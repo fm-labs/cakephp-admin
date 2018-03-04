@@ -170,9 +170,9 @@ class LogsController extends AppController
         /*
         $L = new LogRotation($alias);
         if ($L->rotate()) {
-            $this->Flash->success(__('Ok'));
+            $this->Flash->success(__d('backend','Ok'));
         } else {
-            $this->Flash->error(__('LogRotation for {0} failed', $alias));
+            $this->Flash->error(__d('backend','LogRotation for {0} failed', $alias));
         }
         */
         $this->Flash->error('LogRotation is deprecated. Use log engine features instead');

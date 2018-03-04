@@ -1,5 +1,5 @@
-<?php $this->Breadcrumbs->add(__('Dashboard')); ?>
-<?php $this->assign('title', $this->get('dashboard.title', __('Dashboard'))); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Dashboard')); ?>
+<?php $this->assign('title', $this->get('dashboard.title', __d('backend','Dashboard'))); ?>
 <div id="backend-user-dashboard" class="backend dashboard index">
     <div class="row">
         <?php foreach ((array) $this->get('dashboard.panels') as $panel): ?>

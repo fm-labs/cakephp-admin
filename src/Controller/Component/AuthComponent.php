@@ -42,10 +42,11 @@ class AuthComponent extends \User\Controller\Component\AuthComponent
 
             // form login obviously failed
         } elseif ($this->request->is('post')) {
-            $this->flash(__d('user', 'Login failed'));
+            $this->flash(__d('backend', 'Login failed'));
 
             // dispatch 'User.login' event
             $event = new Event('Backend.User.loginFailed', $this, [
+                'user' => false,
                 'request' => $this->request
             ]);
             $this->eventManager()->dispatch($event);

@@ -20,7 +20,7 @@ class PublishAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __('Publish');
+        return __d('backend','Publish');
     }
 
     /**
@@ -58,9 +58,9 @@ class PublishAction extends BaseEntityAction
                 //'fieldList' => ['is_published', 'publish_start', 'publish_end'], //@TODO Enable fieldList
             ]);
             if ($this->model()->save($entity)) {
-                $controller->Flash->success(__('Updated'));
+                $controller->Flash->success(__d('backend','Updated'));
             } else {
-                $controller->Flash->error(__('Update failed'));
+                $controller->Flash->error(__d('backend','Update failed'));
             }
         }
 

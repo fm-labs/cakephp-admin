@@ -6,5 +6,5 @@
         <dt>Cake PHP Version</dt>
         <dd><?= h(\Cake\Core\Configure::version()); ?></dd>
     </dl>
-    <?= $this->Html->link(__('Open system info'), ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index']); ?>
+    <?= $this->Html->link(__d('backend','Open system info'), ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index']); ?>
 </div>

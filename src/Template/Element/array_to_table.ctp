@@ -14,8 +14,8 @@ if (!is_array($data)) {
 <table class="ui table striped">
     <thead>
     <tr>
-        <th><?php echo __('Key'); ?></th>
-        <th><?php echo __('Value'); ?></th>
+        <th><?php echo __d('backend','Key'); ?></th>
+        <th><?php echo __d('backend','Value'); ?></th>
     </tr>
     </thead>
     <?php foreach(Hash::flatten($data) as $k => $v): ?>

@@ -32,9 +32,9 @@ class DataTableController extends AppController
         }
 
         if ($this->_getModel($modelName)->reorder($scope, compact('field', 'order'))) {
-            $this->Flash->success(__d('content', 'Reordering complete'));
+            $this->Flash->success(__d('backend', 'Reordering complete'));
         } else {
-            $this->Flash->error(__d('content', 'Reordering failed'));
+            $this->Flash->error(__d('backend', 'Reordering failed'));
         }
         $this->redirect($this->referer());
     }

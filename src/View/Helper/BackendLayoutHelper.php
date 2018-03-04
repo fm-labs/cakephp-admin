@@ -11,13 +11,13 @@ class BackendLayoutHelper extends Helper
 {
     public function initialize(array $config = [])
     {
-        $this->_View->loadHelper('Backend.Layout/Breadcrumb');
-        $this->_View->loadHelper('Backend.Layout/Header');
-        $this->_View->loadHelper('Backend.Layout/ContentHeader');
-        $this->_View->loadHelper('Backend.Layout/Toolbar', []);
-        $this->_View->loadHelper('Backend.Layout/Sidebar');
-        $this->_View->loadHelper('Backend.Layout/Footer', []);
-        $this->_View->loadHelper('Backend.Layout/ControlSidebar', []);
+        $this->_View->loadHelper('LayoutBreadcrumb', ['className' => 'Backend.Layout/Breadcrumb']);
+        $this->_View->loadHelper('LayoutHeader', ['className' => 'Backend.Layout/Header']);
+        $this->_View->loadHelper('LayoutContentHeader', ['className' => 'Backend.Layout/ContentHeader']);
+        $this->_View->loadHelper('LayoutFooter', ['className' => 'Backend.Layout/Footer']);
+        $this->_View->loadHelper('Toolbar', ['className' => 'Backend.Layout/Toolbar']);
+        $this->_View->loadHelper('Sidebar', ['className' => 'Backend.Layout/Sidebar']);
+        $this->_View->loadHelper('ControlSidebar', ['className' => 'Backend.Layout/ControlSidebar']);
     }
 
     public function implementedEvents()

@@ -1,4 +1,4 @@
-<?php $this->assign('title', __('SimpleTree Viewer')); ?>
+<?php $this->assign('title', __d('backend','SimpleTree Viewer')); ?>
 <div class="index">
 
     <?= $this->cell('Backend.DataTable', [[

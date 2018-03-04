@@ -9,7 +9,7 @@ class RootUserTask extends BackendTask
     {
         $parser = parent::getOptionParser();
         $parser
-            ->description(__("Create backend root user"))
+            ->description(__d('backend',"Create backend root user"))
             ->addOption('email', [
                 'help' => 'Root user email',
                 'short' => 'e'

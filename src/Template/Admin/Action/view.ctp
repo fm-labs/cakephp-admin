@@ -46,8 +46,8 @@ $this->loadHelper('Bootstrap.Tabs');
             }
 
             $_entity = $entity->get($assoc->property());
-            $title = __('Related {0}', $assoc->name());
-            $html = __("No data available");
+            $title = __d('backend','Related {0}', $assoc->name());
+            $html = __d('backend',"No data available");
 
             $template = '<div class="box"><div class="box-header with-border"><h3 class="box-title">%s</h3></div><div class="box-body">%s</div></div>';
 
@@ -77,7 +77,7 @@ $this->loadHelper('Bootstrap.Tabs');
 
                 case \Cake\ORM\Association::MANY_TO_MANY:
                 default:
-                    $html = __('Association type not implemented {0}', $type);
+                    $html = __d('backend','Association type not implemented {0}', $type);
                     break;
             }
 

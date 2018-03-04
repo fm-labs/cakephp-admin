@@ -10,7 +10,7 @@ $this->Form->addContextProvider('entity_form', function($request, $context) {
 
     <?php echo $this->Form->create($form, ['horizontal' => true]); ?>
     <?php echo $this->Form->allInputs($form->controls(), ['fieldset' => false] ); ?>
-    <?php echo $this->Form->button(__('Save')); ?>
+    <?php echo $this->Form->button(__d('backend','Save')); ?>
     <?php echo $this->Form->end(); ?>
 
     <?php debug($form->controls()); ?>

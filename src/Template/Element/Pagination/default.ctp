@@ -11,8 +11,8 @@ $numbers = (isset($numbers)) ? (array) $numbers : []; // Paginator::number optio
     </ul>
 
     <ul class="pagination pull-right">
-        <?= $this->Paginator->prev(__('previous')) ?>
+        <?= $this->Paginator->prev(__d('backend','previous')) ?>
         <?= $this->Paginator->numbers($numbers) ?>
-        <?= $this->Paginator->next(__('next')) ?>
+        <?= $this->Paginator->next(__d('backend','next')) ?>
     </ul>
 </nav>

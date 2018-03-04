@@ -12,7 +12,7 @@ if (!$item) {
     return;
 }
 
-$item['title'] = (isset($item['title'])) ? $item['title'] : __('Untitled Menu Item');
+$item['title'] = (isset($item['title'])) ? $item['title'] : __d('backend','Untitled Menu Item');
 $item['url'] = (isset($item['url'])) ? $item['url'] : false;
 $item['attr'] = (isset($item['attr'])) ? $item['attr'] : [];
 

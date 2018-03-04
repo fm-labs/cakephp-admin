@@ -3,7 +3,6 @@
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
-use Cake\Controller\Exception\MissingActionException;
 use Cake\Datasource\EntityInterface;
 use Cake\Utility\Inflector;
 
@@ -12,6 +11,7 @@ class InlineEntityAction extends BaseEntityAction
     protected $_scope = [];
     protected $_attributes = [];
     protected $_callable;
+    protected $_executed = false;
 
     public $action;
     public $options;
@@ -62,6 +62,9 @@ class InlineEntityAction extends BaseEntityAction
 
     protected function _execute(Controller $controller)
     {
+        //if ($this->_executed == true) {
+        //    return;
+        //}
 //        if (!method_exists($controller, $this->action)) {
 //            throw new MissingActionException([
 //                'controller' => $controller->name,
@@ -70,14 +73,15 @@ class InlineEntityAction extends BaseEntityAction
 //                'plugin' => $controller->request->params['plugin'],
 //            ]);
 //        }
+//
+//        if (!is_callable($this->_callable)) {
+//            throw new \InvalidArgumentException("InlineAction " . $this->action . " has no valid callback");
+//        }
 
-        if (!is_callable($this->_callable)) {
-            throw new \InvalidArgumentException("InlineAction " . $this->action . " has no valid callback");
-        }
-
-        //$this->_config['modelId'] = $controller->request->params[0];
+        //$this->_config['modelId'] = $controller->request->params['pass'][0];
         //$entity = $this->entity();
         //$controller->set('entity', $entity);
-        return call_user_func_array($this->_callable, $controller->request->params);
+        //$this->_executed = true;
+        return call_user_func_array($this->_callable, $controller->request->params['pass']);
     }
 }

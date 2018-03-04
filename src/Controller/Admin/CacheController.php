@@ -32,9 +32,9 @@ class CacheController extends AppController
         }
 
         if (Cache::clear(false, $config)) {
-            $this->Flash->success(__('Cache cleared'));
+            $this->Flash->success(__d('backend','Cache cleared'));
         } else {
-            $this->Flash->error(__('Failed to clear cache'));
+            $this->Flash->error(__d('backend','Failed to clear cache'));
         }
         $this->redirect($this->referer(['action' => 'default']));
     }

@@ -16,7 +16,7 @@ class TreeRepairAction extends BaseIndexAction
      */
     public function getLabel()
     {
-        return __('Repair Tree');
+        return __d('backend','Repair Tree');
     }
 
     /**
@@ -34,7 +34,7 @@ class TreeRepairAction extends BaseIndexAction
     {
         if ($this->model()->hasBehavior('Tree')) {
             $this->model()->recover();
-            $controller->Flash->success(__d('content', 'Tree for model {0} has been repaired', $this->model()->alias()));
+            $controller->Flash->success(__d('backend', 'Tree for model {0} has been repaired', $this->model()->alias()));
         } else {
             $controller->Flash->error('Tree behavior not loaded for model ' . $this->model()->alias());
         }

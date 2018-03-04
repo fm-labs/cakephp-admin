@@ -5,15 +5,15 @@ $menuTemplates = [
     'navLink' => '<a href="{{url}}"{{attrs}}><span>{{content}}</span></a>',
     'navList' => '<ul class="{{class}}">{{title}}{{items}}</ul>',
     'navListTitle' => '<li class="header">{{content}}</li>',
-    'navListItem' => '<li role="presentation" class="{{class}}"{{attrs}}>{{link}}</li>',
-    'navListItemSubmenu' => '<li role="presentation" class="{{class}}"{{attrs}}>{{link}}{{submenu}}</li>',
+    //'navListItem' => '<li role="presentation" class="{{class}}"{{attrs}}>{{link}}</li>',
+    //'navListItemSubmenu' => '<li role="presentation" class="{{class}}"{{attrs}}>{{link}}{{submenu}}</li>',
     'navSubmenuList' => '<ul class="{{class}}">{{items}}</ul>'
 ];
 $menuClasses = [
     'menu' => 'sidebar-menu',
     'submenuItem' => 'treeview',
     'submenu' => 'treeview-menu',
-    'item' => '',
+    'item' => 'item',
     'activeMenu' => 'menu-open',
     'activeItem' => 'active',
     'trailMenu' => 'menu-open',

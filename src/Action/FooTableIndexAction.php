@@ -49,7 +49,7 @@ class FooTableIndexAction extends IndexAction
 
     public function getLabel()
     {
-        return __("Index");
+        return __d('backend',"Index");
     }
 
     /**

@@ -70,7 +70,7 @@ class IndexAction extends BaseIndexAction
                 [$this, 'buildTableRowActions']
             ]
         ]);
-        $controller->set('actions', $this->_config['actions']);
+        //$controller->set('actions', $this->_config['actions']);
 
         if ($this->model() && $this->model()->hasBehavior('Stats')) {
             $controller->set('tableStats', $this->model()->getStats());

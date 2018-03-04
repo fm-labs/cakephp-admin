@@ -41,6 +41,11 @@ class ActionComponent extends Component
     protected $_controller;
 
     /**
+     * @var string Active action name
+     */
+    protected $_actionName;
+
+    /**
      * @var EntityActionInterface|object Active action
      */
     protected $_action;
@@ -198,7 +203,20 @@ class ActionComponent extends Component
             $action = $this->request->params['action'];
         }
 
+        // prevent recursive action calls
+        if ($action == $this->_actionName) {
+            return;
+        }
+
+        // prevent recursive action calls (2)
+        if ($this->_executing == true) {
+            debug("already executing " . $this->_actionName);
+            return;
+        }
+        $this->_executing = true;
+
         if ($this->_actionRegistry->has($action)) {
+            $this->_actionName = $action;
             $this->_action = $this->_actionRegistry->get($action);
             $this->model(); // init primary model
 
@@ -233,6 +251,11 @@ class ActionComponent extends Component
 
             // execute the action in context of current controller
             $response = $this->_action->execute($this->_controller);
+
+            $event = $this->_registry->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
+            if ($event->result instanceof Response) {
+                return $event->result;
+            }
 
             // force rendering to capture template exception and fallback to Action template path
             if (!$response && $this->_controller->autoRender) {
@@ -275,11 +298,6 @@ class ActionComponent extends Component
                 }
             }
 
-            $event = $this->_registry->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
-            if ($event->result instanceof Response) {
-                return $event->result;
-            }
-
             // detach Action instance from controllers event manager
             if ($this->_action instanceof EventListenerInterface) {
                 $this->_controller->eventManager()->off($this->_action);
@@ -311,6 +329,7 @@ class ActionComponent extends Component
      */
     public function buildIndexActions(Event $event)
     {
+        debug("buildIndexActions");
         foreach ($this->listActions() as $action) {
             $_action = $this->getAction($action);
             if ($action == "index" || (!($_action instanceof IndexActionInterface))) {
@@ -325,6 +344,7 @@ class ActionComponent extends Component
      */
     public function buildEntityActions(Event $event)
     {
+        debug("buildEntityActions");
         //$entity = (isset($event->data['entity'])) ? $event->data['entity'] : null;
         foreach ($this->listActions() as $action) {
             $_action = $this->getAction($action);
@@ -351,7 +371,6 @@ class ActionComponent extends Component
     public function beforeRender(Event $event) {
 
         $controller = $event->subject();
-
         // actions
         //@todo Move to ActionToolbar component
         $actions = [];
@@ -375,7 +394,7 @@ class ActionComponent extends Component
                 }
 
             }
-            elseif ($this->_action instanceof IndexActionInterface) {
+            elseif ($this->_action instanceof IndexActionInterface || $this->_action instanceof InlineEntityAction) {
 
                 foreach ($this->listActions() as $action) {
                     $_action = $this->getAction($action);

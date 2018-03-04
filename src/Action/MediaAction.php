@@ -18,7 +18,7 @@ class MediaAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __('Media');
+        return __d('backend','Media');
     }
 
     public function hasForm()

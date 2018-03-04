@@ -1,4 +1,4 @@
-<?php $this->assign('title', __('Login')); ?>
+<?php $this->assign('title', __d('backend','Login')); ?>
 
 <div class="container">
 
@@ -11,14 +11,14 @@
 
     <?= $this->Form->input('username', [
         'label' => false,
-        'placeholder' => __('Username')
+        'placeholder' => __d('backend','Username')
     ]); ?>
     <?= $this->Form->input('password', [
         'type' => 'password',
         'label' => false,
-        'placeholder' => __('Password')
+        'placeholder' => __d('backend','Password')
     ]); ?>
-    <?= $this->Form->button(__('Login'), [
+    <?= $this->Form->button(__d('backend','Login'), [
         'class' => 'btn btn-lg btn-primary btn-block'
     ]); ?>
     <?= $this->Form->end(); ?>

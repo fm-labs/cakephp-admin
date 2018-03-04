@@ -2,7 +2,7 @@
 $this->loadHelper('Backend.Chosen');
 $this->loadHelper('Backend.DataTable');
 
-//$this->Toolbar->addLink(__('Add'), ['action' => 'add'], ['class' => 'add']);
+//$this->Toolbar->addLink(__d('backend','Add'), ['action' => 'add'], ['class' => 'add']);
 ?>
 <div class="index">
     <div class="box">

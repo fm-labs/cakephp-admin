@@ -47,22 +47,21 @@ class BackendLayoutHelper extends Helper
             trim(join(' ', [$themeSkinClass, $themeSidebarClass, $themeLayoutClass])));
 
         // css
-        $event->subject()->Html->css('/backend/css/adminlte/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
-
-        $event->subject()->Html->css('/backend/css/adminlte/bootstrap/css/bootstrap.min.css', ['block' => true]);
+        $event->subject()->Html->css('/backend/libs/adminlte/bootstrap/css/bootstrap.min.css', ['block' => true]);
         $event->subject()->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css', ['block' => true]);
         $event->subject()->Html->css('/backend/libs/ionicons/css/ionicons.min.css', ['block' => true]);
         $event->subject()->Html->css('/backend/libs/flag-icon-css/css/flag-icon.min.css', ['block' => true]);
-        $event->subject()->Html->css('/backend/css/adminlte/AdminLTE.min.css', ['block' => true]);
-        //$event->subject()->Html->css('/backend/css/adminlte/skins/skin-blue.min.css', ['block' => true]);
+        $event->subject()->Html->css('/backend/libs/adminlte/dist/css/AdminLTE.min.css', ['block' => true]);
+        $event->subject()->Html->css('/backend/libs/adminlte/dist/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
+
         $event->subject()->Html->css('Backend.layout/default', ['block' => true]);
 
         // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views
         $event->subject()->Html->css('Backend.backend', ['block' => true]);
 
         // scripts
-        $event->subject()->Html->script('/backend/js/adminlte/bootstrap/bootstrap.min.js', ['block' => true]);
-        $event->subject()->Html->script('/backend/js/adminlte/app.js', ['block' => true]);
+        $event->subject()->Html->script('/backend/libs/adminlte/bootstrap/js/bootstrap.min.js', ['block' => true]);
+        $event->subject()->Html->script('/backend/libs/adminlte/dist/js/app.js', ['block' => true]);
         $event->subject()->Html->script('/backend/libs/underscore/underscore-min.js', ['block' => true]);
         $event->subject()->Html->script('/backend/js/momentjs/moment.min.js', ['block' => true]);
         $event->subject()->Html->script('/backend/js/backend.js', ['block' => true]);

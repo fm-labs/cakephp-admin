@@ -24,7 +24,7 @@
     <?= $this->Html->script('/backend/libs/html5shiv/html5shiv.min.js'); ?>
     <?= $this->Html->script('/backend/libs/respond/respond.min.js'); ?>
     <![endif]-->
-    <?= $this->Html->script('/backend/libs/adminlte/plugins/jQuery/jquery-2.2.3.min.js'); ?>
+    <?= $this->Html->script('/backend/libs/jquery/jquery.min.js'); ?>
     <?= $this->fetch('headjs') ?>
 </head>
 <!--

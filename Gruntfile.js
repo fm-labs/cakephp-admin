@@ -61,7 +61,7 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'bower_components/ionicons/', src: ['css/**', 'fonts/**', 'png/**'], dest: 'webroot/libs/ionicons/'},
           {expand: true, cwd: 'bower_components/image-picker/image-picker/', src: ['**'], dest: 'webroot/libs/image-picker/'},
           {expand: true, cwd: 'bower_components/jquery/dist/', src: ['**'], dest: 'webroot/libs/jquery/'},
-          {expand: true, cwd: 'bower_components/jquery-ui/', src: ['**'], dest: 'webroot/libs/jquery-ui/'},
+          {expand: true, cwd: 'bower_components/jquery-ui/', src: ['*.js', 'themes/base/**'], dest: 'webroot/libs/jquery-ui/'},
           {expand: true, cwd: 'bower_components/jstree/dist/', src: ['**'], dest: 'webroot/libs/jstree/'},
           {expand: true, cwd: 'bower_components/pickadate/lib/compressed', src: ['**'], dest: 'webroot/libs/pickadate/'},
           {expand: true, cwd: 'bower_components/respond/dest/', src: ['**'], dest: 'webroot/libs/respond/'},

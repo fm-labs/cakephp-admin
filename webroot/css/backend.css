@@ -482,15 +482,15 @@ form fieldset {
   transition: height 1s;
 }
 form fieldset legend {
-  background-color: #f8f8f8;
+  background-color: transparent;
+  border: none;
+  border-top: 1px solid #3c8dbc;
   display: block;
   margin: 0 0 0 0;
   width: 100%;
-  padding: 0 0.3em;
-  border-top: 1px solid #3c8dbc;
-  border-bottom: none;
+  padding: 0;
   line-height: 30px;
-  font-size: 1em;
+  font-size: 18px;
   font-variant: all-small-caps;
   color: #3c8dbc;
 }
@@ -516,20 +516,23 @@ form fieldset legend::after {
   font-style: italic;
 }
 form fieldset legend ~ * {
-  margin-top: 1em;
+  margin-top: 0.3em;
 }
-form fieldset > .body {
+form fieldset > .body,
+form fieldset > .form-group {
   padding: 0;
-  transition: height 1s;
   height: auto;
   overflow: visible;
 }
 form fieldset.collapsed {
   margin-bottom: 0.5em;
 }
-form fieldset.collapsed > .body {
+form fieldset.collapsed > .body,
+form fieldset.collapsed .form-group {
   height: 0;
+  transition: height 2s;
   overflow: hidden;
+  margin: 0;
 }
 form fieldset.collapsed > legend {
   display: block;

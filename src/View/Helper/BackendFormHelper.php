@@ -20,6 +20,7 @@ class BackendFormHelper extends BootstrapFormHelper
             'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
             'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
             'datepicker' => ['Backend\View\Widget\DatePickerWidget', 'text'],
+            'datetime' => ['Backend\View\Widget\DatePickerWidget', 'text'],
             'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
             'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
             'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
@@ -88,6 +89,7 @@ class BackendFormHelper extends BootstrapFormHelper
                     break;
 
                 case 'datepicker':
+                case 'datetime':
                     $this->_View->loadHelper('Backend.Datepicker');
                     break;
 

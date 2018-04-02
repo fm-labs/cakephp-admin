@@ -20,6 +20,7 @@ use Cake\Routing\Router;
  */
 class Backend implements EventListenerInterface
 {
+    static public $urlPrefix = '/admin';
 
     use InstanceConfigTrait;
 
@@ -100,7 +101,7 @@ class Backend implements EventListenerInterface
 
     public function implementedEvents()
     {
-        return ['Banana.startup' => 'startup'];
+        return ['Backend.startup' => 'startup'];
     }
 
     public function startup(Event $event)
@@ -158,7 +159,7 @@ class Backend implements EventListenerInterface
     public function loadRoutes()
     {
         Router::routes(); // <-- required workaround. need to call routes() first, otherwise all existing routes are vanished
-        Router::scope('/admin', ['prefix' => 'admin'], function(RouteBuilder $routes) {
+        Router::scope(static::$urlPrefix, ['prefix' => 'admin'], function(RouteBuilder $routes) {
             EventManager::instance()->dispatch(new \Backend\Event\RouteBuilderEvent('Backend.Routes.build', $routes));
         });
     }

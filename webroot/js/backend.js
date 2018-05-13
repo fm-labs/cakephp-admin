@@ -782,6 +782,14 @@
         //}
 
         //
+        // Array-to-list collapsable
+        //
+        $(scope).on('click', '.array-list > li.has-children', function(ev){
+            $(this).children('ul').toggleClass('collapse');
+            ev.stopPropagation();
+        });
+
+        //
         // Ajax Content
         //
         $(scope).find('.ajax-content[data-url]').each(function() {
@@ -977,6 +985,9 @@
             return;
         }
         Backend.Renderer.onReady();
+
+
+
     });
 
     $(window).on('unload', function() {

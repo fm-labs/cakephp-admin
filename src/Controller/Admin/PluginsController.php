@@ -4,7 +4,6 @@ namespace Backend\Controller\Admin;
 
 use Banana\Banana;
 use Cake\Core\Plugin;
-use Mailman\Controller\Admin\AppController;
 
 class PluginsController extends AppController
 {

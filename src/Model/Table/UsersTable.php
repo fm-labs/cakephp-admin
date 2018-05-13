@@ -21,7 +21,7 @@ class UsersTable extends BaseUsersTable
                 'Users.login_enabled' => true,
                 'Users.superuser' => true,
             ])
-            ->contain(['Groups']);
+            ->contain(['UserGroups']);
 
         return $query;
     }

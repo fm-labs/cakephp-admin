@@ -73,7 +73,6 @@ class EditAction extends BaseEntityAction
         $controller->set('modelClass', $controller->modelClass);
 
         // associated
-        // associated
         foreach ($this->model()->associations() as $assoc) {
             if ($assoc->type() == Association::MANY_TO_ONE) {
                 $fKey = $assoc->foreignKey();

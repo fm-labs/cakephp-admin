@@ -36,12 +36,12 @@ class BackendPlugin implements EventListenerInterface
     public function implementedEvents()
     {
         return [
-            'Settings.build' => 'buildSettings',
+            'Settings.build'        => 'buildSettings',
             'Backend.Sidebar.build' => ['callable' => 'buildBackendSidebarMenu', 'priority' => 99 ],
             'Backend.SysMenu.build' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
-            'Backend.Menu.build' => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
-            'Backend.Routes.build' => ['callable' => 'buildBackendRoutes', 'priority' => 1 ],
-            'View.beforeLayout' => ['callable' => 'beforeLayout']
+            'Backend.Menu.build'    => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
+            'Backend.Routes.build'  => ['callable' => 'buildBackendRoutes', 'priority' => 1 ],
+            'View.beforeLayout'     => ['callable' => 'beforeLayout']
         ];
     }
 
@@ -245,7 +245,7 @@ class BackendPlugin implements EventListenerInterface
             ],
             'users' => [
                 'title' => 'Users',
-                'url' => ['plugin' => 'User', 'controller' => 'Users', 'action' => 'index'],
+                'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
                 'data-icon' => 'users',
             ],
             'plugins' => [

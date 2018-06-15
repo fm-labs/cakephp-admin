@@ -16,6 +16,8 @@ $formOptions = $this->get('form.options', []);
 $inputFields = $this->get('fields', []);
 $inputOptions = $this->get('inputs.options', []);
 $fieldsets = $this->get('fieldsets');
+//$whitelist = $this->get('fields.whitelist');
+//$blacklist = $this->get('fields.blacklist');
 /**
  * Helpers
  */
@@ -39,6 +41,10 @@ $this->extend('Backend./Admin/Base/form_tabs');
             foreach($fieldsets as $fieldset) {
                 echo $this->Form->fieldsetStart($fieldset);
                 foreach($fieldset['fields'] as $field) {
+
+                    //if (!empty($whitelist) && !in_array($field, $whitelist)) continue;
+                    //if (!empty($blacklist) && in_array($field, $blacklist)) continue;
+
                     $fieldConfig = (isset($fields[$field]) && isset($fields[$field]['input'])) ? $fields[$field]['input'] : [];
                     echo $this->Form->input($field, $fieldConfig);
                 }
@@ -51,11 +57,5 @@ $this->extend('Backend./Admin/Base/form_tabs');
         echo $this->Form->button(__d('backend','Submit'));
         echo $this->Form->end();
     }
-
-    debug($inputFields);
     ?>
-
-    <?php if (\Cake\Core\Configure::read('debug')): ?>
-        <small><?php echo h(__FILE__); ?></small>
-    <?php endif; ?>
 </div>

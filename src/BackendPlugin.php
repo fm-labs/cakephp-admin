@@ -5,7 +5,9 @@ namespace Backend;
 use Backend\Event\RouteBuilderEvent;
 use Backend\Backend;
 use Backend\View\BackendView;
+use Banana\Application;
 use Banana\Menu\Menu;
+use Banana\Plugin\PluginInterface;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventDispatcherTrait;
@@ -15,7 +17,7 @@ use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Settings\SettingsManager;
 
-class BackendPlugin implements EventListenerInterface
+class BackendPlugin implements PluginInterface, EventListenerInterface
 {
 
     use EventDispatcherTrait;
@@ -24,6 +26,11 @@ class BackendPlugin implements EventListenerInterface
      * @var Backend Instance of Backend
      */
     protected $backend;
+
+    public function __construct()
+    {
+        //$this->backend = new Backend();
+    }
 
     /**
      * Returns a list of events this object is implementing. When the class is registered
@@ -47,10 +54,10 @@ class BackendPlugin implements EventListenerInterface
 
     public function beforeLayout(Event $event)
     {
-        if ($event->subject() instanceof BackendView && $event->subject()->plugin == "Backend") {
-            $menu = new Menu($this->_getMenuItems());
-            $event->subject()->set('backend.sidebar.menu', $menu);
-        }
+//        if ($event->subject() instanceof BackendView && $event->subject()->plugin == "Backend") {
+//            $menu = new Menu($this->_getMenuItems());
+//            $event->subject()->set('backend.sidebar.menu', $menu);
+//        }
     }
 
     /**
@@ -262,6 +269,16 @@ class BackendPlugin implements EventListenerInterface
     }
 
     public function __invoke()
+    {
+        //debug("run backend");
+    }
+
+    public function routes(RouteBuilder $routes)
+    {
+        //$routes->connect('/foo', ['controller' => 'System', 'action' => 'index']);
+    }
+
+    public function bootstrap(Application $app)
     {
     }
 }

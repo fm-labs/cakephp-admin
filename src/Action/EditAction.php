@@ -24,6 +24,7 @@ class EditAction extends BaseEntityAction
         'rowActions' => [],
         'fields' => [],
         'fields.whitelist' => [],
+        'fields.blacklist' => [],
         'fieldsets' => [],
     ];
 
@@ -53,9 +54,27 @@ class EditAction extends BaseEntityAction
             $entity = $this->entity();
         }
 
-        $fields = $this->model()->schema()->columns();
+        $_fields = $this->model()->schema()->columns();
         if (isset($controller->viewVars['fields'])) {
-            $fields = array_merge($fields, $controller->viewVars['fields']);
+            $_fields = array_merge($_fields, $controller->viewVars['fields']);
+        }
+
+        $fields = $blacklist = $whitelist = [];
+        if (isset($controller->viewVars['fields.blacklist'])) {
+            $blacklist = $controller->viewVars['fields.blacklist'];
+        }
+        if (isset($controller->viewVars['fields.whitelist'])) {
+            $whitelist = $controller->viewVars['fields.whitelist'];
+        }
+        foreach ($_fields as $_f => $field) {
+            if (is_numeric($_f)) {
+                $_f = $field;
+                $field = [];
+            }
+            if (in_array($_f, $blacklist)) $field = false;
+            if (!empty($whitelist) && !in_array($_f, $whitelist)) $field = false;
+
+            $fields[$_f] = $field;
         }
 
         if ($this->_request->is(['put', 'post'])) {
@@ -109,6 +128,6 @@ class EditAction extends BaseEntityAction
         */
 
         // config
-        $controller->set($this->_config);
+        //$controller->set($this->_config);
     }
 }

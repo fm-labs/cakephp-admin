@@ -18,7 +18,7 @@ use Cake\Routing\Router;
  *
  * @package Backend
  */
-class Backend implements EventListenerInterface
+class Backend
 {
     static public $urlPrefix = '/admin';
 
@@ -99,12 +99,8 @@ class Backend implements EventListenerInterface
         $this->services = new ServiceRegistry(EventManager::instance());
     }
 
-    public function implementedEvents()
-    {
-        return ['Backend.startup' => 'startup'];
-    }
 
-    public function startup(Event $event)
+    public function run()
     {
         $this->loadRoutes();
         $this->loadServices();
@@ -121,16 +117,25 @@ class Backend implements EventListenerInterface
         return $this->services;
     }
 
+    /**
+     * @deprecated Use services()->loaded() instead
+     */
     public function loadedServices()
     {
         return $this->services->loaded();
     }
 
+    /**
+     * @deprecated Use service()->get()
+     */
     public function service($name)
     {
         return $this->services->get($name);
     }
 
+    /**
+     * @TODO Make method protected
+     */
     public function loadServices()
     {
         foreach ($this->config('services') as $service => $enabled) {
@@ -145,6 +150,7 @@ class Backend implements EventListenerInterface
      * Call the initialize method on all the loaded services.
      *
      * @return void
+     * @TODO Make method protected
      */
     public function initializeServices()
     {
@@ -155,6 +161,7 @@ class Backend implements EventListenerInterface
 
     /**
      * Load backend routes
+     * @TODO Make method protected
      */
     public function loadRoutes()
     {

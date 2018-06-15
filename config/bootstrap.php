@@ -10,9 +10,17 @@ use Cake\Core\Plugin;
  */
 Configure::load('Backend.backend');
 
-Plugin::load('Bootstrap'); // hard dependency
+Plugin::load('Bootstrap');
+//Plugin::load('User');
+
+if (!Plugin::loaded('User')) {
+    throw new \Cake\Core\Exception\MissingPluginException(['plugin' => 'User']);
+}
 
 if (Plugin::loaded('Banana')) {
     //\Banana\Banana::getInstance()->pluginManager()->register('Bootstrap');
-
+    //   oder
+    //\Banana\Banana::plugin('Backend', new \Backend\BackendPlugin());
+    //   oder
+    //\Banana\Plugin\PluginManager::config('Backend', ['classname' => 'Backend.Backend']);
 }

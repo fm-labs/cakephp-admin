@@ -192,9 +192,11 @@ class DataTableHelper extends Helper
         }
 
         // fields
-        if (empty($this->_params['fields']) && $this->_params['model']) {
-            $this->_params['fields'] = $this->_table()->schema()->columns();
+        $_fields = $this->_params['fields'];
+        if (empty($_fields) && $this->_params['model']) {
+            $_fields = $this->_table()->schema()->columns();
         }
+        $this->_params['fields'] = $_fields;
 
         // callback listeners
         if (isset($this->_params['rowActionCallbacks'])) {
@@ -581,7 +583,7 @@ class DataTableHelper extends Helper
 
         $Model = $this->_table();
         $filters = ($this->_params['filter'] === true) ? [] : (array) $this->_params['filter'];
-        if (empty($filters) && $Model->behaviors()->has('Search')) {
+        if (empty($filters) && $Model && $Model->behaviors()->has('Search')) {
             $searchFilters = $Model->searchManager()->all();
             $filters = array_keys($searchFilters);
         }

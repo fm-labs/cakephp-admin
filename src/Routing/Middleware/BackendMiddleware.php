@@ -28,6 +28,7 @@ class BackendMiddleware
 
         if (isset($params['REQUEST_URI']) && preg_match('/^' . preg_quote(rtrim(Backend::$urlPrefix, '/') . '/', '/') . '/', $params['REQUEST_URI'])) {
             Banana::getInstance()->runBackend();
+            //Backend::run();
         }
 
         return $next($request, $response);

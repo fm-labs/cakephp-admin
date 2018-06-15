@@ -25,4 +25,5 @@ if ($this->get('_no_header')) {
         <?php endif; ?>
     </h1>
 
+    <?= $this->fetch('content_header'); ?>
 </section>

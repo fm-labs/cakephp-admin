@@ -25,6 +25,7 @@ if (!isset($menu)) {
     echo "No menu";
     return;
 }
+//debug($menu->toArray());
 ?>
 <!--Sidebar toggle button
 <ul class="sidebar-menu">
@@ -37,10 +38,9 @@ if (!isset($menu)) {
 </ul>
 -->
 <?php
-
 echo $this->Menu->create([
-        'templates' => $menuTemplates,
-        'classes' => $menuClasses,
-        'items' => $menu->getItems()
-    ])
-    ->render();
+    'templates' => $menuTemplates,
+    'classes' => $menuClasses,
+    'items' => $menu->getItems()
+])
+->render();

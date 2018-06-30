@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copy backend.default.php to your app's config folder,
+ * rename to backend.php and adjust contents
+ */
+
 return [
 
     /**

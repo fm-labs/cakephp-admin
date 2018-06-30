@@ -38,7 +38,7 @@ class BackendView extends View
         $this->loadHelper('Backend.FooTable', []);
         $this->loadHelper('Backend.BackendLayout', []);
 
-        $this->loadHelper('Banana.Status', []);
+        $this->loadHelper('Banana.Status', []); //@TODO Remove this hard dependency
         FormatterHelper::register('status', function($val, $extra, $params) {
             return $this->Status->label($val);
         });

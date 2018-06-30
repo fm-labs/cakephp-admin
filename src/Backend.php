@@ -3,6 +3,7 @@
 namespace Backend;
 
 use Backend\Service\ServiceRegistry;
+use Banana\Application;
 use Banana\Exception\ClassNotFoundException;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
@@ -52,6 +53,16 @@ class Backend
     protected static $_listeners = [];
 
     /**
+     * @var array Object storage
+     */
+    protected static $_objects = [];
+
+    /**
+     * @var array Hook callback storage
+     */
+    protected static $_hooks = [];
+
+    /**
      * @return string Backend version number
      */
     public static function version()
@@ -91,6 +102,7 @@ class Backend
         return static::$_listeners[$type];
     }
 
+
     /**
      * Constructor
      */
@@ -99,10 +111,27 @@ class Backend
         $this->services = new ServiceRegistry(EventManager::instance());
     }
 
+    public function register($name, $object)
+    {
+        static::$_objects[$name] = $object;
+    }
+
+    public function get($name)
+    {
+        if (isset(static::$_objects[$name])) {
+            return static::$_objects[$name];
+        }
+        return null;
+    }
+
+    public function hook($name, callable $callback)
+    {
+        static::$_hooks[$name][] = $callback;
+    }
 
     public function run()
     {
-        $this->loadRoutes();
+        //$this->loadRoutes();
         $this->loadServices();
         $this->initializeServices();
     }
@@ -159,15 +188,4 @@ class Backend
         }
     }
 
-    /**
-     * Load backend routes
-     * @TODO Make method protected
-     */
-    public function loadRoutes()
-    {
-        Router::routes(); // <-- required workaround. need to call routes() first, otherwise all existing routes are vanished
-        Router::scope(static::$urlPrefix, ['prefix' => 'admin'], function(RouteBuilder $routes) {
-            EventManager::instance()->dispatch(new \Backend\Event\RouteBuilderEvent('Backend.Routes.build', $routes));
-        });
-    }
 }

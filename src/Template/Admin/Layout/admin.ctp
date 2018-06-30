@@ -16,6 +16,11 @@
     <![endif]-->
     <?= $this->Html->script('/backend/libs/jquery/jquery.min.js'); ?>
     <?= $this->fetch('headjs') ?>
+    <style>
+        .sidebar-menu .treeview-menu {
+            display: block !important;
+        }
+    </style>
 </head>
 <body class="hold-transition <?= $this->get('be_layout_body_class'); ?>">
 <div class="wrapper">

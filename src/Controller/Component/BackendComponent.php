@@ -46,12 +46,12 @@ class BackendComponent extends Component
     protected $_defaultConfig = [
         'backendPath' => '/backend',
         'backendTitle' => 'Backend',
-        'dashboardUrl' => ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
+        'dashboardUrl' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
         'authLoginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
         'authLoginRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
         'authLogoutAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
         'authUnauthorizedRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'unauthorized'],
-        'authAuthorize' => ['Backend.Backend', 'User.Roles'],
+        'authAuthorize' => ['Backend.Backend' /*, 'User.Roles'*/],
         'userModel' => 'Backend.Users',
         'searchUrl' => ['plugin' => 'Backend', 'controller' => 'Search', 'action' => 'query'],
     ];

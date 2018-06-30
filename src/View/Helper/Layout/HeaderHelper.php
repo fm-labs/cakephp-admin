@@ -28,7 +28,7 @@ class HeaderHelper extends Helper
         //if ($event->subject() instanceof BackendView) {
 
             $elements = [
-                'menu' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_menu', 'block' => 'header_navbar_menu'],
+                //'menu' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_menu', 'block' => 'header_navbar_menu'],
                 //'search' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_search', 'block' => 'header_navbar_items'],
                 //'messages' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_messages', 'block' => 'header_navbar_items'],
                 //'notifications' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_notifications', 'block' => 'header_navbar_items'],
@@ -39,9 +39,9 @@ class HeaderHelper extends Helper
 
 
             // load backend menu
-            $menu = new Menu();
-            $this->_View->eventManager()->dispatch(new Event('Backend.Menu.build', $menu));
-            $event->subject()->set('backend.navbar.menu', $menu);
+            //$menu = new Menu();
+            //$this->_View->eventManager()->dispatch(new Event('Backend.Menu.build', $menu));
+            //$event->subject()->set('backend.navbar.menu', $menu);
 
 
             // load backend sysmenu

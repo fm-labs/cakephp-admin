@@ -3,12 +3,14 @@ namespace Backend\Controller\Admin;
 
 use Banana\Banana;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Form\Schema;
 use Cake\Network\Exception\BadRequestException;
 use Cake\Utility\Hash;
 use Settings\Form\SettingsForm;
 use Settings\Model\Table\SettingsTable;
+use Settings\SettingsInterface;
 use Settings\SettingsManager;
 
 /**
@@ -39,9 +41,19 @@ class SettingsController extends AppController
     {
         parent::beforeFilter($event);
 
-        $manager = Banana::getInstance()->settingsManager();
-        $this->eventManager()->dispatch(new Event('Settings.build', $manager));
+        if (!Plugin::loaded('Settings')) {
+            $this->Flash->error("Settings plugin not loaded");
+            $this->redirect($this->referer());
+        }
 
+        $manager = new SettingsManager();
+        foreach(Banana::getInstance()->plugins()->loaded() as $pluginName) {
+            $instance = Banana::getInstance()->plugins()->get($pluginName);
+            if ($instance instanceof SettingsInterface) {
+                $instance->buildSettings($manager);
+            }
+        }
+        $this->eventManager()->dispatch(new Event('Settings.build', $manager));
 
         $this->sm = $manager;
     }

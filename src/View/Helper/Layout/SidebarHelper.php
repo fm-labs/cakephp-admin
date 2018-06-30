@@ -5,6 +5,7 @@ namespace Backend\View\Helper\Layout;
 use Backend\View\BackendView;
 use Banana\Menu\Menu;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\View\Helper;
 
@@ -29,23 +30,23 @@ class SidebarHelper extends Helper
     {
         //debug("SidebarHelper::beforeLayout");
         $elements = [
-            'menu' => ['element' => 'Backend.Layout/admin/sidebar/sidebar_menu', 'block' => 'sidebar_items'],
+            'menu' => ['cell' => 'Backend.SidebarMenu', 'block' => 'sidebar_items']
+            //'menu' => ['element' => 'Backend.Layout/admin/sidebar/sidebar_menu', 'block' => 'sidebar_items'],
             //'search' => ['element' => 'Backend.Layout/admin/sidebar/sidebar_search', 'block' => 'sidebar_items'],
             //'user' => ['element' => 'Backend.Layout/admin/sidebar/sidebar_user', 'block' => 'sidebar_items'],
         ];
 
-        // load sidebar menu
-        if (!isset($this->_View->viewVars['backend.sidebar.menu'])) {
-            $menu = new Menu();
-            $this->_View->eventManager()->dispatch(new Event('Backend.Sidebar.build', $menu, ['request' => $this->_View->request]));
-            $this->_View->set('backend.sidebar.menu', $menu);
-        }
 
         // inject view elements
         foreach ($elements as $elementId => $element) {
             $elementHtml = "";
             try {
-                $elementHtml = $event->subject()->element($element['element']);
+                if (isset($element['cell'])) {
+                    $elementHtml = $event->subject()->cell($element['cell']);
+                } else {
+                    $elementHtml = $event->subject()->element($element['element']);
+                }
+
             } catch (\Exception $ex) {
                 $elementHtml = h($ex->getMessage());
             } finally {

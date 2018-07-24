@@ -197,6 +197,7 @@ class ActionComponent extends Component
      * @param $action
      * @return mixed
      */
+
     public function execute($action = null)
     {
         if ($action === null) {
@@ -265,11 +266,13 @@ class ActionComponent extends Component
                 // to prevent view events to get triggered twice.
                 $eventManager = clone $this->_controller->eventManager();
 
-                // check if action instance has a template defined
-                $template = ($this->_action->template) ?? null;
+                // action name is default template name
+                //$template = $this->_controller->request->param('action');
+                $template = null;
 
                 try {
                     $response = $this->_controller->render($template);
+                    $eventManager = null; // drop event manager backup
 
                 } catch (MissingTemplateException $ex) {
 
@@ -283,13 +286,12 @@ class ActionComponent extends Component
                     }
 
                     // use action class name as default template name
+                    $template = ($this->_action->template) ?? null;
                     if (!$template) {
                         $config = $this->actions[$action];
                         list($plugin, $actionClass) = pluginSplit($config['className']);
-                        //$template = ($plugin) ? $plugin . '.' . $action : $action;
                         $actionClass = Inflector::underscore($actionClass);
                         $template = ($plugin) ? $plugin . '.' . $actionClass : $actionClass;
-
                     }
 
                     $this->_controller->viewBuilder()->templatePath($templatePath);

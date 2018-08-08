@@ -566,7 +566,7 @@
 //
     $(document).on('click','.tabs .nav a', function (ev) {
 
-        console.log('tabs nav link clicked: ' + this.hash);
+        //console.log('tabs nav link clicked: ' + this.hash);
 
 
         var $tabLink = $(ev.target);

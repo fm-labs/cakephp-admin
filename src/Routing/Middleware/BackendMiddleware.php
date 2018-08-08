@@ -5,12 +5,11 @@ use Backend\Backend;
 use Backend\BackendPluginInterface;
 use Banana\Application;
 use Banana\Banana;
-use Cake\Routing\Exception\RedirectException;
+use Cake\Log\Log;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response\RedirectResponse;
 
 /**
  * Applies routing rules to the request and creates the controller
@@ -35,19 +34,25 @@ class BackendMiddleware
     {
         $params = $request->getServerParams();
 
-        if (isset($params['REQUEST_URI']) && preg_match('/^' . preg_quote(rtrim(Backend::$urlPrefix, '/') . '/', '/') . '/', $params['REQUEST_URI'])) {
-
-            // load backend routes on-the-fly
-            foreach ($this->_app->plugins()->loaded() as $name) {
-                $instance = $this->_app->plugins()->get($name);
+        $urlPrefix = '/' . trim(Backend::$urlPrefix, '/') . '/';
+        if (isset($params['REQUEST_URI']) && preg_match('/^' . preg_quote($urlPrefix, '/') . '/', $params['REQUEST_URI'])) {
+            // lazy backend plugin initialization
+            foreach ($this->_app->plugins()->loaded() as $pluginName) {
+                $instance = $this->_app->plugins()->get($pluginName);
                 if ($instance instanceof BackendPluginInterface) {
-                    $instance->backendBootstrap($this->_backend);
+                    try {
+                        // bootstrap
+                        call_user_func([$instance, 'backendBootstrap'], $this->_backend);
 
-                    Router::scope('/admin/' . Inflector::underscore($name), [
-                        'plugin' => $name,
-                        'prefix' => 'admin',
-                        '_namePrefix' => sprintf("%s:admin:", Inflector::underscore($name))
-                    ], [$instance, 'backendRoutes']);
+                        // routes: create admin scope for each plugin
+                        Router::scope($urlPrefix . Inflector::underscore($pluginName), [
+                            'plugin' => $pluginName,
+                            'prefix' => 'admin',
+                            '_namePrefix' => sprintf("%s:admin:", Inflector::underscore($pluginName))
+                        ], [$instance, 'backendRoutes']);
+                    } catch (\Exception $ex) {
+                        Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
+                    }
                 }
             }
         }

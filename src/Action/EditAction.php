@@ -3,7 +3,9 @@
 namespace Backend\Action;
 use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\I18n\I18n;
 use Cake\ORM\Association;
 use Cake\Utility\Inflector;
 
@@ -81,7 +83,7 @@ class EditAction extends BaseEntityAction
             $entity = $this->model()->patchEntity($entity, $this->_request->data);
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend','Saved!'));
-                //$this->_redirect(['action' => 'index']);
+                $this->_redirect(['action' => $this->getAlias(), $entity->id] + $controller->request->query);
             } else {
                 $this->_flashError();
             }

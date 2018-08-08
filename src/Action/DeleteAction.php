@@ -29,15 +29,26 @@ class DeleteAction extends BaseEntityAction
     protected function _execute(Controller $controller)
     {
         $entity = $this->entity();
-        if ($entity instanceof EntityInterface) {
-            if ($this->model()->delete($entity)) {
-                $controller->Flash->success(__d('backend','Deleted'));
+
+        if ($controller->request->is(['post'])) {
+
+            if ($controller->request->data('confirm') == true) {
+                if ($entity instanceof EntityInterface) {
+                    if ($this->model()->delete($entity)) {
+                        $controller->Flash->success(__d('backend','Deleted'));
+                    } else {
+                        $controller->Flash->error("Delete failed");
+                    }
+                } else {
+                    $controller->Flash->error("Delete failed. No entity selected");
+                }
+                return $controller->redirect(['action' => 'index']);
             } else {
-                $controller->Flash->error("Delete failed");
+                $controller->Flash->error(__("You must confirm to delete record"));
             }
-        } else {
-            $controller->Flash->error("Delete failed. No entity selected");
+
         }
-        return $controller->redirect(['action' => 'index']);
+
+        $controller->set('entity', $entity);
     }
 }

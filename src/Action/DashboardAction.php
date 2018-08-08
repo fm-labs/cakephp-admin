@@ -33,6 +33,14 @@ class DashboardAction implements ActionInterface
     }
 
     /**
+     * @return array
+     */
+    public function getScope()
+    {
+        return [];
+    }
+
+    /**
      * @param Controller $controller
      * @return null|Response
      */

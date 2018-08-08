@@ -12,17 +12,22 @@ use Cake\Network\Response;
 interface ActionInterface
 {
     /**
+     * @return array List of scope strings
+     */
+    public function getScope();
+
+    /**
      * @return string
      */
     public function getAlias();
 
     /**
-     * @return string
+     * @return string The action link label
      */
     public function getLabel();
 
     /**
-     * @return mixed
+     * @return mixed The action link attributes
      */
     public function getAttributes();
 

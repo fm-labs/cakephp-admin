@@ -25,6 +25,10 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
         'rowActions' => []
     ];
 
+    /**
+     * @var array List of enabled scopes
+     */
+    protected $_scope = ['table','form'];
 
     /**
      * {@inheritDoc}

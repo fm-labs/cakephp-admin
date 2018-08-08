@@ -27,8 +27,4 @@ interface EntityActionInterface extends ActionInterface
      */
     public function entity();
 
-    /**
-     * @return array
-     */
-    public function getScope();
 }

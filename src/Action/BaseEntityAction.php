@@ -4,9 +4,11 @@ namespace Backend\Action;
 
 use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
+use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
+use Cake\I18n\I18n;
 use Cake\Network\Exception\NotImplementedException;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -31,7 +33,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     /**
      * @var array List of enabled scopes
      */
-    protected $_scope = [];
+    protected $_scope = ['table','form'];
 
     /**
      * @var Table
@@ -41,21 +43,6 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     public function hasForm()
     {
         return false;
-    }
-
-    public function setScope($scope)
-    {
-        $this->_scope = (array) $scope;
-    }
-
-    public function getScope()
-    {
-        return $this->_scope;
-    }
-
-    public function hasScope($scope)
-    {
-        return in_array($scope, $this->_scope);
     }
 
     public function isUsable(EntityInterface $entity)
@@ -90,6 +77,15 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             $this->template = $controller->viewVars['template'];
         }
 
+        // i18n
+        $translation = I18n::locale();
+        if ($this->model()->hasBehavior('Translate')) {
+            $translation = ($controller->request->query('translation')) ?: I18n::locale();
+            $this->model()->locale($translation);
+            $controller->set('translation', $translation);
+            $controller->set('translations.languages', (array) Configure::read('Multilang.Locales'));
+        }
+
         try {
             $entity = $this->entity();
 
@@ -97,7 +93,6 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             if (isset($controller->viewVars['helpers'])) {
                 $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
             }
-
 
             $controller->set('entity', $entity);
             return $this->_execute($controller);
@@ -114,12 +109,12 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 
     public function model()
     {
-        if (!$this->_config['modelClass']) {
-            //throw new \Exception(get_class($this) . ' has no model class defined');
-            return false;
-        }
-
         if (!$this->_model) {
+            if (!$this->_config['modelClass']) {
+                //throw new \Exception(get_class($this) . ' has no model class defined');
+                return false;
+            }
+
             $this->_model = TableRegistry::get($this->_config['modelClass']);
         }
         return $this->_model;
@@ -128,7 +123,6 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     public function entity()
     {
         if (!$this->_entity) {
-
             if (!$this->_config['modelId']) {
                 throw new \Exception(get_class($this) . ' has no model ID defined');
             }

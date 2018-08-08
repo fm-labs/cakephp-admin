@@ -3,13 +3,14 @@
 namespace Backend\Action;
 
 
+use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Network\Exception\NotImplementedException;
 use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
-abstract class BaseAction
+abstract class BaseAction implements ActionInterface
 {
     /**
      * @var array
@@ -37,6 +38,11 @@ abstract class BaseAction
     protected $_request;
 
     /**
+     * @var array List of enabled scopes
+     */
+    protected $_scope = [];
+
+    /**
      * @var string
      */
     public $template = null;
@@ -58,7 +64,7 @@ abstract class BaseAction
     {
         $class = explode('\\', get_class($this));
         $class = array_pop($class);
-        return substr($class, 0, -6);
+        return Inflector::underscore(substr($class, 0, -6));
     }
 
     /**
@@ -77,6 +83,34 @@ abstract class BaseAction
         $alias = $this->getAlias();
         return Inflector::humanize($alias);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getScope()
+    {
+        return $this->_scope;
+    }
+
+    /**
+     * Set scope list for action.
+     * @return $this
+     */
+    public function setScope($scope)
+    {
+        $this->_scope = (array) $scope;
+        return $this;
+    }
+
+    /**
+     * Check if action has given scope
+     * @return boolean
+     */
+    public function hasScope($scope)
+    {
+        return in_array($scope, $this->_scope);
+    }
+
     /**
      * @return bool|\Cake\ORM\Table
      */

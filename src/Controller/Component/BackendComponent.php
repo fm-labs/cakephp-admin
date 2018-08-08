@@ -9,6 +9,7 @@ use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
+use Cake\I18n\I18n;
 use Cake\Log\Log;
 use Cake\Network\Response;
 use Cake\Routing\Router;
@@ -60,6 +61,8 @@ class BackendComponent extends Component
      * @var Controller
      */
     protected $_controller;
+
+    protected $_cookieName;
 
     /**
      * @param array $config
@@ -150,7 +153,43 @@ class BackendComponent extends Component
             'Access-Control-Allow-Methods' => 'Origin, Authorization, X-Requested-With, Content-Type, Accept'
         ]);
 
+        // i18n
+        //I18n::locale('en_US');
+
+//        // Check backend cookie
+//        $this->Cookie = $controller->loadComponent('Cookie');
+//        $this->Cookie->config('path', '/admin/');
+//        $this->Cookie->config([
+//            'expires' => '+10 min',
+//            'httpOnly' => true,
+//            //'secure' => true
+//        ]);
+//        $cookieSeedData = [
+//            $this->request->env('REMOTE_ADDR'),
+//            $this->request->env('SERVER_NAME'),
+//            $this->request->env('SERVER_PORT')
+//        ];
+//        $this->_cookieName = 'b' . substr(md5(join('|', $cookieSeedData)), 3);
+//        if (!$this->Cookie->read($this->_cookieName)) {
+//            $this->Cookie->write($this->_cookieName, ['cookie_is_set' => true, 'h' => $this->_makeCookieHash($cookieSeedData)]);
+//            $controller->Flash->success("Cookie set");
+//        } else {
+//            $cookie = $this->Cookie->read($this->_cookieName);
+//            if (!isset($cookie['h'])) {
+//                $controller->Flash->error("Cookie hash missing");
+//                $this->Cookie->delete($this->_cookieName);
+//            } elseif ($cookie['h'] != $this->_makeCookieHash($cookieSeedData)) {
+//                $controller->Flash->warn("Invalid cookie hash detected: " . $cookie['h'] . ' != ' . $this->_makeCookieHash($cookieSeedData));
+//            } else {
+//            }
+//        }
+
         $this->_controller =& $controller;
+    }
+
+    protected function _makeCookieHash($seedData)
+    {
+        return sha1(serialize($seedData));
     }
 
     /**

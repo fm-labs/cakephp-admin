@@ -5,6 +5,7 @@ namespace Backend\Controller\Component;
 use Backend\Action\ActionRegistry;
 use Backend\Action\ExternalEntityAction;
 use Backend\Action\InlineEntityAction;
+use Backend\Action\Interfaces\ActionInterface;
 use Backend\Action\Interfaces\EntityActionInterface;
 use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Component;
@@ -372,10 +373,14 @@ class ActionComponent extends Component
 
     public function beforeRender(Event $event) {
 
+        if ($this->_rendered == true) {
+            return;
+        }
+
         $controller = $event->subject();
         // actions
         //@todo Move to ActionToolbar component
-        $actions = [];
+        $actions = (isset($controller->viewVars['toolbar.actions'])) ? $controller->viewVars['toolbar.actions'] : [];
         if ($this->_action) {
             if ($this->_action instanceof EntityActionInterface) {
 
@@ -394,20 +399,19 @@ class ActionComponent extends Component
                         $actions[$action] = [$_action->getLabel(), ['action' => $action, $entity->id], $_action->getAttributes()];
                     }
                 }
-
             }
-            elseif ($this->_action instanceof IndexActionInterface || $this->_action instanceof InlineEntityAction) {
+            elseif ($this->_action instanceof IndexActionInterface) {
 
                 foreach ($this->listActions() as $action) {
                     $_action = $this->getAction($action);
-                    if ($action == "index" || (!($_action instanceof IndexActionInterface))) {
-                        continue;
-                    }
+                    if (!in_array('index', $_action->getScope())) { continue; }
                     $actions[$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
                 }
             }
         }
-        $controller->set('actions', $actions);
+
+        $controller->set('toolbar.actions', array_reverse($actions));
+        $this->_rendered = true;
     }
 
     /**

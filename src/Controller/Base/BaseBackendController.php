@@ -32,8 +32,8 @@ abstract class BaseBackendController extends Controller
     public $actions = [
         'index' => 'Backend.Index',
         'view' => 'Backend.View',
-        'add' => 'Backend.View',
-        'edit' => 'Backend.View',
+        'add' => 'Backend.Add',
+        'edit' => 'Backend.Edit',
     ];
 
     /**

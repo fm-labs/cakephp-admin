@@ -177,11 +177,6 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
                 'title' => 'Plugins',
                 'url' => ['plugin' => 'Backend', 'controller' => 'Plugins', 'action' => 'index'],
                 'data-icon' => 'puzzle-piece',
-            ],
-            'settings' => [
-                'title' => 'Settings',
-                'url' => ['plugin' => 'Backend', 'controller' => 'Settings', 'action' => 'manage'],
-                'data-icon' => 'sliders',
             ]
         ];
     }
@@ -213,36 +208,36 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
     {
             $routes->connect(
                 '/login',
-                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
+                ['controller' => 'Auth', 'action' => 'login'],
                 ['_name' => 'user:login']
             );
             $routes->connect(
                 '/login-success',
-                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
+                ['controller' => 'Auth', 'action' => 'loginSuccess'],
                 ['_name' => 'user:loginsuccess']
             );
 
             // backend:admin:auth:logout
             $routes->connect(
                 '/logout',
-                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
+                ['controller' => 'Auth', 'action' => 'logout'],
                 [ '_name' => 'user:logout']
             );
 
             // backend:admin:auth:user
             $routes->connect(
                 '/user',
-                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user'],
+                ['controller' => 'Auth', 'action' => 'user'],
                 [ '_name' => 'user:profile']
             );
 
             // backend:admin:dashboard
             $routes->connect(
                 '/',
-                ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+                ['controller' => 'Dashboard', 'action' => 'index'],
                 ['_name' => 'dashboard']
             );
-        $routes->fallbacks('DashedRoute');
+            $routes->fallbacks('DashedRoute');
         return $routes;
     }
 

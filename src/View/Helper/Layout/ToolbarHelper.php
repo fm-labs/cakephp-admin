@@ -183,7 +183,7 @@ class ToolbarHelper extends Helper
     public function beforeRender(Event $event)
     {
         // parse toolbar actions defined in 'toolbar.actions' view-var
-        $toolbarActions = (array)$event->subject()->get('actions');
+        $toolbarActions = (array)$event->subject()->get('toolbar.actions');
 
         if ($toolbarActions) {
             array_walk($toolbarActions, function ($action) {

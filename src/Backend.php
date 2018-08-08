@@ -8,11 +8,7 @@ use Banana\Exception\ClassNotFoundException;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin;
-use Cake\Event\Event;
-use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
-use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 
 /**
  * Class Backend
@@ -21,7 +17,7 @@ use Cake\Routing\Router;
  */
 class Backend
 {
-    static public $urlPrefix = '/admin';
+    static public $urlPrefix = 'admin';
 
     use InstanceConfigTrait;
 

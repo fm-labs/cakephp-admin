@@ -16,6 +16,7 @@ $formOptions = $this->get('form.options', []);
 $inputFields = $this->get('fields', []);
 $inputOptions = $this->get('inputs.options', []);
 $fieldsets = $this->get('fieldsets');
+$translations = $this->get('translations.languages');
 //$whitelist = $this->get('fields.whitelist');
 //$blacklist = $this->get('fields.blacklist');
 /**
@@ -30,6 +31,25 @@ $this->loadHelper('Bootstrap.Tabs');
 $this->extend('Backend./Admin/Base/form_tabs');
 ?>
 <div class="form form-edit">
+
+    <?php if ($translations): ?>
+    <div>
+        <p>
+            <strong>Translations: </strong>
+            <?php foreach($translations as $lang => $langLabel): ?>
+                <?php
+                $options = [
+                    'data-lang' => $lang,
+                    'data-title' => __('Edit {0} translation', $langLabel),
+                    'class' => ($lang == Cake\I18n\I18n::locale()) ? 'active' : ''
+                ];
+                $langLabel = ($lang == $translation) ? '[' . $langLabel . ']' : $langLabel;
+                ?>
+                <?= $this->Html->link($langLabel, ['action' => 'edit', $entity->id, 'translation' => $lang], $options); ?>&nbsp;
+            <?php endforeach; ?>
+        </p>
+    </div>
+    <?php endif; ?>
 
     <?php if ($this->fetch('content')) {
         echo $this->fetch('content');
@@ -54,7 +74,7 @@ $this->extend('Backend./Admin/Base/form_tabs');
         } else {
             echo $this->Form->allInputs($inputFields, $inputOptions);
         }
-        echo $this->Form->button(__d('backend','Submit'));
+        echo $this->Form->button(__d('backend','Save changes'));
         echo $this->Form->end();
     }
     ?>

@@ -750,6 +750,7 @@ class DataTableHelper extends Helper
         $html .= $this->_renderRowSelectCell($row);
 
         foreach ($this->_fields as $fieldName => $field) {
+
             $cellData = Hash::get($row, $fieldName);
 
             // If formatter is passed as an array (and no callable construct)

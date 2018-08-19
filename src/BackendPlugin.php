@@ -183,7 +183,6 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
 
     public function routes(RouteBuilder $routes)
     {
-        $routes->connect('/foo', ['controller' => 'System', 'action' => 'index']);
         return $routes;
     }
 
@@ -206,38 +205,38 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
 
     public function backendRoutes(RouteBuilder $routes)
     {
-            $routes->connect(
-                '/login',
-                ['controller' => 'Auth', 'action' => 'login'],
-                ['_name' => 'user:login']
-            );
-            $routes->connect(
-                '/login-success',
-                ['controller' => 'Auth', 'action' => 'loginSuccess'],
-                ['_name' => 'user:loginsuccess']
-            );
+        $routes->connect(
+            '/login',
+            ['controller' => 'Auth', 'action' => 'login'],
+            ['_name' => 'user:login']
+        );
+        $routes->connect(
+            '/login-success',
+            ['controller' => 'Auth', 'action' => 'loginSuccess'],
+            ['_name' => 'user:loginsuccess']
+        );
 
-            // backend:admin:auth:logout
-            $routes->connect(
-                '/logout',
-                ['controller' => 'Auth', 'action' => 'logout'],
-                [ '_name' => 'user:logout']
-            );
+        // backend:admin:auth:logout
+        $routes->connect(
+            '/logout',
+            ['controller' => 'Auth', 'action' => 'logout'],
+            [ '_name' => 'user:logout']
+        );
 
-            // backend:admin:auth:user
-            $routes->connect(
-                '/user',
-                ['controller' => 'Auth', 'action' => 'user'],
-                [ '_name' => 'user:profile']
-            );
+        // backend:admin:auth:user
+        $routes->connect(
+            '/user',
+            ['controller' => 'Auth', 'action' => 'user'],
+            [ '_name' => 'user:profile']
+        );
 
-            // backend:admin:dashboard
-            $routes->connect(
-                '/',
-                ['controller' => 'Dashboard', 'action' => 'index'],
-                ['_name' => 'dashboard']
-            );
-            $routes->fallbacks('DashedRoute');
+        // backend:admin:dashboard
+        $routes->connect(
+            '/',
+            ['controller' => 'Dashboard', 'action' => 'index'],
+            ['_name' => 'dashboard']
+        );
+        $routes->fallbacks('DashedRoute');
         return $routes;
     }
 

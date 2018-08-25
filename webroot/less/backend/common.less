@@ -74,13 +74,20 @@ dl.dl-horizontal {
     text-align: left;
     padding-top: 0.3rem;
     width: 220px;
+    display: inline-block;
   }
   dd {
+    display: block;
     margin-left: 0; // bootstrap override
     padding-left: 220px;
     padding-top: 0.3rem;
     padding-bottom: 0.3rem;
     border-bottom: 1px solid #e8e8e8;
+
+    pre {
+      max-height: 300px;
+      overflow-y: scroll;
+    }
   }
 
 }

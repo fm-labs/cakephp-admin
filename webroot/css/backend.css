@@ -209,14 +209,21 @@ dl.dl-horizontal dt {
   text-align: left;
   padding-top: 0.3rem;
   width: 220px;
+  display: inline-block;
 }
 dl dd,
 dl.dl-horizontal dd {
+  display: block;
   margin-left: 0;
   padding-left: 220px;
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
   border-bottom: 1px solid #e8e8e8;
+}
+dl dd pre,
+dl.dl-horizontal dd pre {
+  max-height: 300px;
+  overflow-y: scroll;
 }
 .index > h1,
 .view > h1,

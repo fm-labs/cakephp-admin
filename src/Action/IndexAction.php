@@ -37,6 +37,16 @@ class IndexAction extends BaseIndexAction
     protected $_defaultLimit = 15;
     protected $_maxLimit = 1000;
 
+//    public function getLabel()
+//    {
+//        if ($this->_config['modelClass']) {
+//            list($plugin,$modelName) = pluginSplit($this->_config['modelClass']);
+//            return __('List {0}', $modelName);
+//        }
+//
+//        return parent::getLabel();
+//    }
+
     /**
      * @param Controller $controller
      */

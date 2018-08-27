@@ -1,0 +1,74 @@
+
+@import "../mixins/elements.less";
+@import "../vars.less";
+@import "_sidebar.less";
+
+html {
+
+}
+
+body {
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.wrapper {
+  height: 100%;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.main-header {
+  position: relative;
+  top: 0;
+  height: @header-h;
+  width: auto;
+  background-color: @header-bg-color;
+  z-index: 1030;
+  color: @header-color;
+
+  a {
+    color: @header-color;
+  }
+}
+
+.main-header .logo {
+  padding-left: 15px;
+  padding-top: 15px;
+  display: block;
+  float: left;
+  z-index: 1031;
+}
+
+.main-header .navbar {
+  transition: margin-left .3s ease-in-out;
+  margin-bottom: 0;
+  border: none;
+  min-height: @header-h;
+  border-radius: 0;
+  z-index: 1032;
+}
+
+.main-sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: @sidebar-w;
+  height: 100%;
+  background-color: @sidebar-bg-color;
+  z-index: 1020;
+}
+
+.content, .content-header h1 {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.main-footer {
+  background: #fff;
+  padding: 15px;
+  color: #444;
+  border-top: 1px solid #d2d6de;
+}

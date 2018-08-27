@@ -8,8 +8,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
-
-    <?= $this->Html->css('Backend.layout/admin'); ?>
     <?= $this->fetch('css') ?>
     <!-- scripts -->
     <!--[if lt IE 9]>
@@ -18,8 +16,13 @@
     <![endif]-->
     <?= $this->Html->script('/backend/libs/jquery/jquery.min.js'); ?>
     <?= $this->fetch('headjs') ?>
+    <style>
+        .sidebar-menu .treeview-menu {
+            display: block !important;
+        }
+    </style>
 </head>
-<body class="hold-transition sidebar-mini sidebar-collapsed <?= $this->get('be_layout_body_class'); ?>">
+<body class="hold-transition <?= $this->get('be_layout_body_class'); ?>">
 <div class="wrapper">
 
     <!-- Main Header -->
@@ -29,7 +32,7 @@
     <?php echo $this->fetch('sidebar'); ?>
 
     <!-- Content Wrapper. Contains page content -->
-    <div id="content" class="content-wrapper" style="min-height: 900px;">
+    <div id="content" class="content-wrapper">
 
         <div class="flash-wrapper">
             <!-- Flash Auth -->
@@ -86,13 +89,12 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED JS SCRIPTS
+<!-- REQUIRED JS SCRIPTS -->
 <script>
     var AdminLTEOptions = {
         sidebarExpandOnHover: false
     };
 </script>
- -->
 <?= $this->fetch('script'); ?>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
@@ -101,13 +103,11 @@
      fixed layout. -->
 <script>
     $(document).ready(function() {
-        /*
         $(window).on('resize', function(ev) {
             var h = $('#content').outerHeight() - $('#main-footer').outerHeight();
             //console.log("Resize to ", h);
             $('.content-aside').height(h);
         }).trigger('resize');
-        */
 
         /*
         if (typeof(Storage) !== "undefined" && window.localStorage) {

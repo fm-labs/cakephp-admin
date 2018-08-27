@@ -15,6 +15,9 @@
  * Body
  */
 /**
+ * Header
+ */
+/**
  * Sidebar
  */
 /**
@@ -32,9 +35,6 @@
 /**
  * Forms
  */
-body.fixed-nav-top {
-  margin-top: 50px;
-}
 @media (min-width: 979px) {
   .main-header .navbar ul.nav li.dropdown:hover > ul.dropdown-menu {
     display: block;

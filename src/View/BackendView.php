@@ -32,10 +32,10 @@ class BackendView extends View
 
         //@todo Remove hard dependencies of Backend helpers
         $this->loadHelper('Bootstrap.Ui', []);
-        $this->loadHelper('Bootstrap.Button', []);
+        //$this->loadHelper('Bootstrap.Button', []);
         $this->loadHelper('Backend.Backend', []);
-        $this->loadHelper('Backend.Ajax', []);
-        $this->loadHelper('Backend.FooTable', []);
+        //$this->loadHelper('Backend.Ajax', []);
+        //$this->loadHelper('Backend.FooTable', []);
         $this->loadHelper('Backend.BackendLayout', []);
 
         $this->loadHelper('Banana.Status', []); //@TODO Remove this hard dependency

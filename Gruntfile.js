@@ -20,6 +20,7 @@ module.exports = function(grunt) {
         files: {
           'webroot/css/layout/auth.css': 'webroot/less/layout/auth.less',
           'webroot/css/layout/default.css': 'webroot/less/layout/default.less',
+          'webroot/css/layout/admin.css': 'webroot/less/layout/admin.less',
           'webroot/css/layout/iframe.css': 'webroot/less/layout/iframe.less',
           'webroot/css/backend.css': 'webroot/less/backend.less',
           'webroot/css/jstree/themes/backend/style.css': 'webroot/less/plugins/jstree/jstree.less'
@@ -38,6 +39,7 @@ module.exports = function(grunt) {
         files: {
           'webroot/css/layout/auth.min.css': 'webroot/less/layout/auth.less',
           'webroot/css/layout/default.min.css': 'webroot/less/layout/default.less',
+          'webroot/css/layout/admin.min.css': 'webroot/less/layout/admin.less',
           'webroot/css/layout/iframe.min.css': 'webroot/less/layout/iframe.less',
           'webroot/css/backend.min.css': 'webroot/less/backend.less',
           'webroot/css/jstree/themes/backend/style.min.css': 'webroot/less/plugins/jstree/jstree.less'
@@ -55,6 +57,7 @@ module.exports = function(grunt) {
           // includes files within path
           {expand: true, cwd: 'bower_components/AdminLTE/', src: ['dist/**', 'bootstrap/**'], dest: 'webroot/libs/adminlte/'},
           {expand: true, cwd: 'bower_components/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
+          {expand: true, cwd: 'bower_components/bootstrap/', src: ['dist/**'], dest: 'webroot/libs/bootstrap/'},
           {expand: true, cwd: 'bower_components/chosen/', src: ['**'], dest: 'webroot/libs/chosen/'},
           {expand: true, cwd: 'bower_components/font-awesome/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/fontawesome/'},
           {expand: true, cwd: 'bower_components/html5shiv/dist/', src: ['**'], dest: 'webroot/libs/html5shiv/'},

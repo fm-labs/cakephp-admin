@@ -48,11 +48,13 @@ body.sidebar-mini .main-footer {
 }
 body.sidebar-collapsed .main-sidebar {
   width: 50px;
+  transition: 0.1s ease-in;
 }
 body.sidebar-collapsed .content-wrapper,
 body.sidebar-collapsed .main-header,
 body.sidebar-collapsed .main-footer {
   margin-left: 50px;
+  transition: 0.1s ease-in;
 }
 /**
  * Sidebar
@@ -61,12 +63,12 @@ body.sidebar-collapsed .main-footer {
   height: 50px;
   color: #b8c7ce;
   background-color: #367fa9;
-  border-left: 3px solid #367fa9;
-  padding-top: 7px;
+  border: none;
+  padding: 0;
 }
 .sidebar div.sidebar-toggle a {
   display: inline-block;
-  padding: 10px 5px 10px 10px;
+  padding: 15px 5px 10px 14px;
 }
 .sidebar div.sidebar-toggle a > i.fa {
   margin-right: 5px;
@@ -116,6 +118,21 @@ body.sidebar-collapsed .main-footer {
 }
 .sidebar ul.sidebar-menu > li > ul li a {
   padding: 5px 5px 5px 10px;
+}
+.sidebar ul.sidebar-menu-collapse > li > ul {
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.1s ease-out;
+}
+.sidebar ul.sidebar-menu-collapse > li:hover > ul,
+.sidebar ul.sidebar-menu-collapse > li.active > ul,
+.sidebar ul.sidebar-menu-collapse > li.trail > ul,
+.sidebar ul.sidebar-menu-collapse > li > ul.active {
+  height: auto;
+  visibility: visible;
+  opacity: 1;
 }
 /** Sidebar collapsed **/
 .sidebar-collapsed .sidebar div.sidebar-toggle a span {

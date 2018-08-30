@@ -3,6 +3,7 @@
 namespace Backend\View\Helper\Layout;
 
 use Cake\Event\Event;
+use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\Helper\BreadcrumbsHelper;
 
@@ -30,6 +31,31 @@ class BreadcrumbHelper extends Helper
         if ($event->subject()->get('layout_no_breadcrumbs') === true || $event->subject()->get('_no_breadcrumbs') === true) {
             return;
         }
+
+        if (empty($this->Breadcrumbs->getCrumbs())) {
+
+            if ($this->request->param('plugin') && $this->request->param('plugin') != $this->request->param('controller'))  {
+                $this->Breadcrumbs->add(Inflector::humanize($this->request->param('plugin')), [
+                    'plugin' => $this->request->param('plugin'),
+                    'controller' => $this->request->param('plugin'),
+                    'action' => 'index'
+                ]);
+            }
+
+
+            $this->Breadcrumbs->add(Inflector::humanize($this->request->param('controller')), [
+                'plugin' => $this->request->param('plugin'),
+                'controller' => $this->request->param('controller'),
+                'action' => 'index'
+            ]);
+
+            //if ($this->request->param('action') != 'index') {
+                $this->Breadcrumbs->add(Inflector::humanize($this->request->param('action')));
+            //}
+        }
+
+        // inject backend dashboard url on first position
+        $event->subject()->Breadcrumbs->insertAt(0, $this->_View->get('be_title'), $this->_View->get('be_dashboard_url'));
 
         $breadcrumbsHtml = $this->Breadcrumbs->render($this->config());
         $event->subject()->Blocks->set('breadcrumbs', $breadcrumbsHtml);

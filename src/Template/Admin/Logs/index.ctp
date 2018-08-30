@@ -1,6 +1,4 @@
 <?php $this->loadHelper('Bootstrap.Tabs'); ?>
-<?php $this->Breadcrumbs->add(__d('backend','Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('backend', 'Logs')); ?>
 <div class="index">
 
     <?php $this->Tabs->create(); ?>

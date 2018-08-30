@@ -8,18 +8,22 @@
 body.sidebar-mini {
   .main-sidebar {
     width: @sidebar-w;
+    //transition: 0.1s ease-out;
   }
   .content-wrapper, .main-header, .main-footer {
     margin-left: @sidebar-w;
+    //transition: 0.1s ease-out;
   }
 }
 
 body.sidebar-collapsed {
   .main-sidebar {
     width: @sidebar-collapse-w;
+    transition: 0.1s ease-in;
   }
   .content-wrapper, .main-header, .main-footer {
     margin-left: @sidebar-collapse-w;
+    transition: 0.1s ease-in;
   }
 
 }
@@ -33,12 +37,12 @@ body.sidebar-collapsed {
      height: 50px;
      color: @sidebar-color;
      background-color: #367fa9;
-     border-left: 3px solid #367fa9;
-     padding-top: 7px;
+     border: none;
+     padding: 0;
 
      a {
        display: inline-block;
-       padding: 10px 5px 10px 10px;
+       padding: 15px 5px 10px 14px;
 
        > i.fa {
          margin-right: 5px;
@@ -107,6 +111,25 @@ body.sidebar-collapsed {
     }
 
 
+  }
+
+  ul.sidebar-menu-collapse {
+    > li > ul {
+      height: 0;
+      overflow: hidden;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.1s ease-out;
+    }
+
+    > li:hover > ul,
+    > li.active > ul,
+    > li.trail > ul,
+    > li > ul.active {
+      height: auto;
+      visibility: visible;
+      opacity: 1;
+    }
   }
 
 }

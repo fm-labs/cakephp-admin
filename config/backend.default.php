@@ -29,7 +29,7 @@ return [
      * - url: Url to Dashboard
      */
     'Backend.Dashboard.title' => 'Backend',
-    'Backend.Dashboard.url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+    'Backend.Dashboard.url' => ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
 
     /**
      * Backend Security

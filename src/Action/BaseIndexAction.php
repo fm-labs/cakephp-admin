@@ -58,10 +58,17 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
         }
 
         // fields
-        if (empty($this->_config['fields'])) {
-            $cols = $this->model()->schema()->columns();
-            $this->_config['fields'] = $cols;
+        $cols = $this->model()->schema()->columns();
+        if (!empty($this->_config['fields'])) {
+            foreach ($this->_config['fields'] as $field => $fieldConfig) {
+                if (is_numeric($field)) {
+                    $field = $fieldConfig;
+                    $fieldConfig = [];
+                }
+                $cols[$field] = $fieldConfig;
+            }
         }
+        $this->_config['fields'] = $cols;
 
         // actions
         if ($this->_config['actions'] !== false) {

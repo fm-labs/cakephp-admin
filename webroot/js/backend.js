@@ -789,6 +789,16 @@
             ev.stopPropagation();
         });
 
+
+        //
+        // Table: Actions Menu
+        //
+        $(scope).find('table tr td.actions ul.actions-menu:not(.dropdown-menu)').each(function() {
+            $(this).wrap('<div class="btn-group"></div>');
+            $(this).before('<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-gear "></i>&nbsp;<span class="caret"></span></button>');
+            $(this).addClass('dropdown-menu dropdown-menu-right');
+        });
+
         //
         // Ajax Content
         //

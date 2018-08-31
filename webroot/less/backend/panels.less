@@ -23,3 +23,21 @@
 .panel table.table tr td {
   border: none;
 }
+
+// Collapse
+.panel-collapse .panel-heading {
+  cursor: pointer;
+}
+
+.panel-collapse.panel-collapsed .panel-heading {
+  border-bottom: none;
+}
+
+.panel-collapse.panel-collapsed .panel-body {
+  height: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: height,max-height 0.1s ease-out;
+  padding: 0;
+  border-bottom: none;
+}

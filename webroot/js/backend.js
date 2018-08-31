@@ -793,10 +793,18 @@
         //
         // Table: Actions Menu
         //
-        $(scope).find('table tr td.actions ul.actions-menu:not(.dropdown-menu)').each(function() {
+        $(scope).find('table tr td.actions ul.actions-menu:not(.actions-menu-dropdown)').each(function() {
             $(this).wrap('<div class="btn-group"></div>');
             $(this).before('<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><i class="fa fa-gear "></i>&nbsp;<span class="caret"></span></button>');
-            $(this).addClass('dropdown-menu dropdown-menu-right');
+            $(this).addClass('actions-menu-dropdown dropdown-menu dropdown-menu-right');
+        });
+
+        //
+        // Panels: Collapsale panels
+        //
+        $(scope).off('click','.panel-collapse > .panel-heading');
+        $(scope).on('click', '.panel-collapse > .panel-heading', function(ev) {
+            $(this).parent().toggleClass('panel-collapsed')
         });
 
         //
@@ -821,9 +829,9 @@
             Backend.Ajax.loadHtml($('#' + id), url, {});
         });
 
-//
-// Bind link events for ajax content loading
-//
+        //
+        // Bind link events for ajax content loading
+        //
 
         $(scope).off('click','a.link-window');
         $(scope).on('click','a.link-window', function (ev) {

@@ -601,17 +601,42 @@ ul.nav.nav-nested.nav-trailed > li.trail > ul {
 .panel table.table tr td {
   border: none;
 }
+.panel-collapse .panel-heading {
+  cursor: pointer;
+}
+.panel-collapse.panel-collapsed .panel-heading {
+  border-bottom: none;
+}
+.panel-collapse.panel-collapsed .panel-body {
+  height: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: height, max-height 0.1s ease-out;
+  padding: 0;
+  border-bottom: none;
+}
+.modal .modal-dialog {
+  width: 50%;
+  max-width: 96%;
+}
 .modal.modal-sm .modal-dialog {
   width: 50%;
   max-width: 400px;
 }
-.modal.modal-lg .modal-dialog {
-  width: 96%;
+.modal.modal-md .modal-dialog {
+  width: 75%;
   max-width: 900px;
+}
+.modal.modal-lg .modal-dialog {
+  width: 80%;
+  max-width: 1200px;
 }
 .modal.modal-xlg .modal-dialog {
   width: 96%;
   max-width: 1400px;
+}
+.modal.modal-wide .modal-dialog {
+  width: 96%;
 }
 /* Tabs */
 .tabs .nav-tabs li:first-child {

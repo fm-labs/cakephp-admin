@@ -42,7 +42,6 @@ class BreadcrumbHelper extends Helper
                 ]);
             }
 
-
             $this->Breadcrumbs->add(Inflector::humanize($this->request->param('controller')), [
                 'plugin' => $this->request->param('plugin'),
                 'controller' => $this->request->param('controller'),

@@ -56,8 +56,11 @@ class AuthController extends AppController
      */
     public function loginSuccess()
     {
-        return $this->redirect(['_name' => 'backend:admin:dashboard']);
-        //return $this->redirect(['_name' => 'admin:backend:dashboard']);
+        $redirect = ['_name' => 'backend:admin:dashboard'];
+        if (Configure::check('Backend.Dashboard.url')) {
+            $redirect = Configure::read('Backend.Dashboard.url');
+        }
+        return $this->redirect($redirect);
     }
 
     /**

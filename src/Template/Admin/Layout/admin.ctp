@@ -31,39 +31,41 @@
     <!-- Content Wrapper. Contains page content -->
     <div id="content" class="content-wrapper" style="min-height: 900px;">
 
-        <div class="flash-wrapper">
+        <section class="flash-wrapper">
             <!-- Flash Auth -->
             <?php echo $this->Flash->render('auth') ?>
             <!-- Flash Backend -->
             <?php echo $this->Flash->render('backend') ?>
             <!-- Flash Default -->
             <?php echo $this->Flash->render() ?>
-        </div>
+        </section>
 
-        <!-- Content Header -->
-        <div class="content-header-wrapper">
-            <?php echo $this->fetch('content_header'); ?>
-        </div>
+        <!-- Breadcrumbs -->
+        <section id="main-breadcrumbs" class="main-breadcrumbs">
+            <?php echo $this->fetch('breadcrumbs'); ?>
+        </section>
 
         <!-- Toolbar -->
-        <div class="toolbar-wrapper">
+        <section id="main-toolbar" class="main-toolbar">
             <?php echo $this->fetch('toolbar'); ?>
-        </div>
+        </section>
+
+        <!-- Before -->
+        <?php echo $this->fetch('before'); ?>
 
         <!-- Left container -->
         <?php if ($this->fetch('left')): ?>
-            <aside id="left" class="content-aside content-left">
+            <aside id="main-left" class="content-aside content-left">
                 <?php echo $this->fetch('left'); ?>
             </aside>
         <?php endif; ?>
 
         <!-- Right column -->
         <?php if ($this->fetch('right')): ?>
-            <aside id="right" class="content-aside content-right">
+            <aside id="main-right" class="content-aside content-right">
                 <?php echo $this->fetch('right'); ?>
             </aside>
         <?php endif; ?>
-
 
         <!-- Main content -->
         <main id="main" class="<?= $this->fetch('contentClass', 'content'); ?>">
@@ -71,9 +73,10 @@
         </main>
         <!-- /.content -->
 
+        <!-- After -->
+        <?php echo $this->fetch('after'); ?>
     </div>
     <!-- /.content-wrapper -->
-
 
     <!-- Main Footer -->
     <footer id="main-footer" class="main-footer">
@@ -86,47 +89,6 @@
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED JS SCRIPTS
-<script>
-    var AdminLTEOptions = {
-        sidebarExpandOnHover: false
-    };
-</script>
- -->
 <?= $this->fetch('script'); ?>
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
-<script>
-    $(document).ready(function() {
-        /*
-        $(window).on('resize', function(ev) {
-            var h = $('#content').outerHeight() - $('#main-footer').outerHeight();
-            //console.log("Resize to ", h);
-            $('.content-aside').height(h);
-        }).trigger('resize');
-        */
-
-        /*
-        if (typeof(Storage) !== "undefined" && window.localStorage) {
-            var collapse = Number(localStorage.getItem('sidebar_collapse'));
-            if (collapse !== 1) {
-                $('body').removeClass('sidebar-collapse');
-            }
-
-            $('a[data-toggle="offcanvas"]').click(function() {
-                var collapse = $('body').hasClass('sidebar-collapse');
-                collapse = (collapse != 1) ? 1 : 0;
-
-                localStorage.setItem("sidebar_collapse", collapse);
-            })
-        } else {
-            // Sorry! No Web Storage support..
-        }
-        */
-    })
-</script>
 </body>
 </html>

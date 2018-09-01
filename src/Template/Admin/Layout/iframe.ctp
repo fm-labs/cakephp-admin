@@ -10,15 +10,8 @@
     <?= $this->fetch('meta') ?>
 
     <!-- styles -->
-    <?= $this->Html->css('/backend/css/adminlte/bootstrap/css/bootstrap.min.css'); ?>
-    <?= $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css'); ?>
-    <?= $this->Html->css('/backend/libs/ionicons/css/ionicons.min.css'); ?>
-    <?= $this->Html->css('/backend/css/adminlte/AdminLTE.min.css'); ?>
-    <?= $this->Html->css('/backend/css/adminlte/skins/skin-blue.min.css'); ?>
+    <?= $this->Html->css('Backend.layout/admin'); ?>
     <?= $this->fetch('css') ?>
-    <?= $this->Html->css('Backend.layout/default'); ?>
-    <?= $this->Html->css('Backend.backend'); // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views ?>
-
     <!-- scripts -->
     <!--[if lt IE 9]>
     <?= $this->Html->script('/backend/libs/html5shiv/html5shiv.min.js'); ?>
@@ -27,30 +20,9 @@
     <?= $this->Html->script('/backend/libs/jquery/jquery.min.js'); ?>
     <?= $this->fetch('headjs') ?>
 </head>
-<!--
-BODY TAG OPTIONS:
-=================
-Apply one or more of the following classes to get the
-desired effect
-|---------------------------------------------------------|
-| SKINS         | skin-blue                               |
-|               | skin-black                              |
-|               | skin-purple                             |
-|               | skin-yellow                             |
-|               | skin-red                                |
-|               | skin-green                              |
-|---------------------------------------------------------|
-|LAYOUT OPTIONS | fixed                                   |
-|               | layout-boxed                            |
-|               | layout-top-nav                          |
-|               | sidebar-collapse                        |
-|               | sidebar-mini                            |
-|---------------------------------------------------------|
--->
-<body class="hold-transition skin-blue sidebar-collapse">
+<body class="iframe">
 <div class="wrapper">
 
-    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -64,10 +36,7 @@ desired effect
 
         <!-- Main content -->
         <section class="content">
-
-            <!-- Your Page Content Here -->
             <?= $this->fetch('content'); ?>
-
         </section>
         <!-- /.content -->
     </div>
@@ -76,14 +45,7 @@ desired effect
 </div>
 <!-- ./wrapper -->
 
-<!-- REQUIRED JS SCRIPTS -->
-<?= $this->Html->script('/backend/libs/adminlte/bootstrap/js/bootstrap.min.js'); ?>
-<?= $this->Html->script('/backend/libs/adminlte/dist/js/app.js'); ?>
-<?= $this->Html->script('/backend/libs/underscore/underscore-min.js'); ?>
-<?= $this->Html->script('/backend/js/backend.js'); ?>
-<?= $this->Html->script('/backend/js/iconify.js'); ?>
 <?= $this->fetch('script'); ?>
-
 <script>
     $(document).ready(function() {
         Backend.Renderer.onReady();
@@ -92,10 +54,5 @@ desired effect
         Backend.Renderer.onUnload();
     })
 </script>
-
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. Slimscroll is required when using the
-     fixed layout. -->
 </body>
 </html>

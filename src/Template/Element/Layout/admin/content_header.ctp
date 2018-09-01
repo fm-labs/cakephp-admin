@@ -14,16 +14,10 @@ if ($this->get('_no_header')) {
 }
 ?>
 <section class="content-header">
-    <?php if (!$this->get('_no_breadcrumbs')): ?>
-        <?php // echo $breadcrumbs; ?>
-        <?php echo $this->fetch('breadcrumbs'); ?>
-    <?php endif; ?>
     <h1>
         <?= $this->fetch('heading', $this->fetch('title')); ?>&nbsp;
         <?php if ($this->fetch('heading_small')): ?>
             <small><?= $this->fetch('heading_small'); ?></small>
         <?php endif; ?>
     </h1>
-
-    <?= $this->fetch('content_header'); ?>
 </section>

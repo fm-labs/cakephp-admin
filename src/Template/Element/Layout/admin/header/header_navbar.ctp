@@ -13,11 +13,11 @@
     </div>
     -->
 
-    <div class="be-navbar-menu-left" style="float: left;">
+    <div class="navbar-menu-left">
         <?php echo $this->fetch('header_navbar_menu'); ?>
     </div>
 
-    <div class="be-navbar-menu-right navbar-custom-menu" style="float: right;">
+    <div class="navbar-menu-right navbar-custom-menu">
         <ul class="nav navbar-nav">
             <?= $this->fetch('header_navbar_items'); ?>
 

@@ -233,7 +233,7 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
         // backend:admin:dashboard
         $routes->connect(
             '/',
-            ['controller' => 'Dashboard', 'action' => 'index'],
+            ['controller' => 'Backend', 'action' => 'index'],
             ['_name' => 'dashboard']
         );
         $routes->fallbacks('DashedRoute');

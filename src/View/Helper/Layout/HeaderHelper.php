@@ -37,13 +37,6 @@ class HeaderHelper extends Helper
                 'user' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_user', 'block' => 'header_navbar_items'],
             ];
 
-
-            // load backend menu
-            //$menu = new Menu();
-            //$this->_View->eventManager()->dispatch(new Event('Backend.Menu.build', $menu));
-            //$event->subject()->set('backend.navbar.menu', $menu);
-
-
             // load backend sysmenu
             $menu = new Menu();
             $this->_View->eventManager()->dispatch(new Event('Backend.SysMenu.build', $menu));

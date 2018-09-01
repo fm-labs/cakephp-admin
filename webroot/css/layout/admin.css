@@ -35,6 +35,53 @@
 /**
  * Forms
  */
+#flash > .alert,
+.flash-wrapper > .alert {
+  margin: 0;
+  -webkit-border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -webkit-border-top-left-radius: 0;
+  -moz-border-radius-topright: 0;
+  -moz-border-radius-bottomright: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
+#loader {
+  position: absolute;
+  top: 55px;
+  right: 10px;
+  z-index: 99999;
+  display: none;
+  color: #3c8dbc;
+}
+#loader img {
+  max-height: 30px;
+}
+.navbar ul li ul.dropdown-menu {
+  background-color: red;
+}
+.navbar .navbar-menu-left {
+  float: left;
+}
+.navbar .navbar-menu-right {
+  float: right;
+}
+.navbar .navbar-menu-right ul li ul.dropdown-menu {
+  right: 0;
+  left: auto;
+}
+.navbar .user-menu ul.dropdown-menu {
+  min-width: 400px;
+  min-height: 300px;
+}
 /**
  * Layout modifications
  */
@@ -181,6 +228,35 @@ body.sidebar-collapsed .main-footer {
   visibility: visible;
   opacity: 1;
 }
+nav.toolbar ul {
+  margin: 0;
+  padding: 0 0 0 15px;
+  width: 100%;
+}
+nav.toolbar ul li {
+  display: inline-block;
+  padding: 0 5px 0 0;
+}
+nav.toolbar ul li a {
+  display: block;
+  padding: 3px 5px;
+  border: 1px solid #CCC;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  -moz-border-radius-topleft: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  -moz-background-clip: padding-box;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+}
 body {
   height: auto;
   overflow-x: hidden;
@@ -229,13 +305,39 @@ body {
   z-index: 1020;
 }
 .content,
-.content-header h1 {
+.content-header {
   padding-left: 15px;
   padding-right: 15px;
+}
+.content-header h1 {
+  margin: 10px 0;
+  border-bottom: 1px solid #CCC;
+  padding: 5px 0;
 }
 .main-footer {
   background: #fff;
   padding: 15px;
   color: #444;
   border-top: 1px solid #d2d6de;
+}
+.main-breadcrumbs {
+  border-bottom: 1px solid #e1e1e1;
+}
+.main-breadcrumbs ul.breadcrumb {
+  margin: 0;
+  padding: 5px 15px;
+  font-size: 90%;
+}
+.main-breadcrumbs ul.breadcrumb > li + li::before {
+  padding: 0 0 0 5px;
+}
+.main-toolbar {
+  margin-top: 10px;
+}
+.main-toolbar nav.toolbar {
+  float: right;
+  margin-right: 15px;
+}
+.main-toolbar nav.toolbar:after {
+  clear: both;
 }

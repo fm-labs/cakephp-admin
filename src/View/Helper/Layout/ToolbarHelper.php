@@ -21,7 +21,7 @@ class ToolbarHelper extends Helper
     protected $_defaultConfig = [
         'element' => 'Backend.Layout/admin/toolbar',
         'block' => 'toolbar',
-        'options' => ['class' => 'nav nav-pills']
+        'options' => ['class' => '']
     ];
 
     /**

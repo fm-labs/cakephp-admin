@@ -19,7 +19,6 @@ module.exports = function(grunt) {
         },
         files: {
           'webroot/css/layout/auth.css': 'webroot/less/layout/auth.less',
-          'webroot/css/layout/default.css': 'webroot/less/layout/default.less',
           'webroot/css/layout/admin.css': 'webroot/less/layout/admin.less',
           'webroot/css/layout/iframe.css': 'webroot/less/layout/iframe.less',
           'webroot/css/backend.css': 'webroot/less/backend.less',
@@ -38,7 +37,6 @@ module.exports = function(grunt) {
         },
         files: {
           'webroot/css/layout/auth.min.css': 'webroot/less/layout/auth.less',
-          'webroot/css/layout/default.min.css': 'webroot/less/layout/default.less',
           'webroot/css/layout/admin.min.css': 'webroot/less/layout/admin.less',
           'webroot/css/layout/iframe.min.css': 'webroot/less/layout/iframe.less',
           'webroot/css/backend.min.css': 'webroot/less/backend.less',

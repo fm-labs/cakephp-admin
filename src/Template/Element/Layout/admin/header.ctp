@@ -5,3 +5,5 @@
     <!-- Header Navbar -->
     <?= $this->element('Backend.Layout/admin/header/header_navbar'); ?>
 </header>
+<script>
+</script>

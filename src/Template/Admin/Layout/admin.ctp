@@ -51,7 +51,8 @@
         </section>
 
         <!-- Before -->
-        <?php echo $this->fetch('before'); ?>
+        <?php echo $this->fetch('top'); ?>
+
 
         <!-- Left container -->
         <?php if ($this->fetch('left')): ?>
@@ -69,12 +70,20 @@
 
         <!-- Main content -->
         <main id="main" class="<?= $this->fetch('contentClass', 'content'); ?>">
+
+            <!-- Before -->
+            <?php echo $this->fetch('before'); ?>
+
+            <!-- Content -->
             <?php echo  $this->fetch('content'); ?>
+
+            <!-- After -->
+            <?php echo $this->fetch('after'); ?>
         </main>
         <!-- /.content -->
 
         <!-- After -->
-        <?php echo $this->fetch('after'); ?>
+        <?php echo $this->fetch('bottom'); ?>
     </div>
     <!-- /.content-wrapper -->
 

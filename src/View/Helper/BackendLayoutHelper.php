@@ -73,7 +73,7 @@ class BackendLayoutHelper extends Helper
         //@TODO Fallback to default block element
         //@TODO Add support for blocks with sub-elements
         $blocks = [
-            'before' => [
+            'top' => [
                 [
                     'element' => 'Backend.Layout/admin/content_header'
                 ]

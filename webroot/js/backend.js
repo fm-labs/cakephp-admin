@@ -139,11 +139,11 @@
 
     Backend.Flash = {
 
-        el: '#flash',
+        el: '#main-flash', // @TODO remove dependency on container with id
 
         message: function(type, msg, persist)
         {
-            //console.log("Flash: [" + type + "] " + msg);
+            console.log("Flash: [" + type + "] " + msg);
 
             var $alert = $('<div>', {
                 class: 'alert alert-' + type
@@ -416,12 +416,16 @@
                     Backend.Renderer.onReady($target);
                 },
                 error: function(xhr, textStatus, errorThrown) {
+                    console.log("request failed", xhr, textStatus, errorThrown);
                     //$target.html(xhr.responseText);
 
+                    Backend.Modal.open(xhr.responseText);
+
+                    /*
                     var cId = $target.attr('id');
                     var c = document.getElementById(cId);
                     var iframe = document.createElement('iframe');
-                    var html = '<body>Foo</body>';
+                    //var html = '<body>Foo</body>';
                     c.innerHTML = '';
                     c.appendChild(iframe);
 
@@ -431,6 +435,7 @@
                     iframe.contentWindow.document.open();
                     iframe.contentWindow.document.write(xhr.responseText);
                     iframe.contentWindow.document.close();
+                    */
 
                 }
             }, ajaxSettings);
@@ -566,8 +571,7 @@
 //
     $(document).on('click','.tabs .nav a', function (ev) {
 
-        //console.log('tabs nav link clicked: ' + this.hash);
-
+        console.log('tabs nav link clicked: ' + this.hash);
 
         var $tabLink = $(ev.target);
         var url = $tabLink.attr("data-url");

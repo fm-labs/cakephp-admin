@@ -211,6 +211,7 @@ class BackendComponent extends Component
 
         //@TODO Move auth config to Backend's built-in AuthComponent
         if ($controller->Auth) {
+            $controller->Auth->config('ajaxLogin', 'Backend.Auth/ajax_login');
             $controller->Auth->config('loginAction', $this->config('authLoginAction'));
             $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'));
             $controller->Auth->config('authenticate', [

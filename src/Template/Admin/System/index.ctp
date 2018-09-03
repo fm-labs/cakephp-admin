@@ -3,8 +3,8 @@ use Cake\Core\Configure;
 
 $this->loadHelper('Bootstrap.Tabs');
 ?>
-<?php $this->Breadcrumbs->add(__d('backend','Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('backend','Systeminfo')); ?>
+<?php //$this->Breadcrumbs->add(__d('backend','Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php //$this->Breadcrumbs->add(__d('backend','Systeminfo')); ?>
 <div class="index">
 
 	<?php $this->Tabs->create(); ?>

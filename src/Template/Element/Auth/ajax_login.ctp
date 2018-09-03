@@ -1,12 +1,18 @@
-<?php $this->assign('title', __d('backend','Login')); ?>
-
-<div class="container">
+<div class="container-fluid text-center">
 
     <h2 class="form-signin-heading">
         <i class="fa fa-cubes fa-3x"></i>
     </h2>
 
-    <?= $this->Form->create(null, ['class' => 'form-signin', 'horizontal' => false]); ?>
+    <div class="alert alert-warning">
+        <?= __('Your session has expired. Please login again to continue.'); ?>
+    </div>
+
+    <?= $this->Form->create(null, [
+        'class' => 'form-signin',
+        'horizontal' => false,
+        'url' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login']
+    ]); ?>
     <?= $this->Form->input('username', [
         'label' => false,
         'placeholder' => __d('backend','Username')

@@ -31,7 +31,7 @@
     <!-- Content Wrapper. Contains page content -->
     <div id="content" class="content-wrapper" style="min-height: 900px;">
 
-        <section class="flash-wrapper">
+        <section id="main-flash" class="flash-wrapper">
             <!-- Flash Auth -->
             <?php echo $this->Flash->render('auth') ?>
             <!-- Flash Backend -->

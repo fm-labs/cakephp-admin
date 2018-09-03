@@ -1,13 +1,13 @@
 <div class="container-fluid text-center">
 
-    <h2 class="form-signin-heading">
-        <i class="fa fa-cubes fa-3x"></i>
-    </h2>
 
     <div class="alert alert-warning">
         <?= __('Your session has expired. Please login again to continue.'); ?>
     </div>
 
+    <h2 class="form-signin-heading">
+        <i class="fa fa-cubes fa-3x"></i>
+    </h2>
     <?= $this->Form->create(null, [
         'class' => 'form-signin',
         'horizontal' => false,

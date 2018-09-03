@@ -9,6 +9,7 @@
         <li>
             <!-- Inner menu: contains the tasks -->
             <ul class="menu">
+                <?php for ($i = 0; $i < 3; $i++): ?>
                 <li><!-- Task item -->
                     <a href="#">
                         <!-- Task title and progress text -->
@@ -25,6 +26,7 @@
                         </div>
                     </a>
                 </li>
+                <?php endfor; ?>
                 <!-- end task item -->
             </ul>
         </li>

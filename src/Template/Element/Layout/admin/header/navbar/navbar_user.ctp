@@ -12,9 +12,11 @@
         <!-- The user image in the menu -->
         <li class="user-header">
             <?php //echo $this->Html->image('/backend/adminlte/dist/img/user2-160x160.jpg', ['class' => 'img-circle', 'alt' => 'User Image']); ?>
-            <i class="fa fa-user fa-5x" style="color: #fff;"></i>
-            <p>
+            <i class="fa fa-user fa-5x"></i>
+            <p class="user-name">
                 <?= h($this->request->session()->read('Backend.User.name')); ?>
+            </p>
+            <p class="user-info">
                 <small>Member since <?= $this->Time->nice($this->request->session()->read('Backend.User.created')); ?></small>
             </p>
         </li>
@@ -49,6 +51,7 @@
                     ['class' => 'btn btn-default btn-flat']
                 ); ?>
             </div>
+            <div class="clearfix"></div>
         </li>
     </ul>
 </li>

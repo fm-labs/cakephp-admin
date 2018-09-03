@@ -615,6 +615,10 @@ ul.nav.nav-nested.nav-trailed > li.trail > ul {
   padding: 0;
   border-bottom: none;
 }
+.progress.xs {
+  height: 10px;
+  margin-bottom: 10px;
+}
 .modal .modal-dialog {
   width: 50%;
   max-width: 96%;

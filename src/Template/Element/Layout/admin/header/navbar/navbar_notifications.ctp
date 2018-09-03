@@ -9,11 +9,13 @@
         <li>
             <!-- Inner Menu: contains the notifications -->
             <ul class="menu">
+                <?php for ($i = 0; $i < 3; $i++): ?>
                 <li><!-- start notification -->
                     <a href="#">
                         <i class="fa fa-users text-aqua"></i> 5 new members joined today
                     </a>
                 </li>
+                <?php endfor; ?>
                 <!-- end notification -->
             </ul>
         </li>

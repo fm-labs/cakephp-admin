@@ -16,10 +16,19 @@ nav.toolbar {
 
       a {
         display: block;
-        padding: 3px 5px;
-        border: 1px solid #CCC;
-        .border-radius(5px, 5px, 5px, 5px);
-        //font-size: 90%;
+        padding: 3px 10px;
+        border: 1px solid @color-primary;
+        font-size: 90%;
+        background-color: @color-primary-inverse;
+        opacity: 0.8;
+        //.border-radius(5px, 5px, 5px, 5px);
+
+        &:hover {
+          text-decoration: none;
+          background-color: @color-primary;
+          color: @color-primary-inverse;
+          opacity: 1;
+        }
       }
     }
   }

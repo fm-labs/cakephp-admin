@@ -65,8 +65,71 @@
 #loader img {
   max-height: 30px;
 }
-.navbar ul li ul.dropdown-menu {
-  background-color: red;
+.navbar ul.navbar-nav > li.dropdown > a:link,
+.navbar ul.navbar-nav > li.dropdown > a:active {
+  color: #FFF;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu {
+  border: none;
+  background-color: #FFF;
+  margin: 0;
+  padding: 0;
+  width: 300px;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li {
+  padding: 0;
+  margin: 0;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li.header,
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li.footer {
+  color: #333;
+  padding: 7px 15px;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li.header {
+  border-bottom: 1px solid #CCC;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li.footer {
+  border-top: 1px solid #CCC;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li a {
+  color: #333;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul {
+  margin: 0;
+  padding: 0;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul li {
+  padding: 5px 15px;
+  position: relative;
+  border-bottom: 1px solid #e8e8e8;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul li:last-child {
+  border-bottom: none;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul li a {
+  margin: 0;
+  display: block;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul li a h3,
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul li a h4 {
+  margin: 0 0 5px 0;
+  padding: 0;
+  font-weight: bold;
+  font-size: 16px;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul li a p {
+  margin: 0;
+  padding: 0;
+}
+.navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul li:hover {
+  background-color: #f8f8f8;
+}
+.navbar ul.navbar-nav > li.dropdown:hover > a {
+  background-color: #FFF;
+  color: #333;
+}
+.navbar ul.navbar-nav > li.dropdown:hover > ul.dropdown-menu {
+  display: block;
 }
 .navbar .navbar-menu-left {
   float: left;
@@ -78,9 +141,32 @@
   right: 0;
   left: auto;
 }
-.navbar .user-menu ul.dropdown-menu {
-  min-width: 400px;
-  min-height: 300px;
+.navbar .user-menu ul.dropdown-menu > li {
+  padding: 5px 15px !important;
+}
+.navbar .user-menu ul.dropdown-menu > li.user-header,
+.navbar .user-menu ul.dropdown-menu > li.user-footer {
+  color: #333;
+  padding: 7px 15px !important;
+}
+.navbar .user-menu ul.dropdown-menu > li.user-header {
+  border-bottom: 1px solid #CCC;
+  text-align: center;
+  background-color: #3c8dbc !important;
+  color: #f8f8f8 !important;
+}
+.navbar .user-menu ul.dropdown-menu > li.user-footer {
+  border-top: 1px solid #CCC;
+}
+.navbar .sys-menu ul.dropdown-menu {
+  width: 180px !important;
+}
+.navbar .tasks-menu ul.dropdown-menu li ul li {
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+.navbar .tasks-menu ul.dropdown-menu li ul li .progress {
+  margin-bottom: 0;
 }
 /**
  * Layout modifications
@@ -239,23 +325,17 @@ nav.toolbar ul li {
 }
 nav.toolbar ul li a {
   display: block;
-  padding: 3px 5px;
-  border: 1px solid #CCC;
-  -webkit-border-top-right-radius: 5px;
-  -webkit-border-bottom-right-radius: 5px;
-  -webkit-border-bottom-left-radius: 5px;
-  -webkit-border-top-left-radius: 5px;
-  -moz-border-radius-topright: 5px;
-  -moz-border-radius-bottomright: 5px;
-  -moz-border-radius-bottomleft: 5px;
-  -moz-border-radius-topleft: 5px;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top-left-radius: 5px;
-  -moz-background-clip: padding-box;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
+  padding: 3px 10px;
+  border: 1px solid #3c8dbc;
+  font-size: 90%;
+  background-color: #FFF;
+  opacity: 0.8;
+}
+nav.toolbar ul li a:hover {
+  text-decoration: none;
+  background-color: #3c8dbc;
+  color: #FFF;
+  opacity: 1;
 }
 body {
   height: auto;
@@ -310,9 +390,10 @@ body {
   padding-right: 15px;
 }
 .content-header h1 {
-  margin: 10px 0;
-  border-bottom: 1px solid #CCC;
-  padding: 5px 0;
+  margin: -10px -15px 15px -15px;
+  background-color: #e8e8e8;
+  padding: 10px 15px;
+  line-height: 28px;
 }
 .main-footer {
   background: #fff;

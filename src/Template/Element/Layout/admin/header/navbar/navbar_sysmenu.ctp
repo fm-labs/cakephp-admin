@@ -1,71 +1,37 @@
 <?php
 $this->loadHelper('Bootstrap.Menu');
-//return;
-//try {
-//
-//    $menu = \Cake\ORM\TableRegistry::get('Content.Menus')->toMenu(1);
-//    $this->loadHelper('Bootstrap.Menu');
-//} catch (\Exception $ex) {
-//    echo $ex->getMessage();
-//    return;
-//}
 
 $menu = $this->get('backend.navbar.sysmenu');
 if (!isset($menu)) {
     echo "No menu";
     return;
 }
+$items = [];
+if ($menu->count() > 0) {
+    $menu->rewind();
+    $first = $menu->current();
+    if (isset($first['children'])) {
+        $items = $first['children'];
+    }
+}
 ?>
-
-<!-- inner menu: contains the messages -->
-<?php
-$menuClasses = [
-                'menu' => 'nav navbar-nav',
-                'submenuItem' => 'dropdown',
-                'submenu' => 'dropdown-menu',
-//                'item' => '',
-                'itemWithChildren' => 'dropdown-toggle',
-                //'itemWithChildren' => 'dropdown',
-//                'activeMenu' => 'menu-open',
-//                'activeItem' => 'active',
-//                'trailMenu' => 'menu-open',
-//                'trailItem' => 'active'
-];
-$menuTemplates = []; //['navList' => '<ul class="{{class}}" style="max-height: 500px;">{{items}}</ul>'];
-echo $this->Menu->create(['templates' => $menuTemplates, 'classes' => $menuClasses, 'items' => $menu->getItems()])->render();
-return;
-?>
-<!-- /.menu -->
-
-
-<li class="dropdown messages-menu">
-    <!-- Menu toggle button -->
+<li class="dropdown sys-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="fa fa-sitemap"></i>
-        <!--
-        <span class="label label-success">4</span>
-        -->
+        <i class="fa fa-gears"></i>
+        <span class="hidden-xs"><?= __('System'); ?></span>
     </a>
     <ul class="dropdown-menu">
-        <li class="header">Some title></li>
+        <li class="header hidden"></li>
         <li>
-            <!-- inner menu: contains the messages -->
-            <?php
-            $menuClasses = [
-//                'menu' => 'sidebar-menu',
-//                'submenuItem' => 'treeview',
-//                'submenu' => 'treeview-menu',
-//                'item' => '',
-//                'activeMenu' => 'menu-open',
-//                'activeItem' => 'active',
-//                'trailMenu' => 'menu-open',
-//                'trailItem' => 'active'
-            ];
-            $menuTemplates = ['navList' => '<ul class="{{class}}" style="max-height: 500px;">{{items}}</ul>'];
-            //echo $this->Menu->create(['templates' => $menuTemplates, 'classes' => $menuClasses, 'items' => $menu->getItems()])->render();
-            ?>
-            <!-- /.menu -->
+        <?php
+        echo $this->Menu->create([
+            'classes' => [
+                'menu' => 'menu',
+            ],
+            'items' => $items
+        ])->render();
+        ?>
         </li>
-        <li class="footer"><a href="#">See All Messages</a></li>
+        <li class="footer hidden"></li>
     </ul>
 </li>

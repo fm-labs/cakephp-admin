@@ -14,8 +14,10 @@ class PageReloadHelper extends Helper
      * @var array
      */
     protected $_defaultConfig = [
-        'timeout' => 60,
-        'infoBlock' => false
+        'timeout' => 0,
+        'render' => 'html', // 'html' (default), 'script', 'both' (not recommended)
+        'infoBlock' => false,
+        'infoTemplate' => '<div class="pagereload-info"><span>Auto-reload in %s seconds</span> <a href="javascript:history.go(0)">Refresh page</a></div>',
     ];
 
     /**
@@ -23,27 +25,84 @@ class PageReloadHelper extends Helper
      * If set to FALSE, no page page reload script will be added.
      * @var bool|int
      */
-    protected $_timeout = false;
+    protected $_timeout = 0;
 
-    public function enable($timeout = null)
+    /**
+     * Enable / Disable automatic page reload
+     * @param bool|int $enable Boolean flag or timeout in seconds.
+     *  If a numeric value is set, the page reload will be enabled with given value as timeout in seconds
+     * @return void
+     */
+    public function enable($enable = true)
     {
-        $this->_timeout = ($timeout !== null && $timeout !== true) ? (int) $timeout : (int) $this->config('timeout');
+        if (is_numeric($enable)) {
+           $this->setTimeout($enable);
+        } elseif ($enable) {
+            $this->setTimeout($this->config('timeout'));
+        } else {
+            $this->setTimeout(0);
+        }
     }
 
+    /**
+     * Set timeout in seconds
+     * @param int $timeout
+     * @return $this
+     */
+    public function setTimeout($timeout = 0)
+    {
+        $this->_timeout = (int) $timeout;
+        return $this;
+    }
+
+    /**
+     * Inject page reload before rendering layout
+     * @param Event $event
+     */
     public function beforeLayout(Event $event)
     {
-        if ($this->_timeout !== false && $this->_timeout > 0) {
-            $event->subject()->Html->meta(['http-equiv' => 'refresh', 'content' => $this->_timeout], null, ['block' => true]);
+        if ($this->_timeout > 0) {
 
-            //$script = sprintf('setTimeout(function() { window.location.href = window.location.href; }, %s);', $this->_timeout*1000);
-            //$event->subject()->Html->scriptBlock($script, ['safe' => true, 'block' => true]);
+            if ($this->_config['render'] == 'html' || $this->_config['render'] == 'both') {
+                $event->subject()->Html->meta(['http-equiv' => 'refresh', 'content' => $this->_timeout], null, ['block' => true]);
+            }
 
+            if ($this->_config['render'] == 'script' || $this->_config['render'] == 'both') {
+
+                // for the javascript we need timeout in milliseconds
+                $timeoutMs = $this->_timeout * 1000;
+
+                // if both render methods are use, we use a little offset in the script,
+                // in favor of the 'script' renderer, to make sure javascript triggers the reload
+                // and not the 'html' renderer.
+                if ($this->_config['render'] == 'both') {
+                    $timeoutMs -= 500; // half a second should do the trick
+                };
+
+                $scriptTemplate = <<<SCRIPT
+(function() {
+var pagereload_timeout = setTimeout(function() {
+  window.location.href = window.location.href;
+}, {{TIMEOUT}});
+
+window.onunload = function() { clearTimeout(pagereload_timeout); }
+})();
+SCRIPT;
+                $script = str_replace(
+                    ['{{TIMEOUT}}'],
+                    [$timeoutMs],
+                    $scriptTemplate
+                );
+                $event->subject()->Html->scriptBlock($script, ['safe' => true, 'block' => true]);
+            }
+
+            if ($this->_config['infoBlock']) {
+                $block = ($this->_config['infoBlock'] === true) ? 'after' : $this->_config['infoBlock'];
+                $event->subject()->append($block,
+                    sprintf($this->_config['infoTemplate'], $this->_timeout)
+                );
+            }
         }
 
-        if ($this->_config['infoBlock']) {
-            $event->subject()->append($this->_config['infoBlock'],
-                sprintf('<div class="pagereload-info">Auto-reload in %s seconds</div>', $this->_timeout)
-            );
-        }
     }
 }

@@ -309,9 +309,6 @@ nav ul.pagination {
 .attachments.editor .attachments .attachment .actions {
   font-size: 10px;
 }
-.form-control {
-  font-size: 14px;
-}
 .dashboard-item {
   padding: 1em;
   margin: 0 0 1em 0;
@@ -347,6 +344,11 @@ form label {
 }
 form .form-group {
   margin-bottom: 8px;
+}
+form .form-control {
+  font-size: 14px;
+  border-color: #A4A4A4;
+  border-radius: 2px;
 }
 form div.required > label,
 form div.required .control-label {
@@ -455,9 +457,6 @@ form fieldset.collapsed > legend::before {
 form fieldset.collapsed > legend ~ * {
   margin-top: 0.3em;
 }
-.form-horizontal .control-label {
-  text-align: left;
-}
 /**
  * Imagepicker
  */
@@ -477,14 +476,6 @@ form .imageselect ul.image_picker_selector .thumbnail p {
 /**
  * Checkbox / Radio
  */
-input[type=checkbox],
-input[type=radio] {
-  width: 25px;
-  height: 25px;
-  vertical-align: middle;
-  margin: 0;
-  padding: 0;
-}
 /**
  * Datepicker
  */
@@ -499,8 +490,11 @@ form input.timepicker {
   cursor: auto;
 }
 /**
- * Form containers
+ * Horizontal
  */
+form.form-horizontal .control-label {
+  text-align: left;
+}
 /**
  * Backend Navigation Style Sheet
  *
@@ -741,6 +735,9 @@ nav.toolbar > ul {
 }
 .chosen-container-single .chosen-single div b {
   background-position-y: 4px;
+}
+.SumoSelect {
+  width: 100%;
 }
 ul.array-list .key {
   font-weight: bold;

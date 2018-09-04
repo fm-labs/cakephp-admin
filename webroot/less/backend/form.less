@@ -13,6 +13,11 @@ input[readonly] {
 /**
  * Forms
  */
+
+form {
+  //max-width: 800px;
+}
+
 form label {
   display: inline-block;
   max-width: 100%;
@@ -28,6 +33,12 @@ form .form-group {
   margin-bottom: 8px;
   //border-bottom: 1px solid #3C8DBC;
   //padding-bottom: 15px;
+}
+
+form .form-control {
+  font-size: @font-size-default;
+  border-color: #A4A4A4;
+  border-radius: 2px;
 }
 
 form div.required > label,
@@ -142,9 +153,7 @@ form fieldset.collapsed {
 
 }
 
-.form-horizontal .control-label {
-  text-align: left;
-}
+
 
 /**
  * Imagepicker
@@ -172,14 +181,14 @@ form .imageselect {
 /**
  * Checkbox / Radio
  */
-input[type=checkbox],
-input[type=radio] {
-  width: 25px;
-  height: 25px;
-  vertical-align: middle;
-  margin: 0;
-  padding: 0;
-}
+//input[type=checkbox],
+//input[type=radio] {
+//  width: 25px;
+//  height: 25px;
+//  vertical-align: middle;
+//  margin: 0;
+//  padding: 0;
+//}
 
 /**
  * Datepicker
@@ -196,9 +205,16 @@ form input.timepicker {
 }
 
 
+
+
 /**
- * Form containers
+ * Horizontal
  */
-div.form {
-  //max-width: 600px;
+
+form.form-horizontal {
+  //max-width: 1000px;
+
+  .control-label {
+    text-align: left;
+  }
 }

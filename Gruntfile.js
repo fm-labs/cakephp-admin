@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         },
         files: [
           // includes files within path
-          {expand: true, cwd: 'bower_components/AdminLTE/', src: ['dist/**', 'bootstrap/**'], dest: 'webroot/libs/adminlte/'},
+          //{expand: true, cwd: 'bower_components/AdminLTE/', src: ['dist/**', 'bootstrap/**'], dest: 'webroot/libs/adminlte/'},
           {expand: true, cwd: 'bower_components/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
           {expand: true, cwd: 'bower_components/bootstrap/', src: ['dist/**'], dest: 'webroot/libs/bootstrap/'},
           {expand: true, cwd: 'bower_components/chosen/', src: ['**'], dest: 'webroot/libs/chosen/'},
@@ -70,6 +70,7 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'webroot/js/tinymce/langs/', src: ['**'], dest: 'webroot/libs/tinymce/langs/'},
           {expand: true, cwd: 'bower_components/underscore/', src: ['**'], dest: 'webroot/libs/underscore/'},
           {expand: true, cwd: 'bower_components/flag-icon-css/', src: ['css/**', 'flags/**'], dest: 'webroot/libs/flag-icon-css/'},
+          {expand: true, cwd: 'bower_components/sumoselect/', src: ['*.js', '*.css'], dest: 'webroot/libs/sumoselect/'}
         ]
       }
     },

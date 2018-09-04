@@ -16,7 +16,8 @@ class BackendFormHelper extends BootstrapFormHelper
         $this->templater()->load('Backend.form_templates');
 
         $widgets = [
-            'select' => ['Backend\View\Widget\ChosenSelectBoxWidget', '_view'],
+            //'select' => ['Backend\View\Widget\ChosenSelectBoxWidget', '_view'],
+            'select' => ['Backend\View\Widget\SumoSelectBoxWidget', '_view'],
             'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
             'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
             'datepicker' => ['Backend\View\Widget\DatePickerWidget', 'text'],

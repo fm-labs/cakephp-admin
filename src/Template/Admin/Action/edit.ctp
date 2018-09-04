@@ -74,7 +74,7 @@ $this->extend('Backend./Admin/Base/form_tabs');
         } else {
             echo $this->Form->allInputs($inputFields, $inputOptions);
         }
-        echo $this->Form->button(__d('backend','Save changes'));
+        echo $this->Form->submit(__d('backend','Save changes'));
         echo $this->Form->end();
     }
     ?>

@@ -347,8 +347,10 @@ form .form-group {
 }
 form .form-control {
   font-size: 14px;
+  color: #333;
   border-color: #A4A4A4;
   border-radius: 2px;
+  padding: 6px 12px;
 }
 form div.required > label,
 form div.required .control-label {
@@ -372,7 +374,7 @@ form textarea ~ button {
 }
 form div.actions {
   border-top: 1px solid #ccc;
-  padding: 0.5rem;
+  padding: 1rem 0;
 }
 form fieldset {
   padding: 0;
@@ -380,17 +382,16 @@ form fieldset {
   transition: height 1s;
 }
 form fieldset legend {
-  background-color: transparent;
+  background-color: #3C8DBC;
+  color: #FFF;
   border: none;
-  border-top: 1px solid #3c8dbc;
   display: block;
-  margin: 0 0 0 0;
+  margin: 0 0 0.5em 0;
   width: 100%;
-  padding: 0;
+  padding: 0 0 0 5px;
   line-height: 30px;
   font-size: 18px;
   font-variant: all-small-caps;
-  color: #3c8dbc;
 }
 form fieldset legend::before {
   display: inline-block;
@@ -407,7 +408,7 @@ form fieldset legend::before {
   -webkit-font-smoothing: antialiased;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  content: " \f078";
+  content: " \f068";
 }
 form fieldset legend::after {
   font-size: 80%;
@@ -452,7 +453,7 @@ form fieldset.collapsed > legend::before {
   -webkit-font-smoothing: antialiased;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  content: " \f054";
+  content: " \f067";
 }
 form fieldset.collapsed > legend ~ * {
   margin-top: 0.3em;
@@ -494,6 +495,80 @@ form input.timepicker {
  */
 form.form-horizontal .control-label {
   text-align: left;
+}
+/* Backend UI Checkbox */
+/* https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */
+div.checkbox {
+  min-height: unset;
+  padding: 0;
+  margin: 0;
+  /* Hide the browser's default checkbox */
+  /* Create a custom checkbox */
+  /* On mouse-over, add a grey background color */
+  /* When the checkbox is checked, add a blue background */
+  /* Create the checkmark/indicator (hidden when not checked) */
+  /* Show the checkmark when checked */
+  /* Style the checkmark/indicator */
+}
+div.checkbox > label {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  line-height: 1.2em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+div.checkbox > label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  margin-left: -35px;
+  margin-top: 0;
+  z-index: 8000;
+}
+div.checkbox .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border: 1px solid #C1C1C1;
+  background: transparent;
+  font-family: Verdana, sans-serif;
+}
+div.checkbox > label:hover input ~ .checkmark {
+  background-color: #FFF;
+}
+div.checkbox > label:hover input ~ .checkmark::after {
+  border-color: #88C7EA;
+}
+div.checkbox input:checked ~ .checkmark {
+  background-color: #3c8dbc;
+  border-color: #3c8dbc;
+}
+div.checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+div.checkbox > label input:checked ~ .checkmark:after {
+  display: block;
+}
+div.checkbox .checkmark:after {
+  left: 8px;
+  top: 2px;
+  width: 8px;
+  height: 16px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 /**
  * Backend Navigation Style Sheet
@@ -738,6 +813,9 @@ nav.toolbar > ul {
 }
 .SumoSelect {
   width: 100%;
+}
+.SumoSelect .SelectBox {
+  padding: 6px 12px;
 }
 ul.array-list .key {
   font-weight: bold;

@@ -11,6 +11,16 @@ class BackendFormHelper extends BootstrapFormHelper
 
     public function __construct(View $View, array $config = [])
     {
+        // custom checkbox templates
+        // @TODO Move to CheckboxWidget
+        $config['templates'] = [
+            'checkboxFormGroup' => '<div class="checkbox">{{label}}</div>',
+            'checkbox' => '<input type="checkbox" name="{{name}}" value="{{value}}"{{attrs}} /><span class="checkmark"></span>',
+            //'inputContainerError' => '<div class="form-group has-error input-{{type}}{{required}}">{{error}}{{content}}</div>',
+        ];
+        $config['templatesHorizontal'] = [
+            'checkbox' => '<div class="checkbox"><label><input type="checkbox" name="{{name}}" value="{{value}}"{{attrs}} /><span class="checkmark"></span></label></div>',
+        ];
         parent::__construct($View, $config);
 
         $this->templater()->load('Backend.form_templates');

@@ -54,7 +54,7 @@ class BreadcrumbHelper extends Helper
         }
 
         // inject backend dashboard url on first position
-        $event->subject()->Breadcrumbs->insertAt(0, $this->_View->get('be_title'), $this->_View->get('be_dashboard_url'));
+        $this->Breadcrumbs->prepend($this->_View->get('be_title'), $this->_View->get('be_dashboard_url'));
 
         $breadcrumbsHtml = $this->Breadcrumbs->render($this->config());
         $event->subject()->Blocks->set('breadcrumbs', $breadcrumbsHtml);

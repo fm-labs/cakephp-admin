@@ -162,6 +162,15 @@ class EntityViewCell extends Cell
                             ['controller' => $assoc->name(), 'action' => 'view', $related->id]
                         );
                     };
+                } elseif ($entity->get($property)) {
+                    $formatter = function($val, $row, $args, $view) use ($assoc) {
+                        return $view->Html->link($val,
+                            ['controller' => $assoc->name(), 'action' => 'view', $val]);
+                    };
+                } else {
+                    $formatter = function() {
+                        return __('Not assigned');
+                    };
                 }
             }
             elseif ($associations) {
@@ -172,16 +181,24 @@ class EntityViewCell extends Cell
                     switch ($assocType) {
                         case "oneToMany":
                         case "manyToMany":
+                            //debug($assocType . ":" . $formatter);
                             //$formatter = "array";
                             $formatter = function($val) use ($assoc) {
                                 //return sprintf("%d %s", count($val), $assoc->name());
-                                return sprintf("%d records", count($val));
+                                return sprintf(__("%d records"), count($val));
                             };
                             break;
                         case "manyToOne":
-                            //$formatter = "object";
-                            $formatter = ['related', $assoc->target()->displayField()];
-                            break;#
+                        case "oneToOne":
+                            //$formatter = ['related', $assoc->target()->displayField()];
+                            $formatter = function($val, $row, $args, $view) use ($assoc) {
+                                if (!$val) return $val;
+
+                                return $view->Html->link($val->get($assoc->target()->displayField()),
+                                    ['controller' => $assoc->name(), 'action' => 'view', $val->get($assoc->target()->primaryKey())]
+                                );
+                            };
+                            break;
                         default:
                             $formatter = $assocType;
                             debug($assocType . ":" . $formatter);

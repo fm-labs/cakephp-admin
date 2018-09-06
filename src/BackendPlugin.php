@@ -33,8 +33,8 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
     {
         return [
             'Backend.Sidebar.build' => ['callable' => 'buildBackendSidebarMenu', 'priority' => 99 ],
-            'Backend.SysMenu.build' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
-            'Backend.Menu.build'    => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
+            //'Backend.SysMenu.build' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
+            //'Backend.Menu.build'    => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
            // 'View.beforeLayout'     => ['callable' => 'beforeLayout']
         ];
     }

@@ -1,5 +1,5 @@
 <?php
-namespace User\Controller\Admin;
+namespace Backend\Controller\Admin;
 
 /**
  * Permissions Controller

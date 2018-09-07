@@ -2,7 +2,7 @@
 
 
     <div class="alert alert-warning">
-        <?= __('Your session has expired. Please login again to continue.'); ?>
+        <?= __d('backend', 'Your session has expired. Please login again to continue.'); ?>
     </div>
 
     <h2 class="form-signin-heading">

@@ -39,12 +39,12 @@ class SumoSelectBoxWidget extends SelectBoxWidget
             'showTitle' => true, //(boolean) set to false to prevent title (tooltip) from appearing (deafult true)
             'up' => false, //(boolean) the direction in which to open the dropdown (default: false)
             'search' => true, // (boolean) To enable searching in sumoselect (default is false).
-            'searchText' => __('Search ...'), // (string) placeholder for search input.
-            'noMatch' => __('No matches for "{0}"'), // (string) placeholder to display if no itmes matches the search term
-            'locale' => [__('OK'), __('Cancel'), __('Select All')], // (array) the text used in plugin
-            'placeholder' => __('Select Here'), //  The palceholder text to be displayed in the rendered select widget
-            'captionFormat' => __('{0} Selected'), // (string) Its the format in which you want to see the caption when more than csvDispCount items are selected.
-            'captionFormatAllSelected' => __('{0} all selected!'), // (string) Format of caption text when all elements are selected.
+            'searchText' => __d('backend', 'Search ...'), // (string) placeholder for search input.
+            'noMatch' => __d('backend', 'No matches for "{0}"'), // (string) placeholder to display if no itmes matches the search term
+            'locale' => [__d('backend', 'OK'), __d('backend', 'Cancel'), __d('backend', 'Select All')], // (array) the text used in plugin
+            'placeholder' => __d('backend', 'Select Here'), //  The palceholder text to be displayed in the rendered select widget
+            'captionFormat' => __d('backend', '{0} Selected'), // (string) Its the format in which you want to see the caption when more than csvDispCount items are selected.
+            'captionFormatAllSelected' => __d('backend', '{0} all selected!'), // (string) Format of caption text when all elements are selected.
             //'csvDispCount' => 3,
             //'floatWidth' => 400,
         ];

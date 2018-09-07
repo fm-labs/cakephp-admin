@@ -41,7 +41,7 @@ class IndexAction extends BaseIndexAction
 //    {
 //        if ($this->_config['modelClass']) {
 //            list($plugin,$modelName) = pluginSplit($this->_config['modelClass']);
-//            return __('List {0}', $modelName);
+//            return __d('backend', 'List {0}', $modelName);
 //        }
 //
 //        return parent::getLabel();

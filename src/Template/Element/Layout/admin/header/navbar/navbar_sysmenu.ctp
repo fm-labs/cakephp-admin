@@ -18,7 +18,7 @@ if ($menu->count() > 0) {
 <li class="dropdown sys-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <i class="fa fa-gears"></i>
-        <span class="hidden-xs"><?= __('System'); ?></span>
+        <span class="hidden-xs"><?= __d('backend', 'System'); ?></span>
     </a>
     <ul class="dropdown-menu">
         <li class="header hidden"></li>

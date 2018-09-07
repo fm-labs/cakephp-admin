@@ -21,9 +21,9 @@ $this->loadHelper('Bootstrap.Tabs');
 <div class="view">
 
     <div class="alert alert-default">
-        <strong><?= __('Confirm deletion'); ?></strong>
+        <strong><?= __d('backend', 'Confirm deletion'); ?></strong>
         <p>
-            <?= $this->Form->postButton(__('Permanently delete record'), ['action' => 'delete', $entity->id], [
+            <?= $this->Form->postButton(__d('backend', 'Permanently delete record'), ['action' => 'delete', $entity->id], [
                 'data' => ['confirm' => true],
                 'form' => [],
                 'class' => 'btn btn-primary btn-danger btn-lg'

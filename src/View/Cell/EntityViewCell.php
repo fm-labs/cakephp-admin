@@ -169,7 +169,7 @@ class EntityViewCell extends Cell
                     };
                 } else {
                     $formatter = function() {
-                        return __('Not assigned');
+                        return __d('backend', 'Not assigned');
                     };
                 }
             }
@@ -187,13 +187,13 @@ class EntityViewCell extends Cell
                             $formatter = function($val) use ($assoc) {
                                 debug($val);
                                 //return sprintf("%d %s", count($val), $assoc->name());
-                                return __("{0} records", count($val));
+                                return __d('backend', "{0} records", count($val));
                             };
                             */
                             $formatter = function($val, $row, $args, $view) use ($assoc) {
                                 if (!$val) return $val;
 
-                                return $view->Html->link(__("{0} records", count($val)),
+                                return $view->Html->link(__d('backend', "{0} records", count($val)),
                                     ['controller' => $assoc->name(), 'action' => 'index', $assoc->target()->primaryKey() => $row->id],
                                     ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title'=> $assoc->name()]
                                 );

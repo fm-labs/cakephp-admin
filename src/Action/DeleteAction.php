@@ -45,7 +45,7 @@ class DeleteAction extends BaseEntityAction
                 }
                 return $controller->redirect($controller->referer(['action' => 'index']));
             } else {
-                $controller->Flash->error(__("You must confirm to delete record"));
+                $controller->Flash->error(__d('backend', "You must confirm to delete record"));
             }
 
         }

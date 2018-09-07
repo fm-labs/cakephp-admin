@@ -40,7 +40,7 @@ $this->extend('Backend./Admin/Base/form_tabs');
                 <?php
                 $options = [
                     'data-lang' => $lang,
-                    'data-title' => __('Edit {0} translation', $langLabel),
+                    'data-title' => __d('backend', 'Edit {0} translation', $langLabel),
                     'class' => ($lang == Cake\I18n\I18n::locale()) ? 'active' : ''
                 ];
                 $langLabel = ($lang == $translation) ? '[' . $langLabel . ']' : $langLabel;

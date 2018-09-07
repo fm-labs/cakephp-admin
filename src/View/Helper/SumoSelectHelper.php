@@ -23,10 +23,10 @@ class SumoSelectHelper extends Helper
 //    public function selectbox($options = [])
 //    {
 //        $defaultSumo = [
-//            //'placeholder' => __('Select Here'),
+//            //'placeholder' => __d('backend', 'Select Here'),
 //            //'csvDispCount' => 3,
-//            //'captionFormat' => __('{0} Selected'),
-//            //'captionFormatAllSelected' => __('{0} all selected!'),
+//            //'captionFormat' => __d('backend', '{0} Selected'),
+//            //'captionFormatAllSelected' => __d('backend', '{0} all selected!'),
 //        ];
 //
 //        $options = array_merge($defaultSumo, $this->config('sumo'), $options);

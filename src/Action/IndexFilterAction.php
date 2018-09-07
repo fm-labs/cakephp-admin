@@ -8,7 +8,7 @@ class IndexFilterAction extends IndexAction
 
     public function getLabel()
     {
-        return __("Filter");
+        return __d('backend', "Filter");
     }
 
     public function _fetchResult()

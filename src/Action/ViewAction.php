@@ -16,6 +16,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
 
     protected $_defaultConfig = [
         'entity' => null,
+        'entityOptions' => [],
         'modelClass' => null,
         'modelId' => null,
         'fields' => [],
@@ -50,24 +51,28 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
      */
     public function _execute(Controller $controller)
     {
-        if ($this->_config['entity'] !== null) {
-            $entity = $this->_config['entity'];
-            $this->_config['modelId'] = $entity->id;
 
-        } else {
+        $entity = $this->entity();
+        if (!$entity) {
+            if ($this->_config['entity'] !== null) {
+                $entity = $this->_config['entity'];
+                $this->_config['modelId'] = $entity->id;
 
-            // attempt to get model ID from request if not set
-            if (!$this->_config['modelId']) {
-                $this->_config['modelId'] = (isset($controller->request->params['id'])) ? $controller->request->params['id'] : null;
-            }
-            if (!$this->_config['modelId']) {
-                $this->_config['modelId'] = (isset($controller->request->params['pass'][0])) ? $controller->request->params['pass'][0] : null;
-            }
+            } else {
 
-            if (!$this->_config['modelId']) {
-                throw new BadRequestException('ViewAction: Model ID missing');
+                // attempt to get model ID from request if not set
+                if (!$this->_config['modelId']) {
+                    $this->_config['modelId'] = (isset($controller->request->params['id'])) ? $controller->request->params['id'] : null;
+                }
+                if (!$this->_config['modelId']) {
+                    $this->_config['modelId'] = (isset($controller->request->params['pass'][0])) ? $controller->request->params['pass'][0] : null;
+                }
+
+                if (!$this->_config['modelId']) {
+                    throw new BadRequestException('ViewAction: Model ID missing');
+                }
+                $entity = $this->model()->get($this->_config['modelId']);
             }
-            $entity = $this->model()->get($this->_config['modelId']);
         }
 
 

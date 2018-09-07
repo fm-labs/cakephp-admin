@@ -68,6 +68,8 @@ $this->loadHelper('Bootstrap.Tabs');
                         'data' => $_entity,
                         'fieldsBlacklist' => [$assoc->foreignKey()],
                         'filter' => false,
+                        'actions' => false,
+                        'rowActions' => false,
                     ], $related[$assoc->name()]);
 
                     $this->DataTable->create($dataTable);

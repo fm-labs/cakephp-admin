@@ -127,7 +127,8 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
                 throw new \Exception(get_class($this) . ' has no model ID defined');
             }
 
-            $this->_entity = $this->model()->get($this->_config['modelId']);
+            $options = (isset($this->_config['entityOptions'])) ? $this->_config['entityOptions'] : [];
+            $this->_entity = $this->model()->get($this->_config['modelId'], $options);
         }
 
         return $this->_entity;

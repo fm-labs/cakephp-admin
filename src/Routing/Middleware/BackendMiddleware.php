@@ -4,7 +4,6 @@ namespace Backend\Routing\Middleware;
 use Backend\Backend;
 use Backend\BackendPluginInterface;
 use Banana\Application;
-use Banana\Banana;
 use Cake\Log\Log;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
@@ -18,10 +17,19 @@ use Psr\Http\Message\ServerRequestInterface;
 class BackendMiddleware
 {
 
+    protected $_iframe = false;
+
     public function __construct(Application $app)
     {
         $this->_app = $app;
         $this->_backend = new Backend();
+
+        // register url filter for persistent URL parameters.
+        // injects 'lang' param on url creation
+        Router::addUrlFilter(function ($params, \Cake\Network\Request $request) {
+            $params['iframe'] = $this->_iframe;
+            return $params;
+        });
     }
 
     /**
@@ -54,6 +62,12 @@ class BackendMiddleware
                         Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
                     }
                 }
+            }
+
+            // iframe detection
+            $query = $request->getQueryParams();
+            if (isset($query['iframe'])) {
+                $this->_iframe = (bool)$query['iframe'];
             }
         }
 

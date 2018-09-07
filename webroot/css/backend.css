@@ -710,6 +710,7 @@ ul.nav.nav-nested.nav-trailed > li.trail > ul {
 }
 .modal.modal-wide .modal-dialog {
   width: 96%;
+  max-width: 96%;
 }
 /* Tabs */
 .tabs .nav-tabs li:first-child {

@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="<?= Cake\I18n\I18n::locale(); ?>">
 <head>
+    <title><?= $this->fetch('title') ?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="noindex,nofollow">
-    <title><?= $this->fetch('title') ?></title>
     <meta name="mobile-web-app-capable" content="yes">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
 
-    <!-- styles -->
     <?= $this->Html->css('Backend.layout/admin'); ?>
     <?= $this->fetch('css') ?>
     <!-- scripts -->
@@ -20,25 +19,45 @@
     <?= $this->Html->script('/backend/libs/jquery/jquery.min.js'); ?>
     <?= $this->fetch('headjs') ?>
 </head>
-<body class="iframe">
+<body class="body-iframe">
 <div class="wrapper">
 
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-                <?= $this->fetch('heading', $this->fetch('title')); ?>
-                <?php if ($this->fetch('titleDesc')): ?>
-                <small><?= $this->fetch('titleDesc'); ?></small>
-                <?php endif; ?>
-            </h1>
+    <!-- Content Wrapper. Contains page content -->
+    <div id="content" class="content-wrapper">
+
+        <section id="main-flash" class="flash-wrapper">
+            <!-- Flash Auth -->
+            <?php echo $this->Flash->render('auth') ?>
+            <!-- Flash Backend -->
+            <?php echo $this->Flash->render('backend') ?>
+            <!-- Flash Default -->
+            <?php echo $this->Flash->render() ?>
         </section>
 
-        <!-- Main content -->
-        <section class="content">
-            <?= $this->fetch('content'); ?>
+        <!-- Toolbar -->
+        <section id="main-toolbar" class="main-toolbar">
+            <?php echo $this->fetch('toolbar'); ?>
         </section>
+
+        <!-- Before -->
+        <?php echo $this->fetch('top'); ?>
+
+        <!-- Main content -->
+        <main id="main" class="<?= $this->fetch('contentClass', 'content'); ?>">
+
+            <!-- Before -->
+            <?php echo $this->fetch('before'); ?>
+
+            <!-- Content -->
+            <?php echo  $this->fetch('content'); ?>
+
+            <!-- After -->
+            <?php echo $this->fetch('after'); ?>
+        </main>
         <!-- /.content -->
+
+        <!-- After -->
+        <?php echo $this->fetch('bottom'); ?>
     </div>
     <!-- /.content-wrapper -->
 
@@ -46,13 +65,5 @@
 <!-- ./wrapper -->
 
 <?= $this->fetch('script'); ?>
-<script>
-    $(document).ready(function() {
-        Backend.Renderer.onReady();
-    });
-    $(window).on('unload', function() {
-        Backend.Renderer.onUnload();
-    })
-</script>
 </body>
 </html>

@@ -104,7 +104,7 @@ class BackendComponent extends Component
         }
         // Iframe request detector
         $this->request->addDetector('iframe', function ($request) {
-            return (bool)$this->request->query('iframe');
+            return (bool)$request->query('iframe') == true || (bool)$request->param('iframe') == true;
         });
 
         // Configure Backend Authentication

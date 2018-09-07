@@ -8,15 +8,16 @@
 
     $.fn.iconify = function() {
 
-        this.find( "[data-icon]" ).each(function() {
+        this.find( "[data-icon]:not('.iconify')" ).each(function() {
             var icon = $( this).data('icon');
 
             if (icon) {
+                $(this).addClass('iconify');
                 $(this).prepend('<i class="fa fa-' + icon + '"></i>&nbsp;');
             }
         });
 
-        this.find( "[data-locale]" ).each(function() {
+        this.find( "[data-locale]:not('.iconify')" ).each(function() {
             var icon = $( this).data('locale');
 
             var map = {
@@ -27,6 +28,8 @@
                 if (icon in map) {
                     icon = map[icon];
                 }
+
+                $(this).addClass('iconify');
                 $(this).prepend('<span class="flag-icon flag-icon-' + icon + '"></span>&nbsp;');
             }
         });

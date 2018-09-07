@@ -41,7 +41,7 @@ class EntityViewCell extends Cell
 
     public $title;
 
-    public $related = [];
+    //public $related = [];
 
     public $helpers = [];
 
@@ -177,17 +177,29 @@ class EntityViewCell extends Cell
                 $assoc = $associations->getByProperty($property);
                 if ($assoc) {
                     $assocType = $assoc->type();
-                    //debug($property . "->" . $assocType);
+                    debug($property . "->" . $assocType);
                     switch ($assocType) {
                         case "oneToMany":
                         case "manyToMany":
                             //debug($assocType . ":" . $formatter);
                             //$formatter = "array";
+                            /*
                             $formatter = function($val) use ($assoc) {
+                                debug($val);
                                 //return sprintf("%d %s", count($val), $assoc->name());
-                                return sprintf(__("%d records"), count($val));
+                                return __("{0} records", count($val));
+                            };
+                            */
+                            $formatter = function($val, $row, $args, $view) use ($assoc) {
+                                if (!$val) return $val;
+
+                                return $view->Html->link(__("{0} records", count($val)),
+                                    ['controller' => $assoc->name(), 'action' => 'index', $assoc->target()->primaryKey() => $row->id],
+                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title'=> $assoc->name()]
+                                );
                             };
                             break;
+
                         case "manyToOne":
                         case "oneToOne":
                             //$formatter = ['related', $assoc->target()->displayField()];
@@ -199,6 +211,7 @@ class EntityViewCell extends Cell
                                 );
                             };
                             break;
+
                         default:
                             $formatter = $assocType;
                             debug($assocType . ":" . $formatter);
@@ -229,15 +242,15 @@ class EntityViewCell extends Cell
         $this->set('model', $this->model);
         $this->set('entity', $entity);
 
-        $related = [];
-        foreach ($this->related as $_related => $_relatedConf) {
-            if (is_numeric($_related)) {
-                $_related = $_relatedConf;
-                $_relatedConf = [];
-            }
-            $related[$_related] = $_relatedConf;
-        }
-        $this->set('related', $related);
+//        $related = [];
+//        foreach ($this->related as $_related => $_relatedConf) {
+//            if (is_numeric($_related)) {
+//                $_related = $_relatedConf;
+//                $_relatedConf = [];
+//            }
+//            $related[$_related] = $_relatedConf;
+//        }
+//        $this->set('related', $related);
 
         $this->set('associations', $associations);
         $this->set('schema', $schema);

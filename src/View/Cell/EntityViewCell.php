@@ -159,13 +159,16 @@ class EntityViewCell extends Cell
                     $related = $entity->get($assoc->property());
                     $formatter = function($val, $row, $args, $view) use ($related, $assoc) {
                         return $view->Html->link($related->get($assoc->target()->displayField()),
-                            ['controller' => $assoc->name(), 'action' => 'view', $related->id]
+                            ['controller' => $assoc->name(), 'action' => 'view', $related->id],
+                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title'=> $related->get($assoc->target()->displayField())]
                         );
                     };
                 } elseif ($entity->get($property)) {
                     $formatter = function($val, $row, $args, $view) use ($assoc) {
                         return $view->Html->link($val,
-                            ['controller' => $assoc->name(), 'action' => 'view', $val]);
+                            ['controller' => $assoc->name(), 'action' => 'view', $val],
+                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title'=> $val]
+                        );
                     };
                 } else {
                     $formatter = function() {
@@ -177,7 +180,7 @@ class EntityViewCell extends Cell
                 $assoc = $associations->getByProperty($property);
                 if ($assoc) {
                     $assocType = $assoc->type();
-                    debug($property . "->" . $assocType);
+                    //debug($property . "->" . $assocType);
                     switch ($assocType) {
                         case "oneToMany":
                         case "manyToMany":
@@ -207,7 +210,8 @@ class EntityViewCell extends Cell
                                 if (!$val) return $val;
 
                                 return $view->Html->link($val->get($assoc->target()->displayField()),
-                                    ['controller' => $assoc->name(), 'action' => 'view', $val->get($assoc->target()->primaryKey())]
+                                    ['controller' => $assoc->name(), 'action' => 'view', $val->get($assoc->target()->primaryKey())],
+                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title'=> $val->get($assoc->target()->displayField())]
                                 );
                             };
                             break;

@@ -12,7 +12,7 @@ $class = (isset($collapse)) ? $class .= ' collapse' : $class;
         <li class="<?= $itemClass; ?>">
             <span class="key"><?= h($k); ?></span>
             <?php if (is_array($v)) {
-                echo $this->element('array_list', ['array' => $v, 'collapse' => true]);
+                echo $this->element('Backend.array_to_list', ['array' => $v, 'collapse' => true]);
             } else {
                 echo '<span class="value">' . h($v) . '</span>';
             }

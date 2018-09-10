@@ -197,8 +197,18 @@ class EntityViewCell extends Cell
                                 if (!$val) return $val;
 
                                 return $view->Html->link(__d('backend', "{0} records", count($val)),
-                                    ['controller' => $assoc->name(), 'action' => 'index', $assoc->target()->primaryKey() => $row->id],
-                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title'=> $assoc->name()]
+                                    [
+                                        'controller' => $assoc->name(),
+                                        'action' => 'index',
+                                        '_filter' => [
+                                            $assoc->foreignKey() => $row->get($assoc->target()->primaryKey())
+                                        ]
+                                    ],
+                                    [
+                                        'data-modal-frame',
+                                        'data-modal-class' => 'modal-wide',
+                                        'data-modal-title'=> __("Related {0}", $assoc->name())
+                                    ]
                                 );
                             };
                             break;

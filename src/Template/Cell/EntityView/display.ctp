@@ -22,11 +22,7 @@ use Cake\Utility\Inflector;
                         <?= h($field['label']); ?>
                     </dt>
                     <dd>
-                        <?php //if (is_array($field['value'])): ?>
-                            <?= ''//$this->element('Backend.array_to_list', ['array' => $field['value']]); ?>
-                        <?php //else: ?>
-                            <?= $this->Formatter->format( $field['value'], $field['formatter'], $field['formatterArgs'], $entity ); ?>
-                        <?php// endif; ?>
+                        <?= $this->Formatter->format( $field['value'], $field['formatter'], $field['formatterArgs'], $entity ); ?>
                     </dd>
                 <?php endforeach; ?>
             </dl>

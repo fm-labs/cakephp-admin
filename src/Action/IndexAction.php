@@ -116,13 +116,16 @@ class IndexAction extends BaseIndexAction
             } else {
                 $query = $this->model()->find();
                 $query->applyOptions($this->_config['query']);
-
-                // apply query conditions from request
-                if ($this->_request->query('qry')) {
-                    $query->where($this->_request->query('qry'));
-                }
             }
 
+            // apply query conditions from request
+            if ($this->_request->query('qry')) { //@deprecated Use _filter param instead
+                $this->_request->query['_filter'] = $this->_request->query['qry'];
+                unset($this->_request->query['qry']);
+            }
+            if ($this->_request->query('_filter')) {
+                $query->where($this->_request->query('_filter'));
+            }
 
             // search support with FriendsOfCake/Search plugin
             if ($this->_config['filter'] && $this->model()->behaviors()->has('Search')) {

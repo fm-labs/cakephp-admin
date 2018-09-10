@@ -207,7 +207,7 @@ class EntityViewCell extends Cell
                                     [
                                         'data-modal-frame',
                                         'data-modal-class' => 'modal-wide',
-                                        'data-modal-title'=> __("Related {0}", $assoc->name())
+                                        'data-modal-title'=> __d('backend', "Related {0}", $assoc->name())
                                     ]
                                 );
                             };

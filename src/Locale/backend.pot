@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-07 20:37+0000\n"
+"POT-Creation-Date: 2018-09-10 23:28+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -287,6 +287,7 @@ msgstr ""
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/view.ctp:49
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:181
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:210
 msgid "Related {0}"
 msgstr ""
 
@@ -541,6 +542,10 @@ msgstr ""
 msgid "PHP Info"
 msgstr ""
 
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/session.ctp:5
+msgid "Session Info"
+msgstr ""
+
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:9;24
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:10
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:54;67
@@ -623,11 +628,11 @@ msgstr ""
 msgid "Publish Item"
 msgstr ""
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_table.ctp:17
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_tablelist.ctp:17
 msgid "Key"
 msgstr ""
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_table.ctp:18
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_tablelist.ctp:18
 msgid "Value"
 msgstr ""
 
@@ -675,11 +680,11 @@ msgstr ""
 msgid "next"
 msgstr ""
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:172
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:175
 msgid "Not assigned"
 msgstr ""
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:196
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:199
 msgid "{0} records"
 msgstr ""
 

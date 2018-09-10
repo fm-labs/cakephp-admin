@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-07 22:37+0200\n"
-"PO-Revision-Date: 2018-09-07 22:37+0200\n"
+"POT-Creation-Date: 2018-09-11 01:30+0200\n"
+"PO-Revision-Date: 2018-09-11 01:31+0200\n"
 "Last-Translator: \n"
 "Language-Team: EMAIL@ADDRESS\n"
 "Language: de_DE\n"
@@ -189,11 +189,11 @@ msgstr "Fehler beim Leeren des Caches"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/DataTableController.php:35
 msgid "Reordering complete"
-msgstr ""
+msgstr "Neusortierung abgeschlossen"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/DataTableController.php:37
 msgid "Reordering failed"
-msgstr ""
+msgstr "Neusortierung fehlgeschlagen"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/LogsController.php:92;123;151
 msgid "No logFile selected"
@@ -226,7 +226,7 @@ msgstr "Lodatei {0} konnte nicht gelöscht werden"
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/SimpleTreeController.php:23
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/TreeController.php:23
 msgid "No model selected"
-msgstr ""
+msgstr "Kein Model ausgewählt"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/SimpleTreeController.php:33
 msgid "Model {0} has no SimpleTree behavior attached"
@@ -284,10 +284,11 @@ msgstr "Aktualisieren"
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/tree_sort.ctp:1;3
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Tree/index.ctp:1;3
 msgid "Tree Viewer"
-msgstr ""
+msgstr "Tree Viewer"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/view.ctp:49
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:181
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:210
 msgid "Related {0}"
 msgstr "Verwandte {0}"
 
@@ -510,11 +511,11 @@ msgstr "Datum & Uhrzeit"
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/globals.ctp:3
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:85
 msgid "Globals"
-msgstr ""
+msgstr "Globals"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/globals.ctp:5
 msgid "CAKEPHP Globals"
-msgstr ""
+msgstr "CAKEPHP Globals"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:11
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Layout/admin/header/navbar/navbar_sysmenu.ctp:21
@@ -532,17 +533,21 @@ msgstr "Deaktiviert"
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:84
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/routes.ctp:7
 msgid "Routes"
-msgstr ""
+msgstr "Routes"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:86
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/session.ctp:3
 msgid "Session"
-msgstr ""
+msgstr "Session"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:87
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/php.ctp:3
 msgid "PHP Info"
-msgstr ""
+msgstr "PHP Info"
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/session.ctp:5
+msgid "Session Info"
+msgstr "Session Info"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:9;24
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:10
@@ -628,13 +633,13 @@ msgstr ""
 msgid "Publish Item"
 msgstr "Eintrag veröffentlichen"
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_table.ctp:17
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_tablelist.ctp:17
 msgid "Key"
-msgstr ""
+msgstr "Schlüssel"
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_table.ctp:18
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_tablelist.ctp:18
 msgid "Value"
-msgstr ""
+msgstr "Wert"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Action/Edit/info_publish.ctp:8
 msgid "Published"
@@ -680,11 +685,11 @@ msgstr "zurück"
 msgid "next"
 msgstr "vor"
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:172
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:175
 msgid "Not assigned"
 msgstr "Nicht zugewiesen"
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:196
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:199
 msgid "{0} records"
 msgstr "{0} Einträge"
 

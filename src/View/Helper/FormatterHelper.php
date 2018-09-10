@@ -128,9 +128,23 @@ class FormatterHelper extends Helper
         });
 
         // array
-        self::register('array', function ($val, $extra, $params) {
-            return '[Array]';
-            //return '<pre>' . print_r($val, true) . '</pre>';
+        self::register('array', function ($val, $extra, $params, $view) {
+            return $view->element('Backend.array_to_list', ['array' => $val]);
+        });
+        self::register('json', function ($val, $extra, $params, $view) {
+            if (is_string($val)) {
+                try {
+                    $val = json_decode($val, true);
+
+                    if (json_last_error()) {
+                        throw new \RuntimeException(json_last_error_msg());
+                    }
+
+                } catch (\Exception $ex) {
+                    return "JSON ERROR: " . $ex->getMessage();
+                }
+            }
+            return $view->element('Backend.array_to_list', ['array' => $val]);
         });
 
         // NULL

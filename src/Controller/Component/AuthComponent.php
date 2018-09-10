@@ -27,8 +27,8 @@ class AuthComponent extends \User\Controller\Component\AuthComponent
         // attempt to identify user (any request method)
         $user = $this->identify();
         if ($user) {
-            // dispatch 'User.login' event
-            $event = new Event('Backend.User.login', $this, [
+            // dispatch 'User.Auth.login' event
+            $event = new Event('Backend.User.Auth.login', $this, [
                 'user' => $user,
                 'request' => $this->request
             ]);
@@ -44,8 +44,8 @@ class AuthComponent extends \User\Controller\Component\AuthComponent
         } elseif ($this->request->is('post')) {
             $this->flash(__d('backend', 'Login failed'));
 
-            // dispatch 'User.login' event
-            $event = new Event('Backend.User.loginFailed', $this, [
+            // dispatch 'User.Auth.login' event
+            $event = new Event('Backend.User.Auth.loginFailed', $this, [
                 'user' => false,
                 'request' => $this->request
             ]);

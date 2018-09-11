@@ -61,12 +61,18 @@ class EditAction extends BaseEntityAction
             $_fields = array_merge($_fields, $controller->viewVars['fields']);
         }
 
+        if (isset($controller->viewVars['fields.access'])) {
+            $entity->accessible($controller->viewVars['fields.access']);
+        }
+
         $fields = $blacklist = $whitelist = [];
         if (isset($controller->viewVars['fields.blacklist'])) {
             $blacklist = $controller->viewVars['fields.blacklist'];
+            $entity->accessible($blacklist, false);
         }
         if (isset($controller->viewVars['fields.whitelist'])) {
             $whitelist = $controller->viewVars['fields.whitelist'];
+            $entity->accessible($whitelist, true);
         }
         foreach ($_fields as $_f => $field) {
             if (is_numeric($_f)) {

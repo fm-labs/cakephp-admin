@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2018-09-11 01:30+0200\n"
-"PO-Revision-Date: 2018-09-11 01:31+0200\n"
+"POT-Creation-Date: 2018-09-13 09:33+0200\n"
+"PO-Revision-Date: 2018-09-13 09:33+0200\n"
 "Last-Translator: \n"
 "Language-Team: EMAIL@ADDRESS\n"
 "Language: de_DE\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/AddAction.php:63
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/AddAction.php:94
 msgid "Record created"
 msgstr "Eintrag erstellt"
 
@@ -68,7 +68,7 @@ msgstr "Löschen des Eintrags bestätigen"
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/EditAction.php:85
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/EditAction.php:91
 msgid "Saved!"
 msgstr "Gespeichert!"
 
@@ -633,11 +633,11 @@ msgstr ""
 msgid "Publish Item"
 msgstr "Eintrag veröffentlichen"
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_tablelist.ctp:17
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_tablelist.ctp:21
 msgid "Key"
 msgstr "Schlüssel"
 
-#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_tablelist.ctp:18
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_tablelist.ctp:22
 msgid "Value"
 msgstr "Wert"
 

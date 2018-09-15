@@ -32,10 +32,10 @@ class BackendLayoutHelper extends Helper
     public function beforeLayout(Event $event)
     {
         // title
-        $title = $event->subject()->Blocks->get('title');
-        if ($title === '') {
-            $event->subject()->Blocks->set('title', Inflector::humanize(Inflector::tableize($event->subject()->request['controller'])));
-        }
+        $title = $event->subject()->Blocks->get('title'); // check the title block
+        $title = ($title) ?: $event->subject()->get('page.title'); // check the 'page.title' view var
+        $title = ($title) ?: Inflector::humanize(Inflector::tableize($event->subject()->request['controller'])); // inflected controller name
+        $event->subject()->Blocks->set('title', $title);
 
         // AdminLTE layout options @TODO Move to AdminLTE Backend Theme
         //$themeSkinClass = (Configure::read('Backend.AdminLte.skin_class')) ?: 'skin-blue';

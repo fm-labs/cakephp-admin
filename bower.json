@@ -18,7 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "AdminLTE": "adminlte#^2.3.8",
     "font-awesome": "^4.7.0",
     "html5shiv": "^3.7.3",
     "ionicons": "ionicons#^2.0.1",

@@ -8,8 +8,11 @@ use Cake\Error\Debugger;
 <div class="index">
     <h2>Connected Routes</h2>
 
-    <table class="table table-stiped">
+    <table class="table table-striped table-hover">
+        <thead>
         <tr><th>Template</th><th>Defaults</th><th>Options</th></tr>
+        </thead>
+        <tbody>
         <?php
         foreach ($this->get('routes', []) as $route):
             echo '<tr>';
@@ -22,5 +25,6 @@ use Cake\Error\Debugger;
             echo '</tr>';
         endforeach;
         ?>
+        </tbody>
     </table>
 </div>

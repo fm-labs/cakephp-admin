@@ -19,7 +19,7 @@
     <?= $this->Html->script('/backend/libs/jquery/jquery.min.js'); ?>
     <?= $this->fetch('headjs') ?>
 </head>
-<body class="body-iframe">
+<body class="body-iframe <?= $this->get('be_layout_body_class'); ?>">
 <div class="wrapper">
 
     <!-- Content Wrapper. Contains page content -->

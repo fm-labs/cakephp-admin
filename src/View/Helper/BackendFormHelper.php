@@ -139,8 +139,9 @@ class BackendFormHelper extends BootstrapFormHelper
         }
 
         if (preg_match('/_datetime$/', $fieldName)) {
+            $options['type'] = 'datetime';
             //$options['type'] = ['datetimepicker'];
-            $options['type'] = 'datepicker';
+            //$options['type'] = 'datepicker';
         }
         elseif (preg_match('/_date$/', $fieldName)) {
             $options['type'] = 'datepicker';

@@ -96,7 +96,7 @@ h2 {
 dl dt,
 dl.dl-horizontal dt {
   text-align: left;
-  padding-top: 0.3rem;
+  padding-top: 0.6rem;
   width: 220px;
   display: inline-block;
 }
@@ -105,8 +105,8 @@ dl.dl-horizontal dd {
   display: block;
   margin-left: 0;
   padding-left: 220px;
-  padding-top: 0.3rem;
-  padding-bottom: 0.3rem;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
   border-bottom: 1px solid #e8e8e8;
 }
 dl dd pre,
@@ -338,7 +338,7 @@ form label {
   display: inline-block;
   max-width: 100%;
   margin-bottom: 5px;
-  font-weight: 700;
+  font-weight: normal;
   font-variant: normal;
   color: #444;
 }
@@ -655,6 +655,30 @@ ul.nav.nav-nested.nav-trailed > ul {
 ul.nav.nav-nested.nav-trailed > li.trail > ul {
   display: inherit;
 }
+/** Horizontal Navs **/
+ul.nav.nav-horizontal {
+  border-bottom: 1px solid #CCC;
+  margin-bottom: 1em;
+}
+ul.nav.nav-horizontal > li {
+  display: inline-block;
+  margin-bottom: -1px;
+}
+ul.nav.nav-horizontal > li > a {
+  padding: 10px 15px;
+  border-bottom: 3px solid transparent;
+}
+ul.nav.nav-horizontal > li.active > a {
+  border-bottom: 3px solid green;
+}
+ul.nav.nav-horizontal > li:hover > a {
+  background-color: transparent;
+  border-bottom: 3px solid blue;
+}
+ul.nav.nav-horizontal > li > a:focus,
+ul.nav.nav-horizontal > li > a:link {
+  background-color: transparent;
+}
 /* Panels */
 .panel {
   border-radius: 0;
@@ -719,13 +743,10 @@ ul.nav.nav-nested.nav-trailed > li.trail > ul {
 .tabs .tab-content {
   background-color: #FFF;
 }
-.tabs .tab-content > .tab-pane.active {
-  box-shadow: 0px 2px 2px #CCC;
-}
 .tabs .tab-content > .tab-pane {
   border: 1px solid #DDD;
   padding: 2rem;
-  border-top-width: 0;
+  border-top: none;
 }
 body {
   font-family: 'Helvetica', 'Arial', sans-serif;
@@ -818,6 +839,12 @@ nav.toolbar > ul {
 .SumoSelect .SelectBox {
   padding: 6px 12px;
 }
+/**
+ * Backend DataTables styles
+ */
+table.dataTable tbody tr {
+  background-color: transparent;
+}
 ul.array-list .key {
   font-weight: bold;
 }
@@ -831,4 +858,18 @@ ul.array-list li.has-children {
 }
 ul.array-list li.has-children::before {
   content: "*";
+}
+.skin-purple {
+  /** Layout - Header **/
+  /** Layout - Sidebar **/
+  /** Layout - Navbar - UserMenu **/
+}
+.skin-purple .main-header {
+  background-color: #800080 !important;
+}
+.skin-purple .sidebar .sidebar-toggle {
+  background-color: #6d0080 !important;
+}
+.skin-purple .navbar .user-menu ul.dropdown-menu > li.user-header {
+  background-color: #800080 !important;
 }

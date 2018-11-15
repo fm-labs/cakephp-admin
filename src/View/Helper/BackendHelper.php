@@ -24,11 +24,14 @@ class BackendHelper extends Helper
 
         // Inject backendjs init script
         $backendjs = [
-            'rootUrl' => $this->Url->build('/'),
+            'rootUrl' => $this->Url->build('/', true),
+            'adminUrl' => $this->Url->build('/admin/', true),
             'debug' => Configure::read('debug')
         ];
-        $script = sprintf('if (window.Backend !== undefined) { Backend.init(%s); }', json_encode($backendjs));
-        $this->Html->scriptBlock($script, ['block' => 'script']);
+        //$script = sprintf('console.log("INIT", window.Backend); if (window.Backend !== undefined) { console.log("INIT2");  Backend.initialize(%s); }', json_encode($backendjs));
+
+        $script = sprintf('var BackendSettings = window.BackendSettings = %s; console.log("[backendjs] SETTIGNS", window.BackendSettings)', json_encode($backendjs));
+        $this->Html->scriptBlock($script, ['block' => true, 'safe' => false]);
     }
 
 }

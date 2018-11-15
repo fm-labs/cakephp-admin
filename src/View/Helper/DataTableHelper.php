@@ -48,8 +48,9 @@ class DataTableHelper extends Helper
         'fieldsBlacklist' => null,
         'actions' => [],
         'rowActions' => [],
-        'paginate' => false,
+        'paging' => false,
         'pagingLimit' => 20,
+        'paginate' => [],
         'select' => false,
         'sortable' => false,
         'reduce' => [],
@@ -79,8 +80,9 @@ class DataTableHelper extends Helper
 
         $this->templater()->add([
             'table_container' => '<div class="datatable-container">{{table}}{{pagination}}{{script}}</div>',
-            'table' => '<table class="table table-striped"{{attrs}}>{{head}}{{body}}</table>',
+            'table' => '<table class="table table-striped"{{attrs}}>{{head}}{{body}}{{footer}}</table>',
             'head' => '<thead><tr>{{cellheads}}{{actionshead}}</tr></thead>',
+            'footer' => '<tfoot><tr>{{cellheads}}{{actionshead}}</tr></tfoot>',
             'headCell' => '<th{{attrs}}>{{content}}</th>',
             'headCellActions' => '<th{{attrs}} style="text-align: right;">{{content}}</th>',
             'body' => '<tbody>{{rows}}</tbody>',
@@ -510,13 +512,14 @@ class DataTableHelper extends Helper
             'attrs' => $this->templater()->formatAttributes($tableAttributes),
             'head' => $this->_renderHead(),
             'body' => $this->_renderBody(),
+            'footer' => $this->_renderHead('footer')
         ]);
         $formEnd = $this->Form->end();
 
         return $formStart . $table . $formEnd;
     }
 
-    protected function _renderHead()
+    protected function _renderHead($template = 'head')
     {
         $headCellActions = '';
         if ($this->_params['rowActions'] !== false) {
@@ -531,7 +534,7 @@ class DataTableHelper extends Helper
             ]);
         }
 
-        $html = $this->templater()->format('head', [
+        $html = $this->templater()->format($template, [
             'cellheads' => $this->_renderHeadCells(),
             'actionshead' => $headCellActions
         ]);
@@ -592,7 +595,7 @@ class DataTableHelper extends Helper
             $filterInput = '';
 
             //if ($this->_params['filter'] == true || in_array($fieldName, $this->_params['filter'])) {
-            if (in_array($fieldName, $filters)) {
+            //if (in_array($fieldName, $filters)) {
                 $filterInputOptions = ['label' => false];
 
                 // get current filter value from request query
@@ -632,7 +635,7 @@ class DataTableHelper extends Helper
                     }
                 }
                 $filterInput = $this->Form->input($fieldName, $filterInputOptions);
-            }
+            //}
             $cells .= $this->templater()->format('rowCell', [
                 'content' => (string)$filterInput,
                 'attrs' => $this->templater()->formatAttributes([

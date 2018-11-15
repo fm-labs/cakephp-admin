@@ -77,11 +77,6 @@ desired effect
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-<?= $this->Html->script('/backend/libs/adminlte/bootstrap/js/bootstrap.min.js'); ?>
-<?= $this->Html->script('/backend/libs/adminlte/dist/js/app.js'); ?>
-<?= $this->Html->script('/backend/libs/underscore/underscore-min.js'); ?>
-<?= $this->Html->script('/backend/js/backend.js'); ?>
-<?= $this->Html->script('/backend/js/iconify.js'); ?>
 <?= $this->fetch('script'); ?>
 
 <script>

@@ -30,7 +30,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
             $data['id'] = uniqid('sumoselect');
         }
 
-        $data['empty'] = false;
+        //$data['empty'] = true;
 
         $html = parent::render($data, $context);
 

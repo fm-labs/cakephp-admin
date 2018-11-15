@@ -16,12 +16,6 @@ return [
      */
     'Backend.theme' => null,
 
-    'Backend.Theme.Navbar.enabled' => true,
-    'Backend.Theme.Sidebar.enabled' => true,
-
-    'Backend.Theme.Navbar' => ['panels' => ['Backend.Navbar\Messages', 'Backend.Navbar\Notifications', 'Backend.Navbar\User']],
-    'Backend.Theme.Sidebar' => [],
-
     /**
      * Backend Dashboard
      *
@@ -53,13 +47,7 @@ return [
     /**
      * Backend AdminLTE theme options
      */
-    'Backend.AdminLte.skin_class' => 'skin-blue',
-    'Backend.AdminLte.layout_class' => '',
-    'Backend.AdminLte.sidebar_class' => 'sidebar-mini',
-
-    'Backend.services' => [
-        'Backend.LayoutNavbar' => true,
-        'Backend.LayoutSidebar' => true,
-        'Backend.LayoutToolbar' => true,
-    ]
+    //'Backend.AdminLte.skin_class' => 'skin-blue',
+    //'Backend.AdminLte.layout_class' => '',
+    //'Backend.AdminLte.sidebar_class' => 'sidebar-mini',
 ];

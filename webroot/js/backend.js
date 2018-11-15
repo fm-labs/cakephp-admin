@@ -2,7 +2,8 @@
     var Backend = {
         init: false,
         settings: {
-            rootUrl: '/'
+            rootUrl: '/',
+            adminUrl: '/admin/'
         },
 
         _cssLoaded: [],
@@ -10,7 +11,7 @@
     };
 
     Backend.initialize = function(settings) {
-        //console.log("[backendjs] INIT");
+        console.log("[backendjs] INIT", settings);
         this.settings = settings;
         this.init = true;
     };
@@ -116,7 +117,15 @@
             window.location.href = window.location.href;
         }
 
-    },
+    };
+
+    /**
+     * Url
+     */
+    Backend.Url = {};
+    Backend.Url.buildAdminUrl = function (path) {
+        return Backend.settings.adminUrl + path;
+    };
 
     /**
      * Loader
@@ -497,6 +506,34 @@
         }
     };
 
+    /**
+     * UI Elements
+     */
+    Backend.Ui = Backend.Ui || {};
+
+    /**
+     * UI Elements: Label
+     * @type {{create: Function}|*}
+     */
+    Backend.Ui.Label = Backend.Ui.Label || {
+        create: function(label, clazz) {
+            return '<span class="label label-' + clazz + '">' + label + '</span>'
+        }
+    };
+
+    Backend.Ui.Link = {
+        create: function(title, url, attrs) {
+            attrs = attrs || {};
+            var opts = _.extend({},
+                {title: 'Untitled', 'href': '#', attrs: {}},
+                {title:title, href:url, attrs:attrs});
+            return $('<a>')
+                .attr('href', opts.href)
+                .attr(opts.attrs)
+                .html(opts.title)
+                .prop('outerHTML');
+        }
+    };
 
     /**
      * Bind global jQuery AJAX events
@@ -997,7 +1034,8 @@
 
     });
 
-    Backend.initialize();
+
+    Backend.initialize(window.BackendSettings);
     window.Backend = Backend;
 
 
@@ -1007,9 +1045,6 @@
             return;
         }
         Backend.Renderer.onReady();
-
-
-
     });
 
     $(window).on('unload', function() {

@@ -57,14 +57,49 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
                     'type' => 'text',
                     'placeholder' => 'Foo'
                 ],
-                'default' => 'Backend'
+                'default' => 'Dashboard'
             ],
+
             'Security.enabled' => [
                 'type' => 'boolean',
                 'inputType' => null,
+                'input' => [],
+            ],
+            'Security.forceSSL' => [
+                'type' => 'boolean',
+                'inputType' => null,
+                'input' => [],
+            ],
+
+            'Theme.name' => [
+                'type' => 'string',
                 'input' => [
-                    'placeholder' => 'Foo'
+                    'type' => 'select',
+                    'options' => [
+                        'theme-default'     => 'Default',
+                    ]
                 ],
+                'default' => 'theme-default'
+            ],
+
+            'Theme.skin' => [
+                'type' => 'string',
+                'input' => [
+                    'type' => 'select',
+                    'options' => [
+                        'skin-blue'     => 'Blue',
+                        'skin-yellow'   => 'Yellow',
+                        'skin-red'      => 'Red',
+                        'skin-purple'   => 'Purple',
+                        'skin-black'    => 'Blue',
+                        'skin-green'    => 'Green',
+                    ]
+                ],
+                'default' => 'skin-blue'
+            ],
+
+            'Theme.bodyClass' => [
+                'type' => 'string',
             ],
 
 //            'AdminLte.skin_class' => [

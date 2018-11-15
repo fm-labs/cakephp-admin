@@ -46,8 +46,12 @@ class DataTableJsHelper extends DataTableHelper
         'searching' => false,
         'paging' => false,
         'lengthChange' => false,
+        'lengthMenu' =>  [ 10, 25, 50, 75, 100 ],
+        'info' => false,
         //'lengthMenu' => $this->_config['lengthMenu'],
-        //'pageLength' => 10,
+        'pageLength' => 10,
+        'select' => false,
+        'scrollX' => false,
     ];
 
     /**
@@ -63,9 +67,13 @@ class DataTableJsHelper extends DataTableHelper
         //$this->Html->script('/backend/adminlte/plugins/datatables/jquery.dataTables.js', ['block' => true]);
         //$this->Html->script('/backend/adminlte/plugins/datatables/dataTables.bootstrap.js', ['block' => true]);
 
-        $this->Html->css('Backend./js/datatables/dataTables.bootstrap.css', ['block' => true]);
-        $this->Html->script('Backend.datatables/jquery.dataTables', ['block' => true]);
-        $this->Html->script('Backend.datatables/dataTables.bootstrap', ['block' => true]);
+        //$this->Html->css('Backend./js/datatables/dataTables.bootstrap.css', ['block' => true]);
+        //$this->Html->script('Backend.datatables/jquery.dataTables', ['block' => true]);
+        //$this->Html->script('Backend.datatables/dataTables.bootstrap', ['block' => true]);
+
+        $this->Html->css('/backend/libs/DataTables/datatables.min.css', ['block' => true]);
+        $this->Html->script('/backend/libs/DataTables/datatables.min.js', ['block' => true]);
+        $this->Html->script('/backend/js/backend.datatables.js', ['block' => true]);
     }
 
     public function options($options = null)
@@ -83,20 +91,23 @@ class DataTableJsHelper extends DataTableHelper
     {
         $jsOpts = (array) $this->param('extra');
 
+        //$jsOpts['lengthChange'] = false;
+        //$jsOpts['lengthMenu'] = [ 10, 25, 50, 75, 100 ];
+
         // filtering
-        if ($this->_params['filter']) {
-            $jsOpts['searching'] = true;
-        }
+        //if ($this->_params['filter']) {
+        //    $jsOpts['searching'] = true;
+        //}
 
         // paging
-        if ($this->_params['paginate']) {
+        if ($this->_params['paging']) {
             $jsOpts['paging'] = true;
         }
 
         // sorting
         if ($this->_params['sortable']) {
             $jsOpts['ordering'] = true;
-            $jsOpts['order'] = [0, 'desc'];
+            $jsOpts['order'] = [0, 'asc'];
         }
 
         // ajax
@@ -111,6 +122,8 @@ class DataTableJsHelper extends DataTableHelper
         $this->options($jsOpts);
     }
 
+    /*
+    */
     protected function _renderFilterRow()
     {
         // Search is injected by DataTable JS
@@ -138,9 +151,52 @@ class DataTableJsHelper extends DataTableHelper
             $columns = $this->_buildDataTableColumns();
             $jsTable['columns'] = array_values($columns);
         }
+        //debug($jsTable);
+        $scriptTemplate = <<<SCRIPT
+$(document).ready(function(){
+    var userOpts = %s;
+    console.log("USEROPTS", userOpts);
+    var opts = _.extend({}, userOpts, {
+        columnDefs: [
+            {
+             targets: '_all',
+             data: null,
+             render: function ( data, type, row, meta ) {console.log("render", type, this); return data;},
+             createdCell: function (td, cellData, rowData, row, col) {console.log("cell", row, col, this);}
+            }
+        ]
+    });
+    console.log("OPTS", opts);
+    $("#%s").DataTable(opts);
+//    .on( 'init.dt', function () {
+//        $(this).dataTable().api().columnDefs() = [
+//        { targets : '_all', render: function() {console.log("render");} }
+//        ];
+//        $(this).dataTable().api().columns().every( function () {
+//            var column = this;
+//            var select = $('<select><option value=""></option></select>')
+//                .appendTo( $(column.footer()).empty() )
+//                .on( 'change', function () {
+//                    var val = $.fn.dataTable.util.escapeRegex(
+//                        $(this).val()
+//                    );
+//
+//                    column
+//                        .search( val ? '^'+val+'$' : '', true, false )
+//                        .draw();
+//                } );
+//
+//            column.data().unique().sort().each( function ( d, j ) {
+//                select.append( '<option value="'+d+'">'+d+'</option>' )
+//            } );
+//        } );
+//    })
+//    .DataTable(opts);
+});
+SCRIPT;
         $script = sprintf(
-            '$(document).ready(function(){ $("#%s").dataTable(%s); });',
-            $this->param('id'), json_encode($jsTable)
+            $scriptTemplate,
+            json_encode($jsTable),$this->param('id')
         );
 
         return $this->Html->scriptBlock($script, ['safe' => false, 'block' => $block]);
@@ -152,10 +208,18 @@ class DataTableJsHelper extends DataTableHelper
         foreach ($this->_fields as $fieldName => $field) {
             $columns[$fieldName] = [
                 'data' => $fieldName,
-                'title' => Inflector::humanize($fieldName),
-                'filterable' => false,
+                'title' => $field['label'],
+                'class' => $field['class'],
+                'searchable' => false,
                 'visible' => true,
-                'sortable' => true
+                'sortable' => true,
+                /*
+                'render' => [
+                    '_' => $fieldName,
+                    'filter' => $fieldName,
+                    'display' => $fieldName
+                ]
+                */
             ];
         }
         return $columns;

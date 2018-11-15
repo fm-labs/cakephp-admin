@@ -69,29 +69,38 @@ body {
   padding-right: 15px;
 }
 
+.content {
+  padding-bottom: 2em;
+}
+
 .content-header h1 {
   margin: -10px -15px 15px -15px;
-  background-color: #fafafa;
+  //background-color: #fafafa;
   border-bottom: 1px solid #e8e8e8;
   padding: 10px 15px;
   line-height: 28px; // corresponds to toolbar button height
 }
 
 .main-footer {
-  background: #fff;
-  padding: 15px;
+  //background: #fff;
+  padding: 5px 15px;
   color: #444;
   border-top: 1px solid #d2d6de;
+
+  a {
+    color: @color-link;
+  }
 }
 
 .main-breadcrumbs {
-
-  border-bottom: 1px solid #e1e1e1;
 
   ul.breadcrumb {
     margin: 0;
     padding: 5px 15px;
     font-size: 90%;
+    background-color: transparent;
+    border-bottom: 1px solid #e1e1e1;
+    border-radius: 0;
   }
 
   ul.breadcrumb > li + li::before {
@@ -109,5 +118,196 @@ body {
 
   nav.toolbar:after {
     clear: both;
+  }
+}
+
+
+/** Dark Mode **/
+@dark-color-bg: #1D2730;
+@dark-color-text: #C1C1C1;
+@dark-color-link: #EEE;
+@dark-color-highlight: #FFF;
+@dark-color-border: #314354;
+@dark-select-border-color: #62879D;
+
+body.darkmode {
+
+  background-color: @dark-color-bg;
+  color: @dark-color-text;
+
+  a {
+    color: @dark-color-link;
+  }
+
+
+  // Content Header
+  .content-header h1 {
+    border-color: @dark-color-border;
+  }
+
+  // Breadcrumbs
+  .breadcrumb {
+    border-color: @dark-color-border;
+  }
+
+  // Footer
+  .main-footer {
+    border-color: @dark-color-border;
+  }
+
+  // Tables
+  .table > thead > tr > th,
+  .table > tbody > tr > th,
+  .table > tfoot > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > td {
+    color: @dark-color-text;
+    border-top-color: @dark-color-border; //rgba(255,255,255,0.1);
+    border-bottom-color: @dark-color-border;
+  }
+
+  .table.table-hover > tbody > tr:HOVER > td {
+    background-color: #314354;
+  }
+
+  .table.table-striped > tbody > tr > td {
+    border-top: none;
+  }
+
+  .table.table-striped > tbody > tr {
+    background-color: transparent;
+  }
+
+  .table.table-striped > tbody > tr:nth-of-type(2n+1) {
+    background-color: #2b333a;
+  }
+
+  // Pagination
+  .pagination > li > a,
+  .pagination > li > span {
+    background-color: transparent;
+    border: 1px solid #314354;
+    color: @dark-color-highlight;
+  }
+
+  .pagination > li.active > a,
+  .pagination > li.active > span {
+    background-color: #88C7EA;
+  }
+
+  .pagination > li:hover > a,
+  .pagination > li:hover > span {
+    background-color: @dark-color-highlight;
+    color: #88C7EA;
+  }
+
+  // DataTable
+  .dataTables_wrapper {
+    .dataTables_length, .dataTables_filter, .dataTables_paginate, .dataTables_info, .dataTables_processing {
+      color: @dark-color-text;
+    }
+  }
+
+  // Form
+  form input.form-control {
+    color: @dark-color-text;
+    background-color: @dark-color-bg;
+    border-color: @dark-color-border;
+
+    //.placeholder(#CCC);
+  }
+
+  form .control-label {
+    color: @dark-color-highlight;
+  }
+
+  // Lists
+  dl dd, dl.dl-horizontal dd {
+    border-color: @dark-color-border;
+  }
+
+  // Sumo Select Boxes
+  .SumoSelect {
+    &> .CaptionCont {
+      background-color: @dark-color-bg;
+      border-color: @dark-select-border-color;
+
+      &> span {
+        color: @dark-color-text;
+      }
+    }
+  }
+
+  // Tabs
+  .tabs .nav-tabs {
+    border-color: @dark-color-border;
+  }
+  .tabs .nav-tabs > li > a {
+    color: @dark-color-highlight;
+    background-color: transparent;
+    border-color: @dark-color-border;
+
+    &:hover {
+      background-color: @dark-color-border;
+    }
+  }
+  .tabs .nav-tabs > li.active > a {
+    color: @dark-color-highlight;
+    background-color: @dark-color-border;
+    border-color: @dark-color-border;
+  }
+  .tabs .tab-content {
+    background-color: transparent;
+  }
+  .tabs .tab-content .tab-pane {
+    background-color: transparent;
+    border-color: @dark-color-border;
+  }
+
+  // Navs
+  .nav.nav-horizontal {
+
+    border-bottom-color: @dark-color-border;
+
+    > li > a {
+      color: @dark-color-text;
+    }
+
+  }
+
+  // Modals
+  .modal-content {
+    background-color: @dark-color-bg;
+    border-color: @dark-color-highlight;
+
+    .modal-header, .modal-body, .modal-footer {
+      border-color: @dark-color-border;
+    }
+
+    .close {
+      color: @dark-color-highlight;
+
+      &:hover {
+        color: @dark-color-highlight;
+      }
+    }
+  }
+
+  // Code
+  pre {
+    color: @dark-color-text;
+    background-color: transparent;
+  }
+
+  // Debug
+  .cake-debug-output {
+
+    .cake-debug {
+      background: transparent;
+      color: lime;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 90%;
+    }
   }
 }

@@ -2,6 +2,6 @@
 <?php $this->Breadcrumbs->add(__d('backend','Systeminfo'), ['action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(__d('backend', 'PHP Info')); ?>
 
-<div class="system phpinfo">
+<div class="system phpinfo view">
 	<?php echo $phpinfo; ?>
 </div>

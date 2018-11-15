@@ -26,3 +26,35 @@ ul.nav.nav-nested.nav-trailed {
     }
   }
 }
+
+
+/** Horizontal Navs **/
+ul.nav.nav-horizontal {
+
+  border-bottom: 1px solid #CCC;
+  margin-bottom: 1em;
+
+  > li {
+    display: inline-block;
+    margin-bottom: -1px;
+  }
+
+  > li > a {
+    padding: 10px 15px;
+    border-bottom: 3px solid transparent;
+  }
+
+  > li.active > a {
+    border-bottom: 3px solid green;
+  }
+
+  > li:hover > a {
+    background-color: transparent;
+    border-bottom: 3px solid blue;
+  }
+
+  > li > a:focus, > li > a:link {
+    background-color: transparent;
+  }
+
+}

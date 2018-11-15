@@ -34,10 +34,31 @@ composer require fm-labs/cakephp3-backend
 
 * Backend user management
 * Backend auth handling
-* Semantic UI Admin templates
-* Bake Semantic UI templates from bake shell
+~~* Semantic UI Admin theme templates
+~~* Bake Semantic UI templates from bake shell
+* Bootstrap 3 Admin heme templates
 * Dashboard
 * System Info
 * Log viewer
 * Cronjob Management
 * ...
+
+## Config/Settings
+
+| Key  | Config | Settings | Comment
+|---|---|---|---|
+|  Backend.path | x | - | |
+|  Backend.theme | x | - | |
+|  Backend.Dashboard.title | x | x | |
+|  Backend.Dashboard.skin | x | x | |
+|  Backend.Dashboard.url | x | - | |
+|  Backend.Dashboard.Panels | x | - | |
+|  Backend.Search.searchUrl | x | - | |
+|  Backend.Security.enable | x | x | |
+|  Backend.Security.forceSSL | x | x | |
+|  Backend.LogRotation | x | - | |
+|  Backend.Users | x | - | |
+|  Backend.Auth | x | - | |
+|  Backend.AdminLte.skin_class | x | x |DEPRECATED|
+|  Backend.AdminLte.layout_class | x | x |DEPRECATED|
+|  Backend.AdminLte.sidebar_class | x | x |DEPRECATED|

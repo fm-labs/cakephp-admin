@@ -11,6 +11,7 @@ class BackendLayoutHelper extends Helper
 {
     public function initialize(array $config = [])
     {
+        $this->_View->loadHelper('Backbone', ['className' => 'Backend.Backbone']);
         $this->_View->loadHelper('LayoutBreadcrumb', ['className' => 'Backend.Layout/Breadcrumb']);
         $this->_View->loadHelper('LayoutHeader', ['className' => 'Backend.Layout/Header']);
         $this->_View->loadHelper('Toolbar', ['className' => 'Backend.Layout/Toolbar']);
@@ -27,6 +28,20 @@ class BackendLayoutHelper extends Helper
 
     public function beforeRender(Event $event)
     {
+        // css
+        $event->subject()->Html->css('/backend/libs/bootstrap/dist/css/bootstrap.min.css', ['block' => true]);
+        $event->subject()->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css', ['block' => true]);
+        $event->subject()->Html->css('/backend/libs/ionicons/css/ionicons.min.css', ['block' => true]);
+        $event->subject()->Html->css('/backend/libs/flag-icon-css/css/flag-icon.min.css', ['block' => true]);
+
+        // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views
+        $event->subject()->Html->css('Backend.backend', ['block' => true]);
+
+        // scripts
+        $event->subject()->Html->script('/backend/libs/bootstrap/dist/js/bootstrap.min.js', ['block' => true]);
+        $event->subject()->Html->script('/backend/js/momentjs/moment.min.js', ['block' => true]);
+        $event->subject()->Html->script('/backend/js/backend.js', ['block' => true]);
+        $event->subject()->Html->script('/backend/js/backend.iconify.js', ['block' => true]);
     }
 
     public function beforeLayout(Event $event)
@@ -52,22 +67,13 @@ class BackendLayoutHelper extends Helper
         //$event->subject()->Html->script('/backend/libs/adminlte/bootstrap/js/bootstrap.min.js', ['block' => true]);
         //$event->subject()->Html->script('/backend/libs/adminlte/dist/js/app.js', ['block' => true]);
 
-        // css
-        $event->subject()->Html->css('/backend/libs/bootstrap/dist/css/bootstrap.min.css', ['block' => true]);
-        $event->subject()->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css', ['block' => true]);
-        $event->subject()->Html->css('/backend/libs/ionicons/css/ionicons.min.css', ['block' => true]);
-        $event->subject()->Html->css('/backend/libs/flag-icon-css/css/flag-icon.min.css', ['block' => true]);
+        $themeClass = (Configure::read('Backend.Theme.name')) ?: 'theme-default';
+        $themeSkinClass = (Configure::read('Backend.Theme.skin')) ?: 'skin-default';
+        $themeBodyClass = (Configure::read('Backend.Theme.bodyClass')) ?: '';
+        $event->subject()->set('be_layout_body_class',
+                trim(join(' ', [$themeClass, $themeSkinClass, $themeBodyClass])));
+        //$event->subject()->Html->css('/backend/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
 
-        // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views
-        $event->subject()->Html->css('Backend.backend', ['block' => true]);
-
-        // scripts
-        $event->subject()->Html->script('/backend/libs/bootstrap/dist/js/bootstrap.min.js', ['block' => true]);
-        $event->subject()->Html->script('/backend/libs/underscore/underscore-min.js', ['block' => true]);
-        $event->subject()->Html->script('/backend/libs/backbone/backbone-min.js', ['block' => true]);
-        $event->subject()->Html->script('/backend/js/momentjs/moment.min.js', ['block' => true]);
-        $event->subject()->Html->script('/backend/js/backend.js', ['block' => true]);
-        $event->subject()->Html->script('/backend/js/iconify.js', ['block' => true]);
 
         //@TODO Move layout blocks to config
         //@TODO Fallback to default block element

@@ -24,7 +24,8 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         'actions' => [],
         'rowActions' => [],
         'fields' => [],
-        'fields.whitelist' => []
+        'fields.whitelist' => [],
+        'fields.blacklist' => []
     ];
 
     protected $_scope = ['index'];

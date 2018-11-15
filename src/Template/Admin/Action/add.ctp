@@ -13,6 +13,7 @@ $title = $this->get('title', @array_pop(explode('\\', get_class($entity))));
 $viewOptions = (array) $this->get('viewOptions');
 $fields = $this->get('fields');
 $whitelist = $this->get('fields.whitelist');
+$formOptions = $this->get('form.options', ['horizontal' => true]);
 
 /**
  * Helpers
@@ -30,7 +31,7 @@ $this->extend('Backend./Admin/Base/form_tabs');
     <?php if ($this->fetch('content')) {
         echo $this->fetch('content');
     } else {
-        echo $this->Form->create($entity);
+        echo $this->Form->create($entity, $formOptions);
         if ($whitelist) {
             foreach($whitelist as $field) {
                 $fieldConfig = (isset($fields[$field]) && isset($fields[$field]['input'])) ? $fields[$field]['input'] : [];

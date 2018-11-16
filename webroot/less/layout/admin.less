@@ -206,6 +206,36 @@ body.darkmode {
   .dataTables_wrapper {
     .dataTables_length, .dataTables_filter, .dataTables_paginate, .dataTables_info, .dataTables_processing {
       color: @dark-color-text;
+
+      label {
+        font-weight: normal;
+      }
+    }
+
+    .dataTables_filter {
+      input {
+        background-color: transparent;
+        border: 1px solid @dark-color-border;
+        box-shadow: none;
+      }
+    }
+
+    button.dt-button, div.dt-button, a.dt-button {
+      filter: none;
+      background-image: none;
+      background-color: @dark-color-bg;
+      border-color: @dark-color-border;
+      color: @dark-color-text;
+      margin: 0;
+
+      &:hover {
+        color: @dark-color-highlight;
+        border-color: @dark-color-highlight;
+      }
+
+      &:last-child {
+        margin-right: 0.33em;
+      }
     }
   }
 
@@ -225,6 +255,21 @@ body.darkmode {
   // Lists
   dl dd, dl.dl-horizontal dd {
     border-color: @dark-color-border;
+  }
+
+  // Buttons
+  .btn {
+
+    &.btn-default {
+      background-color: transparent;
+      color: @dark-color-text;
+      border-color: @dark-color-border;
+
+      &:hover {
+        color: @dark-color-highlight;
+        border-color: @dark-color-highlight;
+      }
+    }
   }
 
   // Sumo Select Boxes

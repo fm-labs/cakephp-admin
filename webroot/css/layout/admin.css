@@ -487,6 +487,39 @@ body.darkmode .dataTables_wrapper .dataTables_info,
 body.darkmode .dataTables_wrapper .dataTables_processing {
   color: #C1C1C1;
 }
+body.darkmode .dataTables_wrapper .dataTables_length label,
+body.darkmode .dataTables_wrapper .dataTables_filter label,
+body.darkmode .dataTables_wrapper .dataTables_paginate label,
+body.darkmode .dataTables_wrapper .dataTables_info label,
+body.darkmode .dataTables_wrapper .dataTables_processing label {
+  font-weight: normal;
+}
+body.darkmode .dataTables_wrapper .dataTables_filter input {
+  background-color: transparent;
+  border: 1px solid #314354;
+  box-shadow: none;
+}
+body.darkmode .dataTables_wrapper button.dt-button,
+body.darkmode .dataTables_wrapper div.dt-button,
+body.darkmode .dataTables_wrapper a.dt-button {
+  filter: none;
+  background-image: none;
+  background-color: #1D2730;
+  border-color: #314354;
+  color: #C1C1C1;
+  margin: 0;
+}
+body.darkmode .dataTables_wrapper button.dt-button:hover,
+body.darkmode .dataTables_wrapper div.dt-button:hover,
+body.darkmode .dataTables_wrapper a.dt-button:hover {
+  color: #FFF;
+  border-color: #FFF;
+}
+body.darkmode .dataTables_wrapper button.dt-button:last-child,
+body.darkmode .dataTables_wrapper div.dt-button:last-child,
+body.darkmode .dataTables_wrapper a.dt-button:last-child {
+  margin-right: 0.33em;
+}
 body.darkmode form input.form-control {
   color: #C1C1C1;
   background-color: #1D2730;
@@ -498,6 +531,15 @@ body.darkmode form .control-label {
 body.darkmode dl dd,
 body.darkmode dl.dl-horizontal dd {
   border-color: #314354;
+}
+body.darkmode .btn.btn-default {
+  background-color: transparent;
+  color: #C1C1C1;
+  border-color: #314354;
+}
+body.darkmode .btn.btn-default:hover {
+  color: #FFF;
+  border-color: #FFF;
 }
 body.darkmode .SumoSelect > .CaptionCont {
   background-color: #1D2730;

@@ -87,7 +87,7 @@
         return data;
     }
 
-    function renderRowActions(data, type) {
+    function renderRowActionsDropdown(data, type) {
         if (type == 'display') {
             var html = "";
             html += "<ul class='actions-menu'>";
@@ -96,6 +96,35 @@
                 html += '<li><a href="'+row.url+'" class="'+row.class+'" data-icon="'+row.icon+'">'+row.title+'</a></li>';
             });
             html += "</ul>";
+            return html;
+        }
+        return data;
+    }
+
+    function renderRowActionsButton(data, type) {
+        if (type == 'display') {
+            var html = "";
+            html += "<span class='actions-btn-group _btn-group'>";
+            _.each(data, function(row, idx) {
+                row = _.extend({}, {url: 'alert("Broken Link");', icon: 'link', title: 'No Title', 'class': ''}, row);
+                html += '<a href="' +row.url+'" class="btn btn-default btn-xs '+row.class+'" data-icon="'+row.icon+'" title="'+row.title+'">'
+                    +row.title +'</a>&nbsp;';
+            });
+            html += "</span>";
+            return html;
+        }
+        return data;
+    }
+
+    function renderRowActionsIcon(data, type) {
+        if (type == 'display') {
+            var html = "";
+            html += "<span class='actions-btn-group _btn-group'>";
+            _.each(data, function(row, idx) {
+                row = _.extend({}, {url: 'alert("Broken Link");', icon: 'link', title: 'No Title', 'class': ''}, row);
+                html += '<a href="'+row.url+'" class="btn btn-default btn-xs '+row.class+'" data-icon="'+row.icon+'" title="'+row.title+'"></a>&nbsp;';
+            });
+            html += "</span>";
             return html;
         }
         return data;
@@ -120,7 +149,10 @@
         'renderTimeAgoInWords': renderTimeDiffInWordsUTC, // @deprecated Use 'renderTimeDiffInWordsUTC' instead
         'renderTimeDiffInWordsUTC': renderTimeDiffInWordsUTC,
         'renderStatus': renderStatus,
-        'renderRowActions': renderRowActions,
+        'renderRowActions': renderRowActionsDropdown, //@deprecated Use 'renderRowActionsDropdown' instead
+        'renderRowActionsDropdown': renderRowActionsDropdown,
+        'renderRowActionsButton': renderRowActionsButton,
+        'renderRowActionsIcon': renderRowActionsIcon,
 
         // CreateCell handlers
         'handleRowActions': handleRowActions

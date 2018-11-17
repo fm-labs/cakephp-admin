@@ -47,10 +47,12 @@
     function renderDate(data, type) {
         if (type === 'display') {
             var d = new Date(data);
-            var datestring = ("0" + d.getDate()).slice(-2) + "." + ("0"+(d.getMonth()+1)).slice(-2) + "." +
-                d.getFullYear();
+            if (d instanceof Date && isFinite(d)) {
+                var datestring = ("0" + d.getDate()).slice(-2) + "." + ("0"+(d.getMonth()+1)).slice(-2) + "." +
+                    d.getFullYear();
 
-            return '<span class="datetime" data-value="' + data + '">' + datestring + '</span>';
+                return '<span class="datetime" data-value="' + data + '">' + datestring + '</span>';
+            }
         }
         return data;
     }
@@ -58,10 +60,12 @@
     function renderDateTime(data, type) {
         if (type === 'display') {
             var d = new Date(data);
-            var datestring = ("0" + d.getDate()).slice(-2) + "." + ("0"+(d.getMonth()+1)).slice(-2) + "." +
-                d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
+            if (d instanceof Date && isFinite(d)) {
+                var datestring = ("0" + d.getDate()).slice(-2) + "." + ("0" + (d.getMonth() + 1)).slice(-2) + "." +
+                    d.getFullYear() + " " + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 
-            return '<span class="datetime" data-value="' + data + '">' + datestring + '</span>';
+                return '<span class="datetime" data-value="' + data + '">' + datestring + '</span>';
+            }
         }
         return data;
     }

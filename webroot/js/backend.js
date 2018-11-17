@@ -521,6 +521,10 @@
         }
     };
 
+    /**
+     * UI Elements: Link
+     * @type {{create: Function}|*}
+     */
     Backend.Ui.Link = {
         create: function(title, url, attrs) {
             attrs = attrs || {};
@@ -531,6 +535,19 @@
                 .attr('href', opts.href)
                 .attr(opts.attrs)
                 .html(opts.title)
+                .prop('outerHTML');
+        }
+    };
+
+    /**
+     * UI Elements: Link
+     * @type {{create: Function}|*}
+     */
+    Backend.Ui.Icon = {
+        create: function(icon, attrs) {
+            attrs = _.extend({}, {}, attrs);
+            return $('<i>', { class: 'fa fa-' + icon})
+                .attr(attrs)
                 .prop('outerHTML');
         }
     };
@@ -893,7 +910,8 @@
         $(scope).off('click','a[data-modal], a.link-modal');
         $(scope).on('click','a[data-modal], a.link-modal', function (ev) {
 
-            var $a = $(ev.target);
+            //var $target = $(ev.target);
+            var $a = $(this);
             var url = $a.attr('href');
 
             Backend.Ajax.load(url).done(function(html) {
@@ -921,7 +939,8 @@
         $(scope).off('click','a[data-modal-frame], a.link-modal-frame');
         $(scope).on('click','a[data-modal-frame], a.link-modal-frame', function (ev) {
 
-            var $target = $(ev.target);
+            //var $target = $(ev.target);
+            var $target = $(this);
             var modalOptions = {
                 //backdrop: $target.data('modalBackdrop'),
                 //show: $target.data('modalShow'),

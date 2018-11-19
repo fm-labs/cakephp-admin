@@ -35,6 +35,7 @@ class BackendFormHelper extends BootstrapFormHelper
             'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
             'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
             'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
+            'codeeditor' => ['Backend\View\Widget\CodeEditorWidget', '_view'],
         ];
         foreach ($widgets as $type => $config) {
             $this->addWidget($type, $config);

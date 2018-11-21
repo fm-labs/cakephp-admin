@@ -520,7 +520,7 @@ body.darkmode .dataTables_wrapper div.dt-button:last-child,
 body.darkmode .dataTables_wrapper a.dt-button:last-child {
   margin-right: 0.33em;
 }
-body.darkmode form input.form-control {
+body.darkmode form .form-control {
   color: #C1C1C1;
   background-color: #1D2730;
   border-color: #314354;
@@ -547,6 +547,10 @@ body.darkmode .SumoSelect > .CaptionCont {
 }
 body.darkmode .SumoSelect > .CaptionCont > span {
   color: #C1C1C1;
+}
+body.darkmode .codeeditor.ace_editor {
+  border: 1px solid #314354;
+  font-size: 14px;
 }
 body.darkmode .tabs .nav-tabs {
   border-color: #314354;

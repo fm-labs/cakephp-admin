@@ -240,7 +240,7 @@ body.darkmode {
   }
 
   // Form
-  form input.form-control {
+  form .form-control {
     color: @dark-color-text;
     background-color: @dark-color-bg;
     border-color: @dark-color-border;
@@ -282,6 +282,14 @@ body.darkmode {
         color: @dark-color-text;
       }
     }
+  }
+
+  // ACE Code Editor
+  .codeeditor.ace_editor {
+    //background-color: transparent;
+    //color: @dark-color-text;
+    border: 1px solid @dark-color-border;
+    font-size: @font-size-default;
   }
 
   // Tabs

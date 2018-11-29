@@ -171,6 +171,19 @@
             this._dataReload = settings.dataReload || -1;
         },
 
+        _addTooltips (dataTable, $table) {
+            dataTable.columns().iterator('column', function (settings, column) {
+                if (settings.aoColumns[column].tooltip !== undefined) {
+                    $(dataTable.column(column).header()).attr('title', settings.aoColumns[column].tooltip);
+                    $(dataTable.column(column).header()).attr('data-toogle', "tooltip");
+                }
+            });
+            $table.find('th').tooltip({
+                placement: 'bottom',
+                container: 'body'
+            });
+        },
+
         render: function() {
 
             $.fn.dataTable.ext.errMode = 'none';
@@ -191,6 +204,8 @@
 
             var settings = _.extend({}, this._dataTable, {ajax: this._dataUrl});
             this._dt = $table.DataTable(settings);
+            //console.log(this._dt.columns());
+            this._addTooltips(this._dt, $table);
 
             if (this._dataReload > 0) {
                 this.clearTimer();

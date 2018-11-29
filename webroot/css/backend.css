@@ -845,6 +845,9 @@ nav.toolbar > ul {
 table.dataTable tbody tr {
   background-color: transparent;
 }
+table.dataTable thead th {
+  text-align: left !important;
+}
 ul.array-list .key {
   font-weight: bold;
 }

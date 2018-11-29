@@ -38,11 +38,8 @@
 
     };
 
-}( jQuery ));
+    Backend.Renderer.addListener('docready', function(scope) {
+        $(scope).iconify();
+    });
 
-Backend.Renderer.addListener('docready', function(scope) {
-
-    //console.log("Iconify", scope);
-    $(scope).iconify();
-
-});
+}( jQuery, Backend ));

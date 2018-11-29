@@ -20,6 +20,6 @@ class HtmlEditorHelper extends Helper
     {
         $this->Html->script('/backend/libs/tinymce/tinymce.min', ['block' => 'script']);
         $this->Html->script('/backend/libs/tinymce/jquery.tinymce.min', ['block' => 'script']);
-        $this->Html->script('Backend.htmleditor', ['block' => 'script']);
+        $this->Html->script('/backend/js/backend.htmleditor.js', ['block' => 'script']);
     }
 }

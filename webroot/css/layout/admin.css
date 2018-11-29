@@ -443,13 +443,15 @@ body.darkmode .breadcrumb {
 body.darkmode .main-footer {
   border-color: #314354;
 }
+body.darkmode .table {
+  color: #C1C1C1;
+}
 body.darkmode .table > thead > tr > th,
 body.darkmode .table > tbody > tr > th,
 body.darkmode .table > tfoot > tr > th,
 body.darkmode .table > thead > tr > td,
 body.darkmode .table > tbody > tr > td,
 body.darkmode .table > tfoot > tr > td {
-  color: #C1C1C1;
   border-top-color: #314354;
   border-bottom-color: #314354;
 }

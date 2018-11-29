@@ -9,6 +9,9 @@ use Cake\View\Helper;
 
 class BackendLayoutHelper extends Helper
 {
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config = [])
     {
         $this->_View->loadHelper('Backbone', ['className' => 'Backend.Backbone']);
@@ -18,6 +21,9 @@ class BackendLayoutHelper extends Helper
         $this->_View->loadHelper('Sidebar', ['className' => 'Backend.Layout/Sidebar']);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function implementedEvents()
     {
         return [
@@ -26,6 +32,9 @@ class BackendLayoutHelper extends Helper
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function beforeRender(Event $event)
     {
         // css
@@ -42,8 +51,12 @@ class BackendLayoutHelper extends Helper
         $event->subject()->Html->script('/backend/js/momentjs/moment.min.js', ['block' => true]);
         $event->subject()->Html->script('/backend/js/backend.js', ['block' => true]);
         $event->subject()->Html->script('/backend/js/backend.iconify.js', ['block' => true]);
+        $event->subject()->Html->script('/backend/js/backend.tooltip.js', ['block' => true]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function beforeLayout(Event $event)
     {
         // title
@@ -70,10 +83,11 @@ class BackendLayoutHelper extends Helper
         $themeClass = (Configure::read('Backend.Theme.name')) ?: 'theme-default';
         $themeSkinClass = (Configure::read('Backend.Theme.skin')) ?: 'skin-default';
         $themeBodyClass = (Configure::read('Backend.Theme.bodyClass')) ?: '';
-        $event->subject()->set('be_layout_body_class',
-                trim(join(' ', [$themeClass, $themeSkinClass, $themeBodyClass])));
+        $event->subject()->set(
+            'be_layout_body_class',
+            trim(join(' ', [$themeClass, $themeSkinClass, $themeBodyClass]))
+        );
         //$event->subject()->Html->css('/backend/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
-
 
         //@TODO Move layout blocks to config
         //@TODO Fallback to default block element

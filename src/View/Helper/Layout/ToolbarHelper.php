@@ -57,7 +57,7 @@ class ToolbarHelper extends Helper
      * Create a new toolbar.
      * Clears items and optionally applies a custom config
      *
-     * @param array $config
+     * @param array $config Toolbar config
      * @return $this
      */
     public function create($config = [])
@@ -73,8 +73,8 @@ class ToolbarHelper extends Helper
     /**
      * Add a toolbar item.
      *
-     * @param $title
-     * @param array $options
+     * @param string $title Link title
+     * @param array $options Link options
      * @return $this
      */
     public function add($title, $options = [])
@@ -90,6 +90,7 @@ class ToolbarHelper extends Helper
             case "postLink":
             case "post":
                 $this->addPostLink($options);
+                break;
             case "link":
             default:
                 $this->addLink($options);
@@ -101,9 +102,9 @@ class ToolbarHelper extends Helper
     /**
      * Add a new toolbar link item.
      *
-     * @param $title
-     * @param null $url
-     * @param array $attr
+     * @param string $title Link title
+     * @param null|string $url Link Url
+     * @param array $attr Link attributes
      * @return $this
      */
     public function addLink($title, $url = null, $attr = [])
@@ -129,9 +130,10 @@ class ToolbarHelper extends Helper
     /**
      * Add a new toolbar item (post-link).
      *
-     * @param $title
-     * @param null $url
-     * @param array $attr
+     * @param string $title Link title
+     * @param null|string $url Link Url
+     * @param array $attr Link attributes
+     * @param array $data Post data
      * @return $this
      */
     public function addPostLink($title, $url = null, $attr = [], $data = [])
@@ -145,8 +147,8 @@ class ToolbarHelper extends Helper
     /**
      * Experimental! Item grouping
      *
-     * @param $title
-     * @param array $options
+     * @param string $title Group title
+     * @param array $options Group options
      * @return $this
      */
     public function startGroup($title, $options = [])
@@ -180,6 +182,25 @@ class ToolbarHelper extends Helper
         return $this->_items;
     }
 
+    /**
+     * Render toolbar menu
+     *
+     * @param array $options Render options
+     * @return string Rendered HTML string
+     */
+    public function render($options = [])
+    {
+        //if ($this->_rendered === true) {
+        //    return null;
+        //}
+
+        //$this->_rendered = true;
+        return $this->Ui->menu($this->getMenuItems(), $options);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function beforeRender(Event $event)
     {
         // parse toolbar actions defined in 'toolbar.actions' view-var
@@ -205,6 +226,9 @@ class ToolbarHelper extends Helper
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function beforeLayout(Event $event)
     {
         if ($event->subject() instanceof BackendView) {
@@ -215,21 +239,8 @@ class ToolbarHelper extends Helper
     }
 
     /**
-     * Render toolbar menu
-     *
-     * @param array $options
-     * @return string Rendered HTML string
+     * {@inheritDoc}
      */
-    public function render($options = [])
-    {
-        //if ($this->_rendered === true) {
-        //    return null;
-        //}
-
-        //$this->_rendered = true;
-        return $this->Ui->menu($this->getMenuItems(), $options);
-    }
-
     public function implementedEvents()
     {
         return [
@@ -237,15 +248,4 @@ class ToolbarHelper extends Helper
             'View.beforeLayout' => ['callable' => 'beforeLayout']
         ];
     }
-
-    /**
-     * Trigger rendering method by self invocation
-     *
-     * @param array $options
-     * @return string Rendered HTML string
-     */
-//    public function __invoke($options = [])
-//    {
-//        return $this->render($options);
-//    }
 }

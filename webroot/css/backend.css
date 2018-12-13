@@ -712,6 +712,71 @@ ul.nav.nav-horizontal > li > a:link {
   height: 10px;
   margin-bottom: 10px;
 }
+/* Tables */
+table.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table.table tr th,
+table.table tr td {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  /*
+    border: 1px solid @table-border-color;
+    background-color: #f7f7f7;
+    color: #333;
+    */
+}
+table.table tr th {
+  /*
+    background-color: @color-primary;
+    background-repeat: repeat-x;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAIAAACOpGH9AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAl2cEFnAAAAAQAAABYAwhbbewAAAAlwSFlzAAALEAAACxABrSO9dQAAAAZiS0dEAAAAAAAA+UO7fwAAACNJREFUCNdj+P//P9O/f/+YYDQE/wfyITRMDFkeu1qEeiAfAE2gQb0aij7cAAAAAElFTkSuQmCC);
+    height: 22px;
+    */
+  font-weight: bold;
+  text-decoration: none;
+  padding: 5px;
+  text-align: left;
+  vertical-align: middle;
+}
+table.table tr th a.asc:after {
+  content: ' ⇣';
+}
+table.table tr th a.desc:after {
+  content: ' ⇡';
+}
+table.table tr td {
+  padding: 5px;
+  vertical-align: middle;
+}
+table.table tr:nth-child(2n+1) td,
+table.table tr:nth-child(2n+1) th[scope="row"] {
+  /*
+    background-color:#fff;
+    */
+}
+table.table tr th[scope="row"] {
+  /*
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-image: url(data:image/gif;base64,R0lGODlhCQAKAIAAAOrNqf///yH5BAAAAAAALAAAAAAJAAoAAAIOjI+ZwH3NEFyRqgCu3gUAOw==);
+    */
+}
+table.table tr:HOVER td,
+table.table tr:HOVER th[scope="row"] {
+  /*
+    background-color:#E7FF91;
+    */
+}
+/**
+ * Table
+ */
+table.info.table tr td:first-child {
+  font-weight: bold;
+}
 .modal .modal-dialog {
   width: 50%;
   max-width: 96%;
@@ -845,8 +910,8 @@ nav.toolbar > ul {
 table.dataTable tbody tr {
   background-color: transparent;
 }
-table.dataTable thead th {
-  text-align: left !important;
+table.dataTable thead th.text-right.sorting {
+  padding-right: 20px !important;
 }
 ul.array-list .key {
   font-weight: bold;

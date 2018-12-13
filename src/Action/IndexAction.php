@@ -142,7 +142,7 @@ class IndexAction extends BaseIndexAction
                 $result = $query->all();
             }
 
-            $result->each(function($row) {
+            $result->each(function ($row) {
                 $row->set('_actions_', $this->buildTableRowActions($row));
             });
         }
@@ -160,7 +160,7 @@ class IndexAction extends BaseIndexAction
             if ($_action instanceof EntityActionInterface && $_action->hasScope('table') /*&& $_action->isUsable($row)*/) {
                 $actions[$action] = [
                     'title' => $_action->getLabel(),
-                    'url' => Router::url(['action' => $action, $row['id']]),
+                    'url' => Router::url(['action' => $action, $row[$this->model()->primaryKey()]]),
                     'attrs' => $_action->getAttributes()];
             }
         }

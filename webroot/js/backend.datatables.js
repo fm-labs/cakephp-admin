@@ -166,6 +166,7 @@
     Backend.DataTablesView = Backbone.View.extend({
 
         initialize: function(settings) {
+            this.settings = settings;
             this._dataTable = settings.dataTable || {};
             this._dataUrl = settings.dataUrl || null;
             this._dataReload = settings.dataReload || -1;

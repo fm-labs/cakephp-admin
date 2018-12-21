@@ -68,6 +68,9 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             $modelId = ($modelId) ?: $controller->request->param('pass')[0]; // @TODO request param 'pass' might be empty or unset
             $this->_config['modelId'] = $modelId;
         }
+        if (isset($controller->viewVars['entityOptions'])) {
+            $this->_config['entityOptions'] = $controller->viewVars['entityOptions'];
+        }
         if (isset($controller->viewVars['entity'])) {
             $this->_entity = $controller->viewVars['entity'];
         }

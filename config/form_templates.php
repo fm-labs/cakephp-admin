@@ -49,4 +49,5 @@ return [
     //'inputContainerError' => '<div class="form-group has-error {{required}}">{{content}}{{error}}</div>',
 
     'fieldsetBody' => '<div class="body"{{attrs}}>{{content}}</div>',
+    'dateWidget' => '{{day}} {{month}} {{year}} {{hour}} {{minute}} {{second}} {{meridian}}',
 ];

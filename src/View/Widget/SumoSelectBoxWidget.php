@@ -11,7 +11,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
      * Constructor.
      *
      * @param \Cake\View\StringTemplate $templates Templates list.
-     * @param View $view
+     * @param View $view The view instance
      */
     public function __construct($templates, View $view)
     {
@@ -21,7 +21,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
     }
 
     /**
-     * Render sumo selectbox
+     * {@inheritDoc}
      */
     public function render(array $data, ContextInterface $context)
     {
@@ -30,7 +30,10 @@ class SumoSelectBoxWidget extends SelectBoxWidget
             $data['id'] = uniqid('sumoselect');
         }
 
-        //$data['empty'] = true;
+        $placeholderTxt = __d('backend', 'Select Here');
+        if (isset($data['empty']) && is_string($data['empty'])) {
+            $placeholderTxt = $data['empty'];
+        }
 
         $html = parent::render($data, $context);
 
@@ -42,7 +45,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
             'searchText' => __d('backend', 'Search ...'), // (string) placeholder for search input.
             'noMatch' => __d('backend', 'No matches for "{0}"'), // (string) placeholder to display if no itmes matches the search term
             'locale' => [__d('backend', 'OK'), __d('backend', 'Cancel'), __d('backend', 'Select All')], // (array) the text used in plugin
-            'placeholder' => __d('backend', 'Select Here'), //  The palceholder text to be displayed in the rendered select widget
+            'placeholder' => $placeholderTxt, //  The palceholder text to be displayed in the rendered select widget
             'captionFormat' => __d('backend', '{0} Selected'), // (string) Its the format in which you want to see the caption when more than csvDispCount items are selected.
             'captionFormatAllSelected' => __d('backend', '{0} all selected!'), // (string) Format of caption text when all elements are selected.
             //'csvDispCount' => 3,
@@ -53,6 +56,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
         }
 
         $js = sprintf("<script>$(document).ready(function() { $('#%s').SumoSelect(%s); });</script>", $data['id'], json_encode($sumo));
+
         return $html . $js;
     }
 

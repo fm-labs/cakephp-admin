@@ -119,6 +119,9 @@ class EditAction extends BaseEntityAction
                 //debug($assoc);
                 //$controller->set($assoc->foreignKey(), $list);
                 //debug($assoc->type());
+            } elseif ($assoc->type() == Association::MANY_TO_MANY) {
+                $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
+                $controller->set(Inflector::variable($assoc->property()), $list);
             } else {
                 //debug($assoc->type());
             }

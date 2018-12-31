@@ -207,21 +207,6 @@ body.darkmode {
 
   // DataTable
   .dataTables_wrapper {
-    .dataTables_length, .dataTables_filter, .dataTables_paginate, .dataTables_info, .dataTables_processing {
-      color: @dark-color-text;
-
-      label {
-        font-weight: normal;
-      }
-    }
-
-    .dataTables_filter {
-      input {
-        background-color: transparent;
-        border: 1px solid @dark-color-border;
-        box-shadow: none;
-      }
-    }
 
     button.dt-button, div.dt-button, a.dt-button {
       filter: none;
@@ -240,6 +225,38 @@ body.darkmode {
         margin-right: 0.33em;
       }
     }
+
+    .dataTables_length, .dataTables_filter, .dataTables_paginate, .dataTables_info, .dataTables_processing {
+      color: @dark-color-text;
+
+      label {
+        font-weight: normal;
+      }
+    }
+
+    .dataTables_filter {
+      input {
+        background-color: transparent;
+        border: 1px solid @dark-color-border;
+        box-shadow: none;
+      }
+    }
+
+    .dataTables_paginate {
+      a.paginate_button {
+        filter: none;
+        background-image: none;
+        background-color: @dark-color-bg;
+        border-color: @dark-color-border;
+        color: @dark-color-highlight;
+
+        &:hover {
+          color: @dark-color-bg;
+          border: 1px solid @dark-color-highlight;
+        }
+      }
+    }
+
   }
 
   // Form
@@ -251,6 +268,7 @@ body.darkmode {
     //.placeholder(#CCC);
   }
 
+  form label,
   form .control-label {
     color: @dark-color-highlight;
   }
@@ -279,11 +297,47 @@ body.darkmode {
   .SumoSelect {
     &> .CaptionCont {
       background-color: @dark-color-bg;
-      border-color: @dark-select-border-color;
+      //border-color: @dark-select-border-color;
+      border-color: @dark-color-border;
 
       &> span {
         color: @dark-color-text;
       }
+
+      input {
+        border-radius: 0;
+        background-color: @dark-color-bg;
+      }
+    }
+
+    &> .optWrapper {
+      background-color: @dark-color-bg;
+      border-color: @dark-color-border;
+
+      &> .options {
+        li.opt {
+          border-color: @dark-color-border;
+
+          label {
+            color: @dark-color-highlight;
+            margin: 0;
+            padding: 0;
+          }
+        }
+
+        li.opt:HOVER {
+          background-color: @dark-color-highlight;
+
+          label {
+            color: @dark-color-bg;
+          }
+        }
+
+        li.opt.selected {
+
+        }
+      }
+
     }
   }
 

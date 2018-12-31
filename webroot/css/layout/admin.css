@@ -12,6 +12,9 @@
  * Fonts
  */
 /**
+ * Borders
+ */
+/**
  * Body
  */
 /**
@@ -34,6 +37,9 @@
  */
 /**
  * Forms
+ */
+/**
+ * Boxes
  */
 #flash > .alert,
 .flash-wrapper > .alert {
@@ -482,25 +488,6 @@ body.darkmode .pagination > li:hover > span {
   background-color: #FFF;
   color: #88C7EA;
 }
-body.darkmode .dataTables_wrapper .dataTables_length,
-body.darkmode .dataTables_wrapper .dataTables_filter,
-body.darkmode .dataTables_wrapper .dataTables_paginate,
-body.darkmode .dataTables_wrapper .dataTables_info,
-body.darkmode .dataTables_wrapper .dataTables_processing {
-  color: #C1C1C1;
-}
-body.darkmode .dataTables_wrapper .dataTables_length label,
-body.darkmode .dataTables_wrapper .dataTables_filter label,
-body.darkmode .dataTables_wrapper .dataTables_paginate label,
-body.darkmode .dataTables_wrapper .dataTables_info label,
-body.darkmode .dataTables_wrapper .dataTables_processing label {
-  font-weight: normal;
-}
-body.darkmode .dataTables_wrapper .dataTables_filter input {
-  background-color: transparent;
-  border: 1px solid #314354;
-  box-shadow: none;
-}
 body.darkmode .dataTables_wrapper button.dt-button,
 body.darkmode .dataTables_wrapper div.dt-button,
 body.darkmode .dataTables_wrapper a.dt-button {
@@ -522,11 +509,42 @@ body.darkmode .dataTables_wrapper div.dt-button:last-child,
 body.darkmode .dataTables_wrapper a.dt-button:last-child {
   margin-right: 0.33em;
 }
+body.darkmode .dataTables_wrapper .dataTables_length,
+body.darkmode .dataTables_wrapper .dataTables_filter,
+body.darkmode .dataTables_wrapper .dataTables_paginate,
+body.darkmode .dataTables_wrapper .dataTables_info,
+body.darkmode .dataTables_wrapper .dataTables_processing {
+  color: #C1C1C1;
+}
+body.darkmode .dataTables_wrapper .dataTables_length label,
+body.darkmode .dataTables_wrapper .dataTables_filter label,
+body.darkmode .dataTables_wrapper .dataTables_paginate label,
+body.darkmode .dataTables_wrapper .dataTables_info label,
+body.darkmode .dataTables_wrapper .dataTables_processing label {
+  font-weight: normal;
+}
+body.darkmode .dataTables_wrapper .dataTables_filter input {
+  background-color: transparent;
+  border: 1px solid #314354;
+  box-shadow: none;
+}
+body.darkmode .dataTables_wrapper .dataTables_paginate a.paginate_button {
+  filter: none;
+  background-image: none;
+  background-color: #1D2730;
+  border-color: #314354;
+  color: #FFF;
+}
+body.darkmode .dataTables_wrapper .dataTables_paginate a.paginate_button:hover {
+  color: #1D2730;
+  border: 1px solid #FFF;
+}
 body.darkmode form .form-control {
   color: #C1C1C1;
   background-color: #1D2730;
   border-color: #314354;
 }
+body.darkmode form label,
 body.darkmode form .control-label {
   color: #FFF;
 }
@@ -545,10 +563,32 @@ body.darkmode .btn.btn-default:hover {
 }
 body.darkmode .SumoSelect > .CaptionCont {
   background-color: #1D2730;
-  border-color: #62879D;
+  border-color: #314354;
 }
 body.darkmode .SumoSelect > .CaptionCont > span {
   color: #C1C1C1;
+}
+body.darkmode .SumoSelect > .CaptionCont input {
+  border-radius: 0;
+  background-color: #1D2730;
+}
+body.darkmode .SumoSelect > .optWrapper {
+  background-color: #1D2730;
+  border-color: #314354;
+}
+body.darkmode .SumoSelect > .optWrapper > .options li.opt {
+  border-color: #314354;
+}
+body.darkmode .SumoSelect > .optWrapper > .options li.opt label {
+  color: #FFF;
+  margin: 0;
+  padding: 0;
+}
+body.darkmode .SumoSelect > .optWrapper > .options li.opt:HOVER {
+  background-color: #FFF;
+}
+body.darkmode .SumoSelect > .optWrapper > .options li.opt:HOVER label {
+  color: #1D2730;
 }
 body.darkmode .codeeditor.ace_editor {
   border: 1px solid #314354;

@@ -18,6 +18,9 @@
  * Fonts
  */
 /**
+ * Borders
+ */
+/**
  * Body
  */
 /**
@@ -40,6 +43,9 @@
  */
 /**
  * Forms
+ */
+/**
+ * Boxes
  */
 /*
 body{
@@ -309,6 +315,33 @@ nav ul.pagination {
 .attachments.editor .attachments .attachment .actions {
   font-size: 10px;
 }
+.box {
+  box-shadow: rgba(0, 0, 0, 0.2) 0 10px 25px;
+  margin-bottom: 40px;
+  border-radius: 5px;
+}
+.box .box-heading {
+  padding: 20px;
+  font-weight: 700;
+}
+.box .box-body {
+  padding: 20px;
+}
+.box .box-footer {
+  padding: 20px;
+}
+.box-success .box-heading {
+  color: #49B52A;
+  border-top: 2px solid #49B52A;
+}
+.box-danger .box-heading {
+  color: #FF6363;
+  border-top: 2px solid #FF6363;
+}
+.box-warning .box-heading {
+  color: #ff9900;
+  border-top: 2px solid #ff9900;
+}
 .dashboard-item {
   padding: 1em;
   margin: 0 0 1em 0;
@@ -489,6 +522,7 @@ form input.timepicker {
   background-color: transparent !important;
   padding-left: 40px;
   cursor: auto;
+  max-width: 200px;
 }
 /**
  * Horizontal
@@ -898,11 +932,13 @@ nav.toolbar > ul {
 .chosen-container-single .chosen-single div b {
   background-position-y: 4px;
 }
-.SumoSelect {
-  width: 100%;
-}
 .SumoSelect .SelectBox {
   padding: 6px 12px;
+}
+form .input-select > label,
+form .input-date > label,
+form .input-datetime > label {
+  display: block;
 }
 /**
  * Backend DataTables styles

@@ -53,10 +53,7 @@ class EntityViewCell extends Cell
     protected $_table;
 
     /**
-     * @param Request|null $request
-     * @param Response|null $response
-     * @param EventManager|null $eventManager
-     * @param array $cellOptions
+     * {@inheritDoc}
      */
     public function __construct(
         Request $request = null,
@@ -138,7 +135,6 @@ class EntityViewCell extends Cell
                 return false;
             }
 
-
             $field = (isset($fields[$property])) ? $fields[$property] : $defaultField;
             $fieldLabel = ($field['title']) ?: Inflector::humanize($property);
             $isVirtual = in_array($property, $virtualProperties);
@@ -157,26 +153,27 @@ class EntityViewCell extends Cell
                 //    $formatter = ['related', $assoc->target()->displayField()];
 
                     $related = $entity->get($assoc->property());
-                    $formatter = function($val, $row, $args, $view) use ($related, $assoc) {
-                        return $view->Html->link($related->get($assoc->target()->displayField()),
+                    $formatter = function ($val, $row, $args, $view) use ($related, $assoc) {
+                        return $view->Html->link(
+                            $related->get($assoc->target()->displayField()),
                             ['controller' => $assoc->name(), 'action' => 'view', $related->id],
-                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title'=> $related->get($assoc->target()->displayField())]
+                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $related->get($assoc->target()->displayField())]
                         );
                     };
                 } elseif ($entity->get($property)) {
-                    $formatter = function($val, $row, $args, $view) use ($assoc) {
-                        return $view->Html->link($val,
+                    $formatter = function ($val, $row, $args, $view) use ($assoc) {
+                        return $view->Html->link(
+                            $val,
                             ['controller' => $assoc->name(), 'action' => 'view', $val],
-                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title'=> $val]
+                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val]
                         );
                     };
                 } else {
-                    $formatter = function() {
+                    $formatter = function () {
                         return __d('backend', 'Not assigned');
                     };
                 }
-            }
-            elseif ($associations) {
+            } elseif ($associations) {
                 $assoc = $associations->getByProperty($property);
                 if ($assoc) {
                     $assocType = $assoc->type();
@@ -193,10 +190,13 @@ class EntityViewCell extends Cell
                                 return __d('backend', "{0} records", count($val));
                             };
                             */
-                            $formatter = function($val, $row, $args, $view) use ($assoc) {
-                                if (!$val) return $val;
+                            $formatter = function ($val, $row, $args, $view) use ($assoc) {
+                                if (!$val) {
+                                    return $val;
+                                }
 
-                                return $view->Html->link(__d('backend', "{0} records", count($val)),
+                                return $view->Html->link(
+                                    __d('backend', "{0} records", count($val)),
                                     [
                                         'controller' => $assoc->name(),
                                         'action' => 'index',
@@ -207,7 +207,7 @@ class EntityViewCell extends Cell
                                     [
                                         'data-modal-frame',
                                         'data-modal-class' => 'modal-wide',
-                                        'data-modal-title'=> __d('backend', "Related {0}", $assoc->name())
+                                        'data-modal-title' => __d('backend', "Related {0}", $assoc->name())
                                     ]
                                 );
                             };
@@ -216,12 +216,15 @@ class EntityViewCell extends Cell
                         case "manyToOne":
                         case "oneToOne":
                             //$formatter = ['related', $assoc->target()->displayField()];
-                            $formatter = function($val, $row, $args, $view) use ($assoc) {
-                                if (!$val) return $val;
+                            $formatter = function ($val, $row, $args, $view) use ($assoc) {
+                                if (!$val) {
+                                    return $val;
+                                }
 
-                                return $view->Html->link($val->get($assoc->target()->displayField()),
+                                return $view->Html->link(
+                                    $val->get($assoc->target()->displayField()),
                                     ['controller' => $assoc->name(), 'action' => 'view', $val->get($assoc->target()->primaryKey())],
-                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title'=> $val->get($assoc->target()->displayField())]
+                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val->get($assoc->target()->displayField())]
                                 );
                             };
                             break;
@@ -268,7 +271,6 @@ class EntityViewCell extends Cell
 
         $this->set('associations', $associations);
         $this->set('schema', $schema);
-
         $this->set('title', $this->title);
         $this->set('data', $data);
     }
@@ -281,6 +283,7 @@ class EntityViewCell extends Cell
         if (!$this->_table && $this->model) {
             $this->_table = TableRegistry::get($this->model);
         }
+
         return $this->_table;
     }
 }

@@ -6,13 +6,14 @@ if (empty($dataTable['class'])) {
     $dataTable['class'] = 'table table-condensed table-striped table-hover';
 }
 ?>
-<?php if (isset($dataTable['title'])): ?>
+<?php if (isset($dataTable['title'])) : ?>
 <h4><?= h($dataTable['title']); ?></h4>
 <?php endif; ?>
 
 <?php
 $html = $this->DataTable->create($dataTable, $data)->render();
 echo $html;
+
 return;
 ?>
 

@@ -20,7 +20,6 @@ $this->loadHelper('Backend.DataTable');
 $this->loadHelper('Bootstrap.Tabs');
 ?>
 <div class="view">
-
     <?php
     if ($this->fetch('content')) {
         echo $this->fetch('content');
@@ -30,11 +29,10 @@ $this->loadHelper('Bootstrap.Tabs');
     ?>
 
     <!-- Related -->
-    <?php foreach ($associations as $assoc): ?>
+    <?php foreach ($associations as $assoc) : ?>
         <?php
         //debug($assoc->name() . " -> " . $assoc->property());
         if ($assoc instanceof \Cake\ORM\Association) {
-
             if ($entity->get($assoc->property()) === null) {
                 //debug("not set: " . $assoc->property());
                 continue;
@@ -45,27 +43,25 @@ $this->loadHelper('Bootstrap.Tabs');
                 continue;
             }
 
-            $_entity = $entity->get($assoc->property());
-            $title = __d('backend','Related {0}', $assoc->name());
-            $html = __d('backend',"No data available");
+            $relatedEntity = $entity->get($assoc->property());
+            $title = __d('backend', 'Related {0}', $assoc->name());
+            $html = __d('backend', "No data available");
+            //$template = '<div class="box"><div class="box-heading with-border">%s</div><div class="box-body">%s</div></div>';
+            $template = '<div class="realted"><h3>%s</h3>%s</div>';
 
-            $template = '<div class="box"><div class="box-header with-border"><h3 class="box-title">%s</h3></div><div class="box-body">%s</div></div>';
-
-            switch($assoc->type()) {
+            switch ($assoc->type()) {
                 case \Cake\ORM\Association::MANY_TO_ONE:
                 case \Cake\ORM\Association::ONE_TO_ONE:
-
                     $config = ['title' => $title] + $related[$assoc->name()];
-                    $html = $this->cell('Backend.EntityView', [ $_entity ] , $config);
+                    debug($config);
+                    $html = $this->cell('Backend.EntityView', [ $relatedEntity ], $config);
                     $template = '%2$s';
-
                     break;
 
                 case \Cake\ORM\Association::ONE_TO_MANY:
-
                     $dataTable = array_merge([
                         'model' => $assoc->target(),
-                        'data' => $_entity,
+                        'data' => $relatedEntity,
                         'fieldsBlacklist' => [$assoc->foreignKey()],
                         'filter' => false,
                         'actions' => false,
@@ -76,10 +72,9 @@ $this->loadHelper('Bootstrap.Tabs');
                     $html = $this->DataTable->render();
                     break;
 
-
                 case \Cake\ORM\Association::MANY_TO_MANY:
                 default:
-                    $html = __d('backend','Association type not implemented {0}', $type);
+                    $html = __d('backend', 'Association type not implemented {0}', $type);
                     break;
             }
 
@@ -88,16 +83,16 @@ $this->loadHelper('Bootstrap.Tabs');
         ?>
     <?php endforeach; ?>
 
-    <?php if ($this->get('tabs')): ?>
+    <?php if ($this->get('tabs')) : ?>
         <?php $this->Tabs->create(); ?>
-        <?php foreach ((array) $this->get('tabs') as $tabId => $tab): ?>
+        <?php foreach ((array)$this->get('tabs') as $tabId => $tab) : ?>
             <?php $this->Tabs->add($tab['title'], $tab); ?>
         <?php endforeach; ?>
         <?php echo $this->Tabs->render(); ?>
     <?php endif; ?>
 
 
-    <?php if (\Cake\Core\Configure::read('debug')): ?>
+    <?php if (\Cake\Core\Configure::read('debug')) : ?>
         <?php //debug($entity); ?>
         <small><?php echo h(__FILE__); ?></small>
     <?php endif; ?>

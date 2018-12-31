@@ -2,51 +2,48 @@
 
 namespace Backend;
 
-use Backend\Event\RouteBuilderEvent;
-use Backend\Backend;
 use Backend\View\BackendView;
 use Banana\Application;
 use Banana\Menu\Menu;
 use Banana\Plugin\PluginInterface;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
 use Cake\Http\MiddlewareQueue;
 use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Settings\SettingsInterface;
 use Settings\SettingsManager;
 
 class BackendPlugin implements PluginInterface, BackendPluginInterface, SettingsInterface, EventListenerInterface
 {
     /**
-     * Returns a list of events this object is implementing. When the class is registered
-     * in an event manager, each individual method will be associated with the respective event.
-     *
-     * @see EventListenerInterface::implementedEvents()
-     * @return array associative array or event key names pointing to the function
-     * that should be called in the object when the respective event is fired
+     * {@inheritDoc}
      */
     public function implementedEvents()
     {
         return [
             'Backend.Sidebar.build' => ['callable' => 'buildBackendSidebarMenu', 'priority' => 99 ],
-            //'Backend.SysMenu.build' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
+            'Backend.SysMenu.build' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
             //'Backend.Menu.build'    => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
            // 'View.beforeLayout'     => ['callable' => 'beforeLayout']
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function beforeLayout(Event $event)
     {
         if ($event->subject() instanceof BackendView && $event->subject()->plugin == "Backend") {
-            $menu = new Menu($this->_getMenuItems());
-            $event->subject()->set('backend.sidebar.menu', $menu);
+            //$menu = new Menu($this->_getMenuItems());
+            //$event->subject()->set('backend.sidebar.menu', $menu);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function buildSettings(SettingsManager $settings)
     {
         //$settings->load('Backend.settings');
@@ -76,7 +73,7 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
                 'input' => [
                     'type' => 'select',
                     'options' => [
-                        'theme-default'     => 'Default',
+                        'theme-default' => 'Default',
                     ]
                 ],
                 'default' => 'theme-default'
@@ -87,12 +84,12 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
                 'input' => [
                     'type' => 'select',
                     'options' => [
-                        'skin-blue'     => 'Blue',
-                        'skin-yellow'   => 'Yellow',
-                        'skin-red'      => 'Red',
-                        'skin-purple'   => 'Purple',
-                        'skin-black'    => 'Blue',
-                        'skin-green'    => 'Green',
+                        'skin-blue' => __('Blue'),
+                        'skin-yellow' => __('Yellow'),
+                        'skin-red' => __('Red'),
+                        'skin-purple' => __('Purple'),
+                        'skin-black' => __('Blue'),
+                        'skin-green' => __('Green'),
                     ]
                 ],
                 'default' => 'skin-blue'
@@ -147,9 +144,9 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
         ]);
     }
 
-
     /**
-     * @param Event $event
+     * @param Event $event The event object
+     * @return void
      */
     public function buildBackendSidebarMenu(Event $event)
     {
@@ -157,19 +154,35 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
             //$settingsMenu = new Menu();
             //$this->eventManager()->dispatch(new Event('Backend.SysMenu.build', $settingsMenu));
             $event->subject()->addItem([
-                'title' => 'System',
+                'title' => __('System'),
                 'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
                 'data-icon' => 'gears',
                 'children' => $this->_getMenuItems(),
             ]);
+
+            if (Configure::read('debug')) {
+                $event->subject()->addItem([
+                    'title' => __('Design'),
+                    'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index']
+                ]);
+            }
         }
     }
 
+    /**
+     * @param Event $event The event object
+     * @return void
+     */
     public function buildBackendMenu(Event $event)
     {
-        if ($event->subject() instanceof \Banana\Menu\Menu) {}
+        if ($event->subject() instanceof \Banana\Menu\Menu) {
+        }
     }
 
+    /**
+     * @param Event $event The event object
+     * @return void
+     */
     public function buildBackendSystemMenu(Event $event)
     {
         if ($event->subject() instanceof \Banana\Menu\Menu) {
@@ -180,6 +193,9 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
         }
     }
 
+    /**
+     * @return array
+     */
     protected function _getMenuItems()
     {
         return $items = [
@@ -216,19 +232,28 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function routes(RouteBuilder $routes)
     {
         return $routes;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function bootstrap(Application $app)
     {
         EventManager::instance()->on($this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function backendBootstrap(Backend $backend)
     {
-        $backend->hook('backend.menu.build', function(Menu $menu) {
+        $backend->hook('backend.menu.build', function (Menu $menu) {
             $menu->addItem([
                 'title' => 'System',
                 'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
@@ -238,6 +263,9 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function backendRoutes(RouteBuilder $routes)
     {
         $routes->connect(
@@ -272,11 +300,14 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
             ['_name' => 'dashboard']
         );
         $routes->fallbacks('DashedRoute');
+
         return $routes;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function middleware(MiddlewareQueue $middleware)
     {
-
     }
 }

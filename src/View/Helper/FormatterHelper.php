@@ -5,6 +5,7 @@ namespace Backend\View\Helper;
 use Bootstrap\View\Helper\UiHelper;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
+use Cake\I18n\Date;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
@@ -68,18 +69,32 @@ class FormatterHelper extends Helper
 
         // date
         self::register('date', function ($val, $extra, $params) {
+            /*
+            if ($val instanceof \Cake\I18n\Date) {
+                return $val->nice();
+                //return (string)$val;
+            }
+            */
 
-            $format = DATE_W3C;
+            return (string)$val;
+        });
+        self::register('datetime', function ($val, $extra, $params) {
+            /*
+            debug($val);
+            debug($params);
+
+            $format = Date::ATOM;
             if (isset($params['format'])) {
                 $format = $params['format'];
             }
 
             return $this->Time->format($val, $format);
+            */
+            return (string)$val;
         });
 
         // link
         self::register('link', function ($val, $extra, $params) {
-
             $title = $url = $val;
             if (isset($params['url'])) {
                 $url = $params['url'];

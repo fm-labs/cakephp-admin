@@ -5,3 +5,6 @@
 <div class="system phpinfo view">
 	<?php echo $phpinfo; ?>
 </div>
+<script>
+	$('.phpinfo').find('table').addClass('table');
+</script>

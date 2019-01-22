@@ -28,9 +28,10 @@ class BoxHelper extends Helper
      */
     protected $_defaultConfig = [
         'templates' => [
-            'box' => '<div class="box box-default{{collapsedClass}}">{{header}}{{body}}{{footer}}</div>',
-            'boxHeader' => '<div class="box-header with-border">{{title}}{{tools}}</div>',
-            'boxTitle' => '<h3 class="box-title">{{title}}</h3>',
+            'box' => '<div class="box box-default with-border{{collapsedClass}}">{{header}}{{body}}{{footer}}</div>',
+            'boxHeader' => '<div class="box-heading">{{icon}} {{title}}{{tools}}</div>',
+            'boxTitle' => '<span class="box-title">{{title}}</span>',
+            'boxIcon' => '<span class="box-icon"><i class="fa fa-{{icon}}"></i></span>',
             'boxTools' => '<div class="box-tools pull-right">{{tools}}</div>',
             'boxBody' => '<div class="box-body">{{contents}}</div>',
             'boxFooter' => '<div class="box-footer">{{contents}}</div>',
@@ -46,8 +47,9 @@ class BoxHelper extends Helper
         'id' => null,
         'autostart' => true,
         'collapsed' => false,
-        'collapse' => true,
-        'expand' => true
+        'collapse' => false,
+        'expand' => true,
+        'icon' => null,
     ];
 
     /**
@@ -132,8 +134,23 @@ class BoxHelper extends Helper
     protected function _renderHeader()
     {
         return $this->templater()->format('boxHeader', [
+            'icon' => $this->_renderIcon(),
             'title' => $this->_renderTitle(),
             'tools' => $this->_renderTools(),
+        ]);
+    }
+
+    /**
+     * @return null|string
+     */
+    protected function _renderIcon()
+    {
+        if (!$this->_params['icon']) {
+            return "";
+        }
+
+        return $this->templater()->format('boxIcon', [
+            'icon' => $this->_params['icon'],
         ]);
     }
 

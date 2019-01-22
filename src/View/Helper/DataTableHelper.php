@@ -80,7 +80,7 @@ class DataTableHelper extends Helper
 
         $this->templater()->add([
             'table_container' => '<div class="datatable-container">{{table}}{{pagination}}{{script}}</div>',
-            'table' => '<table class="table table-striped"{{attrs}}>{{head}}{{body}}{{footer}}</table>',
+            'table' => '<table class="table table-condensed table-hover"{{attrs}}>{{head}}{{body}}{{footer}}</table>',
             'head' => '<thead><tr>{{cellheads}}{{actionshead}}</tr></thead>',
             'footer' => '<tfoot><tr>{{cellheads}}{{actionshead}}</tr></tfoot>',
             'headCell' => '<th{{attrs}}>{{content}}</th>',

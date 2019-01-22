@@ -172,7 +172,7 @@
             this._dataReload = settings.dataReload || -1;
         },
 
-        _addTooltips (dataTable, $table) {
+        _addTooltips: function(dataTable, $table) {
             dataTable.columns().iterator('column', function (settings, column) {
                 if (settings.aoColumns[column].tooltip !== undefined) {
                     $(dataTable.column(column).header()).attr('title', settings.aoColumns[column].tooltip);

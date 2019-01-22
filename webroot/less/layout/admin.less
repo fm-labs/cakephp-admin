@@ -165,9 +165,13 @@ body.darkmode {
   .table > tfoot > tr > th,
   .table > thead > tr > td,
   .table > tbody > tr > td,
-  .table > tfoot > tr > td {
-    border-top-color: @dark-color-border; //rgba(255,255,255,0.1);
-    border-bottom-color: @dark-color-border;
+  .table > tfoot > tr > td,
+  .table-bordered {
+    border-color: @dark-color-border; //rgba(255,255,255,0.1);
+  }
+
+  .table > tbody > tr:first-child td {
+    border-top: none;
   }
 
   .table.table-hover > tbody > tr:HOVER > td {
@@ -203,6 +207,15 @@ body.darkmode {
   .pagination > li:hover > span {
     background-color: @dark-color-highlight;
     color: #88C7EA;
+  }
+
+  // Box
+  .box.with-border {
+    border-color: @dark-color-border;
+
+    .box-heading, .box-footer {
+      border-color: @dark-color-border;
+    }
   }
 
   // DataTable

@@ -68,17 +68,21 @@ body{
 .padding-reset {
   padding: 0 !important;
 }
+.text-strong,
 .strong {
-  font-weight: bold;
+  font-weight: bold !important;
 }
+.text-left,
 .left {
-  text-align: left;
+  text-align: left !important;
 }
+.text-center,
 .centered {
-  text-align: center;
+  text-align: center !important;
 }
+.text-right,
 .right {
-  text-align: right;
+  text-align: right !important;
 }
 .no-border {
   border: none;
@@ -317,18 +321,31 @@ nav ul.pagination {
 }
 .box {
   box-shadow: rgba(0, 0, 0, 0.2) 0 10px 25px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
   border-radius: 5px;
 }
 .box .box-heading {
-  padding: 20px;
+  padding: 10px;
   font-weight: 700;
 }
 .box .box-body {
-  padding: 20px;
+  padding: 10px;
 }
 .box .box-footer {
-  padding: 20px;
+  padding: 10px;
+}
+.box table {
+  width: 100%;
+  margin: 0;
+}
+.box.with-border {
+  border: 1px solid #333;
+}
+.box.with-border .box-heading {
+  border-bottom: 1px solid #333;
+}
+.box.with-border .box-footer {
+  border-top: 1px solid #333;
 }
 .box-success .box-heading {
   color: #49B52A;

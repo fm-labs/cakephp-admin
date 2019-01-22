@@ -163,6 +163,7 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
             if (Configure::read('debug')) {
                 $event->subject()->addItem([
                     'title' => __('Design'),
+                    'data-icon' => 'paint-brush',
                     'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index']
                 ]);
             }

@@ -53,6 +53,7 @@ class BackendComponent extends Component
         'authLogoutAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
         'authUnauthorizedRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'unauthorized'],
         'authAuthorize' => ['Backend.Backend' /*, 'User.Roles'*/],
+        'authAjaxLoginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'ajaxLogin'],
         'userModel' => 'Backend.Users',
         'searchUrl' => ['plugin' => 'Backend', 'controller' => 'Search', 'action' => 'query'],
     ];
@@ -109,6 +110,7 @@ class BackendComponent extends Component
 
         // Configure Backend Authentication
         if ($this->_registry->has('Auth') && !is_a($this->_registry->get('Auth'), static::$authComponentClass)) {
+            debug("auth comp hit");
             $this->_registry->unload('Auth');
         }
         //$this->_registry->load('Auth', [
@@ -116,7 +118,27 @@ class BackendComponent extends Component
         //]);
         $controller->loadComponent('Auth', [
             'className' => static::$authComponentClass,
+            'userModel' => 'Backend.Users'
         ]);
+        //@TODO Move auth config to Backend's built-in AuthComponent
+        $controller->Auth->config('ajaxLogin', $this->config('authAjaxLoginAction'), false);
+        $controller->Auth->config('loginAction', $this->config('authLoginAction'), false);
+        $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'), false);
+        $controller->Auth->config('authenticate', [
+            AuthComponent::ALL => ['userModel' => $this->config('userModel'), 'finder' => 'backendAuthUser'],
+            'Form',
+            //'Basic'
+        ], false);
+        // Configure Backend Auth Storage
+        $controller->Auth->config('storage', [
+            'className' => 'Session',
+            'key' => 'Backend.User',
+            'redirect' => 'Backend.redirect'
+        ], false);
+
+        // Configure Backend Authorization
+        $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'), false);
+        $controller->Auth->config('authorize', $this->config('authAuthorize'), false);
 
         // Configure controller
         $controller->viewBuilder()->className('Backend.Backend');
@@ -209,27 +231,6 @@ class BackendComponent extends Component
             $controller->viewBuilder()->layout('Backend.ajax/admin');
         }
 
-        //@TODO Move auth config to Backend's built-in AuthComponent
-        if ($controller->Auth) {
-            $controller->Auth->config('ajaxLogin', 'Backend.Auth/ajax_login');
-            $controller->Auth->config('loginAction', $this->config('authLoginAction'));
-            $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'));
-            $controller->Auth->config('authenticate', [
-                AuthComponent::ALL => ['userModel' => $this->config('userModel'), 'finder' => 'backendAuthUser'],
-                'Form',
-                //'Basic'
-            ]);
-            // Configure Backend Auth Storage
-            $controller->Auth->config('storage', [
-                'className' => 'Session',
-                'key' => 'Backend.User',
-                'redirect' => 'Backend.redirect'
-            ]);
-
-            // Configure Backend Authorization
-            $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'));
-            $controller->Auth->config('authorize', $this->config('authAuthorize'));
-        }
 
     }
 

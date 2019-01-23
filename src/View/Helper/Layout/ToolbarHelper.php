@@ -190,12 +190,11 @@ class ToolbarHelper extends Helper
      */
     public function render($options = [])
     {
-        //if ($this->_rendered === true) {
-        //    return null;
-        //}
+        $options = array_merge($this->config('options'), $options);
+        $html = $this->Ui->menu($this->getMenuItems(), $options);
+        $this->_rendered = true;
 
-        //$this->_rendered = true;
-        return $this->Ui->menu($this->getMenuItems(), $options);
+        return $html;
     }
 
     /**
@@ -231,10 +230,12 @@ class ToolbarHelper extends Helper
      */
     public function beforeLayout(Event $event)
     {
-        if ($event->subject() instanceof BackendView) {
-            $event->subject()->Blocks->set($this->config('block'), $this->_View->element($this->config('element'), [
-                'toolbar' => $this->render($this->config('options'))
-            ]));
+        if (!$this->_rendered) {
+            if ($event->subject() instanceof BackendView) {
+                $event->subject()->Blocks->set($this->config('block'), $this->_View->element($this->config('element'), [
+                    'toolbar' => $this->render()
+                ]));
+            }
         }
     }
 

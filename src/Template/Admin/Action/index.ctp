@@ -1,7 +1,6 @@
 <?php
-$this->loadHelper('Backend.Chosen');
+//$this->loadHelper('Backend.Chosen');
 $this->loadHelper('Backend.DataTable');
-
 ?>
 <div class="index">
 

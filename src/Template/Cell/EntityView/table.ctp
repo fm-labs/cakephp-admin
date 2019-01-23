@@ -20,7 +20,7 @@ use Cake\Utility\Inflector;
             <?php if ($debug === true): ?>
                 <td class="right">
                     <small>
-                        <?= sprintf("(%s:%s)", gettype($field['value']), $field['formatter'] ) ?>
+                        <?php //sprintf("(%s:%s)", gettype($field['value']), $field['formatter'] ) ?>
                     </small>
                 </td>
             <?php endif; ?>

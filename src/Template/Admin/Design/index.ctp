@@ -1,15 +1,49 @@
 <?php
-$this->assign('title', __('Design Kitchensink'));
+$this->assign('title', __d('backend', 'Design Kitchensink'));
 ?>
 <style>
     .design-index .section-header {
         padding: 0.5em;
-        margin: 0.5em 0 0.5em 0;
-        background-color: #CCC;
-        color: #333;
+        margin: 2em 0 1em 0;
+        color: #ff9900;
+        border-radius: 10px 0 10px 0;
+        border: 1px solid #FFF;
     }
 </style>
 <div class="design-index index">
+
+    <!-- SECTION JS Alerts -->
+    <div class="section-header">
+        Javascript Alerts & Confirmation Boxes
+    </div>
+
+    <a href="#" id="test-js-alert">Test Alert on click event</a> |
+    <a href="#" id="test-js-confirm">Test Confirm on click event</a> |
+    <a onclick="alert('Buyaaa!')">Test Alert</a> |
+    <a onclick="confirm('You sure?')">Test Confirmation</a> |
+    <a onclick="prompt('You sure?')">Test Prompt</a>
+    <br />
+    <?= $this->Html->link('Alert', 'javascript:alert("Hello")'); ?> |
+    <?= $this->Html->link('Confirm', '#', ['confirm' => 'You sure?']); ?>
+    <?php $this->append('script'); ?>
+    <script>
+        $('#test-js-alert').click(function(ev) {
+
+            alert("Test");
+
+            ev.stopPropagation();
+            return false;
+        })
+        $('#test-js-confirm').click(function(ev) {
+
+            var confirmed = confirm("Confirm?");
+            console.log("CONFIRM RESULT", confirmed);
+
+            ev.stopPropagation();
+            return false;
+        })
+    </script>
+    <?php $this->end(); ?>
 
     <!-- SECTION INPUTS -->
     <div class="section-header">
@@ -218,6 +252,23 @@ $this->assign('title', __('Design Kitchensink'));
         <a href="#">Link 3</a>
     </div>
 
+
+    <!-- SECTION ICONS -->
+    <div class="section-header">
+        Flash Messages
+    </div>
+    <div class="alert alert-success">
+        <p>Success!</p>
+    </div>
+    <div class="alert alert-warning">
+        <p>Warning!</p>
+    </div>
+    <div class="alert alert-danger">
+        <p>Danger!</p>
+    </div>
+    <div class="alert alert-info">
+        <p>Info!</p>
+    </div>
 
 
     <!-- SECTION ICONS -->

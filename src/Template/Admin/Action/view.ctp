@@ -12,20 +12,19 @@ $entity = $this->get('entity');
 $title = $this->get('title', get_class($entity));
 $viewOptions = (array) $this->get('viewOptions');
 
+//$this->assign('title', $title);
+
 /**
  * Helpers
  */
-$this->loadHelper('Backend.Chosen');
+//$this->loadHelper('Backend.Chosen');
 $this->loadHelper('Backend.DataTable');
 $this->loadHelper('Bootstrap.Tabs');
+$this->extend('Backend./Admin/Action/base_entity');
 ?>
 <div class="view">
     <?php
-    if ($this->fetch('content')) {
-        echo $this->fetch('content');
-    } else {
-        echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render('display');
-    }
+    echo ($this->fetch('content')) ?: $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render('table');
     ?>
 
     <!-- Related -->
@@ -83,14 +82,13 @@ $this->loadHelper('Bootstrap.Tabs');
         ?>
     <?php endforeach; ?>
 
-    <?php if ($this->get('tabs')) : ?>
+    <?php if ($this->get('tabs')): ?>
         <?php $this->Tabs->create(); ?>
-        <?php foreach ((array)$this->get('tabs') as $tabId => $tab) : ?>
+        <?php foreach ((array) $this->get('tabs') as $tabId => $tab): ?>
             <?php $this->Tabs->add($tab['title'], $tab); ?>
         <?php endforeach; ?>
         <?php echo $this->Tabs->render(); ?>
     <?php endif; ?>
-
 
     <?php if (\Cake\Core\Configure::read('debug')) : ?>
         <?php //debug($entity); ?>

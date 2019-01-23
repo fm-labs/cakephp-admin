@@ -50,7 +50,7 @@
             <?php echo $this->fetch('toolbar'); ?>
         </section>
 
-        <!-- Before -->
+        <!-- Top -->
         <?php echo $this->fetch('top'); ?>
 
 
@@ -82,7 +82,7 @@
         </main>
         <!-- /.content -->
 
-        <!-- After -->
+        <!-- Bottom -->
         <?php echo $this->fetch('bottom'); ?>
     </div>
     <!-- /.content-wrapper -->

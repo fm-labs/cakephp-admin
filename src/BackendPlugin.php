@@ -84,12 +84,12 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
                 'input' => [
                     'type' => 'select',
                     'options' => [
-                        'skin-blue' => __('Blue'),
-                        'skin-yellow' => __('Yellow'),
-                        'skin-red' => __('Red'),
-                        'skin-purple' => __('Purple'),
-                        'skin-black' => __('Blue'),
-                        'skin-green' => __('Green'),
+                        'skin-blue' => __d('backend', 'Blue'),
+                        'skin-yellow' => __d('backend', 'Yellow'),
+                        'skin-red' => __d('backend', 'Red'),
+                        'skin-purple' => __d('backend', 'Purple'),
+                        'skin-black' => __d('backend', 'Blue'),
+                        'skin-green' => __d('backend', 'Green'),
                     ]
                 ],
                 'default' => 'skin-blue'
@@ -154,7 +154,7 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
             //$settingsMenu = new Menu();
             //$this->eventManager()->dispatch(new Event('Backend.SysMenu.build', $settingsMenu));
             $event->subject()->addItem([
-                'title' => __('System'),
+                'title' => __d('backend', 'System'),
                 'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
                 'data-icon' => 'gears',
                 'children' => $this->_getMenuItems(),
@@ -162,7 +162,7 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
 
             if (Configure::read('debug')) {
                 $event->subject()->addItem([
-                    'title' => __('Design'),
+                    'title' => __d('backend', 'Design'),
                     'data-icon' => 'paint-brush',
                     'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index']
                 ]);

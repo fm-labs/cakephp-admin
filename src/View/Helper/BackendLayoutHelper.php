@@ -50,6 +50,7 @@ class BackendLayoutHelper extends Helper
         $event->subject()->Html->script('/backend/libs/bootstrap/dist/js/bootstrap.min.js', ['block' => true]);
         $event->subject()->Html->script('/backend/js/momentjs/moment.min.js', ['block' => true]);
         $event->subject()->Html->script('/backend/js/backend.js', ['block' => true]);
+        //$event->subject()->Html->script('/backend/js/backend.alert.js', ['block' => true]);
         $event->subject()->Html->script('/backend/js/backend.iconify.js', ['block' => true]);
         $event->subject()->Html->script('/backend/js/backend.tooltip.js', ['block' => true]);
     }

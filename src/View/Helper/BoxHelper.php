@@ -88,6 +88,11 @@ class BoxHelper extends Helper
         $this->start('heading');
     }
 
+    public function tools()
+    {
+        $this->start('tools');
+    }
+
     /**
      * Start body block
      */
@@ -190,7 +195,7 @@ class BoxHelper extends Helper
      */
     protected function _renderTools()
     {
-        $tools = '';
+        $tools = $this->getContent('tools');
 
         if ($this->_params['collapse']) {
             $collapseTempl = ($this->_params['collapsed']) ? 'boxToolExpandButton' : 'boxToolCollapseButton';

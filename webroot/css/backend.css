@@ -47,17 +47,6 @@
 /**
  * Boxes
  */
-/*
-body{
-  font-family: @font-family-primary;
-  font-size: @font-size-default;
-  background-color: #FFF;
-  padding-top: @body-offset-top;
-  padding-bottom: @body-offset-bottom;
-  padding-left: @sidebar-w;
-  //.transition(@sidebar-transition);
-}
-*/
 /**
  * Helper classes
  */
@@ -85,20 +74,10 @@ body{
   text-align: right !important;
 }
 .no-border {
-  border: none;
-  border-width: 0;
+  border: 0 none;
 }
 .no-border-radius {
   border-radius: 0;
-}
-/**
- * Standard views
- */
-h1 {
-  font-size: 1.5em;
-}
-h2 {
-  font-size: 1.25em;
 }
 /**
  * Lists
@@ -109,20 +88,31 @@ dl.dl-horizontal dt {
   padding-top: 0.6rem;
   width: 220px;
   display: inline-block;
+  border-top: 1px solid #e8e8e8;
 }
 dl dd,
 dl.dl-horizontal dd {
   display: block;
   margin-left: 0;
-  padding-left: 220px;
+  padding-left: 0;
   padding-top: 0.6rem;
   padding-bottom: 0.6rem;
-  border-bottom: 1px solid #e8e8e8;
+  border-top: 1px solid #e8e8e8;
+  max-height: 200px;
+  overflow-y: scroll;
 }
 dl dd pre,
 dl.dl-horizontal dd pre {
   max-height: 300px;
   overflow-y: scroll;
+}
+dl dt:first-child,
+dl.dl-horizontal dt:first-child {
+  border-top: 0 none;
+}
+dl dd:first-child,
+dl.dl-horizontal dd:first-child {
+  border-top: 0 none;
 }
 .index > h1,
 .view > h1,
@@ -319,6 +309,32 @@ nav ul.pagination {
 .attachments.editor .attachments .attachment .actions {
   font-size: 10px;
 }
+.bg-success {
+  background-color: #49B52A;
+}
+.bg-warning {
+  background-color: #FFCE47;
+}
+.bg-danger {
+  background-color: #DC3601;
+}
+.bg-info {
+  background-color: #5EA5CF;
+}
+/*
+.alert-success {
+  color: @color-success;
+}
+.alert-warning {
+  color: @color-warning;
+}
+.alert-danger {
+  color: @color-danger;
+}
+.alert-info {
+  color: @color-info;
+}
+*/
 .box {
   box-shadow: rgba(0, 0, 0, 0.2) 0 10px 25px;
   margin-bottom: 20px;
@@ -352,12 +368,12 @@ nav ul.pagination {
   border-top: 2px solid #49B52A;
 }
 .box-danger .box-heading {
-  color: #FF6363;
-  border-top: 2px solid #FF6363;
+  color: #DC3601;
+  border-top: 2px solid #DC3601;
 }
 .box-warning .box-heading {
-  color: #ff9900;
-  border-top: 2px solid #ff9900;
+  color: #FFCE47;
+  border-top: 2px solid #FFCE47;
 }
 .dashboard-item {
   padding: 1em;
@@ -635,7 +651,7 @@ div.checkbox .checkmark:after {
   padding: 0.33em 0.66em;
   display: block;
   text-decoration: none;
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Tahoma', 'Geneva', 'Helvetica', 'Arial', sans-serif;
   font-size: 14px;
   color: #333;
 }
@@ -791,7 +807,7 @@ table.table tr th {
   text-decoration: none;
   padding: 5px;
   text-align: left;
-  vertical-align: middle;
+  vertical-align: bottom;
 }
 table.table tr th a.asc:after {
   content: ' ⇣';
@@ -801,7 +817,7 @@ table.table tr th a.desc:after {
 }
 table.table tr td {
   padding: 5px;
-  vertical-align: middle;
+  vertical-align: top;
 }
 table.table tr:nth-child(2n+1) td,
 table.table tr:nth-child(2n+1) th[scope="row"] {
@@ -832,25 +848,34 @@ table.info.table tr td:first-child {
   width: 50%;
   max-width: 96%;
 }
+.modal .modal-dialog.modal-sm,
 .modal.modal-sm .modal-dialog {
   width: 50%;
   max-width: 400px;
 }
+.modal .modal-dialog.modal-md,
 .modal.modal-md .modal-dialog {
   width: 75%;
   max-width: 900px;
 }
+.modal .modal-dialog.modal-lg,
 .modal.modal-lg .modal-dialog {
   width: 80%;
   max-width: 1200px;
 }
+.modal .modal-dialog.modal-xlg,
 .modal.modal-xlg .modal-dialog {
   width: 96%;
   max-width: 1400px;
 }
+.modal .modal-dialog.modal-wide,
 .modal.modal-wide .modal-dialog {
   width: 96%;
   max-width: 96%;
+}
+.modal .modal-dialog.modal-danger .modal-content {
+  background-color: #DC3601;
+  color: #FFF;
 }
 /* Tabs */
 .tabs .nav-tabs li:first-child {
@@ -865,17 +890,11 @@ table.info.table tr td:first-child {
   border-top: none;
 }
 body {
-  font-family: 'Helvetica', 'Arial', sans-serif;
+  font-family: 'Tahoma', 'Geneva', 'Helvetica', 'Arial', sans-serif;
   font-size: 14px;
 }
 body.has-toolbar-fixed {
   padding-top: 140px;
-}
-nav.toolbar {
-  margin: 0;
-}
-nav.toolbar > ul {
-  float: none;
 }
 .dtable-container {
   width: 100%;

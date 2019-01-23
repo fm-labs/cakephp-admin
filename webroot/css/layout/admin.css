@@ -342,7 +342,33 @@ nav.toolbar ul li a:hover {
   color: #FFF;
   opacity: 1;
 }
+nav.actionbar-nav ul {
+  list-style-image: none;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+nav.actionbar-nav ul li {
+  display: block;
+}
+nav.actionbar-nav ul li a {
+  display: block;
+  padding: 7px 12px;
+  margin: 0 0 5px;
+  border: 1px solid #3c8dbc;
+}
+/*
+body{
+  background-color: #FFF;
+  padding-top: @body-offset-top;
+  padding-bottom: @body-offset-bottom;
+  padding-left: @sidebar-w;
+  //.transition(@sidebar-transition);
+}
+*/
 body {
+  font-family: 'Tahoma', 'Geneva', 'Helvetica', 'Arial', sans-serif;
+  font-size: 14px;
   height: auto;
   overflow-x: hidden;
   overflow-y: auto;
@@ -398,10 +424,10 @@ body {
   padding-bottom: 2em;
 }
 .content-header h1 {
-  margin: -10px -15px 15px -15px;
-  border-bottom: 1px solid #e8e8e8;
-  padding: 10px 15px;
-  line-height: 28px;
+  margin-top: 10px;
+  padding-bottom: 5px;
+  font-size: 26px;
+  line-height: 1.1em;
 }
 .main-footer {
   padding: 5px 15px;
@@ -423,14 +449,12 @@ body {
   padding: 0 0 0 5px;
 }
 .main-toolbar {
-  margin-top: 10px;
+  position: relative;
 }
 .main-toolbar nav.toolbar {
-  float: right;
-  margin-right: 15px;
-}
-.main-toolbar nav.toolbar:after {
-  clear: both;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 /** Dark Mode **/
 body.darkmode {
@@ -559,7 +583,9 @@ body.darkmode form .control-label {
   color: #FFF;
 }
 body.darkmode dl dd,
-body.darkmode dl.dl-horizontal dd {
+body.darkmode dl.dl-horizontal dd,
+body.darkmode dl dt,
+body.darkmode dl.dl-horizontal dt {
   border-color: #314354;
 }
 body.darkmode .btn.btn-default {

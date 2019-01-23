@@ -5,18 +5,6 @@
 @import "../mixins/elements.less";
 @import "../vars.less";
 
-/*
-body{
-  font-family: @font-family-primary;
-  font-size: @font-size-default;
-  background-color: #FFF;
-  padding-top: @body-offset-top;
-  padding-bottom: @body-offset-bottom;
-  padding-left: @sidebar-w;
-  //.transition(@sidebar-transition);
-}
-*/
-
 /**
  * Helper classes
  */
@@ -50,28 +38,12 @@ body{
 }
 
 .no-border {
-  border: none;
-  border-width: 0;
+  border: 0 none;
 }
 
 .no-border-radius {
   border-radius: 0;
 }
-
-/**
- * Standard views
- */
-
-h1 {
-  font-size: 1.5em;
-  //border-bottom: 1px solid #CCC;
-  //padding: 0.2em 0;
-}
-
-h2 {
-  font-size: 1.25em;
-}
-
 
 /**
  * Lists
@@ -84,14 +56,17 @@ dl.dl-horizontal {
     padding-top: 0.6rem;
     width: 220px;
     display: inline-block;
+    border-top: 1px solid #e8e8e8;
   }
   dd {
     display: block;
     margin-left: 0; // bootstrap override
-    padding-left: 220px;
+    padding-left: 0;
     padding-top: 0.6rem;
     padding-bottom: 0.6rem;
-    border-bottom: 1px solid #e8e8e8;
+    border-top: 1px solid #e8e8e8;
+    max-height: 200px;
+    overflow-y: scroll;
 
     pre {
       max-height: 300px;
@@ -99,6 +74,13 @@ dl.dl-horizontal {
     }
   }
 
+  dt:first-child {
+    border-top: 0 none;
+  }
+
+  dd:first-child {
+    border-top: 0 none;
+  }
 }
 
 dl.dl-striped {

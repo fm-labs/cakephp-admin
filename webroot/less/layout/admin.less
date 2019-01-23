@@ -10,7 +10,20 @@ html {
 
 }
 
+
+/*
+body{
+  background-color: #FFF;
+  padding-top: @body-offset-top;
+  padding-bottom: @body-offset-bottom;
+  padding-left: @sidebar-w;
+  //.transition(@sidebar-transition);
+}
+*/
+
 body {
+  font-family: @font-family-primary;
+  font-size: @font-size-default;
   height: auto;
   overflow-x: hidden;
   overflow-y: auto;
@@ -74,11 +87,12 @@ body {
 }
 
 .content-header h1 {
-  margin: -10px -15px 15px -15px;
-  //background-color: #fafafa;
-  border-bottom: 1px solid #e8e8e8;
-  padding: 10px 15px;
-  line-height: 28px; // corresponds to toolbar button height
+  margin-top: 10px;
+  //margin: 10px -15px 10px -15px;
+  //border-bottom: 1px solid @border-color-base;
+  padding-bottom: 5px;
+  font-size: 26px;
+  line-height: 1.1em;
 }
 
 .main-footer {
@@ -109,15 +123,17 @@ body {
 }
 
 .main-toolbar {
-  margin-top: 10px;
+
+  position: relative;
 
   nav.toolbar {
-    float: right;
-    margin-right: 15px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
   }
 
   nav.toolbar:after {
-    clear: both;
+    //clear: both;
   }
 }
 
@@ -287,7 +303,8 @@ body.darkmode {
   }
 
   // Lists
-  dl dd, dl.dl-horizontal dd {
+  dl dd, dl.dl-horizontal dd,
+  dl dt, dl.dl-horizontal dt {
     border-color: @dark-color-border;
   }
 

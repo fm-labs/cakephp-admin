@@ -11,6 +11,7 @@ use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Network\Response;
@@ -125,6 +126,9 @@ class ActionComponent extends Component
             $options += ['action' => $action];
             $instance = new InlineEntityAction($this->_controller, $options, $callable);
         }
+        if (isset($options['filter'])) {
+            $instance->setFilter($options['filter']);
+        }
         $config = ['className' => $instance];
         $this->_actionRegistry->load($action, $config);
         $this->actions[$action] = [];
@@ -154,7 +158,7 @@ class ActionComponent extends Component
 
     /**
      * @param $action
-     * @return null|object
+     * @return null|ActionInterface|object
      */
     public function getAction($action)
     {
@@ -332,7 +336,6 @@ class ActionComponent extends Component
      */
     public function buildIndexActions(Event $event)
     {
-        debug("buildIndexActions");
         foreach ($this->listActions() as $action) {
             $_action = $this->getAction($action);
             if ($action == "index" || (!($_action instanceof IndexActionInterface))) {
@@ -347,7 +350,6 @@ class ActionComponent extends Component
      */
     public function buildEntityActions(Event $event)
     {
-        debug("buildEntityActions");
         //$entity = (isset($event->data['entity'])) ? $event->data['entity'] : null;
         foreach ($this->listActions() as $action) {
             $_action = $this->getAction($action);
@@ -371,8 +373,8 @@ class ActionComponent extends Component
         }
     }
 
-    public function beforeRender(Event $event) {
-
+    public function beforeRender(Event $event)
+    {
         if ($this->_rendered == true) {
             return;
         }
@@ -386,32 +388,55 @@ class ActionComponent extends Component
 
                 $entity = $this->_action->entity();
 
-                foreach ($this->listActions() as $action) {
-                    $_action = $this->getAction($action);
-                    if ($_action == $this->_action) {
+                // first add the primary action
+                try {
+                    $actions['primary'] = $this->_buildToolbarAction('view', $this->getAction('view'), $entity);
+                } catch (\Exception $ex) {
+                    debug($ex->getMessage());
+                }
+
+                foreach ($this->listActions() as $actionName) {
+                    if ($actionName == 'view') {
                         continue;
                     }
 
+                    $actionObj = $this->getAction($actionName);
+                    if ($actionObj == $this->_action) {
+                        continue;
+                    }
+
+                    /*
                     if ($action == "index") {
                         $actions[$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
                     }
-                    elseif ($_action instanceof EntityActionInterface && in_array('form', $_action->getScope()) && $_action->isUsable($entity)) {
-                        $actions[$action] = [$_action->getLabel(), ['action' => $action, $entity->id], $_action->getAttributes()];
+                    else*/
+                    if ($actionObj instanceof EntityActionInterface && in_array('form', $actionObj->getScope()) && $actionObj->isUsable($entity)) {
+                        $actions[$actionName] = $this->_buildToolbarAction($actionName, $actionObj, $entity);
                     }
                 }
             }
             elseif ($this->_action instanceof IndexActionInterface) {
 
-                foreach ($this->listActions() as $action) {
-                    $_action = $this->getAction($action);
-                    if (!in_array('index', $_action->getScope())) { continue; }
-                    $actions[$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
+                foreach ($this->listActions() as $actionName) {
+                    $actionObj = $this->getAction($actionName);
+                    if (!in_array('index', $actionObj->getScope())) { continue; }
+                    $actions[$actionName] = $this->_buildToolbarAction($actionName, $actionObj, null);
                 }
             }
         }
 
-        $controller->set('toolbar.actions', array_reverse($actions));
+        //$controller->set('toolbar.actions', array_reverse($actions));
+        $controller->set('toolbar.actions', $actions);
         $this->_rendered = true;
+    }
+
+    protected function _buildToolbarAction($alias, ActionInterface $action, EntityInterface $entity = null)
+    {
+        if ($entity === null) {
+            return [$action->getLabel(), ['action' => $alias], $action->getAttributes()];
+        }
+
+        return [$action->getLabel(), ['action' => $alias, $entity->id], $action->getAttributes()];
     }
 
     /**

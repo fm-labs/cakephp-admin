@@ -3,6 +3,7 @@
 namespace Backend\Action;
 
 use Backend\Action\Interfaces\EntityActionInterface;
+use Backend\Action\Traits\EntityActionFilterTrait;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
@@ -18,6 +19,8 @@ use Cake\Utility\Text;
 
 abstract class BaseEntityAction extends BaseAction implements EntityActionInterface
 {
+    use EntityActionFilterTrait;
+
     /**
      * @var array
      */
@@ -45,9 +48,14 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         return false;
     }
 
-    public function isUsable(EntityInterface $entity)
+    public function __construct(Controller $controller, array $config = [])
     {
-        return true;
+        parent::__construct($controller, $config);
+        $config += ['filter' => null];
+
+        if ($config['filter']) {
+            $this->setFilter($config['filter']);
+        }
     }
 
     public function execute(Controller $controller)

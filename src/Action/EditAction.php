@@ -45,7 +45,7 @@ class EditAction extends BaseEntityAction
      */
     public function getAttributes()
     {
-        return ['data-icon' => 'pencil'];
+        return ['data-icon' => 'edit'];
     }
 
     protected function _execute(Controller $controller)

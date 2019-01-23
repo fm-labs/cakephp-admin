@@ -6,9 +6,11 @@ use Backend\Action\Interfaces\ActionInterface;
 use Backend\Action\Interfaces\EntityActionInterface;
 use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
+use Cake\Datasource\EntityInterface;
 use Cake\Network\Response;
+use Cake\ORM\Table;
 
-class DebugAction implements ActionInterface, IndexActionInterface
+class DebugAction extends BaseEntityAction implements ActionInterface, IndexActionInterface, EntityActionInterface
 {
     public $template;
 
@@ -47,7 +49,7 @@ class DebugAction implements ActionInterface, IndexActionInterface
     /**
      * @todo non-interface entity action method
      */
-    public function hasScope()
+    public function hasScope($scope)
     {
         return true;
     }
@@ -55,16 +57,16 @@ class DebugAction implements ActionInterface, IndexActionInterface
     /**
      * @todo non-interface entity action method
      */
-    public function isUsable()
+    public function isUsable(EntityInterface $entity)
     {
         return true;
     }
 
     /**
      * @param Controller $controller
-     * @return null|Response
+     * @return Response|null
      */
-    public function execute(Controller $controller)
+    protected function _execute(Controller $controller)
     {
         $controller->set('controller_actions', $controller->actions);
 

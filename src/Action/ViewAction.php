@@ -43,7 +43,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
      */
     public function getAttributes()
     {
-        return ['data-icon' => 'file-o'];
+        return ['data-icon' => 'file-text'];
     }
 
     /**

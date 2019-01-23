@@ -12,11 +12,12 @@ class InlineEntityAction extends BaseEntityAction
     protected $_attributes = [];
     protected $_callable;
     protected $_executed = false;
+    protected $_filter;
 
     public $action;
     public $options;
 
-    public function __construct(Controller $controller, array $options = [], callable $callable = null)
+    public function __construct(Controller $controller, array $options = [], callable $callable = null, callable $filter = null)
     {
         parent::__construct($controller, []);
         $options += ['action' => null, 'form' => null, 'label' => null, 'scope' => [], 'attrs' => []];
@@ -30,6 +31,7 @@ class InlineEntityAction extends BaseEntityAction
             $callable = [$controller, $this->action];
         }
         $this->_callable = $callable;
+        $this->_filter = null;
     }
 
     public function getAlias()
@@ -53,11 +55,6 @@ class InlineEntityAction extends BaseEntityAction
     public function hasForm()
     {
         return ($this->options['form'] === true);
-    }
-
-    public function isUsable(EntityInterface $entity)
-    {
-        return true;
     }
 
     protected function _execute(Controller $controller)

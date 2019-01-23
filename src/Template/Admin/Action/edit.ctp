@@ -27,8 +27,8 @@ $this->loadHelper('Bootstrap.Tabs');
 /**
  * Extend
  */
-$this->extend('Backend./Admin/Base/form_tabs');
-//$this->extend('Backend./Admin/Action/base_entity');
+//$this->extend('Backend./Admin/Base/form_tabs');
+$this->extend('Backend./Admin/Action/base_entity');
 ?>
 <div class="form form-edit">
 
@@ -70,4 +70,14 @@ $this->extend('Backend./Admin/Base/form_tabs');
     echo $this->Form->submit(__d('backend', 'Save changes'));
     echo $this->Form->end();
     ?>
+
+
+    <?php if ($this->get('tabs')): ?>
+        <?php $this->Tabs->create(); ?>
+        <?php foreach ((array) $this->get('tabs') as $tabId => $tab): ?>
+            <?php $this->Tabs->add($tab['title'], $tab); ?>
+        <?php endforeach; ?>
+        <?php echo $this->Tabs->render(); ?>
+    <?php endif; ?>
+
 </div>

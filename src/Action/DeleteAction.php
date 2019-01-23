@@ -23,7 +23,7 @@ class DeleteAction extends BaseEntityAction
      */
     public function getAttributes()
     {
-        return ['data-icon' => 'trash'];
+        return ['data-icon' => 'trash', 'class' => 'action-danger'];
     }
 
     protected function _execute(Controller $controller)

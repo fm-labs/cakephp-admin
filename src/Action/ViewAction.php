@@ -35,7 +35,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
      */
     public function getLabel()
     {
-        return __d('backend','Details');
+        return __d('backend', 'View');
     }
 
     /**
@@ -43,7 +43,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
      */
     public function getAttributes()
     {
-        return ['data-icon' => 'file-text'];
+        return ['data-icon' => 'file-o'];
     }
 
     /**

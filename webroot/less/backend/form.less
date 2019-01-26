@@ -10,6 +10,13 @@ input[readonly] {
   cursor: not-allowed;
 }
 
+textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 150px;
+  padding: 5px;
+}
+
 /**
  * Forms
  */
@@ -59,6 +66,7 @@ form div.input {
 
 form div.checkbox {
   padding: 0.5em 0 0.5em;
+  display: inline-block;
 }
 
 form textarea {
@@ -74,6 +82,9 @@ form div.actions {
   padding: 1rem 0;
 }
 
+/**
+ * Fieldset
+ */
 form fieldset {
   //border-bottom: 1px solid @color-primary !important;
   //border-width: 0 0 1px 0 !important;
@@ -88,19 +99,20 @@ form fieldset {
 }
 
 form fieldset legend {
-  background-color: #3C8DBC;
-  color: @color-primary-inverse;
+  //background-color: #3C8DBC;
+  //color: @color-primary-inverse;
   border: none;
   display: block;
   margin: 0 0 0.5em 0;
   width: 100%;
-  padding: 0 0 0 5px;
+  //padding: 0 0 0 5px;
   line-height: 30px;
   font-size: 18px;
   font-variant: all-small-caps;
+  border-bottom: 1px solid @border-color-base;
 
   &::before {
-    .faicon(" \f068");
+    .faicon("\f107");
   }
 
   &::after {
@@ -140,7 +152,7 @@ form fieldset.collapsed {
     //border-bottom: 1px solid #f8f8f8;
 
     &::before {
-      .faicon(" \f067");
+      .faicon("\f105");
     }
 
 
@@ -156,6 +168,32 @@ form fieldset.collapsed {
 }
 
 
+/**
+ * Number
+ */
+form .input-number {
+  input {
+    width: @form-input-w;
+  }
+}
+
+/**
+ * Select
+ */
+form .input-select {
+  label {
+    display: block;
+  }
+}
+
+/**
+ * Datetime
+ */
+form .input-datetime {
+  select {
+    width: 110px;
+  }
+}
 
 /**
  * Imagepicker
@@ -206,7 +244,8 @@ form input.timepicker {
   background-repeat: no-repeat !important;
   background-position: 7px center !important;
   background-size: 20px auto !important;
-  background-color: transparent !important;
+  //background-color: transparent !important;
+  background-color: @input-bg;
   padding-left: 40px;
   cursor: auto;
   max-width: 200px;
@@ -221,6 +260,11 @@ form input.timepicker {
 
 form.form-horizontal {
   //max-width: 1000px;
+
+  fieldset {
+    //margin-left: -15px;
+    //margin-right: -15px;
+  }
 
   .control-label {
     text-align: left;

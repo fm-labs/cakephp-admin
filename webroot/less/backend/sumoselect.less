@@ -1,11 +1,20 @@
 .SumoSelect {
-  .SelectBox {
+  width: auto !important;
+  min-width: 200px !important;
+
+  > .SelectBox {
     padding: 6px 12px;
+  }
+
+  > .optWrapper {
+    width: auto !important;
+    min-width: 200px !important;
   }
 }
 
-form .input-select > label,
-form .input-date > label,
-form .input-datetime > label {
-  display: block;
+
+form .input-datetime {
+  .SumoSelect {
+    min-width: 0 !important;
+  }
 }

@@ -94,7 +94,7 @@ $this->assign('title', __d('backend', 'Design Kitchensink'));
     <div class="row">
         <div class="col-md-6">
             <div class="box box-default">
-                <div class="box-heading">Table</div>
+                <div class="box-header">Table</div>
                 <div class="box-body">
                     <table class="table">
                         <thead>
@@ -127,7 +127,7 @@ $this->assign('title', __d('backend', 'Design Kitchensink'));
         </div>
         <div class="col-md-6">
             <div class="box box-default">
-                <div class="box-heading">Table</div>
+                <div class="box-header">Table</div>
                 <div class="box-body">
                     <table class="table table-striped">
                         <thead>
@@ -168,13 +168,13 @@ $this->assign('title', __d('backend', 'Design Kitchensink'));
     <div class="row">
         <div class="col-md-6">
             <div class="box box-default">
-                <div class="box-heading">Title</div>
+                <div class="box-header">Title</div>
                 <div class="box-body">Hi!</div>
             </div>
         </div>
         <div class="col-md-6">
             <div class="box box-default">
-                <div class="box-heading">Title</div>
+                <div class="box-header">Title</div>
                 <div class="box-body">Hi!</div>
             </div>
         </div>
@@ -183,19 +183,19 @@ $this->assign('title', __d('backend', 'Design Kitchensink'));
     <div class="row">
         <div class="col-md-4">
             <div class="box box-default">
-                <div class="box-heading">Title</div>
+                <div class="box-header">Title</div>
                 <div class="box-body">Hi!</div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="box box-default">
-                <div class="box-heading">Title</div>
+                <div class="box-header">Title</div>
                 <div class="box-body">Hi!</div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="box box-default">
-                <div class="box-heading">Title</div>
+                <div class="box-header">Title</div>
                 <div class="box-body">Hi!</div>
             </div>
         </div>
@@ -204,25 +204,25 @@ $this->assign('title', __d('backend', 'Design Kitchensink'));
     <div class="row">
         <div class="col-md-3">
             <div class="box box-default">
-                <div class="box-heading">Title</div>
+                <div class="box-header">Title</div>
                 <div class="box-body">Hi!</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="box box-default">
-                <div class="box-heading">Title</div>
+                <div class="box-header">Title</div>
                 <div class="box-body">Hi!</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="box box-default">
-                <div class="box-heading">Title</div>
+                <div class="box-header">Title</div>
                 <div class="box-body">Hi!</div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="box box-default">
-                <div class="box-heading">Title</div>
+                <div class="box-header">Title</div>
                 <div class="box-body">Hi!</div>
             </div>
         </div>

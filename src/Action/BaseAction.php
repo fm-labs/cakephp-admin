@@ -5,6 +5,7 @@ namespace Backend\Action;
 
 use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
+use Cake\Core\InstanceConfigTrait;
 use Cake\Network\Exception\NotImplementedException;
 use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
@@ -12,15 +13,12 @@ use Cake\Utility\Inflector;
 
 abstract class BaseAction implements ActionInterface
 {
-    /**
-     * @var array
-     */
-    protected $_defaultConfig = [];
+    use InstanceConfigTrait;
 
     /**
      * @var array
      */
-    protected $_config = [];
+    protected $_defaultConfig = [];
 
     /**
      * @var \Cake\Controller\Controller
@@ -45,6 +43,11 @@ abstract class BaseAction implements ActionInterface
     /**
      * @var string
      */
+    protected $_label;
+
+    /**
+     * @var string
+     */
     public $template = null;
 
     /**
@@ -55,6 +58,7 @@ abstract class BaseAction implements ActionInterface
     {
         $this->_controller = $controller;
         $this->_request =& $controller->request;
+        $this->config($config);
     }
 
     /**
@@ -64,6 +68,7 @@ abstract class BaseAction implements ActionInterface
     {
         $class = explode('\\', get_class($this));
         $class = array_pop($class);
+
         return Inflector::underscore(substr($class, 0, -6));
     }
 
@@ -81,6 +86,7 @@ abstract class BaseAction implements ActionInterface
     public function getLabel()
     {
         $alias = $this->getAlias();
+
         return Inflector::humanize($alias);
     }
 
@@ -99,6 +105,7 @@ abstract class BaseAction implements ActionInterface
     public function setScope($scope)
     {
         $this->_scope = (array) $scope;
+
         return $this;
     }
 
@@ -124,6 +131,7 @@ abstract class BaseAction implements ActionInterface
         if (!$this->_table) {
             $this->_table = TableRegistry::get($this->_config['modelClass']);
         }
+
         return $this->_table;
     }
 
@@ -135,13 +143,13 @@ abstract class BaseAction implements ActionInterface
 
     protected function _flashSuccess($msg = null)
     {
-        $msg = ($msg) ?: __d('backend','Ok');
+        $msg = ($msg) ?: __d('backend', 'Ok');
         $this->_controller->Flash->success($msg);
     }
 
     protected function _flashError($msg = null)
     {
-        $msg = ($msg) ?: __d('backend','Failed');
+        $msg = ($msg) ?: __d('backend', 'Failed');
         $this->_controller->Flash->error($msg);
     }
 

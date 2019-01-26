@@ -7,7 +7,7 @@ use Cake\Core\Configure;
 <div class="entity-view">
     <div class="box">
         <?php if (isset($title)) : ?>
-        <div class="box-heading with-border">
+        <div class="box-header with-border">
             <?= h($title); ?>
         </div>
         <?php endif; ?>

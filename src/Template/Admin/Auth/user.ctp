@@ -8,43 +8,34 @@ use Cake\Core\Configure;
         <?= h($user['name']); ?>
     </h2>
     <div>
-        <div class="image">
-            <?= $this->Ui->icon('user', ['class' => 'fa-5x']); ?>
+        <div class="image" style="margin: 1em 0;">
+            <?= $this->Ui->icon('user-circle', ['class' => 'fa-5x']); ?>
         </div>
         <div class="content">
-            <a class="header"><?= h($user['username']); ?></a>
-            <div class="meta">
-                <span class="date">Joined <?= h($user['created']->nice()) ?></span>
-            </div>
-            <div class="description">
+            <p class="description">
                 Email: <?= h($user['email']); ?>
-            </div>
+            </p>
+            <p class="meta">
+                <span class="date">Joined <?= h($user['created']->nice()) ?></span>
+            </p>
         </div>
         <div class="extra content">
             <?= $this->Ui->link(__d('backend','Goto Dashboard'),
-                ['_name' => 'backend:admin:dashboard'],
-                ['data-icon' => 'home', 'class' => 'btn btn-default btn-block']);
+                ['_name' => 'backend:admin:user:login'],
+                ['icon' => 'home', 'class' => 'btn btn-default btn-block']);
             ?>
-        </div>
-        <div class="extra content">
             <?= $this->Ui->link(__d('backend','Edit profile'),
-                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'edit', $user['id'], 'prefix' => false],
-                ['data-icon' => 'edit', 'class' => 'btn btn-default btn-block']);
+                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'edit', $user['id']],
+                ['icon' => 'edit', 'class' => 'btn btn-default btn-block']);
             ?>
-        </div>
-        <div class="extra content">
             <?= $this->Ui->link(__d('backend','Change password'),
-                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'password_change', 'prefix' => false],
-                ['data-icon' => 'key', 'class' => 'btn btn-default btn-block']);
+                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'password_change'],
+                ['icon' => 'key', 'class' => 'btn btn-default btn-block']);
             ?>
-        </div>
-        <div class="extra content">
             <?= $this->Ui->link(__d('backend','Logout'),
                 ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
-                ['data-icon' => 'logout', 'class' => 'btn btn-default btn-block']);
+                ['icon' => 'sign-out', 'class' => 'btn btn-default btn-block']);
             ?>
         </div>
     </div>
-
-    <?php debug($user); ?>
 </div>

@@ -145,6 +145,7 @@ class EntityViewCell extends Cell
             $formatterArgs = ($field['formatterArgs']) ?: [];
 
             $assoc = null;
+
             if (isset($belongsTo[$property])) {
                 $assoc = $associations->get($belongsTo[$property]);
                 //debug("$property belongsTo " . $belongsTo[$property] . " -> " . $assoc->property());
@@ -154,17 +155,19 @@ class EntityViewCell extends Cell
 
                     $related = $entity->get($assoc->property());
                     $formatter = function ($val, $row, $args, $view) use ($related, $assoc) {
+                        list($plugin, $modelName) = pluginSplit($assoc->target()->registryAlias());
                         return $view->Html->link(
                             $related->get($assoc->target()->displayField()),
-                            ['controller' => $assoc->name(), 'action' => 'view', $related->id],
+                            [/*'plugin' => $plugin,*/ 'controller' => $assoc->name(), 'action' => 'view', $related->id],
                             ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $related->get($assoc->target()->displayField())]
                         );
                     };
                 } elseif ($entity->get($property)) {
                     $formatter = function ($val, $row, $args, $view) use ($assoc) {
+                        list($plugin, $modelName) = pluginSplit($assoc->target()->registryAlias());
                         return $view->Html->link(
                             $val,
-                            ['controller' => $assoc->name(), 'action' => 'view', $val],
+                            [/*'plugin' => $plugin,*/ 'controller' => $assoc->name(), 'action' => 'view', $val],
                             ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val]
                         );
                     };
@@ -192,7 +195,7 @@ class EntityViewCell extends Cell
                             */
                             $formatter = function ($val, $row, $args, $view) use ($assoc) {
                                 if (!$val) {
-                                    return $val;
+                                    return '-';
                                 }
 
                                 return $view->Html->link(

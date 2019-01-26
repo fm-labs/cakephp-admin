@@ -28,19 +28,21 @@ class BoxHelper extends Helper
      */
     protected $_defaultConfig = [
         'templates' => [
-            'box' => '<div class="box box-default with-border{{collapsedClass}}">{{header}}{{body}}{{footer}}</div>',
-            'boxHeader' => '<div class="box-heading">{{icon}} {{title}}{{tools}}</div>',
+            'box' => '<div class="box {{class}}">{{header}}{{body}}{{footer}}</div>',
+            'boxHeader' => '<div class="box-header {{class}}">{{icon}} {{title}}{{tools}}</div>',
             'boxTitle' => '<span class="box-title">{{title}}</span>',
             'boxIcon' => '<span class="box-icon"><i class="fa fa-{{icon}}"></i></span>',
             'boxTools' => '<div class="box-tools pull-right">{{tools}}</div>',
-            'boxBody' => '<div class="box-body">{{contents}}</div>',
-            'boxFooter' => '<div class="box-footer">{{contents}}</div>',
+            'boxBody' => '<div class="box-body {{class}}">{{contents}}</div>',
+            'boxFooter' => '<div class="box-footer {{class}}">{{contents}}</div>',
             'boxToolCollapseButton' => '<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>',
             'boxToolExpandButton' => '<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>'
         ],
     ];
 
     /**
+     * Default parameters
+     *
      * @var array
      */
     protected $_defaultParams = [
@@ -50,12 +52,40 @@ class BoxHelper extends Helper
         'collapse' => false,
         'expand' => true,
         'icon' => null,
+        'class' => 'box-solid',
+        'headerClass' => 'with-border',
+        'bodyClass' => '',
+        'footerClass',
+        'collapsedClass' => 'collapsed-box'
     ];
+
+    /**
+     * Global parameters.
+     * Can be set once and will apply to all newly created boxes
+     *
+     * @var array
+     */
+    protected $_globalParams = [];
 
     /**
      * @var array
      */
     protected $_params = [];
+
+    /**
+     * Set the default params for each box created
+     * after using this method.
+     * Pass an empty array to reset the defaults
+     *
+     * @param array $params Map of default params
+     * @return $this
+     */
+    public function setDefaults(array $params = [])
+    {
+        $this->_globalParams = $params;
+
+        return $this;
+    }
 
     /**
      * @param null $title
@@ -72,7 +102,7 @@ class BoxHelper extends Helper
 
         $params['title'] = $title;
 
-        $this->_params = array_merge($this->_defaultParams, $params);
+        $this->_params = array_merge($this->_defaultParams, $this->_globalParams, $params);
         //$this->_id = ($this->_params['id']) ?: uniqid('box');
 
         if ($this->_params['autostart']) {
@@ -125,8 +155,11 @@ class BoxHelper extends Helper
     {
         $this->end();
 
+        $class = $this->_params['class'];
+        $class = ($this->_params['collapsed']) ? $class .' ' . $this->_params['collapsedClass'] : $class;
+
         return $this->templater()->format('box', [
-            'collapsedClass' => ($this->_params['collapsed']) ? ' collapsed-box' : '',
+            'class' => trim($class),
             'header' => $this->_renderHeader(),
             'body' => $this->_renderBody(),
             'footer' => $this->_renderFooter()
@@ -142,6 +175,7 @@ class BoxHelper extends Helper
             'icon' => $this->_renderIcon(),
             'title' => $this->_renderTitle(),
             'tools' => $this->_renderTools(),
+            'class' => $this->_params['headerClass']
         ]);
     }
 
@@ -174,7 +208,10 @@ class BoxHelper extends Helper
      */
     protected function _renderBody()
     {
-        return $this->templater()->format('boxBody', ['contents' => $this->getContent('body')]);
+        return $this->templater()->format('boxBody', [
+            'contents' => $this->getContent('body'),
+            'class' => $this->_params['bodyClass']
+        ]);
     }
 
     /**
@@ -187,7 +224,10 @@ class BoxHelper extends Helper
             return "";
         }
 
-        return $this->templater()->format('boxFooter', ['contents' => $contents]);
+        return $this->templater()->format('boxFooter', [
+            'contents' => $contents,
+            'class' => $this->_params['footerClass']
+        ]);
     }
 
     /**

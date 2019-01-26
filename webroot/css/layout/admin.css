@@ -355,7 +355,8 @@ nav.actionbar-nav ul li a {
   display: block;
   padding: 7px 12px;
   margin: 0 0 5px;
-  border: 1px solid #3c8dbc;
+  border: 1px solid #ccc;
+  text-align: center;
 }
 /*
 body{
@@ -372,6 +373,12 @@ body {
   height: auto;
   overflow-x: hidden;
   overflow-y: auto;
+}
+body.body-screen {
+  background: #ecf0f5;
+}
+body.body-compact {
+  font-size: 12px;
 }
 .wrapper {
   height: 100%;
@@ -422,6 +429,7 @@ body {
 }
 .content {
   padding-bottom: 2em;
+  overflow: scroll;
 }
 .content-header h1 {
   margin-top: 10px;
@@ -515,11 +523,10 @@ body.darkmode .pagination > li:hover > span {
   background-color: #FFF;
   color: #88C7EA;
 }
-body.darkmode .box.with-border {
+body.darkmode .box-solid {
   border-color: #314354;
 }
-body.darkmode .box.with-border .box-heading,
-body.darkmode .box.with-border .box-footer {
+body.darkmode .box-solid .with-border {
   border-color: #314354;
 }
 body.darkmode .dataTables_wrapper button.dt-button,
@@ -573,6 +580,10 @@ body.darkmode .dataTables_wrapper .dataTables_paginate a.paginate_button:hover {
   color: #1D2730;
   border: 1px solid #FFF;
 }
+body.darkmode textarea {
+  background: transparent;
+  border-color: #314354;
+}
 body.darkmode form .form-control {
   color: #C1C1C1;
   background-color: #1D2730;
@@ -581,6 +592,10 @@ body.darkmode form .form-control {
 body.darkmode form label,
 body.darkmode form .control-label {
   color: #FFF;
+}
+body.darkmode form legend {
+  color: #FFF;
+  border-color: #314354;
 }
 body.darkmode dl dd,
 body.darkmode dl.dl-horizontal dd,

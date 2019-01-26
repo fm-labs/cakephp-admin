@@ -188,10 +188,10 @@ class ToolbarHelper extends Helper
      * @param array $options Render options
      * @return string Rendered HTML string
      */
-    public function render($options = [])
+    public function render($options = [], $childMenuOptions = [], $itemOptions = [])
     {
         $options = array_merge($this->config('options'), $options);
-        $html = $this->Ui->menu($this->getMenuItems(), $options);
+        $html = $this->Ui->menu($this->getMenuItems(), $options, $childMenuOptions, $itemOptions);
         $this->_rendered = true;
 
         return $html;

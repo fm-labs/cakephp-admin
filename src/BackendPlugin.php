@@ -220,11 +220,13 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
                 'url' => ['plugin' => 'Backend', 'controller' => 'Cache', 'action' => 'index'],
                 'data-icon' => 'hourglass-o',
             ],
+            /*
             'users' => [
                 'title' => 'Users',
                 'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
                 'data-icon' => 'users',
             ],
+            */
             'plugins' => [
                 'title' => 'Plugins',
                 'url' => ['plugin' => 'Backend', 'controller' => 'Plugins', 'action' => 'index'],

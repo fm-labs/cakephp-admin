@@ -36,7 +36,7 @@ $this->loadHelper('Bootstrap.Tabs');
     if ($this->fetch('content')) {
         echo $this->fetch('content');
     } else {
-        echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render('display');
+        echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render('table');
     }
     ?>
 

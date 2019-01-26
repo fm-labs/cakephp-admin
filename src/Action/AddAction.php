@@ -70,13 +70,13 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         }
 
         $fields = $blacklist = $whitelist = [];
-        if (isset($controller->viewVars['fields.blacklist'])) {
-            $blacklist = $controller->viewVars['fields.blacklist'];
-            $entity->accessible($blacklist, false);
-        }
         if (isset($controller->viewVars['fields.whitelist'])) {
             $whitelist = $controller->viewVars['fields.whitelist'];
             $entity->accessible($whitelist, true);
+        }
+        if (isset($controller->viewVars['fields.blacklist'])) {
+            $blacklist = $controller->viewVars['fields.blacklist'];
+            $entity->accessible($blacklist, false);
         }
         foreach ($_fields as $_f => $field) {
             if (is_numeric($_f)) {

@@ -95,6 +95,12 @@ class ActionComponent extends Component
             $actionConfig = ['className' => 'Backend.Debug'];
             $this->_actionRegistry->load('debug', $actionConfig);
             $this->actions['debug'] = $actionConfig;
+
+            /*
+            $infoAction = ['className' => 'Backend.View', 'label' => 'Info'];
+            $this->_actionRegistry->load('info', $infoAction);
+            $this->actions['info'] = $infoAction;
+            */
         }
     }
 
@@ -338,6 +344,9 @@ class ActionComponent extends Component
     {
         foreach ($this->listActions() as $action) {
             $_action = $this->getAction($action);
+            if ($_action == $this->_action) {
+                continue;
+            }
             if ($action == "index" || (!($_action instanceof IndexActionInterface))) {
                 continue;
             }
@@ -389,16 +398,20 @@ class ActionComponent extends Component
                 $entity = $this->_action->entity();
 
                 // first add the primary action
+                /*
                 try {
                     $actions['primary'] = $this->_buildToolbarAction('view', $this->getAction('view'), $entity);
                 } catch (\Exception $ex) {
                     debug($ex->getMessage());
                 }
+                */
 
                 foreach ($this->listActions() as $actionName) {
+                    /*
                     if ($actionName == 'view') {
                         continue;
                     }
+                    */
 
                     $actionObj = $this->getAction($actionName);
                     if ($actionObj == $this->_action) {
@@ -419,7 +432,12 @@ class ActionComponent extends Component
 
                 foreach ($this->listActions() as $actionName) {
                     $actionObj = $this->getAction($actionName);
-                    if (!in_array('index', $actionObj->getScope())) { continue; }
+                    if ($actionObj == $this->_action) {
+                        continue;
+                    }
+                    if (!in_array('index', $actionObj->getScope())) {
+                        continue;
+                    }
                     $actions[$actionName] = $this->_buildToolbarAction($actionName, $actionObj, null);
                 }
             }

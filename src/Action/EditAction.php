@@ -37,7 +37,7 @@ class EditAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend','Edit');
+        return __d('backend', 'Edit');
     }
 
     /**
@@ -66,13 +66,15 @@ class EditAction extends BaseEntityAction
         }
 
         $fields = $blacklist = $whitelist = [];
-        if (isset($controller->viewVars['fields.blacklist'])) {
-            $blacklist = $controller->viewVars['fields.blacklist'];
-            $entity->accessible($blacklist, false);
-        }
         if (isset($controller->viewVars['fields.whitelist'])) {
             $whitelist = $controller->viewVars['fields.whitelist'];
             $entity->accessible($whitelist, true);
+        } else {
+            $entity->accessible('*', true);
+        }
+        if (isset($controller->viewVars['fields.blacklist'])) {
+            $blacklist = $controller->viewVars['fields.blacklist'];
+            $entity->accessible($blacklist, false);
         }
         foreach ($_fields as $_f => $field) {
             if (is_numeric($_f)) {

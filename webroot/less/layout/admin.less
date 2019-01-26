@@ -29,6 +29,14 @@ body {
   overflow-y: auto;
 }
 
+body.body-screen {
+  background: #ecf0f5;
+}
+
+body.body-compact {
+  font-size: 12px;
+}
+
 .wrapper {
   height: 100%;
   position: relative;
@@ -84,6 +92,7 @@ body {
 
 .content {
   padding-bottom: 2em;
+  overflow: scroll;
 }
 
 .content-header h1 {
@@ -226,10 +235,10 @@ body.darkmode {
   }
 
   // Box
-  .box.with-border {
+  .box-solid {
     border-color: @dark-color-border;
 
-    .box-heading, .box-footer {
+    .with-border {
       border-color: @dark-color-border;
     }
   }
@@ -288,18 +297,29 @@ body.darkmode {
 
   }
 
+  // Inputs
+  textarea {
+    background: transparent;
+    border-color: @dark-color-border;
+
+  }
+
   // Form
   form .form-control {
     color: @dark-color-text;
     background-color: @dark-color-bg;
     border-color: @dark-color-border;
-
     //.placeholder(#CCC);
   }
 
   form label,
   form .control-label {
     color: @dark-color-highlight;
+  }
+
+  form legend {
+    color: @dark-color-highlight;
+    border-color: @dark-color-border;
   }
 
   // Lists

@@ -6,6 +6,7 @@ use Bootstrap\View\Helper\UiHelper;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\I18n\Date;
+use Cake\I18n\Time;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
@@ -69,27 +70,29 @@ class FormatterHelper extends Helper
 
         // date
         self::register('date', function ($val, $extra, $params) {
-            /*
-            if ($val instanceof \Cake\I18n\Date) {
-                return $val->nice();
-                //return (string)$val;
+            //$format = null;
+            //$format = 'MM.dd.yyyy';
+            $format = 'yyyy-MM-dd';
+            if (isset($params['format'])) {
+                $format = $params['format'];
             }
-            */
+            if ($val instanceof \DateTimeInterface) {
+                return $this->Time->format($val, $format);
+            }
 
             return (string)$val;
         });
         self::register('datetime', function ($val, $extra, $params) {
-            /*
-            debug($val);
-            debug($params);
-
-            $format = Date::ATOM;
+            $format = null;
+            //$format = 'yyyy-MM-dd HH:mm:ss';
+            //$format = 'MM.dd.yyyy HH:mm:ss';
             if (isset($params['format'])) {
                 $format = $params['format'];
             }
+            if ($val instanceof \DateTimeInterface) {
+                return $this->Time->format($val, $format);
+            }
 
-            return $this->Time->format($val, $format);
-            */
             return (string)$val;
         });
 
@@ -164,7 +167,7 @@ class FormatterHelper extends Helper
 
         // NULL
         self::register('null', function ($val, $extra, $params) {
-            return /*(Configure::read('debug')) ? 'null' :*/ '-';
+            return '-';
         });
 
         // object
@@ -233,10 +236,8 @@ class FormatterHelper extends Helper
             return $value;
         }
 
-        // Fallback to default formatter based on values datatype
-        $dataType = gettype($value);
         if ($formatter === null || $formatter === 'default') {
-            $formatter = $dataType;
+            $formatter = $this->_detectFormatter($value);
         }
 
         if (is_array($formatter)) {
@@ -248,16 +249,11 @@ class FormatterHelper extends Helper
                 list($formatter, $formatterArgs) = $formatter;
             } else {
                 debug("Unsupported formatter array format");
-
-                return "[Array]";
+                $formatter = null;
             }
         }
 
         switch ($formatter) {
-            case "null":
-            case "NULL":
-                $formatter = "null";
-                break;
 
             case "integer":
             case "float":
@@ -268,16 +264,20 @@ class FormatterHelper extends Helper
 
             case "unknown type":
             case "resource":
-                return "[" . h($dataType) . "]";
+                return "[" . h($formatter) . "]";
 
-            case "datetime":
+            /*
+            //case "datetime":
+            //case "date":
             case "uuid":
             case "text":
             case "string":
-                if (!isset(self::$_formatters[$formatter])) {
-                    $formatter = 'escape';
-                }
+            case "null":
+            case "NULL":
+            case null:
+                $formatter = 'escape';
                 break;
+            */
             default:
                 break;
         }
@@ -291,15 +291,29 @@ class FormatterHelper extends Helper
             }
         }
 
-        if (is_callable($formatter)) {
-            return call_user_func_array($formatter, [$value, $extra, $formatterArgs, $this->_View]);
+        if (!is_callable($formatter)) {
+            //@TODO remove debug code
+            if ($formatter) {
+                debug("Uncallable formatter");
+                var_dump($formatter);
+            }
+
+            return h($value);
         }
 
-        if ($formatter) {
-            debug("Uncallable formatter");
-            var_dump($formatter);
+        return call_user_func_array($formatter, [$value, $extra, $formatterArgs, $this->_View]);
+    }
+
+    protected function _detectFormatter($value)
+    {
+        // detect date types
+        if (is_object($value) && $value instanceof \DateTimeInterface) {
+            $formatter = 'datetime';
+        } else {
+            // Fallback to default formatter based on values datatype
+            $formatter = gettype($value);
         }
 
-        return $value;
+        return $formatter;
     }
 }

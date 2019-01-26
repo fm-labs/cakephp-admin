@@ -110,7 +110,6 @@ class BackendComponent extends Component
 
         // Configure Backend Authentication
         if ($this->_registry->has('Auth') && !is_a($this->_registry->get('Auth'), static::$authComponentClass)) {
-            debug("auth comp hit");
             $this->_registry->unload('Auth');
         }
         //$this->_registry->load('Auth', [
@@ -220,9 +219,8 @@ class BackendComponent extends Component
      */
     public function beforeFilter(Event $event)
     {
-        $controller =& $this->_controller;
-        //$controller = $event->subject();
-
+        //$controller =& $this->_controller;
+        $controller = $event->subject();
 
         // Handle iframe and ajax requests
         if ($this->request->is('iframe')) {
@@ -231,6 +229,9 @@ class BackendComponent extends Component
             $controller->viewBuilder()->layout('Backend.ajax/admin');
         }
 
+        if ($controller->Auth->user('locale') && $controller->Auth->user('locale') != I18n::locale()) {
+            I18n::locale($controller->Auth->user('locale'));
+        }
 
     }
 
@@ -313,7 +314,7 @@ class BackendComponent extends Component
             //'Controller.startup' => 'startup',
             'Controller.beforeRender' => 'beforeRender',
             //'Controller.beforeRedirect' => 'beforeRedirect',
-            //'Controller.shutdown' => 'shutdown',
+            //'Controller.shutdown' => 'shutdown'
         ];
     }
 }

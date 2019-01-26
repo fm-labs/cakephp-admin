@@ -20,7 +20,7 @@ $viewOptions = (array) $this->get('viewOptions');
 //$this->loadHelper('Backend.Chosen');
 $this->loadHelper('Backend.DataTable');
 $this->loadHelper('Bootstrap.Tabs');
-$this->extend('Backend./Admin/Action/base_entity');
+$this->extend('Backend./Base/form');
 ?>
 <div class="view">
     <?php
@@ -45,7 +45,7 @@ $this->extend('Backend./Admin/Action/base_entity');
             $relatedEntity = $entity->get($assoc->property());
             $title = __d('backend', 'Related {0}', $assoc->name());
             $html = __d('backend', "No data available");
-            //$template = '<div class="box"><div class="box-heading with-border">%s</div><div class="box-body">%s</div></div>';
+            //$template = '<div class="box"><div class="box-header with-border">%s</div><div class="box-body">%s</div></div>';
             $template = '<div class="realted"><h3>%s</h3>%s</div>';
 
             switch ($assoc->type()) {

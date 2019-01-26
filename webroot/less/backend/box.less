@@ -1,13 +1,16 @@
 @import "../vars";
 
 .box {
-  box-shadow: @box-shadow-base;
   margin-bottom: @box-padding-base * 2;
   border-radius: @border-radius-base;
 
-  .box-heading {
+  .box-header {
     padding: @box-padding-base;
     font-weight: 700;
+
+    &.with-border {
+      border-bottom: @box-border-base;
+    }
   }
 
   .box-body {
@@ -16,6 +19,10 @@
 
   .box-footer {
     padding: @box-padding-base;
+
+    &.with-border {
+      border-top: @box-border-base;
+    }
   }
 
   table {
@@ -24,37 +31,33 @@
   }
 }
 
-.box.with-border {
-  border: @box-border-base;
-
-  .box-heading {
-    border-bottom: @box-border-base;
-  }
-
-  .box-footer {
-    border-top: @box-border-base;
-  }
+.box.with-shadow {
+  box-shadow: @box-shadow-base;
 }
 
 .box-default {
 }
 
+.box-solid {
+  border: @box-border-base;
+}
+
 .box-success {
-  .box-heading {
+  .box-header {
     color: @color-success;
     border-top: 2px solid @color-success;
   }
 }
 
 .box-danger {
-  .box-heading {
+  .box-header {
     color: @color-danger;
     border-top: 2px solid @color-danger;
   }
 }
 
 .box-warning {
-  .box-heading {
+  .box-header {
     color: @color-warning;
     border-top: 2px solid @color-warning;
   }

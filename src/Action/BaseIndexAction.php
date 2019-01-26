@@ -58,14 +58,40 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
         }
 
         // fields
-        $cols = $this->model()->schema()->columns();
-        if (!empty($this->_config['fields'])) {
-            foreach ($this->_config['fields'] as $field => $fieldConfig) {
-                if (is_numeric($field)) {
-                    $field = $fieldConfig;
-                    $fieldConfig = [];
+        //$cols = $this->_normalizeColumns($this->_config['fields']);
+
+        // UGLY WORKAROUND TO PREVENT BREAKING OLDER ADMIN PAGES USING THE DEPRECATED CONFIG SCHEME
+        $cols = [];
+        // fields whitelist
+        if ($this->_config['fields.whitelist'] === true) {
+            $cols = $this->_normalizeColumns($this->_config['fields']);
+        } elseif (!empty($this->_config['fields.whitelist'])) {
+            foreach ($this->_config['fields.whitelist'] as $whiteListed) {
+                if (!array_key_exists($whiteListed, $cols)) {
+                    $cols[$whiteListed] = [];
                 }
-                $cols[$field] = $fieldConfig;
+            }
+
+        }
+
+        $normalized = $this->_normalizeColumns($this->_config['fields']);
+        foreach ($normalized as $name => $col) {
+            $cols[$name] = $col;
+        }
+        // END OF WORKAROUND
+
+        if (empty($cols)) {
+            // if no fields are defined, use first 5 columns from table schema
+            $cols = array_slice($this->model()->schema()->columns(), 0, 5);
+        }
+        $cols = $this->_normalizeColumns($cols);
+
+        // fields blacklist
+        if ($this->_config['fields.blacklist']) {
+            foreach ($this->_config['fields.blacklist'] as $blackListed) {
+                if (array_key_exists($blackListed, $cols)) {
+                    unset($cols[$blackListed]);
+                }
             }
         }
         $this->_config['fields'] = $cols;
@@ -92,7 +118,19 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
         }
     }
 
+    protected function _normalizeColumns(array $columns)
+    {
+        $normalized = [];
+        foreach ($columns as $col => $conf) {
+            if (is_numeric($col)) {
+                $col = $conf;
+                $conf = [];
+            }
 
+            $normalized[$col] = $conf;
+        }
 
+        return $normalized;
+    }
 
 }

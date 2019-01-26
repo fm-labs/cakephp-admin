@@ -336,13 +336,15 @@ nav ul.pagination {
 }
 */
 .box {
-  box-shadow: rgba(0, 0, 0, 0.2) 0 10px 25px;
   margin-bottom: 20px;
   border-radius: 5px;
 }
-.box .box-heading {
+.box .box-header {
   padding: 10px;
   font-weight: 700;
+}
+.box .box-header.with-border {
+  border-bottom: 1px solid #333;
 }
 .box .box-body {
   padding: 10px;
@@ -350,28 +352,28 @@ nav ul.pagination {
 .box .box-footer {
   padding: 10px;
 }
+.box .box-footer.with-border {
+  border-top: 1px solid #333;
+}
 .box table {
   width: 100%;
   margin: 0;
 }
-.box.with-border {
+.box.with-shadow {
+  box-shadow: rgba(0, 0, 0, 0.2) 5px 5px 10px;
+}
+.box-solid {
   border: 1px solid #333;
 }
-.box.with-border .box-heading {
-  border-bottom: 1px solid #333;
-}
-.box.with-border .box-footer {
-  border-top: 1px solid #333;
-}
-.box-success .box-heading {
+.box-success .box-header {
   color: #49B52A;
   border-top: 2px solid #49B52A;
 }
-.box-danger .box-heading {
+.box-danger .box-header {
   color: #DC3601;
   border-top: 2px solid #DC3601;
 }
-.box-warning .box-heading {
+.box-warning .box-header {
   color: #FFCE47;
   border-top: 2px solid #FFCE47;
 }
@@ -396,6 +398,12 @@ nav ul.pagination {
  */
 input[readonly] {
   cursor: not-allowed;
+}
+textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 150px;
+  padding: 5px;
 }
 /**
  * Forms
@@ -431,6 +439,7 @@ form div.input {
 }
 form div.checkbox {
   padding: 0.5em 0 0.5em;
+  display: inline-block;
 }
 form textarea {
   min-height: 120px;
@@ -442,22 +451,23 @@ form div.actions {
   border-top: 1px solid #ccc;
   padding: 1rem 0;
 }
+/**
+ * Fieldset
+ */
 form fieldset {
   padding: 0;
   margin: 0 0 1em 0;
   transition: height 1s;
 }
 form fieldset legend {
-  background-color: #3C8DBC;
-  color: #FFF;
   border: none;
   display: block;
   margin: 0 0 0.5em 0;
   width: 100%;
-  padding: 0 0 0 5px;
   line-height: 30px;
   font-size: 18px;
   font-variant: all-small-caps;
+  border-bottom: 1px solid #ccc;
 }
 form fieldset legend::before {
   display: inline-block;
@@ -474,7 +484,7 @@ form fieldset legend::before {
   -webkit-font-smoothing: antialiased;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  content: " \f068";
+  content: "\f107";
 }
 form fieldset legend::after {
   font-size: 80%;
@@ -519,10 +529,28 @@ form fieldset.collapsed > legend::before {
   -webkit-font-smoothing: antialiased;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  content: " \f067";
+  content: "\f105";
 }
 form fieldset.collapsed > legend ~ * {
   margin-top: 0.3em;
+}
+/**
+ * Number
+ */
+form .input-number input {
+  width: 300px;
+}
+/**
+ * Select
+ */
+form .input-select label {
+  display: block;
+}
+/**
+ * Datetime
+ */
+form .input-datetime select {
+  width: 110px;
 }
 /**
  * Imagepicker
@@ -552,7 +580,7 @@ form input.timepicker {
   background-repeat: no-repeat !important;
   background-position: 7px center !important;
   background-size: 20px auto !important;
-  background-color: transparent !important;
+  background-color: #fff;
   padding-left: 40px;
   cursor: auto;
   max-width: 200px;
@@ -886,7 +914,7 @@ table.info.table tr td:first-child {
 }
 .tabs .tab-content > .tab-pane {
   border: 1px solid #DDD;
-  padding: 2rem;
+  padding: 15px;
   border-top: none;
 }
 body {
@@ -968,13 +996,19 @@ body.has-toolbar-fixed {
 .chosen-container-single .chosen-single div b {
   background-position-y: 4px;
 }
-.SumoSelect .SelectBox {
+.SumoSelect {
+  width: auto !important;
+  min-width: 200px !important;
+}
+.SumoSelect > .SelectBox {
   padding: 6px 12px;
 }
-form .input-select > label,
-form .input-date > label,
-form .input-datetime > label {
-  display: block;
+.SumoSelect > .optWrapper {
+  width: auto !important;
+  min-width: 200px !important;
+}
+form .input-datetime .SumoSelect {
+  min-width: 0 !important;
 }
 /**
  * Backend DataTables styles

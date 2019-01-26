@@ -72,8 +72,8 @@ class IndexAction extends BaseIndexAction
             'sortable' => $this->_config['sortable'],
             'model' => $this->_config['modelClass'],
             'fields' => $this->_config['fields'],
-            'fieldsWhitelist' => $this->_config['fields.whitelist'],
-            'fieldsBlacklist' => $this->_config['fields.blacklist'],
+            //'fieldsWhitelist' => $this->_config['fields.whitelist'],
+            //'fieldsBlacklist' => $this->_config['fields.blacklist'],
             'rowActions' => $this->_config['rowActions'],
             //'data' => $result,
             'rowActionCallbacks' => [

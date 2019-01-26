@@ -56,6 +56,10 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         if ($config['filter']) {
             $this->setFilter($config['filter']);
         }
+
+        if (isset($config['scope'])) {
+            $this->_scope = $config['scope'];
+        }
     }
 
     public function execute(Controller $controller)

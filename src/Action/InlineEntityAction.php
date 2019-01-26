@@ -44,6 +44,7 @@ class InlineEntityAction extends BaseEntityAction
         if ($this->options['label']) {
             return $this->options['label'];
         }
+
         return Inflector::humanize(Inflector::underscore($this->action));
     }
 

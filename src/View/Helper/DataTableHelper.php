@@ -512,7 +512,7 @@ class DataTableHelper extends Helper
             'attrs' => $this->templater()->formatAttributes($tableAttributes),
             'head' => $this->_renderHead(),
             'body' => $this->_renderBody(),
-            'footer' => $this->_renderHead('footer')
+            'footer' => (count($this->data()) > 25) ? $this->_renderHead('footer') : ''
         ]);
         $formEnd = $this->Form->end();
 

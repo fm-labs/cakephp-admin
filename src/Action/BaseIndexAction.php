@@ -82,7 +82,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
 
         if (empty($cols)) {
             // if no fields are defined, use first 5 columns from table schema
-            $cols = array_slice($this->model()->schema()->columns(), 0, 5);
+            $cols = array_slice($this->model()->schema()->columns(), 0, 10);
         }
         $cols = $this->_normalizeColumns($cols);
 

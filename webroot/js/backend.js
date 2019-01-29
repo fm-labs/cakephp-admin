@@ -556,7 +556,7 @@
      * Bind global jQuery AJAX events
      */
     $(document).ajaxStart(function(event, xhr) {
-        Backend.Flash.clearAll();
+        //Backend.Flash.clearAll();
         Backend.Loader.show();
     });
 
@@ -574,7 +574,7 @@
 
     $(document).ajaxError(function(event, xhr, settings, thrownError) {
         console.error("AJAX ERROR: ", thrownError, xhr);
-        Backend.Flash.error("Ups, something went wrong: " + thrownError);
+        //Backend.Flash.error("Ups, something went wrong: " + thrownError);
     });
 
 
@@ -831,6 +831,11 @@
         // Tabs: Auto-enable first tab
         //
         $(scope).find('.tabs:not(.tabs-init) .nav a').first().trigger('click');
+
+        //
+        // Dropdown
+        //
+        $(scope).find('.dropdown-toggle').dropdown();
 
         //
         // Jquery UI Sortable

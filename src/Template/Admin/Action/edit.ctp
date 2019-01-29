@@ -72,9 +72,9 @@ $this->extend('Backend./Base/form');
     ?>
 
 
-    <?php if ($this->get('tabs')): ?>
+    <?php if ($this->get('tabs')) : ?>
         <?php $this->Tabs->create(); ?>
-        <?php foreach ((array) $this->get('tabs') as $tabId => $tab): ?>
+        <?php foreach ((array)$this->get('tabs') as $tabId => $tab) : ?>
             <?php $this->Tabs->add($tab['title'], $tab); ?>
         <?php endforeach; ?>
         <?php echo $this->Tabs->render(); ?>

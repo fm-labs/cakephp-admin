@@ -47,8 +47,25 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         return ['data-icon' => 'plus'];
     }
 
+    protected function _normalizeInputs(array $inputs = [])
+    {
+        $normalized = [];
+        foreach ($inputs as $_f => $field) {
+            if (is_numeric($_f)) {
+                $_f = $field;
+                $field = [];
+            }
+
+            if (!array_key_exists($_f, $normalized)) {
+                $normalized[$_f] = $field;
+            }
+        }
+
+        return $normalized;
+    }
+
     /**
-     *
+     * {@inheritDoc}
      */
     public function _execute(Controller $controller)
     {
@@ -58,50 +75,51 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
             $entity = $this->model()->newEntity();
         }
 
-
-
         $_fields = $this->model()->schema()->columns();
         if (isset($controller->viewVars['fields'])) {
-            $_fields = array_merge($_fields, $controller->viewVars['fields']);
+            $_fields = array_merge($controller->viewVars['fields'], $_fields);
         }
-
-        if (isset($controller->viewVars['fields.access'])) {
-            $entity->accessible($controller->viewVars['fields.access']);
-        }
+        $_fields = $this->_normalizeInputs($_fields);
 
         $fields = $blacklist = $whitelist = [];
         if (isset($controller->viewVars['fields.whitelist'])) {
             $whitelist = $controller->viewVars['fields.whitelist'];
-            $entity->accessible($whitelist, true);
+        } else {
+            $whitelist = array_keys($_fields);
         }
         if (isset($controller->viewVars['fields.blacklist'])) {
             $blacklist = $controller->viewVars['fields.blacklist'];
-            $entity->accessible($blacklist, false);
         }
-        foreach ($_fields as $_f => $field) {
-            if (is_numeric($_f)) {
-                $_f = $field;
-                $field = [];
-            }
-            if (in_array($_f, $blacklist)) $field = false;
-            if (!empty($whitelist) && !in_array($_f, $whitelist)) $field = false;
 
-            $fields[$_f] = $field;
+        $fields['id'] = [];
+        foreach ($_fields as $field => $config) {
+            if (!empty($whitelist) && !in_array($field, $whitelist)) {
+                continue;
+            }
+
+            if (!empty($blacklist) && in_array($field, $blacklist)) {
+                continue;
+            }
+
+            $fields[$field] = $config;
+        }
+
+        $entity->accessible($whitelist, true);
+        $entity->accessible($blacklist, false);
+        if (isset($controller->viewVars['fields.access'])) {
+            $entity->accessible($controller->viewVars['fields.access']);
         }
 
         if ($this->_request->is(['put', 'post'])) {
             $entity = $this->model()->patchEntity($entity, $this->_request->data);
             if ($this->model()->save($entity)) {
-                $this->_flashSuccess(__d('backend','Record created'));
+                $this->_flashSuccess(__d('backend', 'Record created'));
                 $this->_redirect(['action' => 'edit', $entity->id]);
             } else {
                 debug($entity->errors());
                 $this->_flashError();
             }
         }
-
-        $controller->set('entity', $entity);
-        $controller->set('modelClass', $controller->modelClass);
 
         // associated
         foreach ($this->model()->associations() as $assoc) {
@@ -130,12 +148,15 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         }
 
         // config
-        $controller->set($this->_config);
+        //$controller->set($this->_config);
+
+        $controller->set('entity', $entity);
+        $controller->set('modelClass', $controller->modelClass);
+        $controller->set('fields', $fields);
     }
 
     /**
-     * @param Controller $controller
-     * @return null|Response
+     * {@inheritDoc}
      */
     public function execute(Controller $controller)
     {

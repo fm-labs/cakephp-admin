@@ -77,6 +77,14 @@ body.sidebar-collapsed {
       width: 20px;
       text-align: center;
     }
+
+    /*
+    > i.fa ~ span {
+      display: inline-block;
+      margin-top: -20px;
+      padding-left: 30px;
+    }
+    */
   }
 
   a:hover {
@@ -168,7 +176,7 @@ body.sidebar-collapsed {
 
         li {
           border: none;
-          width: 180px;
+          width: @sidebar-w - @sidebar-collapse-w;
 
           > a {
             padding-left: 10px;

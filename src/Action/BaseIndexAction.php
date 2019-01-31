@@ -108,14 +108,15 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
         //    $this->_config['rowActions'] = (array)$event->data['actions'];
         //}
 
+        $response = null;
         try {
             $response = $this->_execute($controller);
-            //return $response;
-
         } catch (\Exception $ex) {
             $controller->Flash->error($ex->getMessage());
-            //$controller->redirect($controller->referer());
+        } finally {
         }
+
+        return $response;
     }
 
     protected function _normalizeColumns(array $columns)

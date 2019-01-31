@@ -198,6 +198,9 @@ body.sidebar-collapsed .main-footer {
 /**
  * Sidebar
  */
+.sidebar {
+  background-color: #222d32;
+}
 .sidebar div.sidebar-toggle {
   height: 50px;
   color: #b8c7ce;
@@ -529,6 +532,12 @@ body.darkmode .pagination > li:hover > span {
   background-color: #FFF;
   color: #88C7EA;
 }
+body.darkmode .box {
+  background-color: transparent;
+}
+body.darkmode .box .box-header {
+  background-color: transparent;
+}
 body.darkmode .box-solid {
   border-color: #314354;
 }
@@ -585,6 +594,10 @@ body.darkmode .dataTables_wrapper .dataTables_paginate a.paginate_button {
 body.darkmode .dataTables_wrapper .dataTables_paginate a.paginate_button:hover {
   color: #1D2730;
   border: 1px solid #FFF;
+}
+body.darkmode form.form,
+body.darkmode form.form-horizontal {
+  background-color: transparent;
 }
 body.darkmode textarea {
   background: transparent;

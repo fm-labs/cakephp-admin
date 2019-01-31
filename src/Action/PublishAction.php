@@ -59,13 +59,13 @@ class PublishAction extends BaseEntityAction
             ]);
             if ($this->model()->save($entity)) {
                 $controller->Flash->success(__d('backend','Updated'));
+                $controller->redirect($controller->referer(['action' => 'view', $entity->id]));
             } else {
                 $controller->Flash->error(__d('backend','Update failed'));
             }
         }
 
-
-        //return $controller->redirect($controller->referer(['action' => 'index']));
+        $controller->set('entity', $entity);
     }
 
 }

@@ -55,7 +55,7 @@ class BoxHelper extends Helper
         'class' => 'box-solid',
         'headerClass' => 'with-border',
         'bodyClass' => '',
-        'footerClass',
+        'footerClass' => '',
         'collapsedClass' => 'collapsed-box'
     ];
 
@@ -171,6 +171,9 @@ class BoxHelper extends Helper
      */
     protected function _renderHeader()
     {
+        if (!$this->_params['title']) {
+            return null;
+        }
         return $this->templater()->format('boxHeader', [
             'icon' => $this->_renderIcon(),
             'title' => $this->_renderTitle(),

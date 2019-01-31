@@ -46,13 +46,12 @@ $this->extend('Backend./Base/form');
             $title = __d('backend', 'Related {0}', $assoc->name());
             $html = __d('backend', "No data available");
             //$template = '<div class="box"><div class="box-header with-border">%s</div><div class="box-body">%s</div></div>';
-            $template = '<div class="realted"><h3>%s</h3>%s</div>';
+            $template = '<div class="related"><h3>%s</h3>%s</div>';
 
             switch ($assoc->type()) {
                 case \Cake\ORM\Association::MANY_TO_ONE:
                 case \Cake\ORM\Association::ONE_TO_ONE:
                     $config = ['title' => $title] + $related[$assoc->name()];
-                    debug($config);
                     $html = $this->cell('Backend.EntityView', [ $relatedEntity ], $config);
                     $template = '%2$s';
                     break;

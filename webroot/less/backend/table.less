@@ -16,6 +16,8 @@ table.table {
     margin: 0;
     padding: 0;
     text-align: left;
+    //word-break: break-all;
+    //white-space: normal;
     /*
     border: 1px solid @table-border-color;
     background-color: #f7f7f7;
@@ -77,6 +79,21 @@ table.table {
     background-color:#E7FF91;
     */
   }
+}
+
+/**
+ * Stripped table
+ */
+table.table-striped > tbody > tr:nth-of-type(2n+1) {
+  background-color: #f9f9f9;
+}
+
+/**
+ * Fixed table
+ */
+table.table-fixed {
+
+  table-layout: fixed;
 }
 
 /**

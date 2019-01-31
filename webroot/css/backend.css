@@ -337,14 +337,16 @@ nav ul.pagination {
 */
 .box {
   margin-bottom: 20px;
-  border-radius: 5px;
+  border-radius: 0;
+  background: #FFF;
 }
 .box .box-header {
   padding: 10px;
   font-weight: 700;
+  background: #f9f9f9;
 }
 .box .box-header.with-border {
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #ccc;
 }
 .box .box-body {
   padding: 10px;
@@ -353,7 +355,7 @@ nav ul.pagination {
   padding: 10px;
 }
 .box .box-footer.with-border {
-  border-top: 1px solid #333;
+  border-top: 1px solid #ccc;
 }
 .box table {
   width: 100%;
@@ -363,15 +365,25 @@ nav ul.pagination {
   box-shadow: rgba(0, 0, 0, 0.2) 5px 5px 10px;
 }
 .box-solid {
-  border: 1px solid #333;
+  border: 1px solid #ccc;
+}
+.box-primary {
+  border-top: 2px solid #3c8dbc;
+}
+.box-primary .box-header {
+  color: #3c8dbc;
+}
+.box-success {
+  border-top: 2px solid #49B52A;
 }
 .box-success .box-header {
   color: #49B52A;
-  border-top: 2px solid #49B52A;
+}
+.box-danger {
+  border-top: 2px solid #DC3601;
 }
 .box-danger .box-header {
   color: #DC3601;
-  border-top: 2px solid #DC3601;
 }
 .box-warning .box-header {
   color: #FFCE47;
@@ -408,6 +420,11 @@ textarea {
 /**
  * Forms
  */
+form.form,
+form.form-horizontal {
+  padding: 15px;
+  background-color: #FFF;
+}
 form label {
   display: inline-block;
   max-width: 100%;
@@ -865,6 +882,18 @@ table.table tr:HOVER th[scope="row"] {
   /*
     background-color:#E7FF91;
     */
+}
+/**
+ * Stripped table
+ */
+table.table-striped > tbody > tr:nth-of-type(2n+1) {
+  background-color: #f9f9f9;
+}
+/**
+ * Fixed table
+ */
+table.table-fixed {
+  table-layout: fixed;
 }
 /**
  * Table

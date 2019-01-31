@@ -2,11 +2,13 @@
 
 .box {
   margin-bottom: @box-padding-base * 2;
-  border-radius: @border-radius-base;
+  border-radius: 0; //@border-radius-base;
+  background: @box-background;
 
   .box-header {
     padding: @box-padding-base;
     font-weight: 700;
+    background: @box-header-background;
 
     &.with-border {
       border-bottom: @box-border-base;
@@ -42,17 +44,27 @@
   border: @box-border-base;
 }
 
+.box-primary {
+  border-top: 2px solid @color-primary;
+
+  .box-header {
+    color: @color-primary;
+  }
+}
+
 .box-success {
+  border-top: 2px solid @color-success;
+
   .box-header {
     color: @color-success;
-    border-top: 2px solid @color-success;
   }
 }
 
 .box-danger {
+  border-top: 2px solid @color-danger;
+
   .box-header {
     color: @color-danger;
-    border-top: 2px solid @color-danger;
   }
 }
 

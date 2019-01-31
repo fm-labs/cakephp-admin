@@ -84,19 +84,23 @@
 
         <!-- Bottom -->
         <?php echo $this->fetch('bottom'); ?>
+
+        <!-- Main Footer
+        <footer id="main-footer" class="main-footer">
+            <?php echo $this->fetch('footer'); ?>
+        </footer>
+         -->
+
     </div>
     <!-- /.content-wrapper -->
-
-    <!-- Main Footer -->
-    <footer id="main-footer" class="main-footer">
-        <?php echo $this->fetch('footer'); ?>
-    </footer>
 
     <!-- Control Sidebar -->
     <?php //echo $this->fetch('control_sidebar'); ?>
 
 </div>
 <!-- ./wrapper -->
+
+
 
 <?= $this->fetch('script'); ?>
 </body>

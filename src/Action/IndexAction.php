@@ -48,7 +48,7 @@ class IndexAction extends BaseIndexAction
 //    }
 
     /**
-     * @param Controller $controller
+     * {@inheritDoc}
      */
     public function _execute(Controller $controller)
     {
@@ -64,7 +64,6 @@ class IndexAction extends BaseIndexAction
             $this->_config['rowActions'] = (array)$event->data['actions'];
         }
         */
-
         $controller->set('result', $this->_fetchResult());
         $controller->set('dataTable', [
             'filter' => $this->_config['filter'],
@@ -89,6 +88,9 @@ class IndexAction extends BaseIndexAction
         $controller->set('_serialize', ['result']);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _fetchResult()
     {
         $result = null;
@@ -149,7 +151,6 @@ class IndexAction extends BaseIndexAction
 
         return $result;
     }
-
 
     public function buildTableRowActions($row)
     {

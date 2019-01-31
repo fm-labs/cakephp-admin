@@ -12,7 +12,7 @@ $entity = $this->get('entity');
 //$title = $this->get('title', @array_pop(explode('\\', get_class($entity))));
 $viewOptions = (array) $this->get('viewOptions');
 
-$formOptions = $this->get('form.options', ['horizontal' => true]);
+$formOptions = $this->get('form.options', []);
 $inputFields = $this->get('fields', []);
 $inputOptions = $this->get('inputs.options', []);
 $fieldsets = $this->get('fieldsets');

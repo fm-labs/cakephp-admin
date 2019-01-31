@@ -146,7 +146,7 @@ class DataTableHelper extends Helper
      * - `sortable` boolean
      * - `filter` boolean
      * - `reduce` array
-     *
+     * @return $this
      */
     public function create($params = [], $data = [])
     {
@@ -217,9 +217,9 @@ class DataTableHelper extends Helper
         $this->_initializeFields();
         $this->_initialize();
 
-        if ($this->_setup === null) {
-            $event = $this->_View->eventManager()->dispatch(new Event('Backend.DataTable.create', $this));
-        }
+        //if ($this->_setup === null) {
+            $event = $this->_View->eventManager()->dispatch(new Event('Backend.DataTable.setup', $this));
+        //}
 
         return $this;
     }
@@ -463,13 +463,26 @@ class DataTableHelper extends Helper
         $this->_fields[$field] = $conf;
     }
 
-    protected function _getField($fieldName)
+    public function getField($fieldName)
     {
         if (isset($this->_fields[$fieldName])) {
             return $this->_fields[$fieldName];
         }
 
-        return $this->_defaultField;
+        return null;
+    }
+
+    public function setField($fieldName, array $config, $merge = true)
+    {
+        $field = $this->getField($fieldName);
+        if ($merge) {
+            $config = array_merge($this->_defaultConfig, $field, $config);
+        } else {
+            $config = array_merge($this->_defaultConfig, $config);
+        }
+        $this->_fields[$fieldName] = $config;
+
+        return $this;
     }
 
     /**

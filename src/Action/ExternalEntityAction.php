@@ -8,35 +8,34 @@ use Cake\Utility\Inflector;
 
 class ExternalEntityAction extends BaseEntityAction
 {
+    protected $_action = null;
+
+    protected $_attributes = [];
+
+    protected $_label = 'External';
+
     protected $_scope = ['table'];
 
-    public $action;
-    public $url;
-
-    public $noTemplate = true;
+    protected $_url = null;
 
     public function __construct($action, array $options = [])
     {
-
         $options += ['url' => null, 'label' => null, 'scope' => [], 'attrs' => []];
-        $this->options = $options;
-        $this->action = $action;
-        $this->url = $options['url'];
-        $this->_scope = $this->options['scope'];
-        $this->_attributes = $this->options['attrs'];
+        $this->_action = $action;
+        $this->_attributes = $options['attrs'];
+        $this->_scope = $options['scope'];
+        $this->_url = $options['url'];
+        $this->_label = ($options['label']) ?: Inflector::humanize($this->_action);
     }
 
     public function getAlias()
     {
-        return Inflector::humanize($this->action);
+        return Inflector::humanize($this->_action);
     }
 
     public function getLabel()
     {
-        if ($this->options['label']) {
-            return $this->options['label'];
-        }
-        return Inflector::humanize(Inflector::underscore($this->action));
+        return $this->_label;
     }
 
     public function getAttributes()
@@ -47,7 +46,7 @@ class ExternalEntityAction extends BaseEntityAction
     protected function _execute(Controller $controller)
     {
         $entity = $this->entity();
-        $controller->redirect($this->_buildUrl($this->url, $entity->toArray()));
+        $controller->redirect($this->_buildUrl($this->_url, $entity->toArray()));
     }
 
     protected function _buildUrl($template, $entity)

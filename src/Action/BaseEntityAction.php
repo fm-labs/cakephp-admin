@@ -102,14 +102,14 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         }
 
         try {
-            $entity = $this->entity();
+            //$entity = $this->entity();
+            //$controller->set('entity', $entity);
 
             // load helpers
             if (isset($controller->viewVars['helpers'])) {
                 $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
             }
 
-            $controller->set('entity', $entity);
             return $this->_execute($controller);
 
         } catch (\Cake\Core\Exception\Exception $ex) {
@@ -171,9 +171,9 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 
     public function beforeRender(Event $event) {
 
-        debug("before Render");
 
         /*
+        debug("before Render");
         // actions
         $controller = $event->subject();
         $entity = $this->entity();

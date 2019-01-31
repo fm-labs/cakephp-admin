@@ -1,12 +1,14 @@
 <?php
 
 namespace Backend\Action;
+
 use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\I18n\I18n;
 use Cake\ORM\Association;
+use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
 /**
@@ -28,6 +30,7 @@ class EditAction extends BaseEntityAction
         'fields.whitelist' => [],
         'fields.blacklist' => [],
         'fieldsets' => [],
+        'form.options' => []
     ];
 
     //public $noTemplate = true;
@@ -97,6 +100,14 @@ class EditAction extends BaseEntityAction
             }
         }
 
+        $request = $controller->request;
+        $formId = join('-', array_map(['Cake\Utility\Inflector', 'dasherize'],
+            array_map(['Cake\Utility\Inflector', 'underscore'], ['form', $request->params['controller'], $request->params['action']])));
+        $formOptions = array_merge([
+            'horizontal' => true,
+            'id' => $formId
+        ], $this->_config['form.options']);
+        $controller->set('form.options', $formOptions);
         $controller->set('fields', $fields);
         $controller->set('entity', $entity);
         $controller->set('modelClass', $controller->modelClass);

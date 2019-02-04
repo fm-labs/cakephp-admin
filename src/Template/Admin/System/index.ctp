@@ -86,6 +86,20 @@ $this->loadHelper('Backend.Box');
 					);?>&nbsp;</td><td>&nbsp;</td></tr>
 
 			<tr><td colspan="3">&nbsp;</td></tr>
+			<tr><td colspan="3" style="font-weight: bold;">Locale</td></tr>
+			<tr><td>Default Locale</td>
+				<td><?= \Cake\I18n\I18n::defaultLocale();?>&nbsp;</td><td>&nbsp;</td></tr>
+
+			<tr><td>Intl Default Locale</td>
+				<td><?= ini_get('intl.default_locale');?>&nbsp;</td><td>&nbsp;</td></tr>
+			<tr><td>Display Locale</td>
+				<td><?= h($this->request->query('lang'));?>&nbsp;</td><td>&nbsp;</td></tr>
+			<tr><td>Data Locale</td>
+				<td><?= h($this->request->query('locale'));?>&nbsp;</td><td>&nbsp;</td></tr>
+			<tr><td>Available Languages (Multilang.Locales)</td>
+				<td><?= join(', ', (array)Configure::read('Multilang.Locales'));?>&nbsp;</td><td>&nbsp;</td></tr>
+
+			<tr><td colspan="3">&nbsp;</td></tr>
 			<tr><td colspan="3" style="font-weight: bold;">User</td></tr>
 			<tr><td>User Locale</td>
 				<td><?= $this->request->session()->read('Backend.User.locale');?>&nbsp;</td><td>&nbsp;</td></tr>

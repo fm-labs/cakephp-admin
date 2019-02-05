@@ -33,6 +33,8 @@
     "image-picker": "^0.3.0",
     "flag-icon-css": "^2.8.0",
     "bootstrap": "3.3.7",
-    "sumoselect": "^3.0.2"
+    "sumoselect": "^3.0.2",
+    "select2-bootstrap-theme": "^0.1.0-beta.10",
+    "select2": "^4.0.3"
   }
 }

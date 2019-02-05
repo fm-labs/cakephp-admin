@@ -322,19 +322,59 @@ nav ul.pagination {
   background-color: #5EA5CF;
 }
 /*
+ * Alert Boxes
+ */
+.alert {
+  border-radius: 0;
+  border-width: 0;
+  border-style: none;
+}
 .alert-success {
-  color: @color-success;
+  background-color: #49B52A;
+  color: #FFF;
 }
 .alert-warning {
-  color: @color-warning;
+  background-color: #FFCE47;
+  color: #5E5561;
 }
 .alert-danger {
-  color: @color-danger;
+  background-color: #DC3601;
+  color: #FFF;
 }
 .alert-info {
-  color: @color-info;
+  background-color: #5EA5CF;
+  color: #FFF;
 }
-*/
+/**
+ * Labels
+ */
+.label {
+  border-radius: 0;
+  border-width: 0;
+  border-style: none;
+}
+.label-success {
+  background-color: #49B52A;
+  color: #FFF;
+}
+.label-warning {
+  background-color: #FFCE47;
+  color: #5E5561;
+}
+.label-danger {
+  background-color: #DC3601;
+  color: #FFF;
+}
+.label-info {
+  background-color: #5EA5CF;
+  color: #FFF;
+}
+/**
+ * Button
+ */
+.btn {
+  border-radius: 0;
+}
 .box {
   margin-bottom: 20px;
   border-radius: 0;
@@ -482,8 +522,7 @@ form fieldset legend {
   margin: 0 0 0.5em 0;
   width: 100%;
   line-height: 30px;
-  font-size: 18px;
-  font-variant: all-small-caps;
+  font-variant: small-caps;
   border-bottom: 1px solid #ccc;
 }
 form fieldset legend::before {
@@ -1025,6 +1064,23 @@ body.has-toolbar-fixed {
 .chosen-container-single .chosen-single div b {
   background-position-y: 4px;
 }
+/**
+ * Select2 Integration for Backend
+ */
+.select2-container .select2-selection,
+.select2-container--bootstrap .select2-selection {
+  border-radius: 0 !important;
+}
+form .input-date .select2-container,
+form .input-datetime .select2-container {
+  min-width: 60px;
+  max-width: 100px;
+  width: auto;
+  display: inline-block;
+}
+/**
+ * SumoSelect Integration for Backend
+ */
 .SumoSelect {
   width: auto !important;
   min-width: 200px !important;
@@ -1036,6 +1092,7 @@ body.has-toolbar-fixed {
   width: auto !important;
   min-width: 200px !important;
 }
+form .input-date .SumoSelect,
 form .input-datetime .SumoSelect {
   min-width: 0 !important;
 }

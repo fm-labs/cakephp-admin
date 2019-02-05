@@ -11,31 +11,30 @@ class BackendFormHelper extends BootstrapFormHelper
 
     public function __construct(View $View, array $config = [])
     {
-        // custom checkbox templates
-        // @TODO Move to CheckboxWidget
-        $config['templates'] = [
-            'checkboxFormGroup' => '<div class="checkbox">{{label}}</div>',
-            'checkbox' => '<input type="checkbox" name="{{name}}" value="{{value}}"{{attrs}} /><span class="checkmark"></span>',
-            //'inputContainerError' => '<div class="form-group has-error input-{{type}}{{required}}">{{error}}{{content}}</div>',
-        ];
-        $config['templatesHorizontal'] = [
-            'checkbox' => '<div class="checkbox"><label><input type="checkbox" name="{{name}}" value="{{value}}"{{attrs}} /><span class="checkmark"></span></label></div>',
-        ];
         parent::__construct($View, $config);
 
         $this->templater()->load('Backend.form_templates');
 
         $widgets = [
+            'checkbox' => ['Backend\View\Widget\CheckboxWidget'],
+            // Chosen Select
             //'select' => ['Backend\View\Widget\ChosenSelectBoxWidget', '_view'],
-            'select' => ['Backend\View\Widget\SumoSelectBoxWidget', '_view'],
-            'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget'],
-            'htmltext' => ['Backend\View\Widget\HtmlTextWidget'],
-            'datepicker' => ['Backend\View\Widget\DatePickerWidget', 'text'],
-            //'datetime' => ['Backend\View\Widget\DatePickerWidget', 'text'],
+            // Sumo Select
+            //'select' => ['Backend\View\Widget\SumoSelectBoxWidget', '_view'],
+            // Select2
+            'select' => ['Backend\View\Widget\Select2Widget', '_view'],
+            // TinyMCE Html Editor
+            'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget', '_view'],
+            'htmltext' => ['Backend\View\Widget\HtmlTextWidget', '_view'],
+            // Date and Time Pickers
+            //'datetime' => ['Backend\View\Widget\DatePickerWidget', 'text', '_view'],
+            'datepicker' => ['Backend\View\Widget\DatePickerWidget', 'text', '_view'],
             'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
-            'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
-            'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
-            'codeeditor' => ['Backend\View\Widget\CodeEditorWidget', '_view'],
+            // ACE Code Editor
+            //'codeeditor' => ['Backend\View\Widget\CodeEditorWidget', '_view'],
+            // Image select (experimental)
+            //'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
+            //'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
         ];
         foreach ($widgets as $type => $config) {
             $this->addWidget($type, $config);
@@ -73,9 +72,7 @@ class BackendFormHelper extends BootstrapFormHelper
     }
 
     /**
-     * Override FormHelper::_getInput() to enable lazy loading of helpers for certain input types
-     * @TODO Move helper injection to widget class
-     *
+     * FormHelper::_getInput() override
      *
      * @param string $fieldName
      * @param array $options
@@ -84,37 +81,26 @@ class BackendFormHelper extends BootstrapFormHelper
     protected function _getInput($fieldName, $options)
     {
         //@TODO Dispatch Form.getInput event
+        //debug("get input for $fieldName");
+        //debug($options);
 
         //$options = $this->_getMagicInput($fieldName, $options);
-
         $context = $this->_getContext();
 
         //debug($fieldName);
         //debug($options);
         if (isset($options['type'])) {
             switch ($options['type']) {
-                case 'select':
-                    if (!$context->isRequired($fieldName)) {
-                        $options['empty'] = true;
-                    }
-                    //$this->_View->loadHelper('Backend.Chosen');
-                    break;
-
-                case 'datepicker':
-                //case 'datetime':
-                    $this->_View->loadHelper('Backend.Datepicker');
-                    break;
-
-                case 'htmleditor':
-                case 'htmltext':
-                    $this->_View->loadHelper('Backend.HtmlEditor');
-                    break;
-
-                case 'imageselect':
-                case 'imagemodal':
-                    $this->Html->css('Backend.imagepicker/image-picker', ['block' => true]);
-                    $this->Html->script('Backend.imagepicker/image-picker.min', ['block' => 'script']);
-                    break;
+                //case 'select':
+                //    if (!$context->isRequired($fieldName)) {
+                //        $options['empty'] = true;
+                //    }
+                //    break;
+                //case 'imageselect':
+                //case 'imagemodal':
+                //    $this->Html->css('Backend.imagepicker/image-picker', ['block' => true]);
+                //    $this->Html->script('Backend.imagepicker/image-picker.min', ['block' => 'script']);
+                //    break;
             }
         }
 
@@ -127,7 +113,6 @@ class BackendFormHelper extends BootstrapFormHelper
     protected function _parseOptions($fieldName, $options)
     {
         //@TODO Dispatch Form.parseInput event
-
         //debug($fieldName);
         //debug($options);
         if (isset($options['type'])) {

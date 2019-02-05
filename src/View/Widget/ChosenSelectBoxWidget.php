@@ -25,8 +25,6 @@ class ChosenSelectBoxWidget extends SelectBoxWidget
             $data['id'] = uniqid('select');
         }
 
-        $html = parent::render($data, $context);
-
         $chosen = [
             'allow_single_deselect' => true,
             'search_contains' => true,
@@ -41,8 +39,15 @@ class ChosenSelectBoxWidget extends SelectBoxWidget
 
         if (isset($data['chosen'])) {
             $chosen = array_merge($chosen, (array)$data['chosen']);
+            unset($data['chosen']);
         }
 
+        if (isset($data['empty']) && is_string($data['empty'])) {
+            $chosen['placeholder_text_single'] = $data['empty'];
+            $data['empty'] = true;
+        }
+
+        $html = parent::render($data, $context);
         $js = sprintf("<script>$(document).ready(function() { $('#%s').chosen(%s); });</script>", $data['id'], json_encode($chosen));
 
         return $html . $js;

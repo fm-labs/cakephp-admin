@@ -19,17 +19,11 @@ class ChosenHelper extends Helper
 {
     public $helpers = ['Html', 'Form'];
 
-    public function __construct(View $View, array $config = [])
-    {
-        parent::__construct($View, $config);
-
-        //$this->Form->addWidget('chosen', ['Backend\View\Widget\ChosenSelectBoxWidget']);
-        //$this->Form->addWidget('select', ['Backend\View\Widget\ChosenSelectBoxWidget']);
-    }
-
-    public function beforeLayout(Event $event)
+    public function initialize(array $config)
     {
         $this->Html->css('/backend/libs/chosen/chosen', ['block' => true]);
         $this->Html->script('/backend/libs/chosen/chosen.jquery', ['block' => 'script']);
+
+        $this->Form->addWidget('chosen', ['Backend\View\Widget\ChosenSelectBoxWidget', '_view']);
     }
 }

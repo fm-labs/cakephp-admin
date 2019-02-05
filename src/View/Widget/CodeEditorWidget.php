@@ -37,17 +37,20 @@ class CodeEditorWidget extends TextareaWidget
      */
     protected $_View;
 
+    /**
+     * @param \Cake\View\StringTemplate $templates The templater instance
+     * @param View $view The view instance
+     */
     public function __construct($templates, View $view)
     {
         parent::__construct($templates);
         $this->_View = $view;
         $this->_View->loadHelper('Backend.Backbone');
-        $this->_View->Html->script('/backend/libs/ace/1.4.1-noconflict/ace.js', ['block' => true]);
+        $this->_View->loadHelper('Backend.CodeEditor');
 
         $this->_templates->add([
             'codeeditor_editor' => '<div{{attrs}}>{{value}}</div>'
         ]);
-
     }
 
     /**
@@ -79,12 +82,11 @@ class CodeEditorWidget extends TextareaWidget
         unset($inputData['type']);
         $input = parent::render($inputData, $context);
 
-
         // Editor
         $editor = array_merge(static::$defaultConfig, $data['editor']);
         // auto-prefix 'mode' and 'theme' editor options
-        $editor['mode'] = (preg_match('/\//', $editor['mode'])) ? $editor['mode'] : 'ace/mode/' . $editor['mode'];
-        $editor['theme'] = (preg_match('/\//', $editor['theme'])) ? $editor['theme'] : 'ace/theme/' . $editor['theme'];
+        $editor['mode'] = ($editor['mode'] && !preg_match('/\//', $editor['mode'])) ? 'ace/mode/' . $editor['mode'] : $editor['mode'];
+        $editor['theme'] = ($editor['theme'] && !preg_match('/\//', $editor['theme'])) ? 'ace/theme/' . $editor['theme'] : $editor['theme'];
 
         // build editor html
         $defaultClass = 'codeeditor';

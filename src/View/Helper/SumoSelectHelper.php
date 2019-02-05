@@ -12,12 +12,14 @@ class SumoSelectHelper extends Helper
         'sumo' => []
     ];
 
-    public $helpers = ['Html'];
+    public $helpers = ['Html', 'Form'];
 
     public function initialize(array $config)
     {
         $this->Html->css($this->config('cssUrl'), ['block' => true]);
         $this->Html->script($this->config('scriptUrl'), ['block' => true]);
+
+        $this->Form->addWidget('sumoselect', ['Backend\View\Widget\SumoSelectBoxWidget', '_view']);
     }
 
 //    public function selectbox($options = [])

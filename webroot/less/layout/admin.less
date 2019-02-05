@@ -150,10 +150,11 @@ body.body-compact {
 /** Dark Mode **/
 @dark-color-bg: #1D2730;
 @dark-color-text: #C1C1C1;
-@dark-color-link: #EEE;
+@dark-color-link: #7ca8cf;
 @dark-color-highlight: #FFF;
 @dark-color-border: #314354;
 @dark-select-border-color: #62879D;
+@dark-input-border-color: #62879D;
 
 body.darkmode {
 
@@ -311,7 +312,7 @@ body.darkmode {
   // Inputs
   textarea {
     background: transparent;
-    border-color: @dark-color-border;
+    border-color: @dark-input-border-color;
 
   }
 
@@ -319,7 +320,7 @@ body.darkmode {
   form .form-control {
     color: @dark-color-text;
     background-color: @dark-color-bg;
-    border-color: @dark-color-border;
+    border-color: @dark-input-border-color;
     //.placeholder(#CCC);
   }
 
@@ -400,6 +401,23 @@ body.darkmode {
       }
 
     }
+  }
+
+  // Select2
+  .select2-container--bootstrap .select2-selection,
+  .select2-container--bootstrap .select2-search--dropdown .select2-search__field {
+    background-color: transparent;
+    color: @dark-color-text;
+    border-color: @dark-input-border-color;
+  }
+
+  .select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
+    color: @dark-color-text;
+  }
+
+  .select2-dropdown {
+    background-color: #222D32;
+    border-color: @dark-color-border;
   }
 
   // ACE Code Editor

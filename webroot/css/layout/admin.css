@@ -533,7 +533,7 @@ body.darkmode {
   color: #C1C1C1;
 }
 body.darkmode a {
-  color: #EEE;
+  color: #7ca8cf;
 }
 body.darkmode .content-header h1 {
   border-color: #314354;
@@ -655,12 +655,12 @@ body.darkmode form.form-horizontal {
 }
 body.darkmode textarea {
   background: transparent;
-  border-color: #314354;
+  border-color: #62879D;
 }
 body.darkmode form .form-control {
   color: #C1C1C1;
   background-color: #1D2730;
-  border-color: #314354;
+  border-color: #62879D;
 }
 body.darkmode form label,
 body.darkmode form .control-label {
@@ -713,6 +713,19 @@ body.darkmode .SumoSelect > .optWrapper > .options li.opt:HOVER {
 }
 body.darkmode .SumoSelect > .optWrapper > .options li.opt:HOVER label {
   color: #1D2730;
+}
+body.darkmode .select2-container--bootstrap .select2-selection,
+body.darkmode .select2-container--bootstrap .select2-search--dropdown .select2-search__field {
+  background-color: transparent;
+  color: #C1C1C1;
+  border-color: #62879D;
+}
+body.darkmode .select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
+  color: #C1C1C1;
+}
+body.darkmode .select2-dropdown {
+  background-color: #222D32;
+  border-color: #314354;
 }
 body.darkmode .codeeditor.ace_editor {
   border: 1px solid #314354;

@@ -3,6 +3,7 @@ namespace Backend\View\Widget;
 
 use Cake\Core\Configure;
 use Cake\View\Form\ContextInterface;
+use Cake\View\View;
 use Cake\View\Widget\BasicWidget;
 use Cake\Routing\Router;
 
@@ -52,9 +53,11 @@ class HtmlEditorWidget extends BasicWidget
         'cache_suffix' => null,
     ];
 
-    public function __construct($templates)
+    public function __construct($templates, View $view)
     {
         static::$defaultConfig['document_base_url'] = Router::url('/', true);
+
+        $view->loadHelper('Backend.HtmlEditor');
 
         parent::__construct($templates);
     }

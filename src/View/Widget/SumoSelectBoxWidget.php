@@ -33,6 +33,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
         $placeholderTxt = __d('backend', 'Select Here');
         if (isset($data['empty']) && is_string($data['empty'])) {
             $placeholderTxt = $data['empty'];
+            //$data['empty'] = true;
         }
 
         $html = parent::render($data, $context);
@@ -53,6 +54,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
         ];
         if (isset($data['sumo'])) {
             $sumo = array_merge($sumo, (array)$data['sumo']);
+            unset($data['sumo']);
         }
 
         $js = sprintf("<script>$(document).ready(function() { $('#%s').SumoSelect(%s); });</script>", $data['id'], json_encode($sumo));

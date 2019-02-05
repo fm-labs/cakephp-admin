@@ -15,13 +15,8 @@ class BackendHelper extends Helper
 {
     public $helpers = ['Html', 'Url'];
 
-    public function __construct(View $View, array $config = [])
+    public function initialize(array $config)
     {
-        parent::__construct($View, $config);
-
-        // Load backendjs script
-        //$this->Html->script('Backend.backend', ['block' => 'script']);
-
         // Inject backendjs init script
         $backendjs = [
             'rootUrl' => $this->Url->build('/', true),
@@ -33,5 +28,4 @@ class BackendHelper extends Helper
         $script = sprintf('var BackendSettings = window.BackendSettings = %s; console.log("[backendjs] SETTIGNS", window.BackendSettings)', json_encode($backendjs));
         $this->Html->scriptBlock($script, ['block' => true, 'safe' => false]);
     }
-
 }

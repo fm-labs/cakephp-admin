@@ -191,7 +191,7 @@
 
             var self = this;
             var $table = $('<table>', {
-                'class': 'table table-striped table-condensed datatable'
+                'class': 'table table-striped table-condensed table-hover datatable'
             });
             $table.on('draw.dt', function() {
                 //console.log("Draw complete");

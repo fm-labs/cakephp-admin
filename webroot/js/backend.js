@@ -356,7 +356,9 @@
             });
 
             if (options.title) {
-                $modal.find('.modal-title').html(options.title);
+                $modal.find('.modal-title')
+                    .html(options.title)
+                    .append($('<a>', { style: 'margin-left: 10px; font-size: 0.8em;', href: url.replace(/iframe=1/, "iframe=0"), target: '_blank'}).text("Open in new window"));
             } else {
                 $modal.find('.modal-header').remove();
             }
@@ -939,10 +941,13 @@
             return false;
         });
 
-
-
         $(scope).off('click','a[data-modal-frame], a.link-modal-frame');
         $(scope).on('click','a[data-modal-frame], a.link-modal-frame', function (ev) {
+
+            if(Backend.isFrame()) {
+                console.log("Trying to open iframe modal within modal. Open in same window");
+                return;
+            }
 
             //var $target = $(ev.target);
             var $target = $(this);

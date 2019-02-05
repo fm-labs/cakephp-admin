@@ -3,6 +3,7 @@
 namespace Backend\View\Widget;
 
 use Cake\View\Helper\FormHelper;
+use Cake\View\View;
 use Cake\View\Widget\BasicWidget;
 use Cake\View\Widget\DateTimeWidget as CakeDateTimeWidget;
 use Cake\View\Form\ContextInterface;
@@ -16,10 +17,12 @@ class DatePickerWidget extends CakeDateTimeWidget
      */
     protected $_text;
 
-    public function __construct(StringTemplate $templates, BasicWidget $text)
+    public function __construct(StringTemplate $templates, BasicWidget $text, View $view)
     {
         $this->_templates = $templates;
         $this->_text = $text;
+
+        $view->loadHelper('Backend.Datepicker');
     }
 
     public function render(array $data, ContextInterface $context)

@@ -70,7 +70,9 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'webroot/js/tinymce/langs/', src: ['**'], dest: 'webroot/libs/tinymce/langs/'},
           {expand: true, cwd: 'bower_components/underscore/', src: ['**'], dest: 'webroot/libs/underscore/'},
           {expand: true, cwd: 'bower_components/flag-icon-css/', src: ['css/**', 'flags/**'], dest: 'webroot/libs/flag-icon-css/'},
-          {expand: true, cwd: 'bower_components/sumoselect/', src: ['*.js', '*.css'], dest: 'webroot/libs/sumoselect/'}
+          {expand: true, cwd: 'bower_components/sumoselect/', src: ['*.js', '*.css'], dest: 'webroot/libs/sumoselect/'},
+          {expand: true, cwd: 'bower_components/select2/', src: ['dist/**'], dest: 'webroot/libs/select2/'},
+          {expand: true, cwd: 'bower_components/select2-bootstrap-theme/', src: ['dist/**'], dest: 'webroot/libs/select2-bootstrap-theme/'}
         ]
       }
     },

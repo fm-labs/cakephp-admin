@@ -25,7 +25,8 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         'rowActions' => [],
         'fields' => [],
         'fields.whitelist' => [],
-        'fields.blacklist' => []
+        'fields.blacklist' => [],
+        'model.validator' => 'default'
     ];
 
     protected $_scope = ['index'];
@@ -111,7 +112,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         }
 
         if ($this->_request->is(['put', 'post'])) {
-            $entity = $this->model()->patchEntity($entity, $this->_request->data);
+            $entity = $this->model()->patchEntity($entity, $this->_request->data, ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend', 'Record created'));
                 $this->_redirect(['action' => 'edit', $entity->id]);

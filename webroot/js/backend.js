@@ -546,10 +546,11 @@
      * @type {{create: Function}|*}
      */
     Backend.Ui.Icon = {
-        create: function(icon, attrs) {
+        create: function(icon, attrs, clazzes) {
             attrs = _.extend({}, {}, attrs);
             return $('<i>', { class: 'fa fa-' + icon})
                 .attr(attrs)
+                .addClass(clazzes)
                 .prop('outerHTML');
         }
     };
@@ -913,6 +914,35 @@
             ev.stopPropagation();
         });
 
+        $(scope).off('click','a.link-ajax, a[data-ajax]')
+        $(scope).on('click','a.link-ajax, a[data-ajax]', function (ev) {
+
+            var $a = $(ev.currentTarget);
+            var url = $a.attr('href');
+            console.log("Ajax link clicked: " + url, ev);
+
+            if (!url) {
+                //return false;
+            }
+
+            $.ajax({
+                method: "GET",
+                url: url,
+                success: function(data) {
+                    console.log("Ajax link success", data);
+                    Backend.Flash.message('success', "Request successful");
+                },
+                error: function(xhr, err) {
+                    Backend.Flash.message('error', "Request failed");
+                    console.error("Ajax link error", err);
+                }
+            });
+
+            ev.stopPropagation();
+            ev.preventDefault();
+            return false;
+        });
+
 
         $(scope).off('click','a[data-modal], a.link-modal');
         $(scope).on('click','a[data-modal], a.link-modal', function (ev) {
@@ -956,7 +986,7 @@
                 //show: $target.data('modalShow'),
                 //keyboard: $target.data('modalKeyboard')
             };
-            var modalClass = $target.data('modalClass');
+            var modalClass = $target.data('modalClass') || ($target.hasClass('link-modal-wide')) ? 'modal-wide' : '';
             var modalTitle = $target.data('modalTitle') || ev.target.title || ev.target.innerText;
             var modalReloadOnClose = $target.data('modalReload');
 

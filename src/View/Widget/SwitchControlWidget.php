@@ -26,10 +26,32 @@ class SwitchControlWidget extends CheckboxWidget
             $data['id'] = uniqid('switchctrl');
         }
 
-        $data['type'] = 'checkbox';
-        $html = parent::render($data, $context);
+        $switch = [
+            'size' => 'mini', // mini, small, normal, large
+            'animate' => true,
+            'disabled' => (isset($data['disabled'])) ? $data['disabled'] : false,
+            'readonly' => (isset($data['readonly'])) ? $data['readonly'] : false,
+            //'state' => true,
+            //'indeterminate' => false,
+            //'inverse' => false,
+            //'radioAllOff' => false,
+            //'onColor' => 'primary',
+            //'offColor' => 'default',
+            //'labelText' => '&nbsp;',
+            //'handleWidth' => 'auto',
+            //'labelWidth' => 'auto',
+            //'baseClass' => 'bootstrap-switch',
+            //'wrapperClass' => 'wrapper'
+        ];
 
-        $switch = [];
+        if (isset($data['switch'])) {
+            $switch = array_merge($switch, $data['switch']);
+            unset($data['switch']);
+        }
+
+        $data['type'] = 'checkbox';
+        $html = parent::render($data + $switch, $context);
+
         $tmpl = '<script>$(document).ready(function() { $(\'#%s\').bootstrapSwitch(%s); });</script>';
         $js = sprintf($tmpl, $data['id'], json_encode($switch));
 

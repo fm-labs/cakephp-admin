@@ -107,29 +107,32 @@
 
     function renderRowActionsButton(data, type) {
         if (type == 'display') {
-            var html = "";
-            html += "<span class='actions-btn-group _btn-group'>";
+
+            var $container = $('<span>', {'class': 'actions-btn-group'});
             _.each(data, function(row, idx) {
-                row = _.extend({}, {url: 'alert("Broken Link");', icon: 'link', title: 'No Title', 'class': ''}, row);
-                html += '<a href="' +row.url+'" class="btn btn-default btn-xs '+row.class+'" data-icon="'+row.icon+'" title="'+row.title+'">'
-                    +row.title +'</a>&nbsp;';
+                row = _.extend({}, {url: 'alert("Broken Link");', icon: 'link', title: 'Untitled', 'class': 'btn btn-default btn-xs'}, row);
+                var icon = row.icon;
+                var url = row.url;
+                var attrs = _.extend({}, {href: url, 'data-icon': icon}, _.omit(row, ['url', 'icon']));
+                $('<a>', attrs).html(row.title).appendTo($container);
             });
-            html += "</span>";
-            return html;
+            return $container.prop('outerHTML');
         }
         return data;
     }
 
     function renderRowActionsIcon(data, type) {
         if (type == 'display') {
-            var html = "";
-            html += "<span class='actions-btn-group _btn-group'>";
+            var $container = $('<span>', {'class': 'actions-btn-group'});
             _.each(data, function(row, idx) {
-                row = _.extend({}, {url: 'alert("Broken Link");', icon: 'link', title: 'No Title', 'class': ''}, row);
-                html += '<a href="'+row.url+'" class="btn btn-default btn-xs '+row.class+'" data-icon="'+row.icon+'" title="'+row.title+'"></a>&nbsp;';
+                row = _.extend({}, {url: 'alert("Broken Link");', icon: 'link', title: 'Untitled', 'class': 'btn btn-default btn-xs'}, row);
+                var icon = row.icon;
+                var url = row.url;
+                var attrs = _.extend({}, {href: url}, _.omit(row, ['url', 'icon']));
+                var $icon = $('<i>', {'class': 'fa fa-'+row.icon });
+                $('<a>', attrs).html($icon).appendTo($container);
             });
-            html += "</span>";
-            return html;
+            return $container.prop('outerHTML');
         }
         return data;
     }
@@ -193,9 +196,10 @@
             var $table = $('<table>', {
                 'class': 'table table-striped table-condensed table-hover datatable'
             });
-            $table.on('draw.dt', function() {
+            $table.on( 'draw.dt', function() {
                 //console.log("Draw complete");
                 Backend.Renderer.trigger('docready', self.$el);
+
             });
             $table.on( 'error.dt', function ( e, settings, techNote, message ) {
                 console.warn( 'An error has been reported by DataTables: ', message, techNote );
@@ -203,7 +207,15 @@
             } );
             this.$el.html($table);
 
-            var settings = _.extend({}, this._dataTable, {ajax: this._dataUrl});
+            var settings = _.extend({}, this._dataTable, {
+                ajax: this._dataUrl,
+                drawCallback: function() {
+                    var api = this.api();
+                    console.log( "Rendered rows: " + api.rows().count());
+
+                    self.trigger('backend.dt.draw', this);
+                }
+            });
             this._dt = $table.DataTable(settings);
             //console.log(this._dt.columns());
             this._addTooltips(this._dt, $table);

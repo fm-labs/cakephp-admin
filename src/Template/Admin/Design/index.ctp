@@ -4,17 +4,32 @@ $this->loadHelper('Backend.SwitchControl');
 $this->loadHelper('Backend.SumoSelect');
 $this->loadHelper('Backend.Select2');
 $this->loadHelper('Backend.Chosen');
+$this->loadHelper('Backend.DateRangePicker');
 ?>
 <style>
     .design-index .section-header {
         padding: 0.5em;
         margin: 2em 0 1em 0;
-        color: #ff9900;
         border-radius: 10px 0 10px 0;
-        border: 1px solid #FFF;
+        color: #FFF;
+        background-color: #ff9900;
     }
 </style>
 <div class="design-index index">
+
+    <!-- SECTION TOOLTIP -->
+    <div class="section-header">
+        Tooltip
+    </div>
+
+    <span data-toggle="tooltip" title="This is a tooltip">Span Tooltip</span> |
+    <a data-toggle="tooltip" title="This is a tooltip">Link Tooltip</a>
+    <br />
+    <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="left" title="Tooltip on left">Tooltip on left</button>
+    <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="top" title="Tooltip on top">Tooltip on top</button>
+    <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">Tooltip on bottom</button>
+    <button type="button" class="btn btn-default" data-toggle="tooltip" data-placement="right" title="Tooltip on right">Tooltip on right</button>
+
 
     <!-- SECTION INPUTS -->
     <div class="section-header">
@@ -28,6 +43,33 @@ $this->loadHelper('Backend.Chosen');
             <?= $this->Form->input('h_text_disabled', ['type' => 'text', 'disabled' => true, 'value' => 'Disabled']); ?>
             <?= $this->Form->input('h_text_readonly', ['type' => 'text', 'readonly' => true, 'value' => 'Read only']); ?>
             <?= $this->Form->input('h_text_error', ['type' => 'text']); ?>
+            <?= $this->Form->fieldsetEnd(); ?>
+            <?= $this->Form->fieldsetStart("Date"); ?>
+            <?= $this->Form->input('h_date', ['type' => 'date']); ?>
+            <?= $this->Form->input('h_date_picker', ['type' => 'datepicker']); ?>
+            <?= $this->Form->input('h_date_range_zero', ['type' => 'daterange']); ?>
+            <?= $this->Form->input('h_date_range', ['type' => 'daterange', 'value' => '1999-12-31 - 2000-01-03', 'picker' => [
+                'minYear' => 1999,
+                'maxYear' => 2001,
+                'minDate' => '1999-11-11',
+                'maxDate' => '2000-02-02'
+            ]]); ?>
+            <?= $this->Form->input('h_date_range_custom', ['type' => 'daterange', 'default' => '1999-12-31', 'picker' => [
+                'ranges' => true,
+            ]]); ?>
+            <?= $this->Form->input('h_date_range_single', ['type' => 'daterange', 'default' => '1999-12-31', 'picker' => [
+                'singleDatePicker' => true,
+            ]]); ?>
+            <?= $this->Form->input('h_date_range_time', ['type' => 'daterange', 'default' => '1999-12-31 12:12:00', 'picker' => [
+                'timePicker' => true,
+            ]]); ?>
+            <?= $this->Form->input('h_date_range_time24h', ['type' => 'daterange', 'default' => '2018-12-31 23:23:00 - 2019-01-15 15:15:15', 'picker' => [
+                'timePicker' => true,
+                'timePicker24Hour' => true,
+            ]]); ?>
+            <?= $this->Form->fieldsetEnd(); ?>
+            <?= $this->Form->fieldsetStart("Date Time"); ?>
+            <?= $this->Form->input('h_datetime', ['type' => 'datetime']); ?>
             <?= $this->Form->fieldsetEnd(); ?>
             <?= $this->Form->fieldsetStart("Select"); ?>
             <?= $this->Form->input('h_select', ['type' => 'select', 'options' => $selectOptions]); ?>
@@ -56,11 +98,6 @@ $this->loadHelper('Backend.Chosen');
             <?= $this->Form->fieldsetEnd(); ?>
             <?= $this->Form->fieldsetStart("Textarea"); ?>
             <?= $this->Form->input('h_textarea', ['type' => 'textarea']); ?>
-            <?= $this->Form->fieldsetEnd(); ?>
-            <?= $this->Form->fieldsetStart("Date"); ?>
-            <?= $this->Form->input('h_date', ['type' => 'date']); ?>
-            <?= $this->Form->input('h_datetime', ['type' => 'datetime']); ?>
-            <?= $this->Form->input('h_datepicker', ['type' => 'datepicker']); ?>
             <?= $this->Form->fieldsetEnd(); ?>
             <?= $this->Form->fieldsetStart("Html Editor"); ?>
             <?= $this->Form->input('h_htmleditor', ['type' => 'htmleditor', 'default' => '<h1>Hello World</h1>']); ?>

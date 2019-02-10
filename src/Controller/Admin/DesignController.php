@@ -38,4 +38,9 @@ class DesignController extends AppController
 
         $this->set(compact('form', 'selectOptions'));
     }
+
+    public function daterange()
+    {
+
+    }
 }

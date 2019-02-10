@@ -56,7 +56,7 @@ module.exports = function(grunt) {
           //{expand: true, cwd: 'bower_components/AdminLTE/', src: ['dist/**', 'bootstrap/**'], dest: 'webroot/libs/adminlte/'},
           {expand: true, cwd: 'bower_components/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
           {expand: true, cwd: 'bower_components/bootstrap/', src: ['dist/**'], dest: 'webroot/libs/bootstrap/'},
-          {expand: true, cwd: 'bower_components/chosen/', src: ['**'], dest: 'webroot/libs/chosen/'},
+          {expand: true, cwd: 'bower_components/chosen/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/chosen/'},
           {expand: true, cwd: 'bower_components/font-awesome/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/fontawesome/'},
           {expand: true, cwd: 'bower_components/html5shiv/dist/', src: ['**'], dest: 'webroot/libs/html5shiv/'},
           {expand: true, cwd: 'bower_components/ionicons/', src: ['css/**', 'fonts/**', 'png/**'], dest: 'webroot/libs/ionicons/'},
@@ -72,7 +72,8 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'bower_components/flag-icon-css/', src: ['css/**', 'flags/**'], dest: 'webroot/libs/flag-icon-css/'},
           {expand: true, cwd: 'bower_components/sumoselect/', src: ['*.js', '*.css'], dest: 'webroot/libs/sumoselect/'},
           {expand: true, cwd: 'bower_components/select2/', src: ['dist/**'], dest: 'webroot/libs/select2/'},
-          {expand: true, cwd: 'bower_components/select2-bootstrap-theme/', src: ['dist/**'], dest: 'webroot/libs/select2-bootstrap-theme/'}
+          {expand: true, cwd: 'bower_components/select2-bootstrap-theme/', src: ['dist/**'], dest: 'webroot/libs/select2-bootstrap-theme/'},
+          {expand: true, cwd: 'bower_components/daterangepicker/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/daterangepicker/'}
         ]
       }
     },

@@ -30,7 +30,8 @@ class EditAction extends BaseEntityAction
         'fields.whitelist' => [],
         'fields.blacklist' => [],
         'fieldsets' => [],
-        'form.options' => []
+        'form.options' => [],
+        'model.validator' => 'default'
     ];
 
     //public $noTemplate = true;
@@ -91,10 +92,10 @@ class EditAction extends BaseEntityAction
         }
 
         if ($this->_request->is(['put', 'post'])) {
-            $entity = $this->model()->patchEntity($entity, $this->_request->data);
+            $entity = $this->model()->patchEntity($entity, $this->_request->data, ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend','Saved!'));
-                $this->_redirect(['action' => $this->getAlias(), $entity->id] + $controller->request->query);
+                //$this->_redirect(['action' => $this->getAlias(), $entity->id] + $controller->request->query);
             } else {
                 $this->_flashError();
             }

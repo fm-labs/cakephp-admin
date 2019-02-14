@@ -139,6 +139,12 @@ class BackendComponent extends Component
         $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'), false);
         $controller->Auth->config('authorize', $this->config('authAuthorize'), false);
 
+        // Load Security component
+        if (Configure::read('Backend.Security.enabled') && !$controller->components()->has('Security')) {
+            $controller->components()->load('Security');
+        }
+
+
         // Configure controller
         $controller->viewBuilder()->className('Backend.Backend');
         $controller->viewBuilder()->layout('Backend.admin');

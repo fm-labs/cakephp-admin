@@ -94,7 +94,7 @@ class EditAction extends BaseEntityAction
         if ($this->_request->is(['put', 'post'])) {
             $entity = $this->model()->patchEntity($entity, $this->_request->data, ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
-                $this->_flashSuccess(__d('backend','Saved!'));
+                $this->_flashSuccess(__d('backend', 'Saved!'));
                 //$this->_redirect(['action' => $this->getAlias(), $entity->id] + $controller->request->query);
             } else {
                 $this->_flashError();
@@ -102,8 +102,13 @@ class EditAction extends BaseEntityAction
         }
 
         $request = $controller->request;
-        $formId = join('-', array_map(['Cake\Utility\Inflector', 'dasherize'],
-            array_map(['Cake\Utility\Inflector', 'underscore'], ['form', $request->params['controller'], $request->params['action']])));
+        $formId = join('-', array_map(
+            ['Cake\Utility\Inflector', 'dasherize'],
+            array_map(
+                ['Cake\Utility\Inflector', 'underscore'],
+                ['form', $request->params['controller'], $request->params['action']]
+            )
+        ));
         $formOptions = array_merge([
             'horizontal' => true,
             'id' => $formId
@@ -114,6 +119,7 @@ class EditAction extends BaseEntityAction
         $controller->set('modelClass', $controller->modelClass);
 
         // associated
+        /* @var Association $assoc */
         foreach ($this->model()->associations() as $assoc) {
             if ($assoc->type() == Association::MANY_TO_ONE) {
                 $fKey = $assoc->foreignKey();
@@ -125,9 +131,14 @@ class EditAction extends BaseEntityAction
                     $controller->set($var, $list);
                 }
             } elseif ($assoc->type() == Association::ONE_TO_MANY) {
-                //$var = Inflector::pluralize($assoc->property());
-                $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
-                $controller->set($assoc->foreignKey(), $list);
+                // fetch list for 1-m relationships only if the property is set in entity
+                if ($entity->get($assoc->property())) {
+                    $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
+                    $controller->set(Inflector::variable($assoc->property()), $list);
+                    //debug("assoc list for " . $assoc->name() . ": " . count($list)
+                    //    . " item using key " . $assoc->foreignKey()
+                    //    . " prop: " . $assoc->property() . " -> " . Inflector::variable($assoc->property()));
+                }
             } elseif ($assoc->type() == Association::ONE_TO_ONE) {
                 //$list = ['foo' => 'bar'];
                 //debug($assoc);

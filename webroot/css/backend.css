@@ -1097,6 +1097,10 @@ form .input-date .SumoSelect,
 form .input-datetime .SumoSelect {
   min-width: 0 !important;
 }
+form .input-switch .bootstrap-switch {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
 /**
  * Backend DataTables styles
  */

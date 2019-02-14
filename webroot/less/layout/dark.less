@@ -193,7 +193,14 @@ body.darkmode {
     color: @dark-color-text;
     background-color: @dark-color-bg;
     border-color: @dark-input-border-color;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
     //.placeholder(#CCC);
+  }
+
+  form .form-control[disabled],
+  form .form-control[readonly] {
+    //background-color: @dark-color-bodybg;
   }
 
   form label,
@@ -224,6 +231,16 @@ body.darkmode {
         color: @dark-color-highlight;
         border-color: @dark-color-highlight;
       }
+    }
+  }
+
+  // DateRangePicker
+  .daterangepicker {
+    color: @dark-color-bodybg;
+    //background-color: @dark-color-bodybg;
+
+    .calendar-table {
+      //background-color: @dark-color-bg;
     }
   }
 
@@ -278,9 +295,11 @@ body.darkmode {
   // Select2
   .select2-container--bootstrap .select2-selection,
   .select2-container--bootstrap .select2-search--dropdown .select2-search__field {
-    background-color: transparent;
+    //background-color: transparent;
+    background-color: @dark-color-bg;
     color: @dark-color-text;
     border-color: @dark-input-border-color;
+    //border-width: 0 0 1px 0;
   }
 
   .select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
@@ -288,8 +307,10 @@ body.darkmode {
   }
 
   .select2-dropdown {
-    background-color: #222D32;
-    border-color: @dark-color-border;
+    //background-color: #222D32;
+    background-color: @dark-color-bg;
+    //border-color: @dark-color-border;
+    border-color: @dark-input-border-color;
   }
 
   // ACE Code Editor

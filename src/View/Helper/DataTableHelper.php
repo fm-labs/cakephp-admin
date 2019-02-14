@@ -54,7 +54,7 @@ class DataTableHelper extends Helper
         'select' => false,
         'sortable' => false,
         'reduce' => [],
-        'filter' => true,
+        'filter' => false,
         'ajax' => false,
     ];
 
@@ -207,7 +207,7 @@ class DataTableHelper extends Helper
             }
         }
 
-        if (isset($this->_params['rowActions'])) {
+        if (isset($this->_params['rowActions']) && $this->_params['rowActions'] !== false) {
             $rowActions = $this->_params['rowActions'];
             $this->addRowCallback(function($row) use ($rowActions) {
                 return $this->_applyRowActions($rowActions, $row);

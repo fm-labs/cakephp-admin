@@ -874,6 +874,7 @@ table.table tr td {
   margin: 0;
   padding: 0;
   text-align: left;
+  word-break: break-all;
   /*
     border: 1px solid @table-border-color;
     background-color: #f7f7f7;
@@ -1102,8 +1103,10 @@ form .input-datetime .SumoSelect {
 table.dataTable tbody tr {
   background-color: transparent;
 }
-table.dataTable thead th.text-right.sorting {
-  padding-right: 20px !important;
+table.dataTable thead th.sorting,
+table.dataTable thead th.sorting_asc,
+table.dataTable thead th.sorting_desc {
+  padding-right: 15px !important;
 }
 ul.array-list .key {
   font-weight: bold;

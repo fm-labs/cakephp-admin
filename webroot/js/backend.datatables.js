@@ -70,9 +70,22 @@
         return data;
     }
 
+    function renderTimeAgoInWordsUTC(data, type) {
+        if (type === 'display') {
+            if (data) {
+                return moment.utc(data).fromNow();
+            }
+            return 'Never';
+        }
+        return data;
+    }
+
     function renderTimeDiffInWordsUTC(data, type) {
         if (type === 'display') {
-            return moment.utc(data).fromNow();
+            if (data) {
+                return moment.utc(data).fromNow();
+            }
+            return 'Never';
         }
         return data;
     }
@@ -153,8 +166,9 @@
         'renderBooleanEnabled': renderBooleanEnabled,
         'renderDate': renderDate,
         'renderDateTime': renderDateTime,
-        'renderTimeAgoInWords': renderTimeDiffInWordsUTC, // @deprecated Use 'renderTimeDiffInWordsUTC' instead
+        'renderTimeAgoInWords': renderTimeAgoInWordsUTC,
         'renderTimeDiffInWordsUTC': renderTimeDiffInWordsUTC,
+        //'renderTimeDiffShortUTC': renderTimeDiffShortUTC,
         'renderStatus': renderStatus,
         'renderRowActions': renderRowActionsDropdown, //@deprecated Use 'renderRowActionsDropdown' instead
         'renderRowActionsDropdown': renderRowActionsDropdown,

@@ -21,7 +21,7 @@ class CodeEditorHelper extends Helper
 
     public function initialize(array $config)
     {
-        $this->Html->script('/backend/libs/ace/1.4.1-noconflict/ace.js', ['block' => true]);
+        $this->Html->script('/backend/vendor/ace/1.4.1-noconflict/ace.js', ['block' => true]);
 
         $this->Form->addWidget('codeeditor', ['Backend\View\Widget\CodeEditorWidget', '_view']);
     }

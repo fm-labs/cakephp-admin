@@ -66,24 +66,15 @@ class BackendLayoutHelper extends Helper
         $title = ($title) ?: Inflector::humanize(Inflector::tableize($event->subject()->request['controller'])); // inflected controller name
         $event->subject()->Blocks->set('title', $title);
 
-        // AdminLTE layout options @TODO Move to AdminLTE Backend Theme
-        //$themeSkinClass = (Configure::read('Backend.AdminLte.skin_class')) ?: 'skin-blue';
-        //$themeLayoutClass = (Configure::read('Backend.AdminLte.layout_class')) ?: '';
-        //$themeSidebarClass = (Configure::read('Backend.AdminLte.sidebar_class')) ?: 'sidebar-mini';
-        //$event->subject()->set('be_adminlte_skin_class', $themeSkinClass);
-        //$event->subject()->set('be_adminlte_layout_class', $themeLayoutClass);
-        //$event->subject()->set('be_adminlte_sidebar_class', $themeSidebarClass);
-        //$event->subject()->set('be_layout_body_class',
-        //    trim(join(' ', [$themeSkinClass, $themeSidebarClass, $themeLayoutClass])));
-        //$event->subject()->Html->css('/backend/libs/adminlte/bootstrap/css/bootstrap.min.css', ['block' => true]);
-        //$event->subject()->Html->css('/backend/libs/adminlte/dist/css/AdminLTE.min.css', ['block' => true]);
-        //$event->subject()->Html->css('/backend/libs/adminlte/dist/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
-        //$event->subject()->Html->script('/backend/libs/adminlte/bootstrap/js/bootstrap.min.js', ['block' => true]);
-        //$event->subject()->Html->script('/backend/libs/adminlte/dist/js/app.js', ['block' => true]);
-
         $themeClass = (Configure::read('Backend.Theme.name')) ?: 'theme-default';
         $themeSkinClass = (Configure::read('Backend.Theme.skin')) ?: 'skin-default';
         $themeBodyClass = (Configure::read('Backend.Theme.bodyClass')) ?: '';
+
+        if (Configure::read('Backend.Theme.darkmode')) {
+            $event->subject()->Html->css('/backend/css/layout/dark.min.css', ['block' => true]);
+            $themeBodyClass = trim($themeBodyClass . ' darkmode');
+        }
+
         $event->subject()->set(
             'be_layout_body_class',
             trim(join(' ', [$themeClass, $themeSkinClass, $themeBodyClass]))

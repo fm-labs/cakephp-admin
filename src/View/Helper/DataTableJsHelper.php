@@ -71,8 +71,8 @@ class DataTableJsHelper extends DataTableHelper
         //$this->Html->script('Backend.datatables/jquery.dataTables', ['block' => true]);
         //$this->Html->script('Backend.datatables/dataTables.bootstrap', ['block' => true]);
 
-        $this->Html->css('/backend/libs/DataTables/datatables.min.css', ['block' => true]);
-        $this->Html->script('/backend/libs/DataTables/datatables.min.js', ['block' => true]);
+        $this->Html->css('/backend/vendor/DataTables/datatables.min.css', ['block' => true]);
+        $this->Html->script('/backend/vendor/DataTables/datatables.min.js', ['block' => true]);
         $this->Html->script('/backend/js/backend.datatables.js', ['block' => true]);
     }
 

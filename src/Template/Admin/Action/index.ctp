@@ -13,7 +13,7 @@ $this->extend('Backend./Base/index');
     }
     ?>
     <!-- Data table -->
-    <?php $this->Box->create(false, ['class' => 'box']); ?>
+    <?php $this->Box->create(false/*, ['class' => 'box']*/); ?>
     <?php
     $this->DataTable->create($this->get('dataTable'), $this->get('result'));
     echo $this->DataTable->renderAll();

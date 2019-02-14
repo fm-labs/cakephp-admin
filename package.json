@@ -14,7 +14,7 @@
     "email": "office@flowmotion-labs.com",
     "url": "http://www.flowmotion-labs.com/"
   },
-  "contributers": [],
+  "contributors": [],
   "repository": {
     "type": "git",
     "url": "https://github.com/fm-labs/cakephp3-backend.git"
@@ -32,5 +32,20 @@
     "grunt-contrib-watch": "~0.6.1",
     "less-plugin-autoprefix": "~1.5.1",
     "less-plugin-clean-css": "~1.5.1"
+  },
+  "dependencies": {
+    "datatables.net-bs": "^1.10.19",
+    "datatables.net-buttons-bs": "^1.5.4",
+    "datatables.net-colreorder-bs": "^1.5.1",
+    "datatables.net-fixedcolumns-bs": "^3.2.6",
+    "datatables.net-fixedheader-bs": "^3.1.5",
+    "datatables.net-keytable-bs": "^2.5.0",
+    "datatables.net-responsive-bs": "^2.2.3",
+    "datatables.net-rowgroup-bs": "^1.1.0",
+    "datatables.net-rowreorder-bs": "^1.2.5",
+    "datatables.net-scroller-bs": "^1.5.1",
+    "datatables.net-select-bs": "^1.2.7",
+    "sweetalert2": "^8.0.7",
+    "toastr": "^2.1.4"
   }
 }

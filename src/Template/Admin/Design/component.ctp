@@ -15,23 +15,6 @@
 
 
 
-<!-- SECTION ALERT -->
-<div class="section-header">
-    Flash Messages
-</div>
-<div class="alert alert-success">
-    <p>Success!</p>
-</div>
-<div class="alert alert-warning">
-    <p>Warning!</p>
-</div>
-<div class="alert alert-danger">
-    <p>Danger!</p>
-</div>
-<div class="alert alert-info">
-    <p>Info!</p>
-</div>
-
 <!-- SECTION JS Alerts -->
 <div class="section-header">
     Javascript Alerts & Confirmation Boxes

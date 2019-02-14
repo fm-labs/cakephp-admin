@@ -1,5 +1,31 @@
 <?php $this->extend('base'); ?>
 
+
+<!-- SECTION ALERT -->
+<div class="section-header">
+    Flash Messages
+</div>
+
+<div class="" style="margin-bottom: 10px;">
+    <?= $this->Html->link('Flash success', ['flash' => 'success'], ['class' => 'btn btn-default']); ?>
+    <?= $this->Html->link('Flash warning', ['flash' => 'warning'], ['class' => 'btn btn-default']); ?>
+    <?= $this->Html->link('Flash error', ['flash' => 'error'], ['class' => 'btn btn-default']); ?>
+    <?= $this->Html->link('Flash info', ['flash' => 'info'], ['class' => 'btn btn-default']); ?>
+</div>
+<div class="alert alert-success">
+    <p>Success!</p>
+</div>
+<div class="alert alert-warning">
+    <p>Warning!</p>
+</div>
+<div class="alert alert-danger">
+    <p>Danger!</p>
+</div>
+<div class="alert alert-info">
+    <p>Info!</p>
+</div>
+
+
 <!-- SECTION TYPOGRAPHIE -->
 <div class="section-header">
     Typographie

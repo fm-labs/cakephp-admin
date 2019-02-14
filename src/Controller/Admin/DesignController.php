@@ -7,6 +7,13 @@ use Cake\ORM\Entity;
 
 class DesignController extends AppController
 {
+    public $sections = [
+        'form',
+        'table',
+        'box',
+        'component'
+    ];
+
     /**
      * Index action
      * @return void
@@ -14,12 +21,18 @@ class DesignController extends AppController
     public function index()
     {
         $section = $this->request->query('section');
-        if ($section) {
+        if ($section && in_array($section, $this->sections)) {
             if (method_exists($this, $section)) {
                 $this->setAction($section);
 
                 return;
             }
+        }
+
+        $flash = $this->request->query('flash');
+        if ($flash) {
+            $this->Flash->{$flash}('Awesome!', ['title' => 'My title']);
+            $this->Flash->set('Realy cool!', ['title' => 'Just another flash message']);
         }
 
         $this->render($section);

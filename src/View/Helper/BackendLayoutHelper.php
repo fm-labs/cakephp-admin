@@ -19,6 +19,14 @@ class BackendLayoutHelper extends Helper
         $this->_View->loadHelper('LayoutHeader', ['className' => 'Backend.Layout/Header']);
         $this->_View->loadHelper('Toolbar', ['className' => 'Backend.Layout/Toolbar']);
         $this->_View->loadHelper('Sidebar', ['className' => 'Backend.Layout/Sidebar']);
+
+        if (Configure::read('Backend.Theme.enableJsFlash')) {
+            $this->_View->loadHelper('Backend.Toastr');
+        }
+
+        if (Configure::read('Backend.Theme.enableJsAlerts')) {
+            $this->_View->loadHelper('Backend.SweetAlert2');
+        }
     }
 
     /**
@@ -27,8 +35,8 @@ class BackendLayoutHelper extends Helper
     public function implementedEvents()
     {
         return [
-            'View.beforeRender' => ['callable' => 'beforeRender', 'priority' => 2],
-            'View.beforeLayout' => ['callable' => 'beforeLayout', 'priority' => 2]
+            'View.beforeRender' => ['callable' => 'beforeRender'/*, 'priority' => 2*/],
+            'View.beforeLayout' => ['callable' => 'beforeLayout'/*, 'priority' => 2*/]
         ];
     }
 
@@ -85,6 +93,11 @@ class BackendLayoutHelper extends Helper
         //@TODO Fallback to default block element
         //@TODO Add support for blocks with sub-elements
         $blocks = [
+            'flash' => [
+                [
+                    'element' => 'Backend.Layout/admin/flash'
+                ]
+            ],
             'top' => [
                 [
                     'element' => 'Backend.Layout/admin/content_header'

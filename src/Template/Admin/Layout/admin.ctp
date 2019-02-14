@@ -32,12 +32,7 @@
     <div id="content" class="content-wrapper" style="min-height: 900px;">
 
         <section id="main-flash" class="flash-wrapper">
-            <!-- Flash Auth -->
-            <?php echo $this->Flash->render('auth') ?>
-            <!-- Flash Backend -->
-            <?php echo $this->Flash->render('backend') ?>
-            <!-- Flash Default -->
-            <?php echo $this->Flash->render() ?>
+            <?php echo $this->fetch('flash'); ?>
         </section>
 
         <!-- Breadcrumbs -->

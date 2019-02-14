@@ -21,6 +21,7 @@ module.exports = function(grunt) {
           'webroot/css/layout/auth.css': 'webroot/less/layout/auth.less',
           'webroot/css/layout/admin.css': 'webroot/less/layout/admin.less',
           'webroot/css/layout/iframe.css': 'webroot/less/layout/iframe.less',
+          'webroot/css/layout/dark.css': 'webroot/less/layout/dark.less',
           'webroot/css/backend.css': 'webroot/less/backend.less',
           'webroot/css/jstree/themes/backend/style.css': 'webroot/less/plugins/jstree/jstree.less'
         }
@@ -39,6 +40,7 @@ module.exports = function(grunt) {
           'webroot/css/layout/auth.min.css': 'webroot/less/layout/auth.less',
           'webroot/css/layout/admin.min.css': 'webroot/less/layout/admin.less',
           'webroot/css/layout/iframe.min.css': 'webroot/less/layout/iframe.less',
+          'webroot/css/layout/dark.min.css': 'webroot/less/layout/dark.less',
           'webroot/css/backend.min.css': 'webroot/less/backend.less',
           'webroot/css/jstree/themes/backend/style.min.css': 'webroot/less/plugins/jstree/jstree.less'
         }
@@ -68,12 +70,23 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'bower_components/respond/dest/', src: ['**'], dest: 'webroot/libs/respond/'},
           {expand: true, cwd: 'bower_components/tinymce/', src: ['**'], dest: 'webroot/libs/tinymce/'},
           {expand: true, cwd: 'webroot/js/tinymce/langs/', src: ['**'], dest: 'webroot/libs/tinymce/langs/'},
-          {expand: true, cwd: 'bower_components/underscore/', src: ['**'], dest: 'webroot/libs/underscore/'},
+          {expand: true, cwd: 'bower_components/underscore/', src: ['*.js'], dest: 'webroot/libs/underscore/'},
           {expand: true, cwd: 'bower_components/flag-icon-css/', src: ['css/**', 'flags/**'], dest: 'webroot/libs/flag-icon-css/'},
           {expand: true, cwd: 'bower_components/sumoselect/', src: ['*.js', '*.css'], dest: 'webroot/libs/sumoselect/'},
           {expand: true, cwd: 'bower_components/select2/', src: ['dist/**'], dest: 'webroot/libs/select2/'},
           {expand: true, cwd: 'bower_components/select2-bootstrap-theme/', src: ['dist/**'], dest: 'webroot/libs/select2-bootstrap-theme/'},
           {expand: true, cwd: 'bower_components/daterangepicker/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/daterangepicker/'}
+        ]
+      },
+      yarn: {
+        options: {
+          processContentExclude: ['**/*.{png,gif,jpg,ico,psd,ttf,otf,woff,svg}'],
+          noProcess: ['**/*.{png,gif,jpg,ico,psd,ttf,otf,woff,woff2,svg}'], // processContentExclude has been renamed to noProcess
+          encoding: null
+        },
+        files: [
+          {expand: true, cwd: 'node_modules/toastr/build/', src: ['**'], dest: 'webroot/libs/toastr/'},
+          {expand: true, cwd: 'node_modules/sweetalert2/dist/', src: ['**'], dest: 'webroot/libs/sweetalert2/'}
         ]
       }
     },

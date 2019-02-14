@@ -103,6 +103,16 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
                 'type' => 'boolean',
             ],
 
+            'Theme.enableJsFlash' => [
+                //'label' => 'Pretty Flash messages',
+                'type' => 'boolean',
+            ],
+
+            'Theme.enableJsAlerts' => [
+                //'label' => 'Pretty Alert messages',
+                'type' => 'boolean',
+            ],
+
         ]);
     }
 

@@ -13,7 +13,20 @@ class DesignController extends AppController
      */
     public function index()
     {
+        $section = $this->request->query('section');
+        if ($section) {
+            if (method_exists($this, $section)) {
+                $this->setAction($section);
 
+                return;
+            }
+        }
+
+        $this->render($section);
+    }
+
+    public function form()
+    {
         $form = new Form();
         $form->schema()
             ->addField('h_text', ['type' => 'string'])

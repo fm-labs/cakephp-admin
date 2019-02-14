@@ -126,7 +126,29 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
                 $event->subject()->addItem([
                     'title' => __d('backend', 'Design'),
                     'data-icon' => 'paint-brush',
-                    'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index']
+                    'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index'],
+                    'children' => [
+                        'design_form' => [
+                            'title' => __d('backend', 'Forms'),
+                            'data-icon' => 'paint-brush',
+                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'form'],
+                        ],
+                        'design_boxes' => [
+                            'title' => __d('backend', 'Boxes'),
+                            'data-icon' => 'paint-brush',
+                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'boxes'],
+                        ],
+                        'design_tables' => [
+                            'title' => __d('backend', 'Tables'),
+                            'data-icon' => 'paint-brush',
+                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'tables'],
+                        ],
+                        'design_components' => [
+                            'title' => __d('backend', 'Components'),
+                            'data-icon' => 'paint-brush',
+                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'components'],
+                        ]
+                    ]
                 ]);
             }
         }

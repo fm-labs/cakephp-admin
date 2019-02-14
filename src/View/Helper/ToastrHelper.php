@@ -123,9 +123,8 @@ class ToastrHelper extends Helper
             $script .= sprintf($scriptTemplate, $method, $message['message'], $title, json_encode($toastr));
 
         }
-        //$this->request->session()->delete('Flash.' . $key);
-
-        $this->Html->scriptBlock($script, ['safe' => false, 'block' => $options['block']]);
+        $this->request->session()->delete('Flash.' . $key);
+        return $this->Html->scriptBlock($script, ['safe' => false, 'block' => $options['block']]);
     }
 
     public function implementedEvents()

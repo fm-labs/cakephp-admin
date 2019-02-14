@@ -14,10 +14,14 @@ if ($this->get('_no_header')) {
 }
 ?>
 <section class="content-header">
-    <h1>
-        <?= ($this->fetch('heading')) ?: $this->fetch('title'); ?>&nbsp;
-        <?php if ($this->fetch('heading_small')): ?>
-            <small><?= $this->fetch('heading_small'); ?></small>
-        <?php endif; ?>
-    </h1>
+    <?php if ($this->fetch('contentHeader')) : ?>
+        <?php echo $this->fetch('contentHeader'); ?>
+    <?php else : ?>
+        <h1>
+            <?= ($this->fetch('heading')) ?: $this->fetch('title'); ?>&nbsp;
+            <?php if ($this->fetch('heading_small')) : ?>
+                <small><?= $this->fetch('heading_small'); ?></small>
+            <?php endif; ?>
+        </h1>
+    <?php endif; ?>
 </section>

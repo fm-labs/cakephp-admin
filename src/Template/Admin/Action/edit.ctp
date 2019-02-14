@@ -55,11 +55,12 @@ $this->extend('Backend./Base/form');
     echo $this->Form->create($entity, $formOptions);
     if ($fieldsets) {
         foreach ($fieldsets as $fieldset) {
-            echo $this->Form->fieldsetStart($fieldset);
-            foreach ($fieldset['fields'] as $field) {
+            $fieldset += ['fields' => [], 'legend' => true, 'options' => []];
+            echo $this->Form->fieldsetStart($fieldset['legend'], $fieldset['options']);
+            foreach ($fieldset['fields'] as $field => $fieldConfig) {
                 //if (!empty($whitelist) && !in_array($field, $whitelist)) continue;
                 //if (!empty($blacklist) && in_array($field, $blacklist)) continue;
-                $fieldConfig = (isset($fields[$field]) && isset($fields[$field]['input'])) ? $fields[$field]['input'] : [];
+                //$fieldConfig = (isset($fields[$field]) && isset($fields[$field])) ? $fields[$field] : [];
                 echo $this->Form->input($field, $fieldConfig);
             }
             echo $this->Form->fieldsetEnd();

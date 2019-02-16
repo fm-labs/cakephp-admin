@@ -19,7 +19,7 @@ class BoxHelperTest extends TestCase
         $view = new View();
         $view->loadHelper('Backend.Box');
 
-        $view->Box->create('Collapsable', ['autostart' => false]);
+        $view->Box->create('Collapsable');
         $view->Box->body('The body of the box');
 
         $expected = <<<HTML

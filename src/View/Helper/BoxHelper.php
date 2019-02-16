@@ -147,7 +147,6 @@ class BoxHelper extends Helper
         }
     }
 
-
     /**
      * @return null|string
      */
@@ -156,7 +155,7 @@ class BoxHelper extends Helper
         $this->end();
 
         $class = $this->_params['class'];
-        $class = ($this->_params['collapsed']) ? $class .' ' . $this->_params['collapsedClass'] : $class;
+        $class = ($this->_params['collapsed']) ? $class . ' ' . $this->_params['collapsedClass'] : $class;
 
         return $this->templater()->format('box', [
             'class' => trim($class),

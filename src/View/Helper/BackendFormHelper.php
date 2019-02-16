@@ -9,6 +9,9 @@ class BackendFormHelper extends BootstrapFormHelper
 {
     private $_fieldsetOptions = [];
 
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(View $View, array $config = [])
     {
         parent::__construct($View, $config);
@@ -71,12 +74,9 @@ class BackendFormHelper extends BootstrapFormHelper
         return parent::fieldset($fields, $this->_fieldsetOptions);
     }
 
+
     /**
-     * FormHelper::_getInput() override
-     *
-     * @param string $fieldName
-     * @param array $options
-     * @return string
+     * {@inheritDoc}
      */
     protected function _getInput($fieldName, $options)
     {
@@ -108,7 +108,7 @@ class BackendFormHelper extends BootstrapFormHelper
     }
 
     /**
-     * Magically get input options
+     * {@inheritDoc}
      */
     protected function _parseOptions($fieldName, $options)
     {
@@ -128,17 +128,15 @@ class BackendFormHelper extends BootstrapFormHelper
             $options['type'] = 'datetime';
             //$options['type'] = ['datetimepicker'];
             //$options['type'] = 'datepicker';
-        }
-        elseif (preg_match('/_date$/', $fieldName)) {
+        } elseif (preg_match('/_date$/', $fieldName)) {
             $options['type'] = 'datepicker';
+        } elseif (preg_match('/_url$/', $fieldName)) {
+            $options['type'] = 'url';
+            $options['placeholder'] = 'https://';
         }
         //elseif (preg_match('/_time$/', $fieldName)) {
         //    $options['type'] = ['timepicker'];
         //}
-        elseif (preg_match('/_url$/', $fieldName)) {
-            $options['type'] = 'url';
-            $options['placeholder'] = 'https://';
-        }
 
         return parent::_parseOptions($fieldName, $options);
     }

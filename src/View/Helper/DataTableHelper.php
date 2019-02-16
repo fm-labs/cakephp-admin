@@ -2,9 +2,7 @@
 
 namespace Backend\View\Helper;
 
-use Cake\Collection\CollectionInterface;
 use Cake\Event\Event;
-use Cake\Event\EventManager;
 use Cake\ORM\Association;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -17,7 +15,6 @@ use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\PaginatorHelper;
 use Cake\View\StringTemplateTrait;
 use Cake\View\View;
-use Composer\Script\ScriptEvents;
 
 /**
  * Class DataTableHelper
@@ -74,6 +71,9 @@ class DataTableHelper extends Helper
      */
     protected $_table;
 
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(View $View, array $config = [])
     {
         parent::__construct($View, $config);
@@ -128,11 +128,10 @@ class DataTableHelper extends Helper
             'rowSelectCell' => '<div class="dtable-row-select">{{content}}</div>'
         ]);
         */
-
     }
 
     /**
-     * @param array $params
+     * @param array $params Table parameters
      * - `model` string Model name
      * - `data` array|Collection Table data
      * - `id` string Html element id attribute
@@ -141,11 +140,12 @@ class DataTableHelper extends Helper
      *      string parameter or as first item in list
      * - `exclude` array List of entity fields to ignore.
      * - `actions` array List of actions link. Accepts entity fields as string templates in url arrays (:[field])
-     *      e.g. [__d('backend','Edit'), ['action' => 'edit', 'id' => ':id']]
+     *      e.g. [__d('backend', 'Edit'), ['action' => 'edit', 'id' => ':id']]
      * - `paginate` boolean
      * - `sortable` boolean
      * - `filter` boolean
      * - `reduce` array
+     * @param array $data Table data
      * @return $this
      */
     public function create($params = [], $data = [])
@@ -161,6 +161,10 @@ class DataTableHelper extends Helper
         return $this;
     }
 
+    /**
+     * @param array $params Table parameters
+     * @return $this
+     */
     public function init($params)
     {
         // parse params
@@ -183,8 +187,7 @@ class DataTableHelper extends Helper
         // fields whitelist
         if (is_array($this->_params['fieldsWhitelist']) && empty($this->_params['fieldsWhitelist'])) {
             $this->_params['fieldsWhitelist'] = null;
-        }
-        elseif ($this->_params['fieldsWhitelist'] === true) {
+        } elseif ($this->_params['fieldsWhitelist'] === true) {
             $this->_params['fieldsWhitelist'] = null;
         }
 
@@ -209,7 +212,7 @@ class DataTableHelper extends Helper
 
         if (isset($this->_params['rowActions']) && $this->_params['rowActions'] !== false) {
             $rowActions = $this->_params['rowActions'];
-            $this->addRowCallback(function($row) use ($rowActions) {
+            $this->addRowCallback(function ($row) use ($rowActions) {
                 return $this->_applyRowActions($rowActions, $row);
             });
         }
@@ -226,6 +229,8 @@ class DataTableHelper extends Helper
 
     /**
      * Convenience wrapper to get ID param
+     *
+     * @return int|string
      */
     public function id()
     {
@@ -234,6 +239,11 @@ class DataTableHelper extends Helper
 
     /**
      * Set datatable parameter
+     *
+     * @param string|array $key Parameter key
+     * @param null|mixed $val Parameter value
+     * @param bool $merge If True and $key is an array the values will be merged with existing params
+     * @return $this
      */
     public function setParam($key, $val = null, $merge = true)
     {
@@ -241,18 +251,15 @@ class DataTableHelper extends Helper
             if ($merge === false) {
                 $this->_params = $key;
             } else {
-                foreach($key as $_key => $_val) {
+                foreach ($key as $_key => $_val) {
                     $this->setParam($_key, $_val, $merge);
                 }
             }
+
             return $this;
         }
-
-        switch($key) {
-
-        }
-
         $this->_params[$key] = $val;
+
         return $this;
     }
 
@@ -277,6 +284,9 @@ class DataTableHelper extends Helper
 
     /**
      * Alias for getParam()
+     *
+     * @param string $key Key name
+     * @return mixed
      */
     public function param($key)
     {
@@ -296,7 +306,7 @@ class DataTableHelper extends Helper
     /**
      * Set data
      *
-     * @param mixed $data
+     * @param mixed $data Table data
      * @return $this
      */
     public function setData($data)
@@ -321,6 +331,9 @@ class DataTableHelper extends Helper
 
     /**
      * Alias for get/setData()
+     *
+     * @param null|array $data Table data. If NULL, existing table data will be returned
+     * @return array|$this
      */
     public function data($data = null)
     {
@@ -331,27 +344,23 @@ class DataTableHelper extends Helper
         return $this->setData($data);
     }
 
+    /**
+     * @param callable $callable A callback receiving a table row as single argument
+     * @return $this
+     */
     public function addRowCallback(callable $callable)
     {
         $this->_rowCallbacks[] = $callable;
+
         return $this;
     }
 
-    public function beforeRenderFile(Event $event)
-    {
-        //debug("beforeRenderFile");
-    }
-
-    public function beforeRender(Event $event)
-    {
-        //debug("beforeRender");
-    }
-
-    public function beforeLayout(Event $event)
-    {
-        //debug("beforeLayout");
-    }
-
+    /**
+     * Render the table HTML
+     *
+     * @param array $options Render options
+     * @return string
+     */
     public function render($options = [])
     {
         $options += ['pagination' => null, 'script' => null];
@@ -380,6 +389,7 @@ class DataTableHelper extends Helper
 
     /**
      * @deprecated Use render() instread
+     * @return string
      */
     public function renderAll()
     {
@@ -389,6 +399,8 @@ class DataTableHelper extends Helper
     /**
      * Implementation specific initializer method
      * May be overridden in subclasses for different initialization
+     *
+     * @return void
      */
     protected function _initialize()
     {
@@ -434,6 +446,8 @@ class DataTableHelper extends Helper
     }
 
     /**
+     * @param string $field Field name
+     * @param array $conf Field config
      * @return void
      */
     protected function _configureField($field, array $conf = [])
@@ -463,6 +477,10 @@ class DataTableHelper extends Helper
         $this->_fields[$field] = $conf;
     }
 
+    /**
+     * @param string $fieldName Field name
+     * @return array|null
+     */
     public function getField($fieldName)
     {
         if (isset($this->_fields[$fieldName])) {
@@ -472,6 +490,12 @@ class DataTableHelper extends Helper
         return null;
     }
 
+    /**
+     * @param string $fieldName Field name
+     * @param array $config Field config
+     * @param bool $merge If True, merge with existing field config (Default: True)
+     * @return $this
+     */
     public function setField($fieldName, array $config, $merge = true)
     {
         $field = $this->getField($fieldName);
@@ -497,6 +521,12 @@ class DataTableHelper extends Helper
         return $this->_table;
     }
 
+    /**
+     * Get table css class
+     *
+     * @param string $class Additional class(es)
+     * @return string
+     */
     protected function _tableClass($class = '')
     {
         $class = 'table data-table' . $class;
@@ -511,6 +541,9 @@ class DataTableHelper extends Helper
         return trim($class);
     }
 
+    /**
+     * @return string
+     */
     protected function _renderTable()
     {
         $tableAttributes = $this->_tableArgs + ['id' => $this->param('id')];
@@ -532,12 +565,16 @@ class DataTableHelper extends Helper
         return $formStart . $table . $formEnd;
     }
 
+    /**
+     * @param string $template String template name
+     * @return string
+     */
     protected function _renderHead($template = 'head')
     {
         $headCellActions = '';
         if ($this->_params['rowActions'] !== false) {
             $headCellActions = $this->templater()->format('headCellActions', [
-                'content' => __d('backend','Actions'),
+                'content' => __d('backend', 'Actions'),
                 'attrs' => $this->_buildFieldAttributes('_actions_', [
                     'type' => 'object',
                     'label' => 'Actions',
@@ -555,11 +592,13 @@ class DataTableHelper extends Helper
         return $html;
     }
 
+    /**
+     * @return string
+     */
     protected function _renderHeadCells()
     {
         $html = "";
         foreach ($this->_fields as $fieldName => $field) {
-
             $html .= $this->templater()->format('headCell', [
                 'content' => $this->_buildPaginationFieldLabel($fieldName, $field),
                 'attrs' => $this->_buildFieldAttributes($fieldName, $field)
@@ -569,6 +608,9 @@ class DataTableHelper extends Helper
         return $html;
     }
 
+    /**
+     * @return string
+     */
     protected function _renderBody()
     {
         $rows = "";
@@ -591,6 +633,9 @@ class DataTableHelper extends Helper
         ]);
     }
 
+    /**
+     * @return string
+     */
     protected function _renderFilterRow()
     {
         if ($this->_params['filter'] === false) {
@@ -598,7 +643,7 @@ class DataTableHelper extends Helper
         }
 
         $Model = $this->_table();
-        $filters = ($this->_params['filter'] === true) ? [] : (array) $this->_params['filter'];
+        $filters = ($this->_params['filter'] === true) ? [] : (array)$this->_params['filter'];
         if (empty($filters) && $Model && $Model->behaviors()->has('Search')) {
             $searchFilters = $Model->searchManager()->all();
             $filters = array_keys($searchFilters);
@@ -609,45 +654,45 @@ class DataTableHelper extends Helper
 
             //if ($this->_params['filter'] == true || in_array($fieldName, $this->_params['filter'])) {
             //if (in_array($fieldName, $filters)) {
-                $filterInputOptions = ['label' => false];
+            $filterInputOptions = ['label' => false];
 
-                // get current filter value from request query
-                $filterInputOptions['value'] = $this->_View->request->query($fieldName);
-                $column = ['type' => 'string', 'null' => true, 'default' => null];
+            // get current filter value from request query
+            $filterInputOptions['value'] = $this->_View->request->query($fieldName);
+            $column = ['type' => 'string', 'null' => true, 'default' => null];
 
-                if ($Model) {
-                    $column = $Model->schema()->column($fieldName);
+            if ($Model) {
+                $column = $Model->schema()->column($fieldName);
+            }
+            //$column['null'] = true;
+            //$column['default'] = null;
+
+            $filterInputOptions['title'] = json_encode($column);
+            $filterInputOptions['data-filter'] = $fieldName;
+            $filterInputOptions['class'] = 'filter';
+
+            if ($column['type'] == 'boolean') {
+                $filterInputOptions['type'] = 'select';
+                $filterInputOptions['options'] = [ 0 => __d('backend', 'No'), 1 => __d('backend', 'Yes')];
+                //$filterInputOptions['empty'] = __d('backend', 'All');
+                $filterInputOptions['data-placeholder'] = __d('backend', 'All');
+
+            //} elseif ($column['type'] == 'select' || substr($fieldName, -3) == '_id') {
+            //    $filterInputOptions['empty'] = __d('backend', 'All');
+            } elseif ($column['type'] == 'date' || $column['type'] == 'datetime') {
+                $filterInputOptions['type'] = 'hidden';
+            } elseif ($column['type'] == 'text') {
+                $filterInputOptions['type'] = 'text';
+            }
+
+            if ($Model instanceof \Banana\Model\TableInputDataSourceInterface) {
+                $sources = $Model->getInputList($fieldName);
+                if ($sources) {
+                    $filterInputOptions['options'] = $sources;
+                    //$filterInputOptions['empty'] = __d('backend', 'All');
+                    $filterInputOptions['data-placeholder'] = __d('backend', 'All');
                 }
-                //$column['null'] = true;
-                //$column['default'] = null;
-
-                $filterInputOptions['title'] = json_encode($column);
-                $filterInputOptions['data-filter'] = $fieldName;
-                $filterInputOptions['class'] = 'filter';
-
-                if ($column['type'] == 'boolean') {
-                    $filterInputOptions['type'] = 'select';
-                    $filterInputOptions['options'] = [ 0 => __d('backend','No'), 1 => __d('backend','Yes')];
-                    //$filterInputOptions['empty'] = __d('backend','All');
-                    $filterInputOptions['data-placeholder'] = __d('backend','All');
-
-                //} elseif ($column['type'] == 'select' || substr($fieldName, -3) == '_id') {
-                //    $filterInputOptions['empty'] = __d('backend','All');
-                } elseif ($column['type'] == 'date' || $column['type'] == 'datetime') {
-                    $filterInputOptions['type'] = 'hidden';
-                } elseif ($column['type'] == 'text') {
-                    $filterInputOptions['type'] = 'text';
-                }
-
-                if ($Model instanceof \Banana\Model\TableInputDataSourceInterface) {
-                    $sources = $Model->getInputList($fieldName);
-                    if ($sources) {
-                        $filterInputOptions['options'] = $sources;
-                        //$filterInputOptions['empty'] = __d('backend','All');
-                        $filterInputOptions['data-placeholder'] = __d('backend','All');
-                    }
-                }
-                $filterInput = $this->Form->input($fieldName, $filterInputOptions);
+            }
+            $filterInput = $this->Form->input($fieldName, $filterInputOptions);
             //}
             $cells .= $this->templater()->format('rowCell', [
                 'content' => (string)$filterInput,
@@ -659,7 +704,7 @@ class DataTableHelper extends Helper
         }
 
         $actionCell = $this->templater()->format('rowCell', [
-            'content' => $this->Form->button(__d('backend','Filter'), ['class' => 'btn btn-default btn-xs']),
+            'content' => $this->Form->button(__d('backend', 'Filter'), ['class' => 'btn btn-default btn-xs']),
             'attrs' => $this->templater()->formatAttributes([
                 'style' => 'text-align: right;',
                 //'title' => $field['title']
@@ -675,6 +720,9 @@ class DataTableHelper extends Helper
         return $row;
     }
 
+    /**
+     * @return string
+     */
     protected function _renderReduceRow()
     {
         if (empty($this->_params['reduce'])) {
@@ -706,6 +754,10 @@ class DataTableHelper extends Helper
         return $html;
     }
 
+    /**
+     * @param array $row Table row data
+     * @return string
+     */
     protected function _renderRow($row)
     {
         // data cells
@@ -727,15 +779,24 @@ class DataTableHelper extends Helper
         return $html;
     }
 
+    /**
+     * @param array $row Table row data
+     * @return string
+     */
     protected function _renderRowActionsCell($row)
     {
         $rowActionsHtml = $this->_renderRowActions($row);
+
         return $this->templater()->format('rowActionsCell', [
             'actions' => $rowActionsHtml,
             'attrs' => $this->_buildFieldAttributes('_actions_', ['type' => 'actions', 'label' => 'Actions', 'formatter' => null, 'formatterArgs' => []])
         ]);
     }
 
+    /**
+     * @param array $row Table row data
+     * @return string
+     */
     protected function _renderRowActions($row)
     {
         $row = (is_object($row)) ? $row->toArray() : $row;
@@ -758,6 +819,10 @@ class DataTableHelper extends Helper
         return $button;
     }
 
+    /**
+     * @param array $row Table row data
+     * @return string
+     */
     protected function _renderRowCells($row)
     {
         $html = "";
@@ -766,7 +831,6 @@ class DataTableHelper extends Helper
         $html .= $this->_renderRowSelectCell($row);
 
         foreach ($this->_fields as $fieldName => $field) {
-
             $cellData = Hash::get($row, $fieldName);
 
             // If formatter is passed as an array (and no callable construct)
@@ -797,6 +861,10 @@ class DataTableHelper extends Helper
         return $html;
     }
 
+    /**
+     * @param array $row Table row data
+     * @return string
+     */
     protected function _renderRowSelectCell($row)
     {
         if (isset($this->_params['select']) && $this->_params['select'] === true) {
@@ -808,6 +876,9 @@ class DataTableHelper extends Helper
         }
     }
 
+    /**
+     * @return string
+     */
     protected function _renderPagination()
     {
         //if (!$this->_params['paginate']) {
@@ -815,16 +886,16 @@ class DataTableHelper extends Helper
         //}
 
         return $this->_View->element('Backend.Pagination/default', [
-            'counter' => ['format' => __d('backend','Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records')],
+            'counter' => ['format' => __d('backend', 'Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records')],
             'numbers' => []
         ]);
     }
 
     /**
-     * @param $script
-     * @param array $options
+     * @param string $script Script source
+     * @param array $options Script render options
+     * @return string|void
      * @deprecated
-     * @return string
      */
     public function script($script = null, $options = [])
     {
@@ -837,8 +908,9 @@ class DataTableHelper extends Helper
     }
 
     /**
-     * @param $script
-     * @param array $options
+     * @param string $script Script source
+     * @param array $options Script render options
+     * @return string|void
      * @deprecated
      */
     public function scriptBlock($script, $options = [])
@@ -847,6 +919,11 @@ class DataTableHelper extends Helper
         $this->Html->scriptBlock($script, $options);
     }
 
+    /**
+     * @param string $fieldName Field name
+     * @param array $field Field config
+     * @return string
+     */
     protected function _buildPaginationFieldLabel($fieldName, $field)
     {
         if ($this->_params['paginate'] && $this->_params['sortable']) {
@@ -856,19 +933,30 @@ class DataTableHelper extends Helper
         return h($field['label']);
     }
 
+    /**
+     * @param array $row Table data row
+     * @return string
+     */
     protected function _buildRowAttributes($row)
     {
         $rowAttributes = [
             'data-id' => (isset($row['id'])) ? $row['id'] : null,
         ];
+
         return $this->templater()->formatAttributes($rowAttributes);
     }
 
+    /**
+     * @param string $fieldName Field name
+     * @param array $field Field config
+     * @return string
+     */
     protected function _buildFieldAttributes($fieldName, $field)
     {
         $field['data-name'] = $fieldName;
         $field['data-label'] = $field['label'];
         $field['data-type'] = $field['type'];
+
         return $this->templater()->formatAttributes($field, array_keys($this->_defaultField));
     }
 
@@ -878,10 +966,11 @@ class DataTableHelper extends Helper
      * If $formatter is FALSE, no formatting will be done
      * If $formatter is NULL, the default formatter will be used (escape text)
      *
-     * @param $cellData
-     * @param bool $cellData
-     * @param array $formatter
-     * @param array $formatterArgs
+     * @param string $fieldName Field name
+     * @param mixed $cellData Cell data
+     * @param array $formatter Formatter name
+     * @param array $formatterArgs Formatter args
+     * @param array $row Table row data
      * @return string
      */
     protected function _formatRowCellData($fieldName, $cellData, $formatter = null, $formatterArgs = [], $row = [])
@@ -889,6 +978,9 @@ class DataTableHelper extends Helper
         return $this->Formatter->format($cellData, $formatter, $formatterArgs, $row);
     }
 
+    /**
+     * @return string
+     */
     protected function _renderScript()
     {
         $script = <<<SCRIPT
@@ -997,6 +1089,11 @@ SCRIPT;
         return preg_replace(array_keys($replace), array_values($replace), $script);
     }
 
+    /**
+     * @param array $rowActions List of row actions
+     * @param array $row Table row data
+     * @return array
+     */
     protected function _applyRowActions(array $rowActions, $row = [])
     {
         $row = (is_object($row)) ? $row->toArray() : $row;
@@ -1029,8 +1126,11 @@ SCRIPT;
         return $actions;
     }
 
-    /*
-     * @deprecated
+    /**
+     * @param array $rowActions List of row actions
+     * @param array $row Table row data
+     * @return string
+     * @deprecated Unused
      */
     protected function _renderRowActionsOld(array $rowActions, $row = [])
     {
@@ -1062,7 +1162,11 @@ SCRIPT;
 
         return $html;
     }
+
     /**
+     * @param string $tokenStr Template
+     * @param array $data Data
+     * @return string
      * @deprecated Unused
      */
     protected function _replaceTokens($tokenStr, $data = [])
@@ -1081,6 +1185,7 @@ SCRIPT;
         array_walk($inserts, function (&$val, $key) use ($data) {
             $val = Hash::get($data, $key);
         });
+
         return Text::insert($tokenStr, $inserts);
     }
 }

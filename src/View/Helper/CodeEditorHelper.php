@@ -19,6 +19,9 @@ class CodeEditorHelper extends Helper
 {
     public $helpers = ['Html', 'Form'];
 
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config)
     {
         $this->Html->script('/backend/vendor/ace/1.4.1-noconflict/ace.js', ['block' => true]);

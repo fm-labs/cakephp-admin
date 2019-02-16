@@ -36,7 +36,7 @@ class PageReloadHelper extends Helper
     public function enable($enable = true)
     {
         if (is_numeric($enable)) {
-           $this->setTimeout($enable);
+            $this->setTimeout($enable);
         } elseif ($enable) {
             $this->setTimeout($this->config('timeout'));
         } else {
@@ -45,30 +45,31 @@ class PageReloadHelper extends Helper
     }
 
     /**
-     * Set timeout in seconds
-     * @param int $timeout
+     * Set timeout
+     *
+     * @param int $timeout Timeout in seconds
      * @return $this
      */
     public function setTimeout($timeout = 0)
     {
-        $this->_timeout = (int) $timeout;
+        $this->_timeout = (int)$timeout;
+
         return $this;
     }
 
     /**
      * Inject page reload before rendering layout
-     * @param Event $event
+     *
+     * @param Event $event The event object
      */
     public function beforeLayout(Event $event)
     {
         if ($this->_timeout > 0) {
-
             if ($this->_config['render'] == 'html' || $this->_config['render'] == 'both') {
                 $event->subject()->Html->meta(['http-equiv' => 'refresh', 'content' => $this->_timeout], null, ['block' => true]);
             }
 
             if ($this->_config['render'] == 'script' || $this->_config['render'] == 'both') {
-
                 // for the javascript we need timeout in milliseconds
                 $timeoutMs = $this->_timeout * 1000;
 
@@ -98,11 +99,8 @@ SCRIPT;
 
             if ($this->_config['infoBlock']) {
                 $block = ($this->_config['infoBlock'] === true) ? 'after' : $this->_config['infoBlock'];
-                $event->subject()->append($block,
-                    sprintf($this->_config['infoTemplate'], $this->_timeout)
-                );
+                $event->subject()->append($block, sprintf($this->_config['infoTemplate'], $this->_timeout));
             }
         }
-
     }
 }

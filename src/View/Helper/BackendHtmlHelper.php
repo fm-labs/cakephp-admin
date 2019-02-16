@@ -39,12 +39,7 @@ class BackendHtmlHelper extends HtmlHelper
     protected $_loaded = ['scripts' => [], 'css' => []];
 
     /**
-     * @TODO Implement me: Script injection override which enables script-path aliasing
-     *
-     * @param array|string $url
-     * @param array $options
-     * @return mixed|string|void
-     * @internal param $name
+     * {@inheritDoc}
      */
     public function script($url, array $options = [])
     {

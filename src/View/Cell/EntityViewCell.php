@@ -63,6 +63,7 @@ class EntityViewCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
     }
+
     /**
      * Default display method.
      *
@@ -156,6 +157,7 @@ class EntityViewCell extends Cell
                     $related = $entity->get($assoc->property());
                     $formatter = function ($val, $row, $args, $view) use ($related, $assoc) {
                         list($plugin, $modelName) = pluginSplit($assoc->target()->registryAlias());
+
                         return $view->Html->link(
                             $related->get($assoc->target()->displayField()),
                             [/*'plugin' => $plugin,*/ 'controller' => $assoc->name(), 'action' => 'view', $related->id],
@@ -165,6 +167,7 @@ class EntityViewCell extends Cell
                 } elseif ($entity->get($property)) {
                     $formatter = function ($val, $row, $args, $view) use ($assoc) {
                         list($plugin, $modelName) = pluginSplit($assoc->target()->registryAlias());
+
                         return $view->Html->link(
                             $val,
                             [/*'plugin' => $plugin,*/ 'controller' => $assoc->name(), 'action' => 'view', $val],

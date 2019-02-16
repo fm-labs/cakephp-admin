@@ -19,6 +19,9 @@ class ChosenHelper extends Helper
 {
     public $helpers = ['Html', 'Form'];
 
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config)
     {
         $this->Html->css('/backend/libs/chosen/chosen', ['block' => true]);

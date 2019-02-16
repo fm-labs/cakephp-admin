@@ -46,7 +46,7 @@ class DataTableJsHelper extends DataTableHelper
         'searching' => false,
         'paging' => false,
         'lengthChange' => false,
-        'lengthMenu' =>  [ 10, 25, 50, 75, 100 ],
+        'lengthMenu' => [10, 25, 50, 75, 100],
         'info' => false,
         //'lengthMenu' => $this->_config['lengthMenu'],
         'pageLength' => 10,
@@ -89,8 +89,7 @@ class DataTableJsHelper extends DataTableHelper
 
     protected function _initialize()
     {
-        $jsOpts = (array) $this->param('extra');
-
+        $jsOpts = (array)$this->param('extra');
         //$jsOpts['lengthChange'] = false;
         //$jsOpts['lengthMenu'] = [ 10, 25, 50, 75, 100 ];
 
@@ -116,36 +115,44 @@ class DataTableJsHelper extends DataTableHelper
 
         // language
         $jsOpts['language'] = [
-            'processing' => __d('backend','Loading ...')
+            'processing' => __d('backend', 'Loading ...')
         ];
 
         $this->options($jsOpts);
     }
 
-    /*
-    */
+    /**
+     * {@inheritDoc}
+     */
     protected function _renderFilterRow()
     {
         // Search is injected by DataTable JS
         return '';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _renderPagination()
     {
         // Pagination is injected by DataTable JS
         return '';
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     protected function _buildPaginationFieldLabel($fieldName, $field)
     {
         // Pagination is injected by DataTable JS
         return h($field['label']);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _renderScript($block = null)
     {
-
         $jsTable = $this->_jsOptions;
         if (empty($jsTable['columns'])) {
             $columns = $this->_buildDataTableColumns();
@@ -196,7 +203,8 @@ $(document).ready(function(){
 SCRIPT;
         $script = sprintf(
             $scriptTemplate,
-            json_encode($jsTable),$this->param('id')
+            json_encode($jsTable),
+            $this->param('id')
         );
 
         return $this->Html->scriptBlock($script, ['safe' => false, 'block' => $block]);
@@ -222,6 +230,7 @@ SCRIPT;
                 */
             ];
         }
+
         return $columns;
     }
 
@@ -237,10 +246,9 @@ SCRIPT;
                     break;
                 }
                 $i++;
-            } while(next($columns));
+            } while (next($columns));
         }
+
         return $_order;
     }
-
-
 }

@@ -15,8 +15,7 @@ class FooTableHelper extends DataTableHelper
     protected $_jsOptions = [];
 
     /**
-     * @param View $View
-     * @param array $config
+     * {@inheritDoc}
      */
     public function __construct(View $View, array $config = [])
     {
@@ -44,6 +43,9 @@ class FooTableHelper extends DataTableHelper
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _initialize()
     {
         $extra = $this->_params['extra'];
@@ -76,11 +78,17 @@ class FooTableHelper extends DataTableHelper
         $this->options($extra);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _formatRowCellData($fieldName, $cellData, $formatter = null, $formatterArgs = [], $row = [])
     {
         return $cellData;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _renderFilterRow()
     {
         // Search is injected by FooTable JS
@@ -105,6 +113,9 @@ class FooTableHelper extends DataTableHelper
     }
     */
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _renderRowActions($row)
     {
         $row = (is_object($row)) ? $row->toArray() : $row;
@@ -127,6 +138,9 @@ class FooTableHelper extends DataTableHelper
         return $button;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _renderRowActionsCell($row)
     {
         //$rowActionsHtml = $this->_renderRowActions($row);
@@ -145,12 +159,18 @@ class FooTableHelper extends DataTableHelper
         ]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _renderPagination()
     {
         // Pagination is injected by FooTable JS
         return '';
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _renderScript($block = null)
     {
         $domId = $this->param('id');
@@ -163,7 +183,6 @@ class FooTableHelper extends DataTableHelper
             $template = '$(document).ready(function(){ var opts = %s; opts.rows = $.getJSON("%s"); $("#%s").footable(opts); });';
             $script = sprintf($template, json_encode($opts), $dataUrl, $domId);
         } else {
-
             $template = '$(document).ready(function(){ $("#%s").footable(%s); });';
             $script = sprintf($template, $domId, json_encode($opts));
         }
@@ -182,6 +201,7 @@ class FooTableHelper extends DataTableHelper
         $rowAttributes = [
             'data-id' => (isset($row['id'])) ? $row['id'] : null,
         ];
+
         return $this->templater()->formatAttributes($rowAttributes);
     }
 
@@ -215,6 +235,7 @@ class FooTableHelper extends DataTableHelper
         if (isset($field['class'])) {
             $field['data-classes'] = $field['class'];
         }
+
         return $this->templater()->formatAttributes($field, array_keys($this->_defaultField));
     }
 }

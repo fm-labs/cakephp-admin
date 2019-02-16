@@ -2,10 +2,7 @@
 
 namespace Backend\View\Helper\Layout;
 
-use Backend\View\BackendView;
-use Banana\Menu\Menu;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\View\Helper;
 
@@ -16,16 +13,19 @@ class SidebarHelper extends Helper
         'block' => 'sidebar'
     ];
 
+    /**
+     * {@inheritDoc}
+     */
     public function implementedEvents()
     {
         return [
-            'View.beforeRender' => ['callable' => 'beforeRender'],
             'View.beforeLayout' => ['callable' => 'beforeLayout']
         ];
     }
 
-    public function beforeRender(Event $event) {}
-
+    /**
+     * {@inheritDoc}
+     */
     public function beforeLayout(Event $event)
     {
         //debug("SidebarHelper::beforeLayout");
@@ -35,7 +35,6 @@ class SidebarHelper extends Helper
             //'search' => ['element' => 'Backend.Layout/admin/sidebar/sidebar_search', 'block' => 'sidebar_items'],
             //'user' => ['element' => 'Backend.Layout/admin/sidebar/sidebar_user', 'block' => 'sidebar_items'],
         ];
-
 
         // inject view elements
         foreach ($elements as $elementId => $element) {

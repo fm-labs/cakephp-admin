@@ -18,6 +18,9 @@ class ToastrHelper extends Helper
 {
     public $helpers = ['Html'];
 
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config)
     {
         $this->Html->css('/backend/libs/toastr/toastr.css', ['block' => true]);
@@ -48,6 +51,7 @@ class ToastrHelper extends Helper
      * Grabs messages from session and injects a toastr javascript 'script' block.
      *
      * @param string $key The flash message key
+     * @param array $options Additional options
      * @return null|string The rendered javascript (if the 'block' option is not used)
      */
     public function flash($key = 'flash', array $options = [])
@@ -124,9 +128,13 @@ class ToastrHelper extends Helper
 
         }
         $this->request->session()->delete('Flash.' . $key);
+
         return $this->Html->scriptBlock($script, ['safe' => false, 'block' => $options['block']]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function implementedEvents()
     {
         return [

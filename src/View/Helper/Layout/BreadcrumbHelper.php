@@ -18,6 +18,9 @@ class BreadcrumbHelper extends Helper
         'class' => 'breadcrumb'
     ];
 
+    /**
+     * {@inheritDoc}
+     */
     public function implementedEvents()
     {
         return [
@@ -33,8 +36,7 @@ class BreadcrumbHelper extends Helper
         }
 
         if (empty($this->Breadcrumbs->getCrumbs())) {
-
-            if ($this->request->param('plugin') && $this->request->param('plugin') != $this->request->param('controller'))  {
+            if ($this->request->param('plugin') && $this->request->param('plugin') != $this->request->param('controller')) {
                 $this->Breadcrumbs->add(Inflector::humanize($this->request->param('plugin')), [
                     'plugin' => $this->request->param('plugin'),
                     'controller' => $this->request->param('plugin'),

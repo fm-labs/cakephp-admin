@@ -3,11 +3,9 @@
 namespace Backend\View\Helper;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\View\Helper;
 use Cake\View\Helper\FormHelper;
 use Cake\View\Helper\HtmlHelper;
-use Cake\View\View;
 
 /**
  * Class Select2Helper
@@ -20,6 +18,9 @@ class Select2Helper extends Helper
 {
     public $helpers = ['Html', 'Form'];
 
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config)
     {
         if (Configure::read('debug')) {

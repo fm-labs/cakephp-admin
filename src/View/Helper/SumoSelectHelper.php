@@ -14,6 +14,9 @@ class SumoSelectHelper extends Helper
 
     public $helpers = ['Html', 'Form'];
 
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config)
     {
         $this->Html->css($this->config('cssUrl'), ['block' => true]);

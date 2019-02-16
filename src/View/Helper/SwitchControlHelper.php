@@ -22,10 +22,8 @@ class SwitchControlHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function __construct(View $View, array $config = [])
+    public function initialize(array $config)
     {
-        parent::__construct($View, $config);
-
         $this->Html->css('Backend./vendor/bootstrap-switch/css/bootstrap3/bootstrap-switch.css', ['block' => true]);
         $this->Html->script('Backend./vendor/bootstrap-switch/js/bootstrap-switch.js', ['block' => true]);
         //$this->Form->addWidget('chosen', ['Backend\View\Widget\SwitchControlSelectBoxWidget']);

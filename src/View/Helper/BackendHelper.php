@@ -15,6 +15,9 @@ class BackendHelper extends Helper
 {
     public $helpers = ['Html', 'Url'];
 
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config)
     {
         // Inject backendjs init script

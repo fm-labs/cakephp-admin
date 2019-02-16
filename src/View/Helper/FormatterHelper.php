@@ -5,8 +5,6 @@ namespace Backend\View\Helper;
 use Bootstrap\View\Helper\UiHelper;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
-use Cake\I18n\Date;
-use Cake\I18n\Time;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
@@ -121,8 +119,9 @@ class FormatterHelper extends Helper
         // @todo make span html wrapper optional
         self::register('truncate', function ($val, $extra, $params) {
             $length = (is_int($params)) ? $params : 300;
-            $str = Text::truncate((string) $val, $length);
-            return '<span title="' . (string) $val . '">' . $str . '</span>';
+            $str = Text::truncate((string)$val, $length);
+
+            return '<span title="' . (string)$val . '">' . $str . '</span>';
         });
 
         // currency
@@ -162,6 +161,7 @@ class FormatterHelper extends Helper
                     return "JSON ERROR: " . $ex->getMessage();
                 }
             }
+
             return $view->element('Backend.array_to_list', ['array' => $val]);
         });
 
@@ -196,9 +196,10 @@ class FormatterHelper extends Helper
             return sprintf('<div class="html">' . $val . '</div>', $val);
         });
 
-        self::register('related', function($val, $extra, $params) {
-
-            if (!$val) return $val;
+        self::register('related', function ($val, $extra, $params) {
+            if (!$val) {
+                return $val;
+            }
 
             $params = (is_string($params)) ? ['field' => $params] : $params;
             $params = array_merge(['field' => 'name'], $params);
@@ -211,7 +212,7 @@ class FormatterHelper extends Helper
                 return (isset($val->{$params['field']})) ? $val->{$params['field']} : null;
             }
 
-            return (string) $val;
+            return (string)$val;
         });
     }
 
@@ -254,7 +255,6 @@ class FormatterHelper extends Helper
         }
 
         switch ($formatter) {
-
             case "integer":
             case "float":
             case "double":

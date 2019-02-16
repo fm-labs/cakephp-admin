@@ -16,6 +16,10 @@ class HtmlEditorHelper extends Helper
 {
     public $helpers = ['Html'];
 
+    /**
+     * @param Event $event The event object
+     * @return void
+     */
     public function beforeLayout(Event $event)
     {
         $this->Html->script('/backend/libs/tinymce/tinymce.min', ['block' => 'script']);

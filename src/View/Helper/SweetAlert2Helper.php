@@ -16,6 +16,9 @@ class SweetAlert2Helper extends Helper
 {
     public $helpers = ['Html'];
 
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config)
     {
         if (Configure::read('debug')) {

@@ -18,6 +18,9 @@ class BackboneHelper extends Helper
 {
     public $helpers = ['Html', 'Form'];
 
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(View $View, array $config = [])
     {
         parent::__construct($View, $config);

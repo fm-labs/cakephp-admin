@@ -74,7 +74,6 @@ class BackendFormHelper extends BootstrapFormHelper
         return parent::fieldset($fields, $this->_fieldsetOptions);
     }
 
-
     /**
      * {@inheritDoc}
      */

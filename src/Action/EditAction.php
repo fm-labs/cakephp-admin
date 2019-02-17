@@ -85,8 +85,12 @@ class EditAction extends BaseEntityAction
                 $_f = $field;
                 $field = [];
             }
-            if (in_array($_f, $blacklist)) $field = false;
-            if (!empty($whitelist) && !in_array($_f, $whitelist)) $field = false;
+            if (in_array($_f, $blacklist)) {
+                $field = false;
+            }
+            if (!empty($whitelist) && !in_array($_f, $whitelist)) {
+                $field = false;
+            }
 
             $fields[$_f] = $field;
         }

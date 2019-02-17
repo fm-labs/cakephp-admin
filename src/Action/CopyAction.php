@@ -1,6 +1,7 @@
 <?php
 
 namespace Backend\Action;
+
 use Cake\Controller\Controller;
 use Cake\Network\Exception\NotImplementedException;
 
@@ -18,7 +19,7 @@ class CopyAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend','Copy');
+        return __d('backend', 'Copy');
     }
 
     /**

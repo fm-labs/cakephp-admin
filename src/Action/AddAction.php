@@ -5,7 +5,6 @@ namespace Backend\Action;
 use Backend\Action\Interfaces\ActionInterface;
 use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
-use Cake\Network\Response;
 use Cake\ORM\Association;
 use Cake\Utility\Inflector;
 
@@ -31,13 +30,12 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
 
     protected $_scope = ['index'];
 
-
     /**
      * {@inheritDoc}
      */
     public function getLabel()
     {
-        return __d('backend','Add');
+        return __d('backend', 'Add');
     }
 
     /**

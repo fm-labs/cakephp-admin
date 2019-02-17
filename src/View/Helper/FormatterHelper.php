@@ -156,7 +156,6 @@ class FormatterHelper extends Helper
                     if (json_last_error()) {
                         throw new \RuntimeException(json_last_error_msg());
                     }
-
                 } catch (\Exception $ex) {
                     return "JSON ERROR: " . $ex->getMessage();
                 }

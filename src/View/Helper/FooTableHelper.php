@@ -20,7 +20,6 @@ class FooTableHelper extends DataTableHelper
     public function __construct(View $View, array $config = [])
     {
         parent::__construct($View, $config);
-
     }
 
     public function beforeLayout(Event $event)

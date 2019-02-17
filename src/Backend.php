@@ -98,7 +98,6 @@ class Backend
         return static::$_listeners[$type];
     }
 
-
     /**
      * Constructor
      */
@@ -117,6 +116,7 @@ class Backend
         if (isset(static::$_objects[$name])) {
             return static::$_objects[$name];
         }
+
         return null;
     }
 
@@ -183,5 +183,4 @@ class Backend
             $this->services->{$service}->initialize();
         }
     }
-
 }

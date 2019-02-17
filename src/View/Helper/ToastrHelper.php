@@ -125,7 +125,6 @@ class ToastrHelper extends Helper
 
             $title = (isset($message['params']['title'])) ? $message['params']['title'] : Inflector::humanize($method);
             $script .= sprintf($scriptTemplate, $method, $message['message'], $title, json_encode($toastr));
-
         }
         $this->request->session()->delete('Flash.' . $key);
 

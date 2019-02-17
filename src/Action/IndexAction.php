@@ -165,6 +165,7 @@ class IndexAction extends BaseIndexAction
                     'attrs' => $_action->getAttributes()];
             }
         }
+
         return $actions;
     }
 }

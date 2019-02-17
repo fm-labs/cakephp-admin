@@ -27,7 +27,7 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
      */
     public function getLabel()
     {
-        return __d('backend','Debug');
+        return __d('backend', 'Debug');
     }
 
     /**
@@ -73,7 +73,7 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
         // Actions
         $actionsLoaded = [];
         $actions = $controller->Action->listActions();
-        array_walk($actions, function($action) use (&$actionsLoaded, &$controller) {
+        array_walk($actions, function ($action) use (&$actionsLoaded, &$controller) {
             $a = $controller->Action->getAction($action);
             $actionsLoaded[$action] = [
                 'class' => get_class($a),

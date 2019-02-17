@@ -16,7 +16,7 @@ class SearchAction implements IndexActionInterface
      */
     public function getLabel()
     {
-        return __d('backend','Search');
+        return __d('backend', 'Search');
     }
 
     /**

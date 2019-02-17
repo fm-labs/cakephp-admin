@@ -16,7 +16,7 @@ class TreeRepairAction extends BaseIndexAction
      */
     public function getLabel()
     {
-        return __d('backend','Repair Tree');
+        return __d('backend', 'Repair Tree');
     }
 
     /**

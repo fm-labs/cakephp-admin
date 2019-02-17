@@ -45,7 +45,6 @@ class SidebarHelper extends Helper
                 } else {
                     $elementHtml = $event->subject()->element($element['element']);
                 }
-
             } catch (\Exception $ex) {
                 $elementHtml = h($ex->getMessage());
             } finally {

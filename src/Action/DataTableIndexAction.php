@@ -79,7 +79,6 @@ class DataTableIndexAction extends IndexAction
 
         // JSON data
         if ($controller->request->query('data') == true) {
-
             //Configure::write('debug', 0);
             $controller->viewBuilder()->className('Json');
 
@@ -104,8 +103,7 @@ class DataTableIndexAction extends IndexAction
             /**
              * Selecting & Searching
              */
-            if (isset($request['columns']) ) {
-
+            if (isset($request['columns'])) {
                 /*
                 $selectedFields = array_map(function($col) {
                     return $col['data'];
@@ -118,7 +116,7 @@ class DataTableIndexAction extends IndexAction
                         if (Hash::get($_col, 'search.regex', false) == true) {
                             $query->where([ $_col['data'] . ' REGEXP "' . Hash::get($_col, 'search.value') . '"']);
                         } else {
-                            $query->where([ $_col['data'] . ' LIKE' => sprintf('%%%s%%', (string) Hash::get($_col, 'search.value'))]);
+                            $query->where([ $_col['data'] . ' LIKE' => sprintf('%%%s%%', (string)Hash::get($_col, 'search.value'))]);
                         }
                     }
                 }
@@ -146,7 +144,6 @@ class DataTableIndexAction extends IndexAction
                 $query->order($order);
             }
 
-
             try {
                 /**
                  * Contain
@@ -168,12 +165,12 @@ class DataTableIndexAction extends IndexAction
                     $data = $query->all();
                     //$recordsFiltered = $data->count();
                 }
-
             } catch (\Exception $ex) {
                 debug('AN ERROR OCCUREDED: ' . $ex->getMessage());
                 $controller->set('error', $ex->getMessage());
                 $controller->set('data', []);
                 $controller->set('_serialize', ['data', 'error']);
+
                 return $controller->render();
             }
 
@@ -191,6 +188,7 @@ class DataTableIndexAction extends IndexAction
 
             $controller->set(compact('model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data'));
             $controller->set('_serialize', ['model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data']);
+
             return $controller->render();
         }
 
@@ -202,7 +200,6 @@ class DataTableIndexAction extends IndexAction
             $dtjsOpts['ajax'] = $dataUrl;
             $dtjsOpts['processing'] = false;
             $dtjsOpts['serverSide'] = true;
-
         } else {
             $result = $this->_fetchResult();
         }
@@ -238,8 +235,9 @@ class DataTableIndexAction extends IndexAction
                     break;
                 }
                 $i++;
-            } while(next($columns));
+            } while (next($columns));
         }
+
         return $_order;
     }
 }

@@ -15,7 +15,7 @@ class DeleteAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend','Delete');
+        return __d('backend', 'Delete');
     }
 
     /**
@@ -31,11 +31,11 @@ class DeleteAction extends BaseEntityAction
         $entity = $this->entity();
 
         if ($controller->request->is(['post'])) {
-
             if ($controller->request->data('confirm') == true) {
                 if ($entity instanceof EntityInterface) {
                     if ($this->model()->delete($entity)) {
-                        $controller->Flash->success(__d('backend','Deleted'));
+                        $controller->Flash->success(__d('backend', 'Deleted'));
+
                         return $controller->redirect(['action' => 'index']);
                     } else {
                         $controller->Flash->error("Delete failed");
@@ -43,11 +43,11 @@ class DeleteAction extends BaseEntityAction
                 } else {
                     $controller->Flash->error("Delete failed. No entity selected");
                 }
+
                 return $controller->redirect($controller->referer(['action' => 'index']));
             } else {
                 $controller->Flash->error(__d('backend', "You must confirm to delete record"));
             }
-
         }
 
         $controller->set('entity', $entity);

@@ -14,6 +14,5 @@ class BackendService implements EventListenerInterface
 
     public function initialize()
     {
-
     }
 }

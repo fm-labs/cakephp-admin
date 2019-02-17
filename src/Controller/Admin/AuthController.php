@@ -35,7 +35,6 @@ class AuthController extends AppController
         if ($this->components()->has('RequestHandler') && $this->components()->get('RequestHandler')->accepts('json')) {
             $this->viewBuilder()->className('Json');
             $this->Auth->login();
-
         } else {
             $redirect = $this->Auth->login();
             if ($redirect) {
@@ -60,6 +59,7 @@ class AuthController extends AppController
         if (Configure::check('Backend.Dashboard.url')) {
             $redirect = Configure::read('Backend.Dashboard.url');
         }
+
         return $this->redirect($redirect);
     }
 

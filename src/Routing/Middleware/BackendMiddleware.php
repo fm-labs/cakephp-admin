@@ -28,6 +28,7 @@ class BackendMiddleware
         // injects 'lang' param on url creation
         Router::addUrlFilter(function ($params, \Cake\Network\Request $request) {
             $params['iframe'] = $this->_iframe;
+
             return $params;
         });
     }

@@ -28,7 +28,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
     /**
      * @var array List of enabled scopes
      */
-    protected $_scope = ['table','form'];
+    protected $_scope = ['table', 'form'];
 
     /**
      * {@inheritDoc}
@@ -71,7 +71,6 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
                     $cols[$whiteListed] = [];
                 }
             }
-
         }
 
         $normalized = $this->_normalizeColumns($this->_config['fields']);
@@ -101,7 +100,6 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
             //$event = $controller->dispatchEvent('Backend.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);
             //$this->_config['actions'] = (array)$event->data['actions'];
         }
-
 
         //if ($this->_config['rowActions'] !== false) {
         //    $event = $controller->dispatchEvent('Backend.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
@@ -133,5 +131,4 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
 
         return $normalized;
     }
-
 }

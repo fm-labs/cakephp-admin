@@ -2,7 +2,6 @@
 
 namespace Backend\Action;
 
-
 use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\InstanceConfigTrait;
@@ -104,7 +103,7 @@ abstract class BaseAction implements ActionInterface
      */
     public function setScope($scope)
     {
-        $this->_scope = (array) $scope;
+        $this->_scope = (array)$scope;
 
         return $this;
     }

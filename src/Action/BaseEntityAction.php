@@ -36,7 +36,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     /**
      * @var array List of enabled scopes
      */
-    protected $_scope = ['table','form'];
+    protected $_scope = ['table', 'form'];
 
     /**
      * @var Table
@@ -98,7 +98,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             $translation = ($controller->request->query('translation')) ?: I18n::locale();
             $this->model()->locale($translation);
             $controller->set('translation', $translation);
-            $controller->set('translations.languages', (array) Configure::read('Multilang.Locales'));
+            $controller->set('translations.languages', (array)Configure::read('Multilang.Locales'));
         }
 
         try {
@@ -111,11 +111,8 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             }
 
             return $this->_execute($controller);
-
         } catch (\Cake\Core\Exception\Exception $ex) {
-
             throw $ex;
-
         } catch (\Exception $ex) {
             $controller->Flash->error($ex->getMessage());
             //$controller->redirect($controller->referer());
@@ -132,6 +129,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 
             $this->_model = TableRegistry::get($this->_config['modelClass']);
         }
+
         return $this->_model;
     }
 
@@ -169,8 +167,8 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         return Text::insert($tokenStr, $inserts);
     }
 
-    public function beforeRender(Event $event) {
-
+    public function beforeRender(Event $event)
+    {
 
         /*
         debug("before Render");
@@ -195,5 +193,4 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         }
         */
     }
-
 }

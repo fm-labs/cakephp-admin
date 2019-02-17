@@ -56,7 +56,6 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
             $entity = $this->_entity = $this->_config['entity'];
             $this->_config['modelId'] = $entity->id;
         } else {
-
             // attempt to get model ID from request if not set
             if (!$this->_config['modelId']) {
                 $this->_config['modelId'] = (isset($controller->request->params['id'])) ? $controller->request->params['id'] : null;
@@ -105,7 +104,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         $modelClass = $event->subject()->viewVars['modelClass'];
 
         $event->subject()->viewVars['tabs']['data'] = [
-            'title' => __d('backend','Data'),
+            'title' => __d('backend', 'Data'),
             'url' => ['plugin' => 'Backend', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id]
         ];
     }

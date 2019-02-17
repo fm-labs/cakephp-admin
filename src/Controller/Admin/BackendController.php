@@ -22,7 +22,7 @@ class BackendController extends AppController
      */
     public function index()
     {
-        $this->set('dashboard.title', __d('backend','System Dashboard'));
+        $this->set('dashboard.title', __d('backend', 'System Dashboard'));
         $this->set('dashboard.panels', Configure::read('Backend.Dashboard.Panels'));
         $this->Action->execute();
     }

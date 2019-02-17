@@ -10,10 +10,9 @@ class CrudService extends BackendService
     public function implementedEvents()
     {
         return [
-            'Backend.Controller.setupActions' => ['callable' => function(Event $event) {
+            'Backend.Controller.setupActions' => ['callable' => function (Event $event) {
 
                 if (isset($event->subject()->scaffold)) {
-
                     if (!isset($event->data['actions']['index'])) {
                         $event->data['actions']['index'] = 'Backend.Index';
                     }
@@ -30,7 +29,6 @@ class CrudService extends BackendService
                         $event->data['actions']['delete'] = 'Backend.Delete';
                     }
                 }
-
             }]
         ];
     }

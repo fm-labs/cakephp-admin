@@ -223,6 +223,7 @@ class ActionComponent extends Component
         // prevent recursive action calls (2)
         if ($this->_executing == true) {
             debug("already executing " . $this->_actionName);
+
             return;
         }
         $this->_executing = true;
@@ -271,7 +272,6 @@ class ActionComponent extends Component
 
             // force rendering to capture template exception and fallback to Action template path
             if (!$response && $this->_controller->autoRender) {
-
                 // create a clone of the controller eventManager
                 // we need this as a workaround, when the MissingTemplateException is thrown,
                 // to prevent view events to get triggered twice.
@@ -284,9 +284,7 @@ class ActionComponent extends Component
                 try {
                     $response = $this->_controller->render($template);
                     $eventManager = null; // drop event manager backup
-
                 } catch (MissingTemplateException $ex) {
-
                     // restore event manager from backup clone
                     $this->_controller->eventManager($eventManager);
 
@@ -325,7 +323,6 @@ class ActionComponent extends Component
     public function model()
     {
         if (!$this->_model) {
-
             $modelClass = $this->_registry->getController()->modelClass;
             if (!$modelClass) {
                 return null;
@@ -368,8 +365,7 @@ class ActionComponent extends Component
 
             if ($action == "index") {
                 $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
-            }
-            //elseif ($entity && ($_action instanceof EntityActionInterface)) {
+            } //elseif ($entity && ($_action instanceof EntityActionInterface)) {
             //    $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action, $entity->id], $_action->getAttributes()];
             //}
             elseif ($_action instanceof EntityActionInterface) {
@@ -394,7 +390,6 @@ class ActionComponent extends Component
         $actions = (isset($controller->viewVars['toolbar.actions'])) ? $controller->viewVars['toolbar.actions'] : [];
         if ($this->_action) {
             if ($this->_action instanceof EntityActionInterface) {
-
                 $entity = $this->_action->entity();
 
                 // first add the primary action
@@ -427,9 +422,7 @@ class ActionComponent extends Component
                         $actions[$actionName] = $this->_buildToolbarAction($actionName, $actionObj, $entity);
                     }
                 }
-            }
-            elseif ($this->_action instanceof IndexActionInterface) {
-
+            } elseif ($this->_action instanceof IndexActionInterface) {
                 foreach ($this->listActions() as $actionName) {
                     $actionObj = $this->getAction($actionName);
                     if ($actionObj == $this->_action) {

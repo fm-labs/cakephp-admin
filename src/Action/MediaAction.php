@@ -1,6 +1,7 @@
 <?php
 
 namespace Backend\Action;
+
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 
@@ -18,7 +19,7 @@ class MediaAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend','Media');
+        return __d('backend', 'Media');
     }
 
     public function hasForm()

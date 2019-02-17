@@ -38,9 +38,10 @@ class FooTableIndexAction extends IndexAction
         'limit' => null,
         'ajax' => false,
     ];
-    */
+     */
 
-    public function __construct(Controller $controller, array $config = []) {
+    public function __construct(Controller $controller, array $config = [])
+    {
 
         $this->_defaultConfig['ajax'] = true;
 
@@ -49,7 +50,7 @@ class FooTableIndexAction extends IndexAction
 
     public function getLabel()
     {
-        return __d('backend',"Index");
+        return __d('backend', "Index");
     }
 
     /**
@@ -71,7 +72,6 @@ class FooTableIndexAction extends IndexAction
 
         // JSON data
         if ($controller->request->query('rows') == true) {
-
             //Configure::write('debug', 0);
             $controller->viewBuilder()->className('Json');
 
@@ -79,6 +79,7 @@ class FooTableIndexAction extends IndexAction
 
             $controller->set('data', $result);
             $controller->set('_serialize', 'data');
+
             return;
         }
 
@@ -121,7 +122,6 @@ class FooTableIndexAction extends IndexAction
     {
         $data = parent::_fetchResult()->toArray();
 
-
         if ($this->_config['ajax'] == true) {
             if ($this->_config['paginate']) {
                 $_modelName = pluginSplit($this->_config['modelClass']);
@@ -133,10 +133,10 @@ class FooTableIndexAction extends IndexAction
                 $page = 1;
             }
 
-            array_walk($data, function(&$row) {
+            array_walk($data, function (&$row) {
 
                 $aRow = $row->toArray();
-                array_walk($aRow, function(&$val, $key) {
+                array_walk($aRow, function (&$val, $key) {
                     //$val = ['options' => ['expanded' => false, 'classes' => '_'], 'value' => $val];
                 });
 

@@ -19,7 +19,7 @@ class UnpublishAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend','Unpublish');
+        return __d('backend', 'Unpublish');
     }
 
     /**
@@ -48,9 +48,9 @@ class UnpublishAction extends BaseEntityAction
             $entity->is_published = false; //@TODO Use Publishabel behavior methods
 
             if ($this->model()->save($entity)) {
-                $controller->Flash->success(__d('backend','Unpublished'));
+                $controller->Flash->success(__d('backend', 'Unpublished'));
             } else {
-                $controller->Flash->error(__d('backend','Unpublish failed'));
+                $controller->Flash->error(__d('backend', 'Unpublish failed'));
             }
         } else {
             $controller->Flash->error('Publishable behavior not loaded for model ' . $this->model()->alias());

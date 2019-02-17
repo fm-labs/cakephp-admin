@@ -56,7 +56,6 @@ class ModelController extends AppController
         }
 
         if ($Model instanceof Table) {
-
             $typeMap = [
                 'integer' => 'Number',
                 'string' => 'Text',
@@ -107,7 +106,6 @@ class ModelController extends AppController
         $this->set('_serialize', 'form');
     }
 
-
     public function edit()
     {
         $this->viewBuilder()->className('Json');
@@ -118,7 +116,6 @@ class ModelController extends AppController
 
         $data = $errors = [];
         try {
-
             if (!$modelName) {
                 throw new \InvalidArgumentException("Model name missing");
             }
@@ -134,8 +131,6 @@ class ModelController extends AppController
 
             $entity = $Model->get($id);
 
-
-
             $entity = $Model->patchEntity($entity, $this->request->data, ['validate' => 'default']);
             if (!$entity->errors() && $Model->save($entity)) {
                 $entity = $Model->save($entity);
@@ -145,12 +140,10 @@ class ModelController extends AppController
                 $errors = $entity->errors();
                 $success = false;
             }
-
         } catch (\Exception $ex) {
             $errors = ['submit' => $ex->getMessage()];
             $success = false;
         }
-
 
         $response = [
             'success' => $success,
@@ -161,7 +154,5 @@ class ModelController extends AppController
 
         $this->set('response', $response);
         $this->set('_serialize', 'response');
-
     }
-
 }

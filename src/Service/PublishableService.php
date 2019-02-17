@@ -11,7 +11,7 @@ class PublishableService extends BackendService
     public function implementedEvents()
     {
         return [
-            'Backend.Controller.setupActions' => ['callable' => function(Event $event) {
+            'Backend.Controller.setupActions' => ['callable' => function (Event $event) {
                 $modelClass = $event->subject()->modelClass;
                 if ($modelClass) {
                     $Model = $event->subject()->loadModel($modelClass);
@@ -22,27 +22,27 @@ class PublishableService extends BackendService
                 }
             }],
 
-            'Backend.beforeAction' => ['callable' => function(Event $event) {
+            'Backend.beforeAction' => ['callable' => function (Event $event) {
 
                 if ($event->data['action'] instanceof EditAction) {
                     $elements = (isset($event->subject()->viewVars['form_elements'])) ? $event->subject()->viewVars['form_elements'] : [];
 
                     $elements['translate'] = [
-                        'title' => __d('backend','Translations'),
+                        'title' => __d('backend', 'Translations'),
                         //'cell' => 'Banana.TranslateEntityForm',
                         'element' => 'Backend.Action/Edit/info_translate',
 
                     ];
 
                     $elements['publishable'] = [
-                        'title' => __d('backend','Publishing'),
+                        'title' => __d('backend', 'Publishing'),
                         'helpers' => [],
                         //'cell' => 'Banana.PublishEntityForm',
                         'element' => 'Backend.Action/Edit/info_publish',
                     ];
 
                     $elements['media'] = [
-                        'title' => __d('backend','Media'),
+                        'title' => __d('backend', 'Media'),
                         'helpers' => ['Media.Media', 'Media.MediaPicker'],
                         'cell' => 'Banana.MediaEntityForm',
                     ];

@@ -20,7 +20,7 @@ class PublishAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend','Publish');
+        return __d('backend', 'Publish');
     }
 
     /**
@@ -48,9 +48,9 @@ class PublishAction extends BaseEntityAction
     {
         if (!$this->model()->hasBehavior('Publishable')) {
             $controller->Flash->error('Publishable behavior not loaded for model ' . $this->model()->alias());
+
             return $controller->redirect($controller->referer(['action' => 'index']));
         }
-
 
         $entity = $this->entity();
         if ($controller->request->is(['put', 'post'])) {
@@ -58,14 +58,13 @@ class PublishAction extends BaseEntityAction
                 //'fieldList' => ['is_published', 'publish_start', 'publish_end'], //@TODO Enable fieldList
             ]);
             if ($this->model()->save($entity)) {
-                $controller->Flash->success(__d('backend','Updated'));
+                $controller->Flash->success(__d('backend', 'Updated'));
                 $controller->redirect($controller->referer(['action' => 'view', $entity->id]));
             } else {
-                $controller->Flash->error(__d('backend','Update failed'));
+                $controller->Flash->error(__d('backend', 'Update failed'));
             }
         }
 
         $controller->set('entity', $entity);
     }
-
 }

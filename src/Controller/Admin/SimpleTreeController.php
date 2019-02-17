@@ -20,7 +20,7 @@ class SimpleTreeController extends AppController
     {
         $query = $this->request->query;
         if (!isset($query['model'])) {
-            $this->Flash->error(__d('backend','No model selected'));
+            $this->Flash->error(__d('backend', 'No model selected'));
 
             return;
         }
@@ -30,10 +30,10 @@ class SimpleTreeController extends AppController
         try {
             $Model = $this->loadModel($modelName);
             if (!$Model->behaviors()->has('SimpleTree')) {
-                $this->Flash->warning(__d('backend','Model {0} has no SimpleTree behavior attached', $modelName));
+                $this->Flash->warning(__d('backend', 'Model {0} has no SimpleTree behavior attached', $modelName));
             }
         } catch (\Exception $ex) {
-            $this->Flash->error(__d('backend','Failed to load model {0}', $modelName));
+            $this->Flash->error(__d('backend', 'Failed to load model {0}', $modelName));
 
             return;
         }

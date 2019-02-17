@@ -45,11 +45,9 @@ class EntityController extends AppController
             $this->set('entity', $entity);
             $this->set('exception', $exception);
             $this->set('form', $form);
-
-        } catch(\Exception $ex) {
+        } catch (\Exception $ex) {
             $this->Flash->error($modelName . ":" . $ex->getMessage());
         }
-
     }
 
     /**

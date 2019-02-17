@@ -24,7 +24,7 @@ class FooTablesController extends AppController
         $fields = ['id', 'title'];
 
         $columns = [];
-        foreach($Model->schema()->columns() as $colName) {
+        foreach ($Model->schema()->columns() as $colName) {
             //if (!in_array($colName, $fields)) continue;
             $columns[] = ['name' => $colName, 'title' => Inflector::humanize($colName)];
         }
@@ -54,10 +54,10 @@ class FooTablesController extends AppController
         $data = $this->paginate($Model)->toArray();
 
         //$data = ['options' => ['expanded' => true], 'value' => $data];
-        array_walk($data, function(&$row) {
+        array_walk($data, function (&$row) {
 
             $aRow = $row->toArray();
-            array_walk($aRow, function(&$val, $key) {
+            array_walk($aRow, function (&$val, $key) {
                 $val = ['options' => ['expanded' => false, 'classes' => '_'], 'value' => $val];
             });
 
@@ -97,7 +97,7 @@ class FooTablesController extends AppController
         //$data = $this->paginate($Model);
 
         if ($request['search'] && $request['search']['value']) {
-            $query->where(['title LIKE' => sprintf('%%%s%%',$request['search']['value'])]);
+            $query->where(['title LIKE' => sprintf('%%%s%%', $request['search']['value'])]);
             $recordsFiltered = $query->count();
         }
 

@@ -173,6 +173,7 @@ class BoxHelper extends Helper
         if (!$this->_params['title']) {
             return null;
         }
+
         return $this->templater()->format('boxHeader', [
             'icon' => $this->_renderIcon(),
             'title' => $this->_renderTitle(),

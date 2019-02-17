@@ -21,7 +21,7 @@ class DashboardAction implements ActionInterface
      */
     public function getLabel()
     {
-        return __d('backend','Dashboard');
+        return __d('backend', 'Dashboard');
     }
 
     /**

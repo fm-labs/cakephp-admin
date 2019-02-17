@@ -5,7 +5,8 @@ namespace AdminLteTheme\View\Helper;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 
-class AdminLteLayoutHelper extends Helper {
+class AdminLteLayoutHelper extends Helper
+{
 
     public function beforeLayout(Event $event)
     {
@@ -16,8 +17,10 @@ class AdminLteLayoutHelper extends Helper {
         $event->subject()->set('be_adminlte_skin_class', $themeSkinClass);
         $event->subject()->set('be_adminlte_layout_class', $themeLayoutClass);
         $event->subject()->set('be_adminlte_sidebar_class', $themeSidebarClass);
-        $event->subject()->set('be_layout_body_class',
-            trim(join(' ', [$themeSkinClass, $themeSidebarClass, $themeLayoutClass])));
+        $event->subject()->set(
+            'be_layout_body_class',
+            trim(join(' ', [$themeSkinClass, $themeSidebarClass, $themeLayoutClass]))
+        );
         $event->subject()->Html->css('/admin_lte_theme/lib/bootstrap/css/bootstrap.min.css', ['block' => true]);
         $event->subject()->Html->css('/admin_lte_theme/lib/dist/css/AdminLTE.min.css', ['block' => true]);
         $event->subject()->Html->css('/admin_lte_theme/lib/dist/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);

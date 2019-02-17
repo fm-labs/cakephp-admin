@@ -20,17 +20,17 @@ class TreeController extends AppController
     {
         $modelName = $this->request->query('model');
         if (!$modelName) {
-            $this->Flash->error(__d('backend','No model selected'));
+            $this->Flash->error(__d('backend', 'No model selected'));
 
             return;
         }
         try {
             $Model = $this->loadModel($modelName);
             if (!$Model->behaviors()->has('Tree')) {
-                $this->Flash->warning(__d('backend','Model {0} has no Tree behavior attached', $modelName));
+                $this->Flash->warning(__d('backend', 'Model {0} has no Tree behavior attached', $modelName));
             }
         } catch (\Exception $ex) {
-            $this->Flash->error(__d('backend','Failed to load model {0}', $modelName));
+            $this->Flash->error(__d('backend', 'Failed to load model {0}', $modelName));
 
             return;
         }
@@ -87,7 +87,7 @@ class TreeController extends AppController
             //$Model->behaviors()->Tree->config('scope', ['site_id' => $node->site_id]);
             $node = $Model->moveTo($node, $request['newParentId'], $request['newPos'], $request['oldPos']);
 
-            $result = ['success' => __d('backend',"Node has been moved")];
+            $result = ['success' => __d('backend', "Node has been moved")];
         } catch (\Exception $ex) {
             Log::error('TreeController::treeData: ' . $ex->getMessage());
             //throw new InternalErrorException($ex->getMessage());

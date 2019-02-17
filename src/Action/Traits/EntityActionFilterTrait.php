@@ -34,5 +34,4 @@ trait EntityActionFilterTrait
     {
         return $this->setFilter($filter);
     }
-
 }

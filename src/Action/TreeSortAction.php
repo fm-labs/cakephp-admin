@@ -35,10 +35,11 @@ class TreeSortAction extends BaseIndexAction
     {
         try {
             if (!$this->model()->behaviors()->has('Tree')) {
-                $controller->Flash->error(__d('backend','Model {0} has no Tree behavior attached', $controller->modelClass));
+                $controller->Flash->error(__d('backend', 'Model {0} has no Tree behavior attached', $controller->modelClass));
             }
         } catch (\Exception $ex) {
-            $controller->Flash->error(__d('backend','Failed to load model {0}', $this->model()->alias()));
+            $controller->Flash->error(__d('backend', 'Failed to load model {0}', $this->model()->alias()));
+
             return;
         }
 

@@ -144,7 +144,6 @@ class BackendComponent extends Component
             $controller->components()->load('Security');
         }
 
-
         // Configure controller
         $controller->viewBuilder()->className('Backend.Backend');
         $controller->viewBuilder()->layout('Backend.admin');
@@ -153,7 +152,6 @@ class BackendComponent extends Component
         if (Configure::read('Backend.theme')) {
             $controller->viewBuilder()->theme(Configure::read('Backend.theme'));
         }
-
 
         // Attach listeners @todo Remove deprecated code
         foreach (Backend::getListeners('Controller') as $listenerClass) {
@@ -238,7 +236,6 @@ class BackendComponent extends Component
         if ($controller->Auth->user('locale') && $controller->Auth->user('locale') != I18n::locale()) {
             I18n::locale($controller->Auth->user('locale'));
         }
-
     }
 
     /**

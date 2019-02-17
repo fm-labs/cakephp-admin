@@ -50,7 +50,7 @@ class DesignController extends AppController
             ->requirePresence('h_text_error', true)
             ->notEmpty('h_text_error');
 
-        if  ($this->request->is(['post'])) {
+        if ($this->request->is(['post'])) {
             $form->execute($this->request->data);
         } else {
             $form->validate([]);
@@ -67,6 +67,5 @@ class DesignController extends AppController
 
     public function daterange()
     {
-
     }
 }

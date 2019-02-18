@@ -11,6 +11,7 @@
 @dark-color-bg: #27293D;
 @dark-select-border-color: #62879D;
 @dark-input-border-color: #62879D;
+@dark-table-striped-color-odd: #2B2B39;
 
 body.darkmode {
 
@@ -71,7 +72,7 @@ body.darkmode {
   }
 
   .table.table-hover > tbody > tr:HOVER > td {
-    background-color: #314354;
+    background-color: @dark-color-border;
   }
 
   .table.table-striped > tbody > tr > td {
@@ -83,14 +84,14 @@ body.darkmode {
   }
 
   .table.table-striped > tbody > tr:nth-of-type(2n+1) {
-    background-color: #434e56; //#2b333a;
+    background-color: @dark-table-striped-color-odd;
   }
 
   // Pagination
   .pagination > li > a,
   .pagination > li > span {
     background-color: transparent;
-    border: 1px solid #314354;
+    border: 1px solid @dark-color-border;
     color: @dark-color-highlight;
   }
 

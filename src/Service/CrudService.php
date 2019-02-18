@@ -7,6 +7,9 @@ use Cake\Event\Event;
 
 class CrudService extends BackendService
 {
+    /**
+     * {@inheritDoc}
+     */
     public function implementedEvents()
     {
         return [

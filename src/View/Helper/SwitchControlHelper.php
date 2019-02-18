@@ -2,11 +2,9 @@
 
 namespace Backend\View\Helper;
 
-use Cake\Event\Event;
 use Cake\View\Helper;
 use Cake\View\Helper\FormHelper;
 use Cake\View\Helper\HtmlHelper;
-use Cake\View\View;
 
 /**
  * Class SwitchControlHelper

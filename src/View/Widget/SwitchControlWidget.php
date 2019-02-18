@@ -9,9 +9,7 @@ use Cake\View\Widget\CheckboxWidget;
 class SwitchControlWidget extends CheckboxWidget
 {
     /**
-     * Constructor.
-     *
-     * @param \Cake\View\StringTemplate $templates Templates list.
+     * {@inheritDoc}
      */
     public function __construct($templates, View $view)
     {
@@ -20,6 +18,9 @@ class SwitchControlWidget extends CheckboxWidget
         //$view->loadHelper('Backend.SwitchControl');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
         if (!isset($data['id'])) {

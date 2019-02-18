@@ -33,8 +33,9 @@ class FormatterHelper extends Helper
     static protected $_formatters = [];
 
     /**
-     * @param $formatterName
-     * @param callable $formatter
+     * @param string $formatterName Formatter alias
+     * @param callable $formatter Formatter callback
+     * @return void
      */
     public static function register($formatterName, callable $formatter)
     {
@@ -47,15 +48,10 @@ class FormatterHelper extends Helper
     public $helpers = ['Html', 'Number', 'Time', 'Bootstrap.Ui'];
 
     /**
-     * @param View $View
-     * @param array $config
+     * {@inheritDoc}
      */
-    public function __construct(View $View, array $config = [])
+    public function initialize(array $config)
     {
-        parent::__construct($View, $config);
-
-        // built-in formatters
-
         // escape
         self::register('escape', function ($val, $extra, $params) {
             return h($val);
@@ -224,10 +220,10 @@ class FormatterHelper extends Helper
     }
 
     /**
-     * @param $value
-     * @param null $formatter
-     * @param array $formatterArgs
-     * @param array $extra
+     * @param mixed $value Value to format
+     * @param null|string|callable $formatter Formatter to use
+     * @param array $formatterArgs Formatter callback arguments
+     * @param array $extra Extra data passed to the formatter callback
      * @return mixed
      */
     public function format($value, $formatter = null, $formatterArgs = [], $extra = [])
@@ -303,6 +299,12 @@ class FormatterHelper extends Helper
         return call_user_func_array($formatter, [$value, $extra, $formatterArgs, $this->_View]);
     }
 
+    /**
+     * Autodetect formatter for value
+     *
+     * @param mixed $value The value to format
+     * @return string Formatter alias
+     */
     protected function _detectFormatter($value)
     {
         // detect date types

@@ -4,7 +4,6 @@ namespace Backend\View\Helper;
 
 use Cake\Event\Event;
 use Cake\View\Helper;
-use Cake\View\Helper\FormHelper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\View;
 
@@ -21,15 +20,9 @@ class BackboneHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function __construct(View $View, array $config = [])
+    public function initialize(array $config)
     {
-        parent::__construct($View, $config);
-
         $this->_View->Html->script('/backend/libs/underscore/underscore-min.js', ['block' => true]);
         $this->_View->Html->script('/backend/libs/backbone/backbone-min.js', ['block' => true]);
-    }
-
-    public function beforeLayout(Event $event)
-    {
     }
 }

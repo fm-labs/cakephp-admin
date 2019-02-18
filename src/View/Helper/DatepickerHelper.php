@@ -17,6 +17,10 @@ class DatepickerHelper extends Helper
 {
     public $helpers = ['Html'];
 
+    /**
+     * @param Event $event The event object
+     * @return void
+     */
     public function beforeLayout(Event $event)
     {
         $this->Html->css('/backend/libs/pickadate/themes/classic', ['block' => true]);

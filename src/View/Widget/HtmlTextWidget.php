@@ -7,6 +7,9 @@ use Cake\View\Widget\BasicWidget;
 
 class HtmlTextWidget extends BasicWidget
 {
+    /**
+     * {@inheritDoc}
+     */
     public function __construct($templates, View $view)
     {
         $view->loadHelper('Backend.HtmlEditor');

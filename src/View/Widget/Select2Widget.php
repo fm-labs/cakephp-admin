@@ -20,6 +20,9 @@ class Select2Widget extends SelectBoxWidget
         $view->loadHelper('Backend.Select2');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
         $data += [

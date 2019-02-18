@@ -7,6 +7,9 @@ use User\Model\Table\UsersTable as BaseUsersTable;
 
 class UsersTable extends BaseUsersTable
 {
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config)
     {
         parent::initialize($config);
@@ -14,6 +17,13 @@ class UsersTable extends BaseUsersTable
         $this->entityClass('\User\Model\Entity\User');
     }
 
+    /**
+     * Finder method for Backend's Auth component
+     *
+     * @param Query $query The query object
+     * @param array $options Finder options
+     * @return Query
+     */
     public function findBackendAuthUser(Query $query, array $options)
     {
         $query

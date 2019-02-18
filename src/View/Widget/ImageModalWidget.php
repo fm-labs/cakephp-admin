@@ -13,9 +13,7 @@ use Cake\View\Widget\BasicWidget;
 class ImageModalWidget extends BasicWidget
 {
     /**
-     * @param array $data
-     * @param ContextInterface $context
-     * @return string
+     * {@inheritDoc}
      */
     public function render(array $data, ContextInterface $context)
     {

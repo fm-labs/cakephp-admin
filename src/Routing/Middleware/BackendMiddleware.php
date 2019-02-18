@@ -19,6 +19,9 @@ class BackendMiddleware
 
     protected $_iframe = false;
 
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(Application $app)
     {
         $this->_app = $app;

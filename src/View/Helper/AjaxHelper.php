@@ -15,6 +15,10 @@ class AjaxHelper extends Helper
 {
     public $helpers = ['Html'];
 
+    /**
+     * @param array|string $url URL for ajax content
+     * @return string
+     */
     public function content($url)
     {
         return $this->Html->div('ajax-content', 'Loading ...', [

@@ -2,12 +2,8 @@
 
 namespace Backend\View\Helper;
 
-use Cake\ORM\ResultSet;
-use Cake\Utility\Inflector;
 use Cake\View\Helper;
 use Cake\View\Helper\HtmlHelper;
-use Cake\View\StringTemplateTrait;
-use Cake\View\View;
 
 /**
  * Class DataTablesJsHelper
@@ -55,12 +51,11 @@ class DataTableJsHelper extends DataTableHelper
     ];
 
     /**
-     * @param View $View
-     * @param array $config
+     * {@inheritDoc}
      */
-    public function __construct(View $View, array $config = [])
+    public function initialize(array $config)
     {
-        parent::__construct($View, $config);
+        parent::initialize($config);
 
         //$this->Html->css('/backend/adminlte/plugins/datatables/jquery.dataTables.min.css', ['block' => true]);
         //$this->Html->css('/backend/adminlte/plugins/datatables/dataTables.bootstrap.css', ['block' => true]);
@@ -76,6 +71,10 @@ class DataTableJsHelper extends DataTableHelper
         $this->Html->script('/backend/js/backend.datatables.js', ['block' => true]);
     }
 
+    /**
+     * @param array $options Javascript options
+     * @return $this
+     */
     public function options($options = null)
     {
         if ($options === null) {
@@ -87,6 +86,9 @@ class DataTableJsHelper extends DataTableHelper
         return $this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _initialize()
     {
         $jsOpts = (array)$this->param('extra');
@@ -210,6 +212,9 @@ SCRIPT;
         return $this->Html->scriptBlock($script, ['safe' => false, 'block' => $block]);
     }
 
+    /**
+     * @return array
+     */
     protected function _buildDataTableColumns()
     {
         $columns = [];
@@ -234,6 +239,11 @@ SCRIPT;
         return $columns;
     }
 
+    /**
+     * @param array $order Order list
+     * @param array $columns Columns list
+     * @return array
+     */
     protected function _buildDataTableOrder(&$order, &$columns)
     {
         $_order = [];

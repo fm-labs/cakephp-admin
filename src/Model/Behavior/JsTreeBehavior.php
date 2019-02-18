@@ -4,7 +4,6 @@ namespace Backend\Model\Behavior;
 
 use Cake\Collection\Collection;
 use Cake\Datasource\EntityInterface;
-use Cake\Datasource\ResultSetInterface;
 use Cake\ORM\Behavior;
 use Cake\ORM\Query;
 
@@ -22,6 +21,9 @@ class JsTreeBehavior extends Behavior
         ]
     ];
 
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config)
     {
         if (!$this->_config['fields']['id']) {
@@ -32,6 +34,11 @@ class JsTreeBehavior extends Behavior
         }
     }
 
+    /**
+     * @param Query $query The query object
+     * @param array $options Finder options
+     * @return Query
+     */
     public function findJsTree(Query $query, array $options = [])
     {
         return $this->formatJsTree($query, $options);
@@ -50,16 +57,18 @@ class JsTreeBehavior extends Behavior
         $query->order(['lft' => 'ASC']);
 
         return $query->formatResults(function ($results) use ($options) {
-            ;
             $jstree = $this->_format($results);
 
             return new Collection($jstree);
         });
     }
 
+    /**
+     * @param array $entities List of result entities
+     * @return array
+     */
     protected function _format($entities)
     {
-
         $this->_table->displayField();
 
         $fields = $this->config('fields');

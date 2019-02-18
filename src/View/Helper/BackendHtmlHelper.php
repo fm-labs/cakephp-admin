@@ -9,6 +9,7 @@ use Cake\View\Helper\HtmlHelper;
  * Drop-in HtmlHelper replacement, optimized for usage with Backend plugin
  *
  * @package Backend\View\Helper
+ * @codeCoverageIgnore
  * @deprecated This class is currently unused.
  */
 class BackendHtmlHelper extends HtmlHelper

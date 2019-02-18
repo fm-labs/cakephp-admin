@@ -4,7 +4,6 @@ namespace Backend\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper;
-use Cake\View\View;
 
 /**
  * Class BackendHelper

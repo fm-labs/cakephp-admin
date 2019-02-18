@@ -67,6 +67,7 @@ class EntityViewCell extends Cell
     /**
      * Default display method.
      *
+     * @param EntityInterface $entity The entity object
      * @return void
      */
     public function display(EntityInterface $entity)
@@ -257,6 +258,8 @@ class EntityViewCell extends Cell
                 'class' => $field['class'],
                 'virtual' => $isVirtual
             ];
+
+            return true;
         };
 
         array_walk($this->whitelist, $propDataFormatter);

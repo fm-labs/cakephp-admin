@@ -8,6 +8,9 @@ use Cake\Event\Event;
 
 class PublishableService extends BackendService
 {
+    /**
+     * {@inheritDoc}
+     */
     public function implementedEvents()
     {
         return [

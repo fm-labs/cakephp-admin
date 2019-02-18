@@ -1,10 +1,7 @@
 <?php
 namespace Backend\View\Widget;
 
-use Cake\Chronos\Date;
 use Cake\Core\Configure;
-use Cake\I18n\I18n;
-use Cake\I18n\Time;
 use Cake\View\Form\ContextInterface;
 use Cake\View\View;
 use Cake\View\Widget\BasicWidget;
@@ -21,9 +18,7 @@ class DateRangePickerWidget extends BasicWidget
     const FORMAT_DATETIME_12H_PHP = 'Y-m-d h:i a';
 
     /**
-     * Constructor.
-     *
-     * @param \Cake\View\StringTemplate $templates Templates list.
+     * {@inheritDoc}
      */
     public function __construct($templates, View $view)
     {
@@ -32,6 +27,9 @@ class DateRangePickerWidget extends BasicWidget
         $view->loadHelper('Backend.DateRangePicker');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
         $data += [

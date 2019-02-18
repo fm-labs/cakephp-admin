@@ -53,6 +53,9 @@ class HtmlEditorWidget extends BasicWidget
         'cache_suffix' => null,
     ];
 
+    /**
+     * {@inheritDoc}
+     */
     public function __construct($templates, View $view)
     {
         static::$defaultConfig['document_base_url'] = Router::url('/', true);

@@ -23,9 +23,7 @@ class TimePickerWidget extends CakeDateTimeWidget
     }
 
     /**
-     * @param array $data
-     * @param ContextInterface $context
-     * @return string
+     * {@inheritDoc}
      */
     public function render(array $data, ContextInterface $context)
     {

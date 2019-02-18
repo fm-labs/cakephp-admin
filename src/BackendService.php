@@ -2,17 +2,15 @@
 
 namespace Backend;
 
-use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 
-class BackendService implements EventListenerInterface
+abstract class BackendService implements EventListenerInterface
 {
+    /**
+     * {@inheritDoc}
+     */
     public function implementedEvents()
     {
         return [];
-    }
-
-    public function initialize()
-    {
     }
 }

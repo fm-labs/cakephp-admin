@@ -14,7 +14,6 @@ use Cake\View\Helper\FormHelper;
 use Cake\View\Helper\HtmlHelper;
 use Cake\View\Helper\PaginatorHelper;
 use Cake\View\StringTemplateTrait;
-use Cake\View\View;
 
 /**
  * Class DataTableHelper
@@ -74,10 +73,8 @@ class DataTableHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function __construct(View $View, array $config = [])
+    public function initialize(array $config)
     {
-        parent::__construct($View, $config);
-
         $this->templater()->add([
             'table_container' => '<div class="datatable-container">{{table}}{{pagination}}{{script}}</div>',
             'table' => '<table class="table table-condensed table-hover"{{attrs}}>{{head}}{{body}}{{footer}}</table>',

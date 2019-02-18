@@ -6,11 +6,11 @@ use Backend\View\Helper\AjaxHelper;
 use Backend\View\Helper\BackendHelper;
 use Backend\View\Helper\FormatterHelper;
 use Backend\View\Helper\Layout\ToolbarHelper;
+use Banana\View\ViewModuleTrait;
 use Bootstrap\View\Helper\UiHelper;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\View\View;
-use Banana\View\ViewModuleTrait;
 
 /**
  * Class BackendView
@@ -25,12 +25,14 @@ class BackendView extends View
 {
     use ViewModuleTrait;
 
+    /**
+     * {@inheritDoc}
+     */
     public function initialize()
     {
         $this->loadHelper('Html', [/*'className' => 'Backend\View\Helper\BackendHtmlHelper'*/]);
         $this->loadHelper('Form', ['className' => 'Backend\View\Helper\BackendFormHelper']);
 
-        //@todo Remove hard dependencies of Backend helpers
         $this->loadHelper('Bootstrap.Ui', []);
         //$this->loadHelper('Bootstrap.Button', []);
         $this->loadHelper('Backend.Backend', []);

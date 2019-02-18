@@ -88,8 +88,9 @@ class BoxHelper extends Helper
     }
 
     /**
-     * @param null $title
-     * @param array $params
+     * @param null $title Box heading title
+     * @param array $params Box params
+     * @return void
      */
     public function create($title = null, $params = [])
     {
@@ -112,12 +113,19 @@ class BoxHelper extends Helper
 
     /**
      * Start heading block
+     *
+     * @return void
      */
     public function heading()
     {
         $this->start('heading');
     }
 
+    /**
+     * Start tools block
+     *
+     * @return void
+     */
     public function tools()
     {
         $this->start('tools');
@@ -125,6 +133,9 @@ class BoxHelper extends Helper
 
     /**
      * Start body block
+     *
+     * @param null|string $bodyStr Optional content to put in body after starting the block
+     * @return void
      */
     public function body($bodyStr = null)
     {
@@ -137,6 +148,9 @@ class BoxHelper extends Helper
 
     /**
      * Start footer block
+     *
+     * @param null|string $footerStr Optional content to put in footer after starting the block
+     * @return void
      */
     public function footer($footerStr = null)
     {

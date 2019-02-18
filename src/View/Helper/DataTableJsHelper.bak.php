@@ -12,6 +12,8 @@ use Cake\View\View;
  * Class DataTablesJsHelper
  * @package Backend\View\Helper
  * @property HtmlHelper $Html
+ * @codeCoverageIgnore
+ * @deprecated This is just a backup file
  */
 class DataTableJsHelper extends Helper
 {

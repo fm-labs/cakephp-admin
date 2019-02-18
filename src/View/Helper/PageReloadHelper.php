@@ -61,6 +61,7 @@ class PageReloadHelper extends Helper
      * Inject page reload before rendering layout
      *
      * @param Event $event The event object
+     * @return void
      */
     public function beforeLayout(Event $event)
     {

@@ -5,6 +5,10 @@ namespace Backend\View\Helper;
 use Cake\Event\Event;
 use Cake\View\View;
 
+/**
+ * ! Experimental / Unused !
+ * @codeCoverageIgnore
+ */
 class FooTableHelper extends DataTableHelper
 {
     //protected $_defaultField = ['type' => 'string', 'label' => null, 'class' => null, 'formatter' => null, 'formatterArgs' => []];
@@ -22,6 +26,10 @@ class FooTableHelper extends DataTableHelper
         parent::__construct($View, $config);
     }
 
+    /**
+     * @param Event $event The event object
+     * @return void
+     */
     public function beforeLayout(Event $event)
     {
         parent::beforeLayout($event);

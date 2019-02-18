@@ -1,7 +1,6 @@
 <?php
 namespace Backend\View\Cell;
 
-use Cake\Collection\CollectionInterface;
 use Cake\ORM\TableRegistry;
 use Cake\View\Cell;
 
@@ -11,6 +10,11 @@ class DataTableCell extends Cell
 
     public $model;
 
+    /**
+     * @param array $params Cell params
+     * @param array $data Data
+     * @return void
+     */
     public function display($params = [], $data = [])
     {
         $params = array_merge([

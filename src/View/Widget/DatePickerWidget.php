@@ -2,12 +2,11 @@
 
 namespace Backend\View\Widget;
 
-use Cake\View\Helper\FormHelper;
+use Cake\View\Form\ContextInterface;
+use Cake\View\StringTemplate;
 use Cake\View\View;
 use Cake\View\Widget\BasicWidget;
 use Cake\View\Widget\DateTimeWidget as CakeDateTimeWidget;
-use Cake\View\Form\ContextInterface;
-use Cake\View\StringTemplate;
 use DateTime;
 
 class DatePickerWidget extends CakeDateTimeWidget
@@ -17,6 +16,9 @@ class DatePickerWidget extends CakeDateTimeWidget
      */
     protected $_text;
 
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(StringTemplate $templates, BasicWidget $text, View $view)
     {
         $this->_templates = $templates;
@@ -25,6 +27,9 @@ class DatePickerWidget extends CakeDateTimeWidget
         $view->loadHelper('Backend.Datepicker');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
         $data = array_merge([
@@ -52,7 +57,7 @@ class DatePickerWidget extends CakeDateTimeWidget
             'format' => 'dd.mm.yyyy',
             'formatSubmit' => 'yyyy-mm-dd',
             'hiddenPrefix' => null,
-            'hiddenSuffix' =>  null,
+            'hiddenSuffix' => null,
             'hiddenName' => true,
         ];
         $scriptTemplate = '<script>$(document).ready(function() { $("#%s").pickadate(%s); });</script>';

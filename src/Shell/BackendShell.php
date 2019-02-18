@@ -4,13 +4,11 @@ namespace Backend\Shell;
 
 use Backend\Shell\Task\RootUserTask;
 use Cake\Console\Shell;
-use User\Model\Table\UsersTable;
 
 /**
  * Class BackendShell
  * @package Backend\Shell
- * @property UsersTable $Users
- * @property RootUserTask
+ * @property RootUserTask $RootUser
  */
 class BackendShell extends Shell
 {

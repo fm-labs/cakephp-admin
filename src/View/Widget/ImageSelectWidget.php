@@ -4,12 +4,14 @@ namespace Backend\View\Widget;
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\SelectBoxWidget;
-use Cake\View\Widget\WidgetInterface;
 use Media\Lib\Media\MediaManager;
 use Traversable;
 
 class ImageSelectWidget extends SelectBoxWidget
 {
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
         //return parent::render($data, $context);
@@ -66,6 +68,9 @@ class ImageSelectWidget extends SelectBoxWidget
         ]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _renderOptions($options, $disabled, $selected, $templateVars, $escape)
     {
         $out = [];

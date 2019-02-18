@@ -5,6 +5,9 @@ use Cake\View\Cell;
 
 /**
  * TreeViewCell cell
+ *
+ * @property \Shop\Model\Table\ShopCategoriesTable $ShopCategories
+ * @TODO Remove Shop plugin dependency
  */
 class TreeViewCell extends Cell
 {

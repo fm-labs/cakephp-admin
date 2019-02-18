@@ -8,9 +8,7 @@ use Cake\View\Widget\SelectBoxWidget;
 class ChosenSelectBoxWidget extends SelectBoxWidget
 {
     /**
-     * Constructor.
-     *
-     * @param \Cake\View\StringTemplate $templates Templates list.
+     * {@inheritDoc}
      */
     public function __construct($templates, View $view)
     {
@@ -19,6 +17,9 @@ class ChosenSelectBoxWidget extends SelectBoxWidget
         $view->loadHelper('Backend.Chosen');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
         if (!isset($data['id'])) {

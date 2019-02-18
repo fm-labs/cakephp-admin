@@ -2,9 +2,16 @@
 
 namespace Backend\Shell\Task;
 
-class RootUserTask extends BackendTask
-{
+use Cake\Console\Shell;
 
+/**
+ * @property \Backend\Model\Table\UsersTable $Users
+ */
+class RootUserTask extends Shell
+{
+    /**
+     * {@inheritDoc}
+     */
     public function getOptionParser()
     {
         $parser = parent::getOptionParser();
@@ -22,6 +29,9 @@ class RootUserTask extends BackendTask
         return $parser;
     }
 
+    /**
+     * @return void
+     */
     public function main()
     {
         $this->out("-- Setup root user --");
@@ -35,12 +45,11 @@ class RootUserTask extends BackendTask
             $this->error('Root user already exists');
         }
 
-        $email = "";
         do {
             $email = trim($this->in("Enter root email address: "));
-        } while (strlen($email) < 1);
+            $strlen = strlen($email);
+        } while ($strlen < 1);
 
-        $pass1 = $pass2 = "";
         do {
             $pass1 = trim($this->in("Choose root password: "));
             if (strlen($pass1) < 1) {

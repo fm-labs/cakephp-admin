@@ -64,7 +64,9 @@ class Backend
     public static function version()
     {
         if (!isset(static::$_version)) {
+            //@codingStandardsIgnoreStart
             static::$_version = @file_get_contents(Plugin::path('Backend') . DS . 'VERSION.txt');
+            //@codingStandardsIgnoreEnd
         }
 
         return static::$_version;
@@ -72,6 +74,7 @@ class Backend
 
     /**
      * @deprecated
+     * @return void
      */
     public static function registerListener($type, $listenerClass)
     {
@@ -88,6 +91,7 @@ class Backend
 
     /**
      * @deprecated
+     * @return array
      */
     public static function getListeners($type)
     {

@@ -15,10 +15,7 @@ use Cake\Network\Request;
 class BackendAuthorize extends BaseAuthorize
 {
     /**
-     * Constructor
-     *
-     * @param ComponentRegistry $registry
-     * @param array $config
+     * {@inheritDoc}
      */
     public function __construct(ComponentRegistry $registry, array $config = [])
     {

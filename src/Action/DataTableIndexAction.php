@@ -12,7 +12,11 @@ use Cake\Utility\Inflector;
 /**
  * Class IndexAction
  *
+ * ! Experimental | Unused !
+ *
  * @package Backend\Action
+ * @internal
+ * @codeCoverageIgnore
  */
 class DataTableIndexAction extends IndexAction
 {

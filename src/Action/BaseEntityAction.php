@@ -8,8 +8,6 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\I18n\I18n;
-use Cake\ORM\Table;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Text;
 
 abstract class BaseEntityAction extends BaseAction implements EntityActionInterface
@@ -31,12 +29,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     /**
      * @var array List of enabled scopes
      */
-    protected $_scope = ['table', 'form'];
-
-    /**
-     * @var Table
-     */
-    protected $_table;
+    public $scope = ['table', 'form'];
 
     /**
      * {@inheritDoc}
@@ -51,8 +44,25 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         }
 
         if (isset($config['scope'])) {
-            $this->_scope = $config['scope'];
+            $this->scope = $config['scope'];
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function entity()
+    {
+        if (!$this->_entity) {
+            if (!$this->_config['modelId']) {
+                throw new \Exception(get_class($this) . ' has no model ID defined');
+            }
+
+            $options = (isset($this->_config['entityOptions'])) ? $this->_config['entityOptions'] : [];
+            $this->_entity = $this->model()->get($this->_config['modelId'], $options);
+        }
+
+        return $this->_entity;
     }
 
     /**
@@ -116,39 +126,16 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     }
 
     /**
-     * {@inheritDoc}
+     * @param Controller $controller Controller instance
+     * @return null|void|\Cake\Network\Response
      */
-    public function model()
-    {
-        if (!$this->_table) {
-            if (!$this->_config['modelClass']) {
-                //throw new \Exception(get_class($this) . ' has no model class defined');
-                return false;
-            }
-
-            $this->_table = TableRegistry::get($this->_config['modelClass']);
-        }
-
-        return $this->_table;
-    }
+    abstract protected function _execute(Controller $controller);
 
     /**
-     * {@inheritDoc}
+     * @param string $tokenStr String template
+     * @param array $data Data
+     * @return string
      */
-    public function entity()
-    {
-        if (!$this->_entity) {
-            if (!$this->_config['modelId']) {
-                throw new \Exception(get_class($this) . ' has no model ID defined');
-            }
-
-            $options = (isset($this->_config['entityOptions'])) ? $this->_config['entityOptions'] : [];
-            $this->_entity = $this->model()->get($this->_config['modelId'], $options);
-        }
-
-        return $this->_entity;
-    }
-
     protected function _replaceTokens($tokenStr, $data = [])
     {
         if (is_array($tokenStr)) {

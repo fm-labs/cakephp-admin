@@ -14,7 +14,7 @@ class ExternalEntityAction extends BaseEntityAction
 
     protected $_label = 'External';
 
-    protected $_scope = ['table'];
+    public $scope = ['table'];
 
     protected $_url = null;
 
@@ -23,14 +23,9 @@ class ExternalEntityAction extends BaseEntityAction
         $options += ['url' => null, 'label' => null, 'scope' => [], 'attrs' => []];
         $this->_action = $action;
         $this->_attributes = $options['attrs'];
-        $this->_scope = $options['scope'];
+        $this->scope = $options['scope'];
         $this->_url = $options['url'];
         $this->_label = ($options['label']) ?: Inflector::humanize($this->_action);
-    }
-
-    public function getAlias()
-    {
-        return Inflector::humanize($this->_action);
     }
 
     public function getLabel()

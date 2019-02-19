@@ -5,13 +5,11 @@ namespace Backend\Controller\Component;
 use Backend\Backend;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
-use Cake\Controller\Exception\MissingComponentException;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\I18n\I18n;
 use Cake\Log\Log;
-use Cake\Network\Response;
 use Cake\Routing\Router;
 use User\Controller\Component\AuthComponent;
 
@@ -37,9 +35,7 @@ class BackendComponent extends Component
     /**
      * @var array
      */
-    public $actions = [];
-
-    protected $_mods;
+    public $components = [];
 
     /**
      * @var array
@@ -165,10 +161,8 @@ class BackendComponent extends Component
             }
         }
 
-        // Auto-load ActionComponent if controller defines actions
-        if (isset($controller->actions) && !$this->_registry->has('Action')) {
-            $controller->loadComponent('Backend.Action');
-        }
+        $controller->loadComponent('Backend.Action');
+        $controller->loadComponent('Backend.Toolbar');
 
         //@todo use CORS-Component/-Middleware
         $this->response->header([
@@ -224,6 +218,7 @@ class BackendComponent extends Component
     {
         $controller = $event->subject();
 
+
         // Handle iframe and ajax requests
         if ($this->request->is('iframe')) {
             $controller->viewBuilder()->layout('Backend.iframe');
@@ -243,7 +238,7 @@ class BackendComponent extends Component
     public function beforeRender(Event $event)
     {
         $controller = $event->subject();
-        $controller->set('be_path', $this->config('backendPath'));
+        //$controller->set('be_path', $this->config('backendPath'));
         $controller->set('be_title', $this->config('backendTitle'));
         $controller->set('be_dashboard_url', Router::url($this->config('dashboardUrl')));
         //$controller->set('be_search_url', Router::url($this->config('searchUrl')));

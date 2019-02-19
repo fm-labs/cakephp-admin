@@ -14,11 +14,6 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
     use InstanceConfigTrait;
 
     /**
-     * @var array
-     */
-    protected $_defaultConfig = [];
-
-    /**
      * @var \Cake\ORM\Table
      */
     protected $_table;
@@ -26,7 +21,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
     /**
      * @var array List of enabled scopes
      */
-    protected $_scope = [];
+    public $scope = [];
 
     /**
      * @var string
@@ -62,12 +57,13 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
     /**
      * {@inheritDoc}
      */
-    public function getAlias()
+    public function getLabel()
     {
         $class = explode('\\', get_class($this));
         $class = array_pop($class);
+        $alias = Inflector::underscore(substr($class, 0, -6));
 
-        return Inflector::underscore(substr($class, 0, -6));
+        return Inflector::humanize($alias);
     }
 
     /**
@@ -81,43 +77,9 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
     /**
      * {@inheritDoc}
      */
-    public function getLabel()
-    {
-        $alias = $this->getAlias();
-
-        return Inflector::humanize($alias);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function getScope()
     {
-        return $this->_scope;
-    }
-
-    /**
-     * Set scope list for action.
-     *
-     * @param string $scope Scope name
-     * @return $this
-     */
-    public function setScope($scope)
-    {
-        $this->_scope = (array)$scope;
-
-        return $this;
-    }
-
-    /**
-     * Check if action has given scope
-     *
-     * @param string $scope Scope name
-     * @return bool
-     */
-    public function hasScope($scope)
-    {
-        return in_array($scope, $this->_scope);
+        return $this->scope;
     }
 
     /**
@@ -152,7 +114,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
      * @param Controller $controller The controller instance
      * @return Response|null
      */
-    abstract protected function _execute(Controller $controller);
+    //abstract protected function _execute(Controller $controller);
 
     /**
      * Convenience method for flashing success messages

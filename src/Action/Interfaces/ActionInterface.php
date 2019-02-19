@@ -19,7 +19,7 @@ interface ActionInterface
     /**
      * @return string
      */
-    public function getAlias();
+    //public function getAlias();
 
     /**
      * @return string The action link label

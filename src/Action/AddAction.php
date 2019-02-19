@@ -28,7 +28,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         'model.validator' => 'default'
     ];
 
-    protected $_scope = ['index'];
+    public $scope = ['index'];
 
     /**
      * {@inheritDoc}

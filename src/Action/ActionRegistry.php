@@ -5,7 +5,6 @@ use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
-use Cake\Event\EventListenerInterface;
 use RuntimeException;
 
 /**
@@ -77,10 +76,6 @@ class ActionRegistry extends ObjectRegistry
             $instance = new $class($this->_controller, $settings);
         }
 
-        //if ($instance instanceof EventListenerInterface) {
-        //    $this->_controller->eventManager()->on($instance);
-        //}
-
         if ($instance instanceof ActionInterface) {
             return $instance;
         }
@@ -88,16 +83,5 @@ class ActionRegistry extends ObjectRegistry
         throw new RuntimeException(
             'Action ' . $alias . ' must implement ActionInterface.'
         );
-    }
-
-    /**
-     * Remove a single checkout step from the registry.
-     *
-     * @param string $name The checkout step name.
-     * @return void
-     */
-    public function unload($name)
-    {
-        unset($this->_loaded[$name]);
     }
 }

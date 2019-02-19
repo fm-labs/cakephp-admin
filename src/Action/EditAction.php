@@ -2,13 +2,9 @@
 
 namespace Backend\Action;
 
-use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Event\Event;
-use Cake\I18n\I18n;
 use Cake\ORM\Association;
-use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 
 /**
@@ -18,7 +14,7 @@ use Cake\Utility\Inflector;
  */
 class EditAction extends BaseEntityAction
 {
-    protected $_scope = ['table', 'form'];
+    public $scope = ['table', 'form'];
 
     /**
      * @var array

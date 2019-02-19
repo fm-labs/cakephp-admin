@@ -8,7 +8,7 @@ use Cake\Utility\Inflector;
 
 class InlineEntityAction extends BaseEntityAction
 {
-    protected $_scope = [];
+    public $scope = [];
     protected $_attributes = [];
     protected $_callable;
     protected $_executed = false;
@@ -24,7 +24,7 @@ class InlineEntityAction extends BaseEntityAction
 
         $this->action = $options['action'];
         $this->options = $options;
-        $this->_scope = $this->options['scope'];
+        $this->scope = $this->options['scope'];
         $this->_attributes = $this->options['attrs'];
 
         if ($this->_callable === null) {
@@ -32,11 +32,6 @@ class InlineEntityAction extends BaseEntityAction
         }
         $this->_callable = $callable;
         $this->_filter = null;
-    }
-
-    public function getAlias()
-    {
-        return Inflector::underscore($this->action);
     }
 
     public function getLabel()

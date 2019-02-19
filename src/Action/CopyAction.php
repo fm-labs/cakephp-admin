@@ -8,11 +8,15 @@ use Cake\Network\Exception\NotImplementedException;
 /**
  * Class CopyAction
  *
+ * ! Experimental | Unused !
+ *
  * @package Backend\Action
+ * @internal
+ * @codeCoverageIgnore
  */
 class CopyAction extends BaseEntityAction
 {
-    protected $_scope = ['table'];
+    public $scope = ['table'];
 
     /**
      * {@inheritDoc}
@@ -30,6 +34,9 @@ class CopyAction extends BaseEntityAction
         return ['data-icon' => 'clone'];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _execute(Controller $controller)
     {
         throw new NotImplementedException(__CLASS__ . " not implemented");

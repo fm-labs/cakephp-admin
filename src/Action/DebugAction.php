@@ -8,22 +8,12 @@ use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
 use Cake\Network\Response;
-use Cake\ORM\Table;
 
 class DebugAction extends BaseEntityAction implements ActionInterface, IndexActionInterface, EntityActionInterface
 {
-    public $template;
 
     /**
-     * @return string
-     */
-    public function getAlias()
-    {
-        return 'debug';
-    }
-
-    /**
-     * @return string
+     * {@inheritDoc}
      */
     public function getLabel()
     {
@@ -31,7 +21,7 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
     }
 
     /**
-     * @return mixed
+     * {@inheritDoc}
      */
     public function getAttributes()
     {
@@ -39,7 +29,7 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
     }
 
     /**
-     * @todo non-interface entity action method
+     * {@inheritDoc}
      */
     public function getScope()
     {
@@ -47,15 +37,7 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
     }
 
     /**
-     * @todo non-interface entity action method
-     */
-    public function hasScope($scope)
-    {
-        return true;
-    }
-
-    /**
-     * @todo non-interface entity action method
+     * {@inheritDoc}
      */
     public function isUsable(EntityInterface $entity)
     {

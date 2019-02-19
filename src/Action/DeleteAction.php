@@ -8,7 +8,7 @@ use Cake\Network\Exception\NotImplementedException;
 
 class DeleteAction extends BaseEntityAction
 {
-    protected $_scope = ['table', 'form'];
+    public $scope = ['table', 'form'];
 
     /**
      * {@inheritDoc}

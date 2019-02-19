@@ -7,8 +7,11 @@ use Cake\Routing\Router;
 
 /**
  * Class IndexAction
+ * ! Experimental | Unused !
  *
  * @package Backend\Action
+ * @internal
+ * @codeCoverageIgnore
  */
 class FooTableIndexAction extends IndexAction
 {

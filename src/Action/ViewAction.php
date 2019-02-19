@@ -12,7 +12,7 @@ use Cake\Network\Exception\BadRequestException;
 
 class ViewAction extends BaseEntityAction implements EventListenerInterface
 {
-    protected $_scope = ['table', 'form'];
+    public $scope = ['table', 'form'];
 
     protected $_defaultConfig = [
         'entity' => null,

@@ -13,7 +13,7 @@ use Cake\Event\Event;
  */
 class PublishAction extends BaseEntityAction
 {
-    protected $_scope = ['table'];
+    public $scope = ['table'];
 
     /**
      * {@inheritDoc}

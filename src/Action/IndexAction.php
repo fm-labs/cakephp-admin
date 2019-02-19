@@ -2,7 +2,6 @@
 
 namespace Backend\Action;
 
-use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\QueryInterface;
 use Cake\Routing\Router;
@@ -140,16 +139,26 @@ class IndexAction extends BaseIndexAction
     public function buildTableRowActions($row)
     {
         $actions = [];
-        foreach ($this->controller->Action->listActions() as $action) {
-            $_action = $this->controller->Action->getAction($action);
-
-            if ($_action instanceof EntityActionInterface && $_action->hasScope('table') /*&& $_action->isUsable($row)*/) {
-                $actions[$action] = [
-                    'title' => $_action->getLabel(),
-                    'url' => Router::url(['action' => $action, $row[$this->model()->primaryKey()]]),
-                    'attrs' => $_action->getAttributes()];
+        foreach ($this->controller->Action->actions as $action => $conf) {
+            if ($conf['type'] != 'entity') {
+                continue;
             }
+            $actions[$action] = [
+                'url' => Router::url(['action' => $action, $row[$this->model()->primaryKey()]]),
+                'title' => $conf['label'],
+                'attrs' => $conf['attrs']
+            ];
         }
+//        foreach ($this->controller->Action->listActions() as $action) {
+//            $_action = $this->controller->Action->getAction($action);
+//
+//            if ($_action instanceof EntityActionInterface && in_array('table', $_action->getScope()) /*&& $_action->isUsable($row)*/) {
+//                $actions[$action] = [
+//                    'title' => $_action->getLabel(),
+//                    'url' => Router::url(['action' => $action, $row[$this->model()->primaryKey()]]),
+//                    'attrs' => $_action->getAttributes()];
+//            }
+//        }
 
         return $actions;
     }

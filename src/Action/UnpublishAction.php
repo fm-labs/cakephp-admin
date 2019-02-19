@@ -12,7 +12,7 @@ use Cake\Datasource\EntityInterface;
  */
 class UnpublishAction extends BaseEntityAction
 {
-    protected $_scope = ['table'];
+    public $scope = ['table'];
 
     /**
      * {@inheritDoc}

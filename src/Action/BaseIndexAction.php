@@ -4,11 +4,6 @@ namespace Backend\Action;
 
 use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
-use Cake\Event\Event;
-use Cake\Event\EventListenerInterface;
-use Cake\Network\Exception\NotImplementedException;
-use Cake\ORM\TableRegistry;
-use Cake\Utility\Inflector;
 
 /**
  * Class BaseIndexAction
@@ -28,7 +23,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
     /**
      * @var array List of enabled scopes
      */
-    protected $_scope = ['table', 'form'];
+    public $scope = ['table', 'form'];
 
     /**
      * {@inheritDoc}
@@ -117,6 +112,16 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
         return $response;
     }
 
+    /**
+     * @param Controller $controller Controller instance
+     * @return null|void|\Cake\Network\Response
+     */
+    abstract protected function _execute(Controller $controller);
+
+    /**
+     * @param array $columns Columns schema
+     * @return array
+     */
     protected function _normalizeColumns(array $columns)
     {
         $normalized = [];

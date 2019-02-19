@@ -24,8 +24,6 @@ use Backend\Controller\Component\FlashComponent;
  */
 abstract class BaseBackendController extends Controller
 {
-    use BackendActionsTrait;
-
     /**
      * @var array
      */

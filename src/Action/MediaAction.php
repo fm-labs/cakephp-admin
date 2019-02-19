@@ -12,7 +12,7 @@ use Cake\Event\Event;
  */
 class MediaAction extends BaseEntityAction
 {
-    protected $_scope = [];
+    public $scope = [];
 
     /**
      * {@inheritDoc}

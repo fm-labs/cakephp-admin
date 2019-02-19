@@ -11,14 +11,6 @@ class DashboardAction implements ActionInterface
     /**
      * @return string
      */
-    public function getAlias()
-    {
-        return 'dashboard';
-    }
-
-    /**
-     * @return string
-     */
     public function getLabel()
     {
         return __d('backend', 'Dashboard');

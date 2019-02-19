@@ -202,6 +202,9 @@ body.darkmode dl dt,
 body.darkmode dl.dl-horizontal dt {
   border-color: #314354;
 }
+body.darkmode .dropdown-menu {
+  background-color: #181515;
+}
 body.darkmode .btn.btn-default {
   background-color: transparent;
   color: #FFF;

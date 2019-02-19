@@ -31,11 +31,6 @@ class PublishAction extends BaseEntityAction
         return ['data-icon' => 'eye'];
     }
 
-    public function hasForm()
-    {
-        return true;
-    }
-
     public function isUsable(EntityInterface $entity)
     {
         return (!$entity->get('is_published'));

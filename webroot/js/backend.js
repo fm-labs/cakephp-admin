@@ -633,7 +633,7 @@
         var $tabLink = $(ev.target);
         var url = $tabLink.attr("data-url");
 
-        if (typeof url !== "undefined" && !$tabLink.hasClass('tab-loaded')) {
+        if (typeof url !== "undefined" && !$tabLink.hasClass('tab-loaded') && !$tabLink.hasClass('tab-loading')) {
             var target = this.hash;
             var $tab = $(target);
             if (!$tab.length) {
@@ -642,13 +642,15 @@
             }
 
             // ajax load from data-url
-            $tab.html("Loading ...").tab('show');
+            $tab.html("Loading ...");
+            $tabLink.addClass('tab-loading').tab('show');
             Backend.Ajax.loadHtml($tab, url, {}).then(function() {
 
                 console.log("Tab " + target + " loaded");
 
-                $tabLink.tab('show');
+                //$tabLink.tab('show');
                 $tabLink.addClass('tab-loaded');
+                $tabLink.removeClass('tab-loading');
             });
         } else {
             $tabLink.tab('show');
@@ -665,6 +667,7 @@
 // Tab reload with double click
 //
     $(document).on('dblclick','.tabs .nav a', function (ev) {
+        console.log('tabs nav link dblclicked: ' + this.hash);
         $(this).removeClass('tab-loaded');
         $(this).trigger('click');
 
@@ -833,7 +836,10 @@
         //
         // Tabs: Auto-enable first tab
         //
-        $(scope).find('.tabs:not(.tabs-init) .nav a').first().trigger('click');
+        //$(scope).find('.tabs:not(.tabs-init) .nav a').first().trigger('click');
+        $(scope).find('.tabs:not(.tabs-init)').each(function() {
+            $(this).find('.nav a').first().trigger('click');
+        });
 
         //
         // Dropdown

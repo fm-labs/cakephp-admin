@@ -95,11 +95,11 @@ class EditAction extends BaseEntityAction
             $fields[$_f] = $field;
         }
 
-        if ($this->_request->is(['put', 'post'])) {
-            $entity = $this->model()->patchEntity($entity, $this->_request->data, ['validate' => $this->_config['model.validator']]);
+        if ($this->request->is(['put', 'post'])) {
+            $entity = $this->model()->patchEntity($entity, $this->request->data, ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend', 'Saved!'));
-                //$this->_redirect(['action' => $this->getAlias(), $entity->id] + $controller->request->query);
+                //$this->redirect(['action' => $this->getAlias(), $entity->id] + $controller->request->query);
             } else {
                 $this->_flashError();
             }
@@ -155,19 +155,5 @@ class EditAction extends BaseEntityAction
                 //debug($assoc->type());
             }
         }
-
-        /*
-        foreach ($controller->Action->listActions() as $actionName) {
-            $action = $controller->Action->getAction($actionName);
-            if ($action instanceof EntityActionInterface && $action->hasForm()) {
-                $tabs = (isset($controller->viewVars['tabs'])) ? $controller->viewVars['tabs'] : [];
-                $tabs[$actionName] = ['title' => $action->getLabel(), 'url' => ['action' => $actionName, $controller->viewVars['entity']->id]];
-                $controller->set('tabs', $tabs);
-            }
-        }
-        */
-
-        // config
-        //$controller->set($this->_config);
     }
 }

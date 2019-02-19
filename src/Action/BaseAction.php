@@ -5,12 +5,11 @@ namespace Backend\Action;
 use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\InstanceConfigTrait;
-use Cake\Network\Exception\NotImplementedException;
 use Cake\Network\Response;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
-abstract class BaseAction implements ActionInterface
+abstract class BaseAction /*extends Controller*/ implements ActionInterface
 {
     use InstanceConfigTrait;
 
@@ -20,19 +19,9 @@ abstract class BaseAction implements ActionInterface
     protected $_defaultConfig = [];
 
     /**
-     * @var \Cake\Controller\Controller
-     */
-    protected $_controller;
-
-    /**
      * @var \Cake\ORM\Table
      */
     protected $_table;
-
-    /**
-     * @var \Cake\Network\Request
-     */
-    protected $_request;
 
     /**
      * @var array List of enabled scopes
@@ -45,18 +34,28 @@ abstract class BaseAction implements ActionInterface
     protected $_label;
 
     /**
+     * @var \Cake\Controller\Controller
+     */
+    public $controller;
+
+    /**
+     * @var \Cake\Network\Request
+     */
+    public $request;
+
+    /**
      * @var string
      */
     public $template = null;
 
     /**
-     * @param Controller $controller
-     * @param array $config
+     * @param Controller $controller The controller instance
+     * @param array $config Action config
      */
     public function __construct(Controller $controller, array $config = [])
     {
-        $this->_controller = $controller;
-        $this->_request =& $controller->request;
+        $this->controller = $controller;
+        $this->request =& $controller->request;
         $this->config($config);
     }
 
@@ -99,6 +98,8 @@ abstract class BaseAction implements ActionInterface
 
     /**
      * Set scope list for action.
+     *
+     * @param string $scope Scope name
      * @return $this
      */
     public function setScope($scope)
@@ -110,7 +111,9 @@ abstract class BaseAction implements ActionInterface
 
     /**
      * Check if action has given scope
-     * @return boolean
+     *
+     * @param string $scope Scope name
+     * @return bool
      */
     public function hasScope($scope)
     {
@@ -135,25 +138,43 @@ abstract class BaseAction implements ActionInterface
     }
 
     /**
-     * @param Controller $controller
+     * Convenience method for redirecting
+     *
+     * @param string|array|null $url Redirect URL
+     * @return Response
+     */
+    public function redirect($url)
+    {
+        return $this->controller->redirect($url);
+    }
+
+    /**
+     * @param Controller $controller The controller instance
      * @return Response|null
      */
     abstract protected function _execute(Controller $controller);
 
+    /**
+     * Convenience method for flashing success messages
+     *
+     * @param string $msg The flash message
+     * @return void
+     */
     protected function _flashSuccess($msg = null)
     {
         $msg = ($msg) ?: __d('backend', 'Ok');
-        $this->_controller->Flash->success($msg);
+        $this->controller->Flash->success($msg);
     }
 
+    /**
+     * Convenience method for flashing success messages
+     *
+     * @param string $msg The flash message
+     * @return void
+     */
     protected function _flashError($msg = null)
     {
         $msg = ($msg) ?: __d('backend', 'Failed');
-        $this->_controller->Flash->error($msg);
-    }
-
-    protected function _redirect($url)
-    {
-        return $this->_controller->redirect($url);
+        $this->controller->Flash->error($msg);
     }
 }

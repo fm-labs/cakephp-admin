@@ -8,4 +8,3 @@ if (!Plugin::loaded('User')) {
 
 Plugin::load('Bootstrap');
 //Plugin::load('User');
-

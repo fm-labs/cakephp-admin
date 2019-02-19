@@ -19,6 +19,8 @@ class BackendController extends AppController
 
     /**
      * Default Dashboard
+     *
+     * @return void
      */
     public function index()
     {
@@ -29,6 +31,8 @@ class BackendController extends AppController
 
     /**
      * Backend Dashboard
+     *
+     * @return void
      * @deprecated
      */
     public function backend()

@@ -7,14 +7,9 @@ use Backend\Action\Traits\EntityActionFilterTrait;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
-use Cake\Event\EventListenerInterface;
 use Cake\I18n\I18n;
-use Cake\Network\Exception\NotImplementedException;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
-use Cake\Routing\Router;
-use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 
 abstract class BaseEntityAction extends BaseAction implements EntityActionInterface
@@ -41,13 +36,11 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     /**
      * @var Table
      */
-    protected $_model;
+    protected $_table;
 
-    public function hasForm()
-    {
-        return false;
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public function __construct(Controller $controller, array $config = [])
     {
         parent::__construct($controller, $config);
@@ -62,6 +55,9 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function execute(Controller $controller)
     {
         // read config from controller view vars
@@ -119,20 +115,26 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function model()
     {
-        if (!$this->_model) {
+        if (!$this->_table) {
             if (!$this->_config['modelClass']) {
                 //throw new \Exception(get_class($this) . ' has no model class defined');
                 return false;
             }
 
-            $this->_model = TableRegistry::get($this->_config['modelClass']);
+            $this->_table = TableRegistry::get($this->_config['modelClass']);
         }
 
-        return $this->_model;
+        return $this->_table;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function entity()
     {
         if (!$this->_entity) {
@@ -165,32 +167,5 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         });
 
         return Text::insert($tokenStr, $inserts);
-    }
-
-    public function beforeRender(Event $event)
-    {
-
-        /*
-        debug("before Render");
-        // actions
-        $controller = $event->subject();
-        $entity = $this->entity();
-
-        if ($this->_config['actions'] !== false) {
-            //$event = $controller->dispatchEvent('Backend.Controller.buildEntityActions', [
-            //    'entity' => $entity,
-            //    'actions' => (array) $this->_config['actions']
-            //]);
-            //$this->_config['actions'] = (array)$event->data['actions'];
-
-            foreach ($this->_config['actions'] as $idx => &$action) {
-                list($title, $url, $attr) = $action;
-                $url = $this->_replaceTokens($url, $entity->toArray());
-                $action = [$title, $url, $attr];
-            }
-
-            $controller->set('actions', $this->_config['actions']);
-        }
-        */
     }
 }

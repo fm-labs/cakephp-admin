@@ -11,7 +11,8 @@ class DesignController extends AppController
         'form',
         'table',
         'box',
-        'component'
+        'component',
+        'tabs'
     ];
 
     /**
@@ -67,5 +68,10 @@ class DesignController extends AppController
 
     public function daterange()
     {
+    }
+
+    public function ajaxTest()
+    {
+
     }
 }

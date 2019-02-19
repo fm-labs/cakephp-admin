@@ -14,6 +14,7 @@ use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
+use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Response;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -59,7 +60,8 @@ class ActionComponent extends Component
 
     /**
      * Initialize actions
-     * @param array $config
+     *
+     * @param array $config Component configuration
      * @return void
      */
     public function initialize(array $config)
@@ -72,9 +74,6 @@ class ActionComponent extends Component
         if (isset($this->_controller->actions)) {
             $actions = $this->_controller->actions;
         }
-
-        // detect actions from model
-        //$this->_initModelActions($actions);
 
         // normalize action configs and add actions to actions registry
         foreach ($actions as $action => $actionConfig) {
@@ -89,12 +88,17 @@ class ActionComponent extends Component
         }
     }
 
+    /**
+     * Startup event handler
+     *
+     * @return void
+     */
     public function startup()
     {
         if (Configure::read('debug') && !isset($this->actions['debug'])) {
-            $actionConfig = ['className' => 'Backend.Debug'];
-            $this->_actionRegistry->load('debug', $actionConfig);
-            $this->actions['debug'] = $actionConfig;
+            //$actionConfig = ['className' => 'Backend.Debug'];
+            //$this->_actionRegistry->load('debug', $actionConfig);
+            //$this->actions['debug'] = $actionConfig;
 
             /*
             $infoAction = ['className' => 'Backend.View', 'label' => 'Info'];
@@ -105,24 +109,11 @@ class ActionComponent extends Component
     }
 
     /**
-     * @deprecated Not in use
+     * @param null|string $action Action name
+     * @param array $options Action options
+     * @param null|callable $callable Action callback
+     * @return void
      */
-    protected function _initModelActions(&$actions)
-    {
-        $modelClass = $this->_controller->modelClass;
-        if ($modelClass) {
-            $Model = $this->_controller->loadModel($modelClass);
-
-            $event = $this->_registry->getController()->dispatchEvent('Backend.Controller.setupActions', [
-                'modelClass' => $modelClass,
-                'model' => $Model,
-                'actions' => $actions
-            ]);
-
-            $actions = $event->data['actions'];
-        }
-    }
-
     public function registerInline($action, array $options = [], $callable = null)
     {
         if ($action instanceof InlineEntityAction) {
@@ -140,6 +131,11 @@ class ActionComponent extends Component
         $this->actions[$action] = [];
     }
 
+    /**
+     * @param null|string $action Action name
+     * @param array $options Action options
+     * @return void
+     */
     public function registerExternal($action, array $options = [])
     {
         if ($action instanceof ExternalEntityAction) {
@@ -154,7 +150,7 @@ class ActionComponent extends Component
     }
 
     /**
-     * @param $action
+     * @param null|string $action Action name
      * @return bool
      */
     public function hasAction($action)
@@ -163,7 +159,7 @@ class ActionComponent extends Component
     }
 
     /**
-     * @param $action
+     * @param null|string $action Action name
      * @return null|ActionInterface|object
      */
     public function getAction($action)
@@ -176,11 +172,11 @@ class ActionComponent extends Component
      */
     public function listActions()
     {
-        return $this->_actionRegistry->loaded();
+        return array_keys($this->actions);
     }
 
     /**
-     * @param $action
+     * @param null|string $action Action name
      * @return array
      * @deprecated Not in use
      */
@@ -195,131 +191,114 @@ class ActionComponent extends Component
     }
 
     /**
-     * @param null $action
-     * @return mixed
-     * @deprecated Use execute() method instead
-     */
-    public function executeAction($action = null)
-    {
-        return $this->execute($action);
-    }
-
-    /**
-     * @param $action
+     * @param null|string $action Action name
      * @return mixed
      */
-
     public function execute($action = null)
     {
         if ($action === null) {
             $action = $this->request->params['action'];
         }
+        //debug("execute: $action");
+
+        if (!array_key_exists($action, $this->actions)) {
+            throw new NotFoundException("Action not found");
+        }
 
         // prevent recursive action calls
         if ($action == $this->_actionName) {
-            return;
+            return null;
         }
 
-        // prevent recursive action calls (2)
-        if ($this->_executing == true) {
-            debug("already executing " . $this->_actionName);
+//        // prevent recursive action calls (2)
+//        if ($this->_executing == true) {
+//            debug("already executing " . $this->_actionName);
+//
+//            return null;
+//        }
+//        $this->_executing = true;
 
-            return;
+        if (!$this->_actionRegistry->has($action)) {
+            $this->_actionRegistry->load($action, $this->actions[$action]);
         }
-        $this->_executing = true;
 
-        if ($this->_actionRegistry->has($action)) {
-            $this->_actionName = $action;
-            $this->_action = $this->_actionRegistry->get($action);
-            $this->model(); // init primary model
+        $this->_actionName = $action;
+        $this->_action = $this->_actionRegistry->get($action);
+        $this->model(); // init primary model
 
-            // attach Action instance to controllers event manager
-            if ($this->_action instanceof EventListenerInterface) {
-                $this->_controller->eventManager()->on($this->_action);
-            }
+        // attach Action instance to controllers event manager
+        if ($this->_action instanceof EventListenerInterface) {
+            $this->_controller->eventManager()->on($this->_action);
+        }
 
-            $event = $this->_registry->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
-            if ($event->result instanceof Response) {
-                return $event->result;
-            }
+        $event = $this->_registry->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
+        if ($event->result instanceof Response) {
+            return $event->result;
+        }
 
-            //@TODO Refactor with ActionView
-            //--
-            /*
-            if ($this->_controller->noActionTemplate === false && !isset($this->_action->noTemplate)) {
+        // execute the action in context of current controller
+        $response = $this->_action->execute($this->_controller);
+        //$this->_executed = true;
+        //debug("executed!");
+
+        $event = $this->_registry->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
+        if ($event->result instanceof Response) {
+            return $event->result;
+        }
+
+        // force rendering to capture template exception and fallback to Action template path
+        if (!$response && $this->_controller->autoRender) {
+            //debug("unrendered!");
+
+            // create a clone of the controller eventManager
+            // we need this as a workaround, when the MissingTemplateException is thrown,
+            // to prevent view events to get triggered twice.
+            //$eventManager = clone $this->_controller->eventManager();
+
+            // action name is default template name
+            //$template = $this->_controller->request->param('action');
+            $template = null;
+
+            try {
+                return $this->_controller->render($template);
+                //$eventManager = null; // drop event manager backup
+            } catch (MissingTemplateException $ex) {
+                // restore event manager from backup clone
+                //$this->_controller->eventManager($eventManager);
+
+                // build action template path
                 $templatePath = 'Action';
                 if ($this->request->params['prefix']) {
                     $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
                 }
 
-                $config = $this->actions[$action];
-                list($plugin, ) = pluginSplit($config['className']);
-                $template = ($plugin) ? $plugin . '.' . $action : $action;
-
-                $this->_controller->viewBuilder()->templatePath($templatePath);
-                $this->_controller->viewBuilder()->template($template);
-            }
-            */
-            //--
-
-            // execute the action in context of current controller
-            $response = $this->_action->execute($this->_controller);
-
-            $event = $this->_registry->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
-            if ($event->result instanceof Response) {
-                return $event->result;
-            }
-
-            // force rendering to capture template exception and fallback to Action template path
-            if (!$response && $this->_controller->autoRender) {
-                // create a clone of the controller eventManager
-                // we need this as a workaround, when the MissingTemplateException is thrown,
-                // to prevent view events to get triggered twice.
-                $eventManager = clone $this->_controller->eventManager();
-
-                // action name is default template name
-                //$template = $this->_controller->request->param('action');
-                $template = null;
-
-                try {
-                    $response = $this->_controller->render($template);
-                    $eventManager = null; // drop event manager backup
-                } catch (MissingTemplateException $ex) {
-                    // restore event manager from backup clone
-                    $this->_controller->eventManager($eventManager);
-
-                    // build action template path
-                    $templatePath = 'Action';
-                    if ($this->request->params['prefix']) {
-                        $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
-                    }
-
-                    // use action class name as default template name
-                    $template = ($this->_action->template) ?? null;
-                    if (!$template) {
-                        $config = $this->actions[$action];
-                        list($plugin, $actionClass) = pluginSplit($config['className']);
-                        $actionClass = Inflector::underscore($actionClass);
-                        $template = ($plugin) ? $plugin . '.' . $actionClass : $actionClass;
-                    }
-
-                    $this->_controller->viewBuilder()->templatePath($templatePath);
-                    $this->_controller->viewBuilder()->template($template);
-                    $response = $this->_controller->render();
+                // use action class name as default template name
+                $template = ($this->_action->template) ?? null;
+                if (!$template) {
+                    $config = $this->actions[$action];
+                    list($plugin, $actionClass) = pluginSplit($config['className']);
+                    $actionClass = Inflector::underscore($actionClass);
+                    $template = ($plugin) ? $plugin . '.' . $actionClass : $actionClass;
                 }
-            }
 
-            // detach Action instance from controllers event manager
-            if ($this->_action instanceof EventListenerInterface) {
-                $this->_controller->eventManager()->off($this->_action);
-            }
+                //$this->_controller->viewBuilder()->templatePath($templatePath);
+                //$this->_controller->viewBuilder()->template($template);
+                //$response = $this->_controller->render();
 
-            return $response;
+                // After Controller::render() has been triggered, the $View property
+                // is available
+                $this->_controller->View->templatePath($templatePath);
+                $this->_controller->View->template($template);
+                $this->response->body($this->_controller->View->render());
+
+                return $this->response;
+            }
         }
-
-        throw new \RuntimeException('Action ' . $action . ' not loaded');
     }
 
+    /**
+     * @return \Cake\ORM\Table
+     */
     public function model()
     {
         if (!$this->_model) {
@@ -334,57 +313,14 @@ class ActionComponent extends Component
         return $this->_model;
     }
 
-    /*
-     * @deprecated
+    /**
+     * @param Event $event The event object
+     * @return void
      */
-    public function buildIndexActions(Event $event)
-    {
-        foreach ($this->listActions() as $action) {
-            $_action = $this->getAction($action);
-            if ($_action == $this->_action) {
-                continue;
-            }
-            if ($action == "index" || (!($_action instanceof IndexActionInterface))) {
-                continue;
-            }
-            $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
-        }
-    }
-
-    /*
-     * @deprecated
-     */
-    public function buildEntityActions(Event $event)
-    {
-        //$entity = (isset($event->data['entity'])) ? $event->data['entity'] : null;
-        foreach ($this->listActions() as $action) {
-            $_action = $this->getAction($action);
-            if ($_action == $this->_action) {
-                continue;
-            }
-
-            if ($action == "index") {
-                $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
-            } //elseif ($entity && ($_action instanceof EntityActionInterface)) {
-            //    $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action, $entity->id], $_action->getAttributes()];
-            //}
-            elseif ($_action instanceof EntityActionInterface) {
-                $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action, ':id'], $_action->getAttributes()];
-            }
-        }
-
-        if (method_exists($event->subject(), 'buildEntityActions')) {
-            call_user_func([$event->subject(), 'buildEntityActions'], $event);
-        }
-    }
-
     public function beforeRender(Event $event)
     {
-        if ($this->_rendered == true) {
-            return;
-        }
-
         $controller = $event->subject();
+
         // actions
         //@todo Move to ActionToolbar component
         $actions = (isset($controller->viewVars['toolbar.actions'])) ? $controller->viewVars['toolbar.actions'] : [];
@@ -438,9 +374,59 @@ class ActionComponent extends Component
 
         //$controller->set('toolbar.actions', array_reverse($actions));
         $controller->set('toolbar.actions', $actions);
-        $this->_rendered = true;
     }
 
+    /**
+     * @param Event $event The event object
+     * @return void
+     * @deprecated
+     */
+    public function buildIndexActions(Event $event)
+    {
+        foreach ($this->listActions() as $action) {
+            $_action = $this->getAction($action);
+            if ($_action == $this->_action) {
+                continue;
+            }
+            if ($action == "index" || (!($_action instanceof IndexActionInterface))) {
+                continue;
+            }
+            $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
+        }
+    }
+
+    /**
+     * @param Event $event The event object
+     * @return void
+     * @deprecated
+     */
+    public function buildEntityActions(Event $event)
+    {
+        //$entity = (isset($event->data['entity'])) ? $event->data['entity'] : null;
+        foreach ($this->listActions() as $action) {
+            $_action = $this->getAction($action);
+            if ($_action == $this->_action) {
+                continue;
+            }
+
+            if ($action == "index") {
+                $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action], $_action->getAttributes()];
+            } elseif ($_action instanceof EntityActionInterface) {
+                $event->data['actions'][$action] = [$_action->getLabel(), ['action' => $action, ':id'], $_action->getAttributes()];
+            }
+        }
+
+        if (method_exists($event->subject(), 'buildEntityActions')) {
+            call_user_func([$event->subject(), 'buildEntityActions'], $event);
+        }
+    }
+
+    /**
+     * @param string $alias Action alias
+     * @param ActionInterface $action The action instance
+     * @param EntityInterface $entity The entity instance
+     * @return array
+     */
     protected function _buildToolbarAction($alias, ActionInterface $action, EntityInterface $entity = null)
     {
         if ($entity === null) {

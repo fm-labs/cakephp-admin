@@ -55,18 +55,12 @@ class DataTableIndexAction extends IndexAction
     ];
 
     /**
-     * @var Table
-     */
-    protected $_model;
-
-    /**
-     * @param Controller $controller
+     * {@inheritDoc}
      */
     public function _execute(Controller $controller)
     {
         // data
-        $this->_controller = $controller;
-        $this->_model = $Model = $this->model();
+        //$this->controller = $controller;
         $result = [];
         $dtjsOpts = $this->_defaultJsTable;
 
@@ -82,7 +76,7 @@ class DataTableIndexAction extends IndexAction
             //Configure::write('debug', 0);
             $controller->viewBuilder()->className('Json');
 
-            $query = $this->_model->find();
+            $query = $this->model()->find();
             $request = $controller->request->query;
             $request += ['search' => null, 'order' => null, 'draw' => null, 'start' => null, 'length' => null, 'paginate' => [], 'columns' => []];
 
@@ -100,7 +94,7 @@ class DataTableIndexAction extends IndexAction
             $offset = ($request['start'] > 0) ? $request['start'] : 0;
             $page = intval(floor(abs($offset / $limit)));
 
-            /**
+            /*
              * Selecting & Searching
              */
             if (isset($request['columns'])) {
@@ -122,7 +116,7 @@ class DataTableIndexAction extends IndexAction
                 }
             }
 
-            /**
+            /*
              * Ordering
              *
              * Example:
@@ -145,7 +139,7 @@ class DataTableIndexAction extends IndexAction
             }
 
             try {
-                /**
+                /*
                  * Contain
                  */
                 if ($this->_config['contain']) {
@@ -176,9 +170,9 @@ class DataTableIndexAction extends IndexAction
 
             $data = $data->toArray();
 
-            if ($this->_model->behaviors()->has('Tree')) {
-                $displayField = $this->_model->displayField();
-                $treeList = $this->_model->find('treeList', ['spacer' => '_ '])->toArray();
+            if ($this->model()->behaviors()->has('Tree')) {
+                $displayField = $this->model()->displayField();
+                $treeList = $this->model()->find('treeList', ['spacer' => '_ '])->toArray();
                 for ($i = 0; $i < count($data); $i++) {
                     $data[$i][$displayField] = $treeList[$data[$i]['id']];
                 }
@@ -223,6 +217,11 @@ class DataTableIndexAction extends IndexAction
         //$controller->render('Backend.data_table_index');
     }
 
+    /**
+     * @param array $order Order list
+     * @param array $columns Columns
+     * @return array Order list
+     */
     protected function _buildOrder(&$order, &$columns)
     {
         $_order = [];

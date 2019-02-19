@@ -53,11 +53,6 @@ class InlineEntityAction extends BaseEntityAction
         return $this->_attributes;
     }
 
-    public function hasForm()
-    {
-        return ($this->options['form'] === true);
-    }
-
     protected function _execute(Controller $controller)
     {
         //if ($this->_executed == true) {

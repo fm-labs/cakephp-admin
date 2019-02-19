@@ -22,11 +22,6 @@ class MediaAction extends BaseEntityAction
         return __d('backend', 'Media');
     }
 
-    public function hasForm()
-    {
-        return true;
-    }
-
     /**
      * {@inheritDoc}
      */

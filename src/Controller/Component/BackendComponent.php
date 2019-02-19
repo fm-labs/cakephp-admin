@@ -66,8 +66,7 @@ class BackendComponent extends Component
     protected $_cookieName;
 
     /**
-     * @param array $config
-     * @return void
+     * {@inheritDoc}
      */
     public function initialize(array $config)
     {
@@ -212,18 +211,17 @@ class BackendComponent extends Component
         $this->_controller =& $controller;
     }
 
-    protected function _makeCookieHash($seedData)
-    {
-        return sha1(serialize($seedData));
-    }
+//    protected function _makeCookieHash($seedData)
+//    {
+//        return sha1(serialize($seedData));
+//    }
 
     /**
-     * @param Event $event
+     * @param Event $event The event object
      * @return void
      */
     public function beforeFilter(Event $event)
     {
-        //$controller =& $this->_controller;
         $controller = $event->subject();
 
         // Handle iframe and ajax requests
@@ -239,10 +237,10 @@ class BackendComponent extends Component
     }
 
     /**
-     * @param Event $event
+     * @param Event $event The event object
      * @return void
      */
-    public function beforeRender(\Cake\Event\Event $event)
+    public function beforeRender(Event $event)
     {
         $controller = $event->subject();
         $controller->set('be_path', $this->config('backendPath'));
@@ -254,9 +252,9 @@ class BackendComponent extends Component
     /**
      * Convenience method to configure auth component
      *
-     * @param $key
-     * @param null $val
-     * @param bool|true $merge
+     * @param string $key Auth config key
+     * @param null $val Config value
+     * @param bool|true $merge Merge flag
      * @return void
      */
     public function configAuth($key, $val = null, $merge = true)
@@ -267,44 +265,14 @@ class BackendComponent extends Component
     /**
      * Convenience method to configure flash component
      *
-     * @param $key
-     * @param null $val
-     * @param bool|true $merge
+     * @param string $key Flash config key
+     * @param null $val Config value
+     * @param bool|true $merge Merge flag
      * @return void
      */
     public function configFlash($key, $val = null, $merge = true)
     {
         $this->_controller->Flash->config($key, $val, $merge);
-    }
-
-    /**
-     * @param $action
-     * @return bool
-     * @throws MissingComponentException
-     * @deprecated Use ActionComponent instead
-     */
-    public function hasAction($action)
-    {
-        if (!$this->_registry->has('Action')) {
-            throw new MissingComponentException(['class' => 'ActionComponent']);
-        }
-
-        return $this->_registry->get('Action')->hasAction($action);
-    }
-
-    /**
-     * @param null $action
-     * @return null|Response
-     * @throws MissingComponentException
-     * @deprecated Use ActionComponent instead
-     */
-    public function executeAction($action = null)
-    {
-        if (!$this->_registry->has('Action')) {
-            throw new MissingComponentException(['class' => 'ActionComponent']);
-        }
-
-        return $this->_registry->get('Action')->execute($action);
     }
 
     /**

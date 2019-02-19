@@ -109,11 +109,11 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
             $entity->accessible($controller->viewVars['fields.access']);
         }
 
-        if ($this->_request->is(['put', 'post'])) {
-            $entity = $this->model()->patchEntity($entity, $this->_request->data, ['validate' => $this->_config['model.validator']]);
+        if ($this->request->is(['put', 'post'])) {
+            $entity = $this->model()->patchEntity($entity, $this->request->data, ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend', 'Record created'));
-                $this->_redirect(['action' => 'edit', $entity->id]);
+                $this->redirect(['action' => 'edit', $entity->id]);
             } else {
                 debug($entity->errors());
                 $this->_flashError();

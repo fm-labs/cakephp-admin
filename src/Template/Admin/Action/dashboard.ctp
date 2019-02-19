@@ -1,10 +1,10 @@
-<?php $this->Breadcrumbs->add($this->get('dashboard.title', __d('backend','Dashboard'))); ?>
-<?php $this->assign('title', $this->get('dashboard.title', __d('backend','Dashboard'))); ?>
+<?php $this->Breadcrumbs->add($this->get('dashboard.title', __d('backend', 'Dashboard'))); ?>
+<?php $this->assign('title', $this->get('dashboard.title', __d('backend', 'Dashboard'))); ?>
 <div id="backend-user-dashboard" class="backend dashboard index">
     <div class="row">
-        <?php foreach ((array) $this->get('dashboard.panels') as $panel): ?>
+        <?php foreach ((array)$this->get('dashboard.panels') as $panel) : ?>
             <?php $panel = array_merge(['cols' => 12, 'elements' => []], $panel); ?>
-            <?php foreach ($panel['elements'] as $element): ?>
+            <?php foreach ($panel['elements'] as $element) : ?>
                 <?php $element = array_merge(['type' => null, 'path' => null, 'data' => []], $element); ?>
                 <div class="col-md-<?= $panel['cols']; ?>">
                     <?php

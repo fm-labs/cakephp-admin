@@ -3,9 +3,7 @@
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
-use Cake\ORM\Table;
 use Cake\Routing\Router;
-use Cake\Utility\Inflector;
 
 /**
  * Class IndexAction
@@ -17,49 +15,29 @@ class FooTableIndexAction extends IndexAction
     static public $maxLimit = 200;
 
     /**
-     * @var Table
+     * {@inheritDoc}
      */
-    protected $_model;
-
-    /**
-     * @var array
-    protected $_defaultConfig = [
-        'modelClass' => null,
-        'paginate' => false,
-        'sortable' => false,
-        'filter' => false,
-        'data' => [],
-        'fields' => [],
-        'fields.blacklist' => [],
-        'fields.whitelist' => [],
-        'rowActions' => [],
-        'actions' => [],
-        'query' => [],
-        'limit' => null,
-        'ajax' => false,
-    ];
-     */
-
     public function __construct(Controller $controller, array $config = [])
     {
-
         $this->_defaultConfig['ajax'] = true;
 
         parent::__construct($controller, $config);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function getLabel()
     {
         return __d('backend', "Index");
     }
 
     /**
-     * @param Controller $controller
+     * {@inheritDoc}
      */
     public function _execute(Controller $controller)
     {
-        $this->_controller = $controller;
-        $this->_model = $Model = $this->model();
+        $this->controller = $controller;
         $result = [];
         $extra = [];
         $dataUrl = null; // required for ajax mode
@@ -89,7 +67,7 @@ class FooTableIndexAction extends IndexAction
             $dataUrl = $this->_config['ajax'];
             if ($dataUrl === true) {
                 $dataUrl = ['rows' => 1];
-                $dataUrl += ['qry' => $this->_request->query('qry')];
+                $dataUrl += ['qry' => $this->request->query('qry')];
             }
             $extra['_dataUrl'] = $dataUrl = Router::url($dataUrl);
         } else {
@@ -118,6 +96,9 @@ class FooTableIndexAction extends IndexAction
         //$controller->render('Backend.foo_table_index');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _fetchResult()
     {
         $data = parent::_fetchResult()->toArray();
@@ -125,9 +106,9 @@ class FooTableIndexAction extends IndexAction
         if ($this->_config['ajax'] == true) {
             if ($this->_config['paginate']) {
                 $_modelName = pluginSplit($this->_config['modelClass']);
-                $count = $this->_request['paging'][$_modelName[1]]['count'];
-                $page = $this->_request['paging'][$_modelName[1]]['page'];
-                $pageCount = $this->_request['paging'][$_modelName[1]]['pageCount'];
+                $count = $this->request['paging'][$_modelName[1]]['count'];
+                $page = $this->request['paging'][$_modelName[1]]['page'];
+                $pageCount = $this->request['paging'][$_modelName[1]]['pageCount'];
             } else {
                 $count = $pageCount = count($data);
                 $page = 1;

@@ -3,7 +3,7 @@
 namespace Backend\Controller;
 
 use Backend\Controller\Component\BackendComponent;
-use Cake\Controller\Exception\MissingActionException;
+//use Cake\Controller\Exception\MissingActionException;
 use Cake\Network\Response;
 
 /**
@@ -15,7 +15,7 @@ use Cake\Network\Response;
  * @package Backend\Controller
  * @property BackendComponent $Backend
  *
- * @TODO Remove hard dependency on BackendComponent
+ * @deprecated
  */
 trait BackendActionsTrait
 {
@@ -24,6 +24,8 @@ trait BackendActionsTrait
      */
     public function invokeAction()
     {
+        return parent::invokeAction();
+        /*
         try {
             return parent::invokeAction();
         } catch (MissingActionException $ex) {
@@ -40,5 +42,6 @@ trait BackendActionsTrait
 
             return $this->Action->execute($action);
         }
+        */
     }
 }

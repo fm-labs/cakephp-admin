@@ -1,5 +1,5 @@
 <?php
-foreach (['form', 'box', 'table', 'component'] as $section) {
+foreach (['form', 'boxes', 'tables', 'component', 'tabs'] as $section) {
     $this->Toolbar->addLink($section, ['action' => 'index', 'section' => $section]);
 }
 $this->assign('heading', __('Design {0}', ($this->request->query('section')) ?: 'Index'));

@@ -2,6 +2,7 @@
 
 namespace Backend;
 
+use Backend\Http\ActionDispatcherListener;
 use Backend\View\BackendView;
 use Banana\Application;
 use Banana\Menu\Menu;
@@ -153,10 +154,15 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
                             'data-icon' => 'paint-brush',
                             'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'tables'],
                         ],
-                        'design_components' => [
+                        'design_component' => [
                             'title' => __d('backend', 'Components'),
                             'data-icon' => 'paint-brush',
-                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'components'],
+                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'component'],
+                        ],
+                        'design_tabs' => [
+                            'title' => __d('backend', 'Tabs'),
+                            'data-icon' => 'paint-brush',
+                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'tabs'],
                         ]
                     ]
                 ]);
@@ -243,6 +249,7 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
     public function bootstrap(Application $app)
     {
         EventManager::instance()->on($this);
+        EventManager::instance()->on(new ActionDispatcherListener());
     }
 
     /**

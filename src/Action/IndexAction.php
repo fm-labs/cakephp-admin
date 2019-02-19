@@ -37,33 +37,14 @@ class IndexAction extends BaseIndexAction
     protected $_defaultLimit = 15;
     protected $_maxLimit = 1000;
 
-//    public function getLabel()
-//    {
-//        if ($this->_config['modelClass']) {
-//            list($plugin,$modelName) = pluginSplit($this->_config['modelClass']);
-//            return __d('backend', 'List {0}', $modelName);
-//        }
-//
-//        return parent::getLabel();
-//    }
-
     /**
      * {@inheritDoc}
      */
     public function _execute(Controller $controller)
     {
         // data
-        $this->_controller = $controller;
+        $this->controller = $controller;
 
-        /*
-        if ($this->_config['rowActions'] !== false) {
-            //$event = $controller->dispatchEvent('Backend.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
-            $event = $controller->dispatchEvent('Backend.Controller.buildEntityActions', [
-                'actions' => $this->_config['rowActions'],
-            ]);
-            $this->_config['rowActions'] = (array)$event->data['actions'];
-        }
-        */
         $controller->set('result', $this->_fetchResult());
         $controller->set('dataTable', [
             'filter' => $this->_config['filter'],
@@ -121,25 +102,25 @@ class IndexAction extends BaseIndexAction
             }
 
             // apply query conditions from request
-            if ($this->_request->query('qry')) { //@deprecated Use _filter param instead
-                $this->_request->query['_filter'] = $this->_request->query['qry'];
-                unset($this->_request->query['qry']);
+            if ($this->request->query('qry')) { //@deprecated Use _filter param instead
+                $this->request->query['_filter'] = $this->request->query['qry'];
+                unset($this->request->query['qry']);
             }
-            if ($this->_request->query('_filter')) {
-                $query->where($this->_request->query('_filter'));
+            if ($this->request->query('_filter')) {
+                $query->where($this->request->query('_filter'));
             }
 
             // search support with FriendsOfCake/Search plugin
             if ($this->_config['filter'] && $this->model()->behaviors()->has('Search')) {
-                if ($this->_controller->request->is(['post', 'put'])) {
-                    $query->find('search', ['search' => $this->_controller->request->data]);
-                } elseif ($this->_controller->request->query) {
-                    $query->find('search', ['search' => $this->_controller->request->query]);
+                if ($this->controller->request->is(['post', 'put'])) {
+                    $query->find('search', ['search' => $this->controller->request->data]);
+                } elseif ($this->controller->request->query) {
+                    $query->find('search', ['search' => $this->controller->request->query]);
                 }
             }
 
             if ($this->_config['paginate']) {
-                $result = $this->_controller->paginate($query, $this->_config['query']);
+                $result = $this->controller->paginate($query, $this->_config['query']);
             } else {
                 $result = $query->all();
             }
@@ -152,11 +133,15 @@ class IndexAction extends BaseIndexAction
         return $result;
     }
 
+    /**
+     * @param array $row Table row data
+     * @return array List of named actions
+     */
     public function buildTableRowActions($row)
     {
         $actions = [];
-        foreach ($this->_controller->Action->listActions() as $action) {
-            $_action = $this->_controller->Action->getAction($action);
+        foreach ($this->controller->Action->listActions() as $action) {
+            $_action = $this->controller->Action->getAction($action);
 
             if ($_action instanceof EntityActionInterface && $_action->hasScope('table') /*&& $_action->isUsable($row)*/) {
                 $actions[$action] = [

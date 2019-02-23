@@ -50,7 +50,7 @@ class BoxHelper extends Helper
         'autostart' => true,
         'collapsed' => false,
         'collapse' => false,
-        'expand' => true,
+        //'expand' => true,
         'icon' => null,
         'class' => 'box-solid',
         'headerClass' => 'with-border',

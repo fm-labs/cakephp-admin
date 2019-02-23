@@ -309,17 +309,25 @@ nav ul.pagination {
 .attachments.editor .attachments .attachment .actions {
   font-size: 10px;
 }
+.bg-primary {
+  background-color: #3c8dbc !important;
+  color: #FFF;
+}
 .bg-success {
-  background-color: #49B52A;
+  background-color: #49B52A !important;
+  color: #FFF;
 }
 .bg-warning {
-  background-color: #FFCE47;
+  background-color: #f39c12 !important;
+  color: #FFF;
 }
 .bg-danger {
-  background-color: #DC3601;
+  background-color: #DC3601 !important;
+  color: #FFF;
 }
 .bg-info {
-  background-color: #5EA5CF;
+  background-color: #5EA5CF !important;
+  color: #FFF;
 }
 /*
  * Alert Boxes
@@ -329,13 +337,25 @@ nav ul.pagination {
   border-width: 0;
   border-style: none;
 }
+.alert h3,
+.alert h4,
+.alert h5 {
+  font-weight: 600;
+  margin-top: 0;
+  color: inherit;
+}
+.alert h3 .icon,
+.alert h4 .icon,
+.alert h5 .icon {
+  margin-right: 10px;
+}
 .alert-success {
   background-color: #49B52A;
   color: #FFF;
 }
 .alert-warning {
-  background-color: #FFCE47;
-  color: #5E5561;
+  background-color: #f39c12;
+  color: #FFF;
 }
 .alert-danger {
   background-color: #DC3601;
@@ -358,8 +378,8 @@ nav ul.pagination {
   color: #FFF;
 }
 .label-warning {
-  background-color: #FFCE47;
-  color: #5E5561;
+  background-color: #f39c12;
+  color: #FFF;
 }
 .label-danger {
   background-color: #DC3601;
@@ -379,6 +399,7 @@ nav ul.pagination {
   margin-bottom: 20px;
   border-radius: 0;
   background: #FFF;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 .box .box-header {
   padding: 10px;
@@ -391,43 +412,178 @@ nav ul.pagination {
 .box .box-body {
   padding: 10px;
 }
+.box .box-body table {
+  width: 100%;
+  margin: 0;
+}
 .box .box-footer {
   padding: 10px;
 }
 .box .box-footer.with-border {
   border-top: 1px solid #ccc;
 }
-.box table {
-  width: 100%;
-  margin: 0;
+.box .btn-box-tool {
+  padding: 5px;
+  font-size: 12px;
+  background: transparent;
+  color: #97a0b3;
 }
-.box.with-shadow {
-  box-shadow: rgba(0, 0, 0, 0.2) 5px 5px 10px;
+.box.box-default {
+  border-top: 2px solid 1px solid #ccc;
+}
+.box.box-primary {
+  border-top: 2px solid #3c8dbc;
+}
+.box.box-success {
+  border-top: 2px solid #49B52A;
+}
+.box.box-danger {
+  border-top: 2px solid #DC3601;
+}
+.box.box-warning {
+  border-top: 2px solid #f39c12;
+}
+.box.box-info {
+  border-top: 2px solid #5EA5CF;
 }
 .box-solid {
   border: 1px solid #ccc;
 }
-.box-primary {
-  border-top: 2px solid #3c8dbc;
+.box-solid.box-primary {
+  border-color: #3c8dbc;
 }
-.box-primary .box-header {
-  color: #3c8dbc;
+.box-solid.box-primary .box-header {
+  background-color: #3c8dbc;
+  color: #FFF;
 }
-.box-success {
-  border-top: 2px solid #49B52A;
+.box-solid.box-success {
+  border-color: #49B52A;
 }
-.box-success .box-header {
-  color: #49B52A;
+.box-solid.box-success .box-header {
+  background-color: #49B52A;
+  color: #FFF;
 }
-.box-danger {
-  border-top: 2px solid #DC3601;
+.box-solid.box-danger {
+  border-color: #DC3601;
 }
-.box-danger .box-header {
-  color: #DC3601;
+.box-solid.box-danger .box-header {
+  background-color: #DC3601;
+  color: #FFF;
 }
-.box-warning .box-header {
-  color: #FFCE47;
-  border-top: 2px solid #FFCE47;
+.box-solid.box-warning {
+  border-color: #f39c12;
+}
+.box-solid.box-warning .box-header {
+  background-color: #f39c12;
+  color: #FFF;
+}
+.box-solid.box-info {
+  border-color: #5EA5CF;
+}
+.box-solid.box-info .box-header {
+  background-color: #5EA5CF;
+  color: #FFF;
+}
+/** INFO BOX (inspired by AdminLTE) **/
+.info-box {
+  display: block;
+  min-height: 90px;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  margin-bottom: 15px;
+}
+.info-box-icon {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 2px;
+  display: block;
+  float: left;
+  height: 90px;
+  width: 90px;
+  text-align: center;
+  font-size: 45px;
+  line-height: 90px;
+  background: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.info-box-content {
+  padding: 5px 10px;
+  margin-left: 90px;
+}
+.info-box-text {
+  display: block;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+.info-box-number {
+  display: block;
+  font-weight: bold;
+  font-size: 18px;
+}
+.info-box .progress,
+.info-box .progress .progress-bar {
+  border-radius: 0;
+}
+.info-box .progress {
+  margin: 5px -10px 5px -10px;
+  height: 2px;
+}
+/** SMALL BOX (inspired by AdminLTE) **/
+.small-box {
+  border-radius: 2px;
+  position: relative;
+  display: block;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+.small-box > .inner {
+  padding: 10px;
+}
+.small-box h3,
+.small-box p {
+  z-index: 5;
+}
+.small-box h3 {
+  font-size: 38px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  white-space: nowrap;
+  padding: 0;
+}
+.small-box p {
+  font-size: 15px;
+}
+.small-box .icon {
+  -webkit-transition: all .3s linear;
+  -o-transition: all .3s linear;
+  transition: all .3s linear;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  z-index: 0;
+  font-size: 90px;
+  color: rgba(0, 0, 0, 0.15);
+}
+.small-box > .small-box-footer {
+  position: relative;
+  text-align: center;
+  padding: 3px 0;
+  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+.small-box > .small-box-footer:hover {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.15);
 }
 .dashboard-item {
   padding: 1em;

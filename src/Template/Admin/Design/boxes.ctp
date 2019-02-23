@@ -3,68 +3,25 @@
 
 <!-- SECTION BOXES -->
 <div class="section-header">
-    Boxes
+    Box
 </div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="box box-solid">
-            <div class="box-header with-border">Title</div>
-            <div class="box-body">Hi!</div>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="box box-solid">
-            <div class="box-header with-border">Title</div>
-            <div class="box-body">Hi!</div>
-        </div>
-    </div>
-</div>
+<?= $this->element('Design/boxes_row', ['params' => ['headerHtml' => 'Box']]); ?>
+<?= $this->element('Design/boxes_row', ['params' => ['headerClass' => 'with-border', 'headerHtml' => 'Header with Border']]); ?>
+<?= $this->element('Design/boxes_row', ['params' => ['boxClass' => 'box-solid', 'headerHtml' => 'Box Solid']]); ?>
+<?= $this->element('Design/boxes_row', ['params' => ['collapse' => true, 'collapsed' => false, 'headerHtml' => 'Collapsable']]); ?>
+<?= $this->element('Design/boxes_row', ['params' => ['collapse' => true, 'collapsed' => true, 'headerHtml' => 'Collapsed']]); ?>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="box box-solid">
-            <div class="box-header with-border">Title</div>
-            <div class="box-body">Hi!</div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="box box-solid">
-            <div class="box-header with-border">Title</div>
-            <div class="box-body">Hi!</div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="box box-solid">
-            <div class="box-header with-border">Title</div>
-            <div class="box-body">Hi!</div>
-        </div>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-3">
-        <div class="box box-solid">
-            <div class="box-header with-border">Title</div>
-            <div class="box-body">Hi!</div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="box box-solid">
-            <div class="box-header with-border">Title</div>
-            <div class="box-body">Hi!</div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="box box-solid">
-            <div class="box-header with-border">Title</div>
-            <div class="box-body">Hi!</div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="box box-solid">
-            <div class="box-header with-border">Title</div>
-            <div class="box-body">Hi!</div>
-        </div>
-    </div>
+<!-- SECTION BOXES -->
+<div class="section-header">
+    Info Box
 </div>
+<?= $this->element('Design/infoboxes_row', ['params' => []]); ?>
+<?= $this->element('Design/infoboxes2_row', ['params' => []]); ?>
 
+<!-- SECTION BOXES -->
+<div class="section-header">
+    Small Box
+</div>
+<?= $this->element('Design/smallboxes_row', ['params' => []]); ?>
+<?= $this->element('Design/smallboxes_row', ['params' => ['footer' => true]]); ?>

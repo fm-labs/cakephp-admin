@@ -14,6 +14,8 @@ class SystemController extends AppController
 {
     /**
      * Index method
+     *
+     * @return void
      */
     public function index()
     {
@@ -24,6 +26,7 @@ class SystemController extends AppController
      *
      * @see http://www.mainelydesign.com/blog/view/displaying-phpinfo-without-css-styles
      * @param int $what PHP Info option
+     * @return void
      */
     public function php($what = INFO_ALL)
     {
@@ -39,6 +42,8 @@ class SystemController extends AppController
 
     /**
      * Displays CAKE PHP Global constants
+     *
+     * @return void
      */
     public function globals()
     {
@@ -51,6 +56,8 @@ class SystemController extends AppController
 
     /**
      * List connected routes
+     *
+     * @return void
      */
     public function routes()
     {
@@ -60,6 +67,8 @@ class SystemController extends AppController
 
     /**
      * Displays information about loaded Cake plugins
+     *
+     * @return void
      */
     public function plugins()
     {
@@ -81,6 +90,8 @@ class SystemController extends AppController
 
     /**
      * Display date and time
+     *
+     * @return void
      */
     public function datetime()
     {
@@ -94,6 +105,8 @@ class SystemController extends AppController
 
     /**
      * Display session data
+     *
+     * @return void
      */
     public function session()
     {
@@ -102,6 +115,8 @@ class SystemController extends AppController
 
     /**
      * Display current configuration
+     *
+     * @return void
      */
     public function config()
     {

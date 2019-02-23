@@ -519,7 +519,17 @@
      */
     Backend.Ui.Label = Backend.Ui.Label || {
         create: function(label, clazz) {
-            return '<span class="label label-' + clazz + '">' + label + '</span>'
+            return '<span class="label label-' + clazz + '">' + label + '</span>';
+        }
+    };
+
+    /**
+     * UI Elements: Text
+     * @type {{create: Function}|*}
+     */
+    Backend.Ui.Text = Backend.Ui.Text || {
+        create: function(label, clazz) {
+            return '<span class="text-' + clazz + '">' + label + '</span>';
         }
     };
 

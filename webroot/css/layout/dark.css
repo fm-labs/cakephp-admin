@@ -110,17 +110,57 @@ body.darkmode .pagination > li:hover > span {
   color: #88C7EA;
 }
 body.darkmode .box {
-  background-color: transparent;
+  background-color: #27293D;
 }
 body.darkmode .box .box-header {
   background-color: transparent;
 }
-body.darkmode .box-solid {
-  background-color: #27293D;
+body.darkmode .box .with-border {
   border-color: #314354;
 }
-body.darkmode .box-solid .with-border {
+body.darkmode .box-solid {
   border-color: #314354;
+}
+body.darkmode .box-solid.box-primary {
+  border-color: #3c8dbc;
+}
+body.darkmode .box-solid.box-primary .box-header {
+  background-color: #3c8dbc;
+  color: #FFF;
+}
+body.darkmode .box-solid.box-success {
+  border-color: #49B52A;
+}
+body.darkmode .box-solid.box-success .box-header {
+  background-color: #49B52A;
+  color: #FFF;
+}
+body.darkmode .box-solid.box-danger {
+  border-color: #DC3601;
+}
+body.darkmode .box-solid.box-danger .box-header {
+  background-color: #DC3601;
+  color: #FFF;
+}
+body.darkmode .box-solid.box-warning {
+  border-color: #f39c12;
+}
+body.darkmode .box-solid.box-warning .box-header {
+  background-color: #f39c12;
+  color: #FFF;
+}
+body.darkmode .box-solid.box-info {
+  border-color: #5EA5CF;
+}
+body.darkmode .box-solid.box-info .box-header {
+  background-color: #5EA5CF;
+  color: #FFF;
+}
+body.darkmode .info-box {
+  background-color: #27293D;
+}
+body.darkmode .small-box {
+  background-color: #27293D;
 }
 body.darkmode .dataTables_wrapper button.dt-button,
 body.darkmode .dataTables_wrapper div.dt-button,

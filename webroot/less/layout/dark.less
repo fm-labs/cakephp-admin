@@ -12,6 +12,7 @@
 @dark-select-border-color: #62879D;
 @dark-input-border-color: #62879D;
 @dark-table-striped-color-odd: #2B2B39;
+@dark-box-header-bg: transparent;
 
 body.darkmode {
 
@@ -108,19 +109,70 @@ body.darkmode {
 
   // Box
   .box {
-    background-color: transparent;
-  }
-  .box .box-header {
-    background-color: transparent;
-  }
-
-  .box-solid {
     background-color: @dark-color-bg;
-    border-color: @dark-color-border;
+
+    .box-header {
+      background-color: @dark-box-header-bg;
+    }
 
     .with-border {
       border-color: @dark-color-border;
     }
+  }
+
+  .box-solid {
+    border-color: @dark-color-border;
+
+    &.box-primary {
+      border-color: @color-primary;
+      .box-header {
+        background-color: @color-primary;
+        color: @color-highlight;
+      }
+    }
+
+    &.box-success {
+      border-color: @color-success;
+      .box-header {
+        background-color: @color-success;
+        color: @color-highlight;
+      }
+    }
+
+    &.box-danger {
+      border-color: @color-danger;
+      .box-header {
+        background-color: @color-danger;
+        color: @color-highlight;
+      }
+    }
+
+    &.box-warning {
+      border-color: @color-warning;
+      .box-header {
+        background-color: @color-warning;
+        color: @color-highlight;
+      }
+    }
+
+    &.box-info {
+      border-color: @color-info;
+      .box-header {
+        background-color: @color-info;
+        color: @color-highlight;
+      }
+    }
+
+  }
+
+  // Info box
+  .info-box {
+    background-color: @dark-color-bg;
+  }
+
+  // Small box
+  .small-box {
+    background-color: @dark-color-bg;
   }
 
   // DataTable

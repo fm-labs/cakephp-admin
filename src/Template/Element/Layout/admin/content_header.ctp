@@ -9,7 +9,7 @@
  * Set '_no_header' to TRUE or set 'heading' to FALSE to disable heading rendering
  * Set '_no_breadcrumbs' to TRUE or set 'breadcrumbs' to FALSE to disable breadcrumb rendering
  */
-if ($this->get('_no_header')) {
+if ($this->get('_no_header') || $this->fetch('heading') === false) {
     return;
 }
 ?>

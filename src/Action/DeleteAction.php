@@ -4,6 +4,7 @@ namespace Backend\Action;
 
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
+use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Exception\NotImplementedException;
 
 class DeleteAction extends BaseEntityAction
@@ -29,6 +30,9 @@ class DeleteAction extends BaseEntityAction
     protected function _execute(Controller $controller)
     {
         $entity = $this->entity();
+        if (!$entity) {
+            throw new NotFoundException("Entity not found");
+        }
 
         if ($controller->request->is(['post'])) {
             if ($controller->request->data('confirm') == true) {

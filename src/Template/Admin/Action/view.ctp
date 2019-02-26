@@ -10,7 +10,7 @@
  */
 $entity = $this->get('entity');
 $title = $this->get('title', get_class($entity));
-$viewOptions = (array) $this->get('viewOptions');
+$viewOptions = (array)$this->get('viewOptions');
 
 //$this->assign('title', $title);
 
@@ -20,70 +20,22 @@ $viewOptions = (array) $this->get('viewOptions');
 //$this->loadHelper('Backend.Chosen');
 $this->loadHelper('Backend.DataTable');
 $this->loadHelper('Bootstrap.Tabs');
-$this->extend('Backend./Base/form');
+//$this->extend('Backend./Base/form');
 ?>
 <div class="view">
     <?php
     echo ($this->fetch('content')) ?: $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render('table');
     ?>
 
-    <!-- Related -->
-    <?php foreach ($associations as $assoc) : ?>
-        <?php
-        //debug($assoc->name() . " -> " . $assoc->property());
-        if ($assoc instanceof \Cake\ORM\Association) {
-            if ($entity->get($assoc->property()) === null) {
-                //debug("not set: " . $assoc->property());
-                continue;
-            }
+    <?php echo $this->cell('Backend.EntityRelated', [ $entity ], [
+        'modelClass' => $this->get('modelClass'),
+        'related' => $this->get('related')
+    ])->render('box');
+    ?>
 
-            if (!array_key_exists($assoc->name(), $related)) {
-                //debug("not enabled: " . $assoc->name());
-                continue;
-            }
-
-            $relatedEntity = $entity->get($assoc->property());
-            $title = __d('backend', 'Related {0}', $assoc->name());
-            $html = __d('backend', "No data available");
-            //$template = '<div class="box"><div class="box-header with-border">%s</div><div class="box-body">%s</div></div>';
-            $template = '<div class="related"><h3>%s</h3>%s</div>';
-
-            switch ($assoc->type()) {
-                case \Cake\ORM\Association::MANY_TO_ONE:
-                case \Cake\ORM\Association::ONE_TO_ONE:
-                    $config = ['title' => $title] + $related[$assoc->name()];
-                    $html = $this->cell('Backend.EntityView', [ $relatedEntity ], $config);
-                    $template = '%2$s';
-                    break;
-
-                case \Cake\ORM\Association::ONE_TO_MANY:
-                    $dataTable = array_merge([
-                        'model' => $assoc->target(),
-                        'data' => $relatedEntity,
-                        'fieldsBlacklist' => [$assoc->foreignKey()],
-                        'filter' => false,
-                        'actions' => false,
-                        'rowActions' => false,
-                    ], $related[$assoc->name()]);
-
-                    $this->DataTable->create($dataTable);
-                    $html = $this->DataTable->render();
-                    break;
-
-                case \Cake\ORM\Association::MANY_TO_MANY:
-                default:
-                    $html = __d('backend', 'Association type not implemented {0}', $type);
-                    break;
-            }
-
-            echo sprintf($template, $title, $html);
-        }
-        ?>
-    <?php endforeach; ?>
-
-    <?php if ($this->get('tabs')): ?>
+    <?php if ($this->get('tabs')) : ?>
         <?php $this->Tabs->create(); ?>
-        <?php foreach ((array) $this->get('tabs') as $tabId => $tab): ?>
+        <?php foreach ((array)$this->get('tabs') as $tabId => $tab) : ?>
             <?php $this->Tabs->add($tab['title'], $tab); ?>
         <?php endforeach; ?>
         <?php echo $this->Tabs->render(); ?>

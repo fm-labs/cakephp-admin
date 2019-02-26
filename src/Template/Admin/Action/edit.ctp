@@ -10,7 +10,7 @@
  */
 $entity = $this->get('entity');
 //$title = $this->get('title', @array_pop(explode('\\', get_class($entity))));
-$viewOptions = (array) $this->get('viewOptions');
+$viewOptions = (array)$this->get('viewOptions');
 
 $formOptions = $this->get('form.options', []);
 $inputFields = $this->get('fields', []);
@@ -28,7 +28,8 @@ $this->loadHelper('Bootstrap.Tabs');
  * Extend
  */
 //$this->extend('Backend./Admin/Base/form_tabs');
-$this->extend('Backend./Base/form');
+//$this->extend('Backend./Base/form');
+//$this->extend($this->get('view.extend'));
 ?>
 <div class="form form-edit">
 

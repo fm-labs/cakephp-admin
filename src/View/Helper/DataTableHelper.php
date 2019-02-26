@@ -610,23 +610,31 @@ class DataTableHelper extends Helper
      */
     protected function _renderBody()
     {
-        $rows = "";
-
         // filter cells
-        $rows .= $this->_renderFilterRow();
+        $filterRow = $this->_renderFilterRow();
 
         // data cells
+        $rows = "";
         if ($this->_params['data']) {
             foreach ($this->_params['data'] as $row) {
                 $rows .= $this->_renderRow($row);
             }
         }
+        if (!$rows) {
+            $rows = sprintf(
+                "<tr><td colspan=\"%d\">%s</td></tr>",
+                count($this->_fields),
+                __('No data available')
+            );
+        }
 
         // reduce row
-        $rows .= $this->_renderReduceRow();
+        $reduceRow = $this->_renderReduceRow();
 
         return $this->templater()->format('body', [
             'rows' => $rows,
+            'filterRow' => $filterRow,
+            'reduceRow' => $reduceRow
         ]);
     }
 

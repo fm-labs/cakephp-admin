@@ -528,8 +528,8 @@
      * @type {{create: Function}|*}
      */
     Backend.Ui.Text = Backend.Ui.Text || {
-        create: function(label, clazz) {
-            return '<span class="text-' + clazz + '">' + label + '</span>';
+        create: function(text, clazz) {
+            return '<span class="text-' + clazz + '">' + text + '</span>';
         }
     };
 

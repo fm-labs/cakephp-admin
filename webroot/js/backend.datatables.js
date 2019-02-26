@@ -5,9 +5,11 @@
         return false;
     }
 
-    function buildBooleanLabel(state, labelTrue, labelFalse) {
+    function buildBooleanLabel(state, labelTrue, labelFalse, clazzTrue, clazzFalse) {
+        clazzTrue = clazzTrue || 'primary';
+        clazzFalse = clazzFalse || 'default';
         var isTrue = (state === true || state === "true" || state === 1) ? true : false;
-        var clazz = (isTrue) ? 'success' : 'danger';
+        var clazz = (isTrue) ? clazzTrue : clazzFalse;
         var label = (isTrue) ? labelTrue : labelFalse;
         return '<span class="label label-'+clazz+'">'+label+'</span>';
     }
@@ -31,7 +33,7 @@
     function renderBooleanYesNo(data, type) {
 
         if (type === 'display') {
-            return buildBooleanLabel(data, "Yes", "No");
+            return buildBooleanLabel(data, "Yes", "No", "success", "danger");
         }
         return data;
     }

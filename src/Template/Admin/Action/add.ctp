@@ -24,7 +24,7 @@ $this->loadHelper('Bootstrap.Tabs');
 /**
  * Extend
  */
-$this->extend('Backend./Base/form');
+//$this->extend('Backend./Base/form');
 ?>
 <div class="form form-add">
 

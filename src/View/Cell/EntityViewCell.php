@@ -23,7 +23,7 @@ class EntityViewCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = ['model', 'fields', 'whitelist', 'blacklist', 'title', 'related', 'helpers', 'debug', 'exclude'];
+    protected $_validCellOptions = ['model', 'fields', 'whitelist', 'blacklist', 'title', 'helpers', 'debug', 'exclude'];
 
     public $model;
 
@@ -40,8 +40,6 @@ class EntityViewCell extends Cell
     public $exclude = [];
 
     public $title;
-
-    //public $related = [];
 
     public $helpers = [];
 
@@ -222,7 +220,6 @@ class EntityViewCell extends Cell
 
                         case "manyToOne":
                         case "oneToOne":
-                            //$formatter = ['related', $assoc->target()->displayField()];
                             $formatter = function ($val, $row, $args, $view) use ($assoc) {
                                 if (!$val) {
                                     return $val;
@@ -267,17 +264,6 @@ class EntityViewCell extends Cell
         $this->set('debug', $this->debug && Configure::read('debug'));
         $this->set('model', $this->model);
         $this->set('entity', $entity);
-
-//        $related = [];
-//        foreach ($this->related as $_related => $_relatedConf) {
-//            if (is_numeric($_related)) {
-//                $_related = $_relatedConf;
-//                $_relatedConf = [];
-//            }
-//            $related[$_related] = $_relatedConf;
-//        }
-//        $this->set('related', $related);
-
         $this->set('associations', $associations);
         $this->set('schema', $schema);
         $this->set('title', $this->title);

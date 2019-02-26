@@ -9,6 +9,7 @@ use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Network\Exception\BadRequestException;
+use Cake\ORM\Association;
 
 class ViewAction extends BaseEntityAction implements EventListenerInterface
 {
@@ -51,6 +52,19 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
      */
     public function _execute(Controller $controller)
     {
+        if (!isset($controller->viewVars['related'])) {
+            $related = [];
+            foreach ($this->model()->associations() as $assoc) {
+                /* @var \Cake\ORM\Association $assoc */
+                //debug($assoc->alias() . " : " . $assoc->type());
+                switch ($assoc->type()) {
+                    case Association::ONE_TO_MANY:
+                    default:
+                        $related[] = $assoc->alias();
+                }
+            }
+            $controller->set('related', $related);
+        }
 
         if ($this->_config['entity'] !== null) {
             $entity = $this->_entity = $this->_config['entity'];
@@ -69,16 +83,6 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
             $entity = $this->entity();
         }
 
-        $related = [];
-        foreach ($this->_config['related'] as $_related => $_relatedConf) {
-            if (is_numeric($_related)) {
-                $_related = $_relatedConf;
-                $_relatedConf = [];
-            }
-            $related[$_related] = $_relatedConf;
-        }
-        $this->_config['related'] = $related;
-
         $this->_config['viewOptions']['model'] = $this->_config['modelClass'];
         $this->_config['viewOptions']['title'] = $entity->get($this->model()->displayField());
         $this->_config['viewOptions']['debug'] = Configure::read('debug');
@@ -92,8 +96,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         $controller->set('entity', $entity);
         $controller->set('actions', $this->_config['actions']);
         $controller->set('tabs', $this->_config['tabs']);
-        $controller->set('associations', $this->model()->associations());
-        $controller->set('related', $this->_config['related']);
+        //$controller->set('associations', $this->model()->associations());
         $controller->set('_serialize', ['entity']);
         //$controller->render();
     }

@@ -88,6 +88,14 @@ class EditAction extends BaseEntityAction
                 $field = false;
             }
 
+            // get help text from column comment
+            if ($field && !isset($field['help'])) {
+                $column = $this->model()->schema()->column($_f);
+                if ($column && isset($column['comment'])) {
+                    $field['help'] = $column['comment'];
+                }
+            }
+
             $fields[$_f] = $field;
         }
 

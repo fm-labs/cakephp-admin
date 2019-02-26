@@ -58,17 +58,19 @@ class ActionController extends Controller
      * @param array $args Method args
      * @return mixed
      */
-    public function __call($method, $args)
-    {
-        return call_user_func_array([$this->controller, $method], $args);
-    }
+//    public function __call($method, $args)
+//    {
+//        return call_user_func_array([$this->controller, $method], $args);
+//    }
 
     /**
      * {@inheritDoc}
      */
     public function render($view = null, $layout = null)
     {
-        return $this->controller->render($view, $layout);
+        $response = $this->controller->render($view, $layout);
+        debug(get_class($response));
+        return $response;
     }
 
     /**

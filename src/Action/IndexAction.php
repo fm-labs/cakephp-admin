@@ -25,6 +25,7 @@ class IndexAction extends BaseIndexAction
         'fields' => [],
         'fields.blacklist' => [],
         'fields.whitelist' => [],
+        'filters' => [],
         'rowActions' => [],
         'actions' => [],
         'query' => [],
@@ -106,7 +107,10 @@ class IndexAction extends BaseIndexAction
                 unset($this->request->query['qry']);
             }
             if ($this->request->query('_filter')) {
-                $query->where($this->request->query('_filter'));
+                $filter = array_filter($this->request->query('_filter'), function ($val) {
+                    return (strlen(trim($val)) > 0);
+                });
+                $query->where($filter);
             }
 
             // search support with FriendsOfCake/Search plugin

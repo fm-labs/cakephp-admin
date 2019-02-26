@@ -75,6 +75,16 @@ class BackendFormHelper extends BootstrapFormHelper
     }
 
     /**
+     * @param string $fieldName Field name
+     * @param array $options Control options
+     * @return string
+     */
+    public function input($fieldName, array $options = [])
+    {
+        return parent::input($fieldName, $options);
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected function _getInput($fieldName, $options)

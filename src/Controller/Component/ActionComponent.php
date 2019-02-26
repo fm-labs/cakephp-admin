@@ -226,15 +226,18 @@ class ActionComponent extends Component
             $this->_controller->eventManager()->on($this->_action);
         }
 
-        $event = $this->_registry->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
+        $event = $this->_controller->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
         if ($event->result instanceof Response) {
             return $event->result;
         }
 
         // execute the action in context of current controller
         $response = $this->_action->execute($this->_controller);
+        if ($response instanceof Response) {
+            return $response;
+        }
 
-        $event = $this->_registry->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
+        $event = $this->_controller->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
         if ($event->result instanceof Response) {
             return $event->result;
         }

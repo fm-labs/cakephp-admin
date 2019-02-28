@@ -17,12 +17,19 @@ class CodeEditorHelper extends Helper
 {
     public $helpers = ['Html', 'Form'];
 
+    protected $_defaultConfig = [
+        'scriptUrl' => '/backend/vendor/ace/1.4.1-noconflict/ace.js',
+        'scriptBlock' => true,
+    ];
+
     /**
      * {@inheritDoc}
      */
     public function initialize(array $config)
     {
-        $this->Html->script('/backend/vendor/ace/1.4.1-noconflict/ace.js', ['block' => true]);
+        $this->Html->script($this->config('scriptUrl'), [
+            'block' => $this->config('scriptBlock')
+        ]);
 
         $this->Form->addWidget('codeeditor', ['Backend\View\Widget\CodeEditorWidget', '_view']);
     }

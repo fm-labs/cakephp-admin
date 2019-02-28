@@ -38,6 +38,11 @@ class CodeEditorWidget extends TextareaWidget
     protected $_View;
 
     /**
+     * @var array
+     */
+    protected $_config;
+
+    /**
      * @param \Cake\View\StringTemplate $templates The templater instance
      * @param View $view The view instance
      */
@@ -51,6 +56,8 @@ class CodeEditorWidget extends TextareaWidget
         $this->_templates->add([
             'codeeditor_editor' => '<div{{attrs}}>{{value}}</div>'
         ]);
+
+        $this->_config = (array)Configure::read('Backend.CodeEditor.Ace');
     }
 
     /**
@@ -83,7 +90,7 @@ class CodeEditorWidget extends TextareaWidget
         $input = parent::render($inputData, $context);
 
         // Editor
-        $editor = array_merge(static::$defaultConfig, $data['editor']);
+        $editor = array_merge(static::$defaultConfig, $this->_config, $data['editor']);
         // auto-prefix 'mode' and 'theme' editor options
         $editor['mode'] = ($editor['mode'] && !preg_match('/\//', $editor['mode'])) ? 'ace/mode/' . $editor['mode'] : $editor['mode'];
         $editor['theme'] = ($editor['theme'] && !preg_match('/\//', $editor['theme'])) ? 'ace/theme/' . $editor['theme'] : $editor['theme'];

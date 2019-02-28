@@ -57,7 +57,7 @@ class IndexAction extends BaseIndexAction
             'rowActions' => $this->_config['rowActions'],
             //'data' => $result,
             'rowActionCallbacks' => [
-                [$this, 'buildTableRowActions']
+                //[$this, 'buildTableRowActions']
             ]
         ]);
         //$controller->set('actions', $this->_config['actions']);

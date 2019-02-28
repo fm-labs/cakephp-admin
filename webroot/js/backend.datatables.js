@@ -92,6 +92,32 @@
         return data;
     }
 
+    function renderTimeDiffShortUTC(data, type) {
+        if (type === 'display') {
+            if (data) {
+                var now = moment.utc();
+                var time = moment.utc(data);
+
+                var diff = now.diff(time, 'minutes');
+                if (diff < 1) {
+                    return '< 1 min'
+                } else if (diff < 120) {
+                    return time.diff(now, 'minutes') + ' min'
+                } else if (diff < (60 * 24)) {
+                    return time.diff(now, 'hours') + ' hours'
+                } else if (diff < (60 * 24 * 30)) {
+                    return time.diff(now, 'days') + ' days'
+                } else if (diff < (60 * 24 * 365)) {
+                    return time.diff(now, 'months') + ' months'
+                } else {
+                    return time.diff(now, 'years', true) + ' years'
+                }
+            }
+            return 'Never';
+        }
+        return data;
+    }
+
     function renderStatus (data, type) {
         if (type == 'display') {
             var clazz;
@@ -170,7 +196,7 @@
         'renderDateTime': renderDateTime,
         'renderTimeAgoInWords': renderTimeAgoInWordsUTC,
         'renderTimeDiffInWordsUTC': renderTimeDiffInWordsUTC,
-        //'renderTimeDiffShortUTC': renderTimeDiffShortUTC,
+        'renderTimeDiffShortUTC': renderTimeDiffShortUTC,
         'renderStatus': renderStatus,
         'renderRowActions': renderRowActionsDropdown, //@deprecated Use 'renderRowActionsDropdown' instead
         'renderRowActionsDropdown': renderRowActionsDropdown,

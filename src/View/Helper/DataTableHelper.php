@@ -805,7 +805,7 @@ class DataTableHelper extends Helper
     protected function _renderRowActions($row)
     {
         $row = (is_object($row)) ? $row->toArray() : $row;
-        $actions = [];
+        $actions = (isset($row['_actions_'])) ? $row['_actions_'] : [];
 
         foreach ($this->_rowCallbacks as $callback) {
             if ($result = call_user_func($callback, $row)) {

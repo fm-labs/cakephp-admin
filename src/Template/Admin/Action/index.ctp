@@ -3,6 +3,7 @@
 $this->loadHelper('Backend.Box');
 $this->loadHelper('Backend.DataTable');
 $this->extend('Backend./Base/index');
+$this->Toolbar->addLink(__('Add'), ['action' => 'add'], ['data-icon' => 'plus']);
 ?>
 <style>
     .filter-form-container {

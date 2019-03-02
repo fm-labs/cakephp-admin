@@ -85,10 +85,6 @@ class BackendComponent extends Component
         if ($this->_registry->has('Flash') && !is_a($this->_registry->get('Flash'), static::$flashComponentClass)) {
             $this->_registry->unload('Flash');
         }
-        //$this->_registry->load('Flash', [
-        //    'className' => static::$flashComponentClass,
-        //    'key' => 'backend'
-        //]);
         $controller->loadComponent('Flash', [
             'className' => static::$flashComponentClass,
             'key' => 'backend'
@@ -107,14 +103,10 @@ class BackendComponent extends Component
         if ($this->_registry->has('Auth') && !is_a($this->_registry->get('Auth'), static::$authComponentClass)) {
             $this->_registry->unload('Auth');
         }
-        //$this->_registry->load('Auth', [
-        //    'className' => static::$authComponentClass,
-        //]);
         $controller->loadComponent('Auth', [
             'className' => static::$authComponentClass,
             'userModel' => 'Backend.Users'
         ]);
-        //@TODO Move auth config to Backend's built-in AuthComponent
         $controller->Auth->config('ajaxLogin', $this->config('authAjaxLoginAction'), false);
         $controller->Auth->config('loginAction', $this->config('authLoginAction'), false);
         $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'), false);
@@ -123,14 +115,11 @@ class BackendComponent extends Component
             'Form',
             //'Basic'
         ], false);
-        // Configure Backend Auth Storage
         $controller->Auth->config('storage', [
             'className' => 'Session',
             'key' => 'Backend.User',
             'redirect' => 'Backend.redirect'
         ], false);
-
-        // Configure Backend Authorization
         $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'), false);
         $controller->Auth->config('authorize', $this->config('authAuthorize'), false);
 
@@ -217,7 +206,6 @@ class BackendComponent extends Component
     public function beforeFilter(Event $event)
     {
         $controller = $event->subject();
-
 
         // Handle iframe and ajax requests
         if ($this->request->is('iframe')) {

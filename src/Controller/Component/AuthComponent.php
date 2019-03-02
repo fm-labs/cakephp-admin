@@ -11,50 +11,49 @@ use Cake\Event\Event;
  */
 class AuthComponent extends \User\Controller\Component\AuthComponent
 {
-    /**
-     * Login method
-     *
-     * @return string|array Redirect url
-     * @todo DRY! Duplicates code from the User's plugin AuthComponent
-     */
-    public function login()
-    {
-        // check if user is already authenticated
-        if ($this->user()) {
-            return $this->redirectUrl();
-        }
-
-        // attempt to identify user (any request method)
-        $user = $this->identify();
-        if ($user) {
-            // dispatch 'User.Auth.login' event
-            $event = new Event('Backend.User.Auth.login', $this, [
-                'user' => $user,
-                'request' => $this->request
-            ]);
-            $this->eventManager()->dispatch($event);
-
-            // authenticate user
-            $this->setUser($event->data['user']);
-
-            // redirect to originally requested url (or login redirect url)
-            return $this->redirectUrl();
-
-            // form login obviously failed
-        } elseif ($this->request->is('post')) {
-            $this->flash(__d('backend', 'Login failed'));
-
-            // dispatch 'User.Auth.login' event
-            $event = new Event('Backend.User.Auth.loginFailed', $this, [
-                'user' => false,
-                'request' => $this->request
-            ]);
-            $this->eventManager()->dispatch($event);
-
-            // all other authentication providers also failed to authenticate
-            // or no further authentication has occured
-        } else {
-            // show login form
-        }
-    }
+//    /**
+//     * Login method
+//     *
+//     * @return string|array Redirect url
+//     */
+//    public function login()
+//    {
+//        // check if user is already authenticated
+//        if ($this->user()) {
+//            return $this->redirectUrl();
+//        }
+//
+//        // attempt to identify user (any request method)
+//        $user = $this->identify();
+//        if ($user) {
+//            // dispatch 'User.Auth.beforeLogin' event
+//            $event = new Event('Backend.User.Auth.beforeLogin', $this, [
+//                'user' => $user,
+//                'request' => $this->request
+//            ]);
+//            $this->eventManager()->dispatch($event);
+//
+//            // authenticate user
+//            $this->setUser($event->data['user']);
+//
+//            // redirect to originally requested url (or login redirect url)
+//            return $this->redirectUrl();
+//
+//            // form login obviously failed
+//        } elseif ($this->request->is('post')) {
+//            $this->flash(__d('backend', 'Login failed'));
+//
+//            // dispatch 'User.Auth.beforeLogin' event
+//            $event = new Event('Backend.User.Auth.beforeLoginFailed', $this, [
+//                'user' => false,
+//                'request' => $this->request
+//            ]);
+//            $this->eventManager()->dispatch($event);
+//
+//            // all other authentication providers also failed to authenticate
+//            // or no further authentication has occured
+//        } else {
+//            // show login form
+//        }
+//    }
 }

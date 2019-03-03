@@ -8,6 +8,7 @@ use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\I18n\I18n;
+use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 
 abstract class BaseEntityAction extends BaseAction implements EntityActionInterface
@@ -53,13 +54,20 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
      */
     public function entity()
     {
-        if (!$this->_entity) {
-            if (!$this->_config['modelId']) {
-                throw new \Exception(get_class($this) . ' has no model ID defined');
-            }
+        $controller =& $this->controller;
 
-            $options = (isset($this->_config['entityOptions'])) ? $this->_config['entityOptions'] : [];
-            $this->_entity = $this->model()->get($this->_config['modelId'], $options);
+        if (!$this->_entity) {
+            if (isset($controller->viewVars['_entity']) && isset($controller->viewVars[$controller->viewVars['_entity']])) { // @deprecated Use 'entity' view var instead
+                $this->_entity = $controller->viewVars[$controller->viewVars['_entity']];
+            } elseif (isset($controller->viewVars['entity']) && isset($controller->viewVars[$controller->viewVars['entity']])) {
+                $this->_entity = $controller->viewVars[$controller->viewVars['entity']];
+            } else {
+                if (!$this->_config['modelId']) {
+                    throw new \Exception(get_class($this) . ' has no model ID defined');
+                }
+                $options = (isset($this->_config['entityOptions'])) ? $this->_config['entityOptions'] : [];
+                $this->_entity = $this->model()->get($this->_config['modelId'], $options);
+            }
         }
 
         return $this->_entity;
@@ -83,7 +91,9 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         }
         if (!isset($controller->viewVars['modelId'])) {
             $modelId = $controller->request->param('id');
-            $modelId = ($modelId) ?: $controller->request->param('pass')[0]; // @TODO request param 'pass' might be empty or unset
+            if (!$modelId && isset($controller->request->param('pass')[0])) {
+                $modelId = $controller->request->param('pass')[0];
+            }
             $this->_config['modelId'] = $modelId;
         }
         if (isset($controller->viewVars['entityOptions'])) {
@@ -98,8 +108,44 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             $this->template = $controller->viewVars['template'];
         }
 
+        // breadcrumbs
+        if (!isset($controller->viewVars['breadcrumbs'])) {
+            $breadcrumbs = [];
+            if ($this->request->param('plugin') && $this->request->param('plugin') != $this->request->param('controller')) {
+                $breadcrumbs[] = [
+                    'title' => Inflector::humanize($this->request->param('plugin')),
+                    'url' => [
+                        'plugin' => $this->request->param('plugin'),
+                        'controller' => $this->request->param('plugin'),
+                        'action' => 'index'
+                    ]
+                ];
+                $breadcrumbs[] = [
+                    'title' => Inflector::humanize($this->request->param('controller')),
+                    'url' => [
+                        'plugin' => $this->request->param('plugin'),
+                        'controller' => $this->request->param('controller'),
+                        'action' => 'index'
+                    ]
+                ];
+                $breadcrumbs[] = [
+                    'title' => $this->entity()->get($this->model()->displayField()),
+                    'url' => [
+                        'plugin' => $this->request->param('plugin'),
+                        'controller' => $this->request->param('controller'),
+                        'action' => 'view',
+                        $this->entity()->get($this->model()->primaryKey())
+                    ]
+                ];
+                $breadcrumbs[] = [
+                    'title' => $this->getLabel()
+                ];
+            }
+
+            $controller->set('breadcrumbs', $breadcrumbs);
+        }
+
         // i18n
-        $translation = I18n::locale();
         if ($this->model()->hasBehavior('Translate')) {
             $translation = ($controller->request->query('translation')) ?: I18n::locale();
             $this->model()->locale($translation);

@@ -5,6 +5,7 @@ namespace Backend\Action;
 use Cake\Controller\Controller;
 use Cake\Datasource\QueryInterface;
 use Cake\Routing\Router;
+use Cake\Utility\Hash;
 
 /**
  * Class IndexAction
@@ -107,7 +108,8 @@ class IndexAction extends BaseIndexAction
                 unset($this->request->query['qry']);
             }
             if ($this->request->query('_filter')) {
-                $filter = array_filter($this->request->query('_filter'), function ($val) {
+                $_filter = Hash::flatten($this->request->query('_filter'));
+                $filter = array_filter($_filter, function ($val) {
                     return (strlen(trim($val)) > 0);
                 });
                 $query->where($filter);

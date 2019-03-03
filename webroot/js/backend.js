@@ -967,10 +967,15 @@
             var $a = $(this);
             var url = $a.attr('href');
 
+            var $target = $(this);
+            var modalClass = $target.data('modalClass') || ($target.hasClass('link-modal-wide')) ? 'modal-wide' : '';
+            var modalTitle = $target.data('modalTitle') || ev.target.title || ev.target.innerText;
+
             Backend.Ajax.load(url).done(function(html) {
                 var $container = $('<div>', {class: 'ajax-content ajax-content-loaded', 'data-url': url}).html(html);
                 var $modal = Backend.Modal.open($container, {}, {
-                    title: ev.target.title || ev.target.innerText
+                    'title': modalTitle,
+                    'class': modalClass
                 });
                 $modal.on('shown.bs.modal', function() {
                     console.log("modal shown");

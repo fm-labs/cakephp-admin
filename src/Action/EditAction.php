@@ -50,11 +50,7 @@ class EditAction extends BaseEntityAction
 
     protected function _execute(Controller $controller)
     {
-        if (isset($controller->viewVars['_entity']) && isset($controller->viewVars[$controller->viewVars['_entity']])) {
-            $entity = $controller->viewVars[$controller->viewVars['_entity']];
-        } else {
-            $entity = $this->entity();
-        }
+        $entity = $this->entity();
 
         $_fields = $this->model()->schema()->columns();
         if (isset($controller->viewVars['fields'])) {
@@ -87,6 +83,9 @@ class EditAction extends BaseEntityAction
             if (!empty($whitelist) && !in_array($_f, $whitelist)) {
                 $field = false;
             }
+            if ($_f == 'created' || $_f == 'modified') {
+                $field = false;
+            }
 
             // get help text from column comment
             if ($field && !isset($field['help'])) {
@@ -103,7 +102,7 @@ class EditAction extends BaseEntityAction
             $entity = $this->model()->patchEntity($entity, $this->request->data, ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend', 'Saved!'));
-                //$this->redirect(['action' => $this->getAlias(), $entity->id] + $controller->request->query);
+                $this->redirect([$entity->id] + $controller->request->query);
             } else {
                 $this->_flashError();
             }

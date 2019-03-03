@@ -46,6 +46,18 @@
         return data;
     }
 
+    function renderBooleanCheckIcon(data, type) {
+
+        if (type === 'display') {
+            if (data == true) {
+                return '<span class="text-success">' + Backend.Ui.Icon.create('check') + '</span>';
+            } else {
+                return '<span class="text-danger">' + Backend.Ui.Icon.create('close') + '</span>';
+            }
+        }
+        return data;
+    }
+
     function renderDate(data, type) {
         if (type === 'display') {
             var d = new Date(data);
@@ -154,7 +166,7 @@
                 row = _.extend({}, {url: 'alert("Broken Link");', icon: 'link', title: 'Untitled', 'class': 'btn btn-default btn-xs'}, row);
                 var icon = row.icon;
                 var url = row.url;
-                var attrs = _.extend({}, {href: url, 'data-icon': icon}, _.omit(row, ['url', 'icon']));
+                var attrs = _.extend({}, {href: url, 'data-icon': icon, 'class': 'btn btn-xs'}, _.omit(row, ['url', 'icon']));
                 $('<a>', attrs).html(row.title).appendTo($container);
             });
             return $container.prop('outerHTML');
@@ -178,6 +190,26 @@
         return data;
     }
 
+    function renderCurrency(data, type)
+    {
+        if (type == 'display') {
+            return parseFloat(data).toFixed(2);
+        }
+        return data;
+    }
+
+    function renderCryptoCurrency(data, type)
+    {
+        if (type == 'display') {
+            return parseFloat(data).toFixed(8);
+        }
+        return data;
+    }
+
+    function handleCurrency(cell) {
+        $(cell).addClass('actions').addClass('text-right');
+    }
+
     function handleRowActions(cell) {
         $(cell).addClass('actions').addClass('text-right');
     }
@@ -192,6 +224,7 @@
         'renderBooleanYesNo': renderBooleanYesNo,
         'renderBooleanOnOff': renderBooleanOnOff,
         'renderBooleanEnabled': renderBooleanEnabled,
+        'renderBooleanCheckIcon': renderBooleanCheckIcon,
         'renderDate': renderDate,
         'renderDateTime': renderDateTime,
         'renderTimeAgoInWords': renderTimeAgoInWordsUTC,
@@ -203,8 +236,12 @@
         'renderRowActionsButton': renderRowActionsButton,
         'renderRowActionsIcon': renderRowActionsIcon,
 
+        'renderCurrency': renderCurrency,
+        'renderCryptoCurrency': renderCryptoCurrency,
+
         // CreateCell handlers
-        'handleRowActions': handleRowActions
+        'handleRowActions': handleRowActions,
+        'handleCurrency': handleCurrency
     };
 
 

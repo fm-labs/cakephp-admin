@@ -17,34 +17,25 @@ $inputFields = $this->get('fields', []);
 $inputOptions = $this->get('inputs.options', []);
 $fieldsets = $this->get('fieldsets');
 $translations = $this->get('translations.languages');
-//$whitelist = $this->get('fields.whitelist');
-//$blacklist = $this->get('fields.blacklist');
 /**
  * Helpers
  */
-//$this->loadHelper('Backend.Chosen');
 $this->loadHelper('Bootstrap.Tabs');
-/**
- * Extend
- */
-//$this->extend('Backend./Admin/Base/form_tabs');
-//$this->extend('Backend./Base/form');
-//$this->extend($this->get('view.extend'));
 ?>
 <div class="form form-edit">
 
-    <?php if ($translations): ?>
+    <?php if ($translations) : ?>
     <div>
         <p>
             <strong>Translations: </strong>
-            <?php foreach($translations as $lang => $langLabel): ?>
+            <?php foreach ($translations as $lang => $langLabel) : ?>
                 <?php
                 $options = [
                     'data-lang' => $lang,
                     'data-title' => __d('backend', 'Edit {0} translation', $langLabel),
                     'class' => ($lang == Cake\I18n\I18n::locale()) ? 'active' : ''
                 ];
-                $langLabel = ($lang == $translation) ? '[' . $langLabel . ']' : $langLabel;
+                $langLabel = ($lang == Cake\I18n\I18n::locale()) ? '[' . $langLabel . ']' : $langLabel;
                 ?>
                 <?= $this->Html->link($langLabel, ['action' => 'edit', $entity->id, 'translation' => $lang], $options); ?>&nbsp;
             <?php endforeach; ?>
@@ -59,9 +50,6 @@ $this->loadHelper('Bootstrap.Tabs');
             $fieldset += ['fields' => [], 'legend' => true, 'options' => []];
             echo $this->Form->fieldsetStart($fieldset['legend'], $fieldset['options']);
             foreach ($fieldset['fields'] as $field => $fieldConfig) {
-                //if (!empty($whitelist) && !in_array($field, $whitelist)) continue;
-                //if (!empty($blacklist) && in_array($field, $blacklist)) continue;
-                //$fieldConfig = (isset($fields[$field]) && isset($fields[$field])) ? $fields[$field] : [];
                 echo $this->Form->input($field, $fieldConfig);
             }
             echo $this->Form->fieldsetEnd();

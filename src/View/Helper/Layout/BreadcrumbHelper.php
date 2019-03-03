@@ -30,12 +30,19 @@ class BreadcrumbHelper extends Helper
 
     public function beforeLayout(Event $event)
     {
-        //@TODO _no_breadcrumbs is deprecated. Use layout_no_breadcrumbs instead
-        if ($event->subject()->get('layout_no_breadcrumbs') === true || $event->subject()->get('_no_breadcrumbs') === true) {
+        //@TODO _no_breadcrumbs and layout_no_breadcrumbs are deprecated. Set `breadcrumbs` to FALSE instead
+        if ($event->subject()->get('breadcrumbs') === false
+            || $event->subject()->get('_no_breadcrumbs') === true
+            || $event->subject()->get('layout_no_breadcrumbs') === true) {
             return;
         }
 
-        if (empty($this->Breadcrumbs->getCrumbs())) {
+        if (empty($this->Breadcrumbs->getCrumbs()) && $event->subject()->get('breadcrumbs')) {
+            foreach ((array)$event->subject()->get('breadcrumbs') as $breadcrumb) {
+                $breadcrumb += ['title' => null, 'url' => null, 'options' => []];
+                $this->Breadcrumbs->add($breadcrumb['title'], $breadcrumb['url'], $breadcrumb['options']);
+            }
+        } elseif (empty($this->Breadcrumbs->getCrumbs())) {
             if ($this->request->param('plugin') && $this->request->param('plugin') != $this->request->param('controller')) {
                 $this->Breadcrumbs->add(Inflector::humanize($this->request->param('plugin')), [
                     'plugin' => $this->request->param('plugin'),
@@ -49,6 +56,16 @@ class BreadcrumbHelper extends Helper
                 'controller' => $this->request->param('controller'),
                 'action' => 'index'
             ]);
+
+            //
+            if (isset($this->request->param('pass')[0])) {
+                $this->Breadcrumbs->add(Inflector::humanize(Inflector::singularize($this->request->param('controller'))), [
+                    'plugin' => $this->request->param('plugin'),
+                    'controller' => $this->request->param('controller'),
+                    'action' => 'view',
+                    $this->request->param('pass')[0]
+                ]);
+            }
 
             //if ($this->request->param('action') != 'index') {
                 $this->Breadcrumbs->add(Inflector::humanize($this->request->param('action')));

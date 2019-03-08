@@ -10,7 +10,7 @@ use Cake\View\Helper\BreadcrumbsHelper;
 /**
  * @property BreadcrumbsHelper $Breadcrumbs
  */
-class BreadcrumbHelper extends Helper
+class NavigationHelper extends Helper
 {
     public $helpers = ['Breadcrumbs'];
 

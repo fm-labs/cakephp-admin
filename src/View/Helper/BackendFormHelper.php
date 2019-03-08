@@ -44,6 +44,13 @@ class BackendFormHelper extends BootstrapFormHelper
         }
     }
 
+    /**
+     * Starts a fieldset block.
+     *
+     * @param string $legend Legend label
+     * @param array $options Fieldset options
+     * @return void
+     */
     public function fieldsetStart($legend = null, $options = [])
     {
         if (is_array($legend)) {
@@ -62,6 +69,11 @@ class BackendFormHelper extends BootstrapFormHelper
         $this->_View->Blocks->start('_fieldset');
     }
 
+    /**
+     * Ends a (previously started) fieldset block.
+     *
+     * @return string
+     */
     public function fieldsetEnd()
     {
         $this->_View->Blocks->end();
@@ -75,6 +87,8 @@ class BackendFormHelper extends BootstrapFormHelper
     }
 
     /**
+     * Creates a new form control.
+     *
      * @param string $fieldName Field name
      * @param array $options Control options
      * @return string

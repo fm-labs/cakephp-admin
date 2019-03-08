@@ -25,9 +25,12 @@ class HeaderHelper extends Helper
         ];
     }
 
+    /**
+     * @param Event $event The event object
+     * @return void
+     */
     public function beforeLayout(Event $event)
     {
-        //if ($event->subject() instanceof BackendView) {
         $elements = [
             //'menu' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_menu', 'block' => 'header_navbar_menu'],
             //'search' => ['element' => 'Backend.Layout/admin/header/navbar/navbar_search', 'block' => 'header_navbar_items'],
@@ -65,6 +68,5 @@ class HeaderHelper extends Helper
         }
 
         $event->subject()->Blocks->set($this->config('block'), $event->subject()->element($this->config('element')));
-        //}
     }
 }

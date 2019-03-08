@@ -14,11 +14,16 @@ class BackendLayoutHelper extends Helper
      */
     public function initialize(array $config = [])
     {
-        $this->_View->loadHelper('Backbone', ['className' => 'Backend.Backbone']);
-        $this->_View->loadHelper('LayoutBreadcrumb', ['className' => 'Backend.Layout/Breadcrumb']);
-        $this->_View->loadHelper('LayoutHeader', ['className' => 'Backend.Layout/Header']);
+        $this->_View->loadHelper('Backend.Backend');
+        $this->_View->loadHelper('Navigation', ['className' => 'Backend.Layout/Navigation']);
+        $this->_View->loadHelper('Header', ['className' => 'Backend.Layout/Header']);
         $this->_View->loadHelper('Toolbar', ['className' => 'Backend.Layout/Toolbar']);
         $this->_View->loadHelper('Sidebar', ['className' => 'Backend.Layout/Sidebar']);
+        $this->_View->loadHelper('User.UserSession', [
+            'sessionKey' => 'Backend.UserSession',
+            'loginUrl' => ['_name' => 'backend:admin:user:login'],
+            'checkUrl' => ['_name' => 'backend:admin:user:checkauth']
+        ]);
 
         if (Configure::read('Backend.Theme.enableJsFlash')) {
             $this->_View->loadHelper('Backend.Toastr');
@@ -45,22 +50,6 @@ class BackendLayoutHelper extends Helper
      */
     public function beforeRender(Event $event)
     {
-        // css
-        $event->subject()->Html->css('/backend/libs/bootstrap/dist/css/bootstrap.min.css', ['block' => true]);
-        $event->subject()->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css', ['block' => true]);
-        $event->subject()->Html->css('/backend/libs/ionicons/css/ionicons.min.css', ['block' => true]);
-        $event->subject()->Html->css('/backend/libs/flag-icon-css/css/flag-icon.min.css', ['block' => true]);
-
-        // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views
-        $event->subject()->Html->css('Backend.backend', ['block' => true]);
-
-        // scripts
-        $event->subject()->Html->script('/backend/libs/bootstrap/dist/js/bootstrap.min.js', ['block' => true]);
-        $event->subject()->Html->script('/backend/js/momentjs/moment.min.js', ['block' => true]);
-        $event->subject()->Html->script('/backend/js/backend.js', ['block' => true]);
-        //$event->subject()->Html->script('/backend/js/backend.alert.js', ['block' => true]);
-        $event->subject()->Html->script('/backend/js/backend.iconify.js', ['block' => true]);
-        $event->subject()->Html->script('/backend/js/backend.tooltip.js', ['block' => true]);
     }
 
     /**

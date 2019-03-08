@@ -229,6 +229,20 @@ body.darkmode {
 
   }
 
+  // Popovers
+  .popover {
+    background-color: @dark-color-bodybg;
+
+    .popover-title {
+      background-color: @dark-box-header-bg;
+      border-color: @dark-color-border;
+    }
+
+    .arrow::after {
+      border-right-color: @dark-color-bodybg;
+    }
+  }
+
   form.form,
   form.form-horizontal {
     background-color: transparent;

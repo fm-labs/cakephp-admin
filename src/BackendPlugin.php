@@ -323,6 +323,11 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
             ['_name' => 'user:login']
         );
         $routes->connect(
+            '/session',
+            ['controller' => 'Auth', 'action' => 'session'],
+            ['_name' => 'user:checkauth']
+        );
+        $routes->connect(
             '/login-success',
             ['controller' => 'Auth', 'action' => 'loginSuccess'],
             ['_name' => 'user:loginsuccess']

@@ -1,7 +1,5 @@
-<?php $this->assign('title', __d('backend','Login')); ?>
-
+<?php $this->assign('title', __d('backend', 'Login')); ?>
 <div class="container">
-
     <?= $this->Form->create(null, ['class' => 'form-signin', 'horizontal' => false]); ?>
     <h2 class="form-signin-heading">
         <i class="fa fa-cubes fa-3x"></i>
@@ -9,14 +7,14 @@
 
     <?= $this->Form->input('username', [
         'label' => false,
-        'placeholder' => __d('backend','Username')
+        'placeholder' => __d('backend', 'Username')
     ]); ?>
     <?= $this->Form->input('password', [
         'type' => 'password',
         'label' => false,
-        'placeholder' => __d('backend','Password')
+        'placeholder' => __d('backend', 'Password')
     ]); ?>
-    <?= $this->Form->button(__d('backend','Login'), [
+    <?= $this->Form->button(__d('backend', 'Login'), [
         'class' => 'btn btn-lg btn-primary btn-block'
     ]); ?>
     <?= $this->Form->end(); ?>

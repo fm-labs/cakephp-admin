@@ -45,6 +45,7 @@
     "datatables.net-rowreorder-bs": "^1.2.5",
     "datatables.net-scroller-bs": "^1.5.1",
     "datatables.net-select-bs": "^1.2.7",
+    "jqvmap": "^1.5.1",
     "sweetalert2": "^8.0.7",
     "toastr": "^2.1.4"
   }

@@ -32,6 +32,9 @@
     <div id="content" class="content-wrapper" style="min-height: 900px;">
 
         <section id="main-flash" class="flash-wrapper">
+            <?= $this->Flash->render(); ?>
+            <?= $this->Flash->render('auth'); ?>
+            <?= $this->Flash->render('backend'); ?>
             <?php echo $this->fetch('flash'); ?>
         </section>
 
@@ -48,16 +51,15 @@
         <!-- Top -->
         <?php echo $this->fetch('top'); ?>
 
-
         <!-- Left container -->
-        <?php if ($this->fetch('left')): ?>
+        <?php if ($this->fetch('left')) : ?>
             <aside id="main-left" class="content-aside content-left">
                 <?php echo $this->fetch('left'); ?>
             </aside>
         <?php endif; ?>
 
         <!-- Right column -->
-        <?php if ($this->fetch('right')): ?>
+        <?php if ($this->fetch('right')) : ?>
             <aside id="main-right" class="content-aside content-right">
                 <?php echo $this->fetch('right'); ?>
             </aside>
@@ -70,7 +72,7 @@
             <?php echo $this->fetch('before'); ?>
 
             <!-- Content -->
-            <?php echo  $this->fetch('content'); ?>
+            <?php echo $this->fetch('content'); ?>
 
             <!-- After -->
             <?php echo $this->fetch('after'); ?>
@@ -94,8 +96,6 @@
 
 </div>
 <!-- ./wrapper -->
-
-
 
 <?= $this->fetch('script'); ?>
 </body>

@@ -15,7 +15,7 @@ class AppController extends Controller
     use BackendActionsTrait;
 
     /**
-     * Initialize BackendComponent
+     * {@inheritDoc}
      */
     public function initialize()
     {

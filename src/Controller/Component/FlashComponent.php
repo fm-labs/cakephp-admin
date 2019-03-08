@@ -36,8 +36,11 @@ class FlashComponent extends CakeFlashComponent
      */
 
     /**
-     * @param string $msg
-     * @param array $options
+     * Flash success message
+     *
+     * @param string $msg Flash message
+     * @param array $options Flash options
+     * @return void
      */
     public function success($msg, array $options = [])
     {
@@ -46,8 +49,11 @@ class FlashComponent extends CakeFlashComponent
     }
 
     /**
-     * @param $msg
-     * @param array $options
+     * Flash warning message
+     *
+     * @param string $msg Flash message
+     * @param array $options Flash options
+     * @return void
      */
     public function warning($msg, array $options = [])
     {
@@ -56,8 +62,11 @@ class FlashComponent extends CakeFlashComponent
     }
 
     /**
-     * @param string $msg
-     * @param array $options
+     * Flash error message
+     *
+     * @param string $msg Flash message
+     * @param array $options Flash options
+     * @return void
      */
     public function error($msg, array $options = [])
     {
@@ -66,8 +75,11 @@ class FlashComponent extends CakeFlashComponent
     }
 
     /**
-     * @param $msg
-     * @param array $options
+     * Flash info message
+     *
+     * @param string $msg Flash message
+     * @param array $options Flash options
+     * @return void
      */
     public function info($msg, array $options = [])
     {

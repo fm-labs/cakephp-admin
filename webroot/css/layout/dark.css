@@ -213,6 +213,16 @@ body.darkmode .dataTables_wrapper .dataTables_paginate a.paginate_button:hover {
   color: #27293D;
   border: 1px solid #FFF;
 }
+body.darkmode .popover {
+  background-color: #1e1e2f;
+}
+body.darkmode .popover .popover-title {
+  background-color: transparent;
+  border-color: #314354;
+}
+body.darkmode .popover .arrow::after {
+  border-right-color: #1e1e2f;
+}
 body.darkmode form.form,
 body.darkmode form.form-horizontal {
   background-color: transparent;

@@ -297,6 +297,24 @@
 </div><!-- /.modal-content --> \
 </div><!-- /.modal-dialog -->',
 
+        create: function (options) {
+            var modalId = Backend.Util.uniqueDomId('modal');
+            var $modal = $('<div>', {
+                id: 'modal' + modalId,
+                class: 'modal fade',
+                tabIndex: -1,
+                role: 'dialog'
+            }).html(this._modalTemplate);
+
+            if (options.title) {
+                $modal.find('.modal-title').html(options.title);
+            } else {
+                $modal.find('.modal-header').remove();
+            }
+
+            return $modal;
+        },
+
         open: function(html, modalOptions, options) {
 
             modalOptions = modalOptions || {};
@@ -330,6 +348,11 @@
             });
             $modal.modal(modalOptions);
             return $modal;
+        },
+
+        openUrl: function(url)
+        {
+
         },
 
         openIframe: function (url, modalOptions, options)

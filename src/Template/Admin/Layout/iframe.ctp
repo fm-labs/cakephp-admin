@@ -32,6 +32,7 @@
             <?php echo $this->Flash->render('backend') ?>
             <!-- Flash Default -->
             <?php echo $this->Flash->render() ?>
+            <?php echo $this->fetch('flash'); ?>
         </section>
 
         <!-- Toolbar -->
@@ -49,7 +50,7 @@
             <?php echo $this->fetch('before'); ?>
 
             <!-- Content -->
-            <?php echo  $this->fetch('content'); ?>
+            <?php echo $this->fetch('content'); ?>
 
             <!-- After -->
             <?php echo $this->fetch('after'); ?>

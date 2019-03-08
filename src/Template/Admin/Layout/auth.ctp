@@ -10,17 +10,20 @@
     <?= $this->fetch('meta') ?>
 
     <?= $this->Html->css('Bootstrap.bootstrap.min'); ?>
-    <?= $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min'); ?>
-    <?= $this->Html->css('Backend.layout/auth'); ?>
+    <?= $this->Html->css('Backend./libs/fontawesome/css/font-awesome.min'); ?>
+    <?= $this->Html->css('Backend.backend.min.css'); ?>
+    <?= $this->Html->css('Backend.layout/auth.min.css'); ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+    <?= $this->fetch('headjs') ?>
 </head>
 <body>
     <header>
     </header>
     <div id="page">
         <div id="flash" class="container">
-            <?= $this->Flash->render('auth') ?>
+            <?= $this->Flash->render(); ?>
+            <?= $this->Flash->render('auth'); ?>
+            <?= $this->fetch('flash') ?>
         </div>
         <main id="content">
             <?= $this->fetch('content') ?>
@@ -28,5 +31,6 @@
         <footer>
         </footer>
     </div>
+    <?= $this->fetch('script') ?>
 </body>
 </html>

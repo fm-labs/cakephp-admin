@@ -2,6 +2,11 @@
 /**
  * Combined backend less element
 **/
+.ajax-content .hidden-ajax {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
+}
 /**
  * Common Backend CSS Stylesheet
  */
@@ -61,16 +66,13 @@
 .strong {
   font-weight: bold !important;
 }
-.text-left,
-.left {
+.text-left {
   text-align: left !important;
 }
-.text-center,
-.centered {
+.text-center {
   text-align: center !important;
 }
-.text-right,
-.right {
+.text-right {
   text-align: right !important;
 }
 .no-border {
@@ -805,6 +807,17 @@ form.form-horizontal .control-label {
 }
 form.form-horizontal .control-help {
   text-align: right;
+}
+.filter-form-container {
+  margin: 0.5em 0;
+}
+.filter-form-container button {
+  vertical-align: top;
+}
+.filter-form-input {
+  display: inline-block;
+  width: 220px;
+  max-width: 220px;
 }
 /* Backend UI Checkbox */
 /* https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */

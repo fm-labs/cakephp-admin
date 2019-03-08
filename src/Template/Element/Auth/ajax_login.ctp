@@ -1,6 +1,5 @@
 <div class="container-fluid text-center">
 
-
     <div class="alert alert-warning">
         <?= __d('backend', 'Your session has expired. Please login again to continue.'); ?>
     </div>
@@ -15,14 +14,14 @@
     ]); ?>
     <?= $this->Form->input('username', [
         'label' => false,
-        'placeholder' => __d('backend','Username')
+        'placeholder' => __d('backend', 'Username')
     ]); ?>
     <?= $this->Form->input('password', [
         'type' => 'password',
         'label' => false,
-        'placeholder' => __d('backend','Password')
+        'placeholder' => __d('backend', 'Password')
     ]); ?>
-    <?= $this->Form->button(__d('backend','Login'), [
+    <?= $this->Form->button(__d('backend', 'Login'), [
         'class' => 'btn btn-lg btn-primary btn-block'
     ]); ?>
     <?= $this->Form->end(); ?>

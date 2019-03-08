@@ -236,7 +236,7 @@ class FormatterHelper extends Helper
             $formatter = $this->_detectFormatter($value);
         }
 
-        if (is_array($formatter)) {
+        if (is_array($formatter) && !is_callable($formatter)) {
             // ['formatter-name' => 'formatter-data']
             if (count($formatter) === 1) {
                 $formatterArgs = current($formatter);
@@ -251,10 +251,14 @@ class FormatterHelper extends Helper
 
         switch ($formatter) {
             case "integer":
+                $formatter = 'number';
+                $formatterArgs = ['precision' => 0];
+                break;
             case "float":
             case "double":
             case "decimal":
                 $formatter = 'number';
+                $formatterArgs = ['precision' => 8];
                 break;
 
             case "unknown type":

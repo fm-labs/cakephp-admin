@@ -4,24 +4,26 @@ namespace Backend\Controller\Admin;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Network\Response;
-use User\Controller\Component\AuthComponent;
 
 /**
  * Class AuthController
  * d
  * @package Backend\Controller\Admin
- * @property AuthComponent $Auth
+ * @property \Backend\Controller\Component\AuthComponent $Auth
+ * @property \User\Controller\Component\UserSessionComponent $UserSession
  */
 class AuthController extends AppController
 {
+    public $modelClass = false;
+
     /**
-     * @param Event $event
+     * @param Event $event The event object
      * @return \Cake\Network\Response|null|void
      */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['login', 'unauthorized']);
+        $this->Auth->allow(['login', 'unauthorized', 'session']);
         $this->viewBuilder()->layout('Backend.auth');
     }
 
@@ -43,9 +45,11 @@ class AuthController extends AppController
         }
 
         $this->set('login', [
-            'user' => $this->Auth->user()
+            'user' => $this->Auth->user() //@TODO Only send minimum data!
         ]);
         $this->set('_serialize', ['login']);
+
+        return null;
     }
 
     /**
@@ -70,13 +74,13 @@ class AuthController extends AppController
      */
     public function logout()
     {
-        $this->redirect($this->Auth->logout());
+        return $this->redirect($this->Auth->logout());
     }
 
     /**
      * Unauthorized
      *
-     * @return null
+     * @return void
      */
     public function unauthorized()
     {
@@ -86,12 +90,25 @@ class AuthController extends AppController
     /**
      * Current user
      *
-     * @return null
+     * @return void
      */
     public function user()
     {
         $user = $this->Auth->user();
         $this->set('user', $user);
         $this->set('_serialize', ['user']);
+    }
+
+    /**
+     * Return client session info in JSON format
+     *
+     * @return void
+     */
+    public function session()
+    {
+        $this->viewBuilder()->className('Json');
+        $data = $this->UserSession->extractSessionInfo();
+        $this->set('data', $data);
+        $this->set('_serialize', 'data');
     }
 }

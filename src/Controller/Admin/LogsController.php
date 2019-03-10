@@ -4,8 +4,16 @@ namespace Backend\Controller\Admin;
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
 
+/**
+ * Class LogsController
+ *
+ * @package Backend\Controller\Admin
+ */
 class LogsController extends AppController
 {
+    /**
+     * @var array
+     */
     public $permissions = [
         'index' => ['logs.view'],
         'view' => ['logs.view'],
@@ -14,15 +22,27 @@ class LogsController extends AppController
         'delete' => ['logs.delete']
     ];
 
+    /**
+     * @var string
+     */
     public $logDir = LOGS;
 
+    /**
+     * @param $logFile
+     * @return bool|string
+     */
     protected function _getFilePath($logFile)
     {
+        $logFile .= '.log';
         $path = realpath($this->logDir . $logFile);
         if (!$path) {
             return false;
         }
-        
+
+        if (strpos($path, '..') !== false) {
+            return false;
+        }
+
         if (!preg_match('/^'.preg_quote($this->logDir, '/') . '/', $path)) {
             return false;
         }
@@ -30,6 +50,9 @@ class LogsController extends AppController
         return $path;
     }
 
+    /**
+     * List log files
+     */
     public function index()
     {
         $logDir = $this->logDir;
@@ -37,17 +60,18 @@ class LogsController extends AppController
         $Folder = new Folder($logDir, false);
         $logFiles = $Folder->find('.*.log(\.[0-9])?', true);
 
-        $files = array();
+        $files = [];
         foreach ($logFiles as $logFile) {
             $F = new File($logDir.$logFile);
 
-            $file = array(
+            $file = [
+                'id' => basename($logFile, '.log'),
                 'name' => $logFile,
                 //'dir' => $logDir,
                 'size' => $F->size(),
                 'last_modified' => $F->lastChange(),
                 'last_access' => $F->lastAccess(),
-            );
+            ];
             array_push($files, $file);
         }
 
@@ -57,35 +81,54 @@ class LogsController extends AppController
         $this->set(compact('files', 'logRotation'));
     }
 
+    /**
+     * View log file
+     *
+     * @param null $logFile
+     */
     public function view($logFile = null)
     {
         if (!$logFile) {
             $this->Flash->error(__d('backend', 'No logFile selected'));
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $filePath = $this->_getFilePath($logFile);
         if (!$filePath || !file_exists($filePath)) {
-            $this->Flash->error(__d('backend', 'Logfile {0} not found', $logFile));
-            return $this->redirect(array('action' => 'index'));
+            $this->Flash->error(__d('backend', 'Logfile {0} not found in {1}', $logFile, $filePath));
+            //return $this->redirect(array('action' => 'index'));
+            return;
         }
 
+        $page = ($this->request->query('page')) ?: 1;
+        $length = 409600; // 400 kB
+        $offset = ($page - 1) * $length;
+
         $File = new File($filePath, false);
-        $log = $File->read();
-        $this->set(compact('logFile', 'log'));
+        $File->offset($offset);
+        $log = $File->read($length); // read max 400 kB
+        $File->close();
+        $this->set(compact('logFile', 'log', 'page'));
     }
 
+    /**
+     * Clear log file
+     *
+     * @param null $logFile
+     * @return \Cake\Network\Response|null
+     */
     public function clear($logFile = null)
     {
         if (!$logFile) {
             $this->Flash->error(__d('backend', 'No logFile selected'));
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $filePath = $this->_getFilePath($logFile);
         if (!$filePath) {
             $this->Flash->error(__d('backend', 'Logfile {0} not found', $logFile));
-            return $this->redirect($this->referer(array('action' => 'index')));
+
+            return $this->redirect($this->referer(['action' => 'index']));
         }
 
         $File = new File($filePath, false);
@@ -94,14 +137,19 @@ class LogsController extends AppController
         } else {
             $this->Flash->error(__d('backend', 'Failed to clear logFile {0}', $logFile));
         }
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
+    /**
+     * Delete log file
+     *
+     * @param null $logFile
+     */
     public function delete($logFile = null)
     {
         if (!$logFile) {
             $this->Flash->error(__d('backend', 'No logFile selected'));
-            $this->redirect(array('action' => 'index'));
+            $this->redirect(['action' => 'index']);
         }
 
         $filePath = $this->_getFilePath($logFile);
@@ -110,19 +158,24 @@ class LogsController extends AppController
         } else {
             $this->Flash->error(__d('backend', 'Logfile {0} could not be deleted', $logFile));
         }
-        $this->redirect(array('action' => 'index'));
+        $this->redirect(['action' => 'index']);
     }
 
+    /**
+     * @param null $alias
+     * @deprecated
+     */
     public function rotate($alias = null)
     {
-        App::uses('LogRotation', 'Backend.Log');
+        /*
         $L = new LogRotation($alias);
         if ($L->rotate()) {
-            $this->Flash->success(__('Ok'));
+            $this->Flash->success(__d('backend','Ok'));
         } else {
-            $this->Flash->error(__('LogRotation for {0} failed', $alias));
+            $this->Flash->error(__d('backend','LogRotation for {0} failed', $alias));
         }
-
+        */
+        $this->Flash->error('LogRotation is deprecated. Use log engine features instead');
         $this->redirect($this->referer());
     }
 }

@@ -1,24 +1,33 @@
 <?php
 $this->loadHelper('Backend.DataTable');
-$this->DataTable->init($dataTable);
+//$this->loadHelper('Backend.DataTableJs');
+
+if (empty($dataTable['class'])) {
+    $dataTable['class'] = 'table table-condensed table-striped table-hover';
+}
 ?>
-<?= $this->DataTable->pagination(); ?>
+<?php if (isset($dataTable['title'])) : ?>
+<h4><?= h($dataTable['title']); ?></h4>
+<?php endif; ?>
 
-<?= $this->DataTable->create('table table-hover table-condensed'); ?>
-<?= $this->DataTable->renderHead(); ?>
-<?= $this->DataTable->renderBody(); ?>
-<?= $this->DataTable->end(); ?>
+<?php
+$html = $this->DataTable->create($dataTable, $data)->render();
+echo $html;
 
-<?= $this->DataTable->pagination(); ?>
-<?= $this->DataTable->script(); ?>
-<?= $this->DataTable->debug(); ?>
+return;
+?>
 
+<!-- DataTable JS
 <script type="text/javascript">
-    //$(document).ready(function() {
+    $(document).ready(function() {
+
         var dtId = '<?= $this->DataTable->id(); ?>';
         var dtTable = '<?= $this->DataTable->param('model'); ?>';
-        var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->param('sortUrl')); ?>';
+        var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->param('sortable')); ?>';
         var $el = $('#' + dtId);
+
+        console.log("loading datatable js for " + dtId);
+
 
         //originally from http://stackoverflow.com/questions/1307705/jquery-ui-sortable-with-table-and-tr-width/1372954#1372954
         var fixHelperModified = function(e, tr) {
@@ -34,51 +43,64 @@ $this->DataTable->init($dataTable);
         //
         // Jquery UI Sortable DataTable
         //
-        if ($el.hasClass('sortable')) {
+        if ($el.attr('data-sortable') == 1) {
 
-            $el.find("tbody").sortable({
-                placeholder: "ui-sortable-placeholder", // "ui-state-highlight",
-                helper: fixHelperModified,
-                update: function(event, ui) {
-                    console.log(ui);
-                    console.log(event);
+            console.log("init sortable for dt " + dtId);
 
-                    var sibling = ui.item.prev();
-                    var siblingId = 0;
-                    if (sibling.length > 0) {
-                        siblingId = sibling.data().id;
-                    }
+            if (!$.fn.sortable) {
+                console.warn("JqueryUI sortable not loaded");
+            } else {
+                console.log("initialize sortable")
+                $el.find(".dtable-body").sortable({
+                    placeholder: "ui-sortable-placeholder", // "ui-state-highlight",
+                    helper: fixHelperModified,
+                    update: function(event, ui) {
+                        console.log(ui);
+                        console.log(event);
 
-                    var updateData = { id: ui.item.data().id, after: siblingId, model: dtTable };
-                    //console.log(updateData);
+                        var sibling = ui.item.prev();
+                        var siblingId = 0;
+                        if (sibling.length > 0) {
+                            siblingId = sibling.data().id;
+                        }
 
-                    if (dtTable && dtSortUrl) {
-                        $.ajax({
-                            type: 'POST',
-                            url: dtSortUrl,
-                            data: updateData,
-                            dataType: 'json',
-                            success: function(data, textStatus, xhr) {
-                                //console.log(textStatus);
-                                console.log(data);
+                        var updateData = { id: ui.item.data().id, after: siblingId, model: dtTable };
+                        console.log(updateData);
 
-                                if (data.error !== undefined) {
-                                    alert("Ups. Something went wrong! " + data.error);
-                                    return;
+                        if (dtTable && dtSortUrl) {
+                            $.ajax({
+                                type: 'POST',
+                                url: dtSortUrl,
+                                data: updateData,
+                                dataType: 'json',
+                                success: function(data, textStatus, xhr) {
+                                    //console.log(textStatus);
+                                    console.log(data);
+
+                                    if (data.error !== undefined) {
+                                        alert("Ups. Something went wrong! " + data.error);
+                                        return;
+                                    }
+                                },
+                                error: function(err) {
+                                    alert("Ups. Something went wrong. Please try again");
+                                    console.error(err);
                                 }
-                            },
-                            error: function(err) {
-                                alert("Ups. Something went wrong. Please try again");
-                                console.error(err);
-                            }
-                        });
+                            });
+                        }
+
+
                     }
+                });
+                //.disableSelection();
+            }
 
-
-                }
-            });
-            //.disableSelection();
+        } else {
+            console.log("Datatable " + dtId + " is not sortable");
         }
 
-    //});
+        //$el.dataTable();
+
+    });
 </script>
+ -->

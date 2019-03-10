@@ -1,27 +1,40 @@
 <?php
-use Cake\Utility\Hash;
+
+$array = (isset($array)) ? $array : [];
+$headers = (isset($headers)) ? $headers : [];
+
+if (empty($headers)) {
+    if (isset($array[0])) {
+        foreach (array_keys($array[0]) as $h) {
+            $headers[$h] = ['title' => $h];
+        }
+    }
+}
 
 ?>
-<?php
-if (!is_array($data)) {
-    echo "No array";
-    return;
-} elseif (empty($data)) {
-    echo "[ ]";
-    return;
-}
-?>
-<table class="ui table striped">
+<table class="table table-condensed">
     <thead>
     <tr>
-        <th><?php echo __('Key'); ?></th>
-        <th><?php echo __('Value'); ?></th>
+    <?php foreach ($headers as $h => $hconf): ?>
+    <th data-key="<?= $h ?>"><?= h($hconf['title']); ?></th>
+    <?php endforeach; ?>
     </tr>
     </thead>
-    <?php foreach(Hash::flatten($data) as $k => $v): ?>
+    <tbody>
+    <?php foreach ($array as $row): ?>
         <tr>
-            <td><?= h($k); ?></td>
-            <td><?= (is_array($v)) ? $this->element('Backend.array_to_table', ['data' => $v]) : h($v); ?></td>
+        <?php foreach (array_keys($headers) as $h): ?>
+            <td data-key="<?= $h ?>">
+                <?php if (is_array($row[$h])) {
+                    //echo $this->element('array_list', ['array' => $row[$h], 'collapse' => true]);
+                    echo '(array)';
+                } else {
+                    echo h($row[$h]);
+                }
+                ?>
+            </td>
+        <?php endforeach; ?>
         </tr>
     <?php endforeach; ?>
+    </tbody>
 </table>

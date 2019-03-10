@@ -26,10 +26,10 @@ $compact = ["'" . $singularName . "'"];
         if ($this->request->is('post')) {
             $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
-                $this->Flash->success(__('The {0} has been saved.', __('<%= strtolower($singularHumanName) %>')));
+                $this->Flash->success(__d('backend','The {0} has been saved.', __d('backend','<%= strtolower($singularHumanName) %>')));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The {0} could not be saved. Please, try again.', __('<%= strtolower($singularHumanName) %>')));
+                $this->Flash->error(__d('backend','The {0} could not be saved. Please, try again.', __d('backend','<%= strtolower($singularHumanName) %>')));
             }
         }
 <%

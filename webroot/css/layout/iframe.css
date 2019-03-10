@@ -1,0 +1,6 @@
+/** cakephp3-backend - v1.4.0-dev **/
+#page-main {
+  background-color: transparent;
+  padding-top: 0;
+  overflow-y: hidden;
+}

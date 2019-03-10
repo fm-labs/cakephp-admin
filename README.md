@@ -8,8 +8,8 @@ CakePHP v3.1+
 
 ## Dependencies
 
-fm-labs/cakephp3-user
-fm-labs/cakephp3-semantic-ui
+fm-labs/cakephp-user
+fm-labs/cakephp-bootstrap
 
 ## Installation
 
@@ -18,7 +18,7 @@ You can install this plugin into your CakePHP application using [composer](http:
 The recommended way to install composer packages is:
 
 ```
-composer require fm-labs/cakephp3-backend
+composer require fm-labs/cakephp-backend
 ```
 
 - Enable in your ROOT/config/bootstrap.php
@@ -34,10 +34,71 @@ composer require fm-labs/cakephp3-backend
 
 * Backend user management
 * Backend auth handling
-* Semantic UI Admin templates
-* Bake Semantic UI templates from bake shell
+~~* Semantic UI Admin theme templates
+~~* Bake Semantic UI templates from bake shell
+* Bootstrap 3 Admin heme templates
 * Dashboard
 * System Info
 * Log viewer
 * Cronjob Management
 * ...
+
+## Config/Settings
+
+| Key  | Config | Settings | Comment
+|---|---|---|---|
+|  Backend.path | x | - | |
+|  Backend.theme | x | - | |
+|  Backend.Dashboard.title | x | x | |
+|  Backend.Dashboard.skin | x | x | |
+|  Backend.Dashboard.url | x | - | |
+|  Backend.Dashboard.Panels | x | - | |
+|  Backend.Search.searchUrl | x | - | |
+|  Backend.Security.enable | x | x | |
+|  Backend.Security.forceSSL | x | x | |
+|  Backend.LogRotation | x | - | |
+|  Backend.Users | x | - | |
+|  Backend.Auth | x | - | |
+|  Backend.AdminLte.skin_class | x | x |DEPRECATED|
+|  Backend.AdminLte.layout_class | x | x |DEPRECATED|
+|  Backend.AdminLte.sidebar_class | x | x |DEPRECATED|
+
+
+## Dependencies
+
+Javascript libs
+
+* backbone
+* underscore
+* jquery
+* bootstrap
+* html5shiv
+* momentjs
+
+Widget libs
+
+* Chosen.js (selectbox)
+* Select2
+* Daterangepicker
+* SumoSelect
+* ImagePicker
+* JqueryUi (only used for sortable table)
+* TinyMce WYSIWYG Html Editor
+* ACE Code Editor
+* Bootstrap Switch
+* Pickadate
+
+Icon libs
+
+* flag-icon-css
+* fontawesome
+* Ionicons
+
+Other
+
+* SweetAlert2 (pretty confirm and alert boxes)
+* Toastr (pretty flash messages)
+* JsTree
+* DataTablesJS
+* jqvmap (jquery vector maps)
+* footable (experimental)

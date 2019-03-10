@@ -2,97 +2,50 @@
 
 namespace Backend\View\Helper;
 
+use Cake\Core\Configure;
 use Cake\View\Helper;
-use Cake\View\Helper\HtmlHelper;
 
 /**
  * Class BackendHelper
  *
  * @package Backend\View\Helper
- * @property HtmlHelper $Html
+ * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class BackendHelper extends Helper
 {
-    public static $scriptBlockBottom = "scriptBottom";
-
-    public $helpers = ['Html'];
-
-    protected $_defaultConfig = [
-        //'autoload_scripts' => ['jquery', 'semanticui'],
-        //'autoload_css' => []
-    ];
+    public $helpers = ['Html', 'Url'];
 
     /**
-     * Unstable
-     * @var array
+     * {@inheritDoc}
      */
-    protected $_scripts = [
-        'jquery' => 'Backend.jquery/jquery-1.11.2.min',
-        'jqueryui' => ['Backend.jquery/jquery-ui.min' => ['jquery']],
-        'chosen' => ['Backend.chosen/chosen.jquery.min' => ['jquery']],
-        'pickadate_picker' => ['Backend.pickadate/picker'],
-        'pickadate_date' => ['Backend.pickadate/picker.date'],
-        'pickadate_time' => ['Backend.pickadate/picker.time'],
-        'pickadate' => ['pickadate_picker', 'pickadate_date', 'pickadate_time'],
-        'imagepicker' => ['Backend.imagepicker/image-picker.min'],
-        'semanticui' => ['Backend.semantic/semantic.min'],
-        'tinymce' => ['Backend.tinymce/tinymce.min'],
-        'tinymce_jquery' => ['Backend.tinymce/jquery.tinymce.min'],
-        'admin' => ['Backend.admin'],
-        'admin_chosen' => ['Backend.admin-chosen' => ['chosen'] ],
-        'admin_sidebar' => ['Backend.admin-sidebar' => ['jquery']],
-        'admin_tinymce' => ['Backend.admin-tinymce' => ['tinymce', 'tinymce_jquery']],
-        'shared' => 'Backend.shared'
-    ];
-
-    protected $_css = [
-
-    ];
-
-    protected $_loaded = ['scripts' => [], 'css' => []];
-
-    /**
-     * Unstable
-     *
-     * @param $name
-     * @param array $options
-     * @return mixed|string|void
-     */
-    public function script($name, $options = [])
+    public function initialize(array $config)
     {
-        if (is_string($name) && isset($this->_scripts[$name])) {
-            $path = $this->_scripts[$name];
-        } else {
-            $path = $name;
-        }
+        // 3rd party dependencies
+        $this->_View->loadHelper('Backbone', ['className' => 'Backend.Backbone']);
+        $this->Html->css('/backend/libs/bootstrap/dist/css/bootstrap.min.css', ['block' => true]);
+        $this->Html->script('/backend/libs/bootstrap/dist/js/bootstrap.min.js', ['block' => true]);
+        $this->Html->script('/backend/js/momentjs/moment.min.js', ['block' => true]);
+        $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css', ['block' => true]);
+        $this->Html->css('/backend/libs/ionicons/css/ionicons.min.css', ['block' => true]);
+        $this->_View->loadHelper('Bootstrap.Ui');
 
-        if (is_array($path)) {
-            $out = "";
-            foreach ($path as $_path => $nested) {
-                if (is_numeric($_path)) {
-                    $_path = $nested;
-                    $nested = [];
-                }
+        // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views
+        $this->Html->css('Backend.backend', ['block' => true]);
 
-                if (!empty($nested)) {
-                    $out .= $this->script($nested, $options);
-                }
+        // Inject backendjs init script
+        $backendjs = [
+            'rootUrl' => $this->Url->build('/', true),
+            'adminUrl' => $this->Url->build('/admin/', true),
+            'debug' => Configure::read('debug')
+        ];
+        //$script = sprintf('console.log("INIT", window.Backend); if (window.Backend !== undefined) { console.log("INIT2");  Backend.initialize(%s); }', json_encode($backendjs));
 
-                $out .= $this->script($_path, $options);
-            }
-            return $out;
-        }
+        $script = sprintf('var BackendSettings = window.BackendSettings = %s; console.log("[backendjs] SETTIGNS", window.BackendSettings)', json_encode($backendjs));
+        $this->Html->scriptBlock($script, ['block' => true, 'safe' => false]);
 
-        $options = array_merge(['block' => null, 'once' => true], $options);
-
-        if (isset($this->_loaded['scripts'][$path]) && $options['once'] === true) {
-            return;
-        }
-
-        //debug("Loading script: " . $path . "::" . $options['block']);
-
-        $this->_loaded['scripts'][$path] = true;
-        return $this->Html->script($path, $options);
+        $this->Html->script('/backend/js/backend.js', ['block' => true]);
+        //$this->Html->script('/backend/js/backend.alert.js', ['block' => true]);
+        $this->Html->script('/backend/js/backend.iconify.js', ['block' => true]);
+        $this->Html->script('/backend/js/backend.tooltip.js', ['block' => true]);
     }
-
 }

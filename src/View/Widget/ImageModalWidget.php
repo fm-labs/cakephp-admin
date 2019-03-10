@@ -1,19 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 12/2/15
- * Time: 6:06 PM
- */
 
 namespace Backend\View\Widget;
-
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\BasicWidget;
 
+/**
+ * Class ImageModalWidget
+ * @package Backend\View\Widget
+ * @deprecated Unused class
+ */
 class ImageModalWidget extends BasicWidget
 {
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
         $data += [
@@ -59,7 +60,6 @@ class ImageModalWidget extends BasicWidget
 </div>
 MODAL;
 
-
         $scriptTemplate = <<<SCRIPT
 <script>
 $(document).ready(function() {
@@ -79,7 +79,6 @@ SCRIPT;
             'imagemodalModal' => $modalTemplate,
             'imagemodalScript' => $scriptTemplate
         ]);
-
 
         $modal = $this->_templates->format('imagemodalModal', [
             'modalId' => $modalId

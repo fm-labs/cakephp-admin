@@ -1,18 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 2/7/15
- * Time: 11:11 AM
- */
-
 namespace Backend\Controller\Component;
 
 use Cake\Controller\Component\FlashComponent as CakeFlashComponent;
 use Cake\Core\Configure;
-use Cake\Network\Exception\InternalErrorException;
-use Cake\Utility\Inflector;
 
+/**
+ * Class FlashComponent
+ *
+ * @package Backend\Controller\Component
+ */
 class FlashComponent extends CakeFlashComponent
 {
     /**
@@ -28,7 +24,6 @@ class FlashComponent extends CakeFlashComponent
      *      ]
      *
      * @var array
-     */
     protected $_defaultConfig = [
         'key' => 'flash',
         'element' => 'default',
@@ -38,81 +33,57 @@ class FlashComponent extends CakeFlashComponent
         'plugin' => null,
         'elementMap' => []
     ];
+     */
 
-    public function initialize(array $config)
+    /**
+     * Flash success message
+     *
+     * @param string $msg Flash message
+     * @param array $options Flash options
+     * @return void
+     */
+    public function success($msg, array $options = [])
     {
-        parent::initialize($config);
+        $options += ['element' => 'Backend.success'];
+        $this->set($msg, $options);
     }
 
-    public function set($message, array $options = [])
+    /**
+     * Flash warning message
+     *
+     * @param string $msg Flash message
+     * @param array $options Flash options
+     * @return void
+     */
+    public function warning($msg, array $options = [])
     {
-        $options += $this->config();
-
-        if ($message instanceof \Exception) {
-            $options['params'] += ['code' => $message->getCode()];
-            $message = $message->getMessage();
-        }
-
-        list($plugin, $element) = pluginSplit($options['element']);
-
-        // check map
-        if (isset($options['elementMap'][$element])) {
-            $options = array_merge($options, $options['elementMap'][$element]);
-            list($plugin, $element) = pluginSplit($options['element']);
-        }
-
-        // global plugin
-        if (!$plugin && $options['plugin']) {
-            $plugin = $options['plugin'];
-        }
-
-        if ($plugin) {
-            $options['element'] = $plugin . '.Flash/' . $element;
-        } else {
-            $options['element'] = 'Flash/' . $element;
-        }
-
-        if (!isset($options['params']['class'])) {
-            $options['params'] += ['class' => $options['class']];
-        }
-
-        // debug message shows flash key
-        //if (Configure::read('debug')) {
-        //    $message = sprintf("[%s] %s", $options['key'], $message);
-        //}
-
-        $messages = [];
-        if ($options['clear'] === false) {
-            $messages = $this->_session->read('Flash.' . $options['key']);
-        }
-
-        $messages[] = [
-            'message' => $message,
-            'key' => $options['key'],
-            'element' => $options['element'],
-            'params' => $options['params']
-        ];
-
-        $this->_session->write('Flash.' . $options['key'], $messages);
+        $options += ['element' => 'Backend.warning'];
+        $this->set($msg, $options);
     }
 
-    public function __call($name, $args)
+    /**
+     * Flash error message
+     *
+     * @param string $msg Flash message
+     * @param array $options Flash options
+     * @return void
+     */
+    public function error($msg, array $options = [])
     {
-        $element = Inflector::underscore($name);
-        $options = ['element' => $element, 'class' => $element];
+        $options += ['element' => 'Backend.error'];
+        $this->set($msg, $options);
+    }
 
-        if (count($args) < 1) {
-            throw new InternalErrorException('Flash message missing.');
-        }
-
-        if (!empty($args[1])) {
-            if (!empty($args[1]['plugin'])) {
-                $options = ['element' => $args[1]['plugin'] . '.' . $element];
-                unset($args[1]['plugin']);
-            }
-            $options += (array)$args[1];
-        }
-
-        $this->set($args[0], $options);
+    /**
+     * Flash info message
+     *
+     * @param string $msg Flash message
+     * @param array $options Flash options
+     * @return void
+     */
+    public function info($msg, array $options = [])
+    {
+        $options += ['element' => 'Backend.info'];
+        $this->set($msg, $options);
     }
 }

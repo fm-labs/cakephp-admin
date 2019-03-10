@@ -8,13 +8,13 @@
             <?= $this->Ui->link(
                 $this->get('be_title'),
                 ['_name' => 'backend:admin:dashboard'],
-                ['class' => 'item', 'icon' => 'home']
+                ['class' => 'item', 'data-icon' => 'home']
             ); ?>
 
             <?= $this->Ui->link(
                 'Backend',
                 ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
-                ['class' => 'item', 'icon' => 'cubes']
+                ['class' => 'item', 'data-icon' => 'cubes']
             ); ?>
             -->
 
@@ -32,13 +32,13 @@
                 <?= $this->Ui->link(
                     'Reset',
                     '#',
-                    ['class' => 'item', 'icon' => 'comment']
+                    ['class' => 'item', 'data-icon' => 'comment']
                 ); ?>
 
                 <?= $this->Ui->link(
                     'Submit',
                     '#',
-                    ['class' => 'item', 'icon' => 'play']
+                    ['class' => 'item', 'data-icon' => 'play']
                 ); ?>
 
                 <?= $this->Ui->link(
@@ -48,7 +48,7 @@
                 ?>
                 <div class="ui divider"></div>
                 <?= $this->Ui->link(
-                    __('Publish Item'),
+                    __d('backend','Publish Item'),
                     '#',
                     ['class' => 'item']);
                 ?>
@@ -66,7 +66,7 @@
                         ?>
                         <div class="ui divider"></div>
                         <?= $this->Ui->link(
-                            __('Publish Item'),
+                            __d('backend','Publish Item'),
                             '#',
                             ['class' => 'item']);
                         ?>

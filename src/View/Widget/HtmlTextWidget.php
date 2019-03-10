@@ -2,10 +2,21 @@
 namespace Backend\View\Widget;
 
 use Cake\View\Form\ContextInterface;
+use Cake\View\View;
 use Cake\View\Widget\BasicWidget;
 
 class HtmlTextWidget extends BasicWidget
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct($templates, View $view)
+    {
+        $view->loadHelper('Backend.HtmlEditor');
+
+        parent::__construct($templates);
+    }
+
     /**
      * Render a text area element which will be converted to a tinymce htmleditor.
      *
@@ -38,6 +49,7 @@ class HtmlTextWidget extends BasicWidget
                 ['name', 'val', 'type']
             )
         ]);
+
         return $html;
     }
 }

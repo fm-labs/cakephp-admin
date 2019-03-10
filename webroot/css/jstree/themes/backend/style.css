@@ -1,9 +1,10 @@
+/** cakephp3-backend - v1.4.0-dev **/
 /* jsTree default theme */
 .jstree {
   /** overflow-x: hidden; **/
   overflow: hidden;
   border-right: 1px solid #CCC;
-  overflow-x: scroll;
+  overflow-x: hidden;
 }
 .jstree:hover {
   /** overflow-x: scroll; **/
@@ -1091,15 +1092,19 @@
 .jstree .jstree-icon.root::before {
   content: "\f015";
 }
-.jstree .jstree-icon.content::before {
+.jstree .jstree-icon.content::before,
+.jstree .jstree-icon.page::before {
   content: "\f016";
 }
-.jstree .jstree-icon.static::before {
+.jstree .jstree-icon.post::before {
   content: "\f1c9";
 }
 .jstree .jstree-icon.redirect::before {
   content: "\f08e";
   color: #0d71bb;
+}
+.jstree .jstree-icon.category::before {
+  content: "\f24d";
 }
 .jstree .jstree-icon.shop_category::before {
   content: "\f07b";
@@ -1113,8 +1118,10 @@
 .jstree .jstree-icon.unpublished::before {
   color: red;
 }
-.be-index-tree.jstree {
+/** Default Overrides **/
+.be-index-tree {
   border: none;
-  box-shadow: 1px 5px 5px #CCC;
-  padding: 1em 0 2em 0;
+}
+.be-index-tree .jstree-wholerow {
+  border-bottom: 1px solid #f5f5f5;
 }

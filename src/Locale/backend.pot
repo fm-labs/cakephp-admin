@@ -1,0 +1,746 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2018-09-13 07:31+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/AddAction.php:38
+msgid "Add"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/AddAction.php:94
+msgid "Record created"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/BaseAction.php:138
+msgid "Ok"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/BaseAction.php:144
+msgid "Failed"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/CopyAction.php:21
+msgid "Copy"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/DashboardAction.php:24
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/dashboard.ctp:1;2
+msgid "Dashboard"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/DebugAction.php:28
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:78
+msgid "Debug"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/DeleteAction.php:18
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:32
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/view.ctp:15
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:17
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:53
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:200
+msgid "Delete"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/DeleteAction.php:38
+msgid "Deleted"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/DeleteAction.php:48
+msgid "You must confirm to delete record"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/EditAction.php:40
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:52
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:199
+msgid "Edit"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/EditAction.php:91
+msgid "Saved!"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/FooTableIndexAction.php:52
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeIndexAction.php:13
+msgid "Index"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/IndexFilterAction.php:11
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Helper/DataTableHelper.php:646
+msgid "Filter"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/MediaAction.php:21
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Service/PublishableService.php:45
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/media.ctp:4
+msgid "Media"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/PublishAction.php:23
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Action/Edit/info_publish.ctp:11
+msgid "Publish"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/PublishAction.php:61
+msgid "Updated"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/PublishAction.php:63
+msgid "Update failed"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/SearchAction.php:19
+msgid "Search"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeMoveDownAction.php:19
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/DataTable/sort.ctp:19
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/SimpleTree/index.ctp:15
+msgid "Move Down"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeMoveDownAction.php:39
+msgid "The {0} has been moved down."
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeMoveDownAction.php:41
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeMoveUpAction.php:36
+msgid "The {0} could not be moved. Please, try again."
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeMoveUpAction.php:14
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/DataTable/sort.ctp:18
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/SimpleTree/index.ctp:14
+msgid "Move Up"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeMoveUpAction.php:34
+msgid "The {0} has been moved up."
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeRepairAction.php:19
+msgid "Repair Tree"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeRepairAction.php:37
+msgid "Tree for model {0} has been repaired"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeSortAction.php:20
+msgid "Sort"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeSortAction.php:38
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/TreeController.php:30
+msgid "Model {0} has no Tree behavior attached"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/TreeSortAction.php:41
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/SimpleTreeController.php:36
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/TreeController.php:33
+msgid "Failed to load model {0}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/UnpublishAction.php:22
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Action/Edit/info_publish.ctp:13
+msgid "Unpublish"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/UnpublishAction.php:51
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Action/Edit/info_publish.ctp:7
+msgid "Unpublished"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/UnpublishAction.php:53
+msgid "Unpublish failed"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/ViewAction.php:38
+msgid "Details"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/ViewAction.php:114
+msgid "Data"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/BackendController.php:25
+msgid "System Dashboard"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/CacheController.php:35
+msgid "Cache cleared"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/CacheController.php:37
+msgid "Failed to clear cache"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/DataTableController.php:35
+msgid "Reordering complete"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/DataTableController.php:37
+msgid "Reordering failed"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/LogsController.php:92;123;151
+msgid "No logFile selected"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/LogsController.php:98
+msgid "Logfile {0} not found in {1}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/LogsController.php:129
+msgid "Logfile {0} not found"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/LogsController.php:136
+msgid "Logfile {0} cleared"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/LogsController.php:138
+msgid "Failed to clear logFile {0}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/LogsController.php:157
+msgid "Logfile {0} deleted"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/LogsController.php:159
+msgid "Logfile {0} could not be deleted"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/SimpleTreeController.php:23
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/TreeController.php:23
+msgid "No model selected"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/SimpleTreeController.php:33
+msgid "Model {0} has no SimpleTree behavior attached"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Admin/TreeController.php:90
+msgid "Node has been moved"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Controller/Component/AuthComponent.php:45
+msgid "Login failed"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Service/PublishableService.php:31
+msgid "Translations"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Service/PublishableService.php:38
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/publish.ctp:4
+msgid "Publishing"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Shell/Task/RootUserTask.php:12
+msgid "Create backend root user"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/add.ctp:42
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/add1.ctp:42
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/edit1.ctp:42
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:102
+msgid "Submit"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/delete.ctp:24
+msgid "Confirm deletion"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/delete.ctp:26
+msgid "Permanently delete record"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/edit.ctp:43
+msgid "Edit {0} translation"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/edit.ctp:77
+msgid "Save changes"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/media.ctp:8
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/publish.ctp:8
+msgid "Update"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/tree_sort.ctp:1;3
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Tree/index.ctp:1;3
+msgid "Tree Viewer"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/view.ctp:49
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:181
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:210
+msgid "Related {0}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/view.ctp:50
+msgid "No data available"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Action/view.ctp:82
+msgid "Association type not implemented {0}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/login.ctp:1;19
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Auth/ajax_login.ctp:25
+msgid "Login"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/login.ctp:12
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Auth/ajax_login.ctp:18
+msgid "Username"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/login.ctp:17
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Auth/ajax_login.ctp:23
+msgid "Password"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/unauthorized.ctp:1
+msgid "Unauthorized"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/unauthorized.ctp:14
+msgid "Go to dashboard page"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/unauthorized.ctp:15
+msgid "Go to login page"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/unauthorized.ctp:16
+msgid "Go to logout page"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/unauthorized.ctp:17
+msgid "Go to main page"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/user.ctp:4
+msgid "User"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/user.ctp:24
+msgid "Goto Dashboard"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/user.ctp:30
+msgid "Edit profile"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/user.ctp:36
+msgid "Change password"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Auth/user.ctp:42
+msgid "Logout"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Cache/index.ctp:8
+msgid "Cache config"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Cache/index.ctp:9
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:14;55
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:188
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Cell/DataTable/display1.ctp:12
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Helper/DataTableHelper.php:524
+msgid "Actions"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Cache/index.ctp:17
+msgid "Clear cache"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Entity/edit.ctp:13
+msgid "Save"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Entity/view.ctp:1
+msgid "Entity Info for {0} ID:{1}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:5;6
+msgid "LogViewer"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:10
+msgid "Logfile"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:11
+msgid "Filesize"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:12
+msgid "Last modified"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:13
+msgid "Last access"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:25
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:51
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:198
+msgid "View"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:27
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/view.ctp:10
+msgid "Clear"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:34
+msgid "Are you sure you want to delete {0}?"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:42;43
+msgid "Log Rotation"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:47
+msgid "Alias"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:48
+msgid "Path"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:49
+msgid "Keep"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:50
+msgid "Schedule"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:51
+msgid "Compress"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:52
+msgid "Compress Delay"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:53
+msgid "Rotate Empty"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:54
+msgid "Email To"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/view.ctp:1
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Plugins/index.ctp:1
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/config.ctp:1
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/datetime.ctp:1
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/globals.ctp:1
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/php.ctp:1
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/plugins.ctp:1
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/routes.ctp:5
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/session.ctp:1
+msgid "Backend"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/view.ctp:2;5
+msgid "Logs"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/view.ctp:5
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:24;36
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:20
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:67;84
+msgid "List {0}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/view.ctp:27
+msgid "Load more logs"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Plugins/index.ctp:2;5
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:83
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/plugins.ctp:3;5
+msgid "Plugins"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/SimpleTree/index.ctp:1
+msgid "SimpleTree Viewer"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/config.ctp:2
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/datetime.ctp:2
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/globals.ctp:2
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/php.ctp:2
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/plugins.ctp:2
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/routes.ctp:6
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/session.ctp:2
+msgid "Systeminfo"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/config.ctp:3
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:82
+msgid "Config"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/datetime.ctp:3;5
+msgid "Date & Time"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/globals.ctp:3
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:85
+msgid "Globals"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/globals.ctp:5
+msgid "CAKEPHP Globals"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:11
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Layout/admin/header/navbar/navbar_sysmenu.ctp:21
+msgid "System"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:20
+msgid "Enabled"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:20
+msgid "Disabled"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:84
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/routes.ctp:7
+msgid "Routes"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:86
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/session.ctp:3
+msgid "Session"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/index.ctp:87
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/php.ctp:3
+msgid "PHP Info"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/System/session.ctp:5
+msgid "Session Info"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:9;24
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:10
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:54;67
+msgid "<%= $pluralHumanName %>"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:11
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:57
+msgid "Edit {0}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:11;13;55
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:12
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:57;62;72
+msgid "<%= $singularHumanName %>"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:13;42
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:12;25
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:72;89
+msgid "New {0}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:19
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:53
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:64;200
+msgid "Are you sure you want to delete # {0}?"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:36
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:20
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:84
+msgid "<%= $this->_pluralHumanName($alias) %>"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:42
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/index.ctp:25
+msgid "<%= $this->_singularHumanName($alias) %>"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Element/form.ctp:55
+msgid "<%= Inflector::humanize($action) %> {0}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:62
+msgid "Delete {0}"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:76
+msgid "More"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:89
+msgid "<%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:122
+msgid "<%= Inflector::humanize($details["
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:127;138;157;165;186
+msgid "<%= Inflector::humanize($field) %>"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:158
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Helper/DataTableHelper.php:614
+msgid "Yes"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:158
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Helper/DataTableHelper.php:614
+msgid "No"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Bake/Template/view.ctp:181
+msgid "<%= $otherPluralHumanName %>"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/actionbar.ctp:51;69
+msgid "Publish Item"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_tablelist.ctp:21
+msgid "Key"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/array_to_tablelist.ctp:22
+msgid "Value"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Action/Edit/info_publish.ctp:8
+msgid "Published"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Auth/ajax_login.ctp:5
+msgid "Your session has expired. Please login again to continue."
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Base/IndexTree/noview.ctp:10
+msgid "This node has no view page"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Dashboard/systeminfo.ctp:9
+msgid "Open system info"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Layout/admin/header/header_navbar.ctp:10
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Theme/BackendThemeAdminLte/Template/Element/Layout/admin/header/header_navbar.ctp:10
+msgid "Frontend"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Layout/admin/header/navbar/navbar_user.ctp:42
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Theme/BackendThemeAdminLte/Template/Element/Layout/admin/header/navbar/navbar_user.ctp:40
+msgid "Profile"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Layout/admin/header/navbar/navbar_user.ctp:49
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Theme/BackendThemeAdminLte/Template/Element/Layout/admin/header/navbar/navbar_user.ctp:47
+msgid "Sign out"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Menu/menu_item.ctp:15
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Theme/BackendThemeAdminLte/Template/Element/Menu/menu_item.ctp:15
+msgid "Untitled Menu Item"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Pagination/default.ctp:14
+msgid "previous"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Element/Pagination/default.ctp:16
+msgid "next"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:175
+msgid "Not assigned"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Cell/EntityViewCell.php:199
+msgid "{0} records"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Helper/DataTableHelper.php:616;631
+msgid "All"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Helper/DataTableHelper.php:802
+msgid "Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Helper/DataTableJsHelper.php:108
+msgid "Loading ..."
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/ChosenSelectBoxWidget.php:37
+msgid "No results match"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/ChosenSelectBoxWidget.php:38
+msgid "Select Some Options"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/ChosenSelectBoxWidget.php:39
+msgid "Select an Option"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/SumoSelectBoxWidget.php:42
+msgid "Search ..."
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/SumoSelectBoxWidget.php:43
+msgid "No matches for \"{0}\""
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/SumoSelectBoxWidget.php:44
+msgid "OK"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/SumoSelectBoxWidget.php:44
+msgid "Cancel"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/SumoSelectBoxWidget.php:44
+msgid "Select All"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/SumoSelectBoxWidget.php:45
+msgid "Select Here"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/SumoSelectBoxWidget.php:46
+msgid "{0} Selected"
+msgstr ""
+
+#: /home/low/workspaces/cakesites/cakephp3-backend/src/View/Widget/SumoSelectBoxWidget.php:47
+msgid "{0} all selected!"
+msgstr ""
+

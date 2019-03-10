@@ -1,26 +1,30 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 2/6/15
- * Time: 7:25 PM
- */
 
 namespace Backend\View\Widget;
 
-use Cake\View\Helper\FormHelper;
 use Cake\View\Widget\DateTimeWidget as CakeDateTimeWidget;
 use Cake\View\Form\ContextInterface;
 use Cake\View\StringTemplate;
 use DateTime;
 
+/**
+ * Class TimePickerWidget
+ *
+ * @package Backend\View\Widget
+ */
 class TimePickerWidget extends CakeDateTimeWidget
 {
+    /**
+     * @param StringTemplate $templates
+     */
     public function __construct(StringTemplate $templates)
     {
         $this->_templates = $templates;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
         $_data = [
@@ -71,5 +75,4 @@ class TimePickerWidget extends CakeDateTimeWidget
 
         return $html . $script;
     }
-
 }

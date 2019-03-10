@@ -7,24 +7,24 @@ $fields = collection($fields)
     })
     ->take(7);
 %>
-<?php $this->Html->addCrumb(__('<%= $pluralHumanName %>')); ?>
+<?php $this->Breadcrumbs->add(__d('backend','<%= $pluralHumanName %>')); ?>
 
-<?php $this->Toolbar->addLink(__('New {0}', __('<%= $singularHumanName %>')), ['action' => 'add'], ['icon' => 'plus']); ?>
+<?php $this->Toolbar->addLink(__d('backend','New {0}', __d('backend','<%= $singularHumanName %>')), ['action' => 'add'], ['data-icon' => 'plus']); ?>
 <%
 $done = [];
 foreach ($associations as $type => $data):
     foreach ($data as $alias => $details):
         if ($details['controller'] != $this->name && !in_array($details['controller'], $done)):
 %>
-<?= $this->Toolbar->addLink(
-    __('List {0}', __('<%= $this->_pluralHumanName($alias) %>')),
+<?php $this->Toolbar->addLink(
+    __d('backend','List {0}', __d('backend','<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details["controller"] %>', 'action' => 'index'],
-    ['icon' => 'list']
+    ['data-icon' => 'list']
 ) ?>
-<?= $this->Toolbar->addLink(
-    __('New {0}', __('<%= $this->_singularHumanName($alias) %>')),
+<?php $this->Toolbar->addLink(
+    __d('backend','New {0}', __d('backend','<%= $this->_singularHumanName($alias) %>')),
     ['controller' => '<%= $details["controller"] %>', 'action' => 'add'],
-    ['icon' => 'plus']
+    ['data-icon' => 'plus']
 ) ?>
 <%
             $done[] = $details['controller'];
@@ -33,71 +33,34 @@ foreach ($associations as $type => $data):
 endforeach;
 %>
 <div class="<%= $pluralVar %> index">
-    <table class="ui compact table striped">
-    <thead>
-        <tr>
-    <% foreach ($fields as $field): %>
-        <th><?= $this->Paginator->sort('<%= $field %>') ?></th>
-    <% endforeach; %>
-        <th class="actions"><?= __('Actions') ?></th>
-        </tr>
-    </thead>
-    <tbody>
-    <?php foreach ($<%= $pluralVar %> as $<%= $singularVar %>): ?>
-        <tr>
-<%        foreach ($fields as $field) {
-            $isKey = false;
-            if (!empty($associations['BelongsTo'])) {
-                foreach ($associations['BelongsTo'] as $alias => $details) {
-                    if ($field === $details['foreignKey']) {
-                        $isKey = true;
-%>
-            <td>
-                <?= $<%= $singularVar %>->has('<%= $details['property'] %>') ? $this->Html->link($<%= $singularVar %>-><%= $details['property'] %>-><%= $details['displayField'] %>, ['controller' => '<%= $details['controller'] %>', 'action' => 'view', $<%= $singularVar %>-><%= $details['property'] %>-><%= $details['primaryKey'][0] %>]) : '' ?>
-            </td>
-<%
-                        break;
-                    }
-                }
-            }
-            if ($isKey !== true) {
-                if (!in_array($schema->columnType($field), ['integer', 'biginteger', 'decimal', 'float'])) {
-%>
-            <td><?= h($<%= $singularVar %>-><%= $field %>) ?></td>
-<%
-                } else {
-%>
-            <td><?= $this->Number->format($<%= $singularVar %>-><%= $field %>) ?></td>
-<%
-                }
-            }
-        }
 
-        $pk = '$' . $singularVar . '->' . $primaryKey[0];
-%>
-            <td class="actions">
-                <?php
-                $menu = new Backend\Lib\Menu\Menu();
-                $menu->add(__('View'), ['action' => 'view', <%= $pk %>]);
+    <?php $fields = [
+    <%
+    foreach ($schema->columns() as $column) {
+        echo '\'' . $column . '\',';
+    }
+    %>
+    ] ?>
+    <?= $this->cell('Backend.DataTable', [[
+        'paginate' => true,
+        'model' => '<%= $modelClass %>',
+        'data' => $<%= $pluralVar %>,
+        'fields' => $fields,
+        'debug' => true,
+        'rowActions' => [
+            [__d('backend','View'), ['action' => 'view', ':id'], ['class' => 'view']],
+            [__d('backend','Edit'), ['action' => 'edit', ':id'], ['class' => 'edit']],
+            [__d('backend','Delete'), ['action' => 'delete', ':id'], ['class' => 'delete', 'confirm' => __d('backend','Are you sure you want to delete # {0}?', ':id')]]
+        ]
+    ]]);
+    ?>
 
-                $dropdown = $menu->add('Dropdown');
-                $dropdown->getChildren()->add(
-                    __('Edit'),
-                    ['action' => 'edit', <%= $pk %>],
-                    ['icon' => 'edit']
-                );
-                $dropdown->getChildren()->add(
-                    __('Delete'),
-                    ['action' => 'delete', <%= $pk %>],
-                    ['icon' => 'trash', 'confirm' => __('Are you sure you want to delete # {0}?', <%= $pk %>)]
-                );
-                ?>
-                <?= $this->element('Backend.Table/table_row_actions', ['menu' => $menu]); ?>
-            </td>
-        </tr>
-
-    <?php endforeach; ?>
-    </tbody>
-    </table>
-    <?= $this->element('Backend.Pagination/default'); ?>
 </div>
+
+<% /**
+<pre>
+    <% debug(get_defined_vars()); %>
+    <% debug($fields->toArray()); %>
+    <% debug($associations); %>
+</pre>
+ **/ %>

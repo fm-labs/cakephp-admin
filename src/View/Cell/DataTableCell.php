@@ -1,8 +1,6 @@
 <?php
 namespace Backend\View\Cell;
 
-
-use Cake\Collection\CollectionInterface;
 use Cake\ORM\TableRegistry;
 use Cake\View\Cell;
 
@@ -12,9 +10,14 @@ class DataTableCell extends Cell
 
     public $model;
 
-    public function display($params = [])
+    /**
+     * @param array $params Cell params
+     * @param array $data Data
+     * @return void
+     */
+    public function display($params = [], $data = [])
     {
-        $params += [
+        $params = array_merge([
             'model' => null,
             'headers' => [],
             'data' => [],
@@ -23,7 +26,10 @@ class DataTableCell extends Cell
             'paginate' => false,
             'select' => false,
             'sortable' => false,
-        ];
+            'reduce' => [],
+            'filter' => [],
+            'viewVars' => []
+        ], $params);
 
         // model context
         $this->modelClass = $params['model'];
@@ -32,27 +38,25 @@ class DataTableCell extends Cell
         }
 
         // data
-        if (is_object($params['data'])) {
-            //$params['data'] = $params['data']->toArray();
+        if ($params['data']) {
+            $data = $params['data'];
+        }
+        if (is_object($data)) {
+            //$data = $data->toArray();
         }
 
-        $data =& $params['data'];
-
-        // headers
-        if (!$params['headers']) {
-
-            if ($data instanceof CollectionInterface) {
-                $firstRow = $data->first();
-            } else {
-                $firstRow = (is_array($data) && $data[0]) ? $data[0] : [];
-
-            }
-            $firstRow = is_object($firstRow) ? $firstRow->toArray() : $firstRow;
-            if ($firstRow) {
-                $params['headers'] = array_keys($firstRow);
-            }
+        // sortable
+        if ($params['sortable'] === true) {
+            $params['sortable'] = ['plugin' => 'Backend', 'controller' => 'SimpleTree', 'action' => 'treeSort', 'model' => $params['model']];
         }
+
+        // additional view vars for the view cell
+        foreach ($params['viewVars'] as $viewVar => $val) {
+            $this->set($viewVar, $val);
+        }
+        unset($params['viewVars']);
 
         $this->set('dataTable', $params);
+        $this->set('data', $data);
     }
 }

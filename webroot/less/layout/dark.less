@@ -1,0 +1,467 @@
+/** Admin Layout Dark Mode **/
+
+@import "../mixins/elements.less";
+@import "../vars.less";
+
+@dark-color-bodybg: #1e1e2f;
+@dark-color-text: #FFF;
+@dark-color-link: #7ca8cf;
+@dark-color-highlight: #FFF;
+@dark-color-border: #314354;
+@dark-color-bg: #27293D;
+@dark-select-border-color: #62879D;
+@dark-input-border-color: #62879D;
+@dark-table-striped-color-odd: #1A1A33; //#2B2B39;
+@dark-box-header-bg: transparent;
+
+body.darkmode {
+
+  background-color: @dark-color-bodybg;
+  color: @dark-color-text;
+
+  a {
+    color: @dark-color-link;
+  }
+
+
+  // Content Header
+  .content-header h1 {
+    border-color: @dark-color-border;
+  }
+
+  .content-header .content-header-banner {
+    background-color: @dark-color-bg;
+  }
+
+  // Breadcrumbs
+  .breadcrumb {
+    border-color: @dark-color-border;
+  }
+
+  // Sidebar
+  .main-sidebar {
+    .sidebar .sidebar-menu > li a {
+      color: @dark-color-text;
+    }
+    .sidebar .sidebar-menu > li a:hover {
+      color: @dark-color-link;
+    }
+  }
+
+  // Footer
+  .main-footer {
+    border-color: @dark-color-border;
+  }
+
+  // Tables
+  .table {
+    color: @dark-color-text;
+  }
+
+  .table > thead > tr > th,
+  .table > tbody > tr > th,
+  .table > tfoot > tr > th,
+  .table > thead > tr > td,
+  .table > tbody > tr > td,
+  .table > tfoot > tr > td,
+  .table-bordered {
+    border-color: @dark-color-border; //rgba(255,255,255,0.1);
+  }
+
+  .table > tbody > tr:first-child td {
+    border-top: none;
+  }
+
+  .table.table-hover > tbody > tr:HOVER > td {
+    background-color: @dark-color-border;
+  }
+
+  .table.table-striped > tbody > tr > td {
+    border-top: none;
+  }
+
+  .table.table-striped > tbody > tr {
+    background-color: transparent;
+  }
+
+  .table.table-striped > tbody > tr:nth-of-type(2n+1) {
+    background-color: @dark-table-striped-color-odd;
+  }
+
+  // Pagination
+  .pagination > li > a,
+  .pagination > li > span {
+    background-color: transparent;
+    border: 1px solid @dark-color-border;
+    color: @dark-color-highlight;
+  }
+
+  .pagination > li.active > a,
+  .pagination > li.active > span {
+    background-color: #88C7EA;
+  }
+
+  .pagination > li:hover > a,
+  .pagination > li:hover > span {
+    background-color: @dark-color-highlight;
+    color: #88C7EA;
+  }
+
+  // Box
+  .box {
+    background-color: @dark-color-bg;
+
+    .box-header {
+      background-color: @dark-box-header-bg;
+    }
+
+    .with-border {
+      border-color: @dark-color-border;
+    }
+  }
+
+  .box-solid {
+    border-color: @dark-color-border;
+
+    &.box-primary {
+      border-color: @color-primary;
+      .box-header {
+        background-color: @color-primary;
+        color: @color-highlight;
+      }
+    }
+
+    &.box-success {
+      border-color: @color-success;
+      .box-header {
+        background-color: @color-success;
+        color: @color-highlight;
+      }
+    }
+
+    &.box-danger {
+      border-color: @color-danger;
+      .box-header {
+        background-color: @color-danger;
+        color: @color-highlight;
+      }
+    }
+
+    &.box-warning {
+      border-color: @color-warning;
+      .box-header {
+        background-color: @color-warning;
+        color: @color-highlight;
+      }
+    }
+
+    &.box-info {
+      border-color: @color-info;
+      .box-header {
+        background-color: @color-info;
+        color: @color-highlight;
+      }
+    }
+
+  }
+
+  // Info box
+  .info-box {
+    background-color: @dark-color-bg;
+  }
+
+  // Small box
+  .small-box {
+    background-color: @dark-color-bg;
+  }
+
+  // DataTable
+  .dataTables_wrapper {
+
+    button.dt-button, div.dt-button, a.dt-button {
+      filter: none;
+      background-image: none;
+      background-color: @dark-color-bg;
+      border-color: @dark-color-border;
+      color: @dark-color-text;
+      margin: 0;
+
+      &:hover {
+        color: @dark-color-highlight;
+        border-color: @dark-color-highlight;
+      }
+
+      &:last-child {
+        margin-right: 0.33em;
+      }
+    }
+
+    .dataTables_length, .dataTables_filter, .dataTables_paginate, .dataTables_info, .dataTables_processing {
+      color: @dark-color-text;
+
+      label {
+        font-weight: normal;
+      }
+    }
+
+    .dataTables_filter {
+      input {
+        background-color: transparent;
+        border: 1px solid @dark-color-border;
+        box-shadow: none;
+      }
+    }
+
+    .dataTables_paginate {
+      a.paginate_button {
+        filter: none;
+        background-image: none;
+        background-color: @dark-color-bg;
+        border-color: @dark-color-border;
+        color: @dark-color-highlight;
+
+        &:hover {
+          color: @dark-color-bg;
+          border: 1px solid @dark-color-highlight;
+        }
+      }
+    }
+
+  }
+
+  // Popovers
+  .popover {
+    background-color: @dark-color-bodybg;
+
+    .popover-title {
+      background-color: @dark-box-header-bg;
+      border-color: @dark-color-border;
+    }
+
+    .arrow::after {
+      border-right-color: @dark-color-bodybg;
+    }
+  }
+
+  form.form,
+  form.form-horizontal {
+    background-color: transparent;
+  }
+
+  // Inputs
+  textarea {
+    background: transparent;
+    border-color: @dark-input-border-color;
+
+  }
+
+  // Form
+  form .form-control {
+    color: @dark-color-text;
+    background-color: @dark-color-bg;
+    border-color: @dark-input-border-color;
+    border-width: 0 0 1px 0;
+    border-radius: 0;
+    //.placeholder(#CCC);
+  }
+
+  form .form-control[disabled],
+  form .form-control[readonly] {
+    //background-color: @dark-color-bodybg;
+  }
+
+  form label,
+  form .control-label {
+    color: @dark-color-highlight;
+  }
+
+  form legend {
+    color: @dark-color-highlight;
+    border-color: @dark-color-border;
+  }
+
+  // Lists
+  dl dd, dl.dl-horizontal dd,
+  dl dt, dl.dl-horizontal dt {
+    border-color: @dark-color-border;
+  }
+
+  // Menu
+  .dropdown-menu {
+    background-color: #181515;
+  }
+
+  // Buttons
+  .btn {
+
+    &.btn-default {
+      background-color: transparent;
+      color: @dark-color-text;
+      border-color: @dark-color-border;
+
+      &:hover {
+        color: @dark-color-highlight;
+        border-color: @dark-color-highlight;
+      }
+    }
+  }
+
+  // DateRangePicker
+  .daterangepicker {
+    color: @dark-color-bodybg;
+    //background-color: @dark-color-bodybg;
+
+    .calendar-table {
+      //background-color: @dark-color-bg;
+    }
+  }
+
+  // Sumo Select Boxes
+  .SumoSelect {
+    &> .CaptionCont {
+      background-color: @dark-color-bg;
+      //border-color: @dark-select-border-color;
+      border-color: @dark-color-border;
+
+      &> span {
+        color: @dark-color-text;
+      }
+
+      input {
+        border-radius: 0;
+        background-color: @dark-color-bg;
+      }
+    }
+
+    &> .optWrapper {
+      background-color: @dark-color-bg;
+      border-color: @dark-color-border;
+
+      &> .options {
+        li.opt {
+          border-color: @dark-color-border;
+
+          label {
+            color: @dark-color-highlight;
+            margin: 0;
+            padding: 0;
+          }
+        }
+
+        li.opt:HOVER {
+          background-color: @dark-color-highlight;
+
+          label {
+            color: @dark-color-bg;
+          }
+        }
+
+        li.opt.selected {
+
+        }
+      }
+
+    }
+  }
+
+  // Select2
+  .select2-container--bootstrap .select2-selection,
+  .select2-container--bootstrap .select2-search--dropdown .select2-search__field {
+    //background-color: transparent;
+    background-color: @dark-color-bg;
+    color: @dark-color-text;
+    border-color: @dark-input-border-color;
+    //border-width: 0 0 1px 0;
+  }
+
+  .select2-container--bootstrap .select2-selection--single .select2-selection__rendered {
+    color: @dark-color-text;
+  }
+
+  .select2-dropdown {
+    //background-color: #222D32;
+    background-color: @dark-color-bg;
+    //border-color: @dark-color-border;
+    border-color: @dark-input-border-color;
+  }
+
+  // ACE Code Editor
+  .codeeditor.ace_editor {
+    //background-color: transparent;
+    //color: @dark-color-text;
+    border: 1px solid @dark-color-border;
+    font-size: @font-size-default;
+  }
+
+  // Tabs
+  .tabs .nav-tabs {
+    border-color: @dark-color-border;
+  }
+  .tabs .nav-tabs > li > a {
+    color: @dark-color-highlight;
+    background-color: transparent;
+    border-color: @dark-color-border;
+
+    &:hover {
+      background-color: @dark-color-border;
+    }
+  }
+  .tabs .nav-tabs > li.active > a {
+    color: @dark-color-highlight;
+    background-color: @dark-color-border;
+    border-color: @dark-color-border;
+  }
+  .tabs .tab-content {
+    background-color: transparent;
+  }
+  .tabs .tab-content .tab-pane {
+    background-color: transparent;
+    border-color: @dark-color-border;
+  }
+
+  // Navs
+  .nav.nav-horizontal {
+
+    border-bottom-color: @dark-color-border;
+
+    > li > a {
+      color: @dark-color-text;
+    }
+
+  }
+
+  // Modals
+  .modal-content {
+    background-color: @dark-color-bg;
+    border-color: @dark-color-highlight;
+
+    .modal-header, .modal-body, .modal-footer {
+      border-color: @dark-color-border;
+    }
+
+    .close {
+      color: @dark-color-highlight;
+
+      &:hover {
+        color: @dark-color-highlight;
+      }
+    }
+  }
+
+  // Code
+  pre {
+    color: @dark-color-text;
+    background-color: transparent;
+  }
+
+  // Debug
+  .cake-debug-output {
+
+    .cake-debug {
+      background: transparent;
+      color: lime;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 90%;
+    }
+  }
+}

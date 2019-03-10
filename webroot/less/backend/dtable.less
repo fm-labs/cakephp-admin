@@ -1,0 +1,73 @@
+@dtable-cell-border-color: #e8e8e8;
+@dtable-cell-padding: 2px 5px;
+
+.dtable-container {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: scroll;
+  //overflow-y: visible;
+}
+
+.dtable {
+  display: table;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+}
+
+.dtable-head {
+  display: table-header-group;
+  background-color: #FFF;
+}
+
+
+.dtable-body {
+  display: table-row-group;
+}
+
+.dtable-row {
+  display: table-row;
+
+  &:hover {
+    background-color:#E7FF91;
+  }
+}
+
+.dtable-cell,
+.dtable-head-cell {
+  border-style: solid;
+  border-width: 1px;
+  border-color: @dtable-cell-border-color;
+  border-collapse: collapse;
+  display: table-cell;
+  vertical-align: middle;
+  padding: @dtable-cell-padding;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px
+}
+
+.dtable-head-cell {
+  font-weight: 600;
+  overflow: visible;
+  //background-color: @dtable-cell-border-color;
+}
+
+/** Hide Actions **/
+.dtable-row .dtable-row-actions {
+  overflow: visible;
+}
+
+.dtable-row .dtable-row-actions > * {
+  opacity: 0.4;
+}
+
+.dtable-row:hover .dtable-row-actions > * {
+  opacity: 1;
+}
+
+.dtable-cell .form-control,
+.dtable-cell .form-group {
+  margin: 0;
+}

@@ -1,0 +1,91 @@
+
+@import "../mixins/elements.less";
+@import "../vars.less";
+
+.bg-primary {
+  background-color: @color-primary !important;
+  color: @color-highlight;
+}
+.bg-success {
+  background-color: @color-success !important;
+  color: @color-highlight;
+}
+.bg-warning {
+  background-color: @color-warning !important;
+  color: @color-highlight;
+}
+.bg-danger {
+  background-color: @color-danger !important;
+  color: @color-highlight;
+}
+.bg-info {
+  background-color: @color-info !important;
+  color: @color-highlight;
+}
+
+/*
+ * Alert Boxes
+ */
+.alert {
+  border-radius: 0;
+  border-width: 0;
+  border-style: none;
+
+  h3, h4, h5 {
+    font-weight: 600;
+    margin-top: 0;
+    color: inherit;
+
+    .icon {
+      margin-right: 10px;
+    }
+  }
+}
+.alert-success {
+  background-color: @color-success;
+  color: @color-highlight;
+}
+.alert-warning {
+  background-color: @color-warning;
+  color: @color-highlight;
+}
+.alert-danger {
+  background-color: @color-danger;
+  color: @color-highlight;
+}
+.alert-info {
+  background-color: @color-info;
+  color: @color-highlight;
+}
+
+/**
+ * Labels
+ */
+.label {
+  //border-radius: 0;
+  border-width: 0;
+  border-style: none;
+}
+.label-success {
+  background-color: @color-success;
+  color: @color-highlight;
+}
+.label-warning {
+  background-color: @color-warning;
+  color: @color-highlight;
+}
+.label-danger {
+  background-color: @color-danger;
+  color: @color-highlight;
+}
+.label-info {
+  background-color: @color-info;
+  color: @color-highlight;
+}
+
+/**
+ * Button
+ */
+.btn {
+  border-radius: 0;
+}

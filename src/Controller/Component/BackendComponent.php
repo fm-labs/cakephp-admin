@@ -2,37 +2,54 @@
 
 namespace Backend\Controller\Component;
 
+use Backend\Backend;
 use Cake\Controller\Component;
 use Cake\Controller\Controller;
-use Cake\Event\Event;
-use Cake\Log\Log;
 use Cake\Core\Configure;
-use Cake\Core\Exception\Exception;
-use Backend\Controller\BackendControllerInterface;
+use Cake\Event\Event;
+use Cake\Event\EventListenerInterface;
+use Cake\I18n\I18n;
+use Cake\Log\Log;
+use Cake\Network\Request;
+use Cake\Routing\Router;
 use User\Controller\Component\AuthComponent;
 
 /**
  * Class BackendComponent
- * @package Backend\Controller\Component
  *
- * @property \User\Controller\Component\AuthComponent $Auth
+ * @package Backend\Controller\Component
+ * @property \Backend\Controller\Component\AuthComponent $Auth
  * @property \Backend\Controller\Component\FlashComponent $Flash
  */
 class BackendComponent extends Component
 {
+    /**
+     * @var string
+     */
     public static $flashComponentClass = '\Backend\Controller\Component\FlashComponent';
 
-    public static $authComponentClass = '\User\Controller\Component\AuthComponent';
+    /**
+     * @var string
+     */
+    public static $authComponentClass = '\Backend\Controller\Component\AuthComponent';
 
-    //public $components = ['Backend.Flash', 'User.Auth'];
+    /**
+     * @var array
+     */
+    public $components = [
+        //'RequestHandler',
+        'Flash' => ['className' => '\Backend\Controller\Component\FlashComponent', ['key' => 'backend']],
+        'Auth' => ['className' => '\Backend\Controller\Component\AuthComponent', 'userModel' => 'Backend.Users']
+    ];
 
+    /**
+     * @var array
+     */
     protected $_defaultConfig = [
-        'authLoginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
-        'authLoginRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
-        'authLogoutAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
-        'authUnauthorizedRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'unauthorized'],
-        'authAuthorize' => ['Controller', 'Backend.Backend', 'User.Roles'],
-        'userModel' => 'Backend.Users'
+        'backendPath' => '/backend',
+        'backendTitle' => 'Backend',
+        'dashboardUrl' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+        'searchUrl' => ['plugin' => 'Backend', 'controller' => 'Search', 'action' => 'query'],
     ];
 
     /**
@@ -40,111 +57,209 @@ class BackendComponent extends Component
      */
     protected $_controller;
 
+    //protected $_cookieName;
+
+    /**
+     * {@inheritDoc}
+     */
     public function initialize(array $config)
     {
         $controller = $this->_registry->getController();
 
-        // Configure Backend FlashComponent
-        if ($this->_registry->has('Flash') || !is_a($this->_registry->get('Flash'), static::$flashComponentClass)) {
+        // Configure Backend from config
+        // @TODO Remove config mapping
+        $configMap = [
+            'Backend.path' => 'backendPath',
+            'Backend.Dashboard.title' => 'backendTitle',
+            'Backend.Dashboard.url' => 'dashboardUrl',
+            'Backend.Search.url' => 'searchUrl'
+        ];
+        foreach ($configMap as $configKey => $prop) {
+            if (Configure::check($configKey)) {
+                $this->config($prop, Configure::read($configKey));
+            }
+        }
+
+        // Configure RequestHandler component
+        if (!$this->_registry->has('RequestHandler')) {
+            //$this->_registry->load('RequestHandler');
+        }
+
+        // Configure Flash component
+        if ($this->_registry->has('Flash') && !is_a($this->_registry->get('Flash'), static::$flashComponentClass)) {
             $this->_registry->unload('Flash');
-            $controller->Flash = $this->_registry->load('Flash', [
-                'className' => static::$flashComponentClass,
-                'key' => 'backend',
-                //'class' => 'info',
-                'plugin' => 'Backend',
-                //'params' => ['dismiss' => true],
-                'elementMap' => [
-                    'default' => ['class' => 'info'],
-                    'info' => ['element' => 'default', 'class' => 'info'],
-                    'warning' => ['element' => 'default', 'class' => 'warning'],
-                    'error' => ['element' => 'default', 'class' => 'danger']
-                ]
-            ]);
         }
+        $controller->loadComponent('Flash', ['className' => static::$flashComponentClass]);
 
-        // Configure Backend Authentication
-        if (!$this->_registry->has('Auth') || !is_a($this->_registry->get('Auth'), static::$authComponentClass)) {
+        // Configure Auth component
+        if ($this->_registry->has('Auth') && !is_a($this->_registry->get('Auth'), static::$authComponentClass)) {
             $this->_registry->unload('Auth');
-            $controller->Auth = $this->_registry->load('Auth', [
-                'className' => static::$authComponentClass,
-            ]);
         }
-        $controller->Auth->config('loginAction', $this->config('authLoginAction'));
-        $controller->Auth->config('loginRedirect', $this->config('authLoginRedirect'));
-        $controller->Auth->config('authenticate', [
-            AuthComponent::ALL => ['userModel' => $this->config('userModel'), 'finder' => 'backendAuthUser'],
-            'Form',
-            //'Basic'
-        ]);
-        // Configure Backend Auth Storage
-        $controller->Auth->config('storage', [
-            'className' => 'Session',
-            'key' => 'Backend.User',
-            'redirect' => 'Backend.redirect'
+        $controller->loadComponent('Auth', ['className' => static::$authComponentClass]);
+
+        // Configure UserSession component
+        $controller->loadComponent('User.UserSession');
+        $controller->components()->get('UserSession')->config([
+            'maxLifetimeSec' => 15 * MINUTE,
+            'sessionKey' => 'Backend.UserSession'
         ]);
 
-        // Configure Backend Authorization
-        $controller->Auth->config('unauthorizedRedirect', $this->config('authUnauthorizedRedirect'));
-        $controller->Auth->config('authorize', $this->config('authAuthorize'));
+        // Configure Security component
+        if (Configure::read('Backend.Security.enabled') && !$controller->components()->has('Security')) {
+            $controller->components()->load('Security');
+        }
 
-        // Configure controller
-        $controller->viewBuilder()->className('Backend.Backend');
-        $controller->viewBuilder()->layout('Backend.admin');
-
-        // Iframe request detector
-        $this->request->addDetector('iframe', function($request) {
-            return (bool) $this->request->query('iframe');
+        // Add Iframe request detector
+        $this->request->addDetector('iframe', function (Request $request) {
+            return (bool)$request->query('iframe') == true || (bool)$request->param('iframe') == true;
         });
 
-        // Handle iframe and ajax requests
-        if ($this->request->is('iframe')) {
-            $controller->viewBuilder()->layout('Backend.iframe');
+        // Attach listeners @todo Remove deprecated code
+        foreach (Backend::getListeners('Controller') as $listenerClass) {
+            try {
+                $modobj = new $listenerClass();
+                if ($modobj instanceof EventListenerInterface) {
+                    $controller->eventManager()->on($modobj);
+                }
+            } catch (\Exception $ex) {
+                Log::alert("Failed to load class $listenerClass: " . $ex->getMessage());
+                continue;
+            }
         }
-        elseif ($this->request->is('ajax')) {
-            $controller->viewBuilder()->layout('Backend.ajax');
-        }
+
+        $controller->loadComponent('Backend.Action'); // @TODO Lazy load or remove
+        $controller->loadComponent('Backend.Toolbar'); //@TODO Lazy load or remove. Use helper instead.
+
+        //@todo use CORS-Component/-Middleware
+        $this->response->header([
+            'Access-Control-Allow-Origin' => '*',
+            'Access-Control-Allow-Headers' => 'POST, GET, OPTIONS',
+            'Access-Control-Allow-Methods' => 'Origin, Authorization, X-Requested-With, Content-Type, Accept'
+        ]);
+
+        // i18n
+        //I18n::locale('en_US');
+
+//        // Check backend cookie
+//        $this->Cookie = $controller->loadComponent('Cookie');
+//        $this->Cookie->config('path', '/admin/');
+//        $this->Cookie->config([
+//            'expires' => '+10 min',
+//            'httpOnly' => true,
+//            //'secure' => true
+//        ]);
+//        $cookieSeedData = [
+//            $this->request->env('REMOTE_ADDR'),
+//            $this->request->env('SERVER_NAME'),
+//            $this->request->env('SERVER_PORT')
+//        ];
+//        $this->_cookieName = 'b' . substr(md5(join('|', $cookieSeedData)), 3);
+//        if (!$this->Cookie->read($this->_cookieName)) {
+//            $this->Cookie->write($this->_cookieName, ['cookie_is_set' => true, 'h' => $this->_makeCookieHash($cookieSeedData)]);
+//            $controller->Flash->success("Cookie set");
+//        } else {
+//            $cookie = $this->Cookie->read($this->_cookieName);
+//            if (!isset($cookie['h'])) {
+//                $controller->Flash->error("Cookie hash missing");
+//                $this->Cookie->delete($this->_cookieName);
+//            } elseif ($cookie['h'] != $this->_makeCookieHash($cookieSeedData)) {
+//                $controller->Flash->warn("Invalid cookie hash detected: " . $cookie['h'] . ' != ' . $this->_makeCookieHash($cookieSeedData));
+//            } else {
+//            }
+//        }
 
         $this->_controller =& $controller;
     }
 
-    public function beforeFilter(Event $event)
+//    protected function _makeCookieHash($seedData)
+//    {
+//        return sha1(serialize($seedData));
+//    }
+
+    /**
+     * @param Event $event The event object
+     * @return void
+     */
+    public function init(Event $event)
     {
+        /* @var \Cake\Controller\Controller $controller */
+        $controller = $event->subject();
+
+        // Configure view
+        //$controller->viewBuilder()->className('Backend.Backend');
+        $controller->viewBuilder()->helpers(['Form' => ['className' => 'Backend\View\Helper\BackendFormHelper']]);
+        $controller->viewBuilder()->layout('Backend.admin');
+        if (Configure::read('Backend.theme')) {
+            $controller->viewBuilder()->theme(Configure::read('Backend.theme'));
+        }
+
+        // Handle iframe and ajax requests
+        if ($this->request->is('iframe')) {
+            $controller->viewBuilder()->layout('Backend.iframe');
+        } elseif ($this->request->is('ajax') && !$this->_registry->has('RequestHandler')) {
+            $controller->viewBuilder()->layout('Backend.ajax/admin');
+        }
+
+        if ($controller->Auth->user('locale') && $controller->Auth->user('locale') != I18n::locale()) {
+            I18n::locale($controller->Auth->user('locale'));
+        }
     }
 
-    public function startup(Event $event)
-    {
-    }
-
-
-    public function beforeRender(\Cake\Event\Event $event)
+    /**
+     * @param Event $event The event object
+     * @return void
+     */
+    public function beforeRender(Event $event)
     {
         $controller = $event->subject();
-        $controller->set('be_title', Configure::read('Backend.Dashboard.title'));
+
+        if ($event->subject()->Auth && $event->subject()->Auth->user()) {
+            $event->subject()->viewBuilder()->helpers(['Backend.BackendLayout']);
+
+            $controller->set('be_title', $this->config('backendTitle'));
+            $controller->set('be_dashboard_url', Router::url($this->config('dashboardUrl')));
+        }
     }
 
-    public function authConfig($key, $val = null, $merge = true)
+    /**
+     * Convenience method to configure auth component
+     *
+     * @param string $key Auth config key
+     * @param null $val Config value
+     * @param bool|true $merge Merge flag
+     * @return void
+     * @deprecated
+     */
+    public function configAuth($key, $val = null, $merge = true)
     {
         $this->_controller->Auth->config($key, $val, $merge);
     }
 
-    public function flashConfig($key, $val = null, $merge = true)
+    /**
+     * Convenience method to configure flash component
+     *
+     * @param string $key Flash config key
+     * @param null $val Config value
+     * @param bool|true $merge Merge flag
+     * @return void
+     * @deprecated
+     */
+    public function configFlash($key, $val = null, $merge = true)
     {
         $this->_controller->Flash->config($key, $val, $merge);
     }
 
+    /**
+     * @return array
+     */
     public function implementedEvents()
     {
-        $events = parent::implementedEvents();
-
-        //@TODO Implement implementedEvents (disabled)
-        //$events['User.login'] = 'onUserLogin';
-
-        return $events;
-    }
-
-    public function onUserLogin(Event $event)
-    {
-        //@TODO Implement event callback for 'User.login' (disabled)
-        //Log::debug('Backend:Event: User.login');
+        return [
+            'Controller.initialize' => 'init',
+            //'Controller.startup' => 'startup',
+            'Controller.beforeRender' => 'beforeRender',
+            //'Controller.beforeRedirect' => 'beforeRedirect',
+            //'Controller.shutdown' => 'shutdown'
+        ];
     }
 }

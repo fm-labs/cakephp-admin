@@ -1,9 +1,9 @@
-<?php $this->Html->addCrumb(__('Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Html->addCrumb(__('Systeminfo'), ['action' => 'index']); ?>
-<?php $this->Html->addCrumb(__d('backend', 'Date & Time')); ?>
-<div>
+<?php $this->Breadcrumbs->add(__d('backend','Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend','Systeminfo'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('backend', 'Date & Time')); ?>
+<div class="view">
 	<h2><?php echo __d('backend', 'Date & Time'); ?></h2>
-	<table class="ui table">
+	<table class="table">
     <?php foreach($data as $key => $val): ?>
         <tr>
             <td><?php echo $key; ?>&nbsp;</td>

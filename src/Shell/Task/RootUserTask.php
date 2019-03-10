@@ -2,15 +2,21 @@
 
 namespace Backend\Shell\Task;
 
+use Cake\Console\Shell;
 
-class RootUserTask extends BackendTask
+/**
+ * @property \Backend\Model\Table\UsersTable $Users
+ */
+class RootUserTask extends Shell
 {
-
+    /**
+     * {@inheritDoc}
+     */
     public function getOptionParser()
     {
         $parser = parent::getOptionParser();
         $parser
-            ->description(__("Create backend root user"))
+            ->description(__d('backend', "Create backend root user"))
             ->addOption('email', [
                 'help' => 'Root user email',
                 'short' => 'e'
@@ -23,10 +29,13 @@ class RootUserTask extends BackendTask
         return $parser;
     }
 
+    /**
+     * @return void
+     */
     public function main()
     {
         $this->out("-- Setup root user --");
-        foreach  ($this->args as $key => $val) {
+        foreach ($this->args as $key => $val) {
             $this->out("Arg: $key - $val");
         }
 
@@ -36,14 +45,12 @@ class RootUserTask extends BackendTask
             $this->error('Root user already exists');
         }
 
-        $email = "";
         do {
             $email = trim($this->in("Enter root email address: "));
-        } while(strlen($email) < 1);
+            $strlen = strlen($email);
+        } while ($strlen < 1);
 
-        $pass1 = $pass2 = "";
         do {
-
             $pass1 = trim($this->in("Choose root password: "));
             if (strlen($pass1) < 1) {
                 $this->out("Please enter a password");
@@ -56,9 +63,7 @@ class RootUserTask extends BackendTask
             if (!$match) {
                 $this->out("Passwords do not match. Please try again.");
             }
-
         } while (!$match);
-
 
         $root = $this->Users->createRootUser($email, $pass1);
         if ($root === false) {

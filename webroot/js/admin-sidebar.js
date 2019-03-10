@@ -1,3 +1,6 @@
+/**
+ * @deprecated
+ */
 $(document).ready(function() {
 
     var storage;

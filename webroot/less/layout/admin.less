@@ -1,0 +1,153 @@
+
+@import "../mixins/elements.less";
+@import "../vars.less";
+@import "_default.less";
+@import "_header.less";
+@import "_sidebar.less";
+@import "_toolbar.less";
+
+html {
+
+}
+
+
+/*
+body{
+  background-color: #FFF;
+  padding-top: @body-offset-top;
+  padding-bottom: @body-offset-bottom;
+  padding-left: @sidebar-w;
+  //.transition(@sidebar-transition);
+}
+*/
+
+body {
+  font-family: @font-family-primary;
+  font-size: @font-size-default;
+  height: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+body.body-screen {
+  background: @color-bg;
+}
+
+body.body-compact {
+  font-size: 12px;
+}
+
+.wrapper {
+  height: 100%;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.main-header {
+  position: relative;
+  top: 0;
+  height: @header-h;
+  width: auto;
+  background-color: @header-bg-color;
+  z-index: 1030;
+  color: @header-color;
+
+  a {
+    color: @header-color;
+  }
+}
+
+.main-header .logo {
+  padding-left: 15px;
+  padding-top: 15px;
+  display: block;
+  float: left;
+  z-index: 1031;
+}
+
+.main-header .navbar {
+  transition: margin-left .3s ease-in-out;
+  margin-bottom: 0;
+  border: none;
+  min-height: @header-h;
+  border-radius: 0;
+  z-index: 1032;
+}
+
+.main-sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: @sidebar-w;
+  height: 100%;
+  background-color: @sidebar-bg-color;
+  z-index: 1020;
+}
+
+.content, .content-header {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.content {
+  padding-bottom: 2em;
+  //overflow: scroll;
+}
+
+.content-header h1 {
+  margin-top: 10px;
+  //margin: 10px -15px 10px -15px;
+  //border-bottom: 1px solid @border-color-base;
+  padding-bottom: 5px;
+  font-size: 26px;
+  line-height: 1.1em;
+}
+
+.content-header .content-header-banner {
+  // background-color: #ccc
+  margin: 0 -15px 15px -15px;
+  padding: 15px 30px;
+}
+
+.main-footer {
+  //background: #fff;
+  padding: 5px 15px;
+  color: #444;
+  border-top: 1px solid #d2d6de;
+
+  a {
+    color: @color-link;
+  }
+}
+
+.main-breadcrumbs {
+
+  ul.breadcrumb {
+    margin: 0;
+    padding: 5px 15px;
+    font-size: 90%;
+    background-color: transparent;
+    border-bottom: 1px solid #e1e1e1;
+    border-radius: 0;
+  }
+
+  ul.breadcrumb > li + li::before {
+    padding: 0 0 0 5px;
+  }
+}
+
+.main-toolbar {
+
+  position: relative;
+
+  nav.toolbar {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+  }
+
+  nav.toolbar:after {
+    //clear: both;
+  }
+}

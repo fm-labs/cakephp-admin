@@ -1,11 +1,35 @@
 <?php
-use Backend\Lib\Backend;
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Log\Log;
+
+if (!Plugin::loaded('User')) {
+    die("User plugin missing");
+}
+
+Plugin::load('Bootstrap');
+//Plugin::load('User');
 
 /**
- * Automatically load app's backend configuration
- *
- * Copy backend.default.php to your app's config folder,
- * rename to backend.php and adjust contents
+ * Logs
  */
-//Configure::load('backend');
+Log::config('backend', [
+    'className' => 'Cake\Log\Engine\FileLog',
+    'path' => LOGS,
+    'file' => 'backend',
+    //'levels' => ['info'],
+    'scopes' => ['admin', 'backend']
+]);
+
+/**
+ * Cache config
+ */
+if (!Cache::config('backend')) {
+    Cache::config('backend', [
+        'className' => 'File',
+        'duration' => '+1 hours',
+        'path' => CACHE,
+        'prefix' => 'backend_'
+    ]);
+}

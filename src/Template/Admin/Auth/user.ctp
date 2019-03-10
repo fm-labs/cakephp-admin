@@ -1,50 +1,52 @@
 <?php
 use Cake\Core\Configure;
+
 ?>
-<?php $this->Html->addCrumb(__('User'), ['action' => 'user']); ?>
+<?php $this->Breadcrumbs->add(__d('backend', 'User'), ['action' => 'user']); ?>
 <?php $this->assign('title', $user['name']); ?>
-<div class="users view">
-    <h2 class="ui header">
+<div class="users view container" style="text-align: center;">
+    <h2>
         <?= h($user['name']); ?>
     </h2>
-    <div class="ui card">
-        <div class="image">
-            <img>
+
+    <div>
+        <div class="image" style="margin: 1em 0;">
+            <?= $this->Ui->icon('user-circle', ['class' => 'fa-5x']); ?>
         </div>
         <div class="content">
-            <a class="header"><?= h($user['username']); ?></a>
-            <div class="meta">
-                <span class="date">Joined <?= h($user['created']->nice()) ?></span>
-            </div>
-            <div class="description">
+            <p class="description">
                 Email: <?= h($user['email']); ?>
-            </div>
+            </p>
+
+            <p class="meta">
+                <span class="date">Joined <?= h($user['created']->nice()) ?></span>
+            </p>
         </div>
         <div class="extra content">
-            <?= $this->Ui->link(__('Goto Dashboard'),
-                ['_name' => 'backend:admin:dashboard'],
-                ['icon' => 'user']);
-            ?>
-        </div>
-        <div class="extra content">
-            <?= $this->Ui->link(__('Edit profile'),
+            <?=
+            $this->Ui->link(
+                __d('backend', 'Goto Dashboard'),
+                ['_name' => 'backend:admin:user:login'],
+                ['icon' => 'home', 'class' => 'btn btn-default btn-block']
+            ); ?>
+            <?=
+            $this->Ui->link(
+                __d('backend', 'Edit profile'),
                 ['plugin' => 'User', 'controller' => 'Users', 'action' => 'edit', $user['id']],
-                ['icon' => 'user']);
-            ?>
-        </div>
-        <div class="extra content">
-            <?= $this->Ui->link(__('Change password'),
+                ['icon' => 'edit', 'class' => 'btn btn-default btn-block']
+            ); ?>
+            <?=
+            $this->Ui->link(
+                __d('backend', 'Change password'),
                 ['plugin' => 'User', 'controller' => 'Users', 'action' => 'password_change'],
-                ['icon' => 'user']);
-            ?>
-        </div>
-        <div class="extra content">
-            <?= $this->Ui->link(__('Logout'),
+                ['icon' => 'key', 'class' => 'btn btn-default btn-block']
+            ); ?>
+            <?=
+            $this->Ui->link(
+                __d('backend', 'Logout'),
                 ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
-                ['icon' => 'user']);
-            ?>
+                ['icon' => 'sign-out', 'class' => 'btn btn-default btn-block']
+            ); ?>
         </div>
     </div>
-
-    <?php debug($user); ?>
 </div>

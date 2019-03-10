@@ -4,12 +4,14 @@ namespace Backend\View\Widget;
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\SelectBoxWidget;
-use Cake\View\Widget\WidgetInterface;
 use Media\Lib\Media\MediaManager;
 use Traversable;
 
 class ImageSelectWidget extends SelectBoxWidget
 {
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
         //return parent::render($data, $context);
@@ -26,8 +28,7 @@ class ImageSelectWidget extends SelectBoxWidget
 
         if (empty($data['options']) && isset($data['config'])) {
             $data['options'] = MediaManager::get($data['config'])->getSelectListRecursiveGrouped();
-        }
-        elseif (is_string($data['options']) && preg_match('/^\@(.*)/', $data['options'])) {
+        } elseif (is_string($data['options']) && preg_match('/^\@(.*)/', $data['options'])) {
             $mediaConfig = substr($data['options'], 1);
             $data['options'] = MediaManager::get($mediaConfig)->getSelectListRecursiveGrouped();
         }
@@ -59,6 +60,7 @@ class ImageSelectWidget extends SelectBoxWidget
         $data['class'] = $class;
 
         $attrs = $this->_templates->formatAttributes($data);
+
         return $this->_templates->format($template, [
             'name' => $name,
             'attrs' => $attrs,
@@ -66,6 +68,9 @@ class ImageSelectWidget extends SelectBoxWidget
         ]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected function _renderOptions($options, $disabled, $selected, $templateVars, $escape)
     {
         $out = [];
@@ -78,7 +83,6 @@ class ImageSelectWidget extends SelectBoxWidget
                 $out[] = $this->_renderOptgroup($key, $val, $disabled, $selected, $templateVars, $escape);
                 continue;
             }
-
 
             // Basic options
             $optAttrs = [
@@ -109,6 +113,7 @@ class ImageSelectWidget extends SelectBoxWidget
                 'attrs' => $this->_templates->formatAttributes($optAttrs, ['text', 'value']),
             ]);
         }
+
         return $out;
     }
 
@@ -140,7 +145,5 @@ class ImageSelectWidget extends SelectBoxWidget
             'templateVars' => $templateVars,
             'attrs' => $this->_templates->formatAttributes($attrs, ['text', 'options']),
         ]);
-
     }
-
 }

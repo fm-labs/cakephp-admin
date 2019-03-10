@@ -1,76 +1,68 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 2/6/15
- * Time: 7:25 PM
- */
 
 namespace Backend\View\Widget;
 
-use Cake\View\Helper\FormHelper;
-use Cake\View\Widget\DateTimeWidget as CakeDateTimeWidget;
 use Cake\View\Form\ContextInterface;
 use Cake\View\StringTemplate;
+use Cake\View\View;
+use Cake\View\Widget\BasicWidget;
+use Cake\View\Widget\DateTimeWidget as CakeDateTimeWidget;
 use DateTime;
 
 class DatePickerWidget extends CakeDateTimeWidget
 {
-    public function __construct(StringTemplate $templates)
+    /**
+     * @var BasicWidget
+     */
+    protected $_text;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct(StringTemplate $templates, BasicWidget $text, View $view)
     {
         $this->_templates = $templates;
+        $this->_text = $text;
+
+        $view->loadHelper('Backend.Datepicker');
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
-        $_data = [
-            'type' => 'text',
+        $data = array_merge([
             'escape' => true,
-            'class' => 'form-control datepicker',
-            'options' => $data['options'],
-            'id' => $data['id'],
-            'name' => $data['name'],
-            'val' => $data['val']
-        ];
+            'class' => 'datepicker',
+            'options' => [],
+            'id' => null,
+            'name' => null,
+            'val' => null
+        ], $data);
 
-        if ($_data['val']) {
-            if (!is_object($_data['val'])) {
-                $_data['val'] = new DateTime($_data['val']);
+        $data['type'] = 'text';
+        if ($data['val']) {
+            if (!is_object($data['val'])) {
+                $data['val'] = new DateTime($data['val']);
             }
-            $_data['data-value'] = $_data['value'] = date("Y-m-d", $_data['val']->getTimestamp());
+            $data['data-value'] = $data['value'] = date("Y-m-d", $data['val']->getTimestamp());
         }
-        unset($_data['val']);
-        unset($_data['options']);
+        unset($data['val']);
+        unset($data['options']);
 
+        $input = $this->_text->render($data, $context);
 
         $pickerOptions = [
-            'format' => 'yyyy-mm-dd',
+            'format' => 'dd.mm.yyyy',
             'formatSubmit' => 'yyyy-mm-dd',
-            'hiddenPrefix' => 'pickadate__',
-            'hiddenSuffix' =>  null
+            'hiddenPrefix' => null,
+            'hiddenSuffix' => null,
+            'hiddenName' => true,
         ];
+        $scriptTemplate = '<script>$(document).ready(function() { $("#%s").pickadate(%s); });</script>';
+        $script = sprintf($scriptTemplate, $data['id'], json_encode($pickerOptions));
 
-
-        $this->_templates->add([
-            'datepicker' => '<input type="{{type}}" name="{{name}}"{{attrs}}>',
-            'datepicker_script' => '<script>$("{{selector}}").pickadate({{picker}})</script>'
-        ]);
-
-        $html = $this->_templates->format('datepicker', [
-            'name' => $_data['name'],
-            'type' => $_data['type'],
-            'attrs' => $this->_templates->formatAttributes(
-                    $_data,
-                    ['name', 'type']
-                ),
-        ]);
-
-        $script = $this->_templates->format('datepicker_script', [
-            'selector' => '#' . $_data['id'],
-            'picker' => json_encode($pickerOptions),
-        ]);
-
-        return $html . $script;
+        return $input . $script;
     }
-
 }

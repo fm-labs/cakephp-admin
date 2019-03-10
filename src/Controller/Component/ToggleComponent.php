@@ -1,21 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: flow
- * Date: 2/7/15
- * Time: 11:11 AM
- */
-
 namespace Backend\Controller\Component;
 
-use Cake\Controller\Component\FlashComponent as CakeFlashComponent;
+use Cake\Controller\Component;
 use Cake\Core\Configure;
-use Cake\Datasource\EntityInterface;
-use Cake\Network\Exception\InternalErrorException;
 use Cake\ORM\Table;
-use Cake\Utility\Inflector;
 
-class ToggleComponent extends CakeFlashComponent
+/**
+ * Class ToggleComponent
+ * @package Backend\Controller\Component
+ */
+class ToggleComponent extends Component
 {
     /**
      * Default configuration
@@ -24,17 +18,16 @@ class ToggleComponent extends CakeFlashComponent
     protected $_defaultConfig = [
     ];
 
-    public function initialize(array $config)
-    {
-        parent::initialize($config);
-    }
-
+    /**
+     * @param Table $table
+     * @param $id
+     * @param $field
+     */
     public function toggleBoolean(Table $table, $id, $field)
     {
         $entity = $table->find()->select(['id', $field])->where(['id' => $id])->first();
         if ($entity) {
-
-            $val = (bool) $entity->{$field};
+            $val = (bool)$entity->{$field};
             $new = !$val;
 
             $entity->{$field} = $new;
@@ -54,7 +47,6 @@ class ToggleComponent extends CakeFlashComponent
                 'result' => -1
             ];
         }
-
 
         $controller = $this->_registry->getController();
         $controller->viewBuilder()->className('Json');

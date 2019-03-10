@@ -3,6 +3,7 @@ namespace Backend\View\Widget;
 
 use Cake\Core\Configure;
 use Cake\View\Form\ContextInterface;
+use Cake\View\View;
 use Cake\View\Widget\BasicWidget;
 use Cake\Routing\Router;
 
@@ -44,17 +45,22 @@ class HtmlEditorWidget extends BasicWidget
             'undo redo | cut copy paste | link image media | table'
         ],
         // URL Handling
-        'convert_urls' => true, // TinyMCE default: true
+        'convert_urls' => false, // TinyMCE default: true
         'relative_urls' => false, // TinyMCE default: true
-        'remove_script_host' => true, // TinyMCE default: true
+        'remove_script_host' => false, // TinyMCE default: true
         'document_base_url' => '/',
         //'importcss_append' => true,
         'cache_suffix' => null,
     ];
 
-    public function __construct($templates)
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct($templates, View $view)
     {
         static::$defaultConfig['document_base_url'] = Router::url('/', true);
+
+        $view->loadHelper('Backend.HtmlEditor');
 
         parent::__construct($templates);
     }
@@ -79,22 +85,25 @@ class HtmlEditorWidget extends BasicWidget
             'editor' => [],
         ];
 
-        $data['class'] = ($data['class']) ? $data['class'] . ' htmleditor' : 'htmleditor';
-        $data['id'] = ($data['id']) ? $data['id'] : uniqid('htmleditor');
-
+        $defaultClass = 'htmleditor form-control';
+        $data['class'] = ($data['class']) ? $data['class'] . ' ' . $defaultClass : $defaultClass;
+        $data['id'] = uniqid($data['id'] . '-htmleditor');
 
         // load editor config by config reference (@[Config.Key])
+        //@deprecated
         if ($data['editor'] && is_string($data['editor']) && preg_match('/^\@(.*)/', $data['editor'], $matches)) {
             $data['editor'] = Configure::read($matches[1]);
+        } elseif ($data['editor'] && is_string($data['editor'])) {
+            $confKey = 'HtmlEditor.' . $data['editor'];
+            $data['editor'] = (array)Configure::read($confKey);
         }
-
 
         $data['editor'] = array_merge(static::$defaultConfig, $data['editor']);
 
         // convert urls
         $editor = [];
-        array_walk($data['editor'], function($val, $key) use (&$editor) {
-            if (preg_match('/^_(.*)$/', $key, $matches)) {
+        array_walk($data['editor'], function ($val, $key) use (&$editor) {
+            if (preg_match('/^\@(.*)$/', $key, $matches)) {
                 $_key = $matches[1];
 
                 // urls in cakephp can be arrays
@@ -107,7 +116,6 @@ class HtmlEditorWidget extends BasicWidget
                         $list[] = Router::url($_url, true);
                     });
                 }
-
             } else {
                 $editor[$key] = $val;
             }
@@ -117,19 +125,21 @@ class HtmlEditorWidget extends BasicWidget
         //debug($editor);
 
         $this->_templates->add([
-            'htmlEditor' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea><script>{{editorScript}}</script>',
+            'htmlEditor' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea><script>{{editorScript}}</script>'
+            //'htmlEditor' => '<div class="htmleditor"><textarea  data-htmleditor=\'{{editorConfig}}\' name="{{name}}"{{attrs}}>{{value}}</textarea></div>',
         ]);
 
         $selector = $editor['selector'];
         unset($editor['selector']);
         //$editorScript = "$(document).ready(function() { tinymce.init(" . json_encode($editor) .") });";
-        $jsTemplate = '$(document).on("ready", function() { $("%s").tinymce(%s); });';
-        $jsTemplate = ' $("%s").tinymce(%s);';
-        $editorScript = sprintf($jsTemplate, $selector, json_encode($editor));
+        $jsTemplate = '$(document).ready(function() { $("%s").tinymce(%s); });';
+        $editorConfig = json_encode($editor);
+        $editorScript = sprintf($jsTemplate, $selector, $editorConfig);
 
         return $this->_templates->format('htmlEditor', [
             'name' => $data['name'],
             'value' => $data['escape'] ? h($data['val']) : $data['val'],
+            'editorConfig' => $editorConfig,
             'editorScript' => $editorScript,
             'attrs' => $this->_templates->formatAttributes(
                 $data,

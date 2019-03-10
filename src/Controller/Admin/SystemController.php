@@ -1,17 +1,22 @@
 <?php
 namespace Backend\Controller\Admin;
 
-use Backend\Controller\Admin\AppController;
-use Cake\Core\Plugin;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Routing\Router;
 
 /**
  * Class SystemController
- * @package Backend\Controller
  *
+ * @package Backend\Controller
  */
 class SystemController extends AppController
 {
+    /**
+     * Index method
+     *
+     * @return void
+     */
     public function index()
     {
     }
@@ -21,6 +26,7 @@ class SystemController extends AppController
      *
      * @see http://www.mainelydesign.com/blog/view/displaying-phpinfo-without-css-styles
      * @param int $what PHP Info option
+     * @return void
      */
     public function php($what = INFO_ALL)
     {
@@ -36,18 +42,33 @@ class SystemController extends AppController
 
     /**
      * Displays CAKE PHP Global constants
+     *
+     * @return void
      */
     public function globals()
     {
         $globals = [
-            'APP', 'APP_DIR', 'CONFIG', 'CACHE', 'CAKE', 'CAKE_VERSION', 'CAKE_CORE_INCLUDE_PATH', 'CORE_PATH',
-            'DS', 'LOGS', 'ROOT', 'TESTS', 'TMP','WWW_ROOT'
+            'APP', 'APP_DIR', 'CONFIG', 'CACHE', 'CAKE', 'CAKE_CORE_INCLUDE_PATH', 'CORE_PATH',
+            'DS', 'LOGS', 'ROOT', 'TESTS', 'TMP', 'WWW_ROOT'
         ];
         $this->set(compact('globals'));
     }
 
     /**
+     * List connected routes
+     *
+     * @return void
+     */
+    public function routes()
+    {
+        $this->set('routes', Router::routes());
+        $this->set('_serialize', 'routes');
+    }
+
+    /**
      * Displays information about loaded Cake plugins
+     *
+     * @return void
      */
     public function plugins()
     {
@@ -67,9 +88,14 @@ class SystemController extends AppController
         $this->set('_serialize', $plugins);
     }
 
+    /**
+     * Display date and time
+     *
+     * @return void
+     */
     public function datetime()
     {
-        $data = array();
+        $data = [];
 
         $data['dateDefaultTimezoneGet'] = date_default_timezone_get();
         $data['dateTimeZoneIniGet'] = ini_get('date.timezone');
@@ -77,14 +103,23 @@ class SystemController extends AppController
         $this->set(compact('data'));
     }
 
+    /**
+     * Display session data
+     *
+     * @return void
+     */
     public function session()
     {
         $this->set('session', $this->request->session()->read());
     }
 
+    /**
+     * Display current configuration
+     *
+     * @return void
+     */
     public function config()
     {
         $this->set('config', Configure::read());
     }
-
 }

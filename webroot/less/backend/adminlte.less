@@ -1,0 +1,129 @@
+@left-margin: 230px;
+@left-margin-sidebar-collapse: 50px;
+@left-w: 200px;
+@left-bg-color: transparent;
+
+body {
+  color: #000;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+}
+
+.content-left, .content-right {
+  -webkit-transition: -webkit-transform .3s ease-in-out,margin .3s ease-in-out;
+  -moz-transition: -moz-transform .3s ease-in-out,margin .3s ease-in-out;
+  -o-transition: -o-transform .3s ease-in-out,margin .3s ease-in-out;
+  transition: transform .3s ease-in-out,margin .3s ease-in-out;
+}
+
+/*
+.content-left {
+  margin-left: @left-margin;
+  //color: #FFF;
+  position: absolute;
+  width: @left-w;
+  background: @left-bg-color;
+  //height: 1000px
+}
+
+.content-left ~ .content-wrapper {
+  margin-left: @left-margin + @left-w;
+}
+
+.content-right {
+  //color: #FFF;
+  position: absolute;
+  right: 0;
+  width: @left-w;
+  background: @left-bg-color;
+  //height: 1000px
+}
+
+.content-left ~ .content-wrapper {
+  margin-right: @left-w;
+}
+
+.sidebar-mini.sidebar-collapse .content-left {
+  margin-left: @left-margin-sidebar-collapse !important;
+  z-index: 840;
+}
+
+.sidebar-mini.sidebar-collapse .content-left ~ .content-wrapper {
+  margin-left: @left-margin-sidebar-collapse + @left-w !important;
+  z-index: 840;
+}
+
+*/
+
+.content-left {
+  position: absolute;
+  width: @left-w;
+  background: @left-bg-color;
+}
+
+.content-left ~ main {
+  margin-left: @left-w;
+}
+
+.content-right {
+  position: absolute;
+  right: 0;
+  width: @left-w;
+  background: @left-bg-color;
+}
+
+.content-right ~ main {
+  margin-right: @left-w;
+}
+
+.content-wrapper {
+  padding-bottom: 100px;
+  //background-color: #FFF;
+  //position: relative;
+}
+
+.flash-wrapper {
+  > .alert {
+    margin: 0;
+    .border-radius(0)
+  }
+}
+
+.content-header {
+  //padding: 5px 15px 0 15px;
+}
+
+.content-header > h1 {
+  /*
+  ul {
+    margin: 0 0 5px 0;
+    padding: 0;
+    background-color: transparent;
+  }
+  */
+}
+
+
+/** Sidebar **/
+.sidebar-mini.sidebar-collapse .sidebar-menu > li:hover > a > span:not(.pull-right) {
+  border-radius: 0;
+}
+
+.sidebar-menu .treeview-menu > li > a {
+  font-size: @font-size-default;
+}
+
+/** Tables **/
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td, .table > tfoot > tr > td {
+  border-top: 1px solid #ddd;
+}
+
+/** Invoice Template **/
+.invoice {
+  margin: 10px 0;
+}

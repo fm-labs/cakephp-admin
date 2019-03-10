@@ -1,0 +1,166 @@
+@import "../vars";
+
+.navbar {
+
+  ul.navbar-nav {
+
+
+    > li.dropdown {
+
+      > a {
+        &:link, &:active {
+          color: #FFF;
+        }
+      }
+
+      > ul.dropdown-menu {
+        border: none;
+        background-color: #FFF;
+        margin: 0;
+        padding: 0;
+        width: 300px;
+
+        li {
+          padding: 0;
+          margin: 0;
+        }
+
+        li.header, li.footer {
+          //background-color: #CCC;
+          color: #333;
+          padding: 7px 15px;
+        }
+
+        li.header {
+          border-bottom: 1px solid #CCC;
+        }
+
+        li.footer {
+          border-top: 1px solid #CCC;
+        }
+
+        li a {
+          color: #333;
+          //margin: 0;
+          //padding: 0;
+
+        }
+
+        li ul {
+          margin: 0;
+          padding: 0;
+
+        }
+
+        li ul li {
+          padding: 5px 15px;
+          position: relative;
+          border-bottom: 1px solid #e8e8e8;
+
+          &:last-child {
+            border-bottom: none;
+          }
+
+          a {
+            margin: 0;
+            //padding: 0;
+            display: block;
+
+            h3, h4 {
+              margin: 0 0 5px 0;
+              padding: 0;
+              font-weight: bold;
+              font-size: 16px;
+            }
+
+            p {
+              margin: 0;
+              padding: 0;
+            }
+          }
+
+        }
+
+        li ul li:hover {
+          background-color: #f8f8f8;
+        }
+
+      }
+    }
+
+    > li.dropdown:hover {
+      > a {
+        background-color: #FFF;
+        color: #333;
+      }
+      > ul.dropdown-menu {
+        display: block;
+      }
+    }
+
+  }
+
+
+  .navbar-menu-left {
+    float: left;
+  }
+
+  .navbar-menu-right {
+    float: right;
+
+    ul li ul.dropdown-menu {
+      right: 0;
+      left: auto;
+    }
+  }
+
+
+  .user-menu {
+    ul.dropdown-menu {
+
+      > li {
+        padding: 5px 15px !important;
+      }
+
+      > li.user-header, > li.user-footer {
+        color: #333;
+        padding: 7px 15px !important;
+      }
+
+      > li.user-header {
+        border-bottom: 1px solid #CCC;
+        text-align: center;
+        background-color: @header-bg-color !important;
+        color: @header-color !important;
+      }
+
+      > li.user-footer {
+        border-top: 1px solid #CCC;
+      }
+
+      > li.user-body {
+      }
+    }
+  }
+
+  .sys-menu {
+    ul.dropdown-menu {
+      width: 180px !important;
+    }
+  }
+
+  .tasks-menu {
+    ul.dropdown-menu {
+
+      li ul li {
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+
+        .progress {
+          margin-bottom: 0;
+        }
+      }
+
+    }
+  }
+}

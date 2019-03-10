@@ -1,12 +1,12 @@
 {
-  "name": "cakephp3-backend",
-  "version": "1.4.0-dev",
+  "name": "cakephp-backend",
+  "version": "1.4.0",
   "description": "CakePHP Administrative GUI",
   "keywords": [
     "cakephp",
     "backend"
   ],
-  "homepage": "https://github.com/fmlabs/cakephp3-backend",
+  "homepage": "https://github.com/fmlabs/cakephp-backend",
   "license": "SEE LICENSE IN LICENSE.txt",
   "private": true,
   "author": {
@@ -17,7 +17,7 @@
   "contributors": [],
   "repository": {
     "type": "git",
-    "url": "https://github.com/fm-labs/cakephp3-backend.git"
+    "url": "https://github.com/fm-labs/cakephp-backend.git"
   },
   "engines": {
     "node": ">= 0.10.0"

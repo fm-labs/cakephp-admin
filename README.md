@@ -8,8 +8,8 @@ CakePHP v3.1+
 
 ## Dependencies
 
-fm-labs/cakephp3-user
-fm-labs/cakephp3-semantic-ui
+fm-labs/cakephp-user
+fm-labs/cakephp-bootstrap
 
 ## Installation
 
@@ -18,7 +18,7 @@ You can install this plugin into your CakePHP application using [composer](http:
 The recommended way to install composer packages is:
 
 ```
-composer require fm-labs/cakephp3-backend
+composer require fm-labs/cakephp-backend
 ```
 
 - Enable in your ROOT/config/bootstrap.php

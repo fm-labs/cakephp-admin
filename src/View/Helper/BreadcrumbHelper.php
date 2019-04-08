@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\View\Helper\Layout;
+namespace Backend\View\Helper;
 
 use Cake\Event\Event;
 use Cake\Utility\Inflector;
@@ -10,7 +10,7 @@ use Cake\View\Helper\BreadcrumbsHelper;
 /**
  * @property BreadcrumbsHelper $Breadcrumbs
  */
-class NavigationHelper extends Helper
+class BreadcrumbHelper extends Helper
 {
     public $helpers = ['Breadcrumbs'];
 
@@ -28,6 +28,10 @@ class NavigationHelper extends Helper
         ];
     }
 
+    /**
+     * @param Event $event The event object
+     * @return void
+     */
     public function beforeLayout(Event $event)
     {
         //@TODO _no_breadcrumbs and layout_no_breadcrumbs are deprecated. Set `breadcrumbs` to FALSE instead

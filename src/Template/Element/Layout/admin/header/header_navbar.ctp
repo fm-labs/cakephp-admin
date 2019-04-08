@@ -7,7 +7,7 @@
     <!--
     <div class="navbar-custom-menu" style="float: left;">
         <ul class="nav navbar-nav">
-            <li><?= $this->Html->link(__d('backend','Frontend'), '/', ['target' => '_blank']); ?></li>
+            <li><?= $this->Html->link(__d('backend', 'Frontend'), '/', ['target' => '_blank']); ?></li>
 
         </ul>
     </div>

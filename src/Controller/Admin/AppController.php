@@ -1,24 +1,24 @@
 <?php
 
 namespace Backend\Controller\Admin;
-
-use Backend\Controller\BackendActionsTrait;
-use Cake\Controller\Controller;
+use Cake\ORM\Exception\MissingBehaviorException;
 
 /**
  * Class AppController
  *
  * @package Backend\Controller\Admin
  */
-class AppController extends Controller
+class AppController extends \App\Controller\Admin\AppController
 {
-    use BackendActionsTrait;
-
     /**
      * {@inheritDoc}
      */
     public function initialize()
     {
-        $this->loadComponent('Backend.Backend');
+        parent::initialize();
+
+        if (!$this->components()->has('Backend')) {
+            throw new MissingBehaviorException(['behavior' => 'Backend']);
+        }
     }
 }

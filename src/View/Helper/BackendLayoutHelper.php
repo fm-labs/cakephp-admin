@@ -15,10 +15,8 @@ class BackendLayoutHelper extends Helper
     public function initialize(array $config = [])
     {
         $this->_View->loadHelper('Backend.Backend');
-        $this->_View->loadHelper('Navigation', ['className' => 'Backend.Layout/Navigation']);
-        $this->_View->loadHelper('Header', ['className' => 'Backend.Layout/Header']);
-        $this->_View->loadHelper('Toolbar', ['className' => 'Backend.Layout/Toolbar']);
-        $this->_View->loadHelper('Sidebar', ['className' => 'Backend.Layout/Sidebar']);
+        $this->_View->loadHelper('Breadcrumb', ['className' => 'Backend.Breadcrumb']);
+        $this->_View->loadHelper('Toolbar', ['className' => 'Backend.Toolbar']);
         $this->_View->loadHelper('User.UserSession', [
             'sessionKey' => 'Backend.UserSession',
             'loginUrl' => ['_name' => 'backend:admin:user:login'],
@@ -78,34 +76,16 @@ class BackendLayoutHelper extends Helper
         );
         //$event->subject()->Html->css('/backend/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
 
-        //@TODO Move layout blocks to config
-        //@TODO Fallback to default block element
-        //@TODO Add support for blocks with sub-elements
-        $blocks = [
-            'flash' => [
-                [
-                    'element' => 'Backend.Layout/admin/flash'
-                ]
-            ],
-            'top' => [
-                [
-                    'element' => 'Backend.Layout/admin/content_header'
-                ]
-            ],
-            'footer' => [
-                [
-                    'element' => 'Backend.Layout/admin/footer'
-                ]
-            ],
-            'control_sidebar' => [
-                [
-                    'element' => 'Backend.Layout/admin/control_sidebar'
-                ]
-            ]
-        ];
+        $blocks = Configure::read('Backend.Layout.admin.blocks');
+
         foreach ($blocks as $block => $contents) {
             foreach ($contents as $content) {
-                $event->subject()->Blocks->set($block, $event->subject()->element($content['element']));
+                $_block = (isset($content['block'])) ? $content['block'] : $block;
+                if (isset($content['element'])) {
+                    $event->subject()->append($_block, $event->subject()->element($content['element']));
+                } elseif (isset($content['cell'])) {
+                    $event->subject()->append($_block, $event->subject()->cell($content['cell']));
+                }
             }
         }
     }

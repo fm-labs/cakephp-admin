@@ -33,3 +33,5 @@ if (!Cache::config('backend')) {
         'prefix' => 'backend_'
     ]);
 }
+
+Configure::load('Backend.layout/admin');

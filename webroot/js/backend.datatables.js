@@ -247,6 +247,12 @@
 
     Backend.DataTablesView = Backbone.View.extend({
 
+        events: {
+           'resize': function() {
+               console.log('resize!')
+           }
+        },
+
         initialize: function(settings) {
             this.settings = settings;
             this._dataTable = settings.dataTable || {};

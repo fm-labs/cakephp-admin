@@ -2,9 +2,6 @@
 
 namespace Backend\Controller\Component;
 
-use Cake\Controller\ComponentRegistry;
-use Cake\Event\Event;
-
 /**
  * Class AuthComponent
  *

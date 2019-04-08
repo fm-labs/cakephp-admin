@@ -1,14 +1,13 @@
 <?php
-namespace Backend\Controller\Base;
+namespace Backend\Controller;
 
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
-use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Backend\Controller\Component\FlashComponent;
 
 /**
- * Class BaseBackendController
+ * Class Controller
  *
  * Use this class as a base controller for (app) controllers
  * which should run in backend context
@@ -18,10 +17,8 @@ use Backend\Controller\Component\FlashComponent;
  * @property AuthComponent $Auth
  * @property FlashComponent $Flash
  * @property PaginatorComponent $Paginator
- *
- * @deprecated Use \Backend\Controller\Controller instead
  */
-abstract class BaseBackendController extends Controller
+class Controller extends \Cake\Controller\Controller
 {
     /**
      * @var array
@@ -43,10 +40,8 @@ abstract class BaseBackendController extends Controller
      */
     public function initialize()
     {
-        // Configure Backend component
-        if (!$this->components()->has('Backend')) {
-            $this->loadComponent('Backend.Backend');
-        }
+        $this->loadComponent('Backend.Backend');
+        $this->loadComponent('Backend.Flash');
     }
 
     /**

@@ -4,6 +4,9 @@ namespace Backend;
 
 use Cake\Routing\RouteBuilder;
 
+/**
+ * @deprecated
+ */
 interface BackendPluginInterface
 {
     /**

@@ -12,22 +12,43 @@ use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
 use Cake\Http\MiddlewareQueue;
+use Cake\Log\Log;
 use Cake\Routing\RouteBuilder;
-use Settings\SettingsInterface;
+use Cake\Routing\Router;
+use Cake\Utility\Inflector;
 use Settings\SettingsManager;
 
-class BackendPlugin implements PluginInterface, BackendPluginInterface, SettingsInterface, EventListenerInterface
+class BackendPlugin implements PluginInterface, EventListenerInterface
 {
+    /**
+     * @var \Banana\Application
+     */
+    protected $_app;
+
+    /**
+     * @var Backend
+     */
+    protected $_backend;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function __construct()
+    {
+        $this->_backend = new Backend();
+    }
+
     /**
      * {@inheritDoc}
      */
     public function implementedEvents()
     {
         return [
-            'Backend.Sidebar.build' => ['callable' => 'buildBackendSidebarMenu', 'priority' => 99 ],
+            //'Backend.Sidebar.build' => ['callable' => 'buildBackendSidebarMenu', 'priority' => 99 ],
             'Backend.SysMenu.build' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
             //'Backend.Menu.build'    => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
-           // 'View.beforeLayout'     => ['callable' => 'beforeLayout']
+           // 'View.beforeLayout'     => ['callable' => 'beforeLayout'],
+            'Settings.build' => 'settings'
         ];
     }
 
@@ -45,76 +66,12 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
     /**
      * {@inheritDoc}
      */
-    public function buildSettings(SettingsManager $settings)
+    public function settings(Event $event, SettingsManager $settings)
     {
-        //$settings->load('Backend.settings');
-        $settings->add('Backend', [
-            'Dashboard.title' => [
-                'type' => 'string',
-                'input' => [
-                    'type' => 'text',
-                    'placeholder' => 'Foo'
-                ],
-                'default' => 'Dashboard'
-            ],
-
-            'Security.enabled' => [
-                'type' => 'boolean',
-                'inputType' => null,
-                'input' => [],
-            ],
-            'Security.forceSSL' => [
-                'type' => 'boolean',
-                'inputType' => null,
-                'input' => [],
-            ],
-
-            'Theme.name' => [
-                'type' => 'string',
-                'input' => [
-                    'type' => 'select',
-                    'options' => [
-                        'theme-default' => 'Default',
-                    ]
-                ],
-                'default' => 'theme-default'
-            ],
-
-            'Theme.skin' => [
-                'type' => 'string',
-                'input' => [
-                    'type' => 'select',
-                    'options' => [
-                        'skin-blue' => __d('backend', 'Blue'),
-                        'skin-yellow' => __d('backend', 'Yellow'),
-                        'skin-red' => __d('backend', 'Red'),
-                        'skin-purple' => __d('backend', 'Purple'),
-                        'skin-black' => __d('backend', 'Blue'),
-                        'skin-green' => __d('backend', 'Green'),
-                    ]
-                ],
-                'default' => 'skin-blue'
-            ],
-
-            'Theme.bodyClass' => [
-                'type' => 'string',
-            ],
-
-            'Theme.darkmode' => [
-                'type' => 'boolean',
-            ],
-
-            'Theme.enableJsFlash' => [
-                //'label' => 'Pretty Flash messages',
-                'type' => 'boolean',
-            ],
-
-            'Theme.enableJsAlerts' => [
-                //'label' => 'Pretty Alert messages',
-                'type' => 'boolean',
-            ],
-
-            'CodeEditor.Ace.theme' => [
+        $settings->load('Backend.settings');
+        $settings->addGroup('backend_form', ['label' => __('Backend Form')]);
+        $settings->add('backend_form', [
+            'Backend.CodeEditor.Ace.theme' => [
                 'default' => 'twilight',
                 'input' => [
                     'type' => 'select',
@@ -285,6 +242,22 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
      */
     public function routes(RouteBuilder $routes)
     {
+        $urlPrefix = '/' . trim(Backend::$urlPrefix, '/') . '/';
+        foreach ($this->_app->plugins()->loaded() as $pluginName) {
+            $instance = $this->_app->plugins()->get($pluginName);
+            if (method_exists($instance, 'backendRoutes')) {
+                try {
+                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
+                        'plugin' => $pluginName,
+                        'prefix' => 'admin',
+                        '_namePrefix' => sprintf("%s:admin:", Inflector::underscore($pluginName))
+                    ], [$instance, 'backendRoutes']);
+                } catch (\Exception $ex) {
+                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
+                }
+            }
+        }
+
         return $routes;
     }
 
@@ -295,6 +268,18 @@ class BackendPlugin implements PluginInterface, BackendPluginInterface, Settings
     {
         EventManager::instance()->on($this);
         EventManager::instance()->on(new ActionDispatcherListener());
+
+        $this->_app = $app;
+        foreach ($this->_app->plugins()->loaded() as $pluginName) {
+            $instance = $this->_app->plugins()->get($pluginName);
+            if (method_exists($instance, 'backendBootstrap')) {
+                try {
+                    call_user_func([$instance, 'backendBootstrap'], $this->_backend);
+                } catch (\Exception $ex) {
+                    Log::error("Backend plugin bootstrapping failed: $pluginName: " . $ex->getMessage());
+                }
+            }
+        }
     }
 
     /**

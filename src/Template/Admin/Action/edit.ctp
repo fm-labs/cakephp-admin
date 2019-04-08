@@ -50,6 +50,10 @@ $this->loadHelper('Bootstrap.Tabs');
             $fieldset += ['fields' => [], 'legend' => true, 'options' => []];
             echo $this->Form->fieldsetStart($fieldset['legend'], $fieldset['options']);
             foreach ($fieldset['fields'] as $field => $fieldConfig) {
+                if (is_numeric($field)) { //@todo Normalize fields in action class
+                    $field = $fieldConfig;
+                    $fieldConfig = [];
+                }
                 echo $this->Form->input($field, $fieldConfig);
             }
             echo $this->Form->fieldsetEnd();

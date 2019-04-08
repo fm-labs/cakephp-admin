@@ -34,18 +34,15 @@ class AuthController extends AppController
      */
     public function login()
     {
+        $user = $this->Auth->login();
         if ($this->components()->has('RequestHandler') && $this->components()->get('RequestHandler')->accepts('json')) {
             $this->viewBuilder()->className('Json');
-            $this->Auth->login();
-        } else {
-            $redirect = $this->Auth->login();
-            if ($redirect) {
-                return $this->redirect($redirect);
-            }
+        } elseif ($user) {
+            return $this->redirect($this->Auth->redirectUrl());
         }
 
         $this->set('login', [
-            'user' => $this->Auth->user() //@TODO Only send minimum data!
+            'user' => ($user) ? $user['id'] : null
         ]);
         $this->set('_serialize', ['login']);
 

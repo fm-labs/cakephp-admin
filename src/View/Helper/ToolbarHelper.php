@@ -1,5 +1,5 @@
 <?php
-namespace Backend\View\Helper\Layout;
+namespace Backend\View\Helper;
 
 use Backend\View\BackendView;
 use Bootstrap\View\Helper\UiHelper;

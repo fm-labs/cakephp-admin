@@ -8,7 +8,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
-
     <?= $this->Html->css('Backend.layout/admin'); ?>
     <?= $this->fetch('css') ?>
     <!-- scripts -->

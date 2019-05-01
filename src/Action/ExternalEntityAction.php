@@ -41,7 +41,7 @@ class ExternalEntityAction extends BaseEntityAction
     protected function _execute(Controller $controller)
     {
         $entity = $this->entity();
-        $controller->redirect($this->_buildUrl($this->_url, $entity->toArray()));
+        return $controller->redirect($this->_buildUrl($this->_url, $entity->toArray()));
     }
 
     protected function _buildUrl($template, $entity)

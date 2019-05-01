@@ -111,28 +111,28 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         // breadcrumbs
         if (!isset($controller->viewVars['breadcrumbs'])) {
             $breadcrumbs = [];
-            if ($this->request->param('plugin') && $this->request->param('plugin') != $this->request->param('controller')) {
+            if ($controller->request->param('plugin') && $controller->request->param('plugin') != $controller->request->param('controller')) {
                 $breadcrumbs[] = [
-                    'title' => Inflector::humanize($this->request->param('plugin')),
+                    'title' => Inflector::humanize($controller->request->param('plugin')),
                     'url' => [
-                        'plugin' => $this->request->param('plugin'),
-                        'controller' => $this->request->param('plugin'),
+                        'plugin' => $controller->request->param('plugin'),
+                        'controller' => $controller->request->param('plugin'),
                         'action' => 'index'
                     ]
                 ];
                 $breadcrumbs[] = [
-                    'title' => Inflector::humanize($this->request->param('controller')),
+                    'title' => Inflector::humanize($controller->request->param('controller')),
                     'url' => [
-                        'plugin' => $this->request->param('plugin'),
-                        'controller' => $this->request->param('controller'),
+                        'plugin' => $controller->request->param('plugin'),
+                        'controller' => $controller->request->param('controller'),
                         'action' => 'index'
                     ]
                 ];
                 $breadcrumbs[] = [
                     'title' => $this->entity()->get($this->model()->displayField()),
                     'url' => [
-                        'plugin' => $this->request->param('plugin'),
-                        'controller' => $this->request->param('controller'),
+                        'plugin' => $controller->request->param('plugin'),
+                        'controller' => $controller->request->param('controller'),
                         'action' => 'view',
                         $this->entity()->get($this->model()->primaryKey())
                     ]

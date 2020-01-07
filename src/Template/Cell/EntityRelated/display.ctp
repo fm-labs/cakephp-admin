@@ -6,6 +6,8 @@
             <?php $this->cell($element['cell'], $element['cellParams'], $element['cellOptions'])->render($element['cellTemplate']); ?>
         <?php elseif ($element['render'] == 'table') : ?>
             <?= $this->DataTable->create($element['tableOptions'])->render(); ?>
+        <?php elseif ($element['render'] == 'content') : ?>
+            <?= h($element['content']); ?>
         <?php endif; ?>
     </div>
 <?php endforeach; ?>

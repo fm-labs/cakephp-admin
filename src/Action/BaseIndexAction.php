@@ -9,6 +9,7 @@ use Cake\Controller\Controller;
  * Class BaseIndexAction
  *
  * @package Backend\Action
+ * @deprecated Use IndexAction instead
  */
 abstract class BaseIndexAction extends BaseAction implements IndexActionInterface
 {
@@ -17,7 +18,10 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
      */
     protected $_defaultConfig = [
         'actions' => [],
-        'rowActions' => []
+        'rowActions' => [],
+        'fields' => [],
+        'fields.whitelist' => [],
+        'fields.blacklist' => []
     ];
 
     /**

@@ -48,7 +48,7 @@ class BackendComponent extends Component
     protected $_defaultConfig = [
         'backendPath' => '/backend',
         'backendTitle' => 'Backend',
-        'dashboardUrl' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+        'dashboardUrl' => ['_name' => 'admin:backend:dashboard'],
         'searchUrl' => ['plugin' => 'Backend', 'controller' => 'Search', 'action' => 'query'],
     ];
 
@@ -128,7 +128,6 @@ class BackendComponent extends Component
         }
 
         $controller->loadComponent('Backend.Action'); // @TODO Lazy load or remove
-        $controller->loadComponent('Backend.Toolbar'); //@TODO Lazy load or remove. Use helper instead.
 
         //@todo use CORS-Component/-Middleware
         $this->response->header([
@@ -186,8 +185,8 @@ class BackendComponent extends Component
         $controller = $event->subject();
 
         // Configure view
-        //$controller->viewBuilder()->className('Backend.Backend');
-        $controller->viewBuilder()->helpers(['Form' => ['className' => 'Backend\View\Helper\BackendFormHelper']]);
+        $controller->viewBuilder()->className('Backend.Backend');
+        $controller->viewBuilder()->helpers(['Html', 'Form' => ['className' => 'Backend\View\Helper\BackendFormHelper']], false);
         $controller->viewBuilder()->layout('Backend.admin');
         if (Configure::read('Backend.theme')) {
             $controller->viewBuilder()->theme(Configure::read('Backend.theme'));

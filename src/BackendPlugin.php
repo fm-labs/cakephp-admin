@@ -6,20 +6,25 @@ use Backend\Http\ActionDispatcherListener;
 use Backend\View\BackendView;
 use Banana\Application;
 use Banana\Menu\Menu;
+use Banana\Plugin\BasePlugin;
 use Banana\Plugin\PluginInterface;
 use Cake\Core\Configure;
 use Cake\Event\Event;
+use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
-use Cake\Http\MiddlewareQueue;
 use Cake\Log\Log;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use Settings\SettingsManager;
 
-class BackendPlugin implements PluginInterface, EventListenerInterface
+class BackendPlugin extends BasePlugin implements EventListenerInterface
 {
+    use EventDispatcherTrait;
+
+    protected $_name = "Backend";
+
     /**
      * @var \Banana\Application
      */
@@ -33,8 +38,9 @@ class BackendPlugin implements PluginInterface, EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function __construct()
+    public function __construct($config)
     {
+        parent::__construct($config);
         $this->_backend = new Backend();
     }
 
@@ -44,23 +50,13 @@ class BackendPlugin implements PluginInterface, EventListenerInterface
     public function implementedEvents()
     {
         return [
-            //'Backend.Sidebar.build' => ['callable' => 'buildBackendSidebarMenu', 'priority' => 99 ],
-            'Backend.SysMenu.build' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
-            //'Backend.Menu.build'    => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
-           // 'View.beforeLayout'     => ['callable' => 'beforeLayout'],
+            'Backend.Theme.Sidebar.buildMenu' => 'backendThemeSidebarBuildMenu',
+            'Backend.Theme.Navbar.buildMenu' => 'backendThemeNavbarBuildMenu',
+            'Backend.Menu.init' => ['callable' => 'backendMenuInit' ],
+            'Backend.Menu.build.admin_primary' => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
+            'Backend.Menu.build.admin_system' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
             'Settings.build' => 'settings'
         ];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function beforeLayout(Event $event)
-    {
-        if ($event->subject() instanceof BackendView && $event->subject()->plugin == "Backend") {
-            //$menu = new Menu($this->_getMenuItems());
-            //$event->subject()->set('backend.sidebar.menu', $menu);
-        }
     }
 
     /**
@@ -72,6 +68,7 @@ class BackendPlugin implements PluginInterface, EventListenerInterface
         $settings->addGroup('backend_form', ['label' => __('Backend Form')]);
         $settings->add('backend_form', [
             'Backend.CodeEditor.Ace.theme' => [
+                'group' => 'backend_form',
                 'default' => 'twilight',
                 'input' => [
                     'type' => 'select',
@@ -118,57 +115,53 @@ class BackendPlugin implements PluginInterface, EventListenerInterface
 
         ]);
     }
-
     /**
      * @param Event $event The event object
      * @return void
      */
-    public function buildBackendSidebarMenu(Event $event)
+    public function buildBackendMenu(Event $event, \Banana\Menu\Menu $menu)
     {
-        if ($event->subject() instanceof \Banana\Menu\Menu) {
-            //$settingsMenu = new Menu();
-            //$this->eventManager()->dispatch(new Event('Backend.SysMenu.build', $settingsMenu));
-            $event->subject()->addItem([
-                'title' => __d('backend', 'System'),
-                'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                'data-icon' => 'gears',
-                'children' => $this->_getMenuItems(),
-            ]);
 
-            if (Configure::read('debug')) {
-                $event->subject()->addItem([
-                    'title' => __d('backend', 'Design'),
-                    'data-icon' => 'paint-brush',
-                    'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index'],
-                    'children' => [
-                        'design_form' => [
-                            'title' => __d('backend', 'Forms'),
-                            'data-icon' => 'paint-brush',
-                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'form'],
-                        ],
-                        'design_boxes' => [
-                            'title' => __d('backend', 'Boxes'),
-                            'data-icon' => 'paint-brush',
-                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'boxes'],
-                        ],
-                        'design_tables' => [
-                            'title' => __d('backend', 'Tables'),
-                            'data-icon' => 'paint-brush',
-                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'tables'],
-                        ],
-                        'design_component' => [
-                            'title' => __d('backend', 'Components'),
-                            'data-icon' => 'paint-brush',
-                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'component'],
-                        ],
-                        'design_tabs' => [
-                            'title' => __d('backend', 'Tabs'),
-                            'data-icon' => 'paint-brush',
-                            'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'tabs'],
-                        ]
+        if (Configure::read('debug')) {
+            $menu->addItem([
+                'title' => __d('backend', 'Developer'),
+                'data-icon' => 'paint-brush',
+                'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index'],
+                'children' => [
+                    'design' => [
+                        'title' => __d('backend', 'Design'),
+                        'data-icon' => 'paint-brush',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index'],
+                    ],
+                    /*
+                    'design_form' => [
+                        'title' => __d('backend', 'Forms'),
+                        'data-icon' => 'paint-brush',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'form'],
+                    ],
+                    'design_boxes' => [
+                        'title' => __d('backend', 'Boxes'),
+                        'data-icon' => 'paint-brush',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'boxes'],
+                    ],
+                    'design_tables' => [
+                        'title' => __d('backend', 'Tables'),
+                        'data-icon' => 'paint-brush',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'tables'],
+                    ],
+                    'design_component' => [
+                        'title' => __d('backend', 'Components'),
+                        'data-icon' => 'paint-brush',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'component'],
+                    ],
+                    'design_tabs' => [
+                        'title' => __d('backend', 'Tabs'),
+                        'data-icon' => 'paint-brush',
+                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'tabs'],
                     ]
-                ]);
-            }
+                    */
+                ]
+            ]);
         }
     }
 
@@ -176,23 +169,11 @@ class BackendPlugin implements PluginInterface, EventListenerInterface
      * @param Event $event The event object
      * @return void
      */
-    public function buildBackendMenu(Event $event)
+    public function buildBackendSystemMenu(Event $event, \Banana\Menu\Menu $menu)
     {
-        if ($event->subject() instanceof \Banana\Menu\Menu) {
-        }
-    }
-
-    /**
-     * @param Event $event The event object
-     * @return void
-     */
-    public function buildBackendSystemMenu(Event $event)
-    {
-        if ($event->subject() instanceof \Banana\Menu\Menu) {
-            $items = $this->_getMenuItems();
-            foreach ($items as $item) {
-                $event->subject()->addItem($item);
-            }
+        $items = $this->_getMenuItems();
+        foreach ($items as $item) {
+            $menu->addItem($item);
         }
     }
 
@@ -250,13 +231,29 @@ class BackendPlugin implements PluginInterface, EventListenerInterface
                     Router::scope($urlPrefix . Inflector::underscore($pluginName), [
                         'plugin' => $pluginName,
                         'prefix' => 'admin',
-                        '_namePrefix' => sprintf("%s:admin:", Inflector::underscore($pluginName))
+                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName))
                     ], [$instance, 'backendRoutes']);
                 } catch (\Exception $ex) {
                     Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
                 }
+            } else {
+
+//                try {
+//                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
+//                        'plugin' => $pluginName,
+//                        'prefix' => 'admin',
+//                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName))
+//                    ], function(RouteBuilder $routes) {
+//                        $routes->fallbacks('DashedRoute');
+//                    });
+//                } catch (\Exception $ex) {
+//                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
+//                }
             }
         }
+
+        $event = $this->dispatchEvent('Backend.Routes.setup', ['routes' => $routes]);
+        return $event->data['routes'];
 
         return $routes;
     }
@@ -266,34 +263,28 @@ class BackendPlugin implements PluginInterface, EventListenerInterface
      */
     public function bootstrap(Application $app)
     {
+        parent::bootstrap($app);
+
+        $app->addPlugin("User");
+        $app->addPlugin("Bootstrap");
+
         EventManager::instance()->on($this);
         EventManager::instance()->on(new ActionDispatcherListener());
 
         $this->_app = $app;
-        foreach ($this->_app->plugins()->loaded() as $pluginName) {
-            $instance = $this->_app->plugins()->get($pluginName);
-            if (method_exists($instance, 'backendBootstrap')) {
-                try {
-                    call_user_func([$instance, 'backendBootstrap'], $this->_backend);
-                } catch (\Exception $ex) {
-                    Log::error("Backend plugin bootstrapping failed: $pluginName: " . $ex->getMessage());
-                }
-            }
-        }
-    }
+//        foreach ($this->_app->plugins()->loaded() as $pluginName) {
+//            $instance = $this->_app->plugins()->get($pluginName);
+//            if (method_exists($instance, 'backendBootstrap')) {
+//                try {
+//                    call_user_func([$instance, 'backendBootstrap'], $this->_backend);
+//                } catch (\Exception $ex) {
+//                    Log::error("Backend plugin bootstrapping failed: $pluginName: " . $ex->getMessage());
+//                }
+//            }
+//        }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function backendBootstrap(Backend $backend)
-    {
-        $backend->hook('backend.menu.build', function (Menu $menu) {
-            $menu->addItem([
-                'title' => 'System',
-                'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                'data-icon' => 'gears',
-                'children' => $this->_getMenuItems(),
-            ]);
+        Backend::addFilter('backend_menu_build', function ($menu) {
+            return $menu;
         });
     }
 
@@ -318,35 +309,29 @@ class BackendPlugin implements PluginInterface, EventListenerInterface
             ['_name' => 'user:loginsuccess']
         );
 
-        // backend:admin:auth:logout
+        // admin:backend:auth:logout
         $routes->connect(
             '/logout',
             ['controller' => 'Auth', 'action' => 'logout'],
             [ '_name' => 'user:logout']
         );
 
-        // backend:admin:auth:user
+        // admin:backend:auth:user
         $routes->connect(
             '/user',
             ['controller' => 'Auth', 'action' => 'user'],
             [ '_name' => 'user:profile']
         );
 
-        // backend:admin:dashboard
+        // admin:backend:dashboard
         $routes->connect(
             '/',
             ['controller' => 'Backend', 'action' => 'index'],
             ['_name' => 'dashboard']
         );
+
         $routes->fallbacks('DashedRoute');
 
         return $routes;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function middleware(MiddlewareQueue $middleware)
-    {
     }
 }

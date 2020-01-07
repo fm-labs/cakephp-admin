@@ -40,14 +40,14 @@
             <div class="pull-left">
                 <?= $this->Html->link(
                     __d('backend','Profile'),
-                    ['_name' => 'backend:admin:user:profile'],
+                    ['_name' => 'admin:backend:user:profile'],
                     ['class' => 'btn btn-default btn-flat']
                 ); ?>
             </div>
             <div class="pull-right">
                 <?= $this->Html->link(
                     __d('backend','Sign out'),
-                    ['_name' => 'backend:admin:user:logout'],
+                    ['_name' => 'admin:backend:user:logout'],
                     ['class' => 'btn btn-default btn-flat']
                 ); ?>
             </div>

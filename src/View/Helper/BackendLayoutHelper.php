@@ -9,6 +9,10 @@ use Cake\View\Helper;
 
 class BackendLayoutHelper extends Helper
 {
+    protected $_blocks = [];
+
+    protected $_themeConfig = ['name' => null, 'skin' => null, 'bodyClass' => null, 'darkmode' => null];
+
     /**
      * {@inheritDoc}
      */
@@ -17,11 +21,13 @@ class BackendLayoutHelper extends Helper
         $this->_View->loadHelper('Backend.Backend');
         $this->_View->loadHelper('Breadcrumb', ['className' => 'Backend.Breadcrumb']);
         $this->_View->loadHelper('Toolbar', ['className' => 'Backend.Toolbar']);
+        /*
         $this->_View->loadHelper('User.UserSession', [
             'sessionKey' => 'Backend.UserSession',
-            'loginUrl' => ['_name' => 'backend:admin:user:login'],
-            'checkUrl' => ['_name' => 'backend:admin:user:checkauth']
+            'loginUrl' => ['_name' => 'admin:backend:user:login'],
+            'checkUrl' => ['_name' => 'admin:backend:user:checkauth']
         ]);
+        */
 
         if (Configure::read('Backend.Theme.enableJsFlash')) {
             $this->_View->loadHelper('Backend.Toastr');
@@ -30,6 +36,9 @@ class BackendLayoutHelper extends Helper
         if (Configure::read('Backend.Theme.enableJsAlerts')) {
             $this->_View->loadHelper('Backend.SweetAlert2');
         }
+
+        $this->_blocks = (array)Configure::read('Backend.Layout.admin.blocks');
+        $this->_themeConfig = (array)Configure::read('Backend.Theme') + $this->_themeConfig;
     }
 
     /**
@@ -61,11 +70,11 @@ class BackendLayoutHelper extends Helper
         $title = ($title) ?: Inflector::humanize(Inflector::tableize($event->subject()->request['controller'])); // inflected controller name
         $event->subject()->Blocks->set('title', $title);
 
-        $themeClass = (Configure::read('Backend.Theme.name')) ?: 'theme-default';
-        $themeSkinClass = (Configure::read('Backend.Theme.skin')) ?: 'skin-default';
-        $themeBodyClass = (Configure::read('Backend.Theme.bodyClass')) ?: '';
+        $themeClass = ($this->_themeConfig['name']) ?: 'theme-default';
+        $themeSkinClass = ($this->_themeConfig['skin']) ?: 'skin-default';
+        $themeBodyClass = ($this->_themeConfig['bodyClass']) ?: '';
 
-        if (Configure::read('Backend.Theme.darkmode')) {
+        if ($this->_themeConfig['darkmode']) {
             $event->subject()->Html->css('/backend/css/layout/dark.min.css', ['block' => true]);
             $themeBodyClass = trim($themeBodyClass . ' darkmode');
         }
@@ -76,9 +85,9 @@ class BackendLayoutHelper extends Helper
         );
         //$event->subject()->Html->css('/backend/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
 
-        $blocks = Configure::read('Backend.Layout.admin.blocks');
 
-        foreach ($blocks as $block => $contents) {
+        /*
+        foreach ($this->_blocks as $block => $contents) {
             foreach ($contents as $content) {
                 $_block = (isset($content['block'])) ? $content['block'] : $block;
                 if (isset($content['element'])) {
@@ -88,5 +97,6 @@ class BackendLayoutHelper extends Helper
                 }
             }
         }
+        */
     }
 }

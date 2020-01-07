@@ -20,11 +20,6 @@ $menuClasses = [
     'trailItem' => 'active'
 ];
 
-$menu = $this->get('backend.sidebar.menu');
-if (!isset($menu)) {
-    echo "No menu";
-    return;
-}
 //debug($menu->toArray());
 ?>
 <!--Sidebar toggle button
@@ -38,9 +33,18 @@ if (!isset($menu)) {
 </ul>
 -->
 <?php
-echo $this->Menu->create([
-    'templates' => $menuTemplates,
-    'classes' => $menuClasses,
-    'items' => $menu->getItems()
-])
-->render();
+
+foreach (['admin_primary', 'admin_secondary'] as $menuId) {
+    //$menu = $this->get('backend.sidebar.menu');
+    $menu = \Backend\Backend::getMenu($menuId);
+    if (!$menu) {
+        //echo "No menu";
+        continue;
+    }
+
+    echo $this->Menu->create([
+        'templates' => $menuTemplates,
+        'classes' => $menuClasses,
+        'items' => $menu->getItems()
+    ])->render();
+}

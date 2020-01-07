@@ -30,8 +30,8 @@ class BackendFormHelper extends BootstrapFormHelper
             'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget', '_view'],
             'htmltext' => ['Backend\View\Widget\HtmlTextWidget', '_view'],
             // Date and Time Pickers
-            //'datetime' => ['Backend\View\Widget\DatePickerWidget', 'text', '_view'],
-            'datepicker' => ['Backend\View\Widget\DatePickerWidget', 'text', '_view'],
+            'datetime' => ['Backend\View\Widget\DatePickerWidget', 'text', '_view'], // override CakePHP built-in datetime control
+            //'datepicker' => ['Backend\View\Widget\DatePickerWidget', 'text', '_view'],
             'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
             // ACE Code Editor
             //'codeeditor' => ['Backend\View\Widget\CodeEditorWidget', '_view'],
@@ -114,6 +114,9 @@ class BackendFormHelper extends BootstrapFormHelper
         //debug($options);
         if (isset($options['type'])) {
             switch ($options['type']) {
+                case 'checkbox':
+                    //$options['nestedInput'] = false;
+                    break;
                 //case 'select':
                 //    if (!$context->isRequired($fieldName)) {
                 //        $options['empty'] = true;

@@ -231,11 +231,11 @@ class ToolbarHelper extends Helper
     public function beforeLayout(Event $event)
     {
         if (!$this->_rendered) {
-            if ($event->subject() instanceof BackendView) {
+            //if ($event->subject() instanceof BackendView) {
                 $event->subject()->Blocks->set($this->config('block'), $this->_View->element($this->config('element'), [
                     'toolbar' => $this->render()
                 ]));
-            }
+            //}
         }
     }
 

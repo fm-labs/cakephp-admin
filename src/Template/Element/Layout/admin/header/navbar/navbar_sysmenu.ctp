@@ -1,19 +1,7 @@
 <?php
 $this->loadHelper('Bootstrap.Menu');
 
-$menu = $this->get('backend.navbar.sysmenu');
-if (!isset($menu)) {
-    echo "No menu";
-    return;
-}
-$items = [];
-if ($menu->count() > 0) {
-    $menu->rewind();
-    $first = $menu->current();
-    if (isset($first['children'])) {
-        $items = $first['children'];
-    }
-}
+$items = \Backend\Backend::getMenu('admin_system');
 ?>
 <li class="dropdown sys-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">

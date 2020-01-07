@@ -7,7 +7,7 @@
             <!--
             <?= $this->Ui->link(
                 $this->get('be_title'),
-                ['_name' => 'backend:admin:dashboard'],
+                ['_name' => 'admin:backend:dashboard'],
                 ['class' => 'item', 'data-icon' => 'home']
             ); ?>
 

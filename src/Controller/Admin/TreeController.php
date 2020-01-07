@@ -97,6 +97,6 @@ class TreeController extends AppController
         $this->set('request', $request);
         $this->set('node', $node);
         $this->set('result', $result);
-        $this->set('_serialize', ['request', 'message', 'node']);
+        $this->set('_serialize', ['request', 'result', 'node']);
     }
 }

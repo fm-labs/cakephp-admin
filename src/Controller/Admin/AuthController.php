@@ -56,7 +56,7 @@ class AuthController extends AppController
      */
     public function loginSuccess()
     {
-        $redirect = ['_name' => 'backend:admin:dashboard'];
+        $redirect = ['_name' => 'admin:backend:dashboard'];
         if (Configure::check('Backend.Dashboard.url')) {
             $redirect = Configure::read('Backend.Dashboard.url');
         }

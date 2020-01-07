@@ -10,13 +10,6 @@ input[readonly] {
   cursor: not-allowed;
 }
 
-textarea {
-  width: 100%;
-  max-width: 100%;
-  min-height: 150px;
-  padding: 5px;
-}
-
 /**
  * Forms
  */
@@ -28,7 +21,7 @@ form {
 form.form,
 form.form-horizontal {
   padding: 15px;
-  background-color: #FFF;
+  //background-color: #FFF;
 }
 
 form label {
@@ -55,6 +48,8 @@ form .form-control {
   border-color: #A4A4A4;
   border-radius: 2px;
   padding: 6px 12px;
+  width: auto;
+  min-width: @form-input-w;
 }
 
 form div.required > label,
@@ -70,19 +65,15 @@ form div.input {
   margin-bottom: 0.5em;
 }
 
-form div.checkbox {
-  padding: 0.5em 0 0.5em;
-  display: inline-block;
-}
-
 form textarea {
-  min-height: 120px;
+  height: auto;
+  min-width: 500px !important;
+  min-height: 200px;
 }
 
 form textarea ~ button {
   margin-top: 0.5em;
 }
-
 form div.actions {
   border-top: 1px solid #ccc;
   padding: 1rem 0;
@@ -169,6 +160,18 @@ form fieldset.collapsed {
     ~ * {
       margin-top: 0.3em;
     }
+  }
+
+}
+
+form .input-checkbox,
+form .checkbox-wrapper {
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin: 0 5px 0 0;
+    margin-top: 1px\9;
+    line-height: normal;
+    //display: inline-block;
   }
 
 }

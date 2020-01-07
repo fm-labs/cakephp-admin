@@ -4,13 +4,17 @@ namespace Backend\Controller;
 
 use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
+use Cake\Controller\Exception\MissingActionException;
 use Cake\Event\Event;
+use LogicException;
 
 class ActionController extends Controller
 {
     public $controller;
 
     public $action;
+
+    public $autoRender = true;
 
     /**
      * @param Controller $controller The parent controller instance
@@ -32,7 +36,25 @@ class ActionController extends Controller
      */
     public function invokeAction()
     {
-        return $this->Action->execute();
+        $request = $this->request;
+        if (!isset($request)) {
+            throw new LogicException('No Request object configured. Cannot invoke action');
+        }
+        if (!$this->isAction($request->params['action'])) {
+            throw new MissingActionException([
+                'controller' => $this->name . "Controller",
+                'action' => $request->params['action'],
+                'prefix' => isset($request->params['prefix']) ? $request->params['prefix'] : '',
+                'plugin' => $request->params['plugin'],
+            ]);
+        }
+
+        return $this->controller->Action->execute($request->params['action']);
+    }
+
+    public function isAction($action)
+    {
+        return $this->controller->Action->hasAction($action);
     }
 
     /**
@@ -69,7 +91,6 @@ class ActionController extends Controller
     public function render($view = null, $layout = null)
     {
         $response = $this->controller->render($view, $layout);
-        debug(get_class($response));
         return $response;
     }
 

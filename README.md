@@ -4,7 +4,7 @@ A graphical administration backend boilerplate for CakePHP applications.
 
 ## Requirements
 
-CakePHP v3.1+
+CakePHP: 3.1.x - 3.3.x
 
 ## Dependencies
 

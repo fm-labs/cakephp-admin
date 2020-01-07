@@ -24,10 +24,10 @@ class Controller extends \Cake\Controller\Controller
      * @var array
      */
     public $actions = [
-        'index' => 'Backend.Index',
-        'view' => 'Backend.View',
-        'add' => 'Backend.Add',
-        'edit' => 'Backend.Edit',
+        //'index' => 'Backend.Index',
+        //'view' => 'Backend.View',
+        //'add' => 'Backend.Add',
+        //'edit' => 'Backend.Edit',
     ];
 
     /**

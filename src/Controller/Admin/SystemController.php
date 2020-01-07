@@ -12,6 +12,8 @@ use Cake\Routing\Router;
  */
 class SystemController extends AppController
 {
+    public $actions = [];
+
     /**
      * Index method
      *
@@ -19,6 +21,7 @@ class SystemController extends AppController
      */
     public function index()
     {
+        //$this->set('template', 'index');
     }
 
     /**

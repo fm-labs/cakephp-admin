@@ -102,7 +102,8 @@ class EditAction extends BaseEntityAction
             $entity = $this->model()->patchEntity($entity, $this->request->data, ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend', 'Saved!'));
-                $this->redirect([$entity->id] + $controller->request->query);
+
+                return $this->redirect([$entity->id] + $controller->request->query);
             } else {
                 $this->_flashError();
             }

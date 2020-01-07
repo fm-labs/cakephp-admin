@@ -8,7 +8,7 @@ if (!Plugin::loaded('User')) {
     die("User plugin missing");
 }
 
-Plugin::load('Bootstrap');
+//Plugin::load('Bootstrap');
 //Plugin::load('User');
 
 /**

@@ -4,6 +4,7 @@
  * Scan for elements with following css selectors and inject a font-awesome icon
  * - [data-icon]
  */
+var Backend = window.Backend || {};
 (function( $ ) {
 
     $.fn.iconify = function() {
@@ -38,8 +39,14 @@
 
     };
 
-    Backend.Renderer.addListener('docready', function(scope) {
-        $(scope).iconify();
-    });
+    if (Backend.Renderer) {
+        Backend.Renderer.addListener('docready', function(scope) {
+            $(scope).iconify();
+        });
+    } else {
+        $(document).ready(function() {
+            $('body').iconify();
+        });
+    }
 
 }( jQuery, Backend ));

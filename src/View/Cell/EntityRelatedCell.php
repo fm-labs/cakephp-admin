@@ -41,7 +41,13 @@ class EntityRelatedCell extends Cell
             $assoc = $Model->association($alias);
             if ($assoc) {
                 if ($entity->get($assoc->property()) === null) {
-                    debug($assoc->type() . ": associated property not set: " . $assoc->property());
+                    //debug($assoc->type() . ": associated property not set: " . $assoc->property());
+
+                    $elements[] = [
+                        'title' => __d('backend', 'Related {0}', $assoc->name()),
+                        'render' => 'content',
+                        'content' => sprintf("Associated property not set: %s (%s)", $assoc->property(), $assoc->type())
+                    ];
                     continue;
                 }
 

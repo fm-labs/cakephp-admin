@@ -1,12 +1,6 @@
 <?php
 /**
- * View Action
- *
- * Renders entity with EntityView cell
- *
- * View variables:
- * - entity: Entity instance
- * - viewOptions: EntityView options array
+ * Edit Action Admin Template
  */
 $entity = $this->get('entity');
 //$title = $this->get('title', @array_pop(explode('\\', get_class($entity))));

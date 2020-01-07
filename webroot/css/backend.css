@@ -613,19 +613,12 @@ nav ul.pagination {
 input[readonly] {
   cursor: not-allowed;
 }
-textarea {
-  width: 100%;
-  max-width: 100%;
-  min-height: 150px;
-  padding: 5px;
-}
 /**
  * Forms
  */
 form.form,
 form.form-horizontal {
   padding: 15px;
-  background-color: #FFF;
 }
 form label {
   display: inline-block;
@@ -644,6 +637,8 @@ form .form-control {
   border-color: #A4A4A4;
   border-radius: 2px;
   padding: 6px 12px;
+  width: auto;
+  min-width: 300px;
 }
 form div.required > label,
 form div.required .control-label {
@@ -656,12 +651,10 @@ form div.required .control-label:after {
 form div.input {
   margin-bottom: 0.5em;
 }
-form div.checkbox {
-  padding: 0.5em 0 0.5em;
-  display: inline-block;
-}
 form textarea {
-  min-height: 120px;
+  height: auto;
+  min-width: 500px !important;
+  min-height: 200px;
 }
 form textarea ~ button {
   margin-top: 0.5em;
@@ -752,6 +745,14 @@ form fieldset.collapsed > legend::before {
 form fieldset.collapsed > legend ~ * {
   margin-top: 0.3em;
 }
+form .input-checkbox input[type="checkbox"],
+form .checkbox-wrapper input[type="checkbox"],
+form .input-checkbox input[type="radio"],
+form .checkbox-wrapper input[type="radio"] {
+  margin: 0 5px 0 0;
+  margin-top: 1px\9;
+  line-height: normal;
+}
 /**
  * Number
  */
@@ -828,8 +829,9 @@ form.form-horizontal .control-help {
 /* https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */
 div.checkbox {
   min-height: unset;
-  padding: 0;
   margin: 0;
+  padding: 0.5em 0 0.5em;
+  display: inline-block;
   /* Hide the browser's default checkbox */
   /* Create a custom checkbox */
   /* On mouse-over, add a grey background color */
@@ -839,7 +841,7 @@ div.checkbox {
   /* Style the checkmark/indicator */
 }
 div.checkbox > label {
-  display: block;
+  display: inline-block;
   position: relative;
   padding-left: 35px;
   cursor: pointer;
@@ -1259,6 +1261,10 @@ body.has-toolbar-fixed {
 /**
  * Select2 Integration for Backend
  */
+.select2-container--bootstrap {
+  display: inline-block !important;
+  min-width: 300px;
+}
 .select2-container .select2-selection,
 .select2-container--bootstrap .select2-selection {
   border-radius: 0 !important;

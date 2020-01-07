@@ -10,7 +10,7 @@ use Cake\Event\Event;
  * Class TreeSortAction
  * @package Backend\Action
  */
-class TreeSortAction extends BaseIndexAction
+class TreeSortAction extends IndexAction
 {
     /**
      * {@inheritDoc}
@@ -45,6 +45,6 @@ class TreeSortAction extends BaseIndexAction
 
         $controller->set('dataUrl', ['plugin' => 'Backend', 'controller' => 'Tree', 'action' => 'jstreeData', 'model' => $controller->modelClass]);
         $controller->set('sortUrl', ['plugin' => 'Backend', 'controller' => 'Tree', 'action' => 'jstreeSort', 'model' => $controller->modelClass]);
-        $controller->render('Backend.tree_sort');
+        return $controller->render('Backend.tree_sort');
     }
 }

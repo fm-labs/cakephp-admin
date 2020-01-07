@@ -11,18 +11,21 @@ use Cake\Controller\Component;
 use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Network\Exception\NotFoundException;
 use Cake\Network\Response;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
-use Cake\View\Exception\MissingTemplateException;
 
 /**
  * Class ActionComponent
  *
  * @package Backend\Controller\Component
+ * @TODO Replace ActionRegistry with dynamic initialization of Action objects (load on-the-fly instead of preloading all available actions)
+ * @TODO Add method to easily attach event listeners to the Action object
  */
 class ActionComponent extends Component
 {
@@ -50,6 +53,11 @@ class ActionComponent extends Component
      * @var Table Active primary table
      */
     protected $_model;
+
+    /**
+     * @var array Map of executed actions
+     */
+    protected $_executed = [];
 
     /**
      * Initialize actions
@@ -211,69 +219,108 @@ class ActionComponent extends Component
 
     /**
      * @param null|string $action Action name
-     * @return mixed
+     * @return null|\Cake\Network\Response
      */
     public function execute($action = null)
     {
+        // Fallback to request action param, if not defined
         if ($action === null) {
             $action = $this->request->params['action'];
         }
-        $this->_action = $this->getAction($action);
-        $this->model(); // init primary model
 
-        // attach Action instance to controllers event manager
+        // Prevent double execution (auto and manual)
+        if (isset($this->_executed[$action]) && $this->_executed[$action] === true) {
+            return null;
+        }
+
+        // Get Action class instance
+        $this->_action = $this->getAction($action);
+
+        // Init primary model
+        $this->model();
+
+        // Attach Action instance to controllers event manager
         if ($this->_action instanceof EventListenerInterface) {
             $this->_controller->eventManager()->on($this->_action);
         }
 
+        // Dispatch 'beforeAction' Event
+        //@TODO Rename to 'Backend.Controller.beforeAction'
         $event = $this->_controller->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
         if ($event->result instanceof Response) {
             return $event->result;
         }
 
-        // execute the action in context of current controller
+        // Execute the action in context of current controller
+        $this->_executed[$action] = true;
         $response = $this->_action->execute($this->_controller);
         if ($response instanceof Response) {
             return $response;
         }
 
+        // Dispatch 'afterAction' Event
+        //@TODO Rename to 'Backend.Controller.afterAction'
         $event = $this->_controller->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
         if ($event->result instanceof Response) {
             return $event->result;
         }
 
-        // force rendering to capture template exception and fallback to Action template path
-        if (!$response && $this->_controller->autoRender) {
-            // action name is default template name
-            //$template = $this->_controller->request->param('action');
-            $template = null;
+    }
 
-            try {
-                return $this->_controller->render($template);
-                //$eventManager = null; // drop event manager backup
-            } catch (MissingTemplateException $ex) {
-                // build action template path
-                $templatePath = 'Action';
-                if ($this->request->params['prefix']) {
-                    $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
+    /**
+     * @param Event $event The controller event
+     * @return null|\Cake\Network\Response
+     */
+    public function beforeRender(Event $event)
+    {
+        if (isset($this->request->params['action'])) {
+            $action = $this->request->params['action'];
+            if (isset($this->actions[$action])) {
+                /* @var Controller $controller */
+                $controller = $event->subject();
+
+                // Inject template and layout via controller view vars
+                //$template = (isset($controller->viewVars['template'])) ? $controller->viewVars['template'] : $controller->viewBuilder()->template();
+                //$layout = (isset($controller->viewVars['layout'])) ? $controller->viewVars['layout'] : $controller->viewBuilder()->layout();
+
+                // Check if a custom Action class template in the controller's template path,
+                // otherwise use the default Action class template.
+                // Default Action class template path: {plugin}/src/Template/{prefix}/Action/{action}.ctp
+                // Custom Action class template path: {plugin}/src/Template/{prefix}/{controller}/{action}.ctp
+                //@TODO Check all application template paths, not only the first configured
+                $templateFile = sprintf(
+                    "%ssrc/Template/%s/%s.ctp",
+                    (isset($this->request->params['plugin'])) ? Plugin::path($this->request->params['plugin']) : App::path('Template')[0],
+                    $controller->viewBuilder()->templatePath(),
+                    Inflector::underscore($action)
+                );
+                if (!file_exists($templateFile)) {
+                    // build action template path
+                    $templatePath = 'Action';
+                    if ($this->request->params['prefix']) {
+                        $templatePath = Inflector::camelize($this->request->params['prefix']) . '/' . $templatePath;
+                    }
+                    $controller->viewBuilder()->templatePath($templatePath);
+
+                    // use action class name as default template name
+                    $template = ($this->_action->template) ?? null;
+                    if (!$template) {
+                        $config = $this->actions[$action];
+                        list($plugin, $actionClass) = pluginSplit($config['className']);
+                        $actionClass = Inflector::underscore($actionClass);
+                        $template = ($plugin) ? $plugin . '.' . $actionClass : $actionClass;
+                    }
+
+                    $controller->viewBuilder()->template($template);
                 }
 
-                // use action class name as default template name
-                $template = ($this->_action->template) ?? null;
-                if (!$template) {
-                    $config = $this->actions[$action];
-                    list($plugin, $actionClass) = pluginSplit($config['className']);
-                    $actionClass = Inflector::underscore($actionClass);
-                    $template = ($plugin) ? $plugin . '.' . $actionClass : $actionClass;
+                // Auto-execute Action class
+                // The Action class might have already been executed manually
+                //@TODO Make auto-execution of Action classes optional
+                $response = $this->execute($action);
+                if ($response instanceof Response) {
+                    return $response;
                 }
-
-                // After Controller::render() has been triggered, the $View property
-                // is available
-                $this->_controller->View->templatePath($templatePath);
-                $this->_controller->View->template($template);
-                $this->response->body($this->_controller->View->render());
-
-                return $this->response;
             }
         }
     }
@@ -302,6 +349,7 @@ class ActionComponent extends Component
     {
         return [
             'Controller.startup' => 'startup',
+            'Controller.beforeRender' => 'beforeRender',
         ];
     }
 }

@@ -2,8 +2,6 @@
 <?php $this->Breadcrumbs->add(__d('backend','Plugins'), ['action' => 'index']); ?>
 <?php $this->loadHelpers('Backend.Ui'); ?>
 <div>
-	<h2><?php echo __d('backend', 'Plugins'); ?></h2>
-
 	<table class="table">
 		<tr>
 			<th>Name</th>

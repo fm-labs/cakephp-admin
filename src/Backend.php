@@ -5,9 +5,12 @@ namespace Backend;
 use Backend\Service\ServiceRegistry;
 use Banana\Application;
 use Banana\Exception\ClassNotFoundException;
+use Banana\Menu\Menu;
+use Banana\Menu\MenuItem;
 use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin;
+use Cake\Event\Event;
 use Cake\Event\EventManager;
 
 /**
@@ -57,6 +60,45 @@ class Backend
      * @var array Hook callback storage
      */
     protected static $_hooks = [];
+
+    public static function addFilter($name, $cb)
+    {
+        //@TODO Implement Me
+    }
+
+    public static function applyFilter($name)
+    {
+        //@TODO Implement Me
+    }
+
+    public static function addHook($name, $cb)
+    {
+        //@TODO Implement Me
+    }
+
+    public static function applyHook($name)
+    {
+        //@TODO Implement Me
+    }
+
+    public static function getMailer()
+    {
+        //@TODO Implement Me
+    }
+
+    /**
+     * @return \Banana\Menu\Menu|array
+     */
+    public static function getMenu($menuId)
+    {
+        //@TODO Cache
+        $menu = new Menu();
+        $event = EventManager::instance()->dispatch(new Event('Backend.Menu.build.' . $menuId, null, ['menu' => $menu]));
+
+        return $event->data['menu'];
+        //$event = EventManager::instance()->dispatch(new Event('Backend.Menu.init', null, ['menus' => [], 'menuId' => $menuId]));
+        //return (isset($event->data['menus'][$menuId])) ? $event->data['menus'][$menuId] : [];
+    }
 
     /**
      * @return string Backend version number

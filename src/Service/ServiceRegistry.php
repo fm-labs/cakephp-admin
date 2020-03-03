@@ -20,7 +20,7 @@ class ServiceRegistry extends ObjectRegistry
      */
     public function __construct(EventManager $eventManager)
     {
-        $this->eventManager($eventManager);
+        $this->setEventManager($eventManager);
     }
 
     /**
@@ -64,7 +64,7 @@ class ServiceRegistry extends ObjectRegistry
     protected function _create($class, $alias, $config)
     {
         $instance = new $class($this, $config);
-        $this->eventManager()->on($instance);
+        $this->getEventManager()->on($instance);
 
         return $instance;
     }

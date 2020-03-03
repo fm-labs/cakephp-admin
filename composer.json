@@ -3,12 +3,12 @@
     "description": "Backend plugin for CakePHP",
     "type": "cakephp-plugin",
     "require": {
-        "php": ">=5.4",
+        "php": ">=7.1",
         "fm-labs/cakephp-bootstrap": "dev-master"
     },
     "require-dev": {
-        "cakephp/cakephp": "~3.0",
-        "phpunit/phpunit": "<6.0"
+        "cakephp/cakephp": "~3.8",
+        "phpunit/phpunit": "*"
     },
     "autoload": {
         "psr-4": {

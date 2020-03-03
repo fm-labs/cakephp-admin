@@ -37,7 +37,7 @@ class AdminNotifier
      */
     protected static function _createEmail()
     {
-        if (Email::config('admin') !== null) {
+        if (Email::getConfig('admin') !== null) {
             $email = new Email('admin');
         } elseif (Configure::check('Backend.AdminNotifier')) {
             $email = new Email(Configure::read('Backend.AdminNotifier'));

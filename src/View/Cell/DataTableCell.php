@@ -34,7 +34,7 @@ class DataTableCell extends Cell
         // model context
         $this->modelClass = $params['model'];
         if ($this->modelClass) {
-            $this->model = TableRegistry::get($this->modelClass);
+            $this->model = TableRegistry::getTableLocator()->get($this->modelClass);
         }
 
         // data

@@ -14,7 +14,7 @@ if (!Plugin::loaded('User')) {
 /**
  * Logs
  */
-Log::config('backend', [
+Log::setConfig('backend', [
     'className' => 'Cake\Log\Engine\FileLog',
     'path' => LOGS,
     'file' => 'backend',
@@ -25,8 +25,8 @@ Log::config('backend', [
 /**
  * Cache config
  */
-if (!Cache::config('backend')) {
-    Cache::config('backend', [
+if (!Cache::getConfig('backend')) {
+    Cache::setConfig('backend', [
         'className' => 'File',
         'duration' => '+1 hours',
         'path' => CACHE,

@@ -512,7 +512,7 @@ class DataTableHelper extends Helper
     protected function _table()
     {
         if ($this->_table === null && $this->_params['model']) {
-            $this->_table = TableRegistry::get($this->_params['model']);
+            $this->_table = TableRegistry::getTableLocator()->get($this->_params['model']);
         }
 
         return $this->_table;
@@ -547,7 +547,7 @@ class DataTableHelper extends Helper
 
         //$entity = null;
         //if ($this->_params['model']) {
-        //    $entity = TableRegistry::get($this->_params['model'])->newEntity();
+        //    $entity = TableRegistry::getTableLocator()->get($this->_params['model'])->newEntity();
         //}
 
         $formStart = $this->Form->create(null, ['method' => 'GET', 'novalidate' => true, 'context' => false]);

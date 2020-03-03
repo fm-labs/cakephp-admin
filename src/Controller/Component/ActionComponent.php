@@ -336,7 +336,7 @@ class ActionComponent extends Component
                 return null;
             }
 
-            $this->_model = TableRegistry::get($modelClass);
+            $this->_model = TableRegistry::getTableLocator()->get($modelClass);
         }
 
         return $this->_model;

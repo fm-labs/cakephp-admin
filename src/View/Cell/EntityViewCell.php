@@ -276,7 +276,7 @@ class EntityViewCell extends Cell
     protected function _getTable()
     {
         if (!$this->_table && $this->model) {
-            $this->_table = TableRegistry::get($this->model);
+            $this->_table = TableRegistry::getTableLocator()->get($this->model);
         }
 
         return $this->_table;

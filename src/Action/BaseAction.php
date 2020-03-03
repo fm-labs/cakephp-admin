@@ -93,7 +93,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
         }
 
         if (!$this->_table) {
-            $this->_table = TableRegistry::get($this->_config['modelClass']);
+            $this->_table = TableRegistry::getTableLocator()->get($this->_config['modelClass']);
         }
 
         return $this->_table;

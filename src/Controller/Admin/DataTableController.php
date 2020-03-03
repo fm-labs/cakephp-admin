@@ -127,6 +127,6 @@ class DataTableController extends AppController
      */
     protected function _getModel($tableName)
     {
-        return TableRegistry::get($tableName);
+        return TableRegistry::getTableLocator()->get($tableName);
     }
 }

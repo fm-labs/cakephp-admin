@@ -19,8 +19,8 @@ class SumoSelectHelper extends Helper
      */
     public function initialize(array $config)
     {
-        $this->Html->css($this->config('cssUrl'), ['block' => true]);
-        $this->Html->script($this->config('scriptUrl'), ['block' => true]);
+        $this->Html->css($this->getConfig('cssUrl'), ['block' => true]);
+        $this->Html->script($this->getConfig('scriptUrl'), ['block' => true]);
 
         $this->Form->addWidget('sumoselect', ['Backend\View\Widget\SumoSelectBoxWidget', '_view']);
     }
@@ -34,7 +34,7 @@ class SumoSelectHelper extends Helper
 //            //'captionFormatAllSelected' => __d('backend', '{0} all selected!'),
 //        ];
 //
-//        $options = array_merge($defaultSumo, $this->config('sumo'), $options);
+//        $options = array_merge($defaultSumo, $this->getConfig('sumo'), $options);
 //
 //    }
 }

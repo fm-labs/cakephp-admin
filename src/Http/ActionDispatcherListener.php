@@ -28,7 +28,7 @@ class ActionDispatcherListener implements EventListenerInterface
         /* @var $response \Cake\Network\Response */
         $response = $event->data['response'];
         /* @var $dispatcher \Cake\Http\ActionDispatcher */
-        $dispatcher = $event->subject();
+        $dispatcher = $event->getSubject();
 
         $controllerFactory = new ControllerFactory();
         $controller = $controllerFactory->create($request, $response);

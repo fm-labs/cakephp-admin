@@ -48,7 +48,7 @@ class ToolbarHelper extends Helper
         $this->_items = [];
         $this->_rendered = false;
         $this->_grouping = false;
-        $this->config($this->_defaultConfig, null, false);
+        $this->setConfig($this->_defaultConfig, null, false);
 
         return $this;
     }
@@ -65,7 +65,7 @@ class ToolbarHelper extends Helper
         $this->_items = [];
         $this->_rendered = false;
         $this->_grouping = false;
-        $this->config($config);
+        $this->setConfig($config);
 
         return $this;
     }
@@ -190,7 +190,7 @@ class ToolbarHelper extends Helper
      */
     public function render($options = [], $childMenuOptions = [], $itemOptions = [])
     {
-        $options = array_merge($this->config('options'), $options);
+        $options = array_merge($this->getConfig('options'), $options);
         $html = $this->Ui->menu($this->getMenuItems(), $options, $childMenuOptions, $itemOptions);
         $this->_rendered = true;
 
@@ -203,7 +203,7 @@ class ToolbarHelper extends Helper
     public function beforeRender(Event $event)
     {
         // parse toolbar actions defined in 'toolbar.actions' view-var
-        $toolbarActions = (array)$event->subject()->get('toolbar.actions');
+        $toolbarActions = (array)$event->getSubject()->get('toolbar.actions');
 
         if ($toolbarActions) {
             array_walk($toolbarActions, function ($action) {
@@ -231,8 +231,8 @@ class ToolbarHelper extends Helper
     public function beforeLayout(Event $event)
     {
         if (!$this->_rendered) {
-            //if ($event->subject() instanceof BackendView) {
-                $event->subject()->Blocks->set($this->config('block'), $this->_View->element($this->config('element'), [
+            //if ($event->getSubject() instanceof BackendView) {
+                $event->getSubject()->assign($this->getConfig('block'), $this->_View->element($this->getConfig('element'), [
                     'toolbar' => $this->render()
                 ]));
             //}

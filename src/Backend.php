@@ -209,7 +209,7 @@ class Backend
      */
     public function loadServices()
     {
-        foreach ($this->config('services') as $service => $enabled) {
+        foreach ($this->getConfig('services') as $service => $enabled) {
             list($service, $enabled) = (is_numeric($service)) ? [$enabled, true] : [$service, $enabled];
             if ($enabled) {
                 $this->services->load($service);

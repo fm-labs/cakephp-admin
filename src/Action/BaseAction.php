@@ -51,7 +51,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
     {
         $this->controller = $controller;
         $this->request =& $controller->request;
-        $this->config($config);
+        $this->setConfig($config);
     }
 
     /**

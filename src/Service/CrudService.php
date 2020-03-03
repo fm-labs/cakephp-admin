@@ -15,7 +15,7 @@ class CrudService extends BackendService
         return [
             'Backend.Controller.setupActions' => ['callable' => function (Event $event) {
 
-                if (isset($event->subject()->scaffold)) {
+                if (isset($event->getSubject()->scaffold)) {
                     if (!isset($event->data['actions']['index'])) {
                         $event->data['actions']['index'] = 'Backend.Index';
                     }

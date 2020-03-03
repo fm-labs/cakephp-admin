@@ -32,8 +32,8 @@ class VectorMapHelper extends Helper
      */
     public function initialize(array $config)
     {
-        $this->Html->css($this->config('cssUrl'), ['block' => true]);
-        $this->Html->script($this->config('scriptUrl'), ['block' => true]);
+        $this->Html->css($this->getConfig('cssUrl'), ['block' => true]);
+        $this->Html->script($this->getConfig('scriptUrl'), ['block' => true]);
     }
 
     public function create()

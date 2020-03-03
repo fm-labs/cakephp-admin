@@ -62,10 +62,10 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
 
     public function beforeRender(Event $event)
     {
-        $entity = $event->subject()->viewVars['entity'];
-        $modelClass = $event->subject()->viewVars['modelClass'];
+        $entity = $event->getSubject()->viewVars['entity'];
+        $modelClass = $event->getSubject()->viewVars['modelClass'];
 
-        $event->subject()->viewVars['tabs']['data'] = [
+        $event->getSubject()->viewVars['tabs']['data'] = [
             'title' => __d('backend', 'Data'),
             'url' => ['plugin' => 'Backend', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id]
         ];

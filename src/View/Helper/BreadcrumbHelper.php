@@ -35,14 +35,14 @@ class BreadcrumbHelper extends Helper
     public function beforeLayout(Event $event)
     {
         //@TODO _no_breadcrumbs and layout_no_breadcrumbs are deprecated. Set `breadcrumbs` to FALSE instead
-        if ($event->subject()->get('breadcrumbs') === false
-            || $event->subject()->get('_no_breadcrumbs') === true
-            || $event->subject()->get('layout_no_breadcrumbs') === true) {
+        if ($event->getSubject()->get('breadcrumbs') === false
+            || $event->getSubject()->get('_no_breadcrumbs') === true
+            || $event->getSubject()->get('layout_no_breadcrumbs') === true) {
             return;
         }
 
-        if (empty($this->Breadcrumbs->getCrumbs()) && $event->subject()->get('breadcrumbs')) {
-            foreach ((array)$event->subject()->get('breadcrumbs') as $breadcrumb) {
+        if (empty($this->Breadcrumbs->getCrumbs()) && $event->getSubject()->get('breadcrumbs')) {
+            foreach ((array)$event->getSubject()->get('breadcrumbs') as $breadcrumb) {
                 $breadcrumb += ['title' => null, 'url' => null, 'options' => []];
                 $this->Breadcrumbs->add($breadcrumb['title'], $breadcrumb['url'], $breadcrumb['options']);
             }
@@ -79,7 +79,7 @@ class BreadcrumbHelper extends Helper
         // inject backend dashboard url on first position
         $this->Breadcrumbs->prepend($this->_View->get('be_title'), $this->_View->get('be_dashboard_url'));
 
-        $breadcrumbsHtml = $this->Breadcrumbs->render($this->config());
-        $event->subject()->Blocks->set('breadcrumbs', $breadcrumbsHtml);
+        $breadcrumbsHtml = $this->Breadcrumbs->render($this->getConfig());
+        $event->getSubject()->assign('breadcrumbs', $breadcrumbsHtml);
     }
 }

@@ -71,8 +71,8 @@ class JsTreeBehavior extends Behavior
     {
         $this->_table->displayField();
 
-        $fields = $this->config('fields');
-        $dataFields = $this->config('dataFields');
+        $fields = $this->getConfig('fields');
+        $dataFields = $this->getConfig('dataFields');
         if ($dataFields !== true) {
             $treeFields = ['lft' => null, 'rght' => null, 'parent_id' => null, 'level' => null];
             $dataFields = $fields + $treeFields + array_flip($dataFields);

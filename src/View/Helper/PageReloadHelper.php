@@ -38,7 +38,7 @@ class PageReloadHelper extends Helper
         if (is_numeric($enable)) {
             $this->setTimeout($enable);
         } elseif ($enable) {
-            $this->setTimeout($this->config('timeout'));
+            $this->setTimeout($this->getConfig('timeout'));
         } else {
             $this->setTimeout(0);
         }
@@ -67,7 +67,7 @@ class PageReloadHelper extends Helper
     {
         if ($this->_timeout > 0) {
             if ($this->_config['render'] == 'html' || $this->_config['render'] == 'both') {
-                $event->subject()->Html->meta(['http-equiv' => 'refresh', 'content' => $this->_timeout], null, ['block' => true]);
+                $event->getSubject()->Html->meta(['http-equiv' => 'refresh', 'content' => $this->_timeout], null, ['block' => true]);
             }
 
             if ($this->_config['render'] == 'script' || $this->_config['render'] == 'both') {
@@ -95,12 +95,12 @@ SCRIPT;
                     [$timeoutMs],
                     $scriptTemplate
                 );
-                $event->subject()->Html->scriptBlock($script, ['safe' => true, 'block' => true]);
+                $event->getSubject()->Html->scriptBlock($script, ['safe' => true, 'block' => true]);
             }
 
             if ($this->_config['infoBlock']) {
                 $block = ($this->_config['infoBlock'] === true) ? 'after' : $this->_config['infoBlock'];
-                $event->subject()->append($block, sprintf($this->_config['infoTemplate'], $this->_timeout));
+                $event->getSubject()->append($block, sprintf($this->_config['infoTemplate'], $this->_timeout));
             }
         }
     }

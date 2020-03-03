@@ -277,7 +277,7 @@ class ActionComponent extends Component
             $action = $this->request->params['action'];
             if (isset($this->actions[$action])) {
                 /* @var Controller $controller */
-                $controller = $event->subject();
+                $controller = $event->getSubject();
 
                 // Inject template and layout via controller view vars
                 //$template = (isset($controller->viewVars['template'])) ? $controller->viewVars['template'] : $controller->viewBuilder()->template();

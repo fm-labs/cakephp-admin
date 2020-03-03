@@ -16,7 +16,7 @@ class AuthComponent extends \User\Controller\Component\AuthComponent
     {
         parent::initialize($config);
 
-        $this->config([
+        $this->setConfig([
             'userModel' => 'Backend.Users',
             //'ajaxLoginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'ajaxLogin'],
             'loginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
@@ -26,12 +26,12 @@ class AuthComponent extends \User\Controller\Component\AuthComponent
             'authorize' => ['Backend.Backend' /*, 'User.Roles'*/],
             //'flash' => 'auth',
         ]);
-        $this->config('authenticate', [
-            AuthComponent::ALL => ['userModel' => $this->config('userModel'), 'finder' => 'backendAuthUser'],
+        $this->setConfig('authenticate', [
+            AuthComponent::ALL => ['userModel' => $this->getConfig('userModel'), 'finder' => 'backendAuthUser'],
             'Form',
             //'Basic'
         ], false);
-        $this->config('storage', [
+        $this->setConfig('storage', [
             'className' => 'Session',
             'key' => 'Backend.User',
             'redirect' => 'Backend.redirect'

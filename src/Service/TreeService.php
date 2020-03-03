@@ -15,9 +15,9 @@ class TreeService extends BackendService
         return [
             'Backend.Controller.setupActions' => ['callable' => function (Event $event) {
 
-                $modelClass = $event->subject()->modelClass;
+                $modelClass = $event->getSubject()->modelClass;
                 if ($modelClass) {
-                    $Model = $event->subject()->loadModel($modelClass);
+                    $Model = $event->getSubject()->loadModel($modelClass);
                     if ($Model->behaviors()->has('Tree')) {
                         $event->data['actions']['index'] = 'Backend.TreeIndex';
                         //$event->data['actions']['view']     = 'Backend.View';

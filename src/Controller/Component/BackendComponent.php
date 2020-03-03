@@ -182,7 +182,7 @@ class BackendComponent extends Component
     public function init(Event $event)
     {
         /* @var \Cake\Controller\Controller $controller */
-        $controller = $event->subject();
+        $controller = $event->getSubject();
 
         // Configure view
         $controller->viewBuilder()->className('Backend.Backend');
@@ -210,13 +210,13 @@ class BackendComponent extends Component
      */
     public function beforeRender(Event $event)
     {
-        $controller = $event->subject();
+        $controller = $event->getSubject();
 
-        if ($event->subject()->Auth && $event->subject()->Auth->user()) {
-            $event->subject()->viewBuilder()->helpers(['Backend.BackendLayout']);
+        if ($event->getSubject()->Auth && $event->getSubject()->Auth->user()) {
+            $event->getSubject()->viewBuilder()->helpers(['Backend.BackendLayout']);
 
-            $controller->set('be_title', $this->config('backendTitle'));
-            $controller->set('be_dashboard_url', Router::url($this->config('dashboardUrl')));
+            $controller->set('be_title', $this->getConfig('backendTitle'));
+            $controller->set('be_dashboard_url', Router::url($this->getConfig('dashboardUrl')));
         }
     }
 

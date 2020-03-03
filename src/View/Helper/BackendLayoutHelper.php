@@ -65,25 +65,25 @@ class BackendLayoutHelper extends Helper
     public function beforeLayout(Event $event)
     {
         // title
-        $title = $event->subject()->Blocks->get('title'); // check the title block
-        $title = ($title) ?: $event->subject()->get('page.title'); // check the 'page.title' view var
-        $title = ($title) ?: Inflector::humanize(Inflector::tableize($event->subject()->request['controller'])); // inflected controller name
-        $event->subject()->Blocks->set('title', $title);
+        $title = $event->getSubject()->Blocks->get('title'); // check the title block
+        $title = ($title) ?: $event->getSubject()->get('page.title'); // check the 'page.title' view var
+        $title = ($title) ?: Inflector::humanize(Inflector::tableize($event->getSubject()->request['controller'])); // inflected controller name
+        $event->getSubject()->assign('title', $title);
 
         $themeClass = ($this->_themeConfig['name']) ?: 'theme-default';
         $themeSkinClass = ($this->_themeConfig['skin']) ?: 'skin-default';
         $themeBodyClass = ($this->_themeConfig['bodyClass']) ?: '';
 
         if ($this->_themeConfig['darkmode']) {
-            $event->subject()->Html->css('/backend/css/layout/dark.min.css', ['block' => true]);
+            $event->getSubject()->Html->css('/backend/css/layout/dark.min.css', ['block' => true]);
             $themeBodyClass = trim($themeBodyClass . ' darkmode');
         }
 
-        $event->subject()->set(
+        $event->getSubject()->set(
             'be_layout_body_class',
             trim(join(' ', [$themeClass, $themeSkinClass, $themeBodyClass]))
         );
-        //$event->subject()->Html->css('/backend/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
+        //$event->getSubject()->Html->css('/backend/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
 
 
         /*
@@ -91,9 +91,9 @@ class BackendLayoutHelper extends Helper
             foreach ($contents as $content) {
                 $_block = (isset($content['block'])) ? $content['block'] : $block;
                 if (isset($content['element'])) {
-                    $event->subject()->append($_block, $event->subject()->element($content['element']));
+                    $event->getSubject()->append($_block, $event->getSubject()->element($content['element']));
                 } elseif (isset($content['cell'])) {
-                    $event->subject()->append($_block, $event->subject()->cell($content['cell']));
+                    $event->getSubject()->append($_block, $event->getSubject()->cell($content['cell']));
                 }
             }
         }

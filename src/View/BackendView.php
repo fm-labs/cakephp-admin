@@ -36,10 +36,10 @@ class BackendView extends View
                 //$_block = (isset($content['block'])) ? $content['block'] : $name;
                 if (isset($item['element'])) {
                     $content .= $this->element($item['element']);
-                    //$event->subject()->append($_block, $event->subject()->element($content['element']));
+                    //$event->getSubject()->append($_block, $event->getSubject()->element($content['element']));
                 } elseif (isset($item['cell'])) {
                     $content .= $this->cell($item['cell']);
-                    //$event->subject()->append($_block, $event->subject()->cell($content['cell']));
+                    //$event->getSubject()->append($_block, $event->getSubject()->cell($content['cell']));
                 }
             }
 

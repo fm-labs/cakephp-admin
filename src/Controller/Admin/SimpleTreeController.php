@@ -2,8 +2,8 @@
 
 namespace Backend\Controller\Admin;
 
-use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * Class SimpleTreeController
@@ -18,7 +18,7 @@ class SimpleTreeController extends AppController
      */
     public function index()
     {
-        $query = $this->request->query;
+        $query = $this->request->getQuery();
         if (!isset($query['model'])) {
             $this->Flash->error(__d('backend', 'No model selected'));
 
@@ -48,7 +48,7 @@ class SimpleTreeController extends AppController
      */
     public function treeSort()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
 
         $responseData = [];
         try {

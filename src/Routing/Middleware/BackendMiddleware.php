@@ -26,7 +26,7 @@ class BackendMiddleware
     {
         // register url filter for persistent URL parameters.
         // injects 'iframe' param on url creation
-        Router::addUrlFilter(function ($params, \Cake\Network\Request $request) {
+        Router::addUrlFilter(function ($params, \Cake\Http\ServerRequest $request) {
             $params['iframe'] = $this->_iframe;
 
             return $params;

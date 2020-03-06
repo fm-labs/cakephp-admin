@@ -3,8 +3,8 @@
 namespace Backend\Controller\Admin;
 
 use Banana\Form\EntityForm;
-use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\NotFoundException;
 
 /**
  * Class EntityController

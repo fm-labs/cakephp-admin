@@ -13,7 +13,7 @@ class MenuController extends AppController
     {
 
         $menu = new Menu();
-        $this->eventManager()->dispatch(new Event('Backend.Sidebar.build', $menu, ['request' => $this->request]));
+        $this->getEventManager()->dispatch(new Event('Backend.Sidebar.build', $menu, ['request' => $this->request]));
         $this->set('backend.sidebar.menu', $menu);
 
         /*

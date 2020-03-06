@@ -2,21 +2,21 @@
 
 namespace Backend\Controller\Admin;
 
-use Cake\Network\Exception\BadRequestException;
+use Cake\Http\Exception\BadRequestException;
 
 class DataTablesController extends AppController
 {
 
     public function index()
     {
-        $this->viewBuilder()->layout(false);
+        $this->viewBuilder()->setLayout(false);
     }
 
     public function ajax()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
 
-        $request = $this->request->query;
+        $request = $this->request->getQuery();
         $request += ['search' => null, 'order' => null, 'draw' => null, 'start' => null, 'length' => null, 'paginate' => []];
         $data = [];
         $model = null;
@@ -28,6 +28,7 @@ class DataTablesController extends AppController
             throw new BadRequestException();
         }
 
+        /** @var \Cake\ORM\Table $Model */
         $Model = $this->loadModel($model);
         $query = $Model->find();
 
@@ -76,7 +77,7 @@ class DataTablesController extends AppController
         $data = $data->toArray();
 
         if ($Model->behaviors()->has('Tree')) {
-            $displayField = $Model->displayField();
+            $displayField = $Model->getDisplayField();
             $treeList = $Model->find('treeList', ['spacer' => '_ '])->toArray();
             for ($i = 0; $i < count($data); $i++) {
                 $data[$i][$displayField] = $treeList[$data[$i]['id']];

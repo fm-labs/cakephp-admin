@@ -1,21 +1,23 @@
 <!DOCTYPE html>
-<html lang="<?= Cake\I18n\I18n::locale(); ?>">
+<html lang="<?= Cake\I18n\I18n::getLocale(); ?>">
 <head>
     <title><?= $this->fetch('title') ?></title>
+    <!--
+    <?= $this->Html->charset() ?>
+    <?= $this->Html->meta('icon') ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="noindex,nofollow">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <?= $this->Html->meta('icon') ?>
+    -->
     <?= $this->fetch('meta') ?>
-    <?= $this->Html->css('Backend.layout/admin'); ?>
     <?= $this->fetch('css') ?>
+    <?= $this->Html->css('Backend.layout/admin'); ?>
     <!-- scripts -->
     <!--[if lt IE 9]>
     <?= $this->Html->script('/backend/libs/html5shiv/html5shiv.min.js'); ?>
     <?= $this->Html->script('/backend/libs/respond/respond.min.js'); ?>
     <![endif]-->
-    <?= $this->Html->script('/backend/libs/jquery/jquery.min.js'); ?>
     <?= $this->fetch('headjs') ?>
 </head>
 <body class="body-screen sidebar-mini sidebar-collapsed <?= $this->get('be_layout_body_class'); ?>">

@@ -24,7 +24,7 @@ class ActionController extends Controller
     {
         $this->controller = $controller;
         $this->action = $action;
-        $this->eventManager($this->controller->eventManager());
+        $this->eventManager($this->controller->getEventManager());
         //$this->components($this->controller->components());
         //$this->components()->setController($this->controller);
         $this->setRequest($this->controller->request);
@@ -40,16 +40,16 @@ class ActionController extends Controller
         if (!isset($request)) {
             throw new LogicException('No Request object configured. Cannot invoke action');
         }
-        if (!$this->isAction($request->params['action'])) {
+        if (!$this->isAction($request->getParam('action'))) {
             throw new MissingActionException([
                 'controller' => $this->name . "Controller",
-                'action' => $request->params['action'],
-                'prefix' => isset($request->params['prefix']) ? $request->params['prefix'] : '',
-                'plugin' => $request->params['plugin'],
+                'action' => $request->getParam('action'),
+                'prefix' => $request->getParam('prefix'),
+                'plugin' => $request->getParam('plugin'),
             ]);
         }
 
-        return $this->controller->Action->execute($request->params['action']);
+        return $this->controller->Action->execute($request->getParam('action'));
     }
 
     public function isAction($action)

@@ -36,7 +36,7 @@ trait JsTreeAwareTrait
     public function treeData($Model = null)
     {
         $this->autoRender = false;
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
 
         $Model = null;
         if ($Model === null && method_exists($this, 'model')) {
@@ -73,7 +73,7 @@ trait JsTreeAwareTrait
      */
     public function treeView()
     {
-        $id = $this->request->query('id');
+        $id = $this->request->getQuery('id');
         $this->setAction('view', $id);
     }
 }

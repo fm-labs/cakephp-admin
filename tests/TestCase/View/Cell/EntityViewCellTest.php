@@ -13,14 +13,14 @@ class EntityViewCellTest extends TestCase
     /**
      * Request mock
      *
-     * @var \Cake\Network\Request|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Http\ServerRequest|\PHPUnit_Framework_MockObject_MockObject
      */
     public $request;
 
     /**
      * Response mock
      *
-     * @var \Cake\Network\Response|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Http\Response|\PHPUnit_Framework_MockObject_MockObject
      */
     public $response;
 
@@ -39,8 +39,8 @@ class EntityViewCellTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->request = $this->getMock('Cake\Network\Request');
-        $this->response = $this->getMock('Cake\Network\Response');
+        $this->request = $this->getMock('Cake\Http\Request');
+        $this->response = $this->getMock('Cake\Http\Response');
         $this->EntityView = new EntityViewCell($this->request, $this->response);
     }
 

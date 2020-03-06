@@ -10,9 +10,11 @@ use Cake\Event\Event;
 use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
+use Cake\Log\Log;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
+use Cake\Utility\Inflector;
 use Settings\SettingsManager;
 
 class Plugin extends BasePlugin implements EventListenerInterface
@@ -259,34 +261,36 @@ class Plugin extends BasePlugin implements EventListenerInterface
 
             $routes->fallbacks(DashedRoute::class);
         });
-//        $urlPrefix = '/' . trim(Backend::$urlPrefix, '/') . '/';
-//        foreach ($this->_app->plugins()->loaded() as $pluginName) {
-//            $instance = $this->_app->plugins()->get($pluginName);
-//            if (method_exists($instance, 'backendRoutes')) {
+
+        $urlPrefix = '/' . trim(Backend::$urlPrefix, '/') . '/';
+        foreach ($this->_app->getPlugins()->with('routes') as $instance) {
+            //$instance = $this->_app->getPlugins()->get($pluginName);
+            $pluginName = $instance->getName();
+            if (method_exists($instance, 'backendRoutes')) {
+                try {
+                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
+                        'plugin' => $pluginName,
+                        'prefix' => 'admin',
+                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName))
+                    ], [$instance, 'backendRoutes']);
+                } catch (\Exception $ex) {
+                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
+                }
+            } else {
+
 //                try {
 //                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
 //                        'plugin' => $pluginName,
 //                        'prefix' => 'admin',
 //                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName))
-//                    ], [$instance, 'backendRoutes']);
+//                    ], function(RouteBuilder $routes) {
+//                        $routes->fallbacks('DashedRoute');
+//                    });
 //                } catch (\Exception $ex) {
 //                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
 //                }
-//            } else {
-//
-////                try {
-////                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
-////                        'plugin' => $pluginName,
-////                        'prefix' => 'admin',
-////                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName))
-////                    ], function(RouteBuilder $routes) {
-////                        $routes->fallbacks('DashedRoute');
-////                    });
-////                } catch (\Exception $ex) {
-////                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
-////                }
-//            }
-//        }
+            }
+        }
 
         $event = $this->dispatchEvent('Backend.Routes.setup', ['routes' => $routes]);
     }
@@ -304,7 +308,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
         EventManager::instance()->on($this);
         //EventManager::instance()->on(new ActionDispatcherListener());
 
-//        $this->_app = $app;
+        $this->_app = $app;
 //        foreach ($this->_app->plugins()->loaded() as $pluginName) {
 //            $instance = $this->_app->plugins()->get($pluginName);
 //            if (method_exists($instance, 'backendBootstrap')) {

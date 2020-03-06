@@ -30,7 +30,7 @@ class JsTreeBehavior extends Behavior
             $this->_config['fields']['id'] = $this->_table->primaryKey();
         }
         if (!$this->_config['fields']['title']) {
-            $this->_config['fields']['title'] = $this->_table->displayField();
+            $this->_config['fields']['title'] = $this->_table->getDisplayField();
         }
     }
 
@@ -69,7 +69,7 @@ class JsTreeBehavior extends Behavior
      */
     protected function _format($entities)
     {
-        $this->_table->displayField();
+        $this->_table->getDisplayField();
 
         $fields = $this->getConfig('fields');
         $dataFields = $this->getConfig('dataFields');

@@ -21,16 +21,6 @@ use Backend\Controller\Component\FlashComponent;
 class Controller extends \Cake\Controller\Controller
 {
     /**
-     * @var array
-     */
-    public $actions = [
-        //'index' => 'Backend.Index',
-        //'view' => 'Backend.View',
-        //'add' => 'Backend.Add',
-        //'edit' => 'Backend.Edit',
-    ];
-
-    /**
      * Initialization hook method.
      *
      * Use this method to add common initialization code like loading components.
@@ -41,6 +31,7 @@ class Controller extends \Cake\Controller\Controller
     public function initialize()
     {
         $this->loadComponent('Backend.Backend');
+        $this->loadComponent('Backend.Action');
         $this->loadComponent('Backend.Flash');
     }
 

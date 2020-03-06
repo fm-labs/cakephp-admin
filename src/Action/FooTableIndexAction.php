@@ -52,9 +52,9 @@ class FooTableIndexAction extends IndexAction
         $this->_config['query']['maxLimit'] = self::$maxLimit; // hard limit
 
         // JSON data
-        if ($controller->request->query('rows') == true) {
+        if ($controller->request->getQuery('rows') == true) {
             //Configure::write('debug', 0);
-            $controller->viewBuilder()->className('Json');
+            $controller->viewBuilder()->setClassName('Json');
 
             $result = $this->_fetchResult();
 
@@ -70,7 +70,7 @@ class FooTableIndexAction extends IndexAction
             $dataUrl = $this->_config['ajax'];
             if ($dataUrl === true) {
                 $dataUrl = ['rows' => 1];
-                $dataUrl += ['qry' => $this->request->query('qry')];
+                $dataUrl += ['qry' => $this->request->getQuery('qry')];
             }
             $extra['_dataUrl'] = $dataUrl = Router::url($dataUrl);
         } else {

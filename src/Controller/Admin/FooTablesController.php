@@ -3,7 +3,7 @@
 namespace Backend\Controller\Admin;
 
 use Cake\Core\Configure;
-use Cake\Network\Exception\BadRequestException;
+use Cake\Http\Exception\BadRequestException;
 use Cake\Utility\Inflector;
 
 class FooTablesController extends AppController
@@ -11,14 +11,14 @@ class FooTablesController extends AppController
 
     public function index()
     {
-        //$this->viewBuilder()->layout(false);
+        //$this->viewBuilder()->setLayout(false);
     }
 
     public function columns()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
 
-        $modelName = $this->request->query('model');
+        $modelName = $this->request->getQuery('model');
         $Model = $this->loadModel($modelName);
 
         $fields = ['id', 'title'];
@@ -36,16 +36,16 @@ class FooTablesController extends AppController
     public function rows()
     {
         //Configure::write('debug', 0);
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
 
-        $modelName = $this->request->query('model');
+        $modelName = $this->request->getQuery('model');
         $Model = $this->loadModel($modelName);
 
         //$data = $Model->find('all', ['media' => true])->contain([])->limit(5)->all()->toArray();
 
         $_modelName = pluginSplit($modelName);
-        $limit = ($this->request->query('limit')) ?: 10;
-        $page = ($this->request->query('page')) ?: 10;
+        $limit = ($this->request->getQuery('limit')) ?: 10;
+        $page = ($this->request->getQuery('page')) ?: 10;
 
         $this->paginate = [
             'media' => true,
@@ -73,9 +73,9 @@ class FooTablesController extends AppController
 
     public function ajax()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
 
-        $request = $this->request->query;
+        $request = $this->request->getQuery();
         $data = [];
         $model = null;
 

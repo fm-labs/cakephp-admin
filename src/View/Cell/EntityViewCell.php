@@ -4,8 +4,8 @@ namespace Backend\View\Cell;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventManager;
-use Cake\Network\Request;
-use Cake\Network\Response;
+use Cake\Http\ServerRequest as Request;
+use Cake\Http\Response;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
@@ -80,7 +80,7 @@ class EntityViewCell extends Cell
         $Table = $this->_getTable();
 
         if ($this->title === null && $Table) {
-            $displayField = $Table->displayField();
+            $displayField = $Table->getDisplayField();
             $this->title = $entity->get($displayField);
         }
         if (!$this->title === null) {
@@ -150,17 +150,17 @@ class EntityViewCell extends Cell
                 $assoc = $associations->get($belongsTo[$property]);
                 //debug("$property belongsTo " . $belongsTo[$property] . " -> " . $assoc->property());
                 if ($entity->get($assoc->property())) {
-                //    $val = sprintf("%s (%s)", $val, $entity->get($assoc->property())->get($assoc->target()->displayField()));
-                //    $formatter = ['related', $assoc->target()->displayField()];
+                //    $val = sprintf("%s (%s)", $val, $entity->get($assoc->property())->get($assoc->target()->getDisplayField()));
+                //    $formatter = ['related', $assoc->target()->getDisplayField()];
 
                     $related = $entity->get($assoc->property());
                     $formatter = function ($val, $row, $args, $view) use ($related, $assoc) {
                         list($plugin, $modelName) = pluginSplit($assoc->target()->registryAlias());
 
                         return $view->Html->link(
-                            $related->get($assoc->target()->displayField()),
+                            $related->get($assoc->target()->getDisplayField()),
                             [/*'plugin' => $plugin,*/ 'controller' => $assoc->name(), 'action' => 'view', $related->id],
-                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $related->get($assoc->target()->displayField())]
+                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $related->get($assoc->target()->getDisplayField())]
                         );
                     };
                 } elseif ($entity->get($property)) {
@@ -226,9 +226,9 @@ class EntityViewCell extends Cell
                                 }
 
                                 return $view->Html->link(
-                                    $val->get($assoc->target()->displayField()),
+                                    $val->get($assoc->target()->getDisplayField()),
                                     ['controller' => $assoc->name(), 'action' => 'view', $val->get($assoc->target()->primaryKey())],
-                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val->get($assoc->target()->displayField())]
+                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val->get($assoc->target()->getDisplayField())]
                                 );
                             };
                             break;

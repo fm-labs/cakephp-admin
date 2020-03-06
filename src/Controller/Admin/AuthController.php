@@ -3,7 +3,7 @@ namespace Backend\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Network\Response;
+use Cake\Http\Response;
 
 /**
  * Class AuthController
@@ -18,13 +18,13 @@ class AuthController extends AppController
 
     /**
      * @param Event $event The event object
-     * @return \Cake\Network\Response|null|void
+     * @return Response|null|void
      */
     public function beforeFilter(Event $event)
     {
         parent::beforeFilter($event);
         $this->Auth->allow(['login', 'unauthorized', 'session']);
-        $this->viewBuilder()->layout('Backend.auth');
+        $this->viewBuilder()->setLayout('Backend.auth');
     }
 
     /**
@@ -36,7 +36,7 @@ class AuthController extends AppController
     {
         $user = $this->Auth->login();
         if ($this->components()->has('RequestHandler') && $this->components()->get('RequestHandler')->accepts('json')) {
-            $this->viewBuilder()->className('Json');
+            $this->viewBuilder()->setClassName('Json');
         } elseif ($user) {
             return $this->redirect($this->Auth->redirectUrl());
         }
@@ -81,7 +81,7 @@ class AuthController extends AppController
      */
     public function unauthorized()
     {
-        $this->response->statusCode(403);
+        $this->setResponse($this->getResponse()->withStatus(403));
     }
 
     /**
@@ -103,7 +103,7 @@ class AuthController extends AppController
      */
     public function session()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
         $data = $this->UserSession->extractSessionInfo();
         $this->set('data', $data);
         $this->set('_serialize', 'data');

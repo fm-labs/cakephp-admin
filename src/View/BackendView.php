@@ -16,16 +16,23 @@ class BackendView extends View
 {
     use ViewModuleTrait;
 
-    public $helpers = ['Html', 'Form' => ['className' => 'Backend\View\Helper\BackendFormHelper']];
+    public $layout = "Backend.admin";
 
     /**
      * {@inheritDoc}
      */
     public function initialize()
     {
-        $this->eventManager()->dispatch(new Event('Backend.View.initialize', $this));
+        $this->loadHelper('Html', ['className' => '\Backend\View\Helper\BackendHtmlHelper']);
+        $this->loadHelper('Form', ['className' => '\Backend\View\Helper\BackendFormHelper']);
+        $this->loadHelper('Backend.Backend');
+
+        $this->getEventManager()->dispatch(new Event('Backend.View.initialize', $this));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function fetch($name, $default = '')
     {
         $content = parent::fetch($name, '');
@@ -33,17 +40,14 @@ class BackendView extends View
         if ($name != "content" && strlen($content) < 1) {
             $blocks = (array)Configure::read('Backend.Layout.admin.blocks.' . $name);
             foreach ($blocks as $item) {
-                //$_block = (isset($content['block'])) ? $content['block'] : $name;
                 if (isset($item['element'])) {
                     $content .= $this->element($item['element']);
-                    //$event->getSubject()->append($_block, $event->getSubject()->element($content['element']));
                 } elseif (isset($item['cell'])) {
                     $content .= $this->cell($item['cell']);
-                    //$event->getSubject()->append($_block, $event->getSubject()->cell($content['cell']));
                 }
             }
 
-            $event = $this->eventManager()->dispatch(
+            $event = $this->getEventManager()->dispatch(
                 new Event('Backend.View.fetch', $this, ['name' => $name, 'content' => $content])
             );
             $content = $event->data['content'];
@@ -53,6 +57,6 @@ class BackendView extends View
             $content = $default;
         }
 
-        return /*'[' . $name . ']' . */$content;
+        return $content;
     }
 }

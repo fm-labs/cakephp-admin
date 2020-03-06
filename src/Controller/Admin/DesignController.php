@@ -21,7 +21,7 @@ class DesignController extends AppController
      */
     public function index()
     {
-        $section = $this->request->query('section');
+        $section = $this->request->getQuery('section');
         if ($section && in_array($section, $this->sections)) {
             if (method_exists($this, $section)) {
                 $this->setAction($section);
@@ -30,7 +30,7 @@ class DesignController extends AppController
             }
         }
 
-        $flash = $this->request->query('flash');
+        $flash = $this->request->getQuery('flash');
         if ($flash) {
             $this->Flash->{$flash}('Awesome!', ['title' => 'My title']);
             $this->Flash->set('Realy cool!', ['title' => 'Just another flash message']);

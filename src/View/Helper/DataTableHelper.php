@@ -218,7 +218,7 @@ class DataTableHelper extends Helper
         $this->_initialize();
 
         //if ($this->_setup === null) {
-            $event = $this->_View->eventManager()->dispatch(new Event('Backend.DataTable.setup', $this));
+            $event = $this->_View->getEventManager()->dispatch(new Event('Backend.DataTable.setup', $this));
         //}
 
         return $this;

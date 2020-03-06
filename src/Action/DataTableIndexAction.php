@@ -76,12 +76,12 @@ class DataTableIndexAction extends IndexAction
         $dtjsOpts['paging'] = $this->_config['paging'];
 
         // JSON data
-        if ($controller->request->query('data') == true) {
+        if ($controller->request->getQuery('data') == true) {
             //Configure::write('debug', 0);
-            $controller->viewBuilder()->className('Json');
+            $controller->viewBuilder()->setClassName('Json');
 
             $query = $this->model()->find();
-            $request = $controller->request->query;
+            $request = $controller->request->getQuery();
             $request += ['search' => null, 'order' => null, 'draw' => null, 'start' => null, 'length' => null, 'paginate' => [], 'columns' => []];
 
             $recordsFiltered = $recordsTotal = $query->count();
@@ -175,7 +175,7 @@ class DataTableIndexAction extends IndexAction
             $data = $data->toArray();
 
             if ($this->model()->behaviors()->has('Tree')) {
-                $displayField = $this->model()->displayField();
+                $displayField = $this->model()->getDisplayField();
                 $treeList = $this->model()->find('treeList', ['spacer' => '_ '])->toArray();
                 for ($i = 0; $i < count($data); $i++) {
                     $data[$i][$displayField] = $treeList[$data[$i]['id']];

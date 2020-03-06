@@ -5,7 +5,7 @@ namespace Backend\Action;
 use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\InstanceConfigTrait;
-use Cake\Network\Response;
+use Cake\Http\Response;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
@@ -34,7 +34,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
     public $controller;
 
     /**
-     * @var \Cake\Network\Request
+     * @var ServerRequest
      */
     public $request;
 

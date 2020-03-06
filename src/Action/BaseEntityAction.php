@@ -129,7 +129,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
                     ]
                 ];
                 $breadcrumbs[] = [
-                    'title' => $this->entity()->get($this->model()->displayField()),
+                    'title' => $this->entity()->get($this->model()->getDisplayField()),
                     'url' => [
                         'plugin' => $controller->request->param('plugin'),
                         'controller' => $controller->request->param('controller'),
@@ -147,7 +147,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 
         // i18n
         if ($this->model()->hasBehavior('Translate')) {
-            $translation = ($controller->request->query('translation')) ?: I18n::locale();
+            $translation = ($controller->request->getQuery('translation')) ?: I18n::locale();
             $this->model()->locale($translation);
             $controller->set('translation', $translation);
             $controller->set('translations.languages', (array)Configure::read('Multilang.Locales'));
@@ -173,7 +173,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 
     /**
      * @param Controller $controller Controller instance
-     * @return null|void|\Cake\Network\Response
+     * @return null|void|\Cake\Http\Response
      */
     abstract protected function _execute(Controller $controller);
 

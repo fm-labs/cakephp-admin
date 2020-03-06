@@ -10,7 +10,6 @@ use Cake\View\Helper\HtmlHelper;
  *
  * @package Backend\View\Helper
  * @codeCoverageIgnore
- * @deprecated This class is currently unused.
  */
 class BackendHtmlHelper extends HtmlHelper
 {
@@ -38,6 +37,12 @@ class BackendHtmlHelper extends HtmlHelper
     ];
 
     protected $_loaded = ['scripts' => [], 'css' => []];
+
+    public function css($path, array $options = [])
+    {
+        //$url = $this->Url->css($path, $options);
+        return parent::css($path, $options);
+    }
 
     /**
      * {@inheritDoc}

@@ -7,7 +7,7 @@ use Backend\Action\Interfaces\EntityActionInterface;
 use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
-use Cake\Network\Response;
+use Cake\Http\Response;
 
 class DebugAction extends BaseEntityAction implements ActionInterface, IndexActionInterface, EntityActionInterface
 {

@@ -115,7 +115,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
                 $this->_flashSuccess(__d('backend', 'Record created'));
                 $this->redirect(['action' => 'edit', $entity->id]);
             } else {
-                debug($entity->errors());
+                debug($entity->getErrors());
                 $this->_flashError();
             }
         }
@@ -128,13 +128,13 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
                     $var = substr($fKey, 0, strrpos($fKey, '_id'));
                     $var = lcfirst(Inflector::camelize(Inflector::pluralize($var)));
                     if (!isset($controller->viewVars[$var])) {
-                        $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
+                        $list = $assoc->target()->find('list')->order([$assoc->target()->getDisplayField() => 'ASC'])->toArray();
                         $controller->set($var, $list);
                     }
                 }
 //            } elseif ($assoc->type() == Association::ONE_TO_MANY) {
 //                $var = Inflector::pluralize($assoc->property());
-//                $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
+//                $list = $assoc->target()->find('list')->order([$assoc->target()->getDisplayField() => 'ASC'])->toArray();
 //                $controller->set($assoc->foreignKey(), $list);
 //            } elseif ($assoc->type() == Association::ONE_TO_ONE) {
 //                //$list = ['foo' => 'bar'];

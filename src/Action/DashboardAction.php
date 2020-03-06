@@ -3,7 +3,7 @@ namespace Backend\Action;
 
 use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
-use Cake\Network\Response;
+use Cake\Http\Response;
 
 class DashboardAction implements ActionInterface
 {

@@ -3,7 +3,7 @@
 namespace Backend\Action\Interfaces;
 
 use Cake\Controller\Controller;
-use Cake\Network\Response;
+use Cake\Http\Response;
 
 /**
  * Interface ActionInterface

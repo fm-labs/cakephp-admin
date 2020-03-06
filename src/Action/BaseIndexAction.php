@@ -118,7 +118,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
 
     /**
      * @param Controller $controller Controller instance
-     * @return null|void|\Cake\Network\Response
+     * @return null|void|\Cake\Http\Response
      */
     abstract protected function _execute(Controller $controller);
 

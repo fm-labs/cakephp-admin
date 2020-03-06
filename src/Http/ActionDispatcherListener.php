@@ -19,13 +19,13 @@ class ActionDispatcherListener implements EventListenerInterface
 
     /**
      * @param Event $event The event object
-     * @return void|\Cake\Network\Response
+     * @return void|\Cake\Http\Response
      */
     public function beforeDispatch(Event $event)
     {
-        /* @var $request \Cake\Network\Request */
+        /* @var $request \Cake\Http\ServerRequest */
         $request = $event->data['request'];
-        /* @var $response \Cake\Network\Response */
+        /* @var $response \Cake\Http\Response */
         $response = $event->data['response'];
         /* @var $dispatcher \Cake\Http\ActionDispatcher */
         $dispatcher = $event->getSubject();

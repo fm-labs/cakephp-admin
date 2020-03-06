@@ -194,12 +194,12 @@ class IndexAction extends BaseAction
             }
 
             // apply query conditions from request
-            if ($this->request->query('qry')) { //@deprecated Use _filter param instead
+            if ($this->request->getQuery('qry')) { //@deprecated Use _filter param instead
                 $this->request->query['_filter'] = $this->request->query['qry'];
                 unset($this->request->query['qry']);
             }
-            if ($this->request->query('_filter')) {
-                $_filter = Hash::flatten($this->request->query('_filter'));
+            if ($this->request->getQuery('_filter')) {
+                $_filter = Hash::flatten($this->request->getQuery('_filter'));
                 $filter = array_filter($_filter, function ($val) {
                     return (strlen(trim($val)) > 0);
                 });

@@ -100,7 +100,7 @@ class LogsController extends AppController
             return;
         }
 
-        $page = ($this->request->query('page')) ?: 1;
+        $page = ($this->request->getQuery('page')) ?: 1;
         $length = 409600; // 400 kB
         $offset = ($page - 1) * $length;
 
@@ -115,7 +115,7 @@ class LogsController extends AppController
      * Clear log file
      *
      * @param null $logFile
-     * @return \Cake\Network\Response|null
+     * @return \Cake\Http\Response|null
      */
     public function clear($logFile = null)
     {

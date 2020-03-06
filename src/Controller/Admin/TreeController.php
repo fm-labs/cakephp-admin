@@ -3,7 +3,7 @@
 namespace Backend\Controller\Admin;
 
 use Cake\Log\Log;
-use Cake\Network\Exception\BadRequestException;
+use Cake\Http\Exception\BadRequestException;
 
 /**
  * Class TreeController
@@ -18,7 +18,7 @@ class TreeController extends AppController
      */
     public function index()
     {
-        $modelName = $this->request->query('model');
+        $modelName = $this->request->getQuery('model');
         if (!$modelName) {
             $this->Flash->error(__d('backend', 'No model selected'));
 
@@ -44,9 +44,9 @@ class TreeController extends AppController
      */
     public function jstreeData()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
 
-        $modelName = $this->request->query('model');
+        $modelName = $this->request->getQuery('model');
         if (!$modelName) {
             throw new BadRequestException('Model name missing');
         }
@@ -70,9 +70,9 @@ class TreeController extends AppController
      */
     public function jstreeSort()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
 
-        $modelName = $this->request->query('model');
+        $modelName = $this->request->getQuery('model');
         if (!$modelName) {
             throw new BadRequestException('Model name missing');
         }

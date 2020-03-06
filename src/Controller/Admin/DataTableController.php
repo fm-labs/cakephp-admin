@@ -3,8 +3,8 @@
 namespace Backend\Controller\Admin;
 
 use Cake\Core\Exception\Exception;
-use Cake\Network\Exception\BadRequestException;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
 
 //use Tree\Model\Behavior\SimpleTreeBehavior;
@@ -22,10 +22,10 @@ class DataTableController extends AppController
      */
     public function reorder()
     {
-        $modelName = $this->request->query('model');
-        $field = $this->request->query('field');
-        $order = $this->request->query('order');
-        $scope = $this->request->query('scope');
+        $modelName = $this->request->getQuery('model');
+        $field = $this->request->getQuery('field');
+        $order = $this->request->getQuery('order');
+        $scope = $this->request->getQuery('scope');
 
         if (!$modelName || !$this->_getModel($modelName)) {
             throw new BadRequestException("Table not found");
@@ -44,7 +44,7 @@ class DataTableController extends AppController
      */
     public function sort()
     {
-        $modelName = $this->request->query('model');
+        $modelName = $this->request->getQuery('model');
 
         if (!$modelName || !$this->_getModel($modelName)) {
             throw new BadRequestException("Table not found");
@@ -55,7 +55,7 @@ class DataTableController extends AppController
             $this->Flash->warning("Model $modelName is not an instance of SimpleTree Behavior");
         }
 
-        $queryArgs = $this->request->query;
+        $queryArgs = $this->request->getQuery();
         unset($queryArgs['model']);
 
         $data = $model->find()
@@ -71,12 +71,12 @@ class DataTableController extends AppController
      */
     public function tableSort()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
 
         $responseData = [];
         try {
             if ($this->request->is(['post', 'put'])) {
-                $data = $this->request->data;
+                $data = $this->request->getData();
 
                 $modelName = (isset($data['model'])) ? (string)$data['model'] : null;
                 $id = (isset($data['id'])) ? (int)$data['id'] : null;

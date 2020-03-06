@@ -114,7 +114,7 @@ class EditAction extends BaseEntityAction
             ['Cake\Utility\Inflector', 'dasherize'],
             array_map(
                 ['Cake\Utility\Inflector', 'underscore'],
-                ['form', $request->params['controller'], $request->params['action']]
+                ['form', $request->getParam('controller'), $request->getParam('action')]
             )
         ));
         $formOptions = array_merge([
@@ -135,13 +135,13 @@ class EditAction extends BaseEntityAction
                     $var = substr($fKey, 0, strrpos($fKey, '_id'));
                     $var = lcfirst(Inflector::camelize(Inflector::pluralize($var)));
 
-                    $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
+                    $list = $assoc->target()->find('list')->order([$assoc->target()->getDisplayField() => 'ASC'])->toArray();
                     $controller->set($var, $list);
                 }
             } elseif ($assoc->type() == Association::ONE_TO_MANY) {
                 // fetch list for 1-m relationships only if the property is set in entity
                 if ($entity->get($assoc->property())) {
-                    $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
+                    $list = $assoc->target()->find('list')->order([$assoc->target()->getDisplayField() => 'ASC'])->toArray();
                     $controller->set(Inflector::variable($assoc->property()), $list);
                     //debug("assoc list for " . $assoc->name() . ": " . count($list)
                     //    . " item using key " . $assoc->foreignKey()
@@ -153,7 +153,7 @@ class EditAction extends BaseEntityAction
                 //$controller->set($assoc->foreignKey(), $list);
                 //debug($assoc->type());
             } elseif ($assoc->type() == Association::MANY_TO_MANY) {
-                $list = $assoc->target()->find('list')->order([$assoc->target()->displayField() => 'ASC'])->toArray();
+                $list = $assoc->target()->find('list')->order([$assoc->target()->getDisplayField() => 'ASC'])->toArray();
                 $controller->set(Inflector::variable($assoc->property()), $list);
             } else {
                 //debug($assoc->type());

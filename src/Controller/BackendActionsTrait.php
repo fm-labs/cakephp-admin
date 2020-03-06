@@ -4,7 +4,7 @@ namespace Backend\Controller;
 
 use Backend\Controller\Component\BackendComponent;
 //use Cake\Controller\Exception\MissingActionException;
-use Cake\Network\Response;
+use Cake\Http\Response;
 
 /**
  * Class BackendActionsTrait
@@ -29,14 +29,14 @@ trait BackendActionsTrait
         try {
             return parent::invokeAction();
         } catch (MissingActionException $ex) {
-            $action = $this->request->params['action'];
+            $action = $this->request->getParam('action');
 
             if (!$this->Backend->hasAction($action)) {
                 throw new MissingActionException([
                     'controller' => $this->name . "Controller",
-                    'action' => $this->request->params['action'],
-                    'prefix' => isset($this->request->params['prefix']) ? $this->request->params['prefix'] : '',
-                    'plugin' => $this->request->params['plugin'],
+                    'action' => $this->request->getParam('action'),
+                    'prefix' => isset($this->request->getParam('prefix')) ? $this->request->getParam('prefix') : '',
+                    'plugin' => $this->request->getParam('plugin'),
                 ]);
             }
 

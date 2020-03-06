@@ -5,7 +5,7 @@ namespace Backend\Auth;
 use Cake\Auth\BaseAuthorize;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
-use Cake\Network\Request;
+use Cake\Http\ServerRequest as Request;
 
 /**
  * Class BackendAuthorize
@@ -26,7 +26,7 @@ class BackendAuthorize extends BaseAuthorize
      * Authorize user for request
      *
      * @param array $user Current authenticated user
-     * @param \Cake\Network\Request $request Request instance.
+     * @param \Cake\Http\ServerRequest $request Request instance.
      * @return bool
      */
     public function authorize($user, Request $request)

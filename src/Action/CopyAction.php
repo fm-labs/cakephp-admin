@@ -3,7 +3,7 @@
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
-use Cake\Network\Exception\NotImplementedException;
+use Cake\Http\Exception\NotImplementedException;
 
 /**
  * Class CopyAction

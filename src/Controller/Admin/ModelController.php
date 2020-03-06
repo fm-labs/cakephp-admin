@@ -5,7 +5,7 @@ namespace Backend\Controller\Admin;
 use Banana\Model\TableInputSchema;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Network\Exception\NotFoundException;
+use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Table;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
@@ -34,16 +34,16 @@ class ModelController extends AppController
 
     public function index()
     {
-        $this->viewBuilder()->layout(false);
+        $this->viewBuilder()->setLayout(false);
     }
 
     public function view()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
         //$this->autoRender = false;
 
-        $modelName = $this->request->query('model');
-        $id = $this->request->query('id');
+        $modelName = $this->request->getQuery('model');
+        $id = $this->request->getQuery('id');
 
         if (!$modelName) {
             throw new \InvalidArgumentException("Model name missing");
@@ -108,11 +108,11 @@ class ModelController extends AppController
 
     public function edit()
     {
-        $this->viewBuilder()->className('Json');
+        $this->viewBuilder()->setClassName('Json');
         //$this->autoRender = false;
 
-        $modelName = $this->request->query('model');
-        $id = $this->request->query('id');
+        $modelName = $this->request->getQuery('model');
+        $id = $this->request->getQuery('id');
 
         $data = $errors = [];
         try {
@@ -132,12 +132,12 @@ class ModelController extends AppController
             $entity = $Model->get($id);
 
             $entity = $Model->patchEntity($entity, $this->request->data, ['validate' => 'default']);
-            if (!$entity->errors() && $Model->save($entity)) {
+            if (!$entity->getErrors() && $Model->save($entity)) {
                 $entity = $Model->save($entity);
                 $data = $entity->toArray();
                 $success = true;
             } else {
-                $errors = $entity->errors();
+                $errors = $entity->getErrors();
                 $success = false;
             }
         } catch (\Exception $ex) {

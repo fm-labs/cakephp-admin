@@ -1,7 +1,6 @@
 <?php
 
 namespace Backend\Controller\Admin;
-use Cake\ORM\Exception\MissingBehaviorException;
 
 /**
  * Class AppController
@@ -17,8 +16,10 @@ class AppController extends \App\Controller\Admin\AppController
     {
         parent::initialize();
 
+        // make sure the Backend component is loaded,
+        // especially if a custom Admin\AppController is used
         if (!$this->components()->has('Backend')) {
-            throw new MissingBehaviorException(['behavior' => 'Backend']);
+            $this->components()->load('Backend');
         }
     }
 }

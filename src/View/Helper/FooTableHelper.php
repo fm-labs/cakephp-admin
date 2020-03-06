@@ -180,7 +180,7 @@ class FooTableHelper extends DataTableHelper
      */
     protected function _renderScript($block = null)
     {
-        $domId = $this->param('id');
+        $domId = $this->getParam('id');
         $opts = $this->_jsOptions;
 
         if (isset($opts['_dataUrl'])) {

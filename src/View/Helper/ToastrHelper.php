@@ -57,7 +57,8 @@ class ToastrHelper extends Helper
     public function flash($key = 'flash', array $options = [])
     {
         $options += ['block' => null];
-        $messages = (array)$this->request->session()->read('Flash.' . $key);
+        $request = $this->getView()->getRequest();
+        $messages = (array)$request->getSession()->read('Flash.' . $key);
 
         $scriptTemplate = 'toastr.%s("%s", "%s", %s);';
         $script = "";
@@ -127,7 +128,7 @@ class ToastrHelper extends Helper
             $escapedMessage = addslashes($message['message']);
             $script .= sprintf($scriptTemplate, $method, $escapedMessage, $title, json_encode($toastr));
         }
-        $this->request->session()->delete('Flash.' . $key);
+        $request->getSession()->delete('Flash.' . $key);
 
         return $this->Html->scriptBlock($script, ['safe' => false, 'block' => $options['block']]);
     }

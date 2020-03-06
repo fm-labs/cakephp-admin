@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?= Cake\I18n\I18n::locale(); ?>">
+<html lang="<?= Cake\I18n\I18n::getLocale(); ?>">
 <head>
     <title><?= $this->fetch('title') ?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

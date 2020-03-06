@@ -1,8 +1,8 @@
 <?php
 use Cake\Routing\Router;
 
-$modelName = $this->request->query('model');
-$id = $this->request->query('id');
+$modelName = $this->request->getQuery('model');
+$id = $this->request->getQuery('id');
 
 //$viewUrl = $this->Html->Url->build(['action' => 'view', 'model' => $modelName, 'id' => $id]);
 $viewUrl = Router::url(['action' => 'view', 'model' => $modelName, 'id' => $id]);

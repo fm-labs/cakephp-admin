@@ -66,11 +66,11 @@ foreach ($associations as $type => $data) {
                 $fieldData = $schema->column($field);
                 if (!empty($fieldData['null'])) {
 %>
-                    echo $this->Form->input('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'empty' => true]);
+                    echo $this->Form->control('<%= $field %>', ['options' => $<%= $keyFields[$field] %>, 'empty' => true]);
 <%
                 } else {
 %>
-                    echo $this->Form->input('<%= $field %>', ['options' => $<%= $keyFields[$field] %>]);
+                    echo $this->Form->control('<%= $field %>', ['options' => $<%= $keyFields[$field] %>]);
 <%
                 }
                 continue;
@@ -80,18 +80,18 @@ foreach ($associations as $type => $data) {
                 continue;
             } elseif ($schema->columnType($field) == "datetime" || in_array($field, ['password'])) {
 %>
-                //echo $this->Form->input('<%= $field %>');
+                //echo $this->Form->control('<%= $field %>');
 <%
             } else {
 %>
-                echo $this->Form->input('<%= $field %>');
+                echo $this->Form->control('<%= $field %>');
 <%
             }
         }
         if (!empty($associations['BelongsToMany'])) {
             foreach ($associations['BelongsToMany'] as $assocName => $assocData) {
 %>
-                echo $this->Form->input('<%= $assocData['property'] %>._ids', ['options' => $<%= $assocData['variable'] %>]);
+                echo $this->Form->control('<%= $assocData['property'] %>._ids', ['options' => $<%= $assocData['variable'] %>]);
 <%
             }
         }

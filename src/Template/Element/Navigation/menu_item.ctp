@@ -3,7 +3,7 @@
  * @deprected Use UiHelper::menu() instead
  */
 // Hide priviledged items for unpriviledged users
-if (isset($menuItem['requireRoot']) && $this->request->session()->read('Backend.User.is_root') !== true) {
+if (isset($menuItem['requireRoot']) && $this->request->getSession()->read('Backend.User.is_root') !== true) {
     return false;
 }
 ?>

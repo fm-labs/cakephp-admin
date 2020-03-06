@@ -39,7 +39,7 @@ $this->loadHelper('Bootstrap.Tabs');
             }
         } elseif ($fields) {
             foreach ($fields as $field => $config) {
-                echo $this->Form->input($field, $config);
+                echo $this->Form->control($field, $config);
             }
         } else {
             $this->Form->allInputs();

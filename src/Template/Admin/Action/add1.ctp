@@ -34,7 +34,7 @@ $whitelist = $this->get('fields.whitelist');
                 if ($whitelist) {
                     foreach($whitelist as $field) {
                         $fieldConfig = (isset($fields[$field]) && isset($fields[$field]['input'])) ? $fields[$field]['input'] : [];
-                        echo $this->Form->input($field, $fieldConfig);
+                        echo $this->Form->control($field, $fieldConfig);
                     }
                 } else {
                     echo $this->Form->allInputs();

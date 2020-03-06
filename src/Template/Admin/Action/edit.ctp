@@ -27,9 +27,9 @@ $this->loadHelper('Bootstrap.Tabs');
                 $options = [
                     'data-lang' => $lang,
                     'data-title' => __d('backend', 'Edit {0} translation', $langLabel),
-                    'class' => ($lang == Cake\I18n\I18n::locale()) ? 'active' : ''
+                    'class' => ($lang == Cake\I18n\I18n::getLocale()) ? 'active' : ''
                 ];
-                $langLabel = ($lang == Cake\I18n\I18n::locale()) ? '[' . $langLabel . ']' : $langLabel;
+                $langLabel = ($lang == Cake\I18n\I18n::getLocale()) ? '[' . $langLabel . ']' : $langLabel;
                 ?>
                 <?= $this->Html->link($langLabel, ['action' => 'edit', $entity->id, 'translation' => $lang], $options); ?>&nbsp;
             <?php endforeach; ?>
@@ -48,7 +48,7 @@ $this->loadHelper('Bootstrap.Tabs');
                     $field = $fieldConfig;
                     $fieldConfig = [];
                 }
-                echo $this->Form->input($field, $fieldConfig);
+                echo $this->Form->control($field, $fieldConfig);
             }
             echo $this->Form->fieldsetEnd();
         }

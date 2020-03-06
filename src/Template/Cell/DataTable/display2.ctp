@@ -17,8 +17,8 @@ $this->DataTable->init($dataTable);
 <script type="text/javascript">
     //$(document).ready(function() {
         var dtId = '<?= $this->DataTable->id(); ?>';
-        var dtTable = '<?= $this->DataTable->param('model'); ?>';
-        var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->param('sortUrl')); ?>';
+        var dtTable = '<?= $this->DataTable->getParam('model'); ?>';
+        var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->getParam('sortUrl')); ?>';
         var $el = $('#' + dtId);
 
         //originally from http://stackoverflow.com/questions/1307705/jquery-ui-sortable-with-table-and-tr-width/1372954#1372954

@@ -206,7 +206,7 @@ class EntityViewCell extends Cell
                                         'controller' => $assoc->name(),
                                         'action' => 'index',
                                         '_filter' => [
-                                            $assoc->foreignKey() => $row->get($assoc->target()->primaryKey())
+                                            $assoc->foreignKey() => $row->get($assoc->target()->getPrimaryKey())
                                         ]
                                     ],
                                     [
@@ -227,7 +227,7 @@ class EntityViewCell extends Cell
 
                                 return $view->Html->link(
                                     $val->get($assoc->target()->getDisplayField()),
-                                    ['controller' => $assoc->name(), 'action' => 'view', $val->get($assoc->target()->primaryKey())],
+                                    ['controller' => $assoc->name(), 'action' => 'view', $val->get($assoc->target()->getPrimaryKey())],
                                     ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val->get($assoc->target()->getDisplayField())]
                                 );
                             };

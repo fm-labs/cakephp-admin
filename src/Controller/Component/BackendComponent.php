@@ -118,7 +118,7 @@ class BackendComponent extends Component
 
 //        // Check backend cookie
 //        $this->Cookie = $controller->loadComponent('Cookie');
-//        $this->Cookie->config('path', '/admin/');
+//        $this->Cookie->setConfig('path', '/admin/');
 //        $this->Cookie->config([
 //            'expires' => '+10 min',
 //            'httpOnly' => true,

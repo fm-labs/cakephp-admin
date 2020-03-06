@@ -14,7 +14,7 @@ class UsersTable extends BaseUsersTable
     {
         parent::initialize($config);
 
-        $this->entityClass('\User\Model\Entity\User');
+        $this->setEntityClass('\User\Model\Entity\User');
     }
 
     /**

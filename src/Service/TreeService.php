@@ -19,14 +19,14 @@ class TreeService extends BackendService
                 if ($modelClass) {
                     $Model = $event->getSubject()->loadModel($modelClass);
                     if ($Model->behaviors()->has('Tree')) {
-                        $event->data['actions']['index'] = 'Backend.TreeIndex';
-                        //$event->data['actions']['view']     = 'Backend.View';
-                        //$event->data['actions']['edit']     = 'Backend.Edit';
-                        //$event->data['actions']['delete']   = 'Backend.Delete';
-                        //$event->data['actions']['moveup']   = 'Backend.TreeMoveUp';
-                        //$event->data['actions']['movedown'] = 'Backend.TreeMoveDown';
-                        $event->data['actions']['sort'] = 'Backend.TreeSort';
-                        //$event->data['actions']['repair'] = 'Backend.TreeRepair';
+                        $event->getData('actions')['index'] = 'Backend.TreeIndex';
+                        //$event->getData('actions')['view']     = 'Backend.View';
+                        //$event->getData('actions')['edit']     = 'Backend.Edit';
+                        //$event->getData('actions')['delete']   = 'Backend.Delete';
+                        //$event->getData('actions')['moveup']   = 'Backend.TreeMoveUp';
+                        //$event->getData('actions')['movedown'] = 'Backend.TreeMoveDown';
+                        $event->getData('actions')['sort'] = 'Backend.TreeSort';
+                        //$event->getData('actions')['repair'] = 'Backend.TreeRepair';
                     }
                 }
             }]

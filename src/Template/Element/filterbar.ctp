@@ -16,7 +16,7 @@ $filters = (isset($filters)) ? $filters : null;
         <?= $this->Form->hidden('_form', ['value' => 'filter']); ?>
         <?php foreach ($this->get('filters') as $filter => $inputOptions) : ?>
             <?php $inputOptions['value'] = $this->request->query('_filter.' . $filter); ?>
-            <?= $this->Form->input('_filter.' . $filter, $inputOptions); ?>
+            <?= $this->Form->control('_filter.' . $filter, $inputOptions); ?>
         <?php endforeach; ?>
         <?= $this->Form->button('<i class="fa fa-search"></i>', ['escape' => false, 'class' => 'btn btn-primary']); ?>
         <?= $this->Form->end(); ?>

@@ -4,7 +4,7 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Log\Log;
 
-if (!Plugin::loaded('User')) {
+if (!Plugin::isLoaded('User')) {
     die("User plugin missing");
 }
 

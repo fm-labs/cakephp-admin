@@ -18,6 +18,6 @@
         </div>
 
         <div class="ui hidden divider"></div>
-        <?php debug($this->request->session()->read()); ?>
+        <?php debug($this->request->getSession()->read()); ?>
     </div>
 </div>

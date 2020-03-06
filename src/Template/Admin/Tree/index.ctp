@@ -6,7 +6,7 @@
     <div class="row" style="margin-top: 1rem;">
         <div class="col-md-5">
             <?php
-            $selected = $this->request->query('id');
+            $selected = $this->request->getQuery('id');
             $dataUrl = $this->get('dataUrl', ['action' => 'treeData']);
             $sortUrl = $this->get('sortUrl', ['action' => 'treeSort']);
 

@@ -1,8 +1,8 @@
 <?php
 use Cake\Routing\Router;
 
-$modelName = $this->request->query('model');
-$id = $this->request->query('id');
+$modelName = $this->request->getQuery('model');
+$id = $this->request->getQuery('id');
 $url = Router::url(['action' => 'ajax', 'model' => $modelName]);
 ?>
 <html>

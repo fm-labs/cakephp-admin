@@ -31,7 +31,7 @@
 $this->loadHelper('Backend.JsTree');
 
 
-$selected = $this->request->query('id');
+$selected = $this->request->getQuery('id');
 $dataUrl = $this->get('dataUrl', ['action' => 'treeData']);
 
 $defaultJsTree = [

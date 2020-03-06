@@ -34,6 +34,7 @@ class BreadcrumbHelper extends Helper
      */
     public function beforeLayout(Event $event)
     {
+        $request = $this->getView()->getRequest();
         //@TODO _no_breadcrumbs and layout_no_breadcrumbs are deprecated. Set `breadcrumbs` to FALSE instead
         if ($event->getSubject()->get('breadcrumbs') === false
             || $event->getSubject()->get('_no_breadcrumbs') === true
@@ -47,32 +48,32 @@ class BreadcrumbHelper extends Helper
                 $this->Breadcrumbs->add($breadcrumb['title'], $breadcrumb['url'], $breadcrumb['options']);
             }
         } elseif (empty($this->Breadcrumbs->getCrumbs())) {
-            if ($this->request->param('plugin') && $this->request->param('plugin') != $this->request->param('controller')) {
-                $this->Breadcrumbs->add(Inflector::humanize($this->request->param('plugin')), [
-                    'plugin' => $this->request->param('plugin'),
-                    'controller' => $this->request->param('plugin'),
+            if ($request->getParam('plugin') && $request->getParam('plugin') != $request->getParam('controller')) {
+                $this->Breadcrumbs->add(Inflector::humanize($request->getParam('plugin')), [
+                    'plugin' => $request->getParam('plugin'),
+                    'controller' => $request->getParam('plugin'),
                     'action' => 'index'
                 ]);
             }
 
-            $this->Breadcrumbs->add(Inflector::humanize($this->request->param('controller')), [
-                'plugin' => $this->request->param('plugin'),
-                'controller' => $this->request->param('controller'),
+            $this->Breadcrumbs->add(Inflector::humanize($request->getParam('controller')), [
+                'plugin' => $request->getParam('plugin'),
+                'controller' => $request->getParam('controller'),
                 'action' => 'index'
             ]);
 
             //
-            if (isset($this->request->param('pass')[0])) {
-                $this->Breadcrumbs->add(Inflector::humanize(Inflector::singularize($this->request->param('controller'))), [
-                    'plugin' => $this->request->param('plugin'),
-                    'controller' => $this->request->param('controller'),
+            if (isset($request->getParam('pass')[0])) {
+                $this->Breadcrumbs->add(Inflector::humanize(Inflector::singularize($request->getParam('controller'))), [
+                    'plugin' => $request->getParam('plugin'),
+                    'controller' => $request->getParam('controller'),
                     'action' => 'view',
-                    $this->request->param('pass')[0]
+                    $request->getParam('pass')[0]
                 ]);
             }
 
-            //if ($this->request->param('action') != 'index') {
-                $this->Breadcrumbs->add(Inflector::humanize($this->request->param('action')));
+            //if ($request->getParam('action') != 'index') {
+                $this->Breadcrumbs->add(Inflector::humanize($request->getParam('action')));
             //}
         }
 

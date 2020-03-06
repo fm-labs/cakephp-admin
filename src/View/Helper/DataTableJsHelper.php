@@ -91,7 +91,7 @@ class DataTableJsHelper extends DataTableHelper
      */
     protected function _initialize()
     {
-        $jsOpts = (array)$this->param('extra');
+        $jsOpts = (array)$this->getParam('extra');
         //$jsOpts['lengthChange'] = false;
         //$jsOpts['lengthMenu'] = [ 10, 25, 50, 75, 100 ];
 
@@ -206,7 +206,7 @@ SCRIPT;
         $script = sprintf(
             $scriptTemplate,
             json_encode($jsTable),
-            $this->param('id')
+            $this->getParam('id')
         );
 
         return $this->Html->scriptBlock($script, ['safe' => false, 'block' => $block]);

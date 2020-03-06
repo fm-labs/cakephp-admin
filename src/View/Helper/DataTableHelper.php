@@ -175,10 +175,10 @@ class DataTableHelper extends Helper
         // model
         if ($this->_params['model'] instanceof Table) {
             $this->_table = $this->_params['model'];
-            $this->_params['model'] = $this->_table->alias();
+            $this->_params['model'] = $this->_table->getAlias();
         } elseif ($this->_params['model'] instanceof Association) {
             $this->_table = $this->_params['model']->target();
-            $this->_params['model'] = $this->_table->alias();
+            $this->_params['model'] = $this->_table->getAlias();
         }
 
         // fields whitelist
@@ -196,7 +196,7 @@ class DataTableHelper extends Helper
         // fields
         $_fields = $this->_params['fields'];
         if (empty($_fields) && $this->_params['model']) {
-            $_fields = $this->_table()->schema()->columns();
+            $_fields = $this->_table()->getSchema()->columns();
         }
         $this->_params['fields'] = $_fields;
 
@@ -404,7 +404,7 @@ class DataTableHelper extends Helper
         // feature sorting
         if ($this->_params['sortable']) {
             //$this->_params = $this->Html->addClass($this->_params, 'sortable');
-            //$this->Html->script('$("#' . $this->param('id') . ' .dtable-row").sortable()', ['block' => true]);
+            //$this->Html->script('$("#' . $this->getParam('id') . ' .dtable-row").sortable()', ['block' => true]);
             $this->_tableArgs['data-ui-sortable'] = true;
         }
 
@@ -457,7 +457,7 @@ class DataTableHelper extends Helper
 
         // defaults from table column schema
         if (!isset($conf['schema']) && $this->_table()) {
-            $conf['schema'] = $column = $this->_table()->schema()->column($field);
+            $conf['schema'] = $column = $this->_table()->getSchema()->getColumn($field);
             if ($column && !$conf['type']) {
                 $conf['type'] = $column['type'];
             }
@@ -543,7 +543,7 @@ class DataTableHelper extends Helper
      */
     protected function _renderTable()
     {
-        $tableAttributes = $this->_tableArgs + ['id' => $this->param('id')];
+        $tableAttributes = $this->_tableArgs + ['id' => $this->getParam('id')];
 
         //$entity = null;
         //if ($this->_params['model']) {
@@ -666,7 +666,7 @@ class DataTableHelper extends Helper
             $column = ['type' => 'string', 'null' => true, 'default' => null];
 
             if ($Model) {
-                $column = $Model->schema()->column($fieldName);
+                $column = $Model->getSchema()->column($fieldName);
             }
             //$column['null'] = true;
             //$column['default'] = null;
@@ -697,7 +697,7 @@ class DataTableHelper extends Helper
                     $filterInputOptions['data-placeholder'] = __d('backend', 'All');
                 }
             }
-            $filterInput = $this->Form->input($fieldName, $filterInputOptions);
+            $filterInput = $this->Form->control($fieldName, $filterInputOptions);
             //}
             $cells .= $this->templater()->format('rowCell', [
                 'content' => (string)$filterInput,
@@ -1086,9 +1086,9 @@ class DataTableHelper extends Helper
 SCRIPT;
 
         $replace = [
-            '/__DATATABLE_ID__/' => $this->param('id'),
-            '/__DATATABLE_MODEL__/' => $this->param('model'),
-            '/__DATATABLE_SORTURL__/' => $this->Html->Url->build($this->param('sortable'))
+            '/__DATATABLE_ID__/' => $this->getParam('id'),
+            '/__DATATABLE_MODEL__/' => $this->getParam('model'),
+            '/__DATATABLE_SORTURL__/' => $this->Html->Url->build($this->getParam('sortable'))
         ];
 
         return preg_replace(array_keys($replace), array_values($replace), $script);
@@ -1172,7 +1172,6 @@ SCRIPT;
      * @param string $tokenStr Template
      * @param array $data Data
      * @return string
-     * @deprecated Unused
      */
     protected function _replaceTokens($tokenStr, $data = [])
     {

@@ -90,9 +90,9 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             $this->_config['modelClass'] = $controller->modelClass;
         }
         if (!isset($controller->viewVars['modelId'])) {
-            $modelId = $controller->request->param('id');
-            if (!$modelId && isset($controller->request->param('pass')[0])) {
-                $modelId = $controller->request->param('pass')[0];
+            $modelId = $controller->request->getParam('id');
+            if (!$modelId && isset($controller->request->getParam('pass')[0])) {
+                $modelId = $controller->request->getParam('pass')[0];
             }
             $this->_config['modelId'] = $modelId;
         }
@@ -111,30 +111,30 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         // breadcrumbs
         if (!isset($controller->viewVars['breadcrumbs'])) {
             $breadcrumbs = [];
-            if ($controller->request->param('plugin') && $controller->request->param('plugin') != $controller->request->param('controller')) {
+            if ($controller->request->getParam('plugin') && $controller->request->getParam('plugin') != $controller->request->getParam('controller')) {
                 $breadcrumbs[] = [
-                    'title' => Inflector::humanize($controller->request->param('plugin')),
+                    'title' => Inflector::humanize($controller->request->getParam('plugin')),
                     'url' => [
-                        'plugin' => $controller->request->param('plugin'),
-                        'controller' => $controller->request->param('plugin'),
+                        'plugin' => $controller->request->getParam('plugin'),
+                        'controller' => $controller->request->getParam('plugin'),
                         'action' => 'index'
                     ]
                 ];
                 $breadcrumbs[] = [
-                    'title' => Inflector::humanize($controller->request->param('controller')),
+                    'title' => Inflector::humanize($controller->request->getParam('controller')),
                     'url' => [
-                        'plugin' => $controller->request->param('plugin'),
-                        'controller' => $controller->request->param('controller'),
+                        'plugin' => $controller->request->getParam('plugin'),
+                        'controller' => $controller->request->getParam('controller'),
                         'action' => 'index'
                     ]
                 ];
                 $breadcrumbs[] = [
                     'title' => $this->entity()->get($this->model()->getDisplayField()),
                     'url' => [
-                        'plugin' => $controller->request->param('plugin'),
-                        'controller' => $controller->request->param('controller'),
+                        'plugin' => $controller->request->getParam('plugin'),
+                        'controller' => $controller->request->getParam('controller'),
                         'action' => 'view',
-                        $this->entity()->get($this->model()->primaryKey())
+                        $this->entity()->get($this->model()->getPrimaryKey())
                     ]
                 ];
                 $breadcrumbs[] = [
@@ -147,7 +147,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 
         // i18n
         if ($this->model()->hasBehavior('Translate')) {
-            $translation = ($controller->request->getQuery('translation')) ?: I18n::locale();
+            $translation = ($controller->request->getQuery('translation')) ?: I18n::getLocale();
             $this->model()->locale($translation);
             $controller->set('translation', $translation);
             $controller->set('translations.languages', (array)Configure::read('Multilang.Locales'));
@@ -159,7 +159,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 
             // load helpers
             if (isset($controller->viewVars['helpers'])) {
-                $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
+                $controller->viewBuilder()->setHelpers($controller->viewVars['helpers'], true);
             }
 
             return $this->_execute($controller);

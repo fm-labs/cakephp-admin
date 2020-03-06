@@ -103,9 +103,9 @@ class BackendHelper extends Helper
         /** @var \Cake\View\View $view */
         $view = $event->getSubject();
         // title
-        $title = $view->Blocks->get('title'); // check the title block
+        $title = $view->fetch('title'); // check the title block
         $title = ($title) ?: $event->getSubject()->get('page.title'); // check the 'page.title' view var
-        $title = ($title) ?: Inflector::humanize(Inflector::tableize($view->getRequest()['controller'])); // inflected controller name
+        $title = ($title) ?: Inflector::humanize(Inflector::tableize($view->getRequest()->getParam('controller'))); // inflected controller name
         $view->assign('title', $title);
 
         $themeClass = ($this->_themeConfig['name']) ?: 'theme-default';

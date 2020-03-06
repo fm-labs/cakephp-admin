@@ -159,12 +159,12 @@ $this->loadHelper('Backend.Box');
             </tr>
             <tr>
                 <td>Display Locale</td>
-                <td><?= h($this->request->query('lang')); ?>&nbsp;</td>
+                <td><?= h($this->request->getQuery('lang')); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>Data Locale</td>
-                <td><?= h($this->request->query('locale')); ?>&nbsp;</td>
+                <td><?= h($this->request->getQuery('locale')); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
@@ -180,17 +180,17 @@ $this->loadHelper('Backend.Box');
             </tr>
             <tr>
                 <td>User Locale</td>
-                <td><?= $this->request->session()->read('Backend.User.locale'); ?>&nbsp;</td>
+                <td><?= $this->request->getSession()->read('Backend.User.locale'); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>User Currency</td>
-                <td><?= $this->request->session()->read('Backend.User.currency'); ?>&nbsp;</td>
+                <td><?= $this->request->getSession()->read('Backend.User.currency'); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>User Timezone</td>
-                <td><?= $this->request->session()->read('Backend.User.timezone'); ?>&nbsp;</td>
+                <td><?= $this->request->getSession()->read('Backend.User.timezone'); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
@@ -200,7 +200,7 @@ $this->loadHelper('Backend.Box');
                         new \DateTime(),
                         \IntlDateFormatter::FULL,
                         false,
-                        $this->request->session()->read('Backend.User.timezone')
+                        $this->request->getSession()->read('Backend.User.timezone')
                     ); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>

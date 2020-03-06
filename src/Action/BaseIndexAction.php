@@ -97,12 +97,12 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
         // actions
         if ($this->_config['actions'] !== false) {
             //$event = $controller->dispatchEvent('Backend.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);
-            //$this->_config['actions'] = (array)$event->data['actions'];
+            //$this->_config['actions'] = (array)$event->getData('actions');
         }
 
         //if ($this->_config['rowActions'] !== false) {
         //    $event = $controller->dispatchEvent('Backend.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
-        //    $this->_config['rowActions'] = (array)$event->data['actions'];
+        //    $this->_config['rowActions'] = (array)$event->getData('actions');
         //}
 
         $response = null;

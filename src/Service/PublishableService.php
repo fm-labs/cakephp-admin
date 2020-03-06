@@ -19,15 +19,15 @@ class PublishableService extends BackendService
                 if ($modelClass) {
                     $Model = $event->getSubject()->loadModel($modelClass);
                     if ($Model->behaviors()->has('Publishable')) {
-                        $event->data['actions']['publish'] = 'Backend.Publish';
-                        $event->data['actions']['unpublish'] = 'Backend.Unpublish';
+                        $event->getData('actions')['publish'] = 'Backend.Publish';
+                        $event->getData('actions')['unpublish'] = 'Backend.Unpublish';
                     }
                 }
             }],
 
             'Backend.beforeAction' => ['callable' => function (Event $event) {
 
-                if ($event->data['action'] instanceof EditAction) {
+                if ($event->getData('action') instanceof EditAction) {
                     $elements = (isset($event->getSubject()->viewVars['form_elements'])) ? $event->getSubject()->viewVars['form_elements'] : [];
 
                     $elements['translate'] = [

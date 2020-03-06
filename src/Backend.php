@@ -95,9 +95,9 @@ class Backend
         $menu = new Menu();
         $event = EventManager::instance()->dispatch(new Event('Backend.Menu.build.' . $menuId, null, ['menu' => $menu]));
 
-        return $event->data['menu'];
+        return $event->getData('menu');
         //$event = EventManager::instance()->dispatch(new Event('Backend.Menu.init', null, ['menus' => [], 'menuId' => $menuId]));
-        //return (isset($event->data['menus'][$menuId])) ? $event->data['menus'][$menuId] : [];
+        //return (isset($event->getData('menus')[$menuId])) ? $event->getData('menus')[$menuId] : [];
     }
 
     /**

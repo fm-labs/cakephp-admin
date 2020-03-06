@@ -113,7 +113,7 @@ class SystemController extends AppController
      */
     public function session()
     {
-        $this->set('session', $this->request->session()->read());
+        $this->set('session', $this->request->getSession()->read());
     }
 
     /**

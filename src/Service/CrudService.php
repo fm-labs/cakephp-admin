@@ -16,20 +16,20 @@ class CrudService extends BackendService
             'Backend.Controller.setupActions' => ['callable' => function (Event $event) {
 
                 if (isset($event->getSubject()->scaffold)) {
-                    if (!isset($event->data['actions']['index'])) {
-                        $event->data['actions']['index'] = 'Backend.Index';
+                    if (!isset($event->getData('actions')['index'])) {
+                        $event->getData('actions')['index'] = 'Backend.Index';
                     }
-                    if (!isset($event->data['actions']['add'])) {
-                        $event->data['actions']['add'] = 'Backend.Add';
+                    if (!isset($event->getData('actions')['add'])) {
+                        $event->getData('actions')['add'] = 'Backend.Add';
                     }
-                    if (!isset($event->data['actions']['view'])) {
-                        $event->data['actions']['view'] = 'Backend.View';
+                    if (!isset($event->getData('actions')['view'])) {
+                        $event->getData('actions')['view'] = 'Backend.View';
                     }
-                    if (!isset($event->data['actions']['edit'])) {
-                        $event->data['actions']['edit'] = 'Backend.Edit';
+                    if (!isset($event->getData('actions')['edit'])) {
+                        $event->getData('actions')['edit'] = 'Backend.Edit';
                     }
-                    if (!isset($event->data['actions']['delete'])) {
-                        $event->data['actions']['delete'] = 'Backend.Delete';
+                    if (!isset($event->getData('actions')['delete'])) {
+                        $event->getData('actions')['delete'] = 'Backend.Delete';
                     }
                 }
             }]

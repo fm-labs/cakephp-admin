@@ -280,7 +280,7 @@ class ActionComponent extends Component
                 $controller = $event->getSubject();
 
                 // Inject template and layout via controller view vars
-                //$template = (isset($controller->viewVars['template'])) ? $controller->viewVars['template'] : $controller->viewBuilder()->template();
+                //$template = (isset($controller->viewVars['template'])) ? $controller->viewVars['template'] : $controller->viewBuilder()->getTemplate();
                 //$layout = (isset($controller->viewVars['layout'])) ? $controller->viewVars['layout'] : $controller->viewBuilder()->layout();
 
                 // Check if a custom Action class template in the controller's template path,

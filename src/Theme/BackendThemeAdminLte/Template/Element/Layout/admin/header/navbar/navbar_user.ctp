@@ -6,7 +6,7 @@
         <?php //echo $this->Html->image('/backend/adminlte/dist/img/user2-160x160.jpg', ['class' => 'user-image', 'alt' => 'User Image']); ?>
         <i class="fa fa-user"></i>
         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-        <span class="hidden-xs"><?= h($this->request->session()->read('Backend.User.name')); ?></span>
+        <span class="hidden-xs"><?= h($this->request->getSession()->read('Backend.User.name')); ?></span>
     </a>
     <ul class="dropdown-menu">
         <!-- The user image in the menu -->
@@ -14,8 +14,8 @@
             <?php //echo $this->Html->image('/backend/adminlte/dist/img/user2-160x160.jpg', ['class' => 'img-circle', 'alt' => 'User Image']); ?>
             <i class="fa fa-user fa-5x" style="color: #fff;"></i>
             <p>
-                <?= h($this->request->session()->read('Backend.User.name')); ?>
-                <small>Member since <?= $this->Time->nice($this->request->session()->read('Backend.User.created')); ?></small>
+                <?= h($this->request->getSession()->read('Backend.User.name')); ?>
+                <small>Member since <?= $this->Time->nice($this->request->getSession()->read('Backend.User.created')); ?></small>
             </p>
         </li>
         <!-- Menu Body (unused yet)-->

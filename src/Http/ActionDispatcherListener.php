@@ -24,9 +24,9 @@ class ActionDispatcherListener implements EventListenerInterface
     public function beforeDispatch(Event $event)
     {
         /* @var $request \Cake\Http\ServerRequest */
-        $request = $event->data['request'];
+        $request = $event->getData('request');
         /* @var $response \Cake\Http\Response */
-        $response = $event->data['response'];
+        $response = $event->getData('response');
         /* @var $dispatcher \Cake\Http\ActionDispatcher */
         $dispatcher = $event->getSubject();
 
@@ -35,8 +35,8 @@ class ActionDispatcherListener implements EventListenerInterface
 
         if ($controller->components()->has('Action')) {
             //debug("has component");
-            $action = $request->param('action');
-            $prefix = $request->param('prefix');
+            $action = $request->getParam('action');
+            $prefix = $request->getParam('prefix');
 
             $actionList = $controller->Action->listActions();
             //debug($actionList);
@@ -50,6 +50,6 @@ class ActionDispatcherListener implements EventListenerInterface
             }
         }
 
-        $event->data['controller'] = $controller;
+        $event->getData('controller') = $controller;
     }
 }

@@ -50,7 +50,7 @@ class BackendView extends View
             $event = $this->getEventManager()->dispatch(
                 new Event('Backend.View.fetch', $this, ['name' => $name, 'content' => $content])
             );
-            $content = $event->data['content'];
+            $content = $event->getData('content');
         }
 
         if (!$content) {

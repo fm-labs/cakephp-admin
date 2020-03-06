@@ -22,8 +22,8 @@ return;
     $(document).ready(function() {
 
         var dtId = '<?= $this->DataTable->id(); ?>';
-        var dtTable = '<?= $this->DataTable->param('model'); ?>';
-        var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->param('sortable')); ?>';
+        var dtTable = '<?= $this->DataTable->getParam('model'); ?>';
+        var dtSortUrl = '<?= $this->Html->Url->build($this->DataTable->getParam('sortable')); ?>';
         var $el = $('#' + dtId);
 
         console.log("loading datatable js for " + dtId);

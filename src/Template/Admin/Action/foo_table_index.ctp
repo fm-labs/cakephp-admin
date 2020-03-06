@@ -10,7 +10,7 @@ $this->loadHelper('Backend.FooTable');
             echo $this->FooTable->create($table)
                 ->setData($this->get('result'))
                 ->render(['script' => false]);
-            $domId = $this->FooTable->param('id');
+            $domId = $this->FooTable->getParam('id');
             //$rowsUrl = \Cake\Routing\Router::url(['plugin' => 'Backend', 'controller' => 'FooTables', 'action' => 'rows', 'model' => $table['model']]);
             $rowsUrl = $this->get('rowsUrl', '');
             ?>

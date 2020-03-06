@@ -106,12 +106,12 @@ class IndexAction extends BaseAction
         // actions
         if ($this->_config['actions'] !== false) {
             //$event = $controller->dispatchEvent('Backend.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);
-            //$this->_config['actions'] = (array)$event->data['actions'];
+            //$this->_config['actions'] = (array)$event->getData('actions');
         }
 
         //if ($this->_config['rowActions'] !== false) {
         //    $event = $controller->dispatchEvent('Backend.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
-        //    $this->_config['rowActions'] = (array)$event->data['actions'];
+        //    $this->_config['rowActions'] = (array)$event->getData('actions');
         //}
 
         $response = null;
@@ -241,7 +241,7 @@ class IndexAction extends BaseAction
                 continue;
             }
             $actions[$action] = [
-                'url' => Router::url(['action' => $action, $row[$this->model()->primaryKey()]]),
+                'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
                 'title' => $conf['label'],
                 'attrs' => $conf['attrs']
             ];
@@ -252,7 +252,7 @@ class IndexAction extends BaseAction
 //            if ($_action instanceof EntityActionInterface && in_array('table', $_action->getScope()) /*&& $_action->isUsable($row)*/) {
 //                $actions[$action] = [
 //                    'title' => $_action->getLabel(),
-//                    'url' => Router::url(['action' => $action, $row[$this->model()->primaryKey()]]),
+//                    'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
 //                    'attrs' => $_action->getAttributes()];
 //            }
 //        }

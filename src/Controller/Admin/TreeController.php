@@ -84,7 +84,7 @@ class TreeController extends AppController
             $Model->addBehavior('Backend.JsTree');
 
             $node = $Model->get($request['nodeId']);
-            //$Model->behaviors()->Tree->config('scope', ['site_id' => $node->site_id]);
+            //$Model->behaviors()->Tree->setConfig('scope', ['site_id' => $node->site_id]);
             $node = $Model->moveTo($node, $request['newParentId'], $request['newPos'], $request['oldPos']);
 
             $result = ['success' => __d('backend', "Node has been moved")];

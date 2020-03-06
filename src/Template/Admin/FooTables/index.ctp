@@ -1,8 +1,8 @@
 <?php
 use Cake\Routing\Router;
 
-$modelName = $this->request->query('model');
-$id = $this->request->query('id');
+$modelName = $this->request->getQuery('model');
+$id = $this->request->getQuery('id');
 $columnsUrl = Router::url(['action' => 'columns', 'model' => $modelName]);
 $rowsUrl = Router::url(['action' => 'rows', 'model' => $modelName]);
 $tableUrl = Router::url(['action' => 'table', 'model' => $modelName]);

@@ -12,11 +12,11 @@
         'horizontal' => false,
         'url' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login']
     ]); ?>
-    <?= $this->Form->input('username', [
+    <?= $this->Form->control('username', [
         'label' => false,
         'placeholder' => __d('backend', 'Username')
     ]); ?>
-    <?= $this->Form->input('password', [
+    <?= $this->Form->control('password', [
         'type' => 'password',
         'label' => false,
         'placeholder' => __d('backend', 'Password')

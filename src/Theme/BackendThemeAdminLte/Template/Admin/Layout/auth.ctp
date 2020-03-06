@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?= Cake\I18n\I18n::locale(); ?>">
+<html lang="<?= Cake\I18n\I18n::getLocale(); ?>">
 <head>
     <?= $this->Html->charset() ?>
     <title><?= $this->fetch('title') ?></title>

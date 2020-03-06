@@ -57,8 +57,8 @@ class InlineEntityAction extends BaseEntityAction
 //            throw new MissingActionException([
 //                'controller' => $controller->name,
 //                'action' => $this->action,
-//                'prefix' => isset($controller->request->getParam('prefix')) ? $controller->request->getParam('prefix') : '',
-//                'plugin' => $controller->request->getParam('plugin'),
+//                'prefix' => isset($controller->getRequest()->getParam('prefix')) ? $controller->getRequest()->getParam('prefix') : '',
+//                'plugin' => $controller->getRequest()->getParam('plugin'),
 //            ]);
 //        }
 //
@@ -66,10 +66,10 @@ class InlineEntityAction extends BaseEntityAction
 //            throw new \InvalidArgumentException("InlineAction " . $this->action . " has no valid callback");
 //        }
 
-        //$this->_config['modelId'] = $controller->request->getParam('pass')[0];
+        //$this->_config['modelId'] = $controller->getRequest()->getParam('pass')[0];
         //$entity = $this->entity();
         //$controller->set('entity', $entity);
         //$this->_executed = true;
-        return call_user_func_array($this->_callable, $controller->request->getParam('pass'));
+        return call_user_func_array($this->_callable, $controller->getRequest()->getParam('pass'));
     }
 }

@@ -42,7 +42,7 @@ class DesignController extends AppController
     public function form()
     {
         $form = new Form();
-        $form->schema()
+        $form->getSchema()
             ->addField('h_text', ['type' => 'string'])
             ->addField('h_text_error', ['type' => 'string'])
             ->addField('h_checkbox', ['type' => 'tinyint']);

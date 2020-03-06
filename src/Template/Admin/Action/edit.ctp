@@ -53,7 +53,7 @@ $this->loadHelper('Bootstrap.Tabs');
             echo $this->Form->fieldsetEnd();
         }
     } else {
-        echo $this->Form->allInputs($inputFields, $inputOptions);
+        echo $this->Form->allControls($inputFields, $inputOptions);
     }
     echo $this->Form->submit(__d('backend', 'Save changes'));
     echo $this->Form->end();

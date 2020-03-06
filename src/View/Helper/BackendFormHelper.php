@@ -66,7 +66,7 @@ class BackendFormHelper extends BootstrapFormHelper
         }
 
         $this->_fieldsetOptions = $options;
-        $this->_View->Blocks->start('_fieldset');
+        $this->_View->start('_fieldset');
     }
 
     /**
@@ -76,10 +76,10 @@ class BackendFormHelper extends BootstrapFormHelper
      */
     public function fieldsetEnd()
     {
-        $this->_View->Blocks->end();
+        $this->_View->end();
 
         $fields = $this->templater()->format('fieldsetBody', [
-            'content' => $this->_View->Blocks->get('_fieldset'),
+            'content' => $this->_View->fetch('_fieldset'),
             'attrs' => $this->templater()->formatAttributes([])
         ]);
 

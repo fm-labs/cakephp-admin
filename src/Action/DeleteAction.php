@@ -34,8 +34,8 @@ class DeleteAction extends BaseEntityAction
             throw new NotFoundException("Entity not found");
         }
 
-        if ($controller->request->is(['post'])) {
-            if ($controller->request->data('confirm') == true) {
+        if ($controller->getRequest()->is(['post'])) {
+            if ($controller->getRequest()->data('confirm') == true) {
                 if ($entity instanceof EntityInterface) {
                     if ($this->model()->delete($entity)) {
                         $controller->Flash->success(__d('backend', 'Deleted'));

@@ -6,6 +6,7 @@ use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
@@ -50,7 +51,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
     public function __construct(Controller $controller, array $config = [])
     {
         $this->controller = $controller;
-        $this->request =& $controller->request;
+        $this->request = $controller->getRequest();
         $this->setConfig($config);
     }
 
@@ -87,13 +88,10 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
      */
     public function model()
     {
-        if (!$this->_config['modelClass']) {
-            //throw new \Exception(get_class($this) . ' has no model class defined');
-            return false;
-        }
+        $modelClass = ($this->_config['modelClass']) ?? $this->controller->modelClass;
 
         if (!$this->_table) {
-            $this->_table = TableRegistry::getTableLocator()->get($this->_config['modelClass']);
+            $this->_table = TableRegistry::getTableLocator()->get($modelClass);
         }
 
         return $this->_table;

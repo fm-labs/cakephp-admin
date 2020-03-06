@@ -114,7 +114,7 @@ class BackendComponent extends Component
         );
 
         // i18n
-        //I18n::locale('en_US');
+        //I18n::setLocale('en_US');
 
 //        // Check backend cookie
 //        $this->Cookie = $controller->loadComponent('Cookie');

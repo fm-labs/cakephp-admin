@@ -38,7 +38,7 @@ $this->loadHelper('Bootstrap.Tabs');
                         //echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render();
 
                         echo $this->Form->create($entity, $formOptions);
-                        echo $this->Form->allInputs($inputFields, $inputOptions);
+                        echo $this->Form->allControls($inputFields, $inputOptions);
                         echo $this->Form->button(__d('backend','Submit'));
                         echo $this->Form->end();
                     }

@@ -73,8 +73,8 @@ class ModelController extends AppController
             }
             $inputSchema = $Model->inputs();
             /*
-            foreach ($Model->schema()->columns() as $col) {
-                $schema[$col] = $Model->schema()->column($col);
+            foreach ($Model->getSchema()->columns() as $col) {
+                $schema[$col] = $Model->getSchema()->column($col);
 
                 if (!$inputSchema->field($col)) {
                     $type = (isset($typeMap[$schema[$col]['type']])) ? $typeMap[$schema[$col]['type']] : 'Text';

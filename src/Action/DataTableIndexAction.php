@@ -76,12 +76,12 @@ class DataTableIndexAction extends IndexAction
         $dtjsOpts['paging'] = $this->_config['paging'];
 
         // JSON data
-        if ($controller->request->getQuery('data') == true) {
+        if ($controller->getRequest()->getQuery('data') == true) {
             //Configure::write('debug', 0);
             $controller->viewBuilder()->setClassName('Json');
 
             $query = $this->model()->find();
-            $request = $controller->request->getQuery();
+            $request = $controller->getRequest()->getQuery();
             $request += ['search' => null, 'order' => null, 'draw' => null, 'start' => null, 'length' => null, 'paginate' => [], 'columns' => []];
 
             $recordsFiltered = $recordsTotal = $query->count();
@@ -136,7 +136,7 @@ class DataTableIndexAction extends IndexAction
                     $orderField = $_col['data'];
                     $orderDir = $_order['dir'];
                     list($_plugin, $_field) = pluginSplit($orderField);
-                    $_plugin = ($_plugin) ? Inflector::camelize(Inflector::pluralize($_plugin)) : $this->model()->alias();
+                    $_plugin = ($_plugin) ? Inflector::camelize(Inflector::pluralize($_plugin)) : $this->model()->getAlias();
                     $order[$_plugin . '.' . $_field] = $orderDir;
                 }
                 $query->order($order);

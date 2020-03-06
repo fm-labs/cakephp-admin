@@ -74,7 +74,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
             $entity = $this->model()->newEntity();
         }
 
-        $_fields = $this->model()->schema()->columns();
+        $_fields = $this->model()->getSchema()->columns();
         if (isset($controller->viewVars['fields'])) {
             $_fields = array_merge($controller->viewVars['fields'], $_fields);
         }

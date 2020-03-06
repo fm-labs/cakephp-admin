@@ -52,7 +52,7 @@ class FooTableIndexAction extends IndexAction
         $this->_config['query']['maxLimit'] = self::$maxLimit; // hard limit
 
         // JSON data
-        if ($controller->request->getQuery('rows') == true) {
+        if ($controller->getRequest()->getQuery('rows') == true) {
             //Configure::write('debug', 0);
             $controller->viewBuilder()->setClassName('Json');
 

@@ -90,9 +90,9 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             $this->_config['modelClass'] = $controller->modelClass;
         }
         if (!isset($controller->viewVars['modelId'])) {
-            $modelId = $controller->request->getParam('id');
-            if (!$modelId && isset($controller->request->getParam('pass')[0])) {
-                $modelId = $controller->request->getParam('pass')[0];
+            $modelId = $controller->getRequest()->getParam('id');
+            if (!$modelId && isset($controller->getRequest()->getParam('pass')[0])) {
+                $modelId = $controller->getRequest()->getParam('pass')[0];
             }
             $this->_config['modelId'] = $modelId;
         }
@@ -111,28 +111,28 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         // breadcrumbs
         if (!isset($controller->viewVars['breadcrumbs'])) {
             $breadcrumbs = [];
-            if ($controller->request->getParam('plugin') && $controller->request->getParam('plugin') != $controller->request->getParam('controller')) {
+            if ($controller->getRequest()->getParam('plugin') && $controller->getRequest()->getParam('plugin') != $controller->getRequest()->getParam('controller')) {
                 $breadcrumbs[] = [
-                    'title' => Inflector::humanize($controller->request->getParam('plugin')),
+                    'title' => Inflector::humanize($controller->getRequest()->getParam('plugin')),
                     'url' => [
-                        'plugin' => $controller->request->getParam('plugin'),
-                        'controller' => $controller->request->getParam('plugin'),
+                        'plugin' => $controller->getRequest()->getParam('plugin'),
+                        'controller' => $controller->getRequest()->getParam('plugin'),
                         'action' => 'index'
                     ]
                 ];
                 $breadcrumbs[] = [
-                    'title' => Inflector::humanize($controller->request->getParam('controller')),
+                    'title' => Inflector::humanize($controller->getRequest()->getParam('controller')),
                     'url' => [
-                        'plugin' => $controller->request->getParam('plugin'),
-                        'controller' => $controller->request->getParam('controller'),
+                        'plugin' => $controller->getRequest()->getParam('plugin'),
+                        'controller' => $controller->getRequest()->getParam('controller'),
                         'action' => 'index'
                     ]
                 ];
                 $breadcrumbs[] = [
                     'title' => $this->entity()->get($this->model()->getDisplayField()),
                     'url' => [
-                        'plugin' => $controller->request->getParam('plugin'),
-                        'controller' => $controller->request->getParam('controller'),
+                        'plugin' => $controller->getRequest()->getParam('plugin'),
+                        'controller' => $controller->getRequest()->getParam('controller'),
                         'action' => 'view',
                         $this->entity()->get($this->model()->getPrimaryKey())
                     ]
@@ -147,8 +147,8 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 
         // i18n
         if ($this->model()->hasBehavior('Translate')) {
-            $translation = ($controller->request->getQuery('translation')) ?: I18n::getLocale();
-            $this->model()->locale($translation);
+            $translation = ($controller->getRequest()->getQuery('translation')) ?: I18n::getLocale();
+            $this->model()->setLocale($translation);
             $controller->set('translation', $translation);
             $controller->set('translations.languages', (array)Configure::read('Multilang.Locales'));
         }

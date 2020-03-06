@@ -38,7 +38,7 @@ class TreeSortAction extends IndexAction
                 $controller->Flash->error(__d('backend', 'Model {0} has no Tree behavior attached', $controller->modelClass));
             }
         } catch (\Exception $ex) {
-            $controller->Flash->error(__d('backend', 'Failed to load model {0}', $this->model()->alias()));
+            $controller->Flash->error(__d('backend', 'Failed to load model {0}', $this->model()->getAlias()));
 
             return;
         }

@@ -3,7 +3,7 @@ use Cake\Utility\Inflector;
 
 $fields = collection($fields)
     ->filter(function($field) use ($schema) {
-        return $schema->columnType($field) !== 'binary';
+        return $schema->getColumnType($field) !== 'binary';
     });
 %>
 <?php $this->Breadcrumbs->add(__d('backend','<%= $pluralHumanName %>'), ['action' => 'index']); ?>
@@ -78,7 +78,7 @@ foreach ($associations as $type => $data) {
 
             if (in_array($field, ['created', 'modified', 'updated'])) {
                 continue;
-            } elseif ($schema->columnType($field) == "datetime" || in_array($field, ['password'])) {
+            } elseif ($schema->getColumnType($field) == "datetime" || in_array($field, ['password'])) {
 %>
                 //echo $this->Form->control('<%= $field %>');
 <%

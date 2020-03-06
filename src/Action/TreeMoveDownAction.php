@@ -36,12 +36,12 @@ class TreeMoveDownAction extends BaseEntityAction
             $entity = $this->entity();
 
             if ($this->model()->moveDown($entity)) {
-                $controller->Flash->success(__d('backend', 'The {0} has been moved down.', $this->model()->alias()));
+                $controller->Flash->success(__d('backend', 'The {0} has been moved down.', $this->model()->getAlias()));
             } else {
-                $controller->Flash->error(__d('backend', 'The {0} could not be moved. Please, try again.', $this->model()->alias()));
+                $controller->Flash->error(__d('backend', 'The {0} could not be moved. Please, try again.', $this->model()->getAlias()));
             }
         } else {
-            $controller->Flash->error('Tree behavior not loaded for model ' . $this->model()->alias());
+            $controller->Flash->error('Tree behavior not loaded for model ' . $this->model()->getAlias());
         }
 
         return $controller->redirect($controller->referer(['action' => 'index']));

@@ -42,14 +42,14 @@ class PublishAction extends BaseEntityAction
     public function _execute(Controller $controller)
     {
         if (!$this->model()->hasBehavior('Publishable')) {
-            $controller->Flash->error('Publishable behavior not loaded for model ' . $this->model()->alias());
+            $controller->Flash->error('Publishable behavior not loaded for model ' . $this->model()->getAlias());
 
             return $controller->redirect($controller->referer(['action' => 'index']));
         }
 
         $entity = $this->entity();
-        if ($controller->request->is(['put', 'post'])) {
-            $entity = $this->model()->patchEntity($entity, $controller->request->data(), [
+        if ($controller->getRequest()->is(['put', 'post'])) {
+            $entity = $this->model()->patchEntity($entity, $controller->getRequest()->data(), [
                 //'fieldList' => ['is_published', 'publish_start', 'publish_end'], //@TODO Enable fieldList
             ]);
             if ($this->model()->save($entity)) {

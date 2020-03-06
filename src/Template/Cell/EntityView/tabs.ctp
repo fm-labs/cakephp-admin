@@ -47,7 +47,7 @@ use Cake\Utility\Inflector;
                         break;
                     }
                     echo $this->cell('Backend.EntityView', [ $_entity, [
-                        //'model' => $assoc->target()->alias()
+                        //'model' => $assoc->target()->getAlias()
                     ] ]);
 
                     break;

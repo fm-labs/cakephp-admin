@@ -34,9 +34,9 @@ class TreeRepairAction extends BaseIndexAction
     {
         if ($this->model()->hasBehavior('Tree')) {
             $this->model()->recover();
-            $controller->Flash->success(__d('backend', 'Tree for model {0} has been repaired', $this->model()->alias()));
+            $controller->Flash->success(__d('backend', 'Tree for model {0} has been repaired', $this->model()->getAlias()));
         } else {
-            $controller->Flash->error('Tree behavior not loaded for model ' . $this->model()->alias());
+            $controller->Flash->error('Tree behavior not loaded for model ' . $this->model()->getAlias());
         }
 
         return $controller->redirect($controller->referer(['action' => 'index']));

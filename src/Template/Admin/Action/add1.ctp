@@ -37,7 +37,7 @@ $whitelist = $this->get('fields.whitelist');
                         echo $this->Form->control($field, $fieldConfig);
                     }
                 } else {
-                    echo $this->Form->allInputs();
+                    echo $this->Form->allControls();
                 }
                 echo $this->Form->button(__d('backend','Submit'));
                 echo $this->Form->end();

@@ -70,7 +70,7 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
         // Model
         if ($controller->modelClass) {
             $Model = $controller->loadModel($controller->modelClass);
-            $schema = $Model->schema();
+            $schema = $Model->getSchema();
             $controller->set('model_class', $controller->modelClass);
             $controller->set('model_schema', $schema);
         }

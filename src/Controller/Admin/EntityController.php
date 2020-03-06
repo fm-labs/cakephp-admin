@@ -34,7 +34,7 @@ class EntityController extends AppController
         $entity = $exception = null;
         try {
             $Model = $this->loadModel($modelName);
-            $query = $Model->find()->where([$Model->alias() . '.id' => $modelId]);
+            $query = $Model->find()->where([$Model->getAlias() . '.id' => $modelId]);
 
             $entity = $query->firstOrFail();
 
@@ -67,7 +67,7 @@ class EntityController extends AppController
             //$modelName = pluginSplit($modelName);
 
             $Model = $this->loadModel($modelName);
-            $query = $Model->find()->where([$Model->alias() . '.id' => $modelId]);
+            $query = $Model->find()->where([$Model->getAlias() . '.id' => $modelId]);
 
             //if ($Model->behaviors()->has('Media')) {
             //    $query->find('media');

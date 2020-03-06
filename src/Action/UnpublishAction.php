@@ -53,7 +53,7 @@ class UnpublishAction extends BaseEntityAction
                 $controller->Flash->error(__d('backend', 'Unpublish failed'));
             }
         } else {
-            $controller->Flash->error('Publishable behavior not loaded for model ' . $this->model()->alias());
+            $controller->Flash->error('Publishable behavior not loaded for model ' . $this->model()->getAlias());
 
             return $controller->redirect($controller->referer(['action' => 'index']));
         }

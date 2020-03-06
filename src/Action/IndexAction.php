@@ -89,7 +89,7 @@ class IndexAction extends BaseAction
 
         if (empty($cols)) {
             // if no fields are defined, use first 10 columns from table schema
-            $cols = array_slice($this->model()->schema()->columns(), 0, 10);
+            $cols = array_slice($this->model()->getSchema()->columns(), 0, 10);
         }
         $cols = $this->_normalizeColumns($cols);
 

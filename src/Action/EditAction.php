@@ -52,25 +52,25 @@ class EditAction extends BaseEntityAction
     {
         $entity = $this->entity();
 
-        $_fields = $this->model()->schema()->columns();
+        $_fields = $this->model()->getSchema()->columns();
         if (isset($controller->viewVars['fields'])) {
             $_fields = array_merge($_fields, $controller->viewVars['fields']);
         }
 
         if (isset($controller->viewVars['fields.access'])) {
-            $entity->accessible($controller->viewVars['fields.access']);
+            $entity->setAccess($controller->viewVars['fields.access'], true);
         }
 
         $fields = $blacklist = $whitelist = [];
         if (isset($controller->viewVars['fields.whitelist'])) {
             $whitelist = $controller->viewVars['fields.whitelist'];
-            $entity->accessible($whitelist, true);
+            $entity->setAccess($whitelist, true);
         } else {
-            $entity->accessible('*', true);
+            $entity->setAccess('*', true);
         }
         if (isset($controller->viewVars['fields.blacklist'])) {
             $blacklist = $controller->viewVars['fields.blacklist'];
-            $entity->accessible($blacklist, false);
+            $entity->setAccess($blacklist, false);
         }
         foreach ($_fields as $_f => $field) {
             if (is_numeric($_f)) {
@@ -89,7 +89,7 @@ class EditAction extends BaseEntityAction
 
             // get help text from column comment
             if ($field && !isset($field['help'])) {
-                $column = $this->model()->schema()->column($_f);
+                $column = $this->model()->getSchema()->column($_f);
                 if ($column && isset($column['comment'])) {
                     $field['help'] = $column['comment'];
                 }
@@ -103,13 +103,13 @@ class EditAction extends BaseEntityAction
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend', 'Saved!'));
 
-                return $this->redirect([$entity->id] + $controller->request->query);
+                return $this->redirect([$entity->id] + $controller->getRequest()->query);
             } else {
                 $this->_flashError();
             }
         }
 
-        $request = $controller->request;
+        $request = $controller->getRequest();
         $formId = join('-', array_map(
             ['Cake\Utility\Inflector', 'dasherize'],
             array_map(
@@ -130,22 +130,22 @@ class EditAction extends BaseEntityAction
         /* @var Association $assoc */
         foreach ($this->model()->associations() as $assoc) {
             if ($assoc->type() == Association::MANY_TO_ONE) {
-                $fKey = $assoc->foreignKey();
+                $fKey = $assoc->getForeignKey();
                 if (strrpos($fKey, '_id') !== false) {
                     $var = substr($fKey, 0, strrpos($fKey, '_id'));
                     $var = lcfirst(Inflector::camelize(Inflector::pluralize($var)));
 
-                    $list = $assoc->target()->find('list')->order([$assoc->target()->getDisplayField() => 'ASC'])->toArray();
+                    $list = $assoc->getTarget()->find('list')->order([$assoc->getTarget()->getDisplayField() => 'ASC'])->toArray();
                     $controller->set($var, $list);
                 }
             } elseif ($assoc->type() == Association::ONE_TO_MANY) {
                 // fetch list for 1-m relationships only if the property is set in entity
-                if ($entity->get($assoc->property())) {
-                    $list = $assoc->target()->find('list')->order([$assoc->target()->getDisplayField() => 'ASC'])->toArray();
-                    $controller->set(Inflector::variable($assoc->property()), $list);
+                if ($entity->get($assoc->getProperty())) {
+                    $list = $assoc->getTarget()->find('list')->order([$assoc->getTarget()->getDisplayField() => 'ASC'])->toArray();
+                    $controller->set(Inflector::variable($assoc->getProperty()), $list);
                     //debug("assoc list for " . $assoc->name() . ": " . count($list)
                     //    . " item using key " . $assoc->foreignKey()
-                    //    . " prop: " . $assoc->property() . " -> " . Inflector::variable($assoc->property()));
+                    //    . " prop: " . $assoc->getProperty() . " -> " . Inflector::variable($assoc->getProperty()));
                 }
             } elseif ($assoc->type() == Association::ONE_TO_ONE) {
                 //$list = ['foo' => 'bar'];
@@ -153,8 +153,8 @@ class EditAction extends BaseEntityAction
                 //$controller->set($assoc->foreignKey(), $list);
                 //debug($assoc->type());
             } elseif ($assoc->type() == Association::MANY_TO_MANY) {
-                $list = $assoc->target()->find('list')->order([$assoc->target()->getDisplayField() => 'ASC'])->toArray();
-                $controller->set(Inflector::variable($assoc->property()), $list);
+                $list = $assoc->getTarget()->find('list')->order([$assoc->getTarget()->getDisplayField() => 'ASC'])->toArray();
+                $controller->set(Inflector::variable($assoc->getProperty()), $list);
             } else {
                 //debug($assoc->type());
             }

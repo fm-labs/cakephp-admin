@@ -24,7 +24,7 @@ class FooTablesController extends AppController
         $fields = ['id', 'title'];
 
         $columns = [];
-        foreach ($Model->schema()->columns() as $colName) {
+        foreach ($Model->getSchema()->columns() as $colName) {
             //if (!in_array($colName, $fields)) continue;
             $columns[] = ['name' => $colName, 'title' => Inflector::humanize($colName)];
         }

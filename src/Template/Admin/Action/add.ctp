@@ -35,14 +35,14 @@ $this->loadHelper('Bootstrap.Tabs');
         echo $this->Form->create($entity, $formOptions);
         if ($fieldsets) {
             foreach ($fieldsets as $fieldset) {
-                $this->Form->allInputs($fieldset['inputs'], $fieldset['options']);
+                $this->Form->allControls($fieldset['inputs'], $fieldset['options']);
             }
         } elseif ($fields) {
             foreach ($fields as $field => $config) {
                 echo $this->Form->control($field, $config);
             }
         } else {
-            $this->Form->allInputs();
+            $this->Form->allControls();
         }
         echo $this->Form->button(__d('backend', 'Submit'));
         echo $this->Form->end();

@@ -1,6 +1,7 @@
 <?php
 namespace Backend\View\Cell;
 
+use Cake\Datasource\EntityInterface;
 use Cake\View\Cell;
 
 /**
@@ -38,21 +39,21 @@ class EntityRelatedCell extends Cell
                 $alias = $relatedConfig;
                 $relatedConfig = [];
             }
-            $assoc = $Model->association($alias);
+            $assoc = $Model->getAssociation($alias);
             if ($assoc) {
-                if ($entity->get($assoc->property()) === null) {
-                    //debug($assoc->type() . ": associated property not set: " . $assoc->property());
+                if ($entity->get($assoc->getProperty()) === null) {
+                    //debug($assoc->type() . ": associated property not set: " . $assoc->getProperty());
 
                     $elements[] = [
-                        'title' => __d('backend', 'Related {0}', $assoc->name()),
+                        'title' => __d('backend', 'Related {0}', $assoc->getName()),
                         'render' => 'content',
-                        'content' => sprintf("Associated property not set: %s (%s)", $assoc->property(), $assoc->type())
+                        'content' => sprintf("Associated property not set: %s (%s)", $assoc->getProperty(), $assoc->type())
                     ];
                     continue;
                 }
 
-                $relatedEntity = $entity->get($assoc->property());
-                $title = __d('backend', 'Related {0}', $assoc->name());
+                $relatedEntity = $entity->get($assoc->getProperty());
+                $title = __d('backend', 'Related {0}', $assoc->getName());
 
                 switch ($assoc->type()) {
                     case \Cake\ORM\Association::MANY_TO_ONE:
@@ -60,7 +61,7 @@ class EntityRelatedCell extends Cell
                         $config = ['title' => $title] + $relatedConfig;
 
                         $elements[] = [
-                            'title' => __d('backend', 'Related {0}', $assoc->name()),
+                            'title' => __d('backend', 'Related {0}', $assoc->getName()),
                             'render' => 'cell',
                             'cell' => 'Backend.EntityView',
                             'cellParams' => [ $relatedEntity ],
@@ -71,16 +72,16 @@ class EntityRelatedCell extends Cell
 
                     case \Cake\ORM\Association::ONE_TO_MANY:
                         $dataTable = array_merge([
-                            'model' => $assoc->target(),
+                            'model' => $assoc->getTarget(),
                             'data' => $relatedEntity,
-                            'fieldsBlacklist' => [$assoc->foreignKey()],
+                            'fieldsBlacklist' => [$assoc->getForeignKey()],
                             'filter' => false,
                             'actions' => false,
                             'rowActions' => false,
                         ], $relatedConfig);
 
                         $elements[] = [
-                            'title' => __d('backend', 'Related {0}', $assoc->name()),
+                            'title' => __d('backend', 'Related {0}', $assoc->getName()),
                             'render' => 'table',
                             'tableOptions' => $dataTable
                         ];

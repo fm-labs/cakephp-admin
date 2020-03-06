@@ -102,11 +102,11 @@ class EntityViewCell extends Cell
             $this->whitelist = array_keys($fields);
         }
         if (empty($this->whitelist)) {
-            $this->whitelist = $entity->visibleProperties();
+            $this->whitelist = $entity->getVisible();
         }
 
         if ($Table) {
-            $schema = $Table->schema();
+            $schema = $Table->getSchema();
             $associations = $Table->associations();
         } else {
             $schema = $associations = null;
@@ -114,13 +114,13 @@ class EntityViewCell extends Cell
 
         $data = [];
         //$properties = $entity->visibleProperties();
-        $virtualProperties = $entity->virtualProperties();
+        $virtualProperties = $entity->getVirtual();
 
         $belongsTo = [];
         if ($associations) {
             foreach ($associations as $assoc) {
                 if ($assoc->type() == "manyToOne") {
-                    $belongsTo[$assoc->foreignKey()] = $assoc->name();
+                    $belongsTo[$assoc->getForeignKey()] = $assoc->getName();
                 }
             }
         }
@@ -148,28 +148,28 @@ class EntityViewCell extends Cell
 
             if (isset($belongsTo[$property])) {
                 $assoc = $associations->get($belongsTo[$property]);
-                //debug("$property belongsTo " . $belongsTo[$property] . " -> " . $assoc->property());
-                if ($entity->get($assoc->property())) {
-                //    $val = sprintf("%s (%s)", $val, $entity->get($assoc->property())->get($assoc->target()->getDisplayField()));
-                //    $formatter = ['related', $assoc->target()->getDisplayField()];
+                //debug("$property belongsTo " . $belongsTo[$property] . " -> " . $assoc->getProperty());
+                if ($entity->get($assoc->getProperty())) {
+                //    $val = sprintf("%s (%s)", $val, $entity->get($assoc->getProperty())->get($assoc->getTarget()->getDisplayField()));
+                //    $formatter = ['related', $assoc->getTarget()->getDisplayField()];
 
-                    $related = $entity->get($assoc->property());
+                    $related = $entity->get($assoc->getProperty());
                     $formatter = function ($val, $row, $args, $view) use ($related, $assoc) {
-                        list($plugin, $modelName) = pluginSplit($assoc->target()->registryAlias());
+                        list($plugin, $modelName) = pluginSplit($assoc->getTarget()->getRegistryAlias());
 
                         return $view->Html->link(
-                            $related->get($assoc->target()->getDisplayField()),
-                            [/*'plugin' => $plugin,*/ 'controller' => $assoc->name(), 'action' => 'view', $related->id],
-                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $related->get($assoc->target()->getDisplayField())]
+                            $related->get($assoc->getTarget()->getDisplayField()),
+                            [/*'plugin' => $plugin,*/ 'controller' => $assoc->getName(), 'action' => 'view', $related->id],
+                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $related->get($assoc->getTarget()->getDisplayField())]
                         );
                     };
                 } elseif ($entity->get($property)) {
                     $formatter = function ($val, $row, $args, $view) use ($assoc) {
-                        list($plugin, $modelName) = pluginSplit($assoc->target()->registryAlias());
+                        list($plugin, $modelName) = pluginSplit($assoc->getTarget()->getRegistryAlias());
 
                         return $view->Html->link(
                             $val,
-                            [/*'plugin' => $plugin,*/ 'controller' => $assoc->name(), 'action' => 'view', $val],
+                            [/*'plugin' => $plugin,*/ 'controller' => $assoc->getName(), 'action' => 'view', $val],
                             ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val]
                         );
                     };
@@ -191,7 +191,7 @@ class EntityViewCell extends Cell
                             /*
                             $formatter = function($val) use ($assoc) {
                                 debug($val);
-                                //return sprintf("%d %s", count($val), $assoc->name());
+                                //return sprintf("%d %s", count($val), $assoc->getName());
                                 return __d('backend', "{0} records", count($val));
                             };
                             */
@@ -203,16 +203,16 @@ class EntityViewCell extends Cell
                                 return $view->Html->link(
                                     __d('backend', "{0} records", count($val)),
                                     [
-                                        'controller' => $assoc->name(),
+                                        'controller' => $assoc->getName(),
                                         'action' => 'index',
                                         '_filter' => [
-                                            $assoc->foreignKey() => $row->get($assoc->target()->getPrimaryKey())
+                                            $assoc->getForeignKey() => $row->get($assoc->getTarget()->getPrimaryKey())
                                         ]
                                     ],
                                     [
                                         'data-modal-frame',
                                         'data-modal-class' => 'modal-wide',
-                                        'data-modal-title' => __d('backend', "Related {0}", $assoc->name())
+                                        'data-modal-title' => __d('backend', "Related {0}", $assoc->getName())
                                     ]
                                 );
                             };
@@ -226,9 +226,9 @@ class EntityViewCell extends Cell
                                 }
 
                                 return $view->Html->link(
-                                    $val->get($assoc->target()->getDisplayField()),
-                                    ['controller' => $assoc->name(), 'action' => 'view', $val->get($assoc->target()->getPrimaryKey())],
-                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val->get($assoc->target()->getDisplayField())]
+                                    $val->get($assoc->getTarget()->getDisplayField()),
+                                    ['controller' => $assoc->getName(), 'action' => 'view', $val->get($assoc->getTarget()->getPrimaryKey())],
+                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val->get($assoc->getTarget()->getDisplayField())]
                                 );
                             };
                             break;
@@ -239,7 +239,7 @@ class EntityViewCell extends Cell
                             break;
                     }
                 } else {
-                    $column = $schema->column($property);
+                    $column = $schema->getColumn($property);
                     $type = ($column) ? $column['type'] : gettype($val); // fallback to data type
                     $formatter = ($formatter) ?: $type; // fallback to column type
                 }

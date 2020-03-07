@@ -159,6 +159,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
      */
     public function execute(Controller $controller)
     {
+        debug("AddAction for " . get_class($controller));
         // read config from controller view vars
         foreach (array_keys($this->_defaultConfig) as $key) {
             $this->_config[$key] = (isset($controller->viewVars[$key]))

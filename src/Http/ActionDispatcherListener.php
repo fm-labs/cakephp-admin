@@ -50,6 +50,6 @@ class ActionDispatcherListener implements EventListenerInterface
             }
         }
 
-        $event->getData('controller') = $controller;
+        $event->setData('controller', $controller);
     }
 }

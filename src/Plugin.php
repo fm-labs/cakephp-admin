@@ -306,7 +306,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
         $app->addPlugin("Bootstrap");
 
         EventManager::instance()->on($this);
-        //EventManager::instance()->on(new ActionDispatcherListener());
+        EventManager::instance()->on(new ActionDispatcherListener());
 
         $this->_app = $app;
 //        foreach ($this->_app->plugins()->loaded() as $pluginName) {

@@ -24,11 +24,11 @@ class ActionController extends Controller
     {
         $this->controller = $controller;
         $this->action = $action;
-        $this->eventManager($this->controller->getEventManager());
+        $this->setEventManager($this->controller->getEventManager());
         //$this->components($this->controller->components());
         //$this->components()->setController($this->controller);
-        $this->setRequest($this->controller->request);
-        $this->response = $this->controller->response;
+        $this->setRequest($this->controller->getRequest());
+        $this->setResponse($this->controller->getResponse());
     }
 
     /**
@@ -80,10 +80,9 @@ class ActionController extends Controller
      * @param array $args Method args
      * @return mixed
      */
-//    public function __call($method, $args)
-//    {
-//        return call_user_func_array([$this->controller, $method], $args);
-//    }
+    //public function __call($method, $args) {
+    //    return call_user_func_array([$this->controller, $method], $args);
+    //}
 
     /**
      * {@inheritDoc}
@@ -91,6 +90,8 @@ class ActionController extends Controller
     public function render($view = null, $layout = null)
     {
         $response = $this->controller->render($view, $layout);
+        $this->setResponse($response);
+
         return $response;
     }
 

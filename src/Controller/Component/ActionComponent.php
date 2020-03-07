@@ -228,6 +228,7 @@ class ActionComponent extends Component
             $action = $this->getController()->getRequest()->getParam('action');
         }
 
+
         // Prevent double execution (auto and manual)
         if (isset($this->_executed[$action]) && $this->_executed[$action] === true) {
             return null;
@@ -319,7 +320,7 @@ class ActionComponent extends Component
                 //@TODO Make auto-execution of Action classes optional
                 $response = $this->execute($action);
                 if ($response instanceof Response) {
-                    return $response;
+                    $event->setResult($response);
                 }
             }
         }

@@ -662,11 +662,11 @@ class DataTableHelper extends Helper
             $filterInputOptions = ['label' => false];
 
             // get current filter value from request query
-            $filterInputOptions['value'] = $this->_View->request->query($fieldName);
+            $filterInputOptions['value'] = $this->_View->getRequest()->getQuery($fieldName);
             $column = ['type' => 'string', 'null' => true, 'default' => null];
 
             if ($Model) {
-                $column = $Model->getSchema()->column($fieldName);
+                $column = $Model->getSchema()->getColumn($fieldName);
             }
             //$column['null'] = true;
             //$column['default'] = null;

@@ -39,7 +39,7 @@ class EntityRelatedCellTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->request = $this->getMockBuilder('Cake\Http\Request')->getMock();
+        $this->request = $this->getMockBuilder('Cake\Http\ServerRequest')->getMock();
         $this->response = $this->getMockBuilder('Cake\Http\Response')->getMock();
         $this->EntityRelated = new EntityRelatedCell($this->request, $this->response);
     }

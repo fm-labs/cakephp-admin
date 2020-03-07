@@ -14,13 +14,15 @@ if (!Plugin::isLoaded('User')) {
 /**
  * Logs
  */
-Log::setConfig('backend', [
-    'className' => 'Cake\Log\Engine\FileLog',
-    'path' => LOGS,
-    'file' => 'backend',
-    //'levels' => ['info'],
-    'scopes' => ['admin', 'backend']
-]);
+if (!Log::getConfig('backend')) {
+    Log::setConfig('backend', [
+        'className' => 'Cake\Log\Engine\FileLog',
+        'path' => LOGS,
+        'file' => 'backend',
+        //'levels' => ['info'],
+        'scopes' => ['admin', 'backend']
+    ]);
+}
 
 /**
  * Cache config

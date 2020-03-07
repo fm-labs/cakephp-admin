@@ -67,7 +67,7 @@ class ActionComponent extends Component
      */
     public function initialize(array $config)
     {
-        $this->_controller = $this->_registry->getController();
+        $this->_controller = $this->getController();
         $this->_actionRegistry = new ActionRegistry($this->_controller);
 
         // normalize action configs and add actions to actions registry
@@ -332,7 +332,7 @@ class ActionComponent extends Component
     public function model()
     {
         if (!$this->_model) {
-            $modelClass = $this->_registry->getController()->modelClass;
+            $modelClass = $this->getController()->modelClass;
             if (!$modelClass) {
                 return null;
             }

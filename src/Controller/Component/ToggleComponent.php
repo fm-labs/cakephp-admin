@@ -48,7 +48,7 @@ class ToggleComponent extends Component
             ];
         }
 
-        $controller = $this->_registry->getController();
+        $controller = $this->getController();
         $controller->viewBuilder()->setClassName('Json');
         $controller->viewBuilder()->setLayout(false);
         $controller->set('result', $result);

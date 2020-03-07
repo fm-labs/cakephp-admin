@@ -47,7 +47,7 @@ class DesignController extends AppController
             ->addField('h_text_error', ['type' => 'string'])
             ->addField('h_checkbox', ['type' => 'tinyint']);
 
-        $form->validator()
+        $form->getValidator()
             ->requirePresence('h_text_error', true)
             ->notEmpty('h_text_error');
 

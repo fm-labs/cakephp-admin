@@ -1,11 +1,11 @@
 <?php
 namespace Backend\Controller\Base;
 
+use Backend\Controller\Component\FlashComponent;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Backend\Controller\Component\FlashComponent;
 
 /**
  * Class BaseBackendController

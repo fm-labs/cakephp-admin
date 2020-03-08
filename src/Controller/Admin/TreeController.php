@@ -2,8 +2,8 @@
 
 namespace Backend\Controller\Admin;
 
-use Cake\Log\Log;
 use Cake\Http\Exception\BadRequestException;
+use Cake\Log\Log;
 
 /**
  * Class TreeController
@@ -25,6 +25,7 @@ class TreeController extends AppController
             return;
         }
         try {
+            /** @var \Cake\ORM\Table $Model */
             $Model = $this->loadModel($modelName);
             if (!$Model->behaviors()->has('Tree')) {
                 $this->Flash->warning(__d('backend', 'Model {0} has no Tree behavior attached', $modelName));
@@ -53,6 +54,7 @@ class TreeController extends AppController
 
         $tree = [];
         try {
+            /** @var \Cake\ORM\Table $Model */
             $Model = $this->loadModel($modelName);
             $Model->addBehavior('Backend.JsTree');
             $tree = $Model->find('jstree')->toArray();
@@ -77,9 +79,12 @@ class TreeController extends AppController
             throw new BadRequestException('Model name missing');
         }
 
-        $request = $this->request->data + ['nodeId' => null, 'oldParentId' => null, 'oldPos' => null, 'newParentId' => null, 'newPos' => null];
+        $request = $this->request->getData()
+            + ['nodeId' => null, 'oldParentId' => null, 'oldPos' => null, 'newParentId' => null, 'newPos' => null];
 
+        $node = null;
         try {
+            /** @var \Cake\ORM\Table $Model */
             $Model = $this->loadModel($modelName);
             $Model->addBehavior('Backend.JsTree');
 

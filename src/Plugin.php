@@ -11,9 +11,8 @@ use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
-use Cake\Routing\Route\DashedRoute;
-use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
+use Cake\Routing\Route\DashedRoute;
 use Cake\Utility\Inflector;
 use Settings\SettingsManager;
 

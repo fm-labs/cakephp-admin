@@ -7,9 +7,9 @@ use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
+use Cake\Http\ServerRequest as Request;
 use Cake\I18n\I18n;
 use Cake\Log\Log;
-use Cake\Http\ServerRequest as Request;
 
 /**
  * Class BackendComponent

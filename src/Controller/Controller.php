@@ -1,10 +1,10 @@
 <?php
 namespace Backend\Controller;
 
+use Backend\Controller\Component\FlashComponent;
 use Cake\Controller\Component\AuthComponent;
 use Cake\Controller\Component\PaginatorComponent;
 use Cake\Core\Configure;
-use Backend\Controller\Component\FlashComponent;
 
 /**
  * Class Controller

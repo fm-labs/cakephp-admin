@@ -2,10 +2,10 @@
 namespace Backend\View\Widget;
 
 use Cake\Core\Configure;
+use Cake\Routing\Router;
 use Cake\View\Form\ContextInterface;
 use Cake\View\View;
 use Cake\View\Widget\BasicWidget;
-use Cake\Routing\Router;
 
 /**
  * Class HtmlEditorWidget

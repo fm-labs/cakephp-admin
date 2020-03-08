@@ -27,7 +27,7 @@ class EditAction extends BaseEntityAction
         'fields.blacklist' => [],
         'fieldsets' => [],
         'form.options' => [],
-        'model.validator' => 'default'
+        'model.validator' => 'default',
     ];
 
     //public $noTemplate = true;
@@ -119,7 +119,7 @@ class EditAction extends BaseEntityAction
         ));
         $formOptions = array_merge([
             'horizontal' => true,
-            'id' => $formId
+            'id' => $formId,
         ], $this->_config['form.options']);
         $controller->set('form.options', $formOptions);
         $controller->set('fields', $fields);

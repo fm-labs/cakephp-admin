@@ -51,7 +51,7 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
         if (empty($this->_config['tabs'])) {
             $this->_config['tabs']['view'] = [
                 'title' => __d('backend', 'Data'),
-                'url' => ['action' => 'view', $entity->id]
+                'url' => ['action' => 'view', $entity->id],
             ];
         }
 
@@ -67,7 +67,7 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
 
         $event->getSubject()->viewVars['tabs']['data'] = [
             'title' => __d('backend', 'Data'),
-            'url' => ['plugin' => 'Backend', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id]
+            'url' => ['plugin' => 'Backend', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id],
         ];
     }
 

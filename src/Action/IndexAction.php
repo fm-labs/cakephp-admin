@@ -32,7 +32,7 @@ class IndexAction extends BaseAction
         'query' => [],
         'queryObj' => null,
         'limit' => null,
-        'ajax' => false
+        'ajax' => false,
     ];
 
     protected $_defaultLimit = 15;
@@ -146,7 +146,7 @@ class IndexAction extends BaseAction
             //'data' => $result,
             'rowActionCallbacks' => [
                 //[$this, 'buildTableRowActions']
-            ]
+            ],
         ]);
         //$controller->set('actions', $this->_config['actions']);
 
@@ -155,7 +155,7 @@ class IndexAction extends BaseAction
         }
 
         $controller->set('toolbar.actions', [
-            [__('Add'), ['action' => 'add'], ['data-icon' => 'plus']]
+            [__('Add'), ['action' => 'add'], ['data-icon' => 'plus']],
         ]);
 
         $controller->set('_serialize', ['result']);
@@ -243,7 +243,7 @@ class IndexAction extends BaseAction
             $actions[$action] = [
                 'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
                 'title' => $conf['label'],
-                'attrs' => $conf['attrs']
+                'attrs' => $conf['attrs'],
             ];
         }
 //        foreach ($this->controller->Action->listActions() as $action) {

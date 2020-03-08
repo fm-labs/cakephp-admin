@@ -19,7 +19,7 @@ class LogsController extends AppController
         'view' => ['logs.view'],
         'clear' => ['logs.edit'],
         'rotate' => ['logs.edit'],
-        'delete' => ['logs.delete']
+        'delete' => ['logs.delete'],
     ];
 
     /**
@@ -43,7 +43,7 @@ class LogsController extends AppController
             return false;
         }
 
-        if (!preg_match('/^'.preg_quote($this->logDir, '/') . '/', $path)) {
+        if (!preg_match('/^' . preg_quote($this->logDir, '/') . '/', $path)) {
             return false;
         }
 
@@ -62,7 +62,7 @@ class LogsController extends AppController
 
         $files = [];
         foreach ($logFiles as $logFile) {
-            $F = new File($logDir.$logFile);
+            $F = new File($logDir . $logFile);
 
             $file = [
                 'id' => basename($logFile, '.log'),

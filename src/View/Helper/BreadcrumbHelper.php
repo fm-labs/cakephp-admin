@@ -15,7 +15,7 @@ class BreadcrumbHelper extends Helper
     public $helpers = ['Breadcrumbs'];
 
     protected $_defaultConfig = [
-        'class' => 'breadcrumb'
+        'class' => 'breadcrumb',
     ];
 
     /**
@@ -24,7 +24,7 @@ class BreadcrumbHelper extends Helper
     public function implementedEvents()
     {
         return [
-            'View.beforeLayout' => ['callable' => 'beforeLayout']
+            'View.beforeLayout' => ['callable' => 'beforeLayout'],
         ];
     }
 
@@ -36,9 +36,11 @@ class BreadcrumbHelper extends Helper
     {
         $request = $this->getView()->getRequest();
         //@TODO _no_breadcrumbs and layout_no_breadcrumbs are deprecated. Set `breadcrumbs` to FALSE instead
-        if ($event->getSubject()->get('breadcrumbs') === false
+        if (
+            $event->getSubject()->get('breadcrumbs') === false
             || $event->getSubject()->get('_no_breadcrumbs') === true
-            || $event->getSubject()->get('layout_no_breadcrumbs') === true) {
+            || $event->getSubject()->get('layout_no_breadcrumbs') === true
+        ) {
             return;
         }
 
@@ -52,14 +54,14 @@ class BreadcrumbHelper extends Helper
                 $this->Breadcrumbs->add(Inflector::humanize($request->getParam('plugin')), [
                     'plugin' => $request->getParam('plugin'),
                     'controller' => $request->getParam('plugin'),
-                    'action' => 'index'
+                    'action' => 'index',
                 ]);
             }
 
             $this->Breadcrumbs->add(Inflector::humanize($request->getParam('controller')), [
                 'plugin' => $request->getParam('plugin'),
                 'controller' => $request->getParam('controller'),
-                'action' => 'index'
+                'action' => 'index',
             ]);
 
             //
@@ -68,7 +70,7 @@ class BreadcrumbHelper extends Helper
                     'plugin' => $request->getParam('plugin'),
                     'controller' => $request->getParam('controller'),
                     'action' => 'view',
-                    $request->getParam('pass')[0]
+                    $request->getParam('pass')[0],
                 ]);
             }
 

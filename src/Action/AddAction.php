@@ -25,7 +25,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         'fields' => [],
         'fields.whitelist' => [],
         'fields.blacklist' => [],
-        'model.validator' => 'default'
+        'model.validator' => 'default',
     ];
 
     public $scope = ['index'];

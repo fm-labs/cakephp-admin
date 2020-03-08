@@ -10,7 +10,7 @@ return ['Backend.Layout.admin' => [
         'admin_primary',
         'admin_configure',
         'admin_util',
-        'admin_footer'
+        'admin_footer',
     ],
     'blocks' => [
         'header_navbar_items' => [
@@ -27,7 +27,7 @@ return ['Backend.Layout.admin' => [
             'header_navbar' => ['element' => 'Backend.Layout/admin/header'],
         ],
         'flash' => [
-            ['element' => 'Backend.Layout/admin/flash']
+            ['element' => 'Backend.Layout/admin/flash'],
         ],
         //'toolbar' => [],
         //'breadcrumb' => [],
@@ -41,17 +41,17 @@ return ['Backend.Layout.admin' => [
             'sidebar' => ['element' => 'Backend.Layout/admin/sidebar'],
         ],
         'top' => [
-            ['element' => 'Backend.Layout/admin/content_header']
+            ['element' => 'Backend.Layout/admin/content_header'],
         ],
         'left' => [],
         'content' => [],
         'right' => [],
         'bottom' => [],
         'footer' => [
-            ['element' => 'Backend.Layout/admin/footer']
+            ['element' => 'Backend.Layout/admin/footer'],
         ],
         'control_sidebar' => [
-            ['element' => 'Backend.Layout/admin/control_sidebar']
-        ]
-    ]
+            ['element' => 'Backend.Layout/admin/control_sidebar'],
+        ],
+    ],
 ]];

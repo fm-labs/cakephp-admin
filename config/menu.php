@@ -11,7 +11,7 @@ return [
             'system' => [
                 'title' => 'Systeminfo',
                 'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                'data-icon' => 'info'
+                'data-icon' => 'info',
             ],
             'settings' => [
                 'title' => 'Settings',
@@ -31,6 +31,6 @@ return [
                 'data-icon' => 'lock',
                 'requireRoot' => true, // temporary access control workaround
             ],
-        ]
+        ],
     ],
 ];

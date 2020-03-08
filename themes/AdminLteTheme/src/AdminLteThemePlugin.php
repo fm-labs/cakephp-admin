@@ -18,9 +18,9 @@ class AdminLteThemePlugin
                         'skin-purple'   => 'Purple',
                         'skin-black'    => 'Blue',
                         'skin-green'    => 'Green',
-                    ]
+                    ],
                 ],
-                'default' => 'skin-blue'
+                'default' => 'skin-blue',
             ],
 
             'AdminLteTheme.layout_class' => [
@@ -32,9 +32,9 @@ class AdminLteThemePlugin
                         'fixed'             => 'Fixed',
                         'layout-boxed'      => 'Layout Boxed',
                         'layout-top-nav'    => 'Layout Top Nav',
-                    ]
+                    ],
                 ],
-                'default' => null
+                'default' => null,
             ],
 
             'AdminLteTheme.sidebar_class' => [
@@ -45,10 +45,10 @@ class AdminLteThemePlugin
                     'options' => [
                         'sidebar-mini' => 'Sidebar Mini',
                         'sidebar-mini sidebar-collapse' => 'Sidebar Mini Collapsed',
-                    ]
+                    ],
                 ],
-                'default' => null
-            ]
+                'default' => null,
+            ],
         ];
     }
 }

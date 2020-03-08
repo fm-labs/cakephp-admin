@@ -22,7 +22,7 @@ class VectorMapHelper extends Helper
     protected $_defaultConfig = [
         'scriptUrl' => 'Backend./libs/jqvmap/jquery.vmap.min.js',
         'cssUrl' => 'Backend./libs/jqvmap/jqvmap.min.css',
-        'mapsBaseUrl' => 'Backend./libs/jqvmap/maps/'
+        'mapsBaseUrl' => 'Backend./libs/jqvmap/maps/',
     ];
 
     public $helpers = ['Html'];
@@ -38,6 +38,5 @@ class VectorMapHelper extends Helper
 
     public function create()
     {
-
     }
 }

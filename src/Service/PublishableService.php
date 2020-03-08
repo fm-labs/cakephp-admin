@@ -52,7 +52,7 @@ class PublishableService extends BackendService
 
                     $event->getSubject()->set('form_elements', $elements);
                 }
-            }]
+            }],
         ];
     }
 }

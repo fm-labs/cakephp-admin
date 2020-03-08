@@ -15,7 +15,7 @@ use Cake\Routing\Router;
  */
 class FooTableIndexAction extends IndexAction
 {
-    static public $maxLimit = 200;
+    public static $maxLimit = 200;
 
     /**
      * {@inheritDoc}
@@ -90,7 +90,7 @@ class FooTableIndexAction extends IndexAction
             'fieldsWhitelist' => $this->_config['fields.whitelist'],
             'fieldsBlacklist' => $this->_config['fields.blacklist'],
             'rowActions' => $this->_config['rowActions'],
-            'extra' => $extra
+            'extra' => $extra,
         ]);
         $controller->set('actions', $this->_config['actions']);
         $controller->set('rowsUrl', $dataUrl);

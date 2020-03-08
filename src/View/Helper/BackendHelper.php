@@ -70,7 +70,7 @@ class BackendHelper extends Helper
         $backendjs = [
             'rootUrl' => $this->Url->build('/', true),
             'adminUrl' => $this->Url->build('/admin/', true),
-            'debug' => Configure::read('debug')
+            'debug' => Configure::read('debug'),
         ];
         //$script = sprintf('console.log("INIT", window.Backend); if (window.Backend !== undefined) { console.log("INIT2");  Backend.initialize(%s); }', json_encode($backendjs));
 
@@ -85,7 +85,6 @@ class BackendHelper extends Helper
         $this->Html->script('/backend/js/backend.tooltip.js', ['block' => true]);
         //$this->Html->script('/backend/js/backend.alert.js', ['block' => true]);
     }
-
 
     public function beforeRender(Event $event)
     {

@@ -117,7 +117,7 @@ class DataTableJsHelper extends DataTableHelper
 
         // language
         $jsOpts['language'] = [
-            'processing' => __d('backend', 'Loading ...')
+            'processing' => __d('backend', 'Loading ...'),
         ];
 
         $this->options($jsOpts);

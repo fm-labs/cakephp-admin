@@ -23,7 +23,7 @@ class AdminLteLayoutHelper extends Helper
         );
         $event->getSubject()->Html->css('/admin_lte_theme/lib/bootstrap/css/bootstrap.min.css', ['block' => true]);
         $event->getSubject()->Html->css('/admin_lte_theme/lib/dist/css/AdminLTE.min.css', ['block' => true]);
-        $event->getSubject()->Html->css('/admin_lte_theme/lib/dist/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
+        $event->getSubject()->Html->css('/admin_lte_theme/lib/dist/css/skins/' . $themeSkinClass . '.min.css', ['block' => true]);
         $event->getSubject()->Html->script('/admin_lte_theme/lib/bootstrap/js/bootstrap.min.js', ['block' => true]);
         $event->getSubject()->Html->script('/admin_lte_theme/lib/dist/js/app.js', ['block' => true]);
     }

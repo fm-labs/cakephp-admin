@@ -21,7 +21,7 @@ class ToolbarHelper extends Helper
     protected $_defaultConfig = [
         'element' => 'Backend.Layout/admin/toolbar',
         'block' => 'toolbar',
-        'options' => ['class' => '']
+        'options' => ['class' => ''],
     ];
 
     /**
@@ -83,7 +83,7 @@ class ToolbarHelper extends Helper
             'type' => null,
             'title' => $title,
             'url' => null,
-            'attr' => []
+            'attr' => [],
         ], $options);
 
         switch ($options['type']) {
@@ -233,7 +233,7 @@ class ToolbarHelper extends Helper
         if (!$this->_rendered) {
             //if ($event->getSubject() instanceof BackendView) {
                 $event->getSubject()->assign($this->getConfig('block'), $this->_View->element($this->getConfig('element'), [
-                    'toolbar' => $this->render()
+                    'toolbar' => $this->render(),
                 ]));
             //}
         }
@@ -246,7 +246,7 @@ class ToolbarHelper extends Helper
     {
         return [
             'View.beforeRender' => ['callable' => 'beforeRender'],
-            'View.beforeLayout' => ['callable' => 'beforeLayout']
+            'View.beforeLayout' => ['callable' => 'beforeLayout'],
         ];
     }
 }

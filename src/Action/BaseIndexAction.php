@@ -21,7 +21,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
         'rowActions' => [],
         'fields' => [],
         'fields.whitelist' => [],
-        'fields.blacklist' => []
+        'fields.blacklist' => [],
     ];
 
     /**

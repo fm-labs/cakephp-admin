@@ -19,11 +19,11 @@ class RootUserTask extends Shell
             ->description(__d('backend', "Create backend root user"))
             ->addOption('email', [
                 'help' => 'Root user email',
-                'short' => 'e'
+                'short' => 'e',
             ])
             ->addOption('password', [
                 'help' => 'Root user password',
-                'short' => 'p'
+                'short' => 'p',
             ]);
 
         return $parser;

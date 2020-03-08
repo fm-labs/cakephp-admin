@@ -38,7 +38,7 @@ class DatePickerWidget extends CakeDateTimeWidget
             'options' => [],
             'id' => null,
             'name' => null,
-            'val' => null
+            'val' => null,
         ], $data);
 
         $data['type'] = 'text';

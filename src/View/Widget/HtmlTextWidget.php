@@ -32,7 +32,7 @@ class HtmlTextWidget extends BasicWidget
             'val' => '',
             'name' => '',
             'escape' => true,
-            'class' => ''
+            'class' => '',
         ];
 
         $data['class'] = ($data['class']) ? $data['class'] . ' htmltext' : 'htmltext';
@@ -47,7 +47,7 @@ class HtmlTextWidget extends BasicWidget
             'attrs' => $this->_templates->formatAttributes(
                 $data,
                 ['name', 'val', 'type']
-            )
+            ),
         ]);
 
         return $html;

@@ -7,9 +7,9 @@ return [
             'settings' => [
                 'Backend.Dashboard.title' => [
                     'type' => 'string',
-                    'input' => []
-                ]
-            ]
+                    'input' => [],
+                ],
+            ],
         ],
 
         'backend_security' => [
@@ -18,14 +18,14 @@ return [
                 'Backend.Security.enabled' => [
                     'type' => 'boolean',
                     'label' => 'Enable Backend Security',
-                    'help' => 'Enables advanced security mechanism'
+                    'help' => 'Enables advanced security mechanism',
                 ],
                 'Backend.Security.forceSSL' => [
                     'type' => 'boolean',
                     'label' => 'Force SSL',
-                    'help' => ''
-                ]
-            ]
+                    'help' => '',
+                ],
+            ],
         ],
 
         'backend_theme' => [
@@ -36,9 +36,9 @@ return [
                         'type' => 'select',
                         'options' => [
                             'theme-default' => 'Default',
-                        ]
+                        ],
                     ],
-                    'default' => 'theme-default'
+                    'default' => 'theme-default',
                 ],
                 'Backend.Theme.skin' => [
                     'type' => 'string',
@@ -51,9 +51,9 @@ return [
                             'skin-purple' => __d('backend', 'Purple'),
                             'skin-black' => __d('backend', 'Blue'),
                             'skin-green' => __d('backend', 'Green'),
-                        ]
+                        ],
                     ],
-                    'default' => 'skin-blue'
+                    'default' => 'skin-blue',
                 ],
                 'Backend.Theme.bodyClass' => [
                     'type' => 'string',
@@ -68,8 +68,8 @@ return [
                 'Backend.Theme.enableJsAlerts' => [
                     'label' => 'Pretty Alert messages',
                     'type' => 'boolean',
-                ]
-            ]
-        ]
-    ]
+                ],
+            ],
+        ],
+    ],
 ];

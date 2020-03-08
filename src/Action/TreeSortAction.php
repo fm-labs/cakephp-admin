@@ -45,6 +45,7 @@ class TreeSortAction extends IndexAction
 
         $controller->set('dataUrl', ['plugin' => 'Backend', 'controller' => 'Tree', 'action' => 'jstreeData', 'model' => $controller->modelClass]);
         $controller->set('sortUrl', ['plugin' => 'Backend', 'controller' => 'Tree', 'action' => 'jstreeSort', 'model' => $controller->modelClass]);
+
         return $controller->render('Backend.tree_sort');
     }
 }

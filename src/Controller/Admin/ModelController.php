@@ -28,7 +28,7 @@ class ModelController extends AppController
         $this->response->header([
             'Access-Control-Allow-Origin' => '*',
             'Access-Control-Allow-Headers' => 'POST, GET, OPTIONS',
-            'Access-Control-Allow-Methods' => 'Origin, Authorization, X-Requested-With, Content-Type, Accept, content-type'
+            'Access-Control-Allow-Methods' => 'Origin, Authorization, X-Requested-With, Content-Type, Accept, content-type',
         ]);
     }
 
@@ -63,7 +63,7 @@ class ModelController extends AppController
                 'date' => 'Date',
                 'datetime' => 'Datetime',
                 'timestamp' => 'Text',
-                'boolean' => 'Checkbox'
+                'boolean' => 'Checkbox',
             ];
 
             $schema = $data = [];
@@ -95,7 +95,7 @@ class ModelController extends AppController
                 'ajax' => true,
                 'action' => Router::url(['action' => 'edit', 'model' => $modelName, 'id' => $id], true),
                 'schema' => $inputSchema->fields(),
-                'data' => $data
+                'data' => $data,
             ];
             $this->set('form', $form);
         }
@@ -149,7 +149,7 @@ class ModelController extends AppController
             'success' => $success,
             'request' => $this->request->data,
             'data' => $data,
-            'errors' => $errors
+            'errors' => $errors,
         ];
 
         $this->set('response', $response);

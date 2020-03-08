@@ -31,6 +31,7 @@ class RedirectAction extends BaseEntityAction
         debug(get_class($controller));
         $redirect = $controller->redirect($controller->referer(['action' => 'index']));
         debug(get_class($redirect));
+
         return $redirect;
     }
 }

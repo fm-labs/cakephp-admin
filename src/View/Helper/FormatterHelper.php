@@ -30,7 +30,7 @@ class FormatterHelper extends Helper
     /**
      * @var array
      */
-    static protected $_formatters = [];
+    protected static $_formatters = [];
 
     /**
      * @param string $formatterName Formatter alias

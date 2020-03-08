@@ -16,7 +16,7 @@ class BackendShell extends Shell
      * @var array
      */
     public $tasks = [
-        'Backend.RootUser'
+        'Backend.RootUser',
     ];
 
     /**
@@ -27,7 +27,7 @@ class BackendShell extends Shell
         $parser = parent::getOptionParser();
         $parser->addSubcommand('rootUser', [
             'help' => 'Execute The RootUser Task.',
-            'parser' => $this->RootUser->getOptionParser()
+            'parser' => $this->RootUser->getOptionParser(),
         ]);
 
         return $parser;

@@ -48,7 +48,7 @@ class DataTableJsHelper extends Helper
         parent::__construct($View, $config);
 
         $this->templates([
-            'datatablesTable' => '<table{{attrs}}>{{content}}</table>'
+            'datatablesTable' => '<table{{attrs}}>{{content}}</table>',
         ]);
 
         $this->Html->css('/backend/adminlte/plugins/datatables/jquery.dataTables.min.css', ['block' => true]);
@@ -177,11 +177,11 @@ class DataTableJsHelper extends Helper
     protected function _renderTable()
     {
         $attrs = [
-          'id' => $this->_dataTableId
+          'id' => $this->_dataTableId,
         ];
 
         return $this->templater()->format('datatablesTable', [
-            'attrs' => $this->_templater->formatAttributes($attrs)
+            'attrs' => $this->_templater->formatAttributes($attrs),
         ]);
     }
 

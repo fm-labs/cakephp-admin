@@ -42,7 +42,7 @@ class FlagIconHelper extends Helper
     {
         return $this->templater()->format('flag_icon', [
             'flag' => strtolower($flag),
-            'attrs' => $this->templater()->formatAttributes($options)
+            'attrs' => $this->templater()->formatAttributes($options),
         ]);
     }
 }

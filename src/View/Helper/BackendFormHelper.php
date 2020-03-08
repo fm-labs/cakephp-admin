@@ -80,7 +80,7 @@ class BackendFormHelper extends BootstrapFormHelper
 
         $fields = $this->templater()->format('fieldsetBody', [
             'content' => $this->_View->fetch('_fieldset'),
-            'attrs' => $this->templater()->formatAttributes([])
+            'attrs' => $this->templater()->formatAttributes([]),
         ]);
 
         return parent::fieldset($fields, $this->_fieldsetOptions);

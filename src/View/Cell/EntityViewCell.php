@@ -206,13 +206,13 @@ class EntityViewCell extends Cell
                                         'controller' => $assoc->getName(),
                                         'action' => 'index',
                                         '_filter' => [
-                                            $assoc->getForeignKey() => $row->get($assoc->getTarget()->getPrimaryKey())
-                                        ]
+                                            $assoc->getForeignKey() => $row->get($assoc->getTarget()->getPrimaryKey()),
+                                        ],
                                     ],
                                     [
                                         'data-modal-frame',
                                         'data-modal-class' => 'modal-wide',
-                                        'data-modal-title' => __d('backend', "Related {0}", $assoc->getName())
+                                        'data-modal-title' => __d('backend', "Related {0}", $assoc->getName()),
                                     ]
                                 );
                             };
@@ -253,7 +253,7 @@ class EntityViewCell extends Cell
                 'value' => $val,
                 'assoc' => $assoc,
                 'class' => $field['class'],
-                'virtual' => $isVirtual
+                'virtual' => $isVirtual,
             ];
 
             return true;

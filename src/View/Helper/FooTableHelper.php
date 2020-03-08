@@ -139,7 +139,7 @@ class FooTableHelper extends DataTableHelper
         $icon = $this->Icon->create('gear');
         $button = $this->Button->create($icon, [
             'size' => 'xs',
-            'dropdown' => $actions
+            'dropdown' => $actions,
         ]);
 
         return $button;
@@ -162,7 +162,7 @@ class FooTableHelper extends DataTableHelper
                 'formatterArgs' => [],
                 'data-formatter' => 'actions',
                 //'data-actions' => json_encode($actions)
-            ])
+            ]),
         ]);
     }
 

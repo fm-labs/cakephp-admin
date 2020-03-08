@@ -36,7 +36,7 @@ class BoxHelper extends Helper
             'boxBody' => '<div class="box-body {{class}}">{{contents}}</div>',
             'boxFooter' => '<div class="box-footer {{class}}">{{contents}}</div>',
             'boxToolCollapseButton' => '<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>',
-            'boxToolExpandButton' => '<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>'
+            'boxToolExpandButton' => '<button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>',
         ],
     ];
 
@@ -56,7 +56,7 @@ class BoxHelper extends Helper
         'headerClass' => 'with-border',
         'bodyClass' => '',
         'footerClass' => '',
-        'collapsedClass' => 'collapsed-box'
+        'collapsedClass' => 'collapsed-box',
     ];
 
     /**
@@ -175,7 +175,7 @@ class BoxHelper extends Helper
             'class' => trim($class),
             'header' => $this->_renderHeader(),
             'body' => $this->_renderBody(),
-            'footer' => $this->_renderFooter()
+            'footer' => $this->_renderFooter(),
         ]);
     }
 
@@ -192,7 +192,7 @@ class BoxHelper extends Helper
             'icon' => $this->_renderIcon(),
             'title' => $this->_renderTitle(),
             'tools' => $this->_renderTools(),
-            'class' => $this->_params['headerClass']
+            'class' => $this->_params['headerClass'],
         ]);
     }
 
@@ -227,7 +227,7 @@ class BoxHelper extends Helper
     {
         return $this->templater()->format('boxBody', [
             'contents' => $this->getContent('body'),
-            'class' => $this->_params['bodyClass']
+            'class' => $this->_params['bodyClass'],
         ]);
     }
 
@@ -243,7 +243,7 @@ class BoxHelper extends Helper
 
         return $this->templater()->format('boxFooter', [
             'contents' => $contents,
-            'class' => $this->_params['footerClass']
+            'class' => $this->_params['footerClass'],
         ]);
     }
 
@@ -262,8 +262,8 @@ class BoxHelper extends Helper
         return $this->templater()->format('boxTools', ['tools' => $tools]);
     }
 
-    /**
-     * <div class="box box-default">
+/**
+ * <div class="box box-default">
     <div class="box-header with-border">
     <h3 class="box-title">Collapsable</h3>
     <div class="box-tools pull-right">
@@ -274,5 +274,5 @@ class BoxHelper extends Helper
     The body of the box
     </div><!-- /.box-body -->
     </div><!-- /.box -->
-     */
+ */
 }

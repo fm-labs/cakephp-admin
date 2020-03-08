@@ -34,7 +34,7 @@ class BackendComponent extends Component
         'authClass' => '\Backend\Controller\Component\AuthComponent',
         'authModel' => 'Backend.Users',
         'userSessionMaxLifetimeSec' => 15 * MINUTE,
-        'userSessionKey' => 'Backend.UserSession'
+        'userSessionKey' => 'Backend.UserSession',
     ];
 
     //protected $_cookieName;
@@ -57,7 +57,7 @@ class BackendComponent extends Component
         }
         $controller->loadComponent('Flash', ['className' => $this->_config['flashClass']]);
         $this->_registry->get('Flash')->setConfig([
-            'key' => $this->_config['flashKey']
+            'key' => $this->_config['flashKey'],
         ]);
 
         // Configure Auth component
@@ -66,14 +66,14 @@ class BackendComponent extends Component
         }
         $controller->loadComponent('Auth', ['className' => $this->_config['authClass']]);
         $this->_registry->get('Auth')->setConfig([
-            'userModel' => $this->_config['authModel']
+            'userModel' => $this->_config['authModel'],
         ]);
 
         // Configure UserSession component
         $controller->loadComponent('User.UserSession');
         $this->_registry->get('UserSession')->setConfig([
             'maxLifetimeSec' => $this->_config['userSessionMaxLifetimeSec'],
-            'sessionKey' => $this->_config['userSessionKey']
+            'sessionKey' => $this->_config['userSessionKey'],
         ]);
 
         // Configure Security component
@@ -110,8 +110,7 @@ class BackendComponent extends Component
         $controller->setResponse($controller->getResponse()
             ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Access-Control-Allow-Headers', 'POST, GET, OPTIONS')
-            ->withHeader('Access-Control-Allow-Methods', 'Origin, Authorization, X-Requested-With, Content-Type, Accept')
-        );
+            ->withHeader('Access-Control-Allow-Methods', 'Origin, Authorization, X-Requested-With, Content-Type, Accept'));
 
         // i18n
         //I18n::setLocale('en_US');

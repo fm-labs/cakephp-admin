@@ -77,7 +77,8 @@ class ImageSelectWidget extends SelectBoxWidget
         foreach ($options as $key => $val) {
             // Option groups
             $arrayVal = (is_array($val) || $val instanceof Traversable);
-            if ((!is_int($key) && $arrayVal) ||
+            if (
+                (!is_int($key) && $arrayVal) ||
                 (is_int($key) && $arrayVal && isset($val['options']))
             ) {
                 $out[] = $this->_renderOptgroup($key, $val, $disabled, $selected, $templateVars, $escape);

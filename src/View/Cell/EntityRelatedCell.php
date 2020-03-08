@@ -47,7 +47,7 @@ class EntityRelatedCell extends Cell
                     $elements[] = [
                         'title' => __d('backend', 'Related {0}', $assoc->getName()),
                         'render' => 'content',
-                        'content' => sprintf("Associated property not set: %s (%s)", $assoc->getProperty(), $assoc->type())
+                        'content' => sprintf("Associated property not set: %s (%s)", $assoc->getProperty(), $assoc->type()),
                     ];
                     continue;
                 }
@@ -66,7 +66,7 @@ class EntityRelatedCell extends Cell
                             'cell' => 'Backend.EntityView',
                             'cellParams' => [ $relatedEntity ],
                             'cellOptions' => $config,
-                            'cellTemplate' => 'table'
+                            'cellTemplate' => 'table',
                         ];
                         break;
 
@@ -83,7 +83,7 @@ class EntityRelatedCell extends Cell
                         $elements[] = [
                             'title' => __d('backend', 'Related {0}', $assoc->getName()),
                             'render' => 'table',
-                            'tableOptions' => $dataTable
+                            'tableOptions' => $dataTable,
                         ];
                         break;
 

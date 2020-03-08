@@ -23,7 +23,7 @@ class AjaxHelper extends Helper
     {
         return $this->Html->div('ajax-content', 'Loading ...', [
             'id' => uniqid('ajaxcont'),
-            'data-url' => $this->Html->Url->build($url)
+            'data-url' => $this->Html->Url->build($url),
         ]);
     }
 }

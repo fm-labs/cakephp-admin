@@ -9,7 +9,7 @@ class SumoSelectHelper extends Helper
     protected $_defaultConfig = [
         'scriptUrl' => '/backend/libs/sumoselect/jquery.sumoselect.min.js',
         'cssUrl' => '/backend/libs/sumoselect/sumoselect.css',
-        'sumo' => []
+        'sumo' => [],
     ];
 
     public $helpers = ['Html', 'Form'];

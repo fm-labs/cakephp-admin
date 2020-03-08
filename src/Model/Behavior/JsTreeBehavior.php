@@ -12,13 +12,13 @@ class JsTreeBehavior extends Behavior
     protected $_defaultConfig = [
         'fields' => [
             'id' => null,
-            'title' => null
+            'title' => null,
         ],
         'dataFields' => [],
         'implementedMethods' => [],
         'implementedFinders' => [
-            'jstree' => 'findJsTree'
-        ]
+            'jstree' => 'findJsTree',
+        ],
     ];
 
     /**

@@ -42,7 +42,7 @@ class AuthController extends AppController
         }
 
         $this->set('login', [
-            'user' => ($user) ? $user['id'] : null
+            'user' => ($user) ? $user['id'] : null,
         ]);
         $this->set('_serialize', ['login']);
 

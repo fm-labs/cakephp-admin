@@ -44,7 +44,7 @@ class ToggleComponent extends Component
             $result = [
                 'id' => $entity->id,
                 'field' => $field,
-                'result' => -1
+                'result' => -1,
             ];
         }
 

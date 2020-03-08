@@ -139,7 +139,7 @@ class ToastrHelper extends Helper
     public function implementedEvents()
     {
         return [
-            'View.beforeLayout' => 'beforeLayout'
+            'View.beforeLayout' => 'beforeLayout',
         ];
     }
 }

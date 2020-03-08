@@ -12,7 +12,7 @@ class DesignController extends AppController
         'table',
         'box',
         'component',
-        'tabs'
+        'tabs',
     ];
 
     /**
@@ -72,6 +72,5 @@ class DesignController extends AppController
 
     public function ajaxTest()
     {
-
     }
 }

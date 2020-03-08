@@ -35,7 +35,7 @@ class ChosenSelectBoxWidget extends SelectBoxWidget
             'disable_search_threshold' => 10,
             'no_results_text' => __d('backend', 'No results match'),
             'placeholder_text_multiple' => __d('backend', 'Select Some Options'),
-            'placeholder_text_single' => __d('backend', 'Select an Option')
+            'placeholder_text_single' => __d('backend', 'Select an Option'),
         ];
 
         if (isset($data['chosen'])) {

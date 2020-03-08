@@ -29,7 +29,7 @@ class TreeService extends BackendService
                         //$event->getData('actions')['repair'] = 'Backend.TreeRepair';
                     }
                 }
-            }]
+            }],
         ];
     }
 }

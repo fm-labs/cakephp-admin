@@ -98,7 +98,7 @@ class DataTableHelper extends Helper
                 </div>
             </td>',
             'rowAction' => '<li>{{content}}</li>',
-            'rowSelectCell' => '<td>{{content}}</td>'
+            'rowSelectCell' => '<td>{{content}}</td>',
         ]);
 
         /*
@@ -378,7 +378,7 @@ class DataTableHelper extends Helper
             'attrs' => $this->templater()->formatAttributes($options, ['pagination', 'table', 'script']),
             'pagination' => $pagination,
             'table' => $table,
-            'script' => $script
+            'script' => $script,
         ]);
 
         return $container;
@@ -555,7 +555,7 @@ class DataTableHelper extends Helper
             'attrs' => $this->templater()->formatAttributes($tableAttributes),
             'head' => $this->_renderHead(),
             'body' => $this->_renderBody(),
-            'footer' => (count($this->data()) > 25) ? $this->_renderHead('footer') : ''
+            'footer' => (count($this->data()) > 25) ? $this->_renderHead('footer') : '',
         ]);
         $formEnd = $this->Form->end();
 
@@ -576,14 +576,14 @@ class DataTableHelper extends Helper
                     'type' => 'object',
                     'label' => 'Actions',
                     'formatter' => 'actions',
-                    'formatterArgs' => []
-                ])
+                    'formatterArgs' => [],
+                ]),
             ]);
         }
 
         $html = $this->templater()->format($template, [
             'cellheads' => $this->_renderHeadCells(),
-            'actionshead' => $headCellActions
+            'actionshead' => $headCellActions,
         ]);
 
         return $html;
@@ -598,7 +598,7 @@ class DataTableHelper extends Helper
         foreach ($this->_fields as $fieldName => $field) {
             $html .= $this->templater()->format('headCell', [
                 'content' => $this->_buildPaginationFieldLabel($fieldName, $field),
-                'attrs' => $this->_buildFieldAttributes($fieldName, $field)
+                'attrs' => $this->_buildFieldAttributes($fieldName, $field),
             ]);
         }
 
@@ -634,7 +634,7 @@ class DataTableHelper extends Helper
         return $this->templater()->format('body', [
             'rows' => $rows,
             'filterRow' => $filterRow,
-            'reduceRow' => $reduceRow
+            'reduceRow' => $reduceRow,
         ]);
     }
 
@@ -704,7 +704,7 @@ class DataTableHelper extends Helper
                 'attrs' => $this->templater()->formatAttributes([
                     //'class' => $field['class'],
                     //'title' => $field['title']
-                ])
+                ]),
             ]);
         }
 
@@ -713,13 +713,13 @@ class DataTableHelper extends Helper
             'attrs' => $this->templater()->formatAttributes([
                 'style' => 'text-align: right;',
                 //'title' => $field['title']
-            ])
+            ]),
         ]); // actions cell stub
 
         $row = $this->templater()->format('row', [
             'attrs' => '',
             'cells' => $cells,
-            'actionscell' => $actionCell
+            'actionscell' => $actionCell,
         ]);
 
         return $row;
@@ -750,7 +750,7 @@ class DataTableHelper extends Helper
 
             $html .= $this->templater()->format('rowCell', [
                 'content' => (string)$reducedData,
-                'attrs' => ''
+                'attrs' => '',
             ]);
         }
         $html .= $this->templater()->format('rowCell', ['content' => '']); // actions cell stub
@@ -778,7 +778,7 @@ class DataTableHelper extends Helper
         $html = $this->templater()->format('row', [
             'cells' => $cells,
             'actionscell' => $rowActionsCell,
-            'attrs' => $this->_buildRowAttributes($row)
+            'attrs' => $this->_buildRowAttributes($row),
         ]);
 
         return $html;
@@ -794,7 +794,7 @@ class DataTableHelper extends Helper
 
         return $this->templater()->format('rowActionsCell', [
             'actions' => $rowActionsHtml,
-            'attrs' => $this->_buildFieldAttributes('_actions_', ['type' => 'actions', 'label' => 'Actions', 'formatter' => null, 'formatterArgs' => []])
+            'attrs' => $this->_buildFieldAttributes('_actions_', ['type' => 'actions', 'label' => 'Actions', 'formatter' => null, 'formatterArgs' => []]),
         ]);
     }
 
@@ -818,7 +818,7 @@ class DataTableHelper extends Helper
         $icon = $this->Icon->create('gear');
         $button = $this->Button->create($icon, [
             'size' => 'xs',
-            'dropdown' => $actions
+            'dropdown' => $actions,
         ]);
 
         return $button;
@@ -849,7 +849,7 @@ class DataTableHelper extends Helper
 
             $html .= $this->templater()->format('rowCell', [
                 'content' => $cellData,
-                'attrs' => $this->_buildFieldAttributes($fieldName, $field)
+                'attrs' => $this->_buildFieldAttributes($fieldName, $field),
             ]);
 
             // reducer
@@ -876,7 +876,7 @@ class DataTableHelper extends Helper
             $input = $this->Form->checkbox('multiselect_' . $row->id);
 
             return $this->templater()->format('rowCell', [
-                'content' => $input
+                'content' => $input,
             ]);
         }
     }
@@ -892,7 +892,7 @@ class DataTableHelper extends Helper
 
         return $this->_View->element('Backend.Pagination/default', [
             'counter' => ['format' => __d('backend', 'Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records')],
-            'numbers' => []
+            'numbers' => [],
         ]);
     }
 
@@ -1088,7 +1088,7 @@ SCRIPT;
         $replace = [
             '/__DATATABLE_ID__/' => $this->getParam('id'),
             '/__DATATABLE_MODEL__/' => $this->getParam('model'),
-            '/__DATATABLE_SORTURL__/' => $this->Html->Url->build($this->getParam('sortable'))
+            '/__DATATABLE_SORTURL__/' => $this->Html->Url->build($this->getParam('sortable')),
         ];
 
         return preg_replace(array_keys($replace), array_values($replace), $script);
@@ -1161,7 +1161,7 @@ SCRIPT;
             $rowActionLink = $this->Html->link($title, $url, $attr);
 
             $html .= $this->templater()->format('rowAction', [
-                'content' => $rowActionLink
+                'content' => $rowActionLink,
             ]);
         }
 

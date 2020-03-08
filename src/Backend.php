@@ -20,7 +20,7 @@ use Cake\Event\EventManager;
  */
 class Backend
 {
-    static public $urlPrefix = 'admin';
+    public static $urlPrefix = 'admin';
 
     use InstanceConfigTrait;
 
@@ -41,7 +41,7 @@ class Backend
             'Backend.Crud' => true,
             'Backend.Publishable' => false,
             'Backend.Tree' => true,
-        ]
+        ],
     ];
 
     /**

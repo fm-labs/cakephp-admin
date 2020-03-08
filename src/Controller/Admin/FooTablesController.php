@@ -49,7 +49,7 @@ class FooTablesController extends AppController
 
         $this->paginate = [
             'media' => true,
-            'limit' => 5
+            'limit' => 5,
         ];
         $data = $this->paginate($Model)->toArray();
 

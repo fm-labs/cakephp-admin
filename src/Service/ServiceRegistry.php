@@ -9,7 +9,6 @@ use Cake\Event\EventManager;
 
 class ServiceRegistry extends ObjectRegistry
 {
-
     use EventDispatcherTrait;
 
     /**

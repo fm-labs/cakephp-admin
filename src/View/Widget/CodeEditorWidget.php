@@ -27,7 +27,7 @@ class CodeEditorWidget extends TextareaWidget
         'minLines' => 10,
         'maxLines' => 30,
         'scrollPastEnd' => true,
-        'vScrollBarAlwaysVisible' => true
+        'vScrollBarAlwaysVisible' => true,
     ];
 
     /**
@@ -54,7 +54,7 @@ class CodeEditorWidget extends TextareaWidget
         $this->_View->loadHelper('Backend.CodeEditor');
 
         $this->_templates->add([
-            'codeeditor_editor' => '<div{{attrs}}>{{value}}</div>'
+            'codeeditor_editor' => '<div{{attrs}}>{{value}}</div>',
         ]);
 
         $this->_config = (array)Configure::read('Backend.CodeEditor.Ace');
@@ -105,7 +105,7 @@ class CodeEditorWidget extends TextareaWidget
             'attrs' => $this->_templates->formatAttributes(
                 $data,
                 ['name', 'val', 'type', 'editor']
-            )
+            ),
         ]);
 
         // build editor javascript and inject into view

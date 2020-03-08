@@ -32,7 +32,7 @@ class CrudService extends BackendService
                         $event->getData('actions')['delete'] = 'Backend.Delete';
                     }
                 }
-            }]
+            }],
         ];
     }
 }

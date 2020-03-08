@@ -108,7 +108,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
 
         $event->getSubject()->viewVars['tabs']['data'] = [
             'title' => __d('backend', 'Data'),
-            'url' => ['plugin' => 'Backend', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id]
+            'url' => ['plugin' => 'Backend', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id],
         ];
     }
 

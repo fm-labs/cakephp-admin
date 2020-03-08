@@ -34,7 +34,7 @@ class AuthComponent extends \User\Controller\Component\AuthComponent
         $this->setConfig('storage', [
             'className' => 'Session',
             'key' => 'Backend.User',
-            'redirect' => 'Backend.redirect'
+            'redirect' => 'Backend.redirect',
         ], false);
     }
 }

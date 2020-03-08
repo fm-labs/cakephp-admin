@@ -20,7 +20,7 @@ if (!Log::getConfig('backend')) {
         'path' => LOGS,
         'file' => 'backend',
         //'levels' => ['info'],
-        'scopes' => ['admin', 'backend']
+        'scopes' => ['admin', 'backend'],
     ]);
 }
 
@@ -32,7 +32,7 @@ if (!Cache::getConfig('backend')) {
         'className' => 'File',
         'duration' => '+1 hours',
         'path' => CACHE,
-        'prefix' => 'backend_'
+        'prefix' => 'backend_',
     ]);
 }
 

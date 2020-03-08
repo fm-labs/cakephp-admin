@@ -51,7 +51,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
             'Backend.Menu.init' => ['callable' => 'backendMenuInit' ],
             'Backend.Menu.build.admin_primary' => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
             'Backend.Menu.build.admin_system' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
-            'Settings.build' => 'settings'
+            'Settings.build' => 'settings',
         ];
     }
 
@@ -105,12 +105,13 @@ class Plugin extends BasePlugin implements EventListenerInterface
                         'twilight' => 'twilight',
                         'vibrant_ink' => 'vibrant_ink',
                         'xcode' => 'xcode',
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
 
         ]);
     }
+
     /**
      * @param Event $event The event object
      * @return void
@@ -156,7 +157,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
                         'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'tabs'],
                     ]
                     */
-                ]
+                ],
             ]);
         }
     }
@@ -187,7 +188,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
             'system' => [
                 'title' => 'Systeminfo',
                 'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
-                'data-icon' => 'info'
+                'data-icon' => 'info',
             ],
             'logs' => [
                 'title' => 'Logs',
@@ -210,7 +211,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
                 'title' => 'Plugins',
                 'url' => ['plugin' => 'Backend', 'controller' => 'Plugins', 'action' => 'index'],
                 'data-icon' => 'puzzle-piece',
-            ]
+            ],
         ];
     }
 
@@ -221,7 +222,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     {
         parent::routes($routes);
 
-        $routes->scope('/admin/backend/', ['prefix' => 'admin', 'plugin' => 'Backend', '_namePrefix' => 'admin:backend:'], function($routes) {
+        $routes->scope('/admin/backend/', ['prefix' => 'admin', 'plugin' => 'Backend', '_namePrefix' => 'admin:backend:'], function ($routes) {
             $routes->connect(
                 '/login',
                 ['controller' => 'Auth', 'action' => 'login'],
@@ -271,13 +272,12 @@ class Plugin extends BasePlugin implements EventListenerInterface
                     Router::scope($urlPrefix . Inflector::underscore($pluginName), [
                         'plugin' => $pluginName,
                         'prefix' => 'admin',
-                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName))
+                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName)),
                     ], [$instance, 'backendRoutes']);
                 } catch (\Exception $ex) {
                     Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
                 }
             } else {
-
 //                try {
 //                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
 //                        'plugin' => $pluginName,
@@ -319,6 +319,5 @@ class Plugin extends BasePlugin implements EventListenerInterface
 //                }
 //            }
 //        }
-
     }
 }

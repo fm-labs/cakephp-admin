@@ -26,7 +26,7 @@ class HtmlEditorWidget extends BasicWidget
         'selector' => 'textarea.htmleditor',
         // Which plugins TinyMCE will attempt to load when starting up
         'plugins' => [
-            'image link lists code table media paste wordcount importcss wordcount'
+            'image link lists code table media paste wordcount importcss wordcount',
         ],
         // This option allows you to disable the element path within the status bar at the bottom of the editor.
         // Default: True
@@ -42,7 +42,7 @@ class HtmlEditorWidget extends BasicWidget
         ],
         'toolbar' => [
             'formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | blockquote | code',
-            'undo redo | cut copy paste | link image media | table'
+            'undo redo | cut copy paste | link image media | table',
         ],
         // URL Handling
         'convert_urls' => false, // TinyMCE default: true
@@ -125,7 +125,7 @@ class HtmlEditorWidget extends BasicWidget
         //debug($editor);
 
         $this->_templates->add([
-            'htmlEditor' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea><script>{{editorScript}}</script>'
+            'htmlEditor' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea><script>{{editorScript}}</script>',
             //'htmlEditor' => '<div class="htmleditor"><textarea  data-htmleditor=\'{{editorConfig}}\' name="{{name}}"{{attrs}}>{{value}}</textarea></div>',
         ]);
 
@@ -144,7 +144,7 @@ class HtmlEditorWidget extends BasicWidget
             'attrs' => $this->_templates->formatAttributes(
                 $data,
                 ['name', 'val', 'type', 'editor']
-            )
+            ),
         ]);
     }
 }

@@ -37,7 +37,7 @@ class PluginsController extends AppController
                     'path' => $pluginPath,
                     'loaded' => Plugin::isLoaded($f),
                     'handler_class' => null,
-                    'handler_loaded' => false
+                    'handler_loaded' => false,
                 ];
                 /*
                 $installed[$f] = Banana::pluginInfo($f);

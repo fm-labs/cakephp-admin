@@ -35,7 +35,7 @@ class ImageModalWidget extends BasicWidget
             'attrs' => $this->_templates->formatAttributes(
                 $data,
                 ['name', 'val']
-            )
+            ),
         ]);
 
         $link = '<button id="' . $btnId . '">Select image</button>';
@@ -77,17 +77,17 @@ $(document).ready(function() {
 SCRIPT;
         $this->_templates->add([
             'imagemodalModal' => $modalTemplate,
-            'imagemodalScript' => $scriptTemplate
+            'imagemodalScript' => $scriptTemplate,
         ]);
 
         $modal = $this->_templates->format('imagemodalModal', [
-            'modalId' => $modalId
+            'modalId' => $modalId,
         ]);
 
         $script = $this->_templates->format('imagemodalScript', [
             'domId' => $domId,
             'btnId' => $btnId,
-            'modalId' => $modalId
+            'modalId' => $modalId,
         ]);
 
         return $textarea . $link . $modal . $script;

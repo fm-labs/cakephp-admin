@@ -28,7 +28,7 @@ class DataTableCell extends Cell
             'sortable' => false,
             'reduce' => [],
             'filter' => [],
-            'viewVars' => []
+            'viewVars' => [],
         ], $params);
 
         // model context

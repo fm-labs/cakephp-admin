@@ -55,7 +55,7 @@ class DataTableIndexAction extends IndexAction
         'limit' => null,
         'ajax' => false,
         'queryObj' => null,
-        'contain' => []
+        'contain' => [],
     ];
 
     /**
@@ -213,7 +213,7 @@ class DataTableIndexAction extends IndexAction
             'fieldsWhitelist' => $this->_config['fields.whitelist'],
             'fieldsBlacklist' => $this->_config['fields.blacklist'],
             'rowActions' => false,
-            'extra' => $dtjsOpts
+            'extra' => $dtjsOpts,
         ]);
         $controller->set('actions', $this->_config['actions']);
         $controller->set('_serialize', ['result']);

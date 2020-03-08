@@ -14,7 +14,7 @@ use Cake\Core\Configure;
 class BackendController extends AppController
 {
     public $actions = [
-        'index' => 'Backend.Dashboard'
+        'index' => 'Backend.Dashboard',
     ];
 
     /**

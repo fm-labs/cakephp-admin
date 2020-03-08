@@ -19,7 +19,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
      * @var array
      */
     protected $_defaultConfig = [
-        'actions' => []
+        'actions' => [],
     ];
 
     /**
@@ -117,16 +117,16 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
                     'url' => [
                         'plugin' => $controller->getRequest()->getParam('plugin'),
                         'controller' => $controller->getRequest()->getParam('plugin'),
-                        'action' => 'index'
-                    ]
+                        'action' => 'index',
+                    ],
                 ];
                 $breadcrumbs[] = [
                     'title' => Inflector::humanize($controller->getRequest()->getParam('controller')),
                     'url' => [
                         'plugin' => $controller->getRequest()->getParam('plugin'),
                         'controller' => $controller->getRequest()->getParam('controller'),
-                        'action' => 'index'
-                    ]
+                        'action' => 'index',
+                    ],
                 ];
                 $breadcrumbs[] = [
                     'title' => $this->entity()->get($this->model()->getDisplayField()),
@@ -134,11 +134,11 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
                         'plugin' => $controller->getRequest()->getParam('plugin'),
                         'controller' => $controller->getRequest()->getParam('controller'),
                         'action' => 'view',
-                        $this->entity()->get($this->model()->getPrimaryKey())
-                    ]
+                        $this->entity()->get($this->model()->getPrimaryKey()),
+                    ],
                 ];
                 $breadcrumbs[] = [
-                    'title' => $this->getLabel()
+                    'title' => $this->getLabel(),
                 ];
             }
 

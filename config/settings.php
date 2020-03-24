@@ -2,7 +2,7 @@
 return [
     'Settings' => [
 
-        'backend_general' => [
+        'Backend.General' => [
             'label' => __('Backend General Settings'),
             'settings' => [
                 'Backend.Dashboard.title' => [
@@ -12,7 +12,7 @@ return [
             ],
         ],
 
-        'backend_security' => [
+        'Backend.Security' => [
             'label' => __('Security'),
             'settings' => [
                 'Backend.Security.enabled' => [
@@ -28,7 +28,7 @@ return [
             ],
         ],
 
-        'backend_theme' => [
+        'Backend.Theme' => [
             'settings' => [
                 'Backend.Theme.name' => [
                     'type' => 'string',

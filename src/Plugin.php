@@ -11,11 +11,15 @@ use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Utility\Inflector;
 use Settings\SettingsManager;
 
+/**
+ * Backend Plugin
+ */
 class Plugin extends BasePlugin implements EventListenerInterface
 {
     use EventDispatcherTrait;
@@ -33,10 +37,127 @@ class Plugin extends BasePlugin implements EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function __construct($config)
+    public function initialize()
     {
-        parent::__construct($config);
         $this->_backend = new Backend();
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public function bootstrap(PluginApplicationInterface $app)
+    {
+        parent::bootstrap($app);
+
+        $app->addPlugin("User");
+        $app->addPlugin("Bootstrap");
+
+        EventManager::instance()->on($this);
+        EventManager::instance()->on(new ActionDispatcherListener());
+
+        if (\Cake\Core\Plugin::isLoaded('Settings')) {
+            //SettingsManager::register($this->getName(), Settings::class);
+            //EventManager::instance()->on(new Settings());
+        }
+
+        $this->_app = $app;
+//        foreach ($this->_app->plugins()->loaded() as $pluginName) {
+//            $instance = $this->_app->plugins()->get($pluginName);
+//            if (method_exists($instance, 'backendBootstrap')) {
+//                try {
+//                    call_user_func([$instance, 'backendBootstrap'], $this->_backend);
+//                } catch (\Exception $ex) {
+//                    Log::error("Backend plugin bootstrapping failed: $pluginName: " . $ex->getMessage());
+//                }
+//            }
+//        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function routes($routes)
+    {
+        parent::routes($routes);
+
+        $routes->scope('/admin/backend/', ['prefix' => 'admin', 'plugin' => 'Backend', '_namePrefix' => 'admin:backend:'], function ($routes) {
+            /** @var RouteBuilder $routes */
+            $routes->connect(
+                '/login',
+                ['controller' => 'Auth', 'action' => 'login'],
+                ['_name' => 'user:login']
+            );
+            $routes->connect(
+                '/session',
+                ['controller' => 'Auth', 'action' => 'session'],
+                ['_name' => 'user:checkauth']
+            );
+            $routes->connect(
+                '/login-success',
+                ['controller' => 'Auth', 'action' => 'loginSuccess'],
+                ['_name' => 'user:loginsuccess']
+            );
+
+            // admin:backend:auth:logout
+            $routes->connect(
+                '/logout',
+                ['controller' => 'Auth', 'action' => 'logout'],
+                [ '_name' => 'user:logout']
+            );
+
+            // admin:backend:auth:user
+            $routes->connect(
+                '/user',
+                ['controller' => 'Auth', 'action' => 'user'],
+                [ '_name' => 'user:profile']
+            );
+
+            // admin:backend:dashboard
+            $routes->connect(
+                '/',
+                ['controller' => 'Backend', 'action' => 'index'],
+                ['_name' => 'dashboard']
+            );
+
+            $routes->fallbacks(DashedRoute::class);
+        });
+
+        $urlPrefix = '/' . trim(Backend::$urlPrefix, '/') . '/';
+        foreach ($this->_app->getPlugins()->with('routes') as $instance) {
+            //$instance = $this->_app->getPlugins()->get($pluginName);
+            $pluginName = $instance->getName();
+            if (method_exists($instance, 'backendRoutes')) {
+                try {
+                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
+                        'plugin' => $pluginName,
+                        'prefix' => 'admin',
+                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName)),
+                    ], [$instance, 'backendRoutes']);
+                } catch (\Exception $ex) {
+                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
+                }
+            } else {
+//                try {
+//                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
+//                        'plugin' => $pluginName,
+//                        'prefix' => 'admin',
+//                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName))
+//                    ], function(RouteBuilder $routes) {
+//                        $routes->fallbacks('DashedRoute');
+//                    });
+//                } catch (\Exception $ex) {
+//                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
+//                }
+            }
+        }
+
+        $event = $this->dispatchEvent('Backend.Routes.setup', ['routes' => $routes]);
+    }
+
+    public function adminConfigurationUrl()
+    {
+        return (\Cake\Core\Plugin::isLoaded('Settings')) ? ['_name' => 'settings:manage', $this->getName()] : null;
     }
 
     /**
@@ -59,11 +180,11 @@ class Plugin extends BasePlugin implements EventListenerInterface
      */
     public function settings(Event $event, SettingsManager $settings)
     {
+        //$settings::register($this->getName(), Settings::class);
+
         $settings->load('Backend.settings');
-        $settings->addGroup('backend_form', ['label' => __('Backend Form')]);
-        $settings->add('backend_form', [
+        $settings->add('Backend.Form', [
             'Backend.CodeEditor.Ace.theme' => [
-                'group' => 'backend_form',
                 'default' => 'twilight',
                 'input' => [
                     'type' => 'select',
@@ -214,109 +335,4 @@ class Plugin extends BasePlugin implements EventListenerInterface
         ];
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function routes($routes)
-    {
-        parent::routes($routes);
-
-        $routes->scope('/admin/backend/', ['prefix' => 'admin', 'plugin' => 'Backend', '_namePrefix' => 'admin:backend:'], function ($routes) {
-            $routes->connect(
-                '/login',
-                ['controller' => 'Auth', 'action' => 'login'],
-                ['_name' => 'user:login']
-            );
-            $routes->connect(
-                '/session',
-                ['controller' => 'Auth', 'action' => 'session'],
-                ['_name' => 'user:checkauth']
-            );
-            $routes->connect(
-                '/login-success',
-                ['controller' => 'Auth', 'action' => 'loginSuccess'],
-                ['_name' => 'user:loginsuccess']
-            );
-
-            // admin:backend:auth:logout
-            $routes->connect(
-                '/logout',
-                ['controller' => 'Auth', 'action' => 'logout'],
-                [ '_name' => 'user:logout']
-            );
-
-            // admin:backend:auth:user
-            $routes->connect(
-                '/user',
-                ['controller' => 'Auth', 'action' => 'user'],
-                [ '_name' => 'user:profile']
-            );
-
-            // admin:backend:dashboard
-            $routes->connect(
-                '/',
-                ['controller' => 'Backend', 'action' => 'index'],
-                ['_name' => 'dashboard']
-            );
-
-            $routes->fallbacks(DashedRoute::class);
-        });
-
-        $urlPrefix = '/' . trim(Backend::$urlPrefix, '/') . '/';
-        foreach ($this->_app->getPlugins()->with('routes') as $instance) {
-            //$instance = $this->_app->getPlugins()->get($pluginName);
-            $pluginName = $instance->getName();
-            if (method_exists($instance, 'backendRoutes')) {
-                try {
-                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
-                        'plugin' => $pluginName,
-                        'prefix' => 'admin',
-                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName)),
-                    ], [$instance, 'backendRoutes']);
-                } catch (\Exception $ex) {
-                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
-                }
-            } else {
-//                try {
-//                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
-//                        'plugin' => $pluginName,
-//                        'prefix' => 'admin',
-//                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName))
-//                    ], function(RouteBuilder $routes) {
-//                        $routes->fallbacks('DashedRoute');
-//                    });
-//                } catch (\Exception $ex) {
-//                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
-//                }
-            }
-        }
-
-        $event = $this->dispatchEvent('Backend.Routes.setup', ['routes' => $routes]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function bootstrap(PluginApplicationInterface $app)
-    {
-        parent::bootstrap($app);
-
-        $app->addPlugin("User");
-        $app->addPlugin("Bootstrap");
-
-        EventManager::instance()->on($this);
-        EventManager::instance()->on(new ActionDispatcherListener());
-
-        $this->_app = $app;
-//        foreach ($this->_app->plugins()->loaded() as $pluginName) {
-//            $instance = $this->_app->plugins()->get($pluginName);
-//            if (method_exists($instance, 'backendBootstrap')) {
-//                try {
-//                    call_user_func([$instance, 'backendBootstrap'], $this->_backend);
-//                } catch (\Exception $ex) {
-//                    Log::error("Backend plugin bootstrapping failed: $pluginName: " . $ex->getMessage());
-//                }
-//            }
-//        }
-    }
 }

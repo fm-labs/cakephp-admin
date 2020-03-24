@@ -31,7 +31,7 @@ $compact = ["'" . $singularName . "'"];
             'contain' => [<%= $this->Bake->stringifyList($belongsToMany, ['indent' => false]) %>]
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->data);
+            $<%= $singularName %> = $this-><%= $currentModelName %>->patchEntity($<%= $singularName %>, $this->request->getData());
             if ($this-><%= $currentModelName; %>->save($<%= $singularName %>)) {
                 $this->Flash->success(__d('backend','The {0} has been saved.', __d('backend','<%= strtolower($singularHumanName) %>')));
                 return $this->redirect(['action' => 'index']);

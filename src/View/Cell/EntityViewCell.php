@@ -113,7 +113,7 @@ class EntityViewCell extends Cell
         }
 
         $data = [];
-        //$properties = $entity->visibleProperties();
+        //$properties = $entity->getVisible();
         $virtualProperties = $entity->getVirtual();
 
         $belongsTo = [];

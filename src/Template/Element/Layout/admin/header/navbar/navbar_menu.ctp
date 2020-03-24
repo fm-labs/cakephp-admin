@@ -3,7 +3,7 @@ $this->loadHelper('Bootstrap.Menu');
 //return;
 //try {
 //
-//    $menu = \Cake\ORM\TableRegistry::get('Content.Menus')->toMenu(1);
+//    $menu = \Cake\ORM\TableRegistry::getTableLocator()->get('Content.Menus')->toMenu(1);
 //    $this->loadHelper('Bootstrap.Menu');
 //} catch (\Exception $ex) {
 //    echo $ex->getMessage();

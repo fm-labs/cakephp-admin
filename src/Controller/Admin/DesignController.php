@@ -52,7 +52,7 @@ class DesignController extends AppController
             ->notEmpty('h_text_error');
 
         if ($this->request->is(['post'])) {
-            $form->execute($this->request->data);
+            $form->execute($this->request->getData());
         } else {
             $form->validate([]);
         }

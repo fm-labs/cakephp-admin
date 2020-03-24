@@ -89,7 +89,7 @@ class EditAction extends BaseEntityAction
 
             // get help text from column comment
             if ($field && !isset($field['help'])) {
-                $column = $this->model()->getSchema()->column($_f);
+                $column = $this->model()->getSchema()->getColumn($_f);
                 if ($column && isset($column['comment'])) {
                     $field['help'] = $column['comment'];
                 }
@@ -99,7 +99,7 @@ class EditAction extends BaseEntityAction
         }
 
         if ($this->request->is(['put', 'post'])) {
-            $entity = $this->model()->patchEntity($entity, $this->request->data, ['validate' => $this->_config['model.validator']]);
+            $entity = $this->model()->patchEntity($entity, $this->request->getData(), ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend', 'Saved!'));
 

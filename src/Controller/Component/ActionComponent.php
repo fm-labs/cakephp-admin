@@ -300,10 +300,11 @@ class ActionComponent extends Component
                         $templatePath = Inflector::camelize($this->getController()->getRequest()->getParam('prefix')) . '/' . $templatePath;
                     }
                     $controller->viewBuilder()->setTemplatePath($templatePath);
+                    //$controller->viewBuilder()->setPlugin('Backend');
 
                     // use action class name as default template name
                     $template = ($this->_action->template) ?? null;
-                    if (!$template) {
+                    if (!$template/* && isset($config['className'])*/) {
                         $config = $this->actions[$action];
                         list($plugin, $actionClass) = pluginSplit($config['className']);
                         $actionClass = Inflector::underscore($actionClass);

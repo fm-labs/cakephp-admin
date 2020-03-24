@@ -53,7 +53,7 @@ class SimpleTreeController extends AppController
         $responseData = [];
         try {
             if ($this->request->is(['post', 'put'])) {
-                $data = $this->request->data;
+                $data = $this->request->getData();
 
                 $modelName = (isset($data['model'])) ? (string)$data['model'] : null;
                 $id = (isset($data['id'])) ? (int)$data['id'] : null;

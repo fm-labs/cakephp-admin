@@ -30,6 +30,8 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
 
     public $scope = ['index'];
 
+    //public $template = 'Backend.add';
+
     /**
      * {@inheritDoc}
      */
@@ -103,14 +105,14 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
             $fields[$field] = $config;
         }
 
-        $entity->accessible($whitelist, true);
-        $entity->accessible($blacklist, false);
+        $entity->setAccess($whitelist, true);
+        $entity->setAccess($blacklist, false);
         if (isset($controller->viewVars['fields.access'])) {
-            $entity->accessible($controller->viewVars['fields.access']);
+            $entity->setAccess($controller->viewVars['fields.access'], null);
         }
 
         if ($this->request->is(['put', 'post'])) {
-            $entity = $this->model()->patchEntity($entity, $this->request->data, ['validate' => $this->_config['model.validator']]);
+            $entity = $this->model()->patchEntity($entity, $this->request->getData(), ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend', 'Record created'));
                 $this->redirect(['action' => 'edit', $entity->id]);
@@ -123,12 +125,12 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         // associated
         foreach ($this->model()->associations() as $assoc) {
             if ($assoc->type() == Association::MANY_TO_ONE) {
-                $fKey = $assoc->foreignKey();
+                $fKey = $assoc->getForeignKey();
                 if (strrpos($fKey, '_id') !== false) {
                     $var = substr($fKey, 0, strrpos($fKey, '_id'));
                     $var = lcfirst(Inflector::camelize(Inflector::pluralize($var)));
                     if (!isset($controller->viewVars[$var])) {
-                        $list = $assoc->target()->find('list')->order([$assoc->target()->getDisplayField() => 'ASC'])->toArray();
+                        $list = $assoc->getTarget()->find('list')->order([$assoc->getTarget()->getDisplayField() => 'ASC'])->toArray();
                         $controller->set($var, $list);
                     }
                 }
@@ -159,7 +161,6 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
      */
     public function execute(Controller $controller)
     {
-        debug("AddAction for " . get_class($controller));
         // read config from controller view vars
         foreach (array_keys($this->_defaultConfig) as $key) {
             $this->_config[$key] = (isset($controller->viewVars[$key]))
@@ -174,7 +175,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
 
         // load helpers
         if (isset($controller->viewVars['helpers'])) {
-            $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
+            $controller->viewBuilder()->setHelpers($controller->viewVars['helpers'], true);
         }
 
         // custom template

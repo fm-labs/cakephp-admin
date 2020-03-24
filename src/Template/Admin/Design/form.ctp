@@ -84,7 +84,7 @@ $this->loadHelper('Backend.DateRangePicker');
         <?= $this->Form->fieldsetEnd(); ?>
         <?= $this->Form->submit(); ?>
         <?= $this->Form->end(); ?>
-        <?php debug($this->request->data); ?>
+        <?php debug($this->request->getData()); ?>
     </div>
 </div>
 

@@ -19,7 +19,7 @@ class BackendFormHelper extends BootstrapFormHelper
         $this->templater()->load('Backend.form_templates');
 
         $widgets = [
-            'checkbox' => ['Backend\View\Widget\CheckboxWidget'],
+            //'checkbox' => ['Backend\View\Widget\CheckboxWidget'],
             // Chosen Select
             //'select' => ['Backend\View\Widget\ChosenSelectBoxWidget', '_view'],
             // Sumo Select

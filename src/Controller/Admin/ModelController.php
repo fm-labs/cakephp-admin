@@ -74,7 +74,7 @@ class ModelController extends AppController
             $inputSchema = $Model->inputs();
             /*
             foreach ($Model->getSchema()->columns() as $col) {
-                $schema[$col] = $Model->getSchema()->column($col);
+                $schema[$col] = $Model->getSchema()->getColumn($col);
 
                 if (!$inputSchema->field($col)) {
                     $type = (isset($typeMap[$schema[$col]['type']])) ? $typeMap[$schema[$col]['type']] : 'Text';
@@ -131,7 +131,7 @@ class ModelController extends AppController
 
             $entity = $Model->get($id);
 
-            $entity = $Model->patchEntity($entity, $this->request->data, ['validate' => 'default']);
+            $entity = $Model->patchEntity($entity, $this->request->getData(), ['validate' => 'default']);
             if (!$entity->getErrors() && $Model->save($entity)) {
                 $entity = $Model->save($entity);
                 $data = $entity->toArray();
@@ -147,7 +147,7 @@ class ModelController extends AppController
 
         $response = [
             'success' => $success,
-            'request' => $this->request->data,
+            'request' => $this->request->getData(),
             'data' => $data,
             'errors' => $errors,
         ];

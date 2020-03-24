@@ -607,6 +607,9 @@ nav ul.pagination {
 /**
  * Backend mixins
  */
+div.form {
+  max-width: 700px;
+}
 /**
  * General Inputs
  */
@@ -637,7 +640,6 @@ form .form-control {
   border-color: #A4A4A4;
   border-radius: 2px;
   padding: 6px 12px;
-  width: auto;
   min-width: 300px;
 }
 form div.required > label,
@@ -1162,11 +1164,23 @@ table.info.table tr td:first-child {
   color: #FFF;
 }
 /* Tabs */
-.tabs .nav-tabs {
-  border-bottom-width: 5px;
-}
-.tabs .nav-tabs li:first-child {
+.tabs .nav-tabs > li:first-child {
   margin-left: 10px;
+}
+.tabs .nav-tabs > li a,
+.tabs .nav-tabs > li a:link,
+.tabs .nav-tabs > li a:focus,
+.tabs .nav-tabs > li a:hover {
+  outline: 0;
+  border-bottom: 1px solid transparent;
+}
+.tabs .nav-tabs > li:hover a {
+  border-bottom-color: gray;
+}
+.tabs .nav-tabs > li.active a,
+.tabs .nav-tabs li:link a,
+.tabs .nav-tabs li:focus a {
+  border-bottom-color: white;
 }
 .tabs .tab-content {
   background-color: #FFF;

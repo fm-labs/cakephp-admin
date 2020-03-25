@@ -25,7 +25,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
     /**
      * {@inheritDoc}
      */
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         // generate dom id
         if (!isset($data['id'])) {

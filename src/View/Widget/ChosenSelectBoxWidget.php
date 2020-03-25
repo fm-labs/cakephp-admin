@@ -22,7 +22,7 @@ class ChosenSelectBoxWidget extends SelectBoxWidget
     /**
      * {@inheritDoc}
      */
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         if (!isset($data['id'])) {
             $data['id'] = uniqid('select');

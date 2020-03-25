@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Backend\Shell;
 
+use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 
 /**
@@ -22,7 +23,7 @@ class BackendShell extends Shell
     /**
      * @return \Cake\Console\ConsoleOptionParser
      */
-    public function getOptionParser()
+    public function getOptionParser(): ConsoleOptionParser
     {
         $parser = parent::getOptionParser();
         $parser->addSubcommand('rootUser', [

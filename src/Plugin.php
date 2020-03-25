@@ -165,9 +165,6 @@ class Plugin extends BasePlugin implements EventListenerInterface
     public function implementedEvents(): array
     {
         return [
-            'Backend.Theme.Sidebar.buildMenu' => 'backendThemeSidebarBuildMenu',
-            'Backend.Theme.Navbar.buildMenu' => 'backendThemeNavbarBuildMenu',
-            'Backend.Menu.init' => ['callable' => 'backendMenuInit' ],
             'Backend.Menu.build.admin_primary' => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
             'Backend.Menu.build.admin_system' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
             'Settings.build' => 'settings',

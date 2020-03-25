@@ -94,7 +94,7 @@ class BackendFormHelper extends BootstrapFormHelper
      * @param array $options Control options
      * @return string
      */
-    public function control($fieldName, array $options = [])
+    public function control(string $fieldName, array $options = []): string
     {
         return parent::control($fieldName, $options);
     }
@@ -137,7 +137,7 @@ class BackendFormHelper extends BootstrapFormHelper
     /**
      * {@inheritDoc}
      */
-    protected function _parseOptions($fieldName, $options)
+    protected function _parseOptions($fieldName, $options): array
     {
         //@TODO Dispatch Form.parseInput event
         //debug($fieldName);

@@ -22,7 +22,7 @@ class BackendView extends View
     /**
      * {@inheritDoc}
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadHelper('Html', ['className' => '\Backend\View\Helper\BackendHtmlHelper']);
         $this->loadHelper('Form', ['className' => '\Backend\View\Helper\BackendFormHelper']);
@@ -34,7 +34,7 @@ class BackendView extends View
     /**
      * {@inheritDoc}
      */
-    public function fetch($name, $default = '')
+    public function fetch(string $name, string $default = ''): string
     {
         $content = parent::fetch($name, '');
 

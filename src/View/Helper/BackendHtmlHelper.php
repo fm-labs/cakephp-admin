@@ -38,7 +38,7 @@ class BackendHtmlHelper extends HtmlHelper
 
     protected $_loaded = ['scripts' => [], 'css' => []];
 
-    public function css($path, array $options = [])
+    public function css($path, array $options = []): ?string
     {
         //$url = $this->Url->css($path, $options);
         return parent::css($path, $options);
@@ -47,7 +47,7 @@ class BackendHtmlHelper extends HtmlHelper
     /**
      * {@inheritDoc}
      */
-    public function script($url, array $options = [])
+    public function script($url, array $options = []): ?string
     {
         /*
         if (is_string($url) && $url[0] === "_" && isset($this->_scripts[$url])) {

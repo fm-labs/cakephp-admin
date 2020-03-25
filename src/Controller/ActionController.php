@@ -6,6 +6,7 @@ namespace Backend\Controller;
 use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Controller\Exception\MissingActionException;
+use Cake\Event\EventInterface;
 use LogicException;
 
 class ActionController extends Controller
@@ -34,7 +35,7 @@ class ActionController extends Controller
     /**
      * {@inheritDoc}
      */
-    public function invokeAction()
+    public function invokeAction(): void
     {
         $request = $this->request;
         if (!isset($request)) {
@@ -52,7 +53,7 @@ class ActionController extends Controller
         return $this->controller->Action->execute($request->getParam('action'));
     }
 
-    public function isAction($action)
+    public function isAction($action): bool
     {
         return $this->controller->Action->hasAction($action);
     }
@@ -68,9 +69,9 @@ class ActionController extends Controller
     /**
      * {@inheritDoc}
      */
-    public function __set($key, $val)
+    public function __set($key, $val): void
     {
-        return $this->controller->{$key} = $val;
+        $this->controller->{$key} = $val;
     }
 
     /**
@@ -98,7 +99,7 @@ class ActionController extends Controller
     /**
      * {@inheritDoc}
      */
-    public function dispatchEvent($name, $data = null, $subject = null)
+    public function ddispatchEvent(string $name, ?array $data = null, ?object $subject = null): EventInterface
     {
         if ($subject === null) {
             $subject = $this->controller;

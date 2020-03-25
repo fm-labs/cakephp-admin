@@ -31,7 +31,7 @@ class DatePickerWidget extends CakeDateTimeWidget
     /**
      * {@inheritDoc}
      */
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         $data = array_merge([
             'escape' => true,

@@ -31,7 +31,7 @@ class DateRangePickerWidget extends BasicWidget
     /**
      * {@inheritDoc}
      */
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         $data += [
             'id' => uniqid('daterangepicker'),

@@ -23,7 +23,7 @@ class SwitchControlWidget extends CheckboxWidget
     /**
      * {@inheritDoc}
      */
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         if (!isset($data['id'])) {
             $data['id'] = uniqid('switchctrl');

@@ -6,7 +6,6 @@ namespace Backend\Auth;
 use Cake\Auth\BaseAuthorize;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
-use Cake\Http\ServerRequest as Request;
 
 /**
  * Class BackendAuthorize
@@ -30,10 +29,10 @@ class BackendAuthorize extends BaseAuthorize
      * @param \Cake\Http\ServerRequest $request Request instance.
      * @return bool
      */
-    public function authorize($user, Request $request)
+    public function authorize($user, \Cake\Http\ServerRequest $request): bool
     {
         if (!$user['id']) {
-            return null;
+            return false;
         }
 
         // allow root
@@ -53,6 +52,6 @@ class BackendAuthorize extends BaseAuthorize
             return true;
         }
 
-        return null;
+        return false;
     }
 }

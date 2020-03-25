@@ -25,7 +25,7 @@ class Select2Widget extends SelectBoxWidget
     /**
      * {@inheritDoc}
      */
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         $data += [
             'id' => uniqid('select2'),

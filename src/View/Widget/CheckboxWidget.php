@@ -20,7 +20,7 @@ class CheckboxWidget extends \Cake\View\Widget\CheckboxWidget
     /**
      * {@inheritDoc}
      */
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         //$this->_templates->add()
 

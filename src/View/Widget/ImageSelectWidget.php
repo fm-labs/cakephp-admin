@@ -13,7 +13,7 @@ class ImageSelectWidget extends SelectBoxWidget
     /**
      * {@inheritDoc}
      */
-    public function render(array $data, ContextInterface $context)
+    public function render(array $data, ContextInterface $context): string
     {
         //return parent::render($data, $context);
 
@@ -72,7 +72,7 @@ class ImageSelectWidget extends SelectBoxWidget
     /**
      * {@inheritDoc}
      */
-    protected function _renderOptions($options, $disabled, $selected, $templateVars, $escape)
+    protected function _renderOptions(iterable $options, ?array $disabled, $selected, $templateVars, $escape): array
     {
         $out = [];
         foreach ($options as $key => $val) {
@@ -130,7 +130,14 @@ class ImageSelectWidget extends SelectBoxWidget
      * @param bool $escape Toggle HTML escaping
      * @return string Formatted template string
      */
-    protected function _renderOptgroup($label, $optgroup, $disabled, $selected, $templateVars, $escape)
+    protected function _renderOptgroup(
+        string $label,
+        $optgroup,
+        ?array $disabled,
+        $selected,
+        $templateVars,
+        $escape
+    ): string
     {
         $opts = $optgroup;
         $attrs = [];

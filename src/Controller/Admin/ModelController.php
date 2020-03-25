@@ -12,7 +12,7 @@ use Cake\Utility\Inflector;
 
 class ModelController extends AppController
 {
-    public function initialize()
+    public function initialize(): void
     {
         parent::initialize();
 
@@ -22,7 +22,7 @@ class ModelController extends AppController
         $this->Auth->allow();
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         $this->response = $this->response
             ->withHeader('Access-Control-Allow-Origin', '*')

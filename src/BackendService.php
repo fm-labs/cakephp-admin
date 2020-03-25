@@ -9,7 +9,7 @@ abstract class BackendService implements EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [];
     }

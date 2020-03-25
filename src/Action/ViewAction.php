@@ -112,7 +112,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         ];
     }
 
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             //'Controller.beforeRender' => 'beforeRender'

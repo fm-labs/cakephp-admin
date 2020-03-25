@@ -30,7 +30,7 @@ class VectorMapHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->Html->css($this->getConfig('cssUrl'), ['block' => true]);
         $this->Html->script($this->getConfig('scriptUrl'), ['block' => true]);

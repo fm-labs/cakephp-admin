@@ -35,4 +35,12 @@ class SearchAction implements IndexActionInterface
         $controller->set('foo', 'bar');
         $controller->render('index');
     }
+
+    /**
+     * @return array List of scope strings
+     */
+    public function getScope()
+    {
+
+    }
 }

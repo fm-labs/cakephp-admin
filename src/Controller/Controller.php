@@ -25,10 +25,9 @@ class Controller extends \Cake\Controller\Controller
      *
      * Use this method to add common initialization code like loading components.
      *
-     * @throws \Cake\Core\Exception\Exception
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->loadComponent('Backend.Backend');
         $this->loadComponent('Backend.Action');

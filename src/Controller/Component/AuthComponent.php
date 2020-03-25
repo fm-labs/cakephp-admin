@@ -12,7 +12,7 @@ class AuthComponent extends \User\Controller\Component\AuthComponent
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 

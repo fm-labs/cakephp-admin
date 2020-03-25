@@ -23,7 +23,7 @@ class DateRangePickerHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->Html->css('/backend/libs/daterangepicker/daterangepicker.css', ['block' => true]);
         $this->Html->script('/backend/libs/daterangepicker/daterangepicker.js', ['block' => true]);

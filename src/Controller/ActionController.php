@@ -87,7 +87,7 @@ class ActionController extends Controller
     /**
      * {@inheritDoc}
      */
-    public function render($view = null, $layout = null)
+    public function render($view = null, $layout = null): \Cake\Http\Response
     {
         $response = $this->controller->render($view, $layout);
         $this->setResponse($response);

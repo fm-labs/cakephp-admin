@@ -27,7 +27,7 @@ class ActionRegistry extends ObjectRegistry
      * @param string $class Partial classname to resolve.
      * @return string|false Either the correct classname or false.
      */
-    protected function _resolveClassName($class)
+     protected function _resolveClassName($class): ?string
     {
         if (is_object($class)) {
             return $class;
@@ -46,7 +46,7 @@ class ActionRegistry extends ObjectRegistry
      * @return void
      * @throws \RuntimeException
      */
-    protected function _throwMissingClassError($class, $plugin)
+    protected function _throwMissingClassError(string $class, ?string $plugin): void
     {
         throw new RuntimeException(sprintf('Could not load class %s', $class));
     }

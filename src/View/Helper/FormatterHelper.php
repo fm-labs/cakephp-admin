@@ -50,7 +50,7 @@ class FormatterHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         // escape
         self::register('escape', function ($val, $extra, $params) {

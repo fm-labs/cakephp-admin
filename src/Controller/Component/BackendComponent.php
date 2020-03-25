@@ -42,7 +42,7 @@ class BackendComponent extends Component
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $controller = $this->getController();
 
@@ -153,7 +153,7 @@ class BackendComponent extends Component
      * @param Event $event The event object
      * @return void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         /* @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
@@ -181,7 +181,7 @@ class BackendComponent extends Component
      * @param Event $event The event object
      * @return void
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(\Cake\Event\EventInterface $event)
     {
     }
 
@@ -216,7 +216,7 @@ class BackendComponent extends Component
     /**
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.initialize' => 'beforeFilter',

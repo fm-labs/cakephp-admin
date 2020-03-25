@@ -19,7 +19,7 @@ class SweetAlert2Helper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         if (Configure::read('debug')) {
             $this->Html->css('/backend/libs/sweetalert2/sweetalert2.css', ['block' => true]);

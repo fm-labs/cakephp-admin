@@ -10,7 +10,7 @@ class UsersTable extends BaseUsersTable
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         parent::initialize($config);
 

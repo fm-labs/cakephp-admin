@@ -20,7 +20,7 @@ class BackboneHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->_View->Html->script('/backend/libs/underscore/underscore-min.js', ['block' => true]);
         $this->_View->Html->script('/backend/libs/backbone/backbone-min.js', ['block' => true]);

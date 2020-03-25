@@ -23,7 +23,7 @@ class FlagIconHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->Html->css('/backend/libs/flag-icon-css/css/flag-icon.min.css', ['block' => true]);
 

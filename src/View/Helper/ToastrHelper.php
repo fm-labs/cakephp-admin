@@ -21,7 +21,7 @@ class ToastrHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->Html->css('/backend/libs/toastr/toastr.css', ['block' => true]);
         $this->Html->script('/backend/libs/toastr/toastr.min.js', ['block' => true]);
@@ -136,7 +136,7 @@ class ToastrHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'View.beforeLayout' => 'beforeLayout',

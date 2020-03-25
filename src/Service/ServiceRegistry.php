@@ -30,7 +30,7 @@ class ServiceRegistry extends ObjectRegistry
      * @param string $class Partial class name to resolve.
      * @return string|false Either the correct class name or false.
      */
-    protected function _resolveClassName($class)
+    protected function _resolveClassName($class): ?string
     {
         return App::className($class, 'Service', 'Service');
     }
@@ -45,7 +45,7 @@ class ServiceRegistry extends ObjectRegistry
      * @return void
      * @throws \RuntimeException
      */
-    protected function _throwMissingClassError($class, $plugin)
+    protected function _throwMissingClassError(string $class, ?string $plugin): void
     {
         throw new \RuntimeException("Unable to find '$class' service.");
     }

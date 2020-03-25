@@ -12,7 +12,7 @@ class ActionDispatcherListener implements EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return ['Dispatcher.beforeDispatch' => 'beforeDispatch'];
     }

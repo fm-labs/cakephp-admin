@@ -242,7 +242,7 @@ class ToolbarHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'View.beforeRender' => ['callable' => 'beforeRender'],

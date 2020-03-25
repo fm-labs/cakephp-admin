@@ -13,14 +13,14 @@ class EntityRelatedCellTest extends TestCase
     /**
      * Request mock
      *
-     * @var \Cake\Http\ServerRequest|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Http\ServerRequest|\PHPUnit\Framework\MockObject\MockObject
      */
     public $request;
 
     /**
      * Response mock
      *
-     * @var \Cake\Http\Response|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Cake\Http\Response|\PHPUnit\Framework\MockObject\MockObject
      */
     public $response;
 
@@ -36,7 +36,7 @@ class EntityRelatedCellTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->request = $this->getMockBuilder('Cake\Http\ServerRequest')->getMock();
@@ -49,7 +49,7 @@ class EntityRelatedCellTest extends TestCase
      *
      * @return void
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->EntityRelated);
 

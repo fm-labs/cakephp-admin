@@ -65,7 +65,7 @@ class ActionComponent extends Component
      * @param array $config Component configuration
      * @return void
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->_controller = $this->getController();
         $this->_actionRegistry = new ActionRegistry($this->_controller);
@@ -270,7 +270,7 @@ class ActionComponent extends Component
      * @param Event $event The controller event
      * @return null|\Cake\Http\Response
      */
-    public function beforeRender(Event $event)
+    public function beforeRender(\Cake\Event\EventInterface $event)
     {
         if ($this->getController()->getRequest()->getParam('action')) {
             $action = $this->getController()->getRequest()->getParam('action');
@@ -345,7 +345,7 @@ class ActionComponent extends Component
     /**
      * @return array
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Controller.startup' => 'startup',

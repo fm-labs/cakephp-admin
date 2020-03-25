@@ -21,7 +21,7 @@ class Select2Helper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         if (Configure::read('debug')) {
             $this->Html->css('/backend/libs/select2/dist/css/select2.css', ['block' => true]);

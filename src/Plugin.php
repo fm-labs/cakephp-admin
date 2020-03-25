@@ -37,7 +37,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->_backend = new Backend();
     }
@@ -46,7 +46,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function bootstrap(PluginApplicationInterface $app)
+    public function bootstrap(PluginApplicationInterface $app): void
     {
         parent::bootstrap($app);
 
@@ -77,7 +77,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function routes($routes)
+    public function routes(\Cake\Routing\RouteBuilder $routes): void
     {
         parent::routes($routes);
 
@@ -163,7 +163,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Backend.Theme.Sidebar.buildMenu' => 'backendThemeSidebarBuildMenu',

@@ -10,7 +10,7 @@ class TreeService extends BackendService
     /**
      * {@inheritDoc}
      */
-    public function implementedEvents()
+    public function implementedEvents(): array
     {
         return [
             'Backend.Controller.setupActions' => ['callable' => function (Event $event) {

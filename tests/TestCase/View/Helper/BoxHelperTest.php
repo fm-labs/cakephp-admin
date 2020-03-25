@@ -7,6 +7,7 @@ use Cake\View\View;
 
 /**
  * Class BoxHelperTest
+ *
  * @package Backend\Test\TestCase\View\Helper
  */
 class BoxHelperTest extends TestCase

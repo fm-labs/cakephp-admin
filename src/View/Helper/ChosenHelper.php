@@ -20,7 +20,7 @@ class ChosenHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->Html->css('/backend/libs/chosen/chosen', ['block' => true]);
         $this->Html->script('/backend/libs/chosen/chosen.jquery', ['block' => 'script']);

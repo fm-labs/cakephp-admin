@@ -24,7 +24,7 @@ class JsTreeBehavior extends Behavior
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         if (!$this->_config['fields']['id']) {
             $this->_config['fields']['id'] = $this->_table->getPrimaryKey();

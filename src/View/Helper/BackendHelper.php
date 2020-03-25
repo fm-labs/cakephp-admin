@@ -23,7 +23,7 @@ class BackendHelper extends Helper
     /**
      * {@inheritDoc}
      */
-    public function initialize(array $config)
+    public function initialize(array $config): void
     {
         $this->_themeConfig = (array)Configure::read('Backend.Theme') + $this->_themeConfig;
 

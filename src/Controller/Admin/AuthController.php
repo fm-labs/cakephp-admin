@@ -20,7 +20,7 @@ class AuthController extends AppController
      * @param Event $event The event object
      * @return Response|null|void
      */
-    public function beforeFilter(Event $event)
+    public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
         $this->Auth->allow(['login', 'unauthorized', 'session']);

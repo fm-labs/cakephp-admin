@@ -41,7 +41,7 @@ abstract class BaseBackendController extends Controller
      * @throws \Cake\Core\Exception\Exception
      * @return void
      */
-    public function initialize()
+    public function initialize(): void
     {
         // Configure Backend component
         if (!$this->components()->has('Backend')) {

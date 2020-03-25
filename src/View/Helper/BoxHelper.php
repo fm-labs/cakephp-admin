@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
@@ -169,7 +170,7 @@ class BoxHelper extends Helper
         $this->end();
 
         $class = $this->_params['class'];
-        $class = ($this->_params['collapsed']) ? $class . ' ' . $this->_params['collapsedClass'] : $class;
+        $class = $this->_params['collapsed'] ? $class . ' ' . $this->_params['collapsedClass'] : $class;
 
         return $this->templater()->format('box', [
             'class' => trim($class),
@@ -215,7 +216,7 @@ class BoxHelper extends Helper
      */
     protected function _renderTitle()
     {
-        $title = ($this->getContent('heading')) ?: $this->_params['title'];
+        $title = $this->getContent('heading') ?: $this->_params['title'];
 
         return $this->templater()->format('boxTitle', ['title' => $title]);
     }
@@ -255,7 +256,7 @@ class BoxHelper extends Helper
         $tools = $this->getContent('tools');
 
         if ($this->_params['collapse']) {
-            $collapseTempl = ($this->_params['collapsed']) ? 'boxToolExpandButton' : 'boxToolCollapseButton';
+            $collapseTempl = $this->_params['collapsed'] ? 'boxToolExpandButton' : 'boxToolCollapseButton';
             $tools .= $this->templater()->format($collapseTempl, []);
         }
 

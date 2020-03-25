@@ -1,22 +1,19 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller\Component;
 
 use Backend\Action\ActionRegistry;
 use Backend\Action\ExternalEntityAction;
 use Backend\Action\InlineEntityAction;
-use Backend\Action\Interfaces\ActionInterface;
 use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Component;
-use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
-use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
-use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
@@ -35,22 +32,22 @@ class ActionComponent extends Component
     public $actions = [];
 
     /**
-     * @var ActionRegistry
+     * @var \Backend\Action\ActionRegistry
      */
     protected $_actionRegistry;
 
     /**
-     * @var Controller Active controller
+     * @var \Cake\Controller\Controller Active controller
      */
     protected $_controller;
 
     /**
-     * @var EntityActionInterface|object Active action
+     * @var \Backend\Action\Interfaces\EntityActionInterface|object Active action
      */
     protected $_action;
 
     /**
-     * @var Table Active primary table
+     * @var \Cake\ORM\Table Active primary table
      */
     protected $_model;
 
@@ -71,7 +68,7 @@ class ActionComponent extends Component
         $this->_actionRegistry = new ActionRegistry($this->_controller);
 
         // normalize action configs and add actions to actions registry
-        $actions = (isset($this->_controller->actions)) ? $this->_controller->actions : [];
+        $actions = $this->_controller->actions ?? [];
         foreach ($actions as $action => $actionConfig) {
             $this->_addAction($action, $actionConfig);
         }
@@ -102,7 +99,7 @@ class ActionComponent extends Component
             $className = App::className($actionConfig['className'], 'Action', 'Action');
             $reflection = new \ReflectionClass($className);
             $ifaces = $reflection->getInterfaceNames();
-            $actionConfig['type'] = (in_array('Backend\\Action\\Interfaces\\EntityActionInterface', $ifaces)) ? 'entity' : 'table';
+            $actionConfig['type'] = in_array('Backend\\Action\\Interfaces\\EntityActionInterface', $ifaces) ? 'entity' : 'table';
         }
 
         $this->actions[$action] = $actionConfig;
@@ -170,7 +167,7 @@ class ActionComponent extends Component
 
     /**
      * @param null|string $action Action name
-     * @return null|ActionInterface|object
+     * @return null|\Backend\Action\Interfaces\ActionInterface|object
      */
     public function getAction($action)
     {
@@ -267,7 +264,7 @@ class ActionComponent extends Component
     }
 
     /**
-     * @param Event $event The controller event
+     * @param \Cake\Event\Event $event The controller event
      * @return null|\Cake\Http\Response
      */
     public function beforeRender(\Cake\Event\EventInterface $event)
@@ -275,7 +272,7 @@ class ActionComponent extends Component
         if ($this->getController()->getRequest()->getParam('action')) {
             $action = $this->getController()->getRequest()->getParam('action');
             if (isset($this->actions[$action])) {
-                /* @var Controller $controller */
+                /** @var \Backend\Controller\Component\Controller $controller */
                 $controller = $event->getSubject();
 
                 // Inject template and layout via controller view vars
@@ -289,7 +286,7 @@ class ActionComponent extends Component
                 //@TODO Check all application template paths, not only the first configured
                 $templateFile = sprintf(
                     "%ssrc/Template/%s/%s.ctp",
-                    ($this->getController()->getRequest()->getParam('plugin')) ? Plugin::path($this->getController()->getRequest()->getParam('plugin')) : App::path('Template')[0],
+                    $this->getController()->getRequest()->getParam('plugin') ? Plugin::path($this->getController()->getRequest()->getParam('plugin')) : App::path('Template')[0],
                     $controller->viewBuilder()->getTemplatePath(),
                     Inflector::underscore($action)
                 );
@@ -303,12 +300,12 @@ class ActionComponent extends Component
                     //$controller->viewBuilder()->setPlugin('Backend');
 
                     // use action class name as default template name
-                    $template = ($this->_action->template) ?? null;
+                    $template = $this->_action->template ?? null;
                     if (!$template/* && isset($config['className'])*/) {
                         $config = $this->actions[$action];
-                        list($plugin, $actionClass) = pluginSplit($config['className']);
+                        [$plugin, $actionClass] = pluginSplit($config['className']);
                         $actionClass = Inflector::underscore($actionClass);
-                        $template = ($plugin) ? $plugin . '.' . $actionClass : $actionClass;
+                        $template = $plugin ? $plugin . '.' . $actionClass : $actionClass;
                     }
 
                     $controller->viewBuilder()->setTemplate($template);

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
@@ -61,7 +62,7 @@ class BackendFormHelper extends BootstrapFormHelper
         }
 
         if (isset($options['collapsed']) && $options['collapsed'] === true) {
-            $options['fieldset']['class'] = (isset($options['fieldset']) && isset($options['fieldset']['class']))
+            $options['fieldset']['class'] = isset($options['fieldset']) && isset($options['fieldset']['class'])
                 ? $options['fieldset']['class'] . ' collapsed' : 'collapsed';
         }
 

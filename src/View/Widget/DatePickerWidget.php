@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Widget;
 
@@ -12,7 +13,7 @@ use DateTime;
 class DatePickerWidget extends CakeDateTimeWidget
 {
     /**
-     * @var BasicWidget
+     * @var \Cake\View\Widget\BasicWidget
      */
     protected $_text;
 

@@ -1,10 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller;
 
-use Backend\Controller\Component\BackendComponent;
 //use Cake\Controller\Exception\MissingActionException;
-use Cake\Http\Response;
 
 /**
  * Class BackendActionsTrait
@@ -13,14 +12,14 @@ use Cake\Http\Response;
  * Requires BackendComponent loaded in the controller
  *
  * @package Backend\Controller
- * @property BackendComponent $Backend
+ * @property \Backend\Controller\Component\BackendComponent $Backend
  *
  * @deprecated
  */
 trait BackendActionsTrait
 {
     /**
-     * @return null|Response
+     * @return null|\Cake\Http\Response
      */
     public function invokeAction()
     {

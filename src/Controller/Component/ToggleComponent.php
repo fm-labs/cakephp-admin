@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\Controller\Component;
 
 use Cake\Controller\Component;
-use Cake\Core\Configure;
 use Cake\ORM\Table;
 
 /**
@@ -19,7 +20,7 @@ class ToggleComponent extends Component
     ];
 
     /**
-     * @param Table $table
+     * @param \Cake\ORM\Table $table
      * @param $id
      * @param $field
      */
@@ -36,9 +37,9 @@ class ToggleComponent extends Component
                 'field' => $field,
                 'old' => $val,
                 'new' => $new,
-                'label' => ($new === true) ? 'Yes' : 'No',
-                'class' => ($new === true) ? 'success' : 'danger',
-                'result' => ($table->save($entity)) ? true : false,
+                'label' => $new === true ? 'Yes' : 'No',
+                'class' => $new === true ? 'success' : 'danger',
+                'result' => $table->save($entity) ? true : false,
             ];
         } else {
             $result = [

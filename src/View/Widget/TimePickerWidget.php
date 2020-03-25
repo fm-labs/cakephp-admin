@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Widget;
 
@@ -15,7 +16,7 @@ use DateTime;
 class TimePickerWidget extends CakeDateTimeWidget
 {
     /**
-     * @param StringTemplate $templates
+     * @param \Cake\View\StringTemplate $templates
      */
     public function __construct(StringTemplate $templates)
     {

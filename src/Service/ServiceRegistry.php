@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Service;
 
@@ -14,8 +15,8 @@ class ServiceRegistry extends ObjectRegistry
     /**
      * Constructor
      *
-     * @param EventManager $eventManager EventManager instances that services subscribe to.
-     *   Typically this is the global event manager.
+     * @param \Cake\Event\EventManager $eventManager EventManager instances that services subscribe to.
+     * Typically this is the global event manager.
      */
     public function __construct(EventManager $eventManager)
     {

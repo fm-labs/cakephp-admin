@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Cell;
 
 use Cake\Core\Configure;
@@ -6,7 +8,6 @@ use Cake\Datasource\EntityInterface;
 use Cake\Event\EventManager;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest as Request;
-use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use Cake\View\Cell;
@@ -16,7 +17,6 @@ use Cake\View\Cell;
  */
 class EntityViewCell extends Cell
 {
-
     /**
      * List of valid options that can be passed into this
      * cell's constructor.
@@ -40,7 +40,7 @@ class EntityViewCell extends Cell
     public $debug = false;
 
     /**
-     * @var Table
+     * @var \Cake\ORM\Table
      */
     protected $_table;
 
@@ -48,9 +48,9 @@ class EntityViewCell extends Cell
      * {@inheritDoc}
      */
     public function __construct(
-        Request $request = null,
-        Response $response = null,
-        EventManager $eventManager = null,
+        ?Request $request = null,
+        ?Response $response = null,
+        ?EventManager $eventManager = null,
         array $cellOptions = []
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
@@ -59,7 +59,7 @@ class EntityViewCell extends Cell
     /**
      * Default display method.
      *
-     * @param EntityInterface $entity The entity object
+     * @param \Cake\Datasource\EntityInterface $entity The entity object
      * @return void
      */
     public function display(EntityInterface $entity)
@@ -122,14 +122,14 @@ class EntityViewCell extends Cell
                 return false;
             }
 
-            $field = (isset($fields[$property])) ? $fields[$property] : $defaultField;
-            $fieldLabel = ($field['title']) ?: Inflector::humanize($property);
+            $field = $fields[$property] ?? $defaultField;
+            $fieldLabel = $field['title'] ?: Inflector::humanize($property);
             $isVirtual = in_array($property, $virtualProperties);
 
             $val = $entity->get($property);
 
-            $formatter = ($field['formatter']) ?: null;
-            $formatterArgs = ($field['formatterArgs']) ?: [];
+            $formatter = $field['formatter'] ?: null;
+            $formatterArgs = $field['formatterArgs'] ?: [];
 
             $assoc = null;
 
@@ -142,7 +142,7 @@ class EntityViewCell extends Cell
 
                     $related = $entity->get($assoc->getProperty());
                     $formatter = function ($val, $row, $args, $view) use ($related, $assoc) {
-                        list($plugin, $modelName) = pluginSplit($assoc->getTarget()->getRegistryAlias());
+                        [$plugin, $modelName] = pluginSplit($assoc->getTarget()->getRegistryAlias());
 
                         return $view->Html->link(
                             $related->get($assoc->getTarget()->getDisplayField()),
@@ -152,7 +152,7 @@ class EntityViewCell extends Cell
                     };
                 } elseif ($entity->get($property)) {
                     $formatter = function ($val, $row, $args, $view) use ($assoc) {
-                        list($plugin, $modelName) = pluginSplit($assoc->getTarget()->getRegistryAlias());
+                        [$plugin, $modelName] = pluginSplit($assoc->getTarget()->getRegistryAlias());
 
                         return $view->Html->link(
                             $val,
@@ -227,8 +227,8 @@ class EntityViewCell extends Cell
                     }
                 } else {
                     $column = $schema->getColumn($property);
-                    $type = ($column) ? $column['type'] : gettype($val); // fallback to data type
-                    $formatter = ($formatter) ?: $type; // fallback to column type
+                    $type = $column ? $column['type'] : gettype($val); // fallback to data type
+                    $formatter = $formatter ?: $type; // fallback to column type
                 }
             }
 

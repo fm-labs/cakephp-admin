@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
@@ -45,9 +46,7 @@ class IndexAction extends BaseAction
     {
         // read config from controller view vars
         foreach (array_keys($this->_defaultConfig) as $key) {
-            $this->_config[$key] = (isset($controller->viewVars[$key]))
-                ? $controller->viewVars[$key]
-                : $this->_defaultConfig[$key];
+            $this->_config[$key] = $controller->viewVars[$key] ?? $this->_defaultConfig[$key];
         }
 
         // detect model class
@@ -197,7 +196,7 @@ class IndexAction extends BaseAction
             if ($this->request->getQuery('_filter')) {
                 $_filter = Hash::flatten($this->request->getQuery('_filter'));
                 $filter = array_filter($_filter, function ($val) {
-                    return (strlen(trim($val)) > 0);
+                    return strlen(trim($val)) > 0;
                 });
                 $query->where($filter);
             }

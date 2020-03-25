@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
@@ -7,11 +8,9 @@ use Backend\Action\Interfaces\EntityActionInterface;
 use Backend\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
-use Cake\Http\Response;
 
 class DebugAction extends BaseEntityAction implements ActionInterface, IndexActionInterface, EntityActionInterface
 {
-
     /**
      * {@inheritDoc}
      */
@@ -45,8 +44,8 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
     }
 
     /**
-     * @param Controller $controller
-     * @return Response|null
+     * @param \Cake\Controller\Controller $controller
+     * @return \Cake\Http\Response|null
      */
     protected function _execute(Controller $controller)
     {
@@ -62,7 +61,7 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
                 'action_iface' => ($a instanceof ActionInterface),
                 'index_iface' => ($a instanceof IndexActionInterface),
                 'entity_iface' => ($a instanceof EntityActionInterface),
-                'scope' => ($a instanceof BaseEntityAction) ? $a->getScope() : [],
+                'scope' => $a instanceof BaseEntityAction ? $a->getScope() : [],
             ];
         });
         $controller->set('loaded_actions', $actionsLoaded);

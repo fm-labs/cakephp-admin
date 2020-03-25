@@ -1,13 +1,13 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\Action;
 
 use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
-use Cake\Http\Response;
 
 class DashboardAction implements ActionInterface
 {
-
     /**
      * @return string
      */
@@ -33,8 +33,8 @@ class DashboardAction implements ActionInterface
     }
 
     /**
-     * @param Controller $controller
-     * @return null|Response
+     * @param \Cake\Controller\Controller $controller
+     * @return null|\Cake\Http\Response
      */
     public function execute(Controller $controller)
     {

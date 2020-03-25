@@ -1,14 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
-
-use Cake\View\Helper;
-use Cake\View\Helper\HtmlHelper;
 
 /**
  * Class DataTablesJsHelper
  * @package Backend\View\Helper
- * @property HtmlHelper $Html
+ * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class DataTableJsHelper extends DataTableHelper
 {

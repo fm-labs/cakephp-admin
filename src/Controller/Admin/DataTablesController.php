@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller\Admin;
 
@@ -6,7 +7,6 @@ use Cake\Http\Exception\BadRequestException;
 
 class DataTablesController extends AppController
 {
-
     public function index()
     {
         $this->viewBuilder()->setLayout(false);
@@ -40,8 +40,8 @@ class DataTablesController extends AppController
             $recordsFiltered = $query->count();
         }
 
-        $limit = ($request['length']) ?: 100;
-        $offset = ($request['start']) ?: 0;
+        $limit = $request['length'] ?: 100;
+        $offset = $request['start'] ?: 0;
         $page = abs(($offset + 1) / $limit) + 1;
 
         /*
@@ -84,7 +84,7 @@ class DataTablesController extends AppController
             }
         }
 
-        $draw = (isset($request['draw'])) ? $request['draw'] : -1;
+        $draw = $request['draw'] ?? -1;
 
         $this->set(compact('model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data'));
         $this->set('_serialize', ['model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data']);

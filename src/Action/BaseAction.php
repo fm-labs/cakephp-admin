@@ -1,12 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
 use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\InstanceConfigTrait;
-use Cake\Http\Response;
-use Cake\Http\ServerRequest;
 use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 
@@ -35,7 +34,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
     public $controller;
 
     /**
-     * @var ServerRequest
+     * @var \Cake\Http\ServerRequest
      */
     public $request;
 
@@ -45,7 +44,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
     public $template = null;
 
     /**
-     * @param Controller $controller The controller instance
+     * @param \Cake\Controller\Controller $controller The controller instance
      * @param array $config Action config
      */
     public function __construct(Controller $controller, array $config = [])
@@ -60,7 +59,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
      */
     public function getLabel()
     {
-        $class = explode('\\', get_class($this));
+        $class = explode('\\', static::class);
         $class = array_pop($class);
         $alias = Inflector::underscore(substr($class, 0, -6));
 
@@ -88,7 +87,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
      */
     public function model()
     {
-        $modelClass = ($this->_config['modelClass']) ?? $this->controller->modelClass;
+        $modelClass = $this->_config['modelClass'] ?? $this->controller->modelClass;
 
         if (!$this->_table) {
             $this->_table = TableRegistry::getTableLocator()->get($modelClass);
@@ -101,7 +100,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
      * Convenience method for redirecting
      *
      * @param string|array|null $url Redirect URL
-     * @return Response
+     * @return \Cake\Http\Response
      */
     public function redirect($url)
     {
@@ -109,8 +108,8 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
     }
 
     /**
-     * @param Controller $controller The controller instance
-     * @return Response|null
+     * @param \Cake\Controller\Controller $controller The controller instance
+     * @return \Cake\Http\Response|null
      */
     //abstract protected function _execute(Controller $controller);
 
@@ -122,7 +121,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
      */
     protected function _flashSuccess($msg = null)
     {
-        $msg = ($msg) ?: __d('backend', 'Ok');
+        $msg = $msg ?: __d('backend', 'Ok');
         $this->controller->Flash->success($msg);
     }
 
@@ -134,7 +133,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
      */
     protected function _flashError($msg = null)
     {
-        $msg = ($msg) ?: __d('backend', 'Failed');
+        $msg = $msg ?: __d('backend', 'Failed');
         $this->controller->Flash->error($msg);
     }
 }

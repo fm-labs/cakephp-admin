@@ -1,11 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
-use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Http\Exception\BadRequestException;
@@ -55,7 +54,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         if (!isset($controller->viewVars['related'])) {
             $related = [];
             foreach ($this->model()->associations() as $assoc) {
-                /* @var \Cake\ORM\Association $assoc */
+                /** @var \Cake\ORM\Association $assoc */
                 //debug($assoc->getAlias() . " : " . $assoc->type());
                 switch ($assoc->type()) {
                     case Association::ONE_TO_MANY:
@@ -72,10 +71,10 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         } else {
             // attempt to get model ID from request if not set
             if (!$this->_config['modelId']) {
-                $this->_config['modelId'] = ($controller->getRequest()->getParam('id')) ?: null;
+                $this->_config['modelId'] = $controller->getRequest()->getParam('id') ?: null;
             }
             if (!$this->_config['modelId']) {
-                $this->_config['modelId'] = (isset($controller->getRequest()->getParam('pass')[0])) ? $controller->getRequest()->getParam('pass')[0] : null;
+                $this->_config['modelId'] = $controller->getRequest()->getParam('pass')[0] ?? null;
             }
             if (!$this->_config['modelId']) {
                 throw new BadRequestException('ViewAction: Model ID missing');

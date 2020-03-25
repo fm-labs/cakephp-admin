@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
-use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 
 class ExternalEntityAction extends BaseEntityAction
@@ -25,7 +25,7 @@ class ExternalEntityAction extends BaseEntityAction
         $this->_attributes = $options['attrs'];
         $this->scope = $options['scope'];
         $this->_url = $options['url'];
-        $this->_label = ($options['label']) ?: Inflector::humanize($this->_action);
+        $this->_label = $options['label'] ?: Inflector::humanize($this->_action);
     }
 
     public function getLabel()

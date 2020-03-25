@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
-use Cake\Event\Event;
 
 /**
  * Class MediaAction

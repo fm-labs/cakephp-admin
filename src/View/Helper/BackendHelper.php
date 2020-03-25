@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
@@ -103,13 +104,13 @@ class BackendHelper extends Helper
         $view = $event->getSubject();
         // title
         $title = $view->fetch('title'); // check the title block
-        $title = ($title) ?: $event->getSubject()->get('page.title'); // check the 'page.title' view var
-        $title = ($title) ?: Inflector::humanize(Inflector::tableize($view->getRequest()->getParam('controller'))); // inflected controller name
+        $title = $title ?: $event->getSubject()->get('page.title'); // check the 'page.title' view var
+        $title = $title ?: Inflector::humanize(Inflector::tableize($view->getRequest()->getParam('controller'))); // inflected controller name
         $view->assign('title', $title);
 
-        $themeClass = ($this->_themeConfig['name']) ?: 'theme-default';
-        $themeSkinClass = ($this->_themeConfig['skin']) ?: 'skin-default';
-        $themeBodyClass = ($this->_themeConfig['bodyClass']) ?: '';
+        $themeClass = $this->_themeConfig['name'] ?: 'theme-default';
+        $themeSkinClass = $this->_themeConfig['skin'] ?: 'skin-default';
+        $themeBodyClass = $this->_themeConfig['bodyClass'] ?: '';
 
         if ($this->_themeConfig['darkmode']) {
             $view->Html->css('/backend/css/layout/dark.min.css', ['block' => true]);

@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action\Interfaces;
 
 use Cake\Controller\Controller;
-use Cake\Http\Response;
 
 /**
  * Interface ActionInterface
@@ -32,8 +32,8 @@ interface ActionInterface
     public function getAttributes();
 
     /**
-     * @param Controller $controller
-     * @return null|Response
+     * @param \Cake\Controller\Controller $controller
+     * @return null|\Cake\Http\Response
      */
     public function execute(Controller $controller);
 }

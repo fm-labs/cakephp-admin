@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
@@ -41,6 +42,5 @@ class SearchAction implements IndexActionInterface
      */
     public function getScope()
     {
-
     }
 }

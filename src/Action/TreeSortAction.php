@@ -1,10 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
-use Cake\Core\Plugin;
-use Cake\Event\Event;
 
 /**
  * Class TreeSortAction
@@ -29,7 +28,7 @@ class TreeSortAction extends IndexAction
     }
 
     /**
-     * @param Controller $controller
+     * @param \Cake\Controller\Controller $controller
      */
     public function _execute(Controller $controller)
     {

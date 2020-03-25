@@ -1,22 +1,22 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
 use Cake\Event\Event;
 use Cake\View\Helper;
-use Cake\View\Helper\HtmlHelper;
 
 /**
  * Class JsTreeHelper
  * @package Backend\View\Helper
- * @property HtmlHelper $Html
+ * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class JsTreeHelper extends Helper
 {
     public $helpers = ['Html'];
 
     /**
-     * @param Event $event The event object
+     * @param \Cake\Event\Event $event The event object
      * @return void
      */
     public function beforeLayout(Event $event)

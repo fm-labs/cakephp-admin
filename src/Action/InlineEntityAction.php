@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
-use Cake\Datasource\EntityInterface;
 use Cake\Utility\Inflector;
 
 class InlineEntityAction extends BaseEntityAction
@@ -17,7 +17,7 @@ class InlineEntityAction extends BaseEntityAction
     public $action;
     public $options;
 
-    public function __construct(Controller $controller, array $options = [], callable $callable = null, callable $filter = null)
+    public function __construct(Controller $controller, array $options = [], ?callable $callable = null, ?callable $filter = null)
     {
         parent::__construct($controller, []);
         $options += ['action' => null, 'form' => null, 'label' => null, 'scope' => [], 'attrs' => []];

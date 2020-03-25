@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
-use Cake\Event\Event;
 
 /**
  * Class PublishAction
@@ -33,7 +33,7 @@ class PublishAction extends BaseEntityAction
 
     public function isUsable(EntityInterface $entity)
     {
-        return (!$entity->get('is_published'));
+        return !$entity->get('is_published');
     }
 
     /**

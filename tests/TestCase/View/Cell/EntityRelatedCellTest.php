@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\Test\TestCase\View\Cell;
 
 use Backend\View\Cell\EntityRelatedCell;
@@ -9,7 +11,6 @@ use Cake\TestSuite\TestCase;
  */
 class EntityRelatedCellTest extends TestCase
 {
-
     /**
      * Request mock
      *

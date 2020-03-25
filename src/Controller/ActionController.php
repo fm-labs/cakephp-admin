@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller;
 
 use Backend\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Controller\Exception\MissingActionException;
-use Cake\Event\Event;
 use LogicException;
 
 class ActionController extends Controller
@@ -17,8 +17,8 @@ class ActionController extends Controller
     public $autoRender = true;
 
     /**
-     * @param Controller $controller The parent controller instance
-     * @param ActionInterface $action The action class instance
+     * @param \Cake\Controller\Controller $controller The parent controller instance
+     * @param \Backend\Action\Interfaces\ActionInterface $action The action class instance
      */
     public function __construct(Controller $controller, ActionInterface $action)
     {

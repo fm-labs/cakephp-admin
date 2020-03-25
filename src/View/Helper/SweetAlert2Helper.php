@@ -1,16 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\View\Helper;
-use Cake\View\Helper\HtmlHelper;
 
 /**
  * Class SweetAlert2Helper
  * @package Backend\View\Helper
  *
- * @property HtmlHelper $Html
+ * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class SweetAlert2Helper extends Helper
 {

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
@@ -6,7 +7,6 @@ use Backend\Action\Interfaces\EntityActionInterface;
 use Backend\Action\Traits\EntityActionFilterTrait;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Datasource\EntityInterface;
 use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
@@ -23,7 +23,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     ];
 
     /**
-     * @var EntityInterface
+     * @var \Cake\Datasource\EntityInterface
      */
     protected $_entity;
 
@@ -63,9 +63,9 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
                 $this->_entity = $controller->viewVars[$controller->viewVars['entity']];
             } else {
                 if (!$this->_config['modelId']) {
-                    throw new \Exception(get_class($this) . ' has no model ID defined');
+                    throw new \Exception(static::class . ' has no model ID defined');
                 }
-                $options = (isset($this->_config['entityOptions'])) ? $this->_config['entityOptions'] : [];
+                $options = $this->_config['entityOptions'] ?? [];
                 $this->_entity = $this->model()->get($this->_config['modelId'], $options);
             }
         }
@@ -80,9 +80,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     {
         // read config from controller view vars
         foreach (array_keys($this->_defaultConfig) as $key) {
-            $this->_config[$key] = (isset($controller->viewVars[$key]))
-                ? $controller->viewVars[$key]
-                : $this->_defaultConfig[$key];
+            $this->_config[$key] = $controller->viewVars[$key] ?? $this->_defaultConfig[$key];
         }
 
         // detect model class and load entity
@@ -147,7 +145,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 
         // i18n
         if ($this->model()->hasBehavior('Translate')) {
-            $translation = ($controller->getRequest()->getQuery('translation')) ?: I18n::getLocale();
+            $translation = $controller->getRequest()->getQuery('translation') ?: I18n::getLocale();
             $this->model()->setLocale($translation);
             $controller->set('translation', $translation);
             $controller->set('translations.languages', (array)Configure::read('Multilang.Locales'));
@@ -172,7 +170,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     }
 
     /**
-     * @param Controller $controller Controller instance
+     * @param \Cake\Controller\Controller $controller Controller instance
      * @return null|void|\Cake\Http\Response
      */
     abstract protected function _execute(Controller $controller);

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller\Admin;
 
@@ -78,9 +79,9 @@ class DataTableController extends AppController
             if ($this->request->is(['post', 'put'])) {
                 $data = $this->request->getData();
 
-                $modelName = (isset($data['model'])) ? (string)$data['model'] : null;
-                $id = (isset($data['id'])) ? (int)$data['id'] : null;
-                $after = (isset($data['after'])) ? (int)$data['after'] : false;
+                $modelName = isset($data['model']) ? (string)$data['model'] : null;
+                $id = isset($data['id']) ? (int)$data['id'] : null;
+                $after = isset($data['after']) ? (int)$data['after'] : false;
 
                 $responseData = [
                     'model' => $modelName,

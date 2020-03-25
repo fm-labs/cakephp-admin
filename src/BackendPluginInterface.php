@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend;
 
@@ -10,13 +11,13 @@ use Cake\Routing\RouteBuilder;
 interface BackendPluginInterface
 {
     /**
-     * @param Backend $backend Backend object
+     * @param \Backend\Backend $backend Backend object
      * @return void
      */
     public function backendBootstrap(Backend $backend);
 
     /**
-     * @param RouteBuilder $routes RouterBuilder object
+     * @param \Cake\Routing\RouteBuilder $routes RouterBuilder object
      * @return void
      */
     public function backendRoutes(RouteBuilder $routes);

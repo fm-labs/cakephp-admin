@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller\Component;
 
 use Backend\Backend;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Http\ServerRequest as Request;
 use Cake\I18n\I18n;
@@ -150,12 +150,12 @@ class BackendComponent extends Component
 //    }
 
     /**
-     * @param Event $event The event object
+     * @param \Cake\Event\Event $event The event object
      * @return void
      */
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
-        /* @var \Cake\Controller\Controller $controller */
+        /** @var \Cake\Controller\Controller $controller */
         $controller = $event->getSubject();
 
         // Configure view
@@ -178,7 +178,7 @@ class BackendComponent extends Component
     }
 
     /**
-     * @param Event $event The event object
+     * @param \Cake\Event\Event $event The event object
      * @return void
      */
     public function beforeRender(\Cake\Event\EventInterface $event)

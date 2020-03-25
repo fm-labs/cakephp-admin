@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Cell;
 
-use Cake\Datasource\EntityInterface;
 use Cake\View\Cell;
 
 /**
@@ -9,7 +10,6 @@ use Cake\View\Cell;
  */
 class EntityRelatedCell extends Cell
 {
-
     /**
      * List of valid options that can be passed into this
      * cell's constructor.
@@ -25,12 +25,12 @@ class EntityRelatedCell extends Cell
     /**
      * Default display method.
      *
-     * @param EntityInterface $entity Entity object
+     * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      */
     public function display($entity)
     {
-        /* @var \Cake\ORM\Table $Model */
+        /** @var \Cake\ORM\Table $Model */
         $Model = $this->loadModel($this->modelClass);
 
         $elements = [];

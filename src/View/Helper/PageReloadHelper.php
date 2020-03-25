@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
@@ -60,7 +61,7 @@ class PageReloadHelper extends Helper
     /**
      * Inject page reload before rendering layout
      *
-     * @param Event $event The event object
+     * @param \Cake\Event\Event $event The event object
      * @return void
      */
     public function beforeLayout(Event $event)
@@ -79,7 +80,7 @@ class PageReloadHelper extends Helper
                 // and not the 'html' renderer.
                 if ($this->_config['render'] == 'both') {
                     $timeoutMs -= 500; // half a second should do the trick
-                };
+                }
 
                 $scriptTemplate = <<<SCRIPT
 (function() {
@@ -99,7 +100,7 @@ SCRIPT;
             }
 
             if ($this->_config['infoBlock']) {
-                $block = ($this->_config['infoBlock'] === true) ? 'after' : $this->_config['infoBlock'];
+                $block = $this->_config['infoBlock'] === true ? 'after' : $this->_config['infoBlock'];
                 $event->getSubject()->append($block, sprintf($this->_config['infoTemplate'], $this->_timeout));
             }
         }

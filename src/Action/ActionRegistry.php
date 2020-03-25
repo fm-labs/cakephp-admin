@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\Action;
 
 use Backend\Action\Interfaces\ActionInterface;
@@ -27,7 +29,7 @@ class ActionRegistry extends ObjectRegistry
      * @param string $class Partial classname to resolve.
      * @return string|false Either the correct classname or false.
      */
-     protected function _resolveClassName($class): ?string
+    protected function _resolveClassName($class): ?string
     {
         if (is_object($class)) {
             return $class;

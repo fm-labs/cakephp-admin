@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
 use Cake\Http\Exception\NotFoundException;
-use Cake\Http\Exception\NotImplementedException;
 
 class DeleteAction extends BaseEntityAction
 {

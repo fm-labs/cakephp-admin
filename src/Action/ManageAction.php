@@ -1,14 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
-use Backend\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
-use Cake\Http\Exception\BadRequestException;
-use Cake\ORM\Association;
 
 class ManageAction extends BaseEntityAction implements EventListenerInterface
 {

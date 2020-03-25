@@ -1,11 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\Controller\Base;
 
-use Backend\Controller\Component\FlashComponent;
-use Cake\Controller\Component\AuthComponent;
-use Cake\Controller\Component\PaginatorComponent;
 use Cake\Controller\Controller;
-use Cake\Core\Configure;
 
 /**
  * Class BaseBackendController
@@ -15,9 +13,9 @@ use Cake\Core\Configure;
  *
  * @package Backend\Controller\Base
  *
- * @property AuthComponent $Auth
- * @property FlashComponent $Flash
- * @property PaginatorComponent $Paginator
+ * @property \Cake\Controller\Component\AuthComponent $Auth
+ * @property \Backend\Controller\Component\FlashComponent $Flash
+ * @property \Cake\Controller\Component\PaginatorComponent $Paginator
  *
  * @deprecated Use \Backend\Controller\Controller instead
  */

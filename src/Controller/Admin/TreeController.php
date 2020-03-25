@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller\Admin;
 
@@ -12,7 +13,6 @@ use Cake\Log\Log;
  */
 class TreeController extends AppController
 {
-
     /**
      * Index method
      */

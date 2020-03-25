@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\Routing\Middleware;
 
 use Backend\Backend;
@@ -12,7 +14,6 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class BackendMiddleware
 {
-
     protected $_iframe = false;
 
     /**

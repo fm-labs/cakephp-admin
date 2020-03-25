@@ -1,27 +1,23 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
-use Bootstrap\View\Helper\UiHelper;
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use Cake\View\Helper;
-use Cake\View\Helper\HtmlHelper;
-use Cake\View\Helper\NumberHelper;
-use Cake\View\Helper\TimeHelper;
-use Cake\View\View;
 
 /**
  * Class FormatHelper
  * @package Backend\View\Helper
  *
- * @property HtmlHelper $Html
- * @property NumberHelper $Number
- * @property TimeHelper $Time
- * @property UiHelper $Ui
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\NumberHelper $Number
+ * @property \Cake\View\Helper\TimeHelper $Time
+ * @property \Bootstrap\View\Helper\UiHelper $Ui
  *
  * @TODO Remove hard dependency on Bootstrap plugin. Use mixin solution
  */
@@ -114,7 +110,7 @@ class FormatterHelper extends Helper
         // truncate
         // @todo make span html wrapper optional
         self::register('truncate', function ($val, $extra, $params) {
-            $length = (is_int($params)) ? $params : 300;
+            $length = is_int($params) ? $params : 300;
             $str = Text::truncate((string)$val, $length);
 
             return '<span title="' . (string)$val . '">' . $str . '</span>';
@@ -123,9 +119,8 @@ class FormatterHelper extends Helper
         // currency
         self::register('currency', function ($val, $extra, $params) {
 
-            $currency = (isset($params['currency']))
-                ? $params['currency'] : Configure::read('Shop.defaultCurrency'); // @TODO Use App-level default currency
-            $currency = (!$currency && $extra && isset($extra, $params['currency_field']))
+            $currency = $params['currency'] ?? Configure::read('Shop.defaultCurrency'); // @TODO Use App-level default currency
+            $currency = !$currency && $extra && isset($extra, $params['currency_field'])
                 ? Hash::get($extra, $params['currency_field']) : $currency;
 
             //$params['useIntlCode'] = true;
@@ -137,7 +132,7 @@ class FormatterHelper extends Helper
 
         // email
         self::register('email', function ($val, $extra, $params) {
-            return ($val) ? $this->Html->link($val, 'mailto:' . $val) : null;
+            return $val ? $this->Html->link($val, 'mailto:' . $val) : null;
         });
 
         // array
@@ -196,15 +191,15 @@ class FormatterHelper extends Helper
                 return $val;
             }
 
-            $params = (is_string($params)) ? ['field' => $params] : $params;
+            $params = is_string($params) ? ['field' => $params] : $params;
             $params = array_merge(['field' => 'name'], $params);
 
             if ($val instanceof EntityInterface) {
                 return $val->get($params['field']);
             } elseif (is_array($val)) {
-                return (isset($val[$params['field']])) ? $val[$params['field']] : null;
+                return $val[$params['field']] ?? null;
             } elseif (is_object($val)) {
-                return (isset($val->{$params['field']})) ? $val->{$params['field']} : null;
+                return $val->{$params['field']} ?? null;
             }
 
             return (string)$val;
@@ -242,7 +237,7 @@ class FormatterHelper extends Helper
                 $formatterArgs = current($formatter);
                 $formatter = key($formatter);
             } elseif (count($formatter) === 2) {
-                list($formatter, $formatterArgs) = $formatter;
+                [$formatter, $formatterArgs] = $formatter;
             } else {
                 debug("Unsupported formatter array format");
                 $formatter = null;

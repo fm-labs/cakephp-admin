@@ -1,10 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
-use Cake\Core\Plugin;
-use Cake\Event\Event;
 
 class TreeIndexAction extends IndexAction
 {

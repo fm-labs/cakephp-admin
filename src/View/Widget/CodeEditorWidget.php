@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Widget;
 
 use Cake\Core\Configure;
@@ -33,7 +35,7 @@ class CodeEditorWidget extends TextareaWidget
     /**
      * Reference to the view instance
      *
-     * @var View
+     * @var \Cake\View\View
      */
     protected $_View;
 
@@ -44,7 +46,7 @@ class CodeEditorWidget extends TextareaWidget
 
     /**
      * @param \Cake\View\StringTemplate $templates The templater instance
-     * @param View $view The view instance
+     * @param \Cake\View\View $view The view instance
      */
     public function __construct($templates, View $view)
     {
@@ -82,7 +84,7 @@ class CodeEditorWidget extends TextareaWidget
 
         // Textarea
         $inputData = $data;
-        $inputData['id'] = ($inputData['id']) ?: uniqid('codeeditor');
+        $inputData['id'] = $inputData['id'] ?: uniqid('codeeditor');
         $inputData['class'] = 'codeeditor-input';
         $inputData['style'] = 'display:none;';
         unset($inputData['editor']);
@@ -92,13 +94,13 @@ class CodeEditorWidget extends TextareaWidget
         // Editor
         $editor = array_merge(static::$defaultConfig, $this->_config, $data['editor']);
         // auto-prefix 'mode' and 'theme' editor options
-        $editor['mode'] = ($editor['mode'] && !preg_match('/\//', $editor['mode'])) ? 'ace/mode/' . $editor['mode'] : $editor['mode'];
-        $editor['theme'] = ($editor['theme'] && !preg_match('/\//', $editor['theme'])) ? 'ace/theme/' . $editor['theme'] : $editor['theme'];
+        $editor['mode'] = $editor['mode'] && !preg_match('/\//', $editor['mode']) ? 'ace/mode/' . $editor['mode'] : $editor['mode'];
+        $editor['theme'] = $editor['theme'] && !preg_match('/\//', $editor['theme']) ? 'ace/theme/' . $editor['theme'] : $editor['theme'];
 
         // build editor html
         $defaultClass = 'codeeditor';
         $data['id'] = $inputData['id'] . '-editor';
-        $data['class'] = ($data['class']) ? $data['class'] . ' ' . $defaultClass : $defaultClass;
+        $data['class'] = $data['class'] ? $data['class'] . ' ' . $defaultClass : $defaultClass;
         $editorHtml = $this->_templates->format('codeeditor_editor', [
             'name' => $data['name'],
             'value' => $data['escape'] ? h($data['val']) : $data['val'],

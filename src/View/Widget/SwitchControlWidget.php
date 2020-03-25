@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Widget;
 
 use Bootstrap\View\Widget\BasicWidget;
@@ -30,8 +32,8 @@ class SwitchControlWidget extends CheckboxWidget
         $switch = [
             'size' => 'mini', // mini, small, normal, large
             'animate' => true,
-            'disabled' => (isset($data['disabled'])) ? $data['disabled'] : false,
-            'readonly' => (isset($data['readonly'])) ? $data['readonly'] : false,
+            'disabled' => $data['disabled'] ?? false,
+            'readonly' => $data['readonly'] ?? false,
             //'state' => true,
             //'indeterminate' => false,
             //'inverse' => false,

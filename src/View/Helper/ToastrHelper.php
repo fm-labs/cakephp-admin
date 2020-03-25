@@ -1,18 +1,17 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
-use Cake\View\Helper\HtmlHelper;
 
 /**
  * Class ToastrHelper
  * @package Backend\View\Helper
  *
- * @property HtmlHelper $Html
+ * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class ToastrHelper extends Helper
 {
@@ -37,7 +36,7 @@ class ToastrHelper extends Helper
     /**
      * Automatically render 'backend' and default flash messages as toastr messages.
      *
-     * @param Event $event The event object
+     * @param \Cake\Event\Event $event The event object
      * @return void
      */
     public function beforeLayout(Event $event)
@@ -113,7 +112,7 @@ class ToastrHelper extends Helper
             // the plugin part and possible sub paths are stripped
             // the element name must match a supported toastr method
             if ($method === null) {
-                list($plugin, $element) = pluginSplit($message['element']);
+                [$plugin, $element] = pluginSplit($message['element']);
                 if (strrpos($element, '/') !== false) {
                     $element = substr($element, strrpos($element, '/') + 1);
                 }
@@ -124,7 +123,7 @@ class ToastrHelper extends Helper
                 $method = 'info';
             }
 
-            $title = (isset($message['params']['title'])) ? $message['params']['title'] : Inflector::humanize($method);
+            $title = $message['params']['title'] ?? Inflector::humanize($method);
             $escapedMessage = addslashes($message['message']);
             $script .= sprintf($scriptTemplate, $method, $escapedMessage, $title, json_encode($toastr));
         }

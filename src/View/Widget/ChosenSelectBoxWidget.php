@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Widget;
 
 use Cake\View\Form\ContextInterface;

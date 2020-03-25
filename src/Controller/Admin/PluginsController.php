@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller\Admin;
 
@@ -56,7 +57,7 @@ class PluginsController extends AppController
 
         $plugins = [];
         if (file_exists($pluginsFile)) {
-            $plugins = include($pluginsFile);
+            $plugins = include $pluginsFile;
         }
 
         $plugins['Plugin'][$pluginName] = ['bootstrap' => true, 'routes' => true];
@@ -73,7 +74,7 @@ class PluginsController extends AppController
 
         $plugins = [];
         if (file_exists($pluginsFile)) {
-            $plugins = include($pluginsFile);
+            $plugins = include $pluginsFile;
         }
 
         $plugins['Plugin'][$pluginName] = ['bootstrap' => false, 'routes' => false];
@@ -90,7 +91,7 @@ class PluginsController extends AppController
 
         $plugins = [];
         if (file_exists($pluginsFile)) {
-            $plugins = include($pluginsFile);
+            $plugins = include $pluginsFile;
         }
 
         if (isset($plugins['Plugin'][$pluginName])) {

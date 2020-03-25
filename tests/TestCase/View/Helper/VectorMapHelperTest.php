@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\Test\TestCase\View\Helper;
 
 use Backend\View\Helper\VectorMapHelper;
@@ -10,7 +12,6 @@ use Cake\View\View;
  */
 class VectorMapHelperTest extends TestCase
 {
-
     /**
      * Test subject
      *

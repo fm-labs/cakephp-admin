@@ -1,17 +1,16 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
 use Cake\View\Helper;
-use Cake\View\Helper\FormHelper;
-use Cake\View\Helper\HtmlHelper;
 
 /**
  * Class SwitchControlHelper
  * @package Backend\View\Helper
  *
- * @property HtmlHelper $Html
- * @property FormHelper $Form
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\FormHelper $Form
  */
 class SwitchControlHelper extends Helper
 {

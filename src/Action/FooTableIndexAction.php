@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
@@ -46,7 +47,7 @@ class FooTableIndexAction extends IndexAction
         $dataUrl = null; // required for ajax mode
 
         // query limit workaround
-        $limit = (isset($this->_config['query']['limit'])) ? $this->_config['query']['limit'] : $this->_defaultLimit;
+        $limit = $this->_config['query']['limit'] ?? $this->_defaultLimit;
         $extra['paging']['size'] = $limit;
         $this->_config['query']['limit'] = $limit; //self::$maxLimit; // hard limit
         $this->_config['query']['maxLimit'] = self::$maxLimit; // hard limit

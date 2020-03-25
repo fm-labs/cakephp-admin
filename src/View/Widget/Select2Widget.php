@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Widget;
 
 use Cake\Core\Configure;
@@ -41,8 +43,8 @@ class Select2Widget extends SelectBoxWidget
             'minimumResultsForSearch' => 10,
             'allowClear' => false,
             'closeOnSelect' => true,
-            'disabled' => ($data['disabled']) ? true : false,
-            'multiple' => ($data['multiple']) ? true : false,
+            'disabled' => $data['disabled'] ? true : false,
+            'multiple' => $data['multiple'] ? true : false,
             'width' => $data['width'],
             'language' => 'en', //@TODO Localization
             //'amdBase' => '/backend/libs/select2/dist/js/', // <-- not working (?)

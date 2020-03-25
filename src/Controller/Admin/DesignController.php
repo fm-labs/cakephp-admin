@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller\Admin;
 
 use Cake\Form\Form;
-use Cake\ORM\Entity;
 
 class DesignController extends AppController
 {

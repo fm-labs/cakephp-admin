@@ -1,14 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller\Admin;
 
-use Cake\Core\Configure;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Utility\Inflector;
 
 class FooTablesController extends AppController
 {
-
     public function index()
     {
         //$this->viewBuilder()->setLayout(false);
@@ -44,8 +43,8 @@ class FooTablesController extends AppController
         //$data = $Model->find('all', ['media' => true])->contain([])->limit(5)->all()->toArray();
 
         $_modelName = pluginSplit($modelName);
-        $limit = ($this->request->getQuery('limit')) ?: 10;
-        $page = ($this->request->getQuery('page')) ?: 10;
+        $limit = $this->request->getQuery('limit') ?: 10;
+        $page = $this->request->getQuery('page') ?: 10;
 
         $this->paginate = [
             'media' => true,
@@ -122,7 +121,7 @@ class FooTablesController extends AppController
         }
 
         //$data = $query->all()->toArray();
-        $draw = (isset($request['draw'])) ? $request['draw'] : -1;
+        $draw = $request['draw'] ?? -1;
         $data = $query->all()->toArray();
 
         $this->set(compact('model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data'));

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Widget;
 
 use Cake\Core\Configure;
@@ -86,7 +88,7 @@ class HtmlEditorWidget extends BasicWidget
         ];
 
         $defaultClass = 'htmleditor form-control';
-        $data['class'] = ($data['class']) ? $data['class'] . ' ' . $defaultClass : $defaultClass;
+        $data['class'] = $data['class'] ? $data['class'] . ' ' . $defaultClass : $defaultClass;
         $data['id'] = uniqid($data['id'] . '-htmleditor');
 
         // load editor config by config reference (@[Config.Key])

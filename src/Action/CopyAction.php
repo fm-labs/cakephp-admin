@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
@@ -39,6 +40,6 @@ class CopyAction extends BaseEntityAction
      */
     protected function _execute(Controller $controller)
     {
-        throw new NotImplementedException(__CLASS__ . " not implemented");
+        throw new NotImplementedException(self::class . " not implemented");
     }
 }

@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller;
 
 use Cake\Datasource\Exception\MissingModelException;
-use Cake\ORM\Table;
 
 /**
  * Class JsTreeAwareTrait
@@ -31,7 +31,7 @@ trait JsTreeAwareTrait
      * }
      * @link https://jstree.com
      *
-     * @param Table $Model
+     * @param \Cake\ORM\Table $Model
      */
     public function treeData($Model = null)
     {
@@ -42,7 +42,7 @@ trait JsTreeAwareTrait
         if ($Model === null && method_exists($this, 'model')) {
             $Model = $this->model();
         } elseif (isset($this->modelClass)) {
-            list(, $alias) = pluginSplit($this->modelClass, true);
+            [, $alias] = pluginSplit($this->modelClass, true);
 
             if (!isset($this->{$alias})) {
                 throw new MissingModelException("Primary model not loaded");

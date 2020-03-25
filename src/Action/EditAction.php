@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
-use Cake\Core\Configure;
 use Cake\ORM\Association;
 use Cake\Utility\Inflector;
 
@@ -127,7 +127,7 @@ class EditAction extends BaseEntityAction
         $controller->set('modelClass', $controller->modelClass);
 
         // associated
-        /* @var Association $assoc */
+        /** @var \Cake\ORM\Association $assoc */
         foreach ($this->model()->associations() as $assoc) {
             if ($assoc->type() == Association::MANY_TO_ONE) {
                 $fKey = $assoc->getForeignKey();

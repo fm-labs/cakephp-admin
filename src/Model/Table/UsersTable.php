@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Model\Table;
 
@@ -20,9 +21,9 @@ class UsersTable extends BaseUsersTable
     /**
      * Finder method for Backend's Auth component
      *
-     * @param Query $query The query object
+     * @param \Cake\ORM\Query $query The query object
      * @param array $options Finder options
-     * @return Query
+     * @return \Cake\ORM\Query
      */
     public function findBackendAuthUser(Query $query, array $options)
     {

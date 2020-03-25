@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
@@ -35,7 +36,7 @@ class UnpublishAction extends BaseEntityAction
      */
     public function isUsable(EntityInterface $entity)
     {
-        return ($entity->get('is_published'));
+        return $entity->get('is_published');
     }
 
     /**

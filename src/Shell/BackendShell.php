@@ -1,14 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Shell;
 
-use Backend\Shell\Task\RootUserTask;
 use Cake\Console\Shell;
 
 /**
  * Class BackendShell
  * @package Backend\Shell
- * @property RootUserTask $RootUser
+ * @property \Backend\Shell\Task\RootUserTask $RootUser
  */
 class BackendShell extends Shell
 {

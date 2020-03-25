@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
@@ -10,19 +11,16 @@ use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
 use Cake\View\Helper;
-use Cake\View\Helper\FormHelper;
-use Cake\View\Helper\HtmlHelper;
-use Cake\View\Helper\PaginatorHelper;
 use Cake\View\StringTemplateTrait;
 
 /**
  * Class DataTableHelper
  * @package Backend\View\Helper
  *
- * @property HtmlHelper $Html
- * @property FormHelper $Form
- * @property PaginatorHelper $Paginator
- * @property FormatterHelper $Formatter
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Cake\View\Helper\FormHelper $Form
+ * @property \Cake\View\Helper\PaginatorHelper $Paginator
+ * @property \Backend\View\Helper\FormatterHelper $Formatter
  */
 class DataTableHelper extends Helper
 {
@@ -66,7 +64,7 @@ class DataTableHelper extends Helper
 
     /**
      * Table instance
-     * @var Table
+     * @var \Cake\ORM\Table
      */
     protected $_table;
 
@@ -451,7 +449,7 @@ class DataTableHelper extends Helper
     {
         if ($field == '*' || !is_string($field)) {
             throw new \InvalidArgumentException('Field parameter MUST be a string value');
-        };
+        }
 
         $conf += $this->_defaultField;
 
@@ -507,7 +505,7 @@ class DataTableHelper extends Helper
     }
 
     /**
-     * @return Table
+     * @return \Cake\ORM\Table
      */
     protected function _table()
     {
@@ -555,7 +553,7 @@ class DataTableHelper extends Helper
             'attrs' => $this->templater()->formatAttributes($tableAttributes),
             'head' => $this->_renderHead(),
             'body' => $this->_renderBody(),
-            'footer' => (count($this->data()) > 25) ? $this->_renderHead('footer') : '',
+            'footer' => count($this->data()) > 25 ? $this->_renderHead('footer') : '',
         ]);
         $formEnd = $this->Form->end();
 
@@ -648,7 +646,7 @@ class DataTableHelper extends Helper
         }
 
         $Model = $this->_table();
-        $filters = ($this->_params['filter'] === true) ? [] : (array)$this->_params['filter'];
+        $filters = $this->_params['filter'] === true ? [] : (array)$this->_params['filter'];
         if (empty($filters) && $Model && $Model->behaviors()->has('Search')) {
             $searchFilters = $Model->searchManager()->all();
             $filters = array_keys($searchFilters);
@@ -804,8 +802,8 @@ class DataTableHelper extends Helper
      */
     protected function _renderRowActions($row)
     {
-        $row = (is_object($row)) ? $row->toArray() : $row;
-        $actions = (isset($row['_actions_'])) ? $row['_actions_'] : [];
+        $row = is_object($row) ? $row->toArray() : $row;
+        $actions = $row['_actions_'] ?? [];
 
         foreach ($this->_rowCallbacks as $callback) {
             if ($result = call_user_func($callback, $row)) {
@@ -945,7 +943,7 @@ class DataTableHelper extends Helper
     protected function _buildRowAttributes($row)
     {
         $rowAttributes = [
-            'data-id' => (isset($row['id'])) ? $row['id'] : null,
+            'data-id' => $row['id'] ?? null,
         ];
 
         return $this->templater()->formatAttributes($rowAttributes);
@@ -1101,7 +1099,7 @@ SCRIPT;
      */
     protected function _applyRowActions(array $rowActions, $row = [])
     {
-        $row = (is_object($row)) ? $row->toArray() : $row;
+        $row = is_object($row) ? $row->toArray() : $row;
         // rowActions
         $actions = [];
         foreach ($rowActions as $actionId => $rowAction) {
@@ -1109,11 +1107,11 @@ SCRIPT;
             $attrs = [];
 
             if (count($rowAction) == 1) {
-                list($title) = $rowAction;
+                [$title] = $rowAction;
             } elseif (count($rowAction) == 2) {
-                list($title, $url) = $rowAction;
+                [$title, $url] = $rowAction;
             } elseif (count($rowAction) >= 3) {
-                list($title, $url, $attrs) = $rowAction;
+                [$title, $url, $attrs] = $rowAction;
             }
 
             $title = $this->_replaceTokens($title, $row);
@@ -1140,18 +1138,18 @@ SCRIPT;
     protected function _renderRowActionsOld(array $rowActions, $row = [])
     {
         $html = "";
-        $row = (is_object($row)) ? $row->toArray() : $row;
+        $row = is_object($row) ? $row->toArray() : $row;
         // rowActions
         foreach ($rowActions as $rowAction) {
             $title = $url = null;
             $attr = [];
 
             if (count($rowAction) == 1) {
-                list($title) = $rowAction;
+                [$title] = $rowAction;
             } elseif (count($rowAction) == 2) {
-                list($title, $url) = $rowAction;
+                [$title, $url] = $rowAction;
             } elseif (count($rowAction) >= 3) {
-                list($title, $url, $attr) = $rowAction;
+                [$title, $url, $attr] = $rowAction;
             }
 
             $title = $this->_replaceTokens($title, $row);

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Service;
 
@@ -28,7 +29,7 @@ class PublishableService extends BackendService
             'Backend.beforeAction' => ['callable' => function (Event $event) {
 
                 if ($event->getData('action') instanceof EditAction) {
-                    $elements = (isset($event->getSubject()->viewVars['form_elements'])) ? $event->getSubject()->viewVars['form_elements'] : [];
+                    $elements = $event->getSubject()->viewVars['form_elements'] ?? [];
 
                     $elements['translate'] = [
                         'title' => __d('backend', 'Translations'),

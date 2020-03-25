@@ -1,14 +1,14 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
 use Cake\Event\Event;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
-use Cake\View\Helper\BreadcrumbsHelper;
 
 /**
- * @property BreadcrumbsHelper $Breadcrumbs
+ * @property \Cake\View\Helper\BreadcrumbsHelper $Breadcrumbs
  */
 class BreadcrumbHelper extends Helper
 {
@@ -29,7 +29,7 @@ class BreadcrumbHelper extends Helper
     }
 
     /**
-     * @param Event $event The event object
+     * @param \Cake\Event\Event $event The event object
      * @return void
      */
     public function beforeLayout(Event $event)
@@ -64,7 +64,6 @@ class BreadcrumbHelper extends Helper
                 'action' => 'index',
             ]);
 
-            //
             if (isset($request->getParam('pass')[0])) {
                 $this->Breadcrumbs->add(Inflector::humanize(Inflector::singularize($request->getParam('controller'))), [
                     'plugin' => $request->getParam('plugin'),

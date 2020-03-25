@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Model\Behavior;
 
@@ -35,9 +36,9 @@ class JsTreeBehavior extends Behavior
     }
 
     /**
-     * @param Query $query The query object
+     * @param \Cake\ORM\Query $query The query object
      * @param array $options Finder options
-     * @return Query
+     * @return \Cake\ORM\Query
      */
     public function findJsTree(Query $query, array $options = [])
     {
@@ -92,7 +93,7 @@ class JsTreeBehavior extends Behavior
             return [
                 'id' => $id,
                 'text' => $title,
-                'data' => ($dataFields === true) ? $entity->toArray() : $entity->extract($dataFields),
+                'data' => $dataFields === true ? $entity->toArray() : $entity->extract($dataFields),
                 'children' => [],
                 //'icon' => $class,
                 /*

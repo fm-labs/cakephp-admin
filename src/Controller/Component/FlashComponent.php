@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\Controller\Component;
 
 use Cake\Controller\Component\FlashComponent as CakeFlashComponent;
-use Cake\Core\Configure;
 
 /**
  * Class FlashComponent

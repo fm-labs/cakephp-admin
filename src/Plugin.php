@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend;
 
@@ -11,9 +12,8 @@ use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
 use Cake\Log\Log;
-use Cake\Routing\RouteBuilder;
-use Cake\Routing\Router;
 use Cake\Routing\Route\DashedRoute;
+use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use Settings\SettingsManager;
 
@@ -30,7 +30,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     protected $_app;
 
     /**
-     * @var Backend
+     * @var \Backend\Backend
      */
     protected $_backend;
 
@@ -41,7 +41,6 @@ class Plugin extends BasePlugin implements EventListenerInterface
     {
         $this->_backend = new Backend();
     }
-
 
     /**
      * {@inheritDoc}
@@ -82,7 +81,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
         parent::routes($routes);
 
         $routes->scope('/admin/backend/', ['prefix' => 'admin', 'plugin' => 'Backend', '_namePrefix' => 'admin:backend:'], function ($routes) {
-            /** @var RouteBuilder $routes */
+            /** @var \Cake\Routing\RouteBuilder $routes */
             $routes->connect(
                 '/login',
                 ['controller' => 'Auth', 'action' => 'login'],
@@ -157,7 +156,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
 
     public function adminConfigurationUrl()
     {
-        return (\Cake\Core\Plugin::isLoaded('Settings')) ? ['_name' => 'settings:manage', $this->getName()] : null;
+        return \Cake\Core\Plugin::isLoaded('Settings') ? ['_name' => 'settings:manage', $this->getName()] : null;
     }
 
     /**
@@ -233,7 +232,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     }
 
     /**
-     * @param Event $event The event object
+     * @param \Cake\Event\Event $event The event object
      * @return void
      */
     public function buildBackendMenu(Event $event, \Banana\Menu\Menu $menu)
@@ -283,7 +282,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     }
 
     /**
-     * @param Event $event The event object
+     * @param \Cake\Event\Event $event The event object
      * @return void
      */
     public function buildBackendSystemMenu(Event $event, \Banana\Menu\Menu $menu)
@@ -334,5 +333,4 @@ class Plugin extends BasePlugin implements EventListenerInterface
             ],
         ];
     }
-
 }

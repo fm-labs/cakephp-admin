@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\View\Helper;
 
@@ -27,7 +28,7 @@ class FooTableHelper extends DataTableHelper
     }
 
     /**
-     * @param Event $event The event object
+     * @param \Cake\Event\Event $event The event object
      * @return void
      */
     public function beforeLayout(Event $event)
@@ -125,7 +126,7 @@ class FooTableHelper extends DataTableHelper
      */
     protected function _renderRowActions($row)
     {
-        $row = (is_object($row)) ? $row->toArray() : $row;
+        $row = is_object($row) ? $row->toArray() : $row;
         $actions = [];
 
         foreach ($this->_rowCallbacks as $callback) {
@@ -151,7 +152,7 @@ class FooTableHelper extends DataTableHelper
     protected function _renderRowActionsCell($row)
     {
         //$rowActionsHtml = $this->_renderRowActions($row);
-        $actions = (isset($row['_actions_'])) ? $row['_actions_'] : [];
+        $actions = $row['_actions_'] ?? [];
 
         return $this->templater()->format('rowActionsCell', [
             'actions' => json_encode($actions),
@@ -206,7 +207,7 @@ class FooTableHelper extends DataTableHelper
     protected function _buildRowAttributes($row)
     {
         $rowAttributes = [
-            'data-id' => (isset($row['id'])) ? $row['id'] : null,
+            'data-id' => $row['id'] ?? null,
         ];
 
         return $this->templater()->formatAttributes($rowAttributes);

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
@@ -35,9 +36,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
     {
         // read config from controller view vars
         foreach (array_keys($this->_defaultConfig) as $key) {
-            $this->_config[$key] = (isset($controller->viewVars[$key]))
-                ? $controller->viewVars[$key]
-                : $this->_defaultConfig[$key];
+            $this->_config[$key] = $controller->viewVars[$key] ?? $this->_defaultConfig[$key];
         }
 
         // detect model class
@@ -116,7 +115,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
     }
 
     /**
-     * @param Controller $controller Controller instance
+     * @param \Cake\Controller\Controller $controller Controller instance
      * @return null|void|\Cake\Http\Response
      */
     abstract protected function _execute(Controller $controller);

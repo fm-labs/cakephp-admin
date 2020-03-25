@@ -1,13 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend;
 
 use Backend\Service\ServiceRegistry;
-use Banana\Application;
 use Banana\Exception\ClassNotFoundException;
 use Banana\Menu\Menu;
-use Banana\Menu\MenuItem;
-use Cake\Core\Configure;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
@@ -210,7 +208,7 @@ class Backend
     public function loadServices()
     {
         foreach ($this->getConfig('services') as $service => $enabled) {
-            list($service, $enabled) = (is_numeric($service)) ? [$enabled, true] : [$service, $enabled];
+            [$service, $enabled] = is_numeric($service) ? [$enabled, true] : [$service, $enabled];
             if ($enabled) {
                 $this->services->load($service);
             }

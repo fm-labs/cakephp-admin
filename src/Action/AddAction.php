@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
@@ -15,7 +16,6 @@ use Cake\Utility\Inflector;
  */
 class AddAction extends BaseAction implements ActionInterface, IndexActionInterface
 {
-
     /**
      * @var array
      */
@@ -163,9 +163,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
     {
         // read config from controller view vars
         foreach (array_keys($this->_defaultConfig) as $key) {
-            $this->_config[$key] = (isset($controller->viewVars[$key]))
-                ? $controller->viewVars[$key]
-                : $this->_defaultConfig[$key];
+            $this->_config[$key] = $controller->viewVars[$key] ?? $this->_defaultConfig[$key];
         }
 
         // detect model class

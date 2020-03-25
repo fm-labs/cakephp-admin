@@ -1,14 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Controller\Admin;
 
 use Banana\Model\TableInputSchema;
-use Cake\Core\Configure;
-use Cake\Event\Event;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Table;
 use Cake\Routing\Router;
-use Cake\Utility\Inflector;
 
 class ModelController extends AppController
 {

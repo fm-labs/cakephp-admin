@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
@@ -6,7 +7,6 @@ use Cake\Controller\Controller;
 
 class RedirectAction extends BaseEntityAction
 {
-
     /**
      * {@inheritDoc}
      */

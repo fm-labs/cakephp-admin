@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action\Interfaces;
 
 use Cake\Datasource\EntityInterface;
-use Cake\ORM\Table;
 
 /**
  * Interface EntityActionInterface
@@ -18,12 +18,12 @@ interface EntityActionInterface extends ActionInterface
     public function isUsable(EntityInterface $entity);
 
     /**
-     * @return Table
+     * @return \Cake\ORM\Table
      */
     public function model();
 
     /**
-     * @return EntityInterface
+     * @return \Cake\Datasource\EntityInterface
      */
     public function entity();
 }

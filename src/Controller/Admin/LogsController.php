@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\Controller\Admin;
 
 use Cake\Filesystem\File;
@@ -100,7 +102,7 @@ class LogsController extends AppController
             return;
         }
 
-        $page = ($this->request->getQuery('page')) ?: 1;
+        $page = $this->request->getQuery('page') ?: 1;
         $length = 409600; // 400 kB
         $offset = ($page - 1) * $length;
 

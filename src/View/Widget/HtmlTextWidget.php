@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Widget;
 
 use Cake\View\Form\ContextInterface;
@@ -35,7 +37,7 @@ class HtmlTextWidget extends BasicWidget
             'class' => '',
         ];
 
-        $data['class'] = ($data['class']) ? $data['class'] . ' htmltext' : 'htmltext';
+        $data['class'] = $data['class'] ? $data['class'] . ' htmltext' : 'htmltext';
 
         $this->_templates->add([
             'htmlText' => '<textarea name="{{name}}"{{attrs}}>{{value}}</textarea>',

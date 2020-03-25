@@ -1,10 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Action;
 
 use Cake\Controller\Controller;
-use Cake\Core\Configure;
-use Cake\ORM\Table;
 use Cake\Routing\Router;
 use Cake\Utility\Hash;
 use Cake\Utility\Inflector;
@@ -69,7 +68,7 @@ class DataTableIndexAction extends IndexAction
         $dtjsOpts = $this->_defaultJsTable;
 
         // query limit workaround
-        $limit = (isset($this->_config['query']['limit'])) ? $this->_config['query']['limit'] : $this->_defaultLimit;
+        $limit = $this->_config['query']['limit'] ?? $this->_defaultLimit;
         $this->_config['query']['limit'] = 1000; // hard limit
         $this->_config['query']['maxLimit'] = 1000; // hard limit
         $dtjsOpts['pageLength'] = $limit;
@@ -94,8 +93,8 @@ class DataTableIndexAction extends IndexAction
             }
             */
 
-            $limit = ($request['length'] > 0) ? $request['length'] : 100;
-            $offset = ($request['start'] > 0) ? $request['start'] : 0;
+            $limit = $request['length'] > 0 ? $request['length'] : 100;
+            $offset = $request['start'] > 0 ? $request['start'] : 0;
             $page = intval(floor(abs($offset / $limit)));
 
             /*
@@ -135,8 +134,8 @@ class DataTableIndexAction extends IndexAction
                     $_col = $request['columns'][$_colIdx];
                     $orderField = $_col['data'];
                     $orderDir = $_order['dir'];
-                    list($_plugin, $_field) = pluginSplit($orderField);
-                    $_plugin = ($_plugin) ? Inflector::camelize(Inflector::pluralize($_plugin)) : $this->model()->getAlias();
+                    [$_plugin, $_field] = pluginSplit($orderField);
+                    $_plugin = $_plugin ? Inflector::camelize(Inflector::pluralize($_plugin)) : $this->model()->getAlias();
                     $order[$_plugin . '.' . $_field] = $orderDir;
                 }
                 $query->order($order);
@@ -182,7 +181,7 @@ class DataTableIndexAction extends IndexAction
                 }
             }
 
-            $draw = (isset($request['draw'])) ? $request['draw'] : -1;
+            $draw = $request['draw'] ?? -1;
 
             $controller->set(compact('model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data'));
             $controller->set('_serialize', ['model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data']);

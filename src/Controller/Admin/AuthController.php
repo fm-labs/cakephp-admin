@@ -1,9 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\Controller\Admin;
 
 use Cake\Core\Configure;
-use Cake\Event\Event;
-use Cake\Http\Response;
 
 /**
  * Class AuthController
@@ -17,8 +17,8 @@ class AuthController extends AppController
     public $modelClass = false;
 
     /**
-     * @param Event $event The event object
-     * @return Response|null|void
+     * @param \Cake\Event\Event $event The event object
+     * @return \Cake\Http\Response|null|void
      */
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
@@ -30,7 +30,7 @@ class AuthController extends AppController
     /**
      * Login method
      *
-     * @return null|Response
+     * @return null|\Cake\Http\Response
      */
     public function login()
     {
@@ -42,7 +42,7 @@ class AuthController extends AppController
         }
 
         $this->set('login', [
-            'user' => ($user) ? $user['id'] : null,
+            'user' => $user ? $user['id'] : null,
         ]);
         $this->set('_serialize', ['login']);
 
@@ -52,7 +52,7 @@ class AuthController extends AppController
     /**
      * Login success method
      *
-     * @return Response
+     * @return \Cake\Http\Response
      */
     public function loginSuccess()
     {
@@ -67,7 +67,7 @@ class AuthController extends AppController
     /**
      * Logout method
      *
-     * @return Response
+     * @return \Cake\Http\Response
      */
     public function logout()
     {

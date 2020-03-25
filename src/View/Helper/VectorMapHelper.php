@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Helper;
 
 use Cake\View\Helper;
-use Cake\View\View;
 
 /**
  * VectorMap helper.

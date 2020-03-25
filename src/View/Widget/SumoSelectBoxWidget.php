@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Widget;
 
 use Cake\View\Form\ContextInterface;
@@ -11,7 +13,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
      * Constructor.
      *
      * @param \Cake\View\StringTemplate $templates Templates list.
-     * @param View $view The view instance
+     * @param \Cake\View\View $view The view instance
      */
     public function __construct($templates, View $view)
     {

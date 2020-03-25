@@ -1,18 +1,17 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Helper;
 
-use Backend\View\BackendView;
-use Bootstrap\View\Helper\UiHelper;
 use Cake\Event\Event;
 use Cake\View\Helper;
-use Cake\View\Helper\HtmlHelper;
 
 /**
  * Class ToolbarHelper
  *
  * @package Backend\View\Helper
- * @property HtmlHelper $Html
- * @property UiHelper $Ui
+ * @property \Cake\View\Helper\HtmlHelper $Html
+ * @property \Bootstrap\View\Helper\UiHelper $Ui
  */
 class ToolbarHelper extends Helper
 {
@@ -213,9 +212,9 @@ class ToolbarHelper extends Helper
                     throw new \RuntimeException('Invalid toolbar action item');
                 }
                 if (count($action) == 2) {
-                    list($title, $url) = $action;
+                    [$title, $url] = $action;
                 } elseif (count($action) === 3) {
-                    list($title, $url, $attr) = $action;
+                    [$title, $url, $attr] = $action;
                 } else {
                     extract($action, EXTR_IF_EXISTS); // maybe it's an assoc array. try to extract available vars from action
                 }

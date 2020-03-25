@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Backend\Http;
 
@@ -18,16 +19,16 @@ class ActionDispatcherListener implements EventListenerInterface
     }
 
     /**
-     * @param Event $event The event object
+     * @param \Cake\Event\Event $event The event object
      * @return void|\Cake\Http\Response
      */
     public function beforeDispatch(Event $event)
     {
-        /* @var $request \Cake\Http\ServerRequest */
+        /** @var \Cake\Http\ServerRequest $request */
         $request = $event->getData('request');
-        /* @var $response \Cake\Http\Response */
+        /** @var \Cake\Http\Response $response */
         $response = $event->getData('response');
-        /* @var $dispatcher \Cake\Http\ActionDispatcher */
+        /** @var \Cake\Http\ActionDispatcher $dispatcher */
         $dispatcher = $event->getSubject();
 
         $controllerFactory = new ControllerFactory();

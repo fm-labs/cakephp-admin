@@ -1,7 +1,8 @@
 <?php
+declare(strict_types=1);
+
 namespace Backend\View\Widget;
 
-use Cake\Core\Configure;
 use Cake\View\Form\ContextInterface;
 use Cake\View\View;
 use Cake\View\Widget\BasicWidget;
@@ -9,13 +10,13 @@ use Cake\View\Widget\BasicWidget;
 class DateRangePickerWidget extends BasicWidget
 {
     // momentjs compatible time formats
-    const FORMAT_DATE_JS = 'YYYY-MM-DD';
-    const FORMAT_DATETIME_JS = 'YYYY-MM-DD HH:mm';
-    const FORMAT_DATETIME_12H_JS = 'YYYY-MM-DD hh:mm a';
+    public const FORMAT_DATE_JS = 'YYYY-MM-DD';
+    public const FORMAT_DATETIME_JS = 'YYYY-MM-DD HH:mm';
+    public const FORMAT_DATETIME_12H_JS = 'YYYY-MM-DD hh:mm a';
 
-    const FORMAT_DATE_PHP = 'Y-m-d';
-    const FORMAT_DATETIME_PHP = 'Y-m-d H:i';
-    const FORMAT_DATETIME_12H_PHP = 'Y-m-d h:i a';
+    public const FORMAT_DATE_PHP = 'Y-m-d';
+    public const FORMAT_DATETIME_PHP = 'Y-m-d H:i';
+    public const FORMAT_DATETIME_12H_PHP = 'Y-m-d h:i a';
 
     /**
      * {@inheritDoc}
@@ -87,7 +88,7 @@ class DateRangePickerWidget extends BasicWidget
 
         // timepicker specific
         if ($params['timePicker'] == true) {
-            if (($params['timePicker24Hour']) == true) {
+            if ($params['timePicker24Hour'] == true) {
                 $params['locale']['format'] = self::FORMAT_DATETIME_JS;
                 $format = self::FORMAT_DATETIME_PHP;
             } else {
@@ -114,11 +115,11 @@ class DateRangePickerWidget extends BasicWidget
             $v = explode($params['locale']['separator'], $value);
             $v = array_map('trim', $v);
             if (count($v) == 2) {
-                list($startDate, $endDate) = $v;
+                [$startDate, $endDate] = $v;
                 $params['startDate'] = $makeDate($startDate);
                 $params['endDate'] = $makeDate($endDate);
             } elseif (count($v) == 1) {
-                list($startDate) = $v;
+                [$startDate] = $v;
                 //$params['singleDatePicker'] = true;
                 $params['startDate'] = $makeDate($startDate);
             }

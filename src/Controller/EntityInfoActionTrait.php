@@ -24,7 +24,7 @@ trait EntityInfoActionTrait
             $this->viewBuilder()
                 ->plugin('Backend')
                 ->templatePath('Admin/Entity')
-                ->template('view');
+                ->setTemplate('view');
         }
 
         $this->set(compact('modelClass', 'entityId', 'entity'));

@@ -16,7 +16,7 @@ class RootUserTask extends Shell
     {
         $parser = parent::getOptionParser();
         $parser
-            ->description(__d('backend', "Create backend root user"))
+            ->setDescription(__d('backend', "Create backend root user"))
             ->addOption('email', [
                 'help' => 'Root user email',
                 'short' => 'e',
@@ -42,7 +42,7 @@ class RootUserTask extends Shell
         $this->loadModel('Backend.Users');
         $rootCount = $this->Users->find()->where(['Users.username' => 'root'])->count();
         if ($rootCount > 0) {
-            $this->error('Root user already exists');
+            $this->abort('Root user already exists');
         }
 
         do {
@@ -67,7 +67,7 @@ class RootUserTask extends Shell
 
         $root = $this->Users->createRootUser($email, $pass1);
         if ($root === false) {
-            $this->error("Failed to create root user");
+            $this->abort("Failed to create root user");
         }
 
         $this->out("<success>Root user successfully created!</success>");

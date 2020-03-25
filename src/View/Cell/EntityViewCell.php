@@ -23,7 +23,7 @@ class EntityViewCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = ['model', 'fields', 'whitelist', 'blacklist', 'title', 'helpers', 'debug', 'exclude'];
+    protected $_validCellOptions = ['model', 'fields', 'whitelist', 'blacklist', 'title', 'helpers', 'debug'];
 
     public $model;
 
@@ -32,12 +32,6 @@ class EntityViewCell extends Cell
     public $whitelist = [];
 
     public $blacklist = [];
-
-    /**
-     * @var array
-     * @deprecated Use blacklist instead
-     */
-    public $exclude = [];
 
     public $title;
 
@@ -70,13 +64,6 @@ class EntityViewCell extends Cell
      */
     public function display(EntityInterface $entity)
     {
-        // legacy support for 'exclude' property.
-        if ($this->exclude === '*') {
-        } elseif (!empty($this->exclude)) {
-            $this->blacklist = $this->exclude;
-        }
-        $this->exclude = [];
-
         $Table = $this->_getTable();
 
         if ($this->title === null && $Table) {

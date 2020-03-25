@@ -49,7 +49,7 @@ class DesignController extends AppController
 
         $form->getValidator()
             ->requirePresence('h_text_error', true)
-            ->notEmpty('h_text_error');
+            ->notEmptyString('h_text_error');
 
         if ($this->request->is(['post'])) {
             $form->execute($this->request->getData());

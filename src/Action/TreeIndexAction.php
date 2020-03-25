@@ -31,7 +31,7 @@ class TreeIndexAction extends IndexAction
             $this->_config['fields.whitelist'] = true;
         }
 
-        //$controller->viewBuilder()->template('Backend.tree_index');
+        //$controller->viewBuilder()->setTemplate('Backend.tree_index');
 
         parent::_execute($controller);
     }

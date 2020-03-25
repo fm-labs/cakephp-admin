@@ -26,22 +26,22 @@ use Cake\Utility\Inflector;
     <!-- Related -->
     <?php foreach ($associations as $assoc): ?>
         <?php
-        //debug($assoc->name() . " -> " . $assoc->property());
+        //debug($assoc->getName() . " -> " . $assoc->getProperty());
         if ($assoc instanceof \Cake\ORM\Association) {
 
-            if (!isset($data[$assoc->property()])) {
+            if (!isset($data[$assoc->getProperty()])) {
                 continue;
             }
 
-            if (!array_key_exists($assoc->name(), $related)) {
+            if (!array_key_exists($assoc->getName(), $related)) {
                 continue;
             }
 
-            $this->Tabs->add(['title' => $assoc->name()]);
+            $this->Tabs->add(['title' => $assoc->getName()]);
 
             switch($assoc->type()) {
                 case \Cake\ORM\Association::ONE_TO_ONE:
-                    $_entity = $data[$assoc->property()]['value'];
+                    $_entity = $data[$assoc->getProperty()]['value'];
                     if (!$_entity) {
                         echo "- NO RECORD -";
                         break;
@@ -55,17 +55,16 @@ use Cake\Utility\Inflector;
                 case \Cake\ORM\Association::ONE_TO_MANY:
 
                     $datatable = array_merge([
-                        'model' => $assoc->target(),
-                        'data' => $data[$assoc->property()]['value'],
-                        'fieldsBlacklist' => [$assoc->foreignKey()],
+                        'model' => $assoc->getTarget(),
+                        'data' => $data[$assoc->getProperty()]['value'],
+                        'fieldsBlacklist' => [$assoc->getForeignKey()],
                         'filter' => false,
-                    ], $related[$assoc->name()]);
+                    ], $related[$assoc->getName()]);
 
                     $this->DataTable->create($datatable);
                     echo $this->DataTable->render();
                     break;
             }
-
         }
         ?>
     <?php endforeach; ?>

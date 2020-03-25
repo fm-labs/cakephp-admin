@@ -35,7 +35,7 @@ class DeleteAction extends BaseEntityAction
         }
 
         if ($controller->getRequest()->is(['post'])) {
-            if ($controller->getRequest()->data('confirm') == true) {
+            if ($controller->getRequest()->getData('confirm') == true) {
                 if ($entity instanceof EntityInterface) {
                     if ($this->model()->delete($entity)) {
                         $controller->Flash->success(__d('backend', 'Deleted'));

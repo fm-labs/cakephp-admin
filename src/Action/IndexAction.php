@@ -57,7 +57,7 @@ class IndexAction extends BaseAction
 
         // load helpers
         if (isset($controller->viewVars['helpers'])) {
-            $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
+            $controller->viewBuilder()->setHelpers($controller->viewVars['helpers'], true);
         }
 
         // custom template
@@ -194,10 +194,6 @@ class IndexAction extends BaseAction
             }
 
             // apply query conditions from request
-            if ($this->request->getQuery('qry')) { //@deprecated Use _filter param instead
-                $this->request->query['_filter'] = $this->request->query['qry'];
-                unset($this->request->query['qry']);
-            }
             if ($this->request->getQuery('_filter')) {
                 $_filter = Hash::flatten($this->request->getQuery('_filter'));
                 $filter = array_filter($_filter, function ($val) {
@@ -209,9 +205,9 @@ class IndexAction extends BaseAction
             // search support with FriendsOfCake/Search plugin
             if ($this->_config['filter'] && $this->model()->behaviors()->has('Search')) {
                 if ($this->controller->request->is(['post', 'put'])) {
-                    $query->find('search', ['search' => $this->controller->request->data]);
-                } elseif ($this->controller->request->query) {
-                    $query->find('search', ['search' => $this->controller->request->query]);
+                    $query->find('search', ['search' => $this->controller->request->getData()]);
+                } elseif ($this->controller->request->getQuery()) {
+                    $query->find('search', ['search' => $this->controller->request->getQuery()]);
                 }
             }
 

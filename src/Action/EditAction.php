@@ -103,7 +103,7 @@ class EditAction extends BaseEntityAction
             if ($this->model()->save($entity)) {
                 $this->_flashSuccess(__d('backend', 'Saved!'));
 
-                return $this->redirect([$entity->id] + $controller->getRequest()->query);
+                return $this->redirect([$entity->id] + $controller->getRequest()->getQuery());
             } else {
                 $this->_flashError();
             }
@@ -143,7 +143,7 @@ class EditAction extends BaseEntityAction
                 if ($entity->get($assoc->getProperty())) {
                     $list = $assoc->getTarget()->find('list')->order([$assoc->getTarget()->getDisplayField() => 'ASC'])->toArray();
                     $controller->set(Inflector::variable($assoc->getProperty()), $list);
-                    //debug("assoc list for " . $assoc->name() . ": " . count($list)
+                    //debug("assoc list for " . $assoc->getName() . ": " . count($list)
                     //    . " item using key " . $assoc->foreignKey()
                     //    . " prop: " . $assoc->getProperty() . " -> " . Inflector::variable($assoc->getProperty()));
                 }

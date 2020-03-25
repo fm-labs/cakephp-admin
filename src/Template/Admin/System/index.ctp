@@ -49,11 +49,6 @@ $this->loadHelper('Backend.Box');
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>Magic quotes</td>
-                <td><?= (get_magic_quotes_gpc()) ? __d('backend', 'Enabled') : __d('backend', 'Disabled'); ?></td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
                 <td>Memory limit</td>
                 <td><?= ini_get('memory_limit'); ?>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -149,7 +144,7 @@ $this->loadHelper('Backend.Box');
             </tr>
             <tr>
                 <td>Default Locale</td>
-                <td><?= \Cake\I18n\I18n::defaultLocale(); ?>&nbsp;</td>
+                <td><?= \Cake\I18n\I18n::getDefaultLocale(); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>

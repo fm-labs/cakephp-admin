@@ -135,7 +135,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
                     }
                 }
 //            } elseif ($assoc->type() == Association::ONE_TO_MANY) {
-//                $var = Inflector::pluralize($assoc->property());
+//                $var = Inflector::pluralize($assoc->getProperty());
 //                $list = $assoc->target()->find('list')->order([$assoc->target()->getDisplayField() => 'ASC'])->toArray();
 //                $controller->set($assoc->foreignKey(), $list);
 //            } elseif ($assoc->type() == Association::ONE_TO_ONE) {

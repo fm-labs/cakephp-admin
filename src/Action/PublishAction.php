@@ -49,7 +49,7 @@ class PublishAction extends BaseEntityAction
 
         $entity = $this->entity();
         if ($controller->getRequest()->is(['put', 'post'])) {
-            $entity = $this->model()->patchEntity($entity, $controller->getRequest()->data(), [
+            $entity = $this->model()->patchEntity($entity, $controller->getRequest()->getData(), [
                 //'fieldList' => ['is_published', 'publish_start', 'publish_end'], //@TODO Enable fieldList
             ]);
             if ($this->model()->save($entity)) {

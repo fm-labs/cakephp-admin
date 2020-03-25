@@ -24,12 +24,10 @@ class ModelController extends AppController
 
     public function beforeFilter(Event $event)
     {
-
-        $this->response->header([
-            'Access-Control-Allow-Origin' => '*',
-            'Access-Control-Allow-Headers' => 'POST, GET, OPTIONS',
-            'Access-Control-Allow-Methods' => 'Origin, Authorization, X-Requested-With, Content-Type, Accept, content-type',
-        ]);
+        $this->response = $this->response
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'POST, GET, OPTIONS')
+            ->withHeader('Access-Control-Allow-Methods', 'Origin, Authorization, X-Requested-With, Content-Type, Accept, content-type');
     }
 
     public function index()

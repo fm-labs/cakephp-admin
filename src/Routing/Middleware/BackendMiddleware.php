@@ -2,11 +2,7 @@
 namespace Backend\Routing\Middleware;
 
 use Backend\Backend;
-use Backend\BackendPluginInterface;
-use Banana\Application;
-use Cake\Log\Log;
 use Cake\Routing\Router;
-use Cake\Utility\Inflector;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 

@@ -9,7 +9,6 @@ use Cake\Controller\Controller;
  * Class BaseIndexAction
  *
  * @package Backend\Action
- * @deprecated Use IndexAction instead
  */
 abstract class BaseIndexAction extends BaseAction implements IndexActionInterface
 {
@@ -48,7 +47,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
 
         // load helpers
         if (isset($controller->viewVars['helpers'])) {
-            $controller->viewBuilder()->helpers($controller->viewVars['helpers'], true);
+            $controller->viewBuilder()->setHelpers($controller->viewVars['helpers'], true);
         }
 
         // custom template

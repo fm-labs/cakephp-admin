@@ -137,8 +137,7 @@ class ImageSelectWidget extends SelectBoxWidget
         $selected,
         $templateVars,
         $escape
-    ): string
-    {
+    ): string {
         $opts = $optgroup;
         $attrs = [];
         if (isset($optgroup['options'], $optgroup['text'])) {

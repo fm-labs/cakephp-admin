@@ -64,11 +64,10 @@ class ActionComponent extends Component
      */
     public function initialize(array $config): void
     {
-        $this->_controller = $this->getController();
-        $this->_actionRegistry = new ActionRegistry($this->_controller);
+        $this->_actionRegistry = new ActionRegistry($this->getController());
 
         // normalize action configs and add actions to actions registry
-        $actions = $this->_controller->actions ?? [];
+        $actions = ($this->getController() && isset($this->getController()->actions)) ? $this->getController()->actions : [];
         foreach ($actions as $action => $actionConfig) {
             $this->_addAction($action, $actionConfig);
         }
@@ -139,7 +138,7 @@ class ActionComponent extends Component
             $action = $instance->action;
         } else {
             $options += ['action' => $action];
-            $instance = new InlineEntityAction($this->_controller, $options, $callable);
+            $instance = new InlineEntityAction($this->getController(), $options, $callable);
         }
         if (isset($options['filter'])) {
             $instance->setFilter($options['filter']);
@@ -238,28 +237,28 @@ class ActionComponent extends Component
 
         // Attach Action instance to controllers event manager
         if ($this->_action instanceof EventListenerInterface) {
-            $this->_controller->getEventManager()->on($this->_action);
+            $this->getController()->getEventManager()->on($this->_action);
         }
 
         // Dispatch 'beforeAction' Event
         //@TODO Rename to 'Backend.Controller.beforeAction'
-        $event = $this->_controller->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
-        if ($event->result instanceof Response) {
-            return $event->result;
+        $event = $this->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
+        if ($event->getResult() instanceof Response) {
+            return $event->getResult();
         }
 
         // Execute the action in context of current controller
         $this->_executed[$action] = true;
-        $response = $this->_action->execute($this->_controller);
+        $response = $this->_action->execute($this->getController());
         if ($response instanceof Response) {
             return $response;
         }
 
         // Dispatch 'afterAction' Event
         //@TODO Rename to 'Backend.Controller.afterAction'
-        $event = $this->_controller->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
-        if ($event->result instanceof Response) {
-            return $event->result;
+        $event = $this->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
+        if ($event->getResult() instanceof Response) {
+            return $event->getResult();
         }
     }
 
@@ -328,9 +327,13 @@ class ActionComponent extends Component
     public function model()
     {
         if (!$this->_model) {
-            $modelClass = $this->getController()->modelClass;
+            $modelClass = $this->getController() && isset($this->getController()->modelClass)
+                ? $this->getController()->modelClass
+                : null;
+
             if (!$modelClass) {
                 return null;
+                // @TODO Throw exception
             }
 
             $this->_model = TableRegistry::getTableLocator()->get($modelClass);

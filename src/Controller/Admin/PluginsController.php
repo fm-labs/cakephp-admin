@@ -23,6 +23,10 @@ class PluginsController extends AppController
         $installed = [];
         foreach (App::path('Plugin') as $path) {
             //debug($path);
+            if (!is_dir($path)) {
+                continue;
+            }
+
             $files = scandir($path);
             //debug($files);
             foreach ($files as $f) {

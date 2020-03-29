@@ -80,7 +80,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     {
         parent::routes($routes);
 
-        $routes->scope('/admin/backend/', ['prefix' => 'admin', 'plugin' => 'Backend', '_namePrefix' => 'admin:backend:'], function ($routes) {
+        $routes->scope('/admin/backend/', ['prefix' => 'Admin', 'plugin' => 'Backend', '_namePrefix' => 'admin:backend:'], function ($routes) {
             /** @var \Cake\Routing\RouteBuilder $routes */
             $routes->connect(
                 '/login',
@@ -130,7 +130,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
                 try {
                     Router::scope($urlPrefix . Inflector::underscore($pluginName), [
                         'plugin' => $pluginName,
-                        'prefix' => 'admin',
+                        'prefix' => 'Admin',
                         '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName)),
                     ], [$instance, 'backendRoutes']);
                 } catch (\Exception $ex) {
@@ -140,7 +140,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
 //                try {
 //                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
 //                        'plugin' => $pluginName,
-//                        'prefix' => 'admin',
+//                        'prefix' => 'Admin',
 //                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName))
 //                    ], function(RouteBuilder $routes) {
 //                        $routes->fallbacks('DashedRoute');

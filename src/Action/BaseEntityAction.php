@@ -57,10 +57,9 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         $controller =& $this->controller;
 
         if (!$this->_entity) {
-            if (isset($controller->viewVars['_entity']) && isset($controller->viewVars[$controller->viewVars['_entity']])) { // @deprecated Use 'entity' view var instead
-                $this->_entity = $controller->viewVars[$controller->viewVars['_entity']];
-            } elseif (isset($controller->viewVars['entity']) && isset($controller->viewVars[$controller->viewVars['entity']])) {
-                $this->_entity = $controller->viewVars[$controller->viewVars['entity']];
+            $entity = $controller->viewBuilder()->getVar('_entity');
+            if ($entity) {
+                $this->_entity = $entity;
             } else {
                 if (!$this->_config['modelId']) {
                     throw new \Exception(static::class . ' has no model ID defined');
@@ -78,38 +77,41 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
      */
     public function execute(Controller $controller)
     {
+        $viewVars = $controller->viewBuilder()->getVars();
+        
         // read config from controller view vars
         foreach (array_keys($this->_defaultConfig) as $key) {
-            $this->_config[$key] = $controller->viewVars[$key] ?? $this->_defaultConfig[$key];
+            $this->_config[$key] = $viewVars[$key] ?? $this->_defaultConfig[$key];
         }
 
         // detect model class and load entity
-        if (!isset($controller->viewVars['modelClass'])) {
-            $this->_config['modelClass'] = $controller->modelClass;
+        if (!isset($viewVars['modelClass'])) {
+            $this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
         }
-        if (!isset($controller->viewVars['modelId'])) {
+        if (!isset($viewVars['modelId'])) {
             $modelId = $controller->getRequest()->getParam('id');
             if (!$modelId && isset($controller->getRequest()->getParam('pass')[0])) {
                 $modelId = $controller->getRequest()->getParam('pass')[0];
             }
             $this->_config['modelId'] = $modelId;
         }
-        if (isset($controller->viewVars['entityOptions'])) {
-            $this->_config['entityOptions'] = $controller->viewVars['entityOptions'];
+        if (isset($viewVars['entityOptions'])) {
+            $this->_config['entityOptions'] = $viewVars['entityOptions'];
         }
-        if (isset($controller->viewVars['entity'])) {
-            $this->_entity = $controller->viewVars['entity'];
+        if (isset($viewVars['entity'])) {
+            $this->_entity = $viewVars['entity'];
         }
 
         // custom template
-        if (isset($controller->viewVars['template'])) {
-            $this->template = $controller->viewVars['template'];
+        if (isset($viewVars['template'])) {
+            $this->template = $viewVars['template'];
         }
 
         // breadcrumbs
-        if (!isset($controller->viewVars['breadcrumbs'])) {
+        if (!isset($viewVars['breadcrumbs'])) {
             $breadcrumbs = [];
-            if ($controller->getRequest()->getParam('plugin') && $controller->getRequest()->getParam('plugin') != $controller->getRequest()->getParam('controller')) {
+            if ($controller->getRequest()->getParam('plugin')
+                && $controller->getRequest()->getParam('plugin') != $controller->getRequest()->getParam('controller')) {
                 $breadcrumbs[] = [
                     'title' => Inflector::humanize($controller->getRequest()->getParam('plugin')),
                     'url' => [
@@ -156,8 +158,8 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             //$controller->set('entity', $entity);
 
             // load helpers
-            if (isset($controller->viewVars['helpers'])) {
-                $controller->viewBuilder()->setHelpers($controller->viewVars['helpers'], true);
+            if (isset($viewVars['helpers'])) {
+                $controller->viewBuilder()->setHelpers($viewVars['helpers'], true);
             }
 
             return $this->_execute($controller);
@@ -191,9 +193,9 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         }
 
         // extract tokenized vars from data and cast them to their string representation
-        preg_match_all('/\:(\w+)/', $tokenStr, $matches);
+        preg_match_all('/:(\w+)/', $tokenStr, $matches);
         $inserts = array_intersect_key($data, array_flip(array_values($matches[1])));
-        array_walk($inserts, function (&$val, $key) {
+        array_walk($inserts, function (&$val) {
             $val = (string)$val;
         });
 

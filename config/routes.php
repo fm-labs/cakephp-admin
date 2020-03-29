@@ -12,7 +12,7 @@ use Cake\Routing\Router;
 //    $path = '/backend';
 //}
 //
-//Router::scope('/admin/backend', ['_namePrefix' => 'admin:backend:', 'prefix' => 'admin', 'plugin' => 'Backend'], function ($routes) {
+//Router::scope('/admin/backend', ['_namePrefix' => 'admin:backend:', 'prefix' => 'Admin', 'plugin' => 'Backend'], function ($routes) {
 //
 //    //$routes->extensions(['json']);
 //
@@ -54,7 +54,7 @@ use Cake\Routing\Router;
  * Backend routes
  */
 //Router::extensions(['json', 'xml']);
-//Router::scope('/backend', ['_namePrefix' => 'admin:backend:', 'prefix' => 'admin', 'plugin' => 'Backend'], function($routes) {
+//Router::scope('/backend', ['_namePrefix' => 'admin:backend:', 'prefix' => 'Admin', 'plugin' => 'Backend'], function($routes) {
 //
 //    // admin:backend:auth:login
 //    $routes->connect(
@@ -96,11 +96,11 @@ use Cake\Routing\Router;
 //
 //});
 
-//Router::scope($path, [ /*'path' => $path, */ '_namePrefix' => 'admin:backend:', 'prefix' => 'admin', 'plugin' => 'Backend'], function (\Cake\Routing\RouteBuilder $routes) {
+//Router::scope($path, [ /*'path' => $path, */ '_namePrefix' => 'admin:backend:', 'prefix' => 'Admin', 'plugin' => 'Backend'], function (\Cake\Routing\RouteBuilder $routes) {
 //
-//    $routes->connect('/', ['prefix' => 'admin', 'controller' => 'Dashboard', 'action' => 'index']);
+//    $routes->connect('/', ['prefix' => 'Admin', 'controller' => 'Dashboard', 'action' => 'index']);
 //
-//    //$routes->scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'admin'], function ($routes) {
+//    //$routes->scope('/admin', ['_namePrefix' => 'admin:', 'prefix' => 'Admin'], function ($routes) {
 //
 //        //$routes->extensions(['json']);
 //

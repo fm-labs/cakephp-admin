@@ -51,25 +51,26 @@ class EditAction extends BaseEntityAction
     protected function _execute(Controller $controller)
     {
         $entity = $this->entity();
+        $viewVars = $controller->viewBuilder()->getVars();
 
         $_fields = $this->model()->getSchema()->columns();
-        if (isset($controller->viewVars['fields'])) {
-            $_fields = array_merge($_fields, $controller->viewVars['fields']);
+        if (isset($viewVars['fields'])) {
+            $_fields = array_merge($_fields, $viewVars['fields']);
         }
 
-        if (isset($controller->viewVars['fields.access'])) {
-            $entity->setAccess($controller->viewVars['fields.access'], true);
+        if (isset($viewVars['fields.access'])) {
+            $entity->setAccess($viewVars['fields.access'], true);
         }
 
         $fields = $blacklist = $whitelist = [];
-        if (isset($controller->viewVars['fields.whitelist'])) {
-            $whitelist = $controller->viewVars['fields.whitelist'];
+        if (isset($viewVars['fields.whitelist'])) {
+            $whitelist = $viewVars['fields.whitelist'];
             $entity->setAccess($whitelist, true);
         } else {
             $entity->setAccess('*', true);
         }
-        if (isset($controller->viewVars['fields.blacklist'])) {
-            $blacklist = $controller->viewVars['fields.blacklist'];
+        if (isset($viewVars['fields.blacklist'])) {
+            $blacklist = $viewVars['fields.blacklist'];
             $entity->setAccess($blacklist, false);
         }
         foreach ($_fields as $_f => $field) {
@@ -124,7 +125,7 @@ class EditAction extends BaseEntityAction
         $controller->set('form.options', $formOptions);
         $controller->set('fields', $fields);
         $controller->set('entity', $entity);
-        $controller->set('modelClass', $controller->modelClass);
+        $controller->set('modelClass', $controller->loadModel()->getRegistryAlias());
 
         // associated
         /** @var \Cake\ORM\Association $assoc */

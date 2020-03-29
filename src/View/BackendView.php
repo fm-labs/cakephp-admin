@@ -38,6 +38,7 @@ class BackendView extends View
     {
         $content = parent::fetch($name, '');
 
+
         if ($name != "content" && strlen($content) < 1) {
             $blocks = (array)Configure::read('Backend.Layout.admin.blocks.' . $name);
             foreach ($blocks as $item) {
@@ -57,6 +58,7 @@ class BackendView extends View
         if (!$content) {
             $content = $default;
         }
+
 
         return $content;
     }

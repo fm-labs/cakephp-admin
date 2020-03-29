@@ -87,10 +87,8 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
      */
     public function model()
     {
-        $modelClass = $this->_config['modelClass'] ?? $this->controller->modelClass;
-
         if (!$this->_table) {
-            $this->_table = TableRegistry::getTableLocator()->get($modelClass);
+            $this->_table = $this->controller->loadModel();
         }
 
         return $this->_table;

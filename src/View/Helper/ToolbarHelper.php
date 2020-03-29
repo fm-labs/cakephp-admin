@@ -18,7 +18,7 @@ class ToolbarHelper extends Helper
     public $helpers = ['Html', 'Bootstrap.Ui'];
 
     protected $_defaultConfig = [
-        'element' => 'Backend.Layout/admin/toolbar',
+        'element' => 'Backend.layout/admin/toolbar',
         'block' => 'toolbar',
         'options' => ['class' => ''],
     ];

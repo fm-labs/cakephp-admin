@@ -51,7 +51,8 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
      */
     public function _execute(Controller $controller)
     {
-        if (!isset($controller->viewVars['related'])) {
+        $viewVars = $controller->viewBuilder()->getVars();
+        if (!isset($viewVars['related'])) {
             $related = [];
             foreach ($this->model()->associations() as $assoc) {
                 /** @var \Cake\ORM\Association $assoc */

@@ -44,24 +44,26 @@ class IndexAction extends BaseAction
      */
     public function execute(Controller $controller)
     {
+        $viewVars = $controller->viewBuilder()->getVars();
+
         // read config from controller view vars
         foreach (array_keys($this->_defaultConfig) as $key) {
-            $this->_config[$key] = $controller->viewVars[$key] ?? $this->_defaultConfig[$key];
+            $this->_config[$key] = $viewVars[$key] ?? $this->_defaultConfig[$key];
         }
 
         // detect model class
-        if (!isset($controller->viewVars['modelClass'])) {
-            $this->_config['modelClass'] = $controller->modelClass;
+        if (!isset($viewVars['modelClass'])) {
+            $this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
         }
 
         // load helpers
-        if (isset($controller->viewVars['helpers'])) {
-            $controller->viewBuilder()->setHelpers($controller->viewVars['helpers'], true);
+        if (isset($viewVars['helpers'])) {
+            $controller->viewBuilder()->setHelpers($viewVars['helpers'], true);
         }
 
         // custom template
-        if (isset($controller->viewVars['template'])) {
-            $this->template = $controller->viewVars['template'];
+        if (isset($viewVars['template'])) {
+            $this->template = $viewVars['template'];
         }
 
         // fields
@@ -166,7 +168,7 @@ class IndexAction extends BaseAction
     protected function _fetchResult()
     {
         $result = null;
-        if ($this->_config['data']) {
+        if (!empty($this->_config['data'])) {
             $result = $this->_config['data'];
         } elseif ($this->model()) {
             //if ($this->_config['paginate'] === true) {

@@ -35,7 +35,7 @@ class ActionController extends Controller
     /**
      * {@inheritDoc}
      */
-    public function invokeAction(): void
+    public function invokeAction(\Closure $action, array $args): void
     {
         $request = $this->request;
         if (!isset($request)) {
@@ -50,7 +50,7 @@ class ActionController extends Controller
             ]);
         }
 
-        return $this->controller->Action->execute($request->getParam('action'));
+        $this->controller->Action->execute($request->getParam('action'));
     }
 
     public function isAction($action): bool

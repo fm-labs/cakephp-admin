@@ -33,7 +33,7 @@ class FooTableHelper extends DataTableHelper
      */
     public function beforeLayout(Event $event)
     {
-        parent::beforeLayout($event);
+        //parent::beforeLayout($event);
 
         $this->Html->css('Backend./js/footable-bootstrap/css/footable.bootstrap.css', ['block' => true]);
         $this->Html->script('Backend./js/footable-bootstrap/js/footable.js', ['block' => true]);

@@ -183,8 +183,8 @@ class DataTableIndexAction extends IndexAction
 
             $draw = $request['draw'] ?? -1;
 
-            $controller->set(compact('model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data'));
-            $controller->set('_serialize', ['model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data']);
+            $controller->set(compact('request', 'draw', 'recordsTotal', 'recordsFiltered', 'data'));
+            $controller->set('_serialize', ['request', 'draw', 'recordsTotal', 'recordsFiltered', 'data']);
 
             return $controller->render();
         }

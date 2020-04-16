@@ -70,26 +70,28 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
      */
     public function _execute(Controller $controller)
     {
-        if (isset($controller->viewVars['_entity']) && isset($controller->viewVars[$controller->viewVars['_entity']])) {
-            $entity = $controller->viewVars[$controller->viewVars['_entity']];
+        $viewVars = $controller->viewBuilder()->getVars();
+        
+        if (isset($viewVars['_entity']) && isset($viewVars[$viewVars['_entity']])) {
+            $entity = $viewVars[$viewVars['_entity']];
         } else {
-            $entity = $this->model()->newEntity();
+            $entity = $this->model()->newEmptyEntity();
         }
 
         $_fields = $this->model()->getSchema()->columns();
-        if (isset($controller->viewVars['fields'])) {
-            $_fields = array_merge($controller->viewVars['fields'], $_fields);
+        if (isset($viewVars['fields'])) {
+            $_fields = array_merge($viewVars['fields'], $_fields);
         }
         $_fields = $this->_normalizeInputs($_fields);
 
         $fields = $blacklist = $whitelist = [];
-        if (isset($controller->viewVars['fields.whitelist'])) {
-            $whitelist = $controller->viewVars['fields.whitelist'];
+        if (isset($viewVars['fields.whitelist'])) {
+            $whitelist = $viewVars['fields.whitelist'];
         } else {
             $whitelist = array_keys($_fields);
         }
-        if (isset($controller->viewVars['fields.blacklist'])) {
-            $blacklist = $controller->viewVars['fields.blacklist'];
+        if (isset($viewVars['fields.blacklist'])) {
+            $blacklist = $viewVars['fields.blacklist'];
         }
 
         $fields['id'] = [];
@@ -107,8 +109,8 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
 
         $entity->setAccess($whitelist, true);
         $entity->setAccess($blacklist, false);
-        if (isset($controller->viewVars['fields.access'])) {
-            $entity->setAccess($controller->viewVars['fields.access'], null);
+        if (isset($viewVars['fields.access'])) {
+            $entity->setAccess($viewVars['fields.access'], true);
         }
 
         if ($this->request->is(['put', 'post'])) {
@@ -129,7 +131,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
                 if (strrpos($fKey, '_id') !== false) {
                     $var = substr($fKey, 0, strrpos($fKey, '_id'));
                     $var = lcfirst(Inflector::camelize(Inflector::pluralize($var)));
-                    if (!isset($controller->viewVars[$var])) {
+                    if (!isset($viewVars[$var])) {
                         $list = $assoc->getTarget()->find('list')->order([$assoc->getTarget()->getDisplayField() => 'ASC'])->toArray();
                         $controller->set($var, $list);
                     }
@@ -163,22 +165,22 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
     {
         // read config from controller view vars
         foreach (array_keys($this->_defaultConfig) as $key) {
-            $this->_config[$key] = $controller->viewVars[$key] ?? $this->_defaultConfig[$key];
+            $this->_config[$key] = $viewVars[$key] ?? $this->_defaultConfig[$key];
         }
 
         // detect model class
-        if (!isset($controller->viewVars['modelClass'])) {
+        if (!isset($viewVars['modelClass'])) {
             $this->_config['modelClass'] = $controller->modelClass;
         }
 
         // load helpers
-        if (isset($controller->viewVars['helpers'])) {
-            $controller->viewBuilder()->setHelpers($controller->viewVars['helpers'], true);
+        if (isset($viewVars['helpers'])) {
+            $controller->viewBuilder()->setHelpers($viewVars['helpers'], true);
         }
 
         // custom template
-        if (isset($controller->viewVars['template'])) {
-            $this->template = $controller->viewVars['template'];
+        if (isset($viewVars['template'])) {
+            $this->template = $viewVars['template'];
         }
 
         return $this->_execute($controller);

@@ -104,9 +104,9 @@ class Backend
     public static function version()
     {
         if (!isset(static::$_version)) {
-            //@codingStandardsIgnoreStart
+            //phpcs::disable
             static::$_version = @file_get_contents(Plugin::path('Backend') . DS . 'VERSION.txt');
-            //@codingStandardsIgnoreEnd
+            //phpcs::enable
         }
 
         return static::$_version;

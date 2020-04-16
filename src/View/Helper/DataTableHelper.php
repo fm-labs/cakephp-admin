@@ -545,7 +545,7 @@ class DataTableHelper extends Helper
 
         //$entity = null;
         //if ($this->_params['model']) {
-        //    $entity = TableRegistry::getTableLocator()->get($this->_params['model'])->newEntity();
+        //    $entity = TableRegistry::getTableLocator()->get($this->_params['model'])->newEmptyEntity();
         //}
 
         $formStart = $this->Form->create(null, ['method' => 'GET', 'novalidate' => true, 'context' => false]);

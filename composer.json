@@ -2,13 +2,19 @@
     "name": "fm-labs/cakephp-backend",
     "description": "Backend plugin for CakePHP",
     "type": "cakephp-plugin",
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/fm-labs/cakephp-bootstrap"
+        }
+    ],
     "require": {
         "php": ">=7.2",
         "fm-labs/cakephp-bootstrap": "dev-master"
     },
     "require-dev": {
         "cakephp/cakephp": "^4.0",
-        "phpunit/phpunit": "*"
+        "fm-labs/cakephp-devtools": "dev-master"
     },
     "autoload": {
         "psr-4": {
@@ -21,5 +27,7 @@
             "Cake\\": "./vendor/cakephp/cakephp/src",
             "Cake\\Test\\": "./vendor/cakephp/cakephp/tests"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

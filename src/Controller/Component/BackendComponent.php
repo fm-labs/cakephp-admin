@@ -161,9 +161,7 @@ class BackendComponent extends Component
         // Configure view
         $controller->viewBuilder()->setClassName('Backend.Backend');
         $controller->viewBuilder()->setLayout('Backend.admin');
-        if (Configure::read('Backend.theme')) {
-            $controller->viewBuilder()->setTheme(Configure::read('Backend.theme'));
-        }
+        $controller->viewBuilder()->setTheme(Configure::read('Backend.theme'));
 
         // Handle iframe and ajax requests
         if ($this->getController()->getRequest()->is('iframe')) {

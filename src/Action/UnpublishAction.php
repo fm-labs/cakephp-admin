@@ -44,7 +44,7 @@ class UnpublishAction extends BaseEntityAction
      */
     public function _execute(Controller $controller)
     {
-        if ($this->model()->hasBehavior('Publishable')) {
+        if ($this->model()->hasBehavior('Publish')) {
             $entity = $this->entity();
             $entity->is_published = false; //@TODO Use Publishabel behavior methods
 
@@ -54,7 +54,7 @@ class UnpublishAction extends BaseEntityAction
                 $controller->Flash->error(__d('backend', 'Unpublish failed'));
             }
         } else {
-            $controller->Flash->error('Publishable behavior not loaded for model ' . $this->model()->getAlias());
+            $controller->Flash->error('Publish behavior not loaded for model ' . $this->model()->getAlias());
 
             return $controller->redirect($controller->referer(['action' => 'index']));
         }

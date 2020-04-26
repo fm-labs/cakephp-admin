@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Backend\View;
 
-use Banana\View\ViewModuleTrait;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\View\View;
@@ -15,8 +14,6 @@ use Cake\View\View;
  */
 class BackendView extends View
 {
-    use ViewModuleTrait;
-
     public $layout = "Backend.admin";
 
     /**

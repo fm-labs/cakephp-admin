@@ -41,8 +41,8 @@ class PublishAction extends BaseEntityAction
      */
     public function _execute(Controller $controller)
     {
-        if (!$this->model()->hasBehavior('Publishable')) {
-            $controller->Flash->error('Publishable behavior not loaded for model ' . $this->model()->getAlias());
+        if (!$this->model()->hasBehavior('Publish')) {
+            $controller->Flash->error('Publish behavior not loaded for model ' . $this->model()->getAlias());
 
             return $controller->redirect($controller->referer(['action' => 'index']));
         }

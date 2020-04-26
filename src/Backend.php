@@ -37,7 +37,7 @@ class Backend
     protected $_defaultConfig = [
         'services' => [
             'Backend.Crud' => true,
-            'Backend.Publishable' => false,
+            'Backend.Publish' => false,
             'Backend.Tree' => true,
         ],
     ];

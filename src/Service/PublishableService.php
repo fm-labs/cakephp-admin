@@ -7,7 +7,7 @@ use Backend\Action\EditAction;
 use Backend\BackendService;
 use Cake\Event\Event;
 
-class PublishableService extends BackendService
+class PublishService extends BackendService
 {
     /**
      * {@inheritDoc}
@@ -19,7 +19,7 @@ class PublishableService extends BackendService
                 $modelClass = $event->getSubject()->modelClass;
                 if ($modelClass) {
                     $Model = $event->getSubject()->loadModel($modelClass);
-                    if ($Model->behaviors()->has('Publishable')) {
+                    if ($Model->behaviors()->has('Publish')) {
                         $event->getData('actions')['publish'] = 'Backend.Publish';
                         $event->getData('actions')['unpublish'] = 'Backend.Unpublish';
                     }
@@ -45,11 +45,13 @@ class PublishableService extends BackendService
                         'element' => 'Backend.Action/Edit/info_publish',
                     ];
 
+                    /*
                     $elements['media'] = [
                         'title' => __d('backend', 'Media'),
                         'helpers' => ['Media.Media', 'Media.MediaPicker'],
                         'cell' => 'Banana.MediaEntityForm',
                     ];
+                    */
 
                     $event->getSubject()->set('form_elements', $elements);
                 }

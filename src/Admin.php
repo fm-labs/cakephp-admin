@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend;
+namespace Admin;
 
-use Backend\Service\ServiceRegistry;
+use Admin\Service\ServiceRegistry;
 use Banana\Exception\ClassNotFoundException;
 use Banana\Menu\Menu;
 use Cake\Core\InstanceConfigTrait;
@@ -12,11 +12,11 @@ use Cake\Event\Event;
 use Cake\Event\EventManager;
 
 /**
- * Class Backend
+ * Class Admin
  *
- * @package Backend
+ * @package Admin
  */
-class Backend
+class Admin
 {
     public static $urlPrefix = 'admin';
 
@@ -25,7 +25,7 @@ class Backend
     /**
      * The service services.
      *
-     * @var \Backend\Service\ServiceRegistry
+     * @var \Admin\Service\ServiceRegistry
      */
     protected $services;
 
@@ -36,9 +36,9 @@ class Backend
      */
     protected $_defaultConfig = [
         'services' => [
-            'Backend.Crud' => true,
-            'Backend.Publish' => false,
-            'Backend.Tree' => true,
+            'Admin.Crud' => true,
+            'Admin.Publish' => false,
+            'Admin.Tree' => true,
         ],
     ];
 
@@ -91,21 +91,21 @@ class Backend
     {
         //@TODO Cache
         $menu = new Menu();
-        $event = EventManager::instance()->dispatch(new Event('Backend.Menu.build.' . $menuId, null, ['menu' => $menu]));
+        $event = EventManager::instance()->dispatch(new Event('Admin.Menu.build.' . $menuId, null, ['menu' => $menu]));
 
         return $event->getData('menu');
-        //$event = EventManager::instance()->dispatch(new Event('Backend.Menu.init', null, ['menus' => [], 'menuId' => $menuId]));
+        //$event = EventManager::instance()->dispatch(new Event('Admin.Menu.init', null, ['menus' => [], 'menuId' => $menuId]));
         //return (isset($event->getData('menus')[$menuId])) ? $event->getData('menus')[$menuId] : [];
     }
 
     /**
-     * @return string Backend version number
+     * @return string Admin version number
      */
     public static function version()
     {
         if (!isset(static::$_version)) {
             //phpcs::disable
-            static::$_version = @file_get_contents(Plugin::path('Backend') . DS . 'VERSION.txt');
+            static::$_version = @file_get_contents(Plugin::path('Admin') . DS . 'VERSION.txt');
             //phpcs::enable
         }
 
@@ -179,7 +179,7 @@ class Backend
     /**
      * Fetch the ServiceRegistry
      *
-     * @return \Backend\Service\ServiceRegistry
+     * @return \Admin\Service\ServiceRegistry
      */
     public function services()
     {

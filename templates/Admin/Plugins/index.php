@@ -1,6 +1,6 @@
-<?php $this->Breadcrumbs->add(__d('backend','Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('backend','Plugins'), ['action' => 'index']); ?>
-<?php $this->loadHelpers('Backend.Ui'); ?>
+<?php $this->Breadcrumbs->add(__d('admin','Admin'), ['controller' => 'Admin', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('admin','Plugins'), ['action' => 'index']); ?>
+<?php $this->loadHelpers('Admin.Ui'); ?>
 <div>
 	<table class="table">
 		<tr>

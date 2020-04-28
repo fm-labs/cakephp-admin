@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend;
+namespace Admin;
 
-use Backend\Http\ActionDispatcherListener;
+use Admin\Http\ActionDispatcherListener;
 use Banana\Plugin\BasePlugin;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
@@ -18,7 +18,7 @@ use Cake\Utility\Inflector;
 use Settings\SettingsManager;
 
 /**
- * Backend Plugin
+ * Admin Plugin
  */
 class Plugin extends BasePlugin implements EventListenerInterface
 {
@@ -30,16 +30,16 @@ class Plugin extends BasePlugin implements EventListenerInterface
     protected $_app;
 
     /**
-     * @var \Backend\Backend
+     * @var \Admin\Admin
      */
-    protected $_backend;
+    protected $_admin;
 
     /**
      * {@inheritDoc}
      */
     public function initialize(): void
     {
-        $this->_backend = new Backend();
+        $this->_admin = new Admin();
     }
 
     /**
@@ -63,11 +63,11 @@ class Plugin extends BasePlugin implements EventListenerInterface
         $this->_app = $app;
 //        foreach ($this->_app->plugins()->loaded() as $pluginName) {
 //            $instance = $this->_app->plugins()->get($pluginName);
-//            if (method_exists($instance, 'backendBootstrap')) {
+//            if (method_exists($instance, 'adminBootstrap')) {
 //                try {
-//                    call_user_func([$instance, 'backendBootstrap'], $this->_backend);
+//                    call_user_func([$instance, 'adminBootstrap'], $this->_admin);
 //                } catch (\Exception $ex) {
-//                    Log::error("Backend plugin bootstrapping failed: $pluginName: " . $ex->getMessage());
+//                    Log::error("Admin plugin bootstrapping failed: $pluginName: " . $ex->getMessage());
 //                }
 //            }
 //        }
@@ -80,7 +80,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     {
         parent::routes($routes);
 
-        $routes->scope('/admin/backend/', ['prefix' => 'Admin', 'plugin' => 'Backend', '_namePrefix' => 'admin:backend:'], function ($routes) {
+        $routes->scope('/admin/admin/', ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'admin:admin:'], function ($routes) {
             /** @var \Cake\Routing\RouteBuilder $routes */
             $routes->connect(
                 '/login',
@@ -98,43 +98,43 @@ class Plugin extends BasePlugin implements EventListenerInterface
                 ['_name' => 'user:loginsuccess']
             );
 
-            // admin:backend:auth:logout
+            // admin:admin:auth:logout
             $routes->connect(
                 '/logout',
                 ['controller' => 'Auth', 'action' => 'logout'],
                 [ '_name' => 'user:logout']
             );
 
-            // admin:backend:auth:user
+            // admin:admin:auth:user
             $routes->connect(
                 '/user',
                 ['controller' => 'Auth', 'action' => 'user'],
                 [ '_name' => 'user:profile']
             );
 
-            // admin:backend:dashboard
+            // admin:admin:dashboard
             $routes->connect(
                 '/',
-                ['controller' => 'Backend', 'action' => 'index'],
+                ['controller' => 'Admin', 'action' => 'index'],
                 ['_name' => 'dashboard']
             );
 
             $routes->fallbacks(DashedRoute::class);
         });
 
-        $urlPrefix = '/' . trim(Backend::$urlPrefix, '/') . '/';
+        $urlPrefix = '/' . trim(Admin::$urlPrefix, '/') . '/';
         foreach ($this->_app->getPlugins()->with('routes') as $instance) {
             //$instance = $this->_app->getPlugins()->get($pluginName);
             $pluginName = $instance->getName();
-            if (method_exists($instance, 'backendRoutes')) {
+            if (method_exists($instance, 'adminRoutes')) {
                 try {
                     Router::scope($urlPrefix . Inflector::underscore($pluginName), [
                         'plugin' => $pluginName,
                         'prefix' => 'Admin',
                         '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName)),
-                    ], [$instance, 'backendRoutes']);
+                    ], [$instance, 'adminRoutes']);
                 } catch (\Exception $ex) {
-                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
+                    Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
                 }
             } else {
 //                try {
@@ -146,12 +146,12 @@ class Plugin extends BasePlugin implements EventListenerInterface
 //                        $routes->fallbacks('DashedRoute');
 //                    });
 //                } catch (\Exception $ex) {
-//                    Log::error("Backend plugin loading failed: $pluginName: " . $ex->getMessage());
+//                    Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
 //                }
             }
         }
 
-        $event = $this->dispatchEvent('Backend.Routes.setup', ['routes' => $routes]);
+        $event = $this->dispatchEvent('Admin.Routes.setup', ['routes' => $routes]);
     }
 
     public function adminConfigurationUrl()
@@ -165,8 +165,8 @@ class Plugin extends BasePlugin implements EventListenerInterface
     public function implementedEvents(): array
     {
         return [
-            'Backend.Menu.build.admin_primary' => ['callable' => 'buildBackendMenu', 'priority' => 99 ],
-            'Backend.Menu.build.admin_system' => ['callable' => 'buildBackendSystemMenu', 'priority' => 99 ],
+            'Admin.Menu.build.admin_primary' => ['callable' => 'buildAdminMenu', 'priority' => 99 ],
+            'Admin.Menu.build.admin_system' => ['callable' => 'buildAdminSystemMenu', 'priority' => 99 ],
             'Settings.build' => 'settings',
         ];
     }
@@ -178,9 +178,9 @@ class Plugin extends BasePlugin implements EventListenerInterface
     {
         //$settings::register($this->getName(), Settings::class);
 
-        $settings->load('Backend.settings');
-        $settings->add('Backend.Form', [
-            'Backend.CodeEditor.Ace.theme' => [
+        $settings->load('Admin.settings');
+        $settings->add('Admin.Form', [
+            'Admin.CodeEditor.Ace.theme' => [
                 'default' => 'twilight',
                 'input' => [
                     'type' => 'select',
@@ -232,45 +232,45 @@ class Plugin extends BasePlugin implements EventListenerInterface
      * @param \Cake\Event\Event $event The event object
      * @return void
      */
-    public function buildBackendMenu(Event $event, \Banana\Menu\Menu $menu)
+    public function buildAdminMenu(Event $event, \Banana\Menu\Menu $menu)
     {
 
         if (Configure::read('debug')) {
             $menu->addItem([
-                'title' => __d('backend', 'Developer'),
+                'title' => __d('admin', 'Developer'),
                 'data-icon' => 'paint-brush',
-                'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index'],
+                'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index'],
                 'children' => [
                     'design' => [
-                        'title' => __d('backend', 'Design'),
+                        'title' => __d('admin', 'Design'),
                         'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index'],
+                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index'],
                     ],
                     /*
                     'design_form' => [
-                        'title' => __d('backend', 'Forms'),
+                        'title' => __d('admin', 'Forms'),
                         'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'form'],
+                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'form'],
                     ],
                     'design_boxes' => [
-                        'title' => __d('backend', 'Boxes'),
+                        'title' => __d('admin', 'Boxes'),
                         'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'boxes'],
+                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'boxes'],
                     ],
                     'design_tables' => [
-                        'title' => __d('backend', 'Tables'),
+                        'title' => __d('admin', 'Tables'),
                         'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'tables'],
+                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'tables'],
                     ],
                     'design_component' => [
-                        'title' => __d('backend', 'Components'),
+                        'title' => __d('admin', 'Components'),
                         'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'component'],
+                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'component'],
                     ],
                     'design_tabs' => [
-                        'title' => __d('backend', 'Tabs'),
+                        'title' => __d('admin', 'Tabs'),
                         'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Backend', 'controller' => 'Design', 'action' => 'index', 'section' => 'tabs'],
+                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'tabs'],
                     ]
                     */
                 ],
@@ -282,7 +282,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
      * @param \Cake\Event\Event $event The event object
      * @return void
      */
-    public function buildBackendSystemMenu(Event $event, \Banana\Menu\Menu $menu)
+    public function buildAdminSystemMenu(Event $event, \Banana\Menu\Menu $menu)
     {
         $items = $this->_getMenuItems();
         foreach ($items as $item) {
@@ -298,34 +298,34 @@ class Plugin extends BasePlugin implements EventListenerInterface
         return $items = [
 //                'overview' => [
 //                    'title' => 'Overview',
-//                    'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+//                    'url' => ['plugin' => 'Admin', 'controller' => 'Dashboard', 'action' => 'index'],
 //                    'data-icon' => 'info'
 //                ],
             'system' => [
                 'title' => 'Systeminfo',
-                'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
+                'url' => ['plugin' => 'Admin', 'controller' => 'System', 'action' => 'index'],
                 'data-icon' => 'info',
             ],
             'logs' => [
                 'title' => 'Logs',
-                'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
+                'url' => ['plugin' => 'Admin', 'controller' => 'Logs', 'action' => 'index'],
                 'data-icon' => 'file-text-o',
             ],
             'cache' => [
                 'title' => 'Cache',
-                'url' => ['plugin' => 'Backend', 'controller' => 'Cache', 'action' => 'index'],
+                'url' => ['plugin' => 'Admin', 'controller' => 'Cache', 'action' => 'index'],
                 'data-icon' => 'hourglass-o',
             ],
             /*
             'users' => [
                 'title' => 'Users',
-                'url' => ['plugin' => 'Backend', 'controller' => 'Users', 'action' => 'index'],
+                'url' => ['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'index'],
                 'data-icon' => 'users',
             ],
             */
             'plugins' => [
                 'title' => 'Plugins',
-                'url' => ['plugin' => 'Backend', 'controller' => 'Plugins', 'action' => 'index'],
+                'url' => ['plugin' => 'Admin', 'controller' => 'Plugins', 'action' => 'index'],
                 'data-icon' => 'puzzle-piece',
             ],
         ];

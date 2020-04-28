@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Utility\Inflector;

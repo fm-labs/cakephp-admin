@@ -28,7 +28,7 @@
  * @param jsTree array jsTree params. See jsTree documentation for options
  * @link https://www.jstree.com/
  */
-$this->loadHelper('Backend.JsTree');
+$this->loadHelper('Admin.JsTree');
 
 
 $selected = $this->request->getQuery('id');
@@ -46,8 +46,8 @@ $defaultJsTree = [
 ];
 $jsTree = $this->get('jsTree', $defaultJsTree);
 ?>
-<?= $this->Html->css('Backend.jstree/themes/backend/style.min', ['block' => true]); ?>
-<?= $this->Html->script('Backend.jstree/jstree.min', ['block' => true]); ?>
+<?= $this->Html->css('Admin.jstree/themes/admin/style.min', ['block' => true]); ?>
+<?= $this->Html->script('Admin.jstree/jstree.min', ['block' => true]); ?>
 <div class="index index-tree">
 
     <?php if ($this->fetch('heading')): ?>
@@ -82,7 +82,7 @@ $jsTree = $this->get('jsTree', $defaultJsTree);
     </div>
 
     <div id="index-tree-noview" style="display: none">
-        <?= $this->fetch('noview', $this->element('Backend.Base/IndexTree/noview')); ?>
+        <?= $this->fetch('noview', $this->element('Admin.Base/IndexTree/noview')); ?>
     </div>
 
 </div>
@@ -165,7 +165,7 @@ echo $this->fetch('jsTreeScript');
                     var config = '';
                     var url = data.node.data.viewUrl;
                     if (url) {
-                        Backend.Ajax.loadHtml($container, url, {
+                        Admin.Ajax.loadHtml($container, url, {
                             data: {'selected': r },
                         }).always(function(ev) {
                             // history pushstate

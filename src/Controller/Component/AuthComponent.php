@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Component;
+namespace Admin\Controller\Component;
 
 /**
  * Class AuthComponent
  *
- * @package Backend\Controller\Component
+ * @package Admin\Controller\Component
  */
 class AuthComponent extends \User\Controller\Component\AuthComponent
 {
@@ -18,24 +18,24 @@ class AuthComponent extends \User\Controller\Component\AuthComponent
         parent::initialize($config);
 
         $this->setConfig([
-            'userModel' => 'Backend.Users',
-            //'ajaxLoginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'ajaxLogin'],
-            'loginAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
-            'loginRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
-            'logoutAction' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
-            'unauthorizedRedirect' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'unauthorized'],
-            'authorize' => ['Backend.Backend' /*, 'User.Roles'*/],
+            'userModel' => 'Admin.Users',
+            //'ajaxLoginAction' => ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'ajaxLogin'],
+            'loginAction' => ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
+            'loginRedirect' => ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'loginSuccess'],
+            'logoutAction' => ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
+            'unauthorizedRedirect' => ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'unauthorized'],
+            'authorize' => ['Admin.Admin' /*, 'User.Roles'*/],
             //'flash' => 'auth',
         ]);
         $this->setConfig('authenticate', [
-            AuthComponent::ALL => ['userModel' => $this->getConfig('userModel'), 'finder' => 'backendAuthUser'],
+            AuthComponent::ALL => ['userModel' => $this->getConfig('userModel'), 'finder' => 'adminAuthUser'],
             'Form',
             //'Basic'
         ], false);
         $this->setConfig('storage', [
             'className' => 'Session',
-            'key' => 'Backend.User',
-            'redirect' => 'Backend.redirect',
+            'key' => 'Admin.User',
+            'redirect' => 'Admin.redirect',
         ], false);
     }
 }

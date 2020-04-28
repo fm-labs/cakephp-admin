@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Admin;
+namespace Admin\Controller\Admin;
 
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\NotFoundException;
@@ -9,7 +9,7 @@ use Cake\Http\Exception\NotFoundException;
 /**
  * Class SimpleTreeController
  *
- * @package Backend\Controller\Admin
+ * @package Admin\Controller\Admin
  */
 class SimpleTreeController extends AppController
 {
@@ -20,7 +20,7 @@ class SimpleTreeController extends AppController
     {
         $query = $this->request->getQuery();
         if (!isset($query['model'])) {
-            $this->Flash->error(__d('backend', 'No model selected'));
+            $this->Flash->error(__d('admin', 'No model selected'));
 
             return;
         }
@@ -30,10 +30,10 @@ class SimpleTreeController extends AppController
         try {
             $Model = $this->loadModel($modelName);
             if (!$Model->behaviors()->has('SimpleTree')) {
-                $this->Flash->warning(__d('backend', 'Model {0} has no SimpleTree behavior attached', $modelName));
+                $this->Flash->warning(__d('admin', 'Model {0} has no SimpleTree behavior attached', $modelName));
             }
         } catch (\Exception $ex) {
-            $this->Flash->error(__d('backend', 'Failed to load model {0}', $modelName));
+            $this->Flash->error(__d('admin', 'Failed to load model {0}', $modelName));
 
             return;
         }

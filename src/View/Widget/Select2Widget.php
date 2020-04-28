@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Cake\Core\Configure;
 use Cake\View\Form\ContextInterface;
@@ -19,7 +19,7 @@ class Select2Widget extends SelectBoxWidget
     {
         parent::__construct($templates);
 
-        $view->loadHelper('Backend.Select2');
+        $view->loadHelper('Admin.Select2');
     }
 
     /**
@@ -38,7 +38,7 @@ class Select2Widget extends SelectBoxWidget
         // https://select2.org/configuration/options-api
         $select2 = [
             'debug' => Configure::read('debug'),
-            'placeholder' => __d('backend', 'Select an option'),
+            'placeholder' => __d('admin', 'Select an option'),
             'theme' => 'bootstrap',
             'minimumResultsForSearch' => 10,
             'allowClear' => false,
@@ -47,8 +47,8 @@ class Select2Widget extends SelectBoxWidget
             'multiple' => $data['multiple'] ? true : false,
             'width' => $data['width'],
             'language' => 'en', //@TODO Localization
-            //'amdBase' => '/backend/libs/select2/dist/js/', // <-- not working (?)
-            //'amdLanguageBase' => '/backend/libs/select2/dist/js/i18n/'// <-- not working (?)
+            //'amdBase' => '/admin/libs/select2/dist/js/', // <-- not working (?)
+            //'amdLanguageBase' => '/admin/libs/select2/dist/js/i18n/'// <-- not working (?)
             //// Browser JS console output: Select2: The language file for "./i18n/de" could not be automatically loaded. A fallback will be used instead.
         ];
         if (isset($data['select2'])) {

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Test\TestCase\View\Helper;
+namespace Admin\Test\TestCase\View\Helper;
 
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
@@ -9,7 +9,7 @@ use Cake\View\View;
 /**
  * Class BoxHelperTest
  *
- * @package Backend\Test\TestCase\View\Helper
+ * @package Admin\Test\TestCase\View\Helper
  */
 class BoxHelperTest extends TestCase
 {
@@ -19,7 +19,7 @@ class BoxHelperTest extends TestCase
     public function testCreate()
     {
         $view = new View();
-        $view->loadHelper('Backend.Box');
+        $view->loadHelper('Admin.Box');
 
         $view->Box->create('Collapsable');
         $view->Box->body('The body of the box');

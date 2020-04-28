@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Admin;
+namespace Admin\Controller\Admin;
 
 use Cake\Http\Exception\BadRequestException;
 use Cake\Utility\Inflector;

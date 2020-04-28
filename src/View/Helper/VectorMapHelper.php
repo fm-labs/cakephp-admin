@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\View\Helper;
 
@@ -21,9 +21,9 @@ class VectorMapHelper extends Helper
      * @var array
      */
     protected $_defaultConfig = [
-        'scriptUrl' => 'Backend./libs/jqvmap/jquery.vmap.min.js',
-        'cssUrl' => 'Backend./libs/jqvmap/jqvmap.min.css',
-        'mapsBaseUrl' => 'Backend./libs/jqvmap/maps/',
+        'scriptUrl' => 'Admin./libs/jqvmap/jquery.vmap.min.js',
+        'cssUrl' => 'Admin./libs/jqvmap/jqvmap.min.css',
+        'mapsBaseUrl' => 'Admin./libs/jqvmap/maps/',
     ];
 
     public $helpers = ['Html'];

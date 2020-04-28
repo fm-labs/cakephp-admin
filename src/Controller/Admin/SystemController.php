@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Admin;
+namespace Admin\Controller\Admin;
 
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
@@ -10,7 +10,7 @@ use Cake\Routing\Router;
 /**
  * Class SystemController
  *
- * @package Backend\Controller
+ * @package Admin\Controller
  */
 class SystemController extends AppController
 {

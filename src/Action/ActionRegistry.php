@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
-use Backend\Action\Interfaces\ActionInterface;
+use Admin\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;

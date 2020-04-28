@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
-use Backend\Action\Interfaces\ActionInterface;
-use Backend\Action\Interfaces\IndexActionInterface;
+use Admin\Action\Interfaces\ActionInterface;
+use Admin\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
 use Cake\ORM\Association;
 use Cake\Utility\Inflector;
@@ -12,7 +12,7 @@ use Cake\Utility\Inflector;
 /**
  * Class AddAction
  *
- * @package Backend\Action
+ * @package Admin\Action
  */
 class AddAction extends BaseAction implements ActionInterface, IndexActionInterface
 {
@@ -30,14 +30,14 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
 
     public $scope = ['index'];
 
-    //public $template = 'Backend.add';
+    //public $template = 'Admin.add';
 
     /**
      * {@inheritDoc}
      */
     public function getLabel()
     {
-        return __d('backend', 'Add');
+        return __d('admin', 'Add');
     }
 
     /**
@@ -116,7 +116,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         if ($this->request->is(['put', 'post'])) {
             $entity = $this->model()->patchEntity($entity, $this->request->getData(), ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
-                $this->_flashSuccess(__d('backend', 'Record created'));
+                $this->_flashSuccess(__d('admin', 'Record created'));
                 $this->redirect(['action' => 'edit', $entity->id]);
             } else {
                 debug($entity->getErrors());

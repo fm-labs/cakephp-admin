@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Http;
+namespace Admin\Http;
 
-use Backend\Controller\ActionController;
+use Admin\Controller\ActionController;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Http\ControllerFactory;

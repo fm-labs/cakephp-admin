@@ -1,17 +1,17 @@
 <?php
-use Backend\Backend;
+use Admin\Admin;
 use Banana\Banana;
 use Cake\Core\Configure;
 
 $this->loadHelper('Bootstrap.Tabs');
-$this->loadHelper('Backend.Box');
+$this->loadHelper('Admin.Box');
 ?>
-<?php //$this->Breadcrumbs->add(__d('backend','Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php //$this->Breadcrumbs->add(__d('backend','Systeminfo')); ?>
+<?php //$this->Breadcrumbs->add(__d('admin','Admin'), ['controller' => 'Admin', 'action' => 'index']); ?>
+<?php //$this->Breadcrumbs->add(__d('admin','Systeminfo')); ?>
 <div class="index">
 
     <?php $this->Tabs->create(); ?>
-    <?php $this->Tabs->add(__d('backend', 'System')); ?>
+    <?php $this->Tabs->add(__d('admin', 'System')); ?>
     <div class="view">
 
         <?php $this->Box->create("System overview", ['class' => '']); ?>
@@ -33,8 +33,8 @@ $this->loadHelper('Backend.Box');
                 <td>&nbsp;</td>
             </tr>
             <tr>
-                <td>Backend Version</td>
-                <td><?= Backend::version(); ?>&nbsp;</td>
+                <td>Admin Version</td>
+                <td><?= Admin::version(); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
@@ -175,17 +175,17 @@ $this->loadHelper('Backend.Box');
             </tr>
             <tr>
                 <td>User Locale</td>
-                <td><?= $this->request->getSession()->read('Backend.User.locale'); ?>&nbsp;</td>
+                <td><?= $this->request->getSession()->read('Admin.User.locale'); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>User Currency</td>
-                <td><?= $this->request->getSession()->read('Backend.User.currency'); ?>&nbsp;</td>
+                <td><?= $this->request->getSession()->read('Admin.User.currency'); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
                 <td>User Timezone</td>
-                <td><?= $this->request->getSession()->read('Backend.User.timezone'); ?>&nbsp;</td>
+                <td><?= $this->request->getSession()->read('Admin.User.timezone'); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
@@ -195,7 +195,7 @@ $this->loadHelper('Backend.Box');
                         new \DateTime(),
                         \IntlDateFormatter::FULL,
                         false,
-                        $this->request->getSession()->read('Backend.User.timezone')
+                        $this->request->getSession()->read('Admin.User.timezone')
                     ); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
@@ -219,11 +219,11 @@ $this->loadHelper('Backend.Box');
         <?php echo $this->Box->render(); ?>
     </div>
 
-    <?php $this->Tabs->add(__d('backend', 'Config'), ['url' => ['action' => 'config']]); ?>
-    <?php $this->Tabs->add(__d('backend', 'Plugins'), ['url' => ['action' => 'plugins']]); ?>
-    <?php $this->Tabs->add(__d('backend', 'Routes'), ['url' => ['action' => 'routes']]); ?>
-    <?php $this->Tabs->add(__d('backend', 'Globals'), ['url' => ['action' => 'globals']]); ?>
-    <?php $this->Tabs->add(__d('backend', 'Session'), ['url' => ['action' => 'session']]); ?>
-    <?php $this->Tabs->add(__d('backend', 'PHP Info'), ['url' => ['action' => 'php']]); ?>
+    <?php $this->Tabs->add(__d('admin', 'Config'), ['url' => ['action' => 'config']]); ?>
+    <?php $this->Tabs->add(__d('admin', 'Plugins'), ['url' => ['action' => 'plugins']]); ?>
+    <?php $this->Tabs->add(__d('admin', 'Routes'), ['url' => ['action' => 'routes']]); ?>
+    <?php $this->Tabs->add(__d('admin', 'Globals'), ['url' => ['action' => 'globals']]); ?>
+    <?php $this->Tabs->add(__d('admin', 'Session'), ['url' => ['action' => 'session']]); ?>
+    <?php $this->Tabs->add(__d('admin', 'PHP Info'), ['url' => ['action' => 'php']]); ?>
     <?php echo $this->Tabs->render(); ?>
 </div>

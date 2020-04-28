@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Admin;
+namespace Admin\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Http\Exception\BadRequestException;
@@ -9,7 +9,7 @@ use Cake\Http\Exception\BadRequestException;
 /**
  * Class CacheController
  *
- * @package Backend\Controller\Admin
+ * @package Admin\Controller\Admin
  */
 class CacheController extends AppController
 {
@@ -33,9 +33,9 @@ class CacheController extends AppController
         }
 
         if (Cache::clear(false, $config)) {
-            $this->Flash->success(__d('backend', 'Cache cleared'));
+            $this->Flash->success(__d('admin', 'Cache cleared'));
         } else {
-            $this->Flash->error(__d('backend', 'Failed to clear cache'));
+            $this->Flash->error(__d('admin', 'Failed to clear cache'));
         }
         $this->redirect($this->referer(['action' => 'default']));
     }

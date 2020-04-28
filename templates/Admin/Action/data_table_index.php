@@ -1,5 +1,5 @@
 <?php
-$this->loadHelper('Backend.DataTableJs');
+$this->loadHelper('Admin.DataTableJs');
 ?>
 <div class="index">
     <?php

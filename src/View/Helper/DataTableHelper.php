@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\Event\Event;
 use Cake\ORM\Association;
@@ -15,18 +15,18 @@ use Cake\View\StringTemplateTrait;
 
 /**
  * Class DataTableHelper
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  *
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Cake\View\Helper\FormHelper $Form
  * @property \Cake\View\Helper\PaginatorHelper $Paginator
- * @property \Backend\View\Helper\FormatterHelper $Formatter
+ * @property \Admin\View\Helper\FormatterHelper $Formatter
  */
 class DataTableHelper extends Helper
 {
     use StringTemplateTrait;
 
-    public $helpers = ['Html', 'Form', 'Paginator', 'Backend.Formatter', 'Bootstrap.Button', 'Bootstrap.Icon'];
+    public $helpers = ['Html', 'Form', 'Paginator', 'Admin.Formatter', 'Bootstrap.Button', 'Bootstrap.Icon'];
 
     protected $_params = [];
 
@@ -135,7 +135,7 @@ class DataTableHelper extends Helper
      *      string parameter or as first item in list
      * - `exclude` array List of entity fields to ignore.
      * - `actions` array List of actions link. Accepts entity fields as string templates in url arrays (:[field])
-     *      e.g. [__d('backend', 'Edit'), ['action' => 'edit', 'id' => ':id']]
+     *      e.g. [__d('admin', 'Edit'), ['action' => 'edit', 'id' => ':id']]
      * - `paginate` boolean
      * - `sortable` boolean
      * - `filter` boolean
@@ -216,7 +216,7 @@ class DataTableHelper extends Helper
         $this->_initialize();
 
         //if ($this->_setup === null) {
-            $event = $this->_View->getEventManager()->dispatch(new Event('Backend.DataTable.setup', $this));
+            $event = $this->_View->getEventManager()->dispatch(new Event('Admin.DataTable.setup', $this));
         //}
 
         return $this;
@@ -569,7 +569,7 @@ class DataTableHelper extends Helper
         $headCellActions = '';
         if ($this->_params['rowActions'] !== false) {
             $headCellActions = $this->templater()->format('headCellActions', [
-                'content' => __d('backend', 'Actions'),
+                'content' => __d('admin', 'Actions'),
                 'attrs' => $this->_buildFieldAttributes('_actions_', [
                     'type' => 'object',
                     'label' => 'Actions',
@@ -675,12 +675,12 @@ class DataTableHelper extends Helper
 
             if ($column['type'] == 'boolean') {
                 $filterInputOptions['type'] = 'select';
-                $filterInputOptions['options'] = [ 0 => __d('backend', 'No'), 1 => __d('backend', 'Yes')];
-                //$filterInputOptions['empty'] = __d('backend', 'All');
-                $filterInputOptions['data-placeholder'] = __d('backend', 'All');
+                $filterInputOptions['options'] = [ 0 => __d('admin', 'No'), 1 => __d('admin', 'Yes')];
+                //$filterInputOptions['empty'] = __d('admin', 'All');
+                $filterInputOptions['data-placeholder'] = __d('admin', 'All');
 
             //} elseif ($column['type'] == 'select' || substr($fieldName, -3) == '_id') {
-            //    $filterInputOptions['empty'] = __d('backend', 'All');
+            //    $filterInputOptions['empty'] = __d('admin', 'All');
             } elseif ($column['type'] == 'date' || $column['type'] == 'datetime') {
                 $filterInputOptions['type'] = 'hidden';
             } elseif ($column['type'] == 'text') {
@@ -691,8 +691,8 @@ class DataTableHelper extends Helper
                 $sources = $Model->getInputList($fieldName);
                 if ($sources) {
                     $filterInputOptions['options'] = $sources;
-                    //$filterInputOptions['empty'] = __d('backend', 'All');
-                    $filterInputOptions['data-placeholder'] = __d('backend', 'All');
+                    //$filterInputOptions['empty'] = __d('admin', 'All');
+                    $filterInputOptions['data-placeholder'] = __d('admin', 'All');
                 }
             }
             $filterInput = $this->Form->control($fieldName, $filterInputOptions);
@@ -707,7 +707,7 @@ class DataTableHelper extends Helper
         }
 
         $actionCell = $this->templater()->format('rowCell', [
-            'content' => $this->Form->button(__d('backend', 'Filter'), ['class' => 'btn btn-default btn-xs']),
+            'content' => $this->Form->button(__d('admin', 'Filter'), ['class' => 'btn btn-default btn-xs']),
             'attrs' => $this->templater()->formatAttributes([
                 'style' => 'text-align: right;',
                 //'title' => $field['title']
@@ -888,8 +888,8 @@ class DataTableHelper extends Helper
         //    return '';
         //}
 
-        return $this->_View->element('Backend.Pagination/default', [
-            'counter' => ['format' => __d('backend', 'Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records')],
+        return $this->_View->element('Admin.Pagination/default', [
+            'counter' => ['format' => __d('admin', 'Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records')],
             'numbers' => [],
         ]);
     }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Cake\Core\Configure;
 use Cake\Routing\Router;
@@ -14,7 +14,7 @@ use Cake\View\Widget\BasicWidget;
  *
  * TinyMCE Html Editor widget
  *
- * @package Backend\View\Widget
+ * @package Admin\View\Widget
  */
 class HtmlEditorWidget extends BasicWidget
 {
@@ -62,7 +62,7 @@ class HtmlEditorWidget extends BasicWidget
     {
         static::$defaultConfig['document_base_url'] = Router::url('/', true);
 
-        $view->loadHelper('Backend.HtmlEditor');
+        $view->loadHelper('Admin.HtmlEditor');
 
         parent::__construct($templates);
     }

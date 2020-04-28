@@ -1,27 +1,27 @@
 <?php
 return [
-    'backend' => [
-        'plugin' => 'Backend',
+    'admin' => [
+        'plugin' => 'Admin',
         'title' => 'System',
-        'url' => ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'backend'],
+        'url' => ['plugin' => 'Admin', 'controller' => 'Dashboard', 'action' => 'admin'],
         'data-icon' => 'cube',
         // 'requireRoot' => true, // temporary access control workaround
 
         '_children' => [
             'system' => [
                 'title' => 'Systeminfo',
-                'url' => ['plugin' => 'Backend', 'controller' => 'System', 'action' => 'index'],
+                'url' => ['plugin' => 'Admin', 'controller' => 'System', 'action' => 'index'],
                 'data-icon' => 'info',
             ],
             'settings' => [
                 'title' => 'Settings',
-                'url' => ['plugin' => 'Backend', 'controller' => 'Settings', 'action' => 'index'],
+                'url' => ['plugin' => 'Admin', 'controller' => 'Settings', 'action' => 'index'],
                 'data-icon' => 'gears',
                 'requireRoot' => true, // temporary access control workaround
             ],
             'logs' => [
                 'title' => 'Logs',
-                'url' => ['plugin' => 'Backend', 'controller' => 'Logs', 'action' => 'index'],
+                'url' => ['plugin' => 'Admin', 'controller' => 'Logs', 'action' => 'index'],
                 'data-icon' => 'file-text-o',
                 'requireRoot' => true, // temporary access control workaround
             ],

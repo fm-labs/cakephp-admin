@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Http\Exception\NotImplementedException;
@@ -11,7 +11,7 @@ use Cake\Http\Exception\NotImplementedException;
  *
  * ! Experimental | Unused !
  *
- * @package Backend\Action
+ * @package Admin\Action
  * @internal
  * @codeCoverageIgnore
  */
@@ -24,7 +24,7 @@ class CopyAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend', 'Copy');
+        return __d('admin', 'Copy');
     }
 
     /**

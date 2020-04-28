@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\StringTemplate;
@@ -11,7 +11,7 @@ use DateTime;
 /**
  * Class TimePickerWidget
  *
- * @package Backend\View\Widget
+ * @package Admin\View\Widget
  */
 class TimePickerWidget extends CakeDateTimeWidget
 {

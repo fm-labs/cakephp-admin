@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\Event\Event;
 use Cake\Utility\Inflector;
@@ -78,7 +78,7 @@ class BreadcrumbHelper extends Helper
             //}
         }
 
-        // inject backend dashboard url on first position
+        // inject admin dashboard url on first position
         $this->Breadcrumbs->prepend($this->_View->get('be_title'), $this->_View->get('be_dashboard_url'));
 
         $breadcrumbsHtml = $this->Breadcrumbs->render($this->getConfig());

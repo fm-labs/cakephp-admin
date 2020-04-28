@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\Event\Event;
 use Cake\View\Helper;

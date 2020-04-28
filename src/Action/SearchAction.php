@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
-use Backend\Action\Interfaces\IndexActionInterface;
+use Admin\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
 
 /**
  * Class SearchAction
- * @package Backend\Action
+ * @package Admin\Action
  */
 class SearchAction implements IndexActionInterface
 {
@@ -17,7 +17,7 @@ class SearchAction implements IndexActionInterface
      */
     public function getLabel()
     {
-        return __d('backend', 'Search');
+        return __d('admin', 'Search');
     }
 
     /**

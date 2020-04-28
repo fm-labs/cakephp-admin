@@ -6,8 +6,8 @@ use Cake\Cache\Cache;
     <table class="table table-condensed">
         <thead>
         <tr>
-            <th><?= __d('backend', 'Cache config'); ?></th>
-            <th class="actions"><?= __d('backend', 'Actions'); ?></th>
+            <th><?= __d('admin', 'Cache config'); ?></th>
+            <th class="actions"><?= __d('admin', 'Actions'); ?></th>
         </tr>
         </thead>
         <tbody>
@@ -15,7 +15,7 @@ use Cake\Cache\Cache;
             <tr>
                 <td><?= h($key); ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__d('backend', 'Clear cache'), ['action' => 'clear', $key], ['class' => 'btn btn-sm btn-default']); ?>
+                    <?= $this->Html->link(__d('admin', 'Clear cache'), ['action' => 'clear', $key], ['class' => 'btn btn-sm btn-default']); ?>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -1,8 +1,8 @@
-<?php $this->Breadcrumbs->add(__d('backend','Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('backend','Systeminfo'), ['action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('backend', 'Date & Time')); ?>
+<?php $this->Breadcrumbs->add(__d('admin','Admin'), ['controller' => 'Admin', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('admin','Systeminfo'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('admin', 'Date & Time')); ?>
 <div class="view">
-	<h2><?php echo __d('backend', 'Date & Time'); ?></h2>
+	<h2><?php echo __d('admin', 'Date & Time'); ?></h2>
 	<table class="table">
     <?php foreach($data as $key => $val): ?>
         <tr>

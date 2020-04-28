@@ -7,13 +7,13 @@
             <!--
             <?= $this->Ui->link(
                 $this->get('be_title'),
-                ['_name' => 'admin:backend:dashboard'],
+                ['_name' => 'admin:admin:dashboard'],
                 ['class' => 'item', 'data-icon' => 'home']
             ); ?>
 
             <?= $this->Ui->link(
-                'Backend',
-                ['plugin' => 'Backend', 'controller' => 'Backend', 'action' => 'index'],
+                'Admin',
+                ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
                 ['class' => 'item', 'data-icon' => 'cubes']
             ); ?>
             -->
@@ -48,7 +48,7 @@
                 ?>
                 <div class="ui divider"></div>
                 <?= $this->Ui->link(
-                    __d('backend','Publish Item'),
+                    __d('admin','Publish Item'),
                     '#',
                     ['class' => 'item']);
                 ?>
@@ -66,7 +66,7 @@
                         ?>
                         <div class="ui divider"></div>
                         <?= $this->Ui->link(
-                            __d('backend','Publish Item'),
+                            __d('admin','Publish Item'),
                             '#',
                             ['class' => 'item']);
                         ?>

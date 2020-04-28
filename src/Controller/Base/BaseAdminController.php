@@ -1,34 +1,34 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Base;
+namespace Admin\Controller\Base;
 
 use Cake\Controller\Controller;
 
 /**
- * Class BaseBackendController
+ * Class BaseAdminController
  *
  * Use this class as a base controller for (app) controllers
- * which should run in backend context
+ * which should run in admin context
  *
- * @package Backend\Controller\Base
+ * @package Admin\Controller\Base
  *
  * @property \Cake\Controller\Component\AuthComponent $Auth
- * @property \Backend\Controller\Component\FlashComponent $Flash
+ * @property \Admin\Controller\Component\FlashComponent $Flash
  * @property \Cake\Controller\Component\PaginatorComponent $Paginator
  *
- * @deprecated Use \Backend\Controller\Controller instead
+ * @deprecated Use \Admin\Controller\Controller instead
  */
-abstract class BaseBackendController extends Controller
+abstract class BaseAdminController extends Controller
 {
     /**
      * @var array
      */
     public $actions = [
-        'index' => 'Backend.Index',
-        'view' => 'Backend.View',
-        'add' => 'Backend.Add',
-        'edit' => 'Backend.Edit',
+        'index' => 'Admin.Index',
+        'view' => 'Admin.View',
+        'add' => 'Admin.Add',
+        'edit' => 'Admin.Edit',
     ];
 
     /**
@@ -41,9 +41,9 @@ abstract class BaseBackendController extends Controller
      */
     public function initialize(): void
     {
-        // Configure Backend component
-        if (!$this->components()->has('Backend')) {
-            $this->loadComponent('Backend.Backend');
+        // Configure Admin component
+        if (!$this->components()->has('Admin')) {
+            $this->loadComponent('Admin.Admin');
         }
     }
 

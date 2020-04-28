@@ -12,11 +12,11 @@
     -->
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->Html->css('Backend.layout/admin'); ?>
+    <?= $this->Html->css('Admin.layout/admin'); ?>
     <!-- scripts -->
     <!--[if lt IE 9]>
-    <?= $this->Html->script('/backend/libs/html5shiv/html5shiv.min.js'); ?>
-    <?= $this->Html->script('/backend/libs/respond/respond.min.js'); ?>
+    <?= $this->Html->script('/admin/libs/html5shiv/html5shiv.min.js'); ?>
+    <?= $this->Html->script('/admin/libs/respond/respond.min.js'); ?>
     <![endif]-->
     <?= $this->fetch('headjs') ?>
 </head>
@@ -35,7 +35,7 @@
         <section id="main-flash" class="flash-wrapper">
             <?= $this->Flash->render(); ?>
             <?= $this->Flash->render('auth'); ?>
-            <?= $this->Flash->render('backend'); ?>
+            <?= $this->Flash->render('admin'); ?>
             <?php echo $this->fetch('flash'); ?>
         </section>
 

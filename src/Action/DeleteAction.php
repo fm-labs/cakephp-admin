@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
@@ -16,7 +16,7 @@ class DeleteAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend', 'Delete');
+        return __d('admin', 'Delete');
     }
 
     /**
@@ -38,7 +38,7 @@ class DeleteAction extends BaseEntityAction
             if ($controller->getRequest()->getData('confirm') == true) {
                 if ($entity instanceof EntityInterface) {
                     if ($this->model()->delete($entity)) {
-                        $controller->Flash->success(__d('backend', 'Deleted'));
+                        $controller->Flash->success(__d('admin', 'Deleted'));
 
                         return $controller->redirect(['action' => 'index']);
                     } else {
@@ -50,7 +50,7 @@ class DeleteAction extends BaseEntityAction
 
                 return $controller->redirect($controller->referer(['action' => 'index']));
             } else {
-                $controller->Flash->error(__d('backend', "You must confirm to delete record"));
+                $controller->Flash->error(__d('admin', "You must confirm to delete record"));
             }
         }
 

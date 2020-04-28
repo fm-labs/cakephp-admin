@@ -1,6 +1,6 @@
 <?php
 /**
- * Backend generic flash message with bootstrap styles
+ * Admin generic flash message with bootstrap styles
  *
  * Parameters:
  *

@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Admin;
+namespace Admin\Controller\Admin;
 
 /**
  * Class AppController
  *
- * @package Backend\Controller\Admin
+ * @package Admin\Controller\Admin
  */
 class AppController extends \App\Controller\Admin\AppController
 {
@@ -17,10 +17,10 @@ class AppController extends \App\Controller\Admin\AppController
     {
         parent::initialize();
 
-        // make sure the Backend component is loaded,
+        // make sure the Admin component is loaded,
         // especially if a custom Admin\AppController is used
-        if (!$this->components()->has('Backend')) {
-            $this->components()->load('Backend');
+        if (!$this->components()->has('Admin')) {
+            $this->components()->load('Admin');
         }
     }
 }

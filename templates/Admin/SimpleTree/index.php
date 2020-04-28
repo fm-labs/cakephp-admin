@@ -1,7 +1,7 @@
-<?php $this->assign('title', __d('backend','SimpleTree Viewer')); ?>
+<?php $this->assign('title', __d('admin','SimpleTree Viewer')); ?>
 <div class="index">
 
-    <?= $this->cell('Backend.DataTable', [[
+    <?= $this->cell('Admin.DataTable', [[
         'paginate' => false,
         'sortable' => ($this->get('sortUrl')),
         'model' => $this->get('modelName'),
@@ -11,10 +11,10 @@
         ],
 
         'rowActions' => [
-            [__d('backend','Move Up'), ['controller' => 'Posts', 'action' => 'moveUp', ':id'], ['class' => 'move up']],
-            [__d('backend','Move Down'), ['controller' => 'Posts', 'action' => 'moveDown', ':id'], ['class' => 'move down']],
+            [__d('admin','Move Up'), ['controller' => 'Posts', 'action' => 'moveUp', ':id'], ['class' => 'move up']],
+            [__d('admin','Move Down'), ['controller' => 'Posts', 'action' => 'moveDown', ':id'], ['class' => 'move down']],
         ]
     ]]);
     ?>
 </div>
-<?php $this->Html->script('/backend/libs/jquery-ui/jquery-ui.min.js', ['block' => true]); ?>
+<?php $this->Html->script('/admin/libs/jquery-ui/jquery-ui.min.js', ['block' => true]); ?>

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Model\Behavior;
+namespace Admin\Model\Behavior;
 
 use Cake\Collection\Collection;
 use Cake\Datasource\EntityInterface;

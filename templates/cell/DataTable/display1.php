@@ -1,7 +1,7 @@
 <?php
 use Cake\Utility\Hash;
 
-$this->loadHelper('Backend.DataTable');
+$this->loadHelper('Admin.DataTable');
 
 $this->DataTable->create($params);
 ?>
@@ -9,7 +9,7 @@ $this->DataTable->create($params);
 <table class="<?= $this->DataTable->tableClass('table table-striped table-hover table-condensed'); ?>">
     <thead>
         <?= $this->DataTable->renderHead(); ?>
-        <th class="actions"><?= __d('backend','Actions') ?></th>
+        <th class="actions"><?= __d('admin','Actions') ?></th>
     </thead>
 
     <tbody>

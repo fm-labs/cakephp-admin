@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Shell\Task;
+namespace Admin\Shell\Task;
 
 use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 
 /**
- * @property \Backend\Model\Table\UsersTable $Users
+ * @property \Admin\Model\Table\UsersTable $Users
  */
 class RootUserTask extends Shell
 {
@@ -18,7 +18,7 @@ class RootUserTask extends Shell
     {
         $parser = parent::getOptionParser();
         $parser
-            ->setDescription(__d('backend', "Create backend root user"))
+            ->setDescription(__d('admin', "Create admin root user"))
             ->addOption('email', [
                 'help' => 'Root user email',
                 'short' => 'e',
@@ -41,7 +41,7 @@ class RootUserTask extends Shell
             $this->out("Arg: $key - $val");
         }
 
-        $this->loadModel('Backend.Users');
+        $this->loadModel('Admin.Users');
         $rootCount = $this->Users->find()->where(['Users.username' => 'root'])->count();
         if ($rootCount > 0) {
             $this->abort('Root user already exists');

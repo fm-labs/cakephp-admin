@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\View\Helper;
 use Cake\View\StringTemplateTrait;
@@ -27,7 +27,7 @@ class FlagIconHelper extends Helper
      */
     public function initialize(array $config): void
     {
-        $this->Html->css('/backend/libs/flag-icon-css/css/flag-icon.min.css', ['block' => true]);
+        $this->Html->css('/admin/libs/flag-icon-css/css/flag-icon.min.css', ['block' => true]);
 
         $this->templater()->add([
             'flag_icon' => '<span class="flag-icon flag-icon-{{flag}}"{{attrs}}></span>',

@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Component;
+namespace Admin\Controller\Component;
 
-use Backend\Action\ActionRegistry;
-use Backend\Action\ExternalEntityAction;
-use Backend\Action\InlineEntityAction;
-use Backend\Action\Interfaces\EntityActionInterface;
+use Admin\Action\ActionRegistry;
+use Admin\Action\ExternalEntityAction;
+use Admin\Action\InlineEntityAction;
+use Admin\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Component;
 use Cake\Core\App;
 use Cake\Core\Configure;
@@ -20,7 +20,7 @@ use Cake\Utility\Inflector;
 /**
  * Class ActionComponent
  *
- * @package Backend\Controller\Component
+ * @package Admin\Controller\Component
  * @TODO Replace ActionRegistry with dynamic initialization of Action objects (load on-the-fly instead of preloading all available actions)
  * @TODO Add method to easily attach event listeners to the Action object
  */
@@ -32,7 +32,7 @@ class ActionComponent extends Component
     public $actions = [];
 
     /**
-     * @var \Backend\Action\ActionRegistry
+     * @var \Admin\Action\ActionRegistry
      */
     protected $_actionRegistry;
 
@@ -42,7 +42,7 @@ class ActionComponent extends Component
     protected $_controller;
 
     /**
-     * @var \Backend\Action\Interfaces\EntityActionInterface|object Active action
+     * @var \Admin\Action\Interfaces\EntityActionInterface|object Active action
      */
     protected $_action;
 
@@ -98,7 +98,7 @@ class ActionComponent extends Component
             $className = App::className($actionConfig['className'], 'Action', 'Action');
             $reflection = new \ReflectionClass($className);
             $ifaces = $reflection->getInterfaceNames();
-            $actionConfig['type'] = in_array('Backend\\Action\\Interfaces\\EntityActionInterface', $ifaces) ? 'entity' : 'table';
+            $actionConfig['type'] = in_array('Admin\\Action\\Interfaces\\EntityActionInterface', $ifaces) ? 'entity' : 'table';
         }
 
         $this->actions[$action] = $actionConfig;
@@ -113,12 +113,12 @@ class ActionComponent extends Component
     public function startup()
     {
         if (Configure::read('debug') && !isset($this->actions['debug'])) {
-            //$actionConfig = ['className' => 'Backend.Debug'];
+            //$actionConfig = ['className' => 'Admin.Debug'];
             //$this->_actionRegistry->load('debug', $actionConfig);
             //$this->actions['debug'] = $actionConfig;
 
             /*
-            $infoAction = ['className' => 'Backend.View', 'label' => 'Info'];
+            $infoAction = ['className' => 'Admin.View', 'label' => 'Info'];
             $this->_actionRegistry->load('info', $infoAction);
             $this->actions['info'] = $infoAction;
             */
@@ -166,7 +166,7 @@ class ActionComponent extends Component
 
     /**
      * @param null|string $action Action name
-     * @return null|\Backend\Action\Interfaces\ActionInterface|object
+     * @return null|\Admin\Action\Interfaces\ActionInterface|object
      */
     public function getAction($action)
     {
@@ -241,8 +241,8 @@ class ActionComponent extends Component
         }
 
         // Dispatch 'beforeAction' Event
-        //@TODO Rename to 'Backend.Controller.beforeAction'
-        $event = $this->getController()->dispatchEvent('Backend.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
+        //@TODO Rename to 'Admin.Controller.beforeAction'
+        $event = $this->getController()->dispatchEvent('Admin.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
         if ($event->getResult() instanceof Response) {
             return $event->getResult();
         }
@@ -255,8 +255,8 @@ class ActionComponent extends Component
         }
 
         // Dispatch 'afterAction' Event
-        //@TODO Rename to 'Backend.Controller.afterAction'
-        $event = $this->getController()->dispatchEvent('Backend.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
+        //@TODO Rename to 'Admin.Controller.afterAction'
+        $event = $this->getController()->dispatchEvent('Admin.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
         if ($event->getResult() instanceof Response) {
             return $event->getResult();
         }
@@ -271,7 +271,7 @@ class ActionComponent extends Component
         if ($this->getController()->getRequest()->getParam('action')) {
             $action = $this->getController()->getRequest()->getParam('action');
             if (isset($this->actions[$action])) {
-                /** @var \Backend\Controller\Component\Controller $controller */
+                /** @var \Admin\Controller\Component\Controller $controller */
                 $controller = $event->getSubject();
 
                 // Inject template and layout via controller view vars
@@ -296,7 +296,7 @@ class ActionComponent extends Component
                         $templatePath = Inflector::camelize($this->getController()->getRequest()->getParam('prefix')) . '/' . $templatePath;
                     }
                     $controller->viewBuilder()->setTemplatePath($templatePath);
-                    //$controller->viewBuilder()->setPlugin('Backend');
+                    //$controller->viewBuilder()->setPlugin('Admin');
 
                     // use action class name as default template name
                     $template = $this->_action->template ?? null;

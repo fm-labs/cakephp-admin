@@ -3,21 +3,21 @@
     <!-- Menu Toggle Button -->
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <!-- The user image in the navbar-->
-        <?php //echo $this->Html->image('/backend/adminlte/dist/img/user2-160x160.jpg', ['class' => 'user-image', 'alt' => 'User Image']); ?>
+        <?php //echo $this->Html->image('/admin/adminlte/dist/img/user2-160x160.jpg', ['class' => 'user-image', 'alt' => 'User Image']); ?>
         <i class="fa fa-user"></i>
         <!-- hidden-xs hides the username on small devices so only the image appears. -->
-        <span class="hidden-xs"><?= h($this->request->getSession()->read('Backend.User.name')); ?></span>
+        <span class="hidden-xs"><?= h($this->request->getSession()->read('Admin.User.name')); ?></span>
     </a>
     <ul class="dropdown-menu">
         <!-- The user image in the menu -->
         <li class="user-header">
-            <?php //echo $this->Html->image('/backend/adminlte/dist/img/user2-160x160.jpg', ['class' => 'img-circle', 'alt' => 'User Image']); ?>
+            <?php //echo $this->Html->image('/admin/adminlte/dist/img/user2-160x160.jpg', ['class' => 'img-circle', 'alt' => 'User Image']); ?>
             <i class="fa fa-user fa-5x"></i>
             <p class="user-name">
-                <?= h($this->request->getSession()->read('Backend.User.name')); ?>
+                <?= h($this->request->getSession()->read('Admin.User.name')); ?>
             </p>
             <p class="user-info">
-                <small>Member since <?= $this->Time->nice($this->request->getSession()->read('Backend.User.created')); ?></small>
+                <small>Member since <?= $this->Time->nice($this->request->getSession()->read('Admin.User.created')); ?></small>
             </p>
         </li>
         <!-- Menu Body (unused yet)-->
@@ -39,15 +39,15 @@
         <li class="user-footer">
             <div class="pull-left">
                 <?= $this->Html->link(
-                    __d('backend','Profile'),
-                    ['_name' => 'admin:backend:user:profile'],
+                    __d('admin', 'Profile'),
+                    ['_name' => 'admin:admin:user:profile'],
                     ['class' => 'btn btn-default btn-flat']
                 ); ?>
             </div>
             <div class="pull-right">
                 <?= $this->Html->link(
-                    __d('backend','Sign out'),
-                    ['_name' => 'admin:backend:user:logout'],
+                    __d('admin', 'Sign out'),
+                    ['_name' => 'admin:admin:user:logout'],
                     ['class' => 'btn btn-default btn-flat']
                 ); ?>
             </div>

@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\View\Helper;
 
 /**
  * Class CodeEditorHelper
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  *
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Cake\View\Helper\FormHelper $Form
@@ -17,7 +17,7 @@ class CodeEditorHelper extends Helper
     public $helpers = ['Html', 'Form'];
 
     protected $_defaultConfig = [
-        'scriptUrl' => '/backend/vendor/ace/1.4.1-noconflict/ace.js',
+        'scriptUrl' => '/admin/vendor/ace/1.4.1-noconflict/ace.js',
         'scriptBlock' => true,
     ];
 
@@ -30,6 +30,6 @@ class CodeEditorHelper extends Helper
             'block' => $this->getConfig('scriptBlock'),
         ]);
 
-        $this->Form->addWidget('codeeditor', ['Backend\View\Widget\CodeEditorWidget', '_view']);
+        $this->Form->addWidget('codeeditor', ['Admin\View\Widget\CodeEditorWidget', '_view']);
     }
 }

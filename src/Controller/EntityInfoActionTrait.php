@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller;
+namespace Admin\Controller;
 
 use Cake\Core\Exception\Exception;
 
 /**
  * Class EntityInfoActionTrait
  *
- * @package Backend\Controller
+ * @package Admin\Controller
  */
 trait EntityInfoActionTrait
 {
@@ -24,12 +24,12 @@ trait EntityInfoActionTrait
 
         if (method_exists($this, 'viewBuilder')) {
             $this->viewBuilder()
-                ->plugin('Backend')
+                ->plugin('Admin')
                 ->templatePath('Admin/Entity')
                 ->setTemplate('view');
         }
 
         $this->set(compact('modelClass', 'entityId', 'entity'));
-        $this->render('Backend.view');
+        $this->render('Admin.view');
     }
 }

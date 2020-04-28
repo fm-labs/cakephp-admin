@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
@@ -9,7 +9,7 @@ use Cake\Datasource\EntityInterface;
 /**
  * Class PublishAction
  *
- * @package Backend\Action
+ * @package Admin\Action
  */
 class PublishAction extends BaseEntityAction
 {
@@ -20,7 +20,7 @@ class PublishAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend', 'Publish');
+        return __d('admin', 'Publish');
     }
 
     /**
@@ -53,10 +53,10 @@ class PublishAction extends BaseEntityAction
                 //'fieldList' => ['is_published', 'publish_start', 'publish_end'], //@TODO Enable fieldList
             ]);
             if ($this->model()->save($entity)) {
-                $controller->Flash->success(__d('backend', 'Updated'));
+                $controller->Flash->success(__d('admin', 'Updated'));
                 $controller->redirect($controller->referer(['action' => 'view', $entity->id]));
             } else {
-                $controller->Flash->error(__d('backend', 'Update failed'));
+                $controller->Flash->error(__d('admin', 'Update failed'));
             }
         }
 

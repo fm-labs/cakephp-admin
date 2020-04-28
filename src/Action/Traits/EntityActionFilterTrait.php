@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action\Traits;
+namespace Admin\Action\Traits;
 
 use Cake\Datasource\EntityInterface;
 

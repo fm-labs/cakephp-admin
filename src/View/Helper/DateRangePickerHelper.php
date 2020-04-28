@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\View\Helper;
 
 /**
  * Class DateRangePickerHelper
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  *
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Cake\View\Helper\FormHelper $Form
@@ -21,9 +21,9 @@ class DateRangePickerHelper extends Helper
      */
     public function initialize(array $config): void
     {
-        $this->Html->css('/backend/libs/daterangepicker/daterangepicker.css', ['block' => true]);
-        $this->Html->script('/backend/libs/daterangepicker/daterangepicker.js', ['block' => true]);
+        $this->Html->css('/admin/libs/daterangepicker/daterangepicker.css', ['block' => true]);
+        $this->Html->script('/admin/libs/daterangepicker/daterangepicker.js', ['block' => true]);
 
-        $this->Form->addWidget('daterange', ['Backend\View\Widget\DateRangePickerWidget', '_view']);
+        $this->Form->addWidget('daterange', ['Admin\View\Widget\DateRangePickerWidget', '_view']);
     }
 }

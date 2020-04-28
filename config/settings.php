@@ -2,25 +2,25 @@
 return [
     'Settings' => [
 
-        'Backend.General' => [
-            'label' => __('Backend General Settings'),
+        'Admin.General' => [
+            'label' => __('Admin General Settings'),
             'settings' => [
-                'Backend.Dashboard.title' => [
+                'Admin.Dashboard.title' => [
                     'type' => 'string',
                     'input' => [],
                 ],
             ],
         ],
 
-        'Backend.Security' => [
+        'Admin.Security' => [
             'label' => __('Security'),
             'settings' => [
-                'Backend.Security.enabled' => [
+                'Admin.Security.enabled' => [
                     'type' => 'boolean',
-                    'label' => 'Enable Backend Security',
+                    'label' => 'Enable Admin Security',
                     'help' => 'Enables advanced security mechanism',
                 ],
-                'Backend.Security.forceSSL' => [
+                'Admin.Security.forceSSL' => [
                     'type' => 'boolean',
                     'label' => 'Force SSL',
                     'help' => '',
@@ -28,9 +28,9 @@ return [
             ],
         ],
 
-        'Backend.Theme' => [
+        'Admin.Theme' => [
             'settings' => [
-                'Backend.Theme.name' => [
+                'Admin.Theme.name' => [
                     'type' => 'string',
                     'input' => [
                         'type' => 'select',
@@ -40,32 +40,32 @@ return [
                     ],
                     'default' => 'theme-default',
                 ],
-                'Backend.Theme.skin' => [
+                'Admin.Theme.skin' => [
                     'type' => 'string',
                     'input' => [
                         'type' => 'select',
                         'options' => [
-                            'skin-blue' => __d('backend', 'Blue'),
-                            'skin-yellow' => __d('backend', 'Yellow'),
-                            'skin-red' => __d('backend', 'Red'),
-                            'skin-purple' => __d('backend', 'Purple'),
-                            'skin-black' => __d('backend', 'Blue'),
-                            'skin-green' => __d('backend', 'Green'),
+                            'skin-blue' => __d('admin', 'Blue'),
+                            'skin-yellow' => __d('admin', 'Yellow'),
+                            'skin-red' => __d('admin', 'Red'),
+                            'skin-purple' => __d('admin', 'Purple'),
+                            'skin-black' => __d('admin', 'Blue'),
+                            'skin-green' => __d('admin', 'Green'),
                         ],
                     ],
                     'default' => 'skin-blue',
                 ],
-                'Backend.Theme.bodyClass' => [
+                'Admin.Theme.bodyClass' => [
                     'type' => 'string',
                 ],
-                'Backend.Theme.darkmode' => [
+                'Admin.Theme.darkmode' => [
                     'type' => 'boolean',
                 ],
-                'Backend.Theme.enableJsFlash' => [
+                'Admin.Theme.enableJsFlash' => [
                     'label' => 'Pretty Flash messages',
                     'type' => 'boolean',
                 ],
-                'Backend.Theme.enableJsAlerts' => [
+                'Admin.Theme.enableJsAlerts' => [
                     'label' => 'Pretty Alert messages',
                     'type' => 'boolean',
                 ],

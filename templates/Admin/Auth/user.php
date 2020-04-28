@@ -2,7 +2,7 @@
 use Cake\Core\Configure;
 
 ?>
-<?php $this->Breadcrumbs->add(__d('backend', 'User'), ['action' => 'user']); ?>
+<?php $this->Breadcrumbs->add(__d('admin', 'User'), ['action' => 'user']); ?>
 <?php $this->assign('title', $user['name']); ?>
 <div class="users view container" style="text-align: center;">
     <h2>
@@ -25,26 +25,26 @@ use Cake\Core\Configure;
         <div class="extra content">
             <?=
             $this->Ui->link(
-                __d('backend', 'Goto Dashboard'),
-                ['_name' => 'admin:backend:user:login'],
+                __d('admin', 'Goto Dashboard'),
+                ['_name' => 'admin:admin:user:login'],
                 ['icon' => 'home', 'class' => 'btn btn-default btn-block']
             ); ?>
             <?=
             $this->Ui->link(
-                __d('backend', 'Edit profile'),
+                __d('admin', 'Edit profile'),
                 ['plugin' => 'User', 'controller' => 'Users', 'action' => 'edit', $user['id']],
                 ['icon' => 'edit', 'class' => 'btn btn-default btn-block']
             ); ?>
             <?=
             $this->Ui->link(
-                __d('backend', 'Change password'),
+                __d('admin', 'Change password'),
                 ['plugin' => 'User', 'controller' => 'Users', 'action' => 'password_change'],
                 ['icon' => 'key', 'class' => 'btn btn-default btn-block']
             ); ?>
             <?=
             $this->Ui->link(
-                __d('backend', 'Logout'),
-                ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
+                __d('admin', 'Logout'),
+                ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
                 ['icon' => 'sign-out', 'class' => 'btn btn-default btn-block']
             ); ?>
         </div>

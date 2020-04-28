@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
@@ -9,13 +9,13 @@ use Cake\Utility\Inflector;
 use Cake\View\Helper;
 
 /**
- * Class BackendHelper
+ * Class AdminHelper
  *
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Cake\View\Helper\UrlHelper $Url
  */
-class BackendHelper extends Helper
+class AdminHelper extends Helper
 {
     public $helpers = ['Html', 'Url'];
 
@@ -26,73 +26,73 @@ class BackendHelper extends Helper
      */
     public function initialize(array $config): void
     {
-        $this->_themeConfig = (array)Configure::read('Backend.Theme') + $this->_themeConfig;
+        $this->_themeConfig = (array)Configure::read('Admin.Theme') + $this->_themeConfig;
 
-        $this->Html->script('/backend/libs/jquery/jquery.min.js', ['block' => 'headjs']);
+        $this->Html->script('/admin/libs/jquery/jquery.min.js', ['block' => 'headjs']);
 
         // 3rd party dependencies
         // Bootstrap
-        $this->Html->css('/backend/libs/bootstrap/dist/css/bootstrap.min.css', ['block' => true]);
-        $this->Html->script('/backend/libs/bootstrap/dist/js/bootstrap.min.js', ['block' => true]);
+        $this->Html->css('/admin/libs/bootstrap/dist/css/bootstrap.min.css', ['block' => true]);
+        $this->Html->script('/admin/libs/bootstrap/dist/js/bootstrap.min.js', ['block' => true]);
         // MomentJS
-        $this->Html->script('/backend/js/momentjs/moment.min.js', ['block' => true]);
+        $this->Html->script('/admin/js/momentjs/moment.min.js', ['block' => true]);
         // FontAwesome
-        $this->Html->css('/backend/libs/fontawesome/css/font-awesome.min.css', ['block' => true]);
+        $this->Html->css('/admin/libs/fontawesome/css/font-awesome.min.css', ['block' => true]);
         // IonIcons
-        $this->Html->css('/backend/libs/ionicons/css/ionicons.min.css', ['block' => true]);
+        $this->Html->css('/admin/libs/ionicons/css/ionicons.min.css', ['block' => true]);
 
         // default helpers
         $this->_View->loadHelper('Bootstrap.Ui');
-        $this->_View->loadHelper('Backend.Backbone');
-        $this->_View->loadHelper('Backend.Breadcrumb');
-        $this->_View->loadHelper('Backend.Toolbar');
+        $this->_View->loadHelper('Admin.Backbone');
+        $this->_View->loadHelper('Admin.Breadcrumb');
+        $this->_View->loadHelper('Admin.Toolbar');
 
-        if (Configure::read('Backend.Theme.enableJsFlash')) {
-            $this->_View->loadHelper('Backend.Toastr');
+        if (Configure::read('Admin.Theme.enableJsFlash')) {
+            $this->_View->loadHelper('Admin.Toastr');
         }
 
-        if (Configure::read('Backend.Theme.enableJsAlerts')) {
-            $this->_View->loadHelper('Backend.SweetAlert2');
+        if (Configure::read('Admin.Theme.enableJsAlerts')) {
+            $this->_View->loadHelper('Admin.SweetAlert2');
         }
 
         /*
         $this->_View->loadHelper('User.UserSession', [
-            'sessionKey' => 'Backend.UserSession',
-            'loginUrl' => ['_name' => 'admin:backend:user:login'],
-            'checkUrl' => ['_name' => 'admin:backend:user:checkauth']
+            'sessionKey' => 'Admin.UserSession',
+            'loginUrl' => ['_name' => 'admin:admin:user:login'],
+            'checkUrl' => ['_name' => 'admin:admin:user:checkauth']
         ]);
         */
 
-        // Backend assets
-        // Backend css injected after css block, as a dirty workaround to override styles of vendor css injected from views
-        $this->Html->css('Backend.backend', ['block' => true]);
+        // Admin assets
+        // Admin css injected after css block, as a dirty workaround to override styles of vendor css injected from views
+        $this->Html->css('Admin.admin', ['block' => true]);
 
-        // Inject backendjs init script
-        $backendjs = [
+        // Inject adminjs init script
+        $adminjs = [
             'rootUrl' => $this->Url->build('/', ['fullBase' => true]),
             'adminUrl' => $this->Url->build('/admin/', ['fullBase' => true]),
             'debug' => Configure::read('debug'),
         ];
-        //$script = sprintf('console.log("INIT", window.Backend); if (window.Backend !== undefined) { console.log("INIT2");  Backend.initialize(%s); }', json_encode($backendjs));
+        //$script = sprintf('console.log("INIT", window.Admin); if (window.Admin !== undefined) { console.log("INIT2");  Admin.initialize(%s); }', json_encode($adminjs));
 
-        $script = sprintf('var BackendSettings = window.BackendSettings = %s;', json_encode($backendjs));
+        $script = sprintf('var AdminSettings = window.AdminSettings = %s;', json_encode($adminjs));
         if (Configure::read('debug')) {
-            $script .= 'console.log("[backend] global settings", window.BackendSettings);';
+            $script .= 'console.log("[admin] global settings", window.AdminSettings);';
         }
         $this->Html->scriptBlock($script, ['block' => true, 'safe' => false]);
 
-        $this->Html->script('/backend/js/backend.js', ['block' => true]);
-        $this->Html->script('/backend/js/backend.iconify.js', ['block' => true]);
-        $this->Html->script('/backend/js/backend.tooltip.js', ['block' => true]);
-        //$this->Html->script('/backend/js/backend.alert.js', ['block' => true]);
+        $this->Html->script('/admin/js/admin.js', ['block' => true]);
+        $this->Html->script('/admin/js/admin.iconify.js', ['block' => true]);
+        $this->Html->script('/admin/js/admin.tooltip.js', ['block' => true]);
+        //$this->Html->script('/admin/js/admin.alert.js', ['block' => true]);
     }
 
     public function beforeRender(Event $event)
     {
         /** @var \Cake\View\View $view */
         $view = $event->getSubject();
-        $view->set('be_title', Configure::read('Backend.Dashboard.title'));
-        $view->set('be_dashboard_url', $this->Url->build(Configure::read('Backend.Dashboard.url')));
+        $view->set('be_title', Configure::read('Admin.Dashboard.title'));
+        $view->set('be_dashboard_url', $this->Url->build(Configure::read('Admin.Dashboard.url')));
     }
 
     /**
@@ -113,7 +113,7 @@ class BackendHelper extends Helper
         $themeBodyClass = $this->_themeConfig['bodyClass'] ?: '';
 
         if ($this->_themeConfig['darkmode']) {
-            $view->Html->css('/backend/css/layout/dark.min.css', ['block' => true]);
+            $view->Html->css('/admin/css/layout/dark.min.css', ['block' => true]);
             $themeBodyClass = trim($themeBodyClass . ' darkmode');
         }
 
@@ -121,7 +121,7 @@ class BackendHelper extends Helper
             'be_layout_body_class',
             trim(join(' ', [$themeClass, $themeSkinClass, $themeBodyClass]))
         );
-        //$view->Html->css('/backend/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
+        //$view->Html->css('/admin/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
 
         $view->append('meta', $this->Html->charset());
         $view->Html->meta(['http-equiv' => 'X-UA-Compatible', 'content' => 'IE-edge'], null, ['block' => true]);

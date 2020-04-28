@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Test\TestCase\View\Cell;
+namespace Admin\Test\TestCase\View\Cell;
 
-use Backend\View\Cell\EntityViewCell;
+use Admin\View\Cell\EntityViewCell;
 use Cake\TestSuite\TestCase;
 
 /**
- * Backend\View\Cell\EntityViewCell Test Case
+ * Admin\View\Cell\EntityViewCell Test Case
  */
 class EntityViewCellTest extends TestCase
 {
@@ -28,7 +28,7 @@ class EntityViewCellTest extends TestCase
     /**
      * Test subject
      *
-     * @var \Backend\View\Cell\EntityViewCell
+     * @var \Admin\View\Cell\EntityViewCell
      */
     public $EntityView;
 

@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Admin;
+namespace Admin\Controller\Admin;
 
 use Cake\Core\Configure;
 
 /**
  * Class AuthController
  * d
- * @package Backend\Controller\Admin
- * @property \Backend\Controller\Component\AuthComponent $Auth
+ * @package Admin\Controller\Admin
+ * @property \Admin\Controller\Component\AuthComponent $Auth
  * @property \User\Controller\Component\UserSessionComponent $UserSession
  */
 class AuthController extends AppController
@@ -24,7 +24,7 @@ class AuthController extends AppController
     {
         parent::beforeFilter($event);
         $this->Auth->allow(['login', 'unauthorized', 'session']);
-        $this->viewBuilder()->setLayout('Backend.auth');
+        $this->viewBuilder()->setLayout('Admin.auth');
     }
 
     /**
@@ -56,9 +56,9 @@ class AuthController extends AppController
      */
     public function loginSuccess()
     {
-        $redirect = ['_name' => 'admin:backend:dashboard'];
-        if (Configure::check('Backend.Dashboard.url')) {
-            $redirect = Configure::read('Backend.Dashboard.url');
+        $redirect = ['_name' => 'admin:admin:dashboard'];
+        if (Configure::check('Admin.Dashboard.url')) {
+            $redirect = Configure::read('Admin.Dashboard.url');
         }
 
         return $this->redirect($redirect);

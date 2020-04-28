@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
-use Backend\Action\Interfaces\ActionInterface;
-use Backend\Action\Interfaces\EntityActionInterface;
-use Backend\Action\Interfaces\IndexActionInterface;
+use Admin\Action\Interfaces\ActionInterface;
+use Admin\Action\Interfaces\EntityActionInterface;
+use Admin\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
 
@@ -16,7 +16,7 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
      */
     public function getLabel()
     {
-        return __d('backend', 'Debug');
+        return __d('admin', 'Debug');
     }
 
     /**

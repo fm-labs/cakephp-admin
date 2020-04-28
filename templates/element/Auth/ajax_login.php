@@ -1,7 +1,7 @@
 <div class="container-fluid text-center">
 
     <div class="alert alert-warning">
-        <?= __d('backend', 'Your session has expired. Please login again to continue.'); ?>
+        <?= __d('admin', 'Your session has expired. Please login again to continue.'); ?>
     </div>
 
     <h2 class="form-signin-heading">
@@ -10,18 +10,18 @@
     <?= $this->Form->create(null, [
         'class' => 'form-signin',
         'horizontal' => false,
-        'url' => ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login']
+        'url' => ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login']
     ]); ?>
     <?= $this->Form->control('username', [
         'label' => false,
-        'placeholder' => __d('backend', 'Username')
+        'placeholder' => __d('admin', 'Username')
     ]); ?>
     <?= $this->Form->control('password', [
         'type' => 'password',
         'label' => false,
-        'placeholder' => __d('backend', 'Password')
+        'placeholder' => __d('admin', 'Password')
     ]); ?>
-    <?= $this->Form->button(__d('backend', 'Login'), [
+    <?= $this->Form->button(__d('admin', 'Login'), [
         'class' => 'btn btn-lg btn-primary btn-block'
     ]); ?>
     <?= $this->Form->end(); ?>

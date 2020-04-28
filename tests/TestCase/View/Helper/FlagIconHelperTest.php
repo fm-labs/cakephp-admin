@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Test\TestCase\View\Helper;
+namespace Admin\Test\TestCase\View\Helper;
 
-use Backend\View\Helper\FlagIconHelper;
+use Admin\View\Helper\FlagIconHelper;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 
 /**
- * Backend\View\Helper\FlagIconHelper Test Case
+ * Admin\View\Helper\FlagIconHelper Test Case
  */
 class FlagIconHelperTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \Backend\View\Helper\FlagIconHelper
+     * @var \Admin\View\Helper\FlagIconHelper
      */
     public $FlagIcon;
 

@@ -18,14 +18,14 @@ if (!is_array($data)) {
 <table class="ui table striped">
     <thead>
     <tr>
-        <th><?php echo __d('backend','Key'); ?></th>
-        <th><?php echo __d('backend','Value'); ?></th>
+        <th><?php echo __d('admin','Key'); ?></th>
+        <th><?php echo __d('admin','Value'); ?></th>
     </tr>
     </thead>
     <?php foreach(Hash::flatten($data) as $k => $v): ?>
         <tr>
             <td><?= h($k); ?></td>
-            <td><?= (is_array($v)) ? $this->element('Backend.array_to_tablelist', ['data' => $v]) : h($v); ?></td>
+            <td><?= (is_array($v)) ? $this->element('Admin.array_to_tablelist', ['data' => $v]) : h($v); ?></td>
         </tr>
     <?php endforeach; ?>
 </table>

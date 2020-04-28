@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\View\Helper;
 
 /**
  * Class AjaxHelper
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  *
  * @property \Cake\View\Helper\HtmlHelper $Html
  */

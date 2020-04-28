@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
@@ -20,14 +20,14 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
         'tabs' => [],
     ];
 
-    public $template = "Backend.manage";
+    public $template = "Admin.manage";
 
     /**
      * {@inheritDoc}
      */
     public function getLabel()
     {
-        return __d('backend', 'Manage');
+        return __d('admin', 'Manage');
     }
 
     /**
@@ -47,7 +47,7 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
 
         if (empty($this->_config['tabs'])) {
             $this->_config['tabs']['view'] = [
-                'title' => __d('backend', 'Data'),
+                'title' => __d('admin', 'Data'),
                 'url' => ['action' => 'view', $entity->id],
             ];
         }
@@ -63,8 +63,8 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
         $modelClass = $event->getSubject()->viewVars['modelClass'];
 
         $event->getSubject()->viewVars['tabs']['data'] = [
-            'title' => __d('backend', 'Data'),
-            'url' => ['plugin' => 'Backend', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id],
+            'title' => __d('admin', 'Data'),
+            'url' => ['plugin' => 'Admin', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id],
         ];
     }
 

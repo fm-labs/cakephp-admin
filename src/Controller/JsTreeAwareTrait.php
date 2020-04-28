@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller;
+namespace Admin\Controller;
 
 use Cake\Datasource\Exception\MissingModelException;
 
 /**
  * Class JsTreeAwareTrait
  *
- * @package Backend\Controller
+ * @package Admin\Controller
  */
 trait JsTreeAwareTrait
 {

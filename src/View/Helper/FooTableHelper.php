@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\Event\Event;
 use Cake\View\View;
@@ -35,9 +35,9 @@ class FooTableHelper extends DataTableHelper
     {
         //parent::beforeLayout($event);
 
-        $this->Html->css('Backend./js/footable-bootstrap/css/footable.bootstrap.css', ['block' => true]);
-        $this->Html->script('Backend./js/footable-bootstrap/js/footable.js', ['block' => true]);
-        $this->Html->script('Backend./js/backend.footable.js', ['block' => true]);
+        $this->Html->css('Admin./js/footable-bootstrap/css/footable.bootstrap.css', ['block' => true]);
+        $this->Html->script('Admin./js/footable-bootstrap/js/footable.js', ['block' => true]);
+        $this->Html->script('Admin./js/admin.footable.js', ['block' => true]);
     }
 
     public function options($options = null)
@@ -233,7 +233,7 @@ class FooTableHelper extends DataTableHelper
             $field['formatter'] = array_shift($field['formatterArgs']);
         }
         if (is_string($field['formatter'])) {
-            $field['data-formatter'] = 'Backend.FooTable.Formatters.' . $field['formatter'];
+            $field['data-formatter'] = 'Admin.FooTable.Formatters.' . $field['formatter'];
         }
         if (isset($field['formatterArgs'])) {
             foreach ($field['formatterArgs'] as $k => $v) {

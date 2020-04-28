@@ -15,7 +15,7 @@ $viewOptions = (array) $this->get('viewOptions');
 /**
  * Helpers
  */
-$this->loadHelper('Backend.Chosen');
+$this->loadHelper('Admin.Chosen');
 $this->loadHelper('Bootstrap.Tabs');
 
 $fields = $this->get('fields');
@@ -39,7 +39,7 @@ $whitelist = $this->get('fields.whitelist');
                 } else {
                     echo $this->Form->allControls();
                 }
-                echo $this->Form->button(__d('backend','Submit'));
+                echo $this->Form->button(__d('admin','Submit'));
                 echo $this->Form->end();
             }
             ?>

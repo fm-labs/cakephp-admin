@@ -17,17 +17,17 @@ $viewOptions = (array)$this->get('viewOptions');
 /**
  * Helpers
  */
-//$this->loadHelper('Backend.Chosen');
-$this->loadHelper('Backend.DataTable');
+//$this->loadHelper('Admin.Chosen');
+$this->loadHelper('Admin.DataTable');
 $this->loadHelper('Bootstrap.Tabs');
-//$this->extend('Backend./Base/form');
+//$this->extend('Admin./Base/form');
 ?>
 <div class="view">
     <?php
-    echo ($this->fetch('content')) ?: $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render('table');
+    echo ($this->fetch('content')) ?: $this->cell('Admin.EntityView', [ $entity ], $viewOptions)->render('table');
     ?>
 
-    <?php echo $this->cell('Backend.EntityRelated', [ $entity ], [
+    <?php echo $this->cell('Admin.EntityRelated', [ $entity ], [
         'modelClass' => $this->get('modelClass'),
         'related' => $this->get('related')
     ])->render('box');

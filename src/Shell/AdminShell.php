@@ -1,23 +1,23 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Shell;
+namespace Admin\Shell;
 
 use Cake\Console\ConsoleOptionParser;
 use Cake\Console\Shell;
 
 /**
- * Class BackendShell
- * @package Backend\Shell
- * @property \Backend\Shell\Task\RootUserTask $RootUser
+ * Class AdminShell
+ * @package Admin\Shell
+ * @property \Admin\Shell\Task\RootUserTask $RootUser
  */
-class BackendShell extends Shell
+class AdminShell extends Shell
 {
     /**
      * @var array
      */
     public $tasks = [
-        'Backend.RootUser',
+        'Admin.RootUser',
     ];
 
     /**

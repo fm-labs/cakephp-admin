@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\View;
@@ -25,7 +25,7 @@ class DateRangePickerWidget extends BasicWidget
     {
         parent::__construct($templates);
 
-        $view->loadHelper('Backend.DateRangePicker');
+        $view->loadHelper('Admin.DateRangePicker');
     }
 
     /**

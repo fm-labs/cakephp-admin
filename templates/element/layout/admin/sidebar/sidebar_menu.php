@@ -35,8 +35,8 @@ $menuClasses = [
 <?php
 
 foreach (['admin_primary', 'admin_secondary'] as $menuId) {
-    //$menu = $this->get('backend.sidebar.menu');
-    $menu = \Backend\Backend::getMenu($menuId);
+    //$menu = $this->get('admin.sidebar.menu');
+    $menu = \Admin\Admin::getMenu($menuId);
     if (!$menu) {
         //echo "No menu";
         continue;

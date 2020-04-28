@@ -1,22 +1,22 @@
-<?php $this->Breadcrumbs->add(__d('backend', 'Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('backend', 'Logs'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('admin', 'Admin'), ['controller' => 'Admin', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('admin', 'Logs'), ['action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(h($logFile)); ?>
 <?php $this->Toolbar->addLink(
-    __d('backend', 'List {0}', __d('backend', 'Logs')),
+    __d('admin', 'List {0}', __d('admin', 'Logs')),
     ['action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
 <?php $this->Toolbar->addLink(
-    __d('backend', 'Clear'),
+    __d('admin', 'Clear'),
     ['action' => 'clear', $logFile],
     ['data-icon' => 'trash outline']
 ) ?>
 <?php $this->Toolbar->addLink(
-    __d('backend', 'Delete'),
+    __d('admin', 'Delete'),
     ['action' => 'delete', $logFile],
     ['data-icon' => 'trash', 'confirm' => __('Are you sure?')]
 ) ?>
-<div class="view backend logs">
+<div class="view admin logs">
     <h2 class="ui header">
         <?php echo h($logFile); ?>
     </h2>
@@ -26,7 +26,7 @@
             h($this->get('log'));
         ?></textarea>
         <div>
-            <?= $this->Html->link(__d('backend', 'Load more'), ['action' => 'view', $logFile, 'page' => $page + 1], ['class' => 'btn btn-default']); ?>
+            <?= $this->Html->link(__d('admin', 'Load more'), ['action' => 'view', $logFile, 'page' => $page + 1], ['class' => 'btn btn-default']); ?>
         </div>
     </div>
 </div>

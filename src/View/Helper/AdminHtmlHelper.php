@@ -1,33 +1,33 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\View\Helper\HtmlHelper;
 
 /**
- * Drop-in HtmlHelper replacement, optimized for usage with Backend plugin
+ * Drop-in HtmlHelper replacement, optimized for usage with Admin plugin
  *
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  * @codeCoverageIgnore
  */
-class BackendHtmlHelper extends HtmlHelper
+class AdminHtmlHelper extends HtmlHelper
 {
     /**
      * @var array
      */
     protected $_scripts = [
         /*
-        '_jquery' => 'Backend.jquery/jquery-1.11.2.min',
-        '_jqueryui' => ['Backend.jqueryui/jquery-ui.min' => ['_jquery']],
-        '_chosen' => ['Backend.chosen/chosen.jquery.min' => ['_jquery']],
-        '_pickadate_picker' => ['Backend.pickadate/picker'],
-        '_pickadate_date' => ['Backend.pickadate/picker.date'],
-        '_pickadate_time' => ['Backend.pickadate/picker.time'],
+        '_jquery' => 'Admin.jquery/jquery-1.11.2.min',
+        '_jqueryui' => ['Admin.jqueryui/jquery-ui.min' => ['_jquery']],
+        '_chosen' => ['Admin.chosen/chosen.jquery.min' => ['_jquery']],
+        '_pickadate_picker' => ['Admin.pickadate/picker'],
+        '_pickadate_date' => ['Admin.pickadate/picker.date'],
+        '_pickadate_time' => ['Admin.pickadate/picker.time'],
         '_pickadate' => ['_pickadate_picker', '_pickadate_date', '_pickadate_time'],
-        '_imagepicker' => ['Backend.imagepicker/image-picker.min'],
-        '_tinymce_core' => ['Backend.tinymce/tinymce.min'],
-        '_tinymce_jquery' => ['Backend.tinymce/jquery.tinymce.min'],
+        '_imagepicker' => ['Admin.imagepicker/image-picker.min'],
+        '_tinymce_core' => ['Admin.tinymce/tinymce.min'],
+        '_tinymce_jquery' => ['Admin.tinymce/jquery.tinymce.min'],
         '_tinymce' => ['_tinymce_core', '_tinymce_jquery']
         */
     ];

@@ -1,5 +1,5 @@
 <?php
-$this->loadHelper('Backend.FooTable');
+$this->loadHelper('Admin.FooTable');
 ?>
 <div class="index">
     <div class="box">
@@ -11,7 +11,7 @@ $this->loadHelper('Backend.FooTable');
                 ->setData($this->get('result'))
                 ->render(['script' => false]);
             $domId = $this->FooTable->getParam('id');
-            //$rowsUrl = \Cake\Routing\Router::url(['plugin' => 'Backend', 'controller' => 'FooTables', 'action' => 'rows', 'model' => $table['model']]);
+            //$rowsUrl = \Cake\Routing\Router::url(['plugin' => 'Admin', 'controller' => 'FooTables', 'action' => 'rows', 'model' => $table['model']]);
             $rowsUrl = $this->get('rowsUrl', '');
             ?>
         </div>
@@ -105,7 +105,7 @@ $this->loadHelper('Backend.FooTable');
                         ft.rows.load(rows.data);
 
                         setTimeout(function() {
-                            Backend.Renderer.trigger('docready', ft.$el);
+                            Admin.Renderer.trigger('docready', ft.$el);
                         }, 50);
 
                     });

@@ -5,42 +5,42 @@ use Cake\Routing\Router;
 
 /**
  * Configurable route path
- * Use 'Backend.path' config key
+ * Use 'Admin.path' config key
  */
-//$path = Configure::read('Backend.path');
+//$path = Configure::read('Admin.path');
 //if (!$path || !preg_match('/^\/(.*)$/', $path)) {
-//    $path = '/backend';
+//    $path = '/admin';
 //}
 //
-//Router::scope('/admin/backend', ['_namePrefix' => 'admin:backend:', 'prefix' => 'Admin', 'plugin' => 'Backend'], function ($routes) {
+//Router::scope('/admin/admin', ['_namePrefix' => 'admin:admin:', 'prefix' => 'Admin', 'plugin' => 'Admin'], function ($routes) {
 //
 //    //$routes->extensions(['json']);
 //
-//    // admin:backend:auth:login
+//    // admin:admin:auth:login
 //    $routes->connect(
 //        '/login',
-//        ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
+//        ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
 //        ['_name' => 'user:login']
 //    );
 //
-//    // admin:backend:auth:logout
+//    // admin:admin:auth:logout
 //    $routes->connect(
 //        '/logout',
-//        ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
+//        ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
 //        [ '_name' => 'user:logout']
 //    );
 //
-//    // admin:backend:auth:user
+//    // admin:admin:auth:user
 //    $routes->connect(
 //        '/user',
-//        ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user'],
+//        ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
 //        [ '_name' => 'user:profile']
 //    );
 //
-//    // admin:backend:dashboard
+//    // admin:admin:dashboard
 //    $routes->connect(
 //        '/',
-//        ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+//        ['plugin' => 'Admin', 'controller' => 'Dashboard', 'action' => 'index'],
 //        ['_name' => 'dashboard']
 //    );
 //
@@ -51,41 +51,41 @@ use Cake\Routing\Router;
 
 
 /**
- * Backend routes
+ * Admin routes
  */
 //Router::extensions(['json', 'xml']);
-//Router::scope('/backend', ['_namePrefix' => 'admin:backend:', 'prefix' => 'Admin', 'plugin' => 'Backend'], function($routes) {
+//Router::scope('/admin', ['_namePrefix' => 'admin:admin:', 'prefix' => 'Admin', 'plugin' => 'Admin'], function($routes) {
 //
-//    // admin:backend:auth:login
+//    // admin:admin:auth:login
 //    $routes->connect(
 //        '/login',
-//        ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
+//        ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
 //        ['_name' => 'user:login']
 //    );
 //    $routes->connect(
 //        '/login-success',
-//        ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'loginSuccess'],
+//        ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'loginSuccess'],
 //        ['_name' => 'user:loginsuccess']
 //    );
 //
-//    // admin:backend:auth:logout
+//    // admin:admin:auth:logout
 //    $routes->connect(
 //        '/logout',
-//        ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
+//        ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
 //        [ '_name' => 'user:logout']
 //    );
 //
-//    // admin:backend:auth:user
+//    // admin:admin:auth:user
 //    $routes->connect(
 //        '/user',
-//        ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user'],
+//        ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
 //        [ '_name' => 'user:profile']
 //    );
 //
-//    // admin:backend:dashboard
+//    // admin:admin:dashboard
 //    $routes->connect(
 //        '/',
-//        ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+//        ['plugin' => 'Admin', 'controller' => 'Dashboard', 'action' => 'index'],
 //        ['_name' => 'dashboard']
 //    );
 //
@@ -96,7 +96,7 @@ use Cake\Routing\Router;
 //
 //});
 
-//Router::scope($path, [ /*'path' => $path, */ '_namePrefix' => 'admin:backend:', 'prefix' => 'Admin', 'plugin' => 'Backend'], function (\Cake\Routing\RouteBuilder $routes) {
+//Router::scope($path, [ /*'path' => $path, */ '_namePrefix' => 'admin:admin:', 'prefix' => 'Admin', 'plugin' => 'Admin'], function (\Cake\Routing\RouteBuilder $routes) {
 //
 //    $routes->connect('/', ['prefix' => 'Admin', 'controller' => 'Dashboard', 'action' => 'index']);
 //
@@ -104,31 +104,31 @@ use Cake\Routing\Router;
 //
 //        //$routes->extensions(['json']);
 //
-//        // admin:backend:auth:login
+//        // admin:admin:auth:login
 //        $routes->connect(
 //            '/login',
-//            ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'login'],
+//            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
 //            ['_name' => 'user:login']
 //        );
 //
-//        // admin:backend:auth:logout
+//        // admin:admin:auth:logout
 //        $routes->connect(
 //            '/logout',
-//            ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'logout'],
+//            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
 //            [ '_name' => 'user:logout']
 //        );
 //
-//        // admin:backend:auth:user
+//        // admin:admin:auth:user
 //        $routes->connect(
 //            '/user',
-//            ['plugin' => 'Backend', 'controller' => 'Auth', 'action' => 'user'],
+//            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
 //            [ '_name' => 'user:profile']
 //        );
 //
-//        // admin:backend:dashboard
+//        // admin:admin:dashboard
 //        $routes->connect(
 //            '/',
-//            ['plugin' => 'Backend', 'controller' => 'Dashboard', 'action' => 'index'],
+//            ['plugin' => 'Admin', 'controller' => 'Dashboard', 'action' => 'index'],
 //            ['_name' => 'dashboard']
 //        );
 //

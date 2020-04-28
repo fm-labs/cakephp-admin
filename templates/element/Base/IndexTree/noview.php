@@ -7,5 +7,5 @@
  */
 ?>
 <div class="alert alert-info">
-    <?= __d('backend',"This node has no view page"); ?>
+    <?= __d('admin',"This node has no view page"); ?>
 </div>

@@ -1,5 +1,5 @@
 <?php
-$element = ($element) ?: 'Backend.TreeView/list';
+$element = ($element) ?: 'Admin.TreeView/list';
 ?>
 <style>
     .treeview {

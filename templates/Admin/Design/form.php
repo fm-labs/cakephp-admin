@@ -1,11 +1,11 @@
 <?php $this->extend('base'); ?>
 <?php
-$this->assign('title', __d('backend', 'Design Kitchensink'));
-$this->loadHelper('Backend.SwitchControl');
-$this->loadHelper('Backend.SumoSelect');
-$this->loadHelper('Backend.Select2');
-$this->loadHelper('Backend.Chosen');
-$this->loadHelper('Backend.DateRangePicker');
+$this->assign('title', __d('admin', 'Design Kitchensink'));
+$this->loadHelper('Admin.SwitchControl');
+$this->loadHelper('Admin.SumoSelect');
+$this->loadHelper('Admin.Select2');
+$this->loadHelper('Admin.Chosen');
+$this->loadHelper('Admin.DateRangePicker');
 ?>
 <!-- SECTION INPUTS -->
 <div class="section-header">

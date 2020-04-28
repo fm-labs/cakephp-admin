@@ -12,7 +12,7 @@ if (!$item) {
     return;
 }
 
-$item['title'] = (isset($item['title'])) ? $item['title'] : __d('backend','Untitled Menu Item');
+$item['title'] = (isset($item['title'])) ? $item['title'] : __d('admin','Untitled Menu Item');
 $item['url'] = (isset($item['url'])) ? $item['url'] : false;
 $item['attr'] = (isset($item['attr'])) ? $item['attr'] : [];
 
@@ -28,7 +28,7 @@ if (isset($item['_children']) && !empty($item['_children'])): ?>
         </a>
         <ul class="dropdown-menu">
             <?php foreach ($item['_children'] as $child): ?>
-                <?= $this->element('Backend.Menu/menu_item', ['item' => $child, 'level' => $level + 1]); ?>
+                <?= $this->element('Admin.Menu/menu_item', ['item' => $child, 'level' => $level + 1]); ?>
             <?php endforeach; ?>
         </ul>
     </li>

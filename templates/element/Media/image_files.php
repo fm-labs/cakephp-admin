@@ -9,7 +9,7 @@ if (!isset($actions)) $actions = [];
 <?php
 if (!empty($images)) {
     foreach ($images as $imageFile) {
-        $this->element('Backend.Media/image_file', [
+        $this->element('Admin.Media/image_file', [
             'label' => false,
             'image' => $imageFile,
             'imageOptions' => $imageOptions,

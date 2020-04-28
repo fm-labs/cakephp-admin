@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\View;
@@ -19,7 +19,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
     {
         parent::__construct($templates);
 
-        $view->loadHelper('Backend.SumoSelect');
+        $view->loadHelper('Admin.SumoSelect');
     }
 
     /**
@@ -32,7 +32,7 @@ class SumoSelectBoxWidget extends SelectBoxWidget
             $data['id'] = uniqid('sumoselect');
         }
 
-        $placeholderTxt = __d('backend', 'Select Here');
+        $placeholderTxt = __d('admin', 'Select Here');
         if (isset($data['empty']) && is_string($data['empty'])) {
             $placeholderTxt = $data['empty'];
             //$data['empty'] = true;
@@ -45,12 +45,12 @@ class SumoSelectBoxWidget extends SelectBoxWidget
             'showTitle' => true, //(boolean) set to false to prevent title (tooltip) from appearing (deafult true)
             'up' => false, //(boolean) the direction in which to open the dropdown (default: false)
             'search' => true, // (boolean) To enable searching in sumoselect (default is false).
-            'searchText' => __d('backend', 'Search ...'), // (string) placeholder for search input.
-            'noMatch' => __d('backend', 'No matches for "{0}"'), // (string) placeholder to display if no itmes matches the search term
-            'locale' => [__d('backend', 'OK'), __d('backend', 'Cancel'), __d('backend', 'Select All')], // (array) the text used in plugin
+            'searchText' => __d('admin', 'Search ...'), // (string) placeholder for search input.
+            'noMatch' => __d('admin', 'No matches for "{0}"'), // (string) placeholder to display if no itmes matches the search term
+            'locale' => [__d('admin', 'OK'), __d('admin', 'Cancel'), __d('admin', 'Select All')], // (array) the text used in plugin
             'placeholder' => $placeholderTxt, //  The palceholder text to be displayed in the rendered select widget
-            'captionFormat' => __d('backend', '{0} Selected'), // (string) Its the format in which you want to see the caption when more than csvDispCount items are selected.
-            'captionFormatAllSelected' => __d('backend', '{0} all selected!'), // (string) Format of caption text when all elements are selected.
+            'captionFormat' => __d('admin', '{0} Selected'), // (string) Its the format in which you want to see the caption when more than csvDispCount items are selected.
+            'captionFormatAllSelected' => __d('admin', '{0} all selected!'), // (string) Format of caption text when all elements are selected.
             //'csvDispCount' => 3,
             //'floatWidth' => 400,
         ];

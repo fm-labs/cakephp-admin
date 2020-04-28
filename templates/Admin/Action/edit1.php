@@ -19,7 +19,7 @@ $inputOptions = $this->get('inputs.options', []);
 /**
  * Helpers
  */
-$this->loadHelper('Backend.Chosen');
+$this->loadHelper('Admin.Chosen');
 $this->loadHelper('Bootstrap.Tabs');
 ?>
 <div class="edit">
@@ -35,11 +35,11 @@ $this->loadHelper('Bootstrap.Tabs');
                     <?php if ($this->fetch('content')) {
                         echo $this->fetch('content');
                     } else {
-                        //echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render();
+                        //echo $this->cell('Admin.EntityView', [ $entity ], $viewOptions)->render();
 
                         echo $this->Form->create($entity, $formOptions);
                         echo $this->Form->allControls($inputFields, $inputOptions);
-                        echo $this->Form->button(__d('backend','Submit'));
+                        echo $this->Form->button(__d('admin','Submit'));
                         echo $this->Form->end();
                     }
                     ?>

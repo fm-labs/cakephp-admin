@@ -72,5 +72,5 @@ if (!getenv('db_dsn')) {
 }
 ConnectionManager::setConfig('test', ['url' => getenv('db_dsn')]);
 
-//Plugin::getCollection()->add(new \Backend\Plugin());
+//Plugin::getCollection()->add(new \Admin\Plugin());
 */

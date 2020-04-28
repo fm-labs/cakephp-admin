@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Service;
+namespace Admin\Service;
 
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
@@ -59,7 +59,7 @@ class ServiceRegistry extends ObjectRegistry
      * @param string $class The classname to create.
      * @param string $alias The alias of the service.
      * @param array $config An array of config to use for the service.
-     * @return \Backend\BackendService The constructed service class.
+     * @return \Admin\AdminService The constructed service class.
      */
     protected function _create($class, $alias, $config)
     {

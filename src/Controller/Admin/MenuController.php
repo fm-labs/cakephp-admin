@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Admin;
+namespace Admin\Controller\Admin;
 
 use Banana\Menu\Menu;
 use Cake\Event\Event;
@@ -14,8 +14,8 @@ class MenuController extends AppController
     {
 
         $menu = new Menu();
-        $this->getEventManager()->dispatch(new Event('Backend.Sidebar.build', $menu, ['request' => $this->request]));
-        $this->set('backend.sidebar.menu', $menu);
+        $this->getEventManager()->dispatch(new Event('Admin.Sidebar.build', $menu, ['request' => $this->request]));
+        $this->set('admin.sidebar.menu', $menu);
 
         /*
         $menu = new Menu();

@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Auth;
+namespace Admin\Auth;
 
 use Cake\Auth\BaseAuthorize;
 use Cake\Controller\ComponentRegistry;
 use Cake\Core\Configure;
 
 /**
- * Class BackendAuthorize
+ * Class AdminAuthorize
  * s
- * @package Backend\Auth
+ * @package Admin\Auth
  */
-class BackendAuthorize extends BaseAuthorize
+class AdminAuthorize extends BaseAuthorize
 {
     /**
      * {@inheritDoc}
@@ -45,10 +45,10 @@ class BackendAuthorize extends BaseAuthorize
             return true;
         }
 
-        // configured backend users
+        // configured admin users
         //@TODO Refactor this dirty UserId-hack with http basic auth
-        $backendUsers = (array)Configure::read('Backend.Users');
-        if (in_array($user['username'], $backendUsers)) {
+        $adminUsers = (array)Configure::read('Admin.Users');
+        if (in_array($user['username'], $adminUsers)) {
             return true;
         }
 

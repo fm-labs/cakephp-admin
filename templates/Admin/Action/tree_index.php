@@ -1,13 +1,13 @@
 <?php
-$this->loadHelper('Backend.Chosen');
-$this->loadHelper('Backend.DataTable');
+$this->loadHelper('Admin.Chosen');
+$this->loadHelper('Admin.DataTable');
 
-//$this->Toolbar->addLink(__d('backend','Add'), ['action' => 'add'], ['class' => 'add']);
+//$this->Toolbar->addLink(__d('admin','Add'), ['action' => 'add'], ['class' => 'add']);
 ?>
 <div class="index">
     <div class="box">
         <div class="box-body">
-            <?php //echo $this->cell('Backend.DataTable', [$this->get('dataTable'), $this->get('result')->toArray()]); ?>
+            <?php //echo $this->cell('Admin.DataTable', [$this->get('dataTable'), $this->get('result')->toArray()]); ?>
             <?php
             $this->DataTable->create($this->get('dataTable'), $this->get('result'));
             echo $this->DataTable->renderAll();

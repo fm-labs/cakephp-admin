@@ -14,16 +14,16 @@ $viewOptions = (array) $this->get('viewOptions');
 /**
  * Helpers
  */
-$this->loadHelper('Backend.Chosen');
-$this->loadHelper('Backend.DataTable');
+$this->loadHelper('Admin.Chosen');
+$this->loadHelper('Admin.DataTable');
 $this->loadHelper('Bootstrap.Tabs');
 ?>
 <div class="view">
 
     <div class="alert alert-default">
-        <strong><?= __d('backend', 'Confirm deletion'); ?></strong>
+        <strong><?= __d('admin', 'Confirm deletion'); ?></strong>
         <p>
-            <?= $this->Form->postButton(__d('backend', 'Permanently delete record'), ['action' => 'delete', $entity->id], [
+            <?= $this->Form->postButton(__d('admin', 'Permanently delete record'), ['action' => 'delete', $entity->id], [
                 'data' => ['confirm' => true],
                 'form' => [],
                 'class' => 'btn btn-primary btn-danger btn-lg'
@@ -36,7 +36,7 @@ $this->loadHelper('Bootstrap.Tabs');
     if ($this->fetch('content')) {
         echo $this->fetch('content');
     } else {
-        echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render('table');
+        echo $this->cell('Admin.EntityView', [ $entity ], $viewOptions)->render('table');
     }
     ?>
 

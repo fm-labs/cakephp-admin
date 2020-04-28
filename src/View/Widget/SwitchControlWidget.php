@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Bootstrap\View\Widget\BasicWidget;
 use Cake\View\Form\ContextInterface;
@@ -17,7 +17,7 @@ class SwitchControlWidget extends CheckboxWidget
     {
         parent::__construct($templates);
 
-        //$view->loadHelper('Backend.SwitchControl');
+        //$view->loadHelper('Admin.SwitchControl');
     }
 
     /**

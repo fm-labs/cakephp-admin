@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 class IndexFilterAction extends IndexAction
 {
-    public $template = 'Backend.index';
+    public $template = 'Admin.index';
 
     public function getLabel()
     {
-        return __d('backend', "Filter");
+        return __d('admin', "Filter");
     }
 
     public function _fetchResult()

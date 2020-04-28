@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Service;
+namespace Admin\Service;
 
-use Backend\BackendService;
+use Admin\AdminService;
 use Cake\Event\Event;
 
-class TreeService extends BackendService
+class TreeService extends AdminService
 {
     /**
      * {@inheritDoc}
@@ -14,20 +14,20 @@ class TreeService extends BackendService
     public function implementedEvents(): array
     {
         return [
-            'Backend.Controller.setupActions' => ['callable' => function (Event $event) {
+            'Admin.Controller.setupActions' => ['callable' => function (Event $event) {
 
                 $modelClass = $event->getSubject()->modelClass;
                 if ($modelClass) {
                     $Model = $event->getSubject()->loadModel($modelClass);
                     if ($Model->behaviors()->has('Tree')) {
-                        $event->getData('actions')['index'] = 'Backend.TreeIndex';
-                        //$event->getData('actions')['view']     = 'Backend.View';
-                        //$event->getData('actions')['edit']     = 'Backend.Edit';
-                        //$event->getData('actions')['delete']   = 'Backend.Delete';
-                        //$event->getData('actions')['moveup']   = 'Backend.TreeMoveUp';
-                        //$event->getData('actions')['movedown'] = 'Backend.TreeMoveDown';
-                        $event->getData('actions')['sort'] = 'Backend.TreeSort';
-                        //$event->getData('actions')['repair'] = 'Backend.TreeRepair';
+                        $event->getData('actions')['index'] = 'Admin.TreeIndex';
+                        //$event->getData('actions')['view']     = 'Admin.View';
+                        //$event->getData('actions')['edit']     = 'Admin.Edit';
+                        //$event->getData('actions')['delete']   = 'Admin.Delete';
+                        //$event->getData('actions')['moveup']   = 'Admin.TreeMoveUp';
+                        //$event->getData('actions')['movedown'] = 'Admin.TreeMoveDown';
+                        $event->getData('actions')['sort'] = 'Admin.TreeSort';
+                        //$event->getData('actions')['repair'] = 'Admin.TreeRepair';
                     }
                 }
             }],

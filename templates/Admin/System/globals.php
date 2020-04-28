@@ -1,8 +1,8 @@
-<?php $this->Breadcrumbs->add(__d('backend', 'Backend'), ['controller' => 'Backend', 'action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('backend', 'Systeminfo'), ['action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('backend', 'Globals')); ?>
+<?php $this->Breadcrumbs->add(__d('admin', 'Admin'), ['controller' => 'Admin', 'action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('admin', 'Systeminfo'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('admin', 'Globals')); ?>
 <div class="view">
-    <h2><?php echo __d('backend', 'CAKEPHP Globals'); ?></h2>
+    <h2><?php echo __d('admin', 'CAKEPHP Globals'); ?></h2>
     <table class="table table-striped table-hover">
         <?php foreach ($globals as $global) : ?>
             <tr>

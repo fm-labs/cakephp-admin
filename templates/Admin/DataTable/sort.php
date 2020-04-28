@@ -1,6 +1,6 @@
-<?php $this->Html->script('/backend/libs/jquery-ui/jquery-ui.min.js', ['block' => true]); ?>
+<?php $this->Html->script('/admin/libs/jquery-ui/jquery-ui.min.js', ['block' => true]); ?>
 <div class="data-table data-table-sort">
-    <?= $this->cell('Backend.DataTable', [[
+    <?= $this->cell('Admin.DataTable', [[
         'paginate' => false,
         'sortable' => true,
         'sortUrl' => ['action' => 'tableSort'],
@@ -15,8 +15,8 @@
         ],
 
         'rowActions' => [
-            [__d('backend','Move Up'), ['controller' => 'Posts', 'action' => 'moveUp', ':id'], ['class' => 'move up']],
-            [__d('backend','Move Down'), ['controller' => 'Posts', 'action' => 'moveDown', ':id'], ['class' => 'move down']],
+            [__d('admin','Move Up'), ['controller' => 'Posts', 'action' => 'moveUp', ':id'], ['class' => 'move up']],
+            [__d('admin','Move Down'), ['controller' => 'Posts', 'action' => 'moveDown', ':id'], ['class' => 'move down']],
         ]
     ]]);
     ?>

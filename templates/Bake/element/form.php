@@ -6,22 +6,22 @@ $fields = collection($fields)
         return $schema->getColumnType($field) !== 'binary';
     });
 %>
-<?php $this->Breadcrumbs->add(__d('backend','<%= $pluralHumanName %>'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('admin','<%= $pluralHumanName %>'), ['action' => 'index']); ?>
 <% if (strpos($action, 'add') === false): %>
-<?php $this->Breadcrumbs->add(__d('backend','Edit {0}', __d('backend','<%= $singularHumanName %>'))); ?>
+<?php $this->Breadcrumbs->add(__d('admin','Edit {0}', __d('admin','<%= $singularHumanName %>'))); ?>
 <% else: %>
-<?php $this->Breadcrumbs->add(__d('backend','New {0}', __d('backend','<%= $singularHumanName %>'))); ?>
+<?php $this->Breadcrumbs->add(__d('admin','New {0}', __d('admin','<%= $singularHumanName %>'))); ?>
 <% endif; %>
 <% if (strpos($action, 'add') === false): %>
 <?php $this->Toolbar->addPostLink(
-    __d('backend','Delete'),
+    __d('admin','Delete'),
     ['action' => 'delete', $<%= $singularVar %>-><%= $primaryKey[0] %>],
-    ['data-icon' => 'trash', 'confirm' => __d('backend','Are you sure you want to delete # {0}?', $<%= $singularVar %>-><%= $primaryKey[0] %>)]
+    ['data-icon' => 'trash', 'confirm' => __d('admin','Are you sure you want to delete # {0}?', $<%= $singularVar %>-><%= $primaryKey[0] %>)]
 )
 ?>
 <% endif; %>
 <?php $this->Toolbar->addLink(
-    __d('backend','List {0}', __d('backend','<%= $pluralHumanName %>')),
+    __d('admin','List {0}', __d('admin','<%= $pluralHumanName %>')),
     ['action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
@@ -33,13 +33,13 @@ foreach ($associations as $type => $data) {
         if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
 %>
 <?php $this->Toolbar->addLink(
-    __d('backend','List {0}', __d('backend','<%= $this->_pluralHumanName($alias) %>')),
+    __d('admin','List {0}', __d('admin','<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'index'],
     ['data-icon' => 'list']
 ) %>
 
 <?php $this->Toolbar->addLink(
-    __d('backend','New {0}', __d('backend','<%= $this->_singularHumanName($alias) %>')),
+    __d('admin','New {0}', __d('admin','<%= $this->_singularHumanName($alias) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'add'],
     ['data-icon' => 'plus']
 ) %>
@@ -52,7 +52,7 @@ foreach ($associations as $type => $data) {
 <?php $this->Toolbar->endGroup(); ?>
 <div class="form">
     <h2 class="ui header">
-        <?= __d('backend','<%= Inflector::humanize($action) %> {0}', __d('backend','<%= $singularHumanName %>')) ?>
+        <?= __d('admin','<%= Inflector::humanize($action) %> {0}', __d('admin','<%= $singularHumanName %>')) ?>
     </h2>
     <?= $this->Form->create($<%= $singularVar %>, ['class' => 'no-ajax']); ?>
         <div class="ui form">
@@ -99,7 +99,7 @@ foreach ($associations as $type => $data) {
         ?>
         </div>
 
-    <?= $this->Form->button(__d('backend','Submit')) ?>
+    <?= $this->Form->button(__d('admin','Submit')) ?>
     <?= $this->Form->end() ?>
 
 </div>

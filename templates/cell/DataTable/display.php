@@ -1,6 +1,6 @@
 <?php
-$this->loadHelper('Backend.DataTable');
-//$this->loadHelper('Backend.DataTableJs');
+$this->loadHelper('Admin.DataTable');
+//$this->loadHelper('Admin.DataTableJs');
 
 if (empty($dataTable['class'])) {
     $dataTable['class'] = 'table table-condensed table-striped table-hover';

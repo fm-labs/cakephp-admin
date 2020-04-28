@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action\Interfaces;
+namespace Admin\Action\Interfaces;
 
 use Cake\Datasource\EntityInterface;
 
 /**
  * Interface EntityActionInterface
  *
- * @package Backend\Action\Interfaces
+ * @package Admin\Action\Interfaces
  */
 interface EntityActionInterface extends ActionInterface
 {

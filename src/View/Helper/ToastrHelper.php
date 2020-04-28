@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\Event\Event;
 use Cake\Utility\Inflector;
@@ -9,7 +9,7 @@ use Cake\View\Helper;
 
 /**
  * Class ToastrHelper
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  *
  * @property \Cake\View\Helper\HtmlHelper $Html
  */
@@ -22,8 +22,8 @@ class ToastrHelper extends Helper
      */
     public function initialize(array $config): void
     {
-        $this->Html->css('/backend/libs/toastr/toastr.css', ['block' => true]);
-        $this->Html->script('/backend/libs/toastr/toastr.min.js', ['block' => true]);
+        $this->Html->css('/admin/libs/toastr/toastr.css', ['block' => true]);
+        $this->Html->script('/admin/libs/toastr/toastr.min.js', ['block' => true]);
 
         // set global toastr options
         // @TODO Make toastr js global options configurable
@@ -34,14 +34,14 @@ class ToastrHelper extends Helper
     }
 
     /**
-     * Automatically render 'backend' and default flash messages as toastr messages.
+     * Automatically render 'admin' and default flash messages as toastr messages.
      *
      * @param \Cake\Event\Event $event The event object
      * @return void
      */
     public function beforeLayout(Event $event)
     {
-        $this->flash('backend', ['block' => true]);
+        $this->flash('admin', ['block' => true]);
         $this->flash('flash', ['block' => true]);
     }
 

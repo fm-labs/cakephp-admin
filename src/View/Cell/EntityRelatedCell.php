@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Cell;
+namespace Admin\View\Cell;
 
 use Cake\View\Cell;
 
@@ -45,7 +45,7 @@ class EntityRelatedCell extends Cell
                     //debug($assoc->type() . ": associated property not set: " . $assoc->getProperty());
 
                     $elements[] = [
-                        'title' => __d('backend', 'Related {0}', $assoc->getName()),
+                        'title' => __d('admin', 'Related {0}', $assoc->getName()),
                         'render' => 'content',
                         'content' => sprintf("Associated property not set: %s (%s)", $assoc->getProperty(), $assoc->type()),
                     ];
@@ -53,7 +53,7 @@ class EntityRelatedCell extends Cell
                 }
 
                 $relatedEntity = $entity->get($assoc->getProperty());
-                $title = __d('backend', 'Related {0}', $assoc->getName());
+                $title = __d('admin', 'Related {0}', $assoc->getName());
 
                 switch ($assoc->type()) {
                     case \Cake\ORM\Association::MANY_TO_ONE:
@@ -61,9 +61,9 @@ class EntityRelatedCell extends Cell
                         $config = ['title' => $title] + $relatedConfig;
 
                         $elements[] = [
-                            'title' => __d('backend', 'Related {0}', $assoc->getName()),
+                            'title' => __d('admin', 'Related {0}', $assoc->getName()),
                             'render' => 'cell',
-                            'cell' => 'Backend.EntityView',
+                            'cell' => 'Admin.EntityView',
                             'cellParams' => [ $relatedEntity ],
                             'cellOptions' => $config,
                             'cellTemplate' => 'table',
@@ -81,7 +81,7 @@ class EntityRelatedCell extends Cell
                         ], $relatedConfig);
 
                         $elements[] = [
-                            'title' => __d('backend', 'Related {0}', $assoc->getName()),
+                            'title' => __d('admin', 'Related {0}', $assoc->getName()),
                             'render' => 'table',
                             'tableOptions' => $dataTable,
                         ];
@@ -89,7 +89,7 @@ class EntityRelatedCell extends Cell
 
                     case \Cake\ORM\Association::MANY_TO_MANY:
                     default:
-                        //$html = __d('backend', 'Association type not implemented {0}', $assoc->type());
+                        //$html = __d('admin', 'Association type not implemented {0}', $assoc->type());
                         break;
                 }
             }

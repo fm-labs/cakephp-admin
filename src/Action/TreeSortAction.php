@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 
 /**
  * Class TreeSortAction
- * @package Backend\Action
+ * @package Admin\Action
  */
 class TreeSortAction extends IndexAction
 {
@@ -16,7 +16,7 @@ class TreeSortAction extends IndexAction
      */
     public function getLabel()
     {
-        return __d('backend', 'Sort');
+        return __d('admin', 'Sort');
     }
 
     /**
@@ -34,17 +34,17 @@ class TreeSortAction extends IndexAction
     {
         try {
             if (!$this->model()->behaviors()->has('Tree')) {
-                $controller->Flash->error(__d('backend', 'Model {0} has no Tree behavior attached', $controller->modelClass));
+                $controller->Flash->error(__d('admin', 'Model {0} has no Tree behavior attached', $controller->modelClass));
             }
         } catch (\Exception $ex) {
-            $controller->Flash->error(__d('backend', 'Failed to load model {0}', $this->model()->getAlias()));
+            $controller->Flash->error(__d('admin', 'Failed to load model {0}', $this->model()->getAlias()));
 
             return;
         }
 
-        $controller->set('dataUrl', ['plugin' => 'Backend', 'controller' => 'Tree', 'action' => 'jstreeData', 'model' => $controller->modelClass]);
-        $controller->set('sortUrl', ['plugin' => 'Backend', 'controller' => 'Tree', 'action' => 'jstreeSort', 'model' => $controller->modelClass]);
+        $controller->set('dataUrl', ['plugin' => 'Admin', 'controller' => 'Tree', 'action' => 'jstreeData', 'model' => $controller->modelClass]);
+        $controller->set('sortUrl', ['plugin' => 'Admin', 'controller' => 'Tree', 'action' => 'jstreeSort', 'model' => $controller->modelClass]);
 
-        return $controller->render('Backend.tree_sort');
+        return $controller->render('Admin.tree_sort');
     }
 }

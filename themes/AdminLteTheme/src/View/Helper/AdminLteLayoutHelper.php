@@ -10,7 +10,7 @@ class AdminLteLayoutHelper extends Helper
 
     public function beforeLayout(Event $event)
     {
-        // AdminLTE layout options @TODO Move to AdminLTE Backend Theme
+        // AdminLTE layout options @TODO Move to AdminLTE Admin Theme
         $themeSkinClass = (Configure::read('AdminLteTheme.skin_class')) ?: 'skin-blue';
         $themeLayoutClass = (Configure::read('AdminLteTheme.layout_class')) ?: '';
         $themeSidebarClass = (Configure::read('AdminLteTheme.sidebar_class')) ?: 'sidebar-mini';

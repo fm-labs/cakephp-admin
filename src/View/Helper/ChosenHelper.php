@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\View\Helper;
 
 /**
  * Class ChosenHelper
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  *
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Cake\View\Helper\FormHelper $Form
@@ -21,9 +21,9 @@ class ChosenHelper extends Helper
      */
     public function initialize(array $config): void
     {
-        $this->Html->css('/backend/libs/chosen/chosen', ['block' => true]);
-        $this->Html->script('/backend/libs/chosen/chosen.jquery', ['block' => 'script']);
+        $this->Html->css('/admin/libs/chosen/chosen', ['block' => true]);
+        $this->Html->script('/admin/libs/chosen/chosen.jquery', ['block' => 'script']);
 
-        $this->Form->addWidget('chosen', ['Backend\View\Widget\ChosenSelectBoxWidget', '_view']);
+        $this->Form->addWidget('chosen', ['Admin\View\Widget\ChosenSelectBoxWidget', '_view']);
     }
 }

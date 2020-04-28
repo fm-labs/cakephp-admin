@@ -1,10 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
-use Backend\Action\Interfaces\EntityActionInterface;
-use Backend\Action\Traits\EntityActionFilterTrait;
+use Admin\Action\Interfaces\EntityActionInterface;
+use Admin\Action\Traits\EntityActionFilterTrait;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\I18n\I18n;

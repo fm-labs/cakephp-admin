@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Admin;
+namespace Admin\Controller\Admin;
 
 use Cake\Filesystem\File;
 use Cake\Filesystem\Folder;
@@ -9,7 +9,7 @@ use Cake\Filesystem\Folder;
 /**
  * Class LogsController
  *
- * @package Backend\Controller\Admin
+ * @package Admin\Controller\Admin
  */
 class LogsController extends AppController
 {
@@ -77,7 +77,7 @@ class LogsController extends AppController
             array_push($files, $file);
         }
 
-        //$logRotation = Configure::read('Backend.LogRotation');
+        //$logRotation = Configure::read('Admin.LogRotation');
         $logRotation = [];
 
         $this->set(compact('files', 'logRotation'));
@@ -91,13 +91,13 @@ class LogsController extends AppController
     public function view($logFile = null)
     {
         if (!$logFile) {
-            $this->Flash->error(__d('backend', 'No logFile selected'));
+            $this->Flash->error(__d('admin', 'No logFile selected'));
             $this->redirect(['action' => 'index']);
         }
 
         $filePath = $this->_getFilePath($logFile);
         if (!$filePath || !file_exists($filePath)) {
-            $this->Flash->error(__d('backend', 'Logfile {0} not found in {1}', $logFile, $filePath));
+            $this->Flash->error(__d('admin', 'Logfile {0} not found in {1}', $logFile, $filePath));
             //return $this->redirect(array('action' => 'index'));
             return;
         }
@@ -122,22 +122,22 @@ class LogsController extends AppController
     public function clear($logFile = null)
     {
         if (!$logFile) {
-            $this->Flash->error(__d('backend', 'No logFile selected'));
+            $this->Flash->error(__d('admin', 'No logFile selected'));
             $this->redirect(['action' => 'index']);
         }
 
         $filePath = $this->_getFilePath($logFile);
         if (!$filePath) {
-            $this->Flash->error(__d('backend', 'Logfile {0} not found', $logFile));
+            $this->Flash->error(__d('admin', 'Logfile {0} not found', $logFile));
 
             return $this->redirect($this->referer(['action' => 'index']));
         }
 
         $File = new File($filePath, false);
         if ($File->write("")) {
-            $this->Flash->success(__d('backend', 'Logfile {0} cleared', $logFile));
+            $this->Flash->success(__d('admin', 'Logfile {0} cleared', $logFile));
         } else {
-            $this->Flash->error(__d('backend', 'Failed to clear logFile {0}', $logFile));
+            $this->Flash->error(__d('admin', 'Failed to clear logFile {0}', $logFile));
         }
         $this->redirect(['action' => 'index']);
     }
@@ -150,15 +150,15 @@ class LogsController extends AppController
     public function delete($logFile = null)
     {
         if (!$logFile) {
-            $this->Flash->error(__d('backend', 'No logFile selected'));
+            $this->Flash->error(__d('admin', 'No logFile selected'));
             $this->redirect(['action' => 'index']);
         }
 
         $filePath = $this->_getFilePath($logFile);
         if (unlink($filePath)) {
-            $this->Flash->success(__d('backend', 'Logfile {0} deleted', $logFile));
+            $this->Flash->success(__d('admin', 'Logfile {0} deleted', $logFile));
         } else {
-            $this->Flash->error(__d('backend', 'Logfile {0} could not be deleted', $logFile));
+            $this->Flash->error(__d('admin', 'Logfile {0} could not be deleted', $logFile));
         }
         $this->redirect(['action' => 'index']);
     }
@@ -172,9 +172,9 @@ class LogsController extends AppController
         /*
         $L = new LogRotation($alias);
         if ($L->rotate()) {
-            $this->Flash->success(__d('backend','Ok'));
+            $this->Flash->success(__d('admin','Ok'));
         } else {
-            $this->Flash->error(__d('backend','LogRotation for {0} failed', $alias));
+            $this->Flash->error(__d('admin','LogRotation for {0} failed', $alias));
         }
         */
         $this->Flash->error('LogRotation is deprecated. Use log engine features instead');

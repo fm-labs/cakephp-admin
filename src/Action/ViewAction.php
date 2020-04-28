@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
@@ -28,14 +28,14 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         'tabs' => [],
     ];
 
-    public $template = "Backend.view";
+    public $template = "Admin.view";
 
     /**
      * {@inheritDoc}
      */
     public function getLabel()
     {
-        return __d('backend', 'View');
+        return __d('admin', 'View');
     }
 
     /**
@@ -107,8 +107,8 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         $modelClass = $event->getSubject()->viewVars['modelClass'];
 
         $event->getSubject()->viewVars['tabs']['data'] = [
-            'title' => __d('backend', 'Data'),
-            'url' => ['plugin' => 'Backend', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id],
+            'title' => __d('admin', 'Data'),
+            'url' => ['plugin' => 'Admin', 'controller' => 'Entity', 'action' => 'view', $modelClass, $entity->id],
         ];
     }
 

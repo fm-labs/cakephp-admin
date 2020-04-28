@@ -2,8 +2,8 @@
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 ?>
-<?php $this->loadHelper('Backend.Formatter'); ?>
-<?php $this->loadHelper('Backend.DataTable'); ?>
+<?php $this->loadHelper('Admin.Formatter'); ?>
+<?php $this->loadHelper('Admin.DataTable'); ?>
 <?php $this->loadHelper('Bootstrap.Tabs'); ?>
 <div class="entity-view">
 
@@ -46,7 +46,7 @@ use Cake\Utility\Inflector;
                         echo "- NO RECORD -";
                         break;
                     }
-                    echo $this->cell('Backend.EntityView', [ $_entity, [
+                    echo $this->cell('Admin.EntityView', [ $_entity, [
                         //'model' => $assoc->target()->getAlias()
                     ] ]);
 

@@ -1,4 +1,4 @@
-<?php $this->assign('title', __d('backend', 'Login')); ?>
+<?php $this->assign('title', __d('admin', 'Login')); ?>
 <div class="container">
     <?= $this->Form->create(null, ['class' => 'form-signin', 'horizontal' => false]); ?>
     <h2 class="form-signin-heading">
@@ -7,14 +7,14 @@
 
     <?= $this->Form->control('username', [
         'label' => false,
-        'placeholder' => __d('backend', 'Username')
+        'placeholder' => __d('admin', 'Username')
     ]); ?>
     <?= $this->Form->control('password', [
         'type' => 'password',
         'label' => false,
-        'placeholder' => __d('backend', 'Password')
+        'placeholder' => __d('admin', 'Password')
     ]); ?>
-    <?= $this->Form->button(__d('backend', 'Login'), [
+    <?= $this->Form->button(__d('admin', 'Login'), [
         'class' => 'btn btn-lg btn-primary btn-block'
     ]); ?>
     <?= $this->Form->end(); ?>

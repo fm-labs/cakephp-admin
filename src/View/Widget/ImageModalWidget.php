@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\Widget\BasicWidget;
 
 /**
  * Class ImageModalWidget
- * @package Backend\View\Widget
+ * @package Admin\View\Widget
  * @deprecated Unused class
  */
 class ImageModalWidget extends BasicWidget

@@ -1,7 +1,7 @@
 <header class="main-header">
     <!-- Logo -->
-    <?= '' // $this->element('Backend.layout/admin/header/header_logo'); ?>
+    <?= '' // $this->element('Admin.layout/admin/header/header_logo'); ?>
 
     <!-- Header Navbar -->
-    <?= $this->element('Backend.layout/admin/header/header_navbar'); ?>
+    <?= $this->element('Admin.layout/admin/header/header_navbar'); ?>
 </header>

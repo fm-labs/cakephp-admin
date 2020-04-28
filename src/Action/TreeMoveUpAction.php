@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 
@@ -12,7 +12,7 @@ class TreeMoveUpAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend', 'Move Up');
+        return __d('admin', 'Move Up');
     }
 
     /**
@@ -32,9 +32,9 @@ class TreeMoveUpAction extends BaseEntityAction
             $entity = $this->entity();
 
             if ($this->model()->moveUp($entity)) {
-                $controller->Flash->success(__d('backend', 'The {0} has been moved up.', $this->model()->getAlias()));
+                $controller->Flash->success(__d('admin', 'The {0} has been moved up.', $this->model()->getAlias()));
             } else {
-                $controller->Flash->error(__d('backend', 'The {0} could not be moved. Please, try again.', $this->model()->getAlias()));
+                $controller->Flash->error(__d('admin', 'The {0} could not be moved. Please, try again.', $this->model()->getAlias()));
             }
         } else {
             $controller->Flash->error('Tree behavior not loaded for model ' . $this->model()->getAlias());

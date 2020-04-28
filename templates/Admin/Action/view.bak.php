@@ -15,7 +15,7 @@ $viewOptions = (array) $this->get('viewOptions');
 /**
  * Helpers
  */
-$this->loadHelper('Backend.Chosen');
+$this->loadHelper('Admin.Chosen');
 $this->loadHelper('Bootstrap.Tabs');
 ?>
 <div class="view">
@@ -24,7 +24,7 @@ $this->loadHelper('Bootstrap.Tabs');
     <?php if ($this->fetch('content')) {
         echo $this->fetch('content');
     } else {
-        echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render();
+        echo $this->cell('Admin.EntityView', [ $entity ], $viewOptions)->render();
     }
     ?>
 

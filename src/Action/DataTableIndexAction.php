@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Routing\Router;
@@ -13,13 +13,13 @@ use Cake\Utility\Inflector;
  *
  * ! Experimental | Unused !
  *
- * @package Backend\Action
+ * @package Admin\Action
  * @internal
  * @codeCoverageIgnore
  */
 class DataTableIndexAction extends IndexAction
 {
-    public $template = 'Backend.data_table_index';
+    public $template = 'Admin.data_table_index';
 
     /**
      * @var array
@@ -191,7 +191,7 @@ class DataTableIndexAction extends IndexAction
 
         // AJAX
         if ($this->_config['ajax']) {
-            //$dataUrl = Router::url(['plugin' => 'Backend', 'controller' => 'DataTables', 'action' => 'ajax', 'model' => $this->_config['modelClass']]);
+            //$dataUrl = Router::url(['plugin' => 'Admin', 'controller' => 'DataTables', 'action' => 'ajax', 'model' => $this->_config['modelClass']]);
             $dataUrl = Router::url(['data' => 1]);
             //$controller->set('dataUrl', $dataUrl);
             $dtjsOpts['ajax'] = $dataUrl;
@@ -217,7 +217,7 @@ class DataTableIndexAction extends IndexAction
         $controller->set('actions', $this->_config['actions']);
         $controller->set('_serialize', ['result']);
 
-        //$controller->render('Backend.data_table_index');
+        //$controller->render('Admin.data_table_index');
     }
 
     /**

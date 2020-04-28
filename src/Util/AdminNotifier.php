@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Util;
+namespace Admin\Util;
 
 use Cake\Core\Configure;
 use Cake\Log\Log;
@@ -40,8 +40,8 @@ class AdminNotifier
     {
         if (Email::getConfig('admin') !== null) {
             $email = new Email('admin');
-        } elseif (Configure::check('Backend.AdminNotifier')) {
-            $email = new Email(Configure::read('Backend.AdminNotifier'));
+        } elseif (Configure::check('Admin.AdminNotifier')) {
+            $email = new Email(Configure::read('Admin.AdminNotifier'));
         } else {
             throw new \Exception("AdminNotifier email configuration is missing");
         }

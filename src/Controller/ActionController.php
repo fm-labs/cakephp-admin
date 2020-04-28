@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller;
+namespace Admin\Controller;
 
-use Backend\Action\Interfaces\ActionInterface;
+use Admin\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Controller\Exception\MissingActionException;
 use Cake\Event\EventInterface;
@@ -19,7 +19,7 @@ class ActionController extends Controller
 
     /**
      * @param \Cake\Controller\Controller $controller The parent controller instance
-     * @param \Backend\Action\Interfaces\ActionInterface $action The action class instance
+     * @param \Admin\Action\Interfaces\ActionInterface $action The action class instance
      */
     public function __construct(Controller $controller, ActionInterface $action)
     {

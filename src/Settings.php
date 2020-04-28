@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend;
+namespace Admin;
 
 use Settings\SettingsInterface;
 use Settings\SettingsManager;
@@ -10,10 +10,10 @@ class Settings implements SettingsInterface
 {
     public function buildSettings(SettingsManager $settings)
     {
-        $settings->load('Backend.settings');
-        $settings->add('Backend', [
-            'Backend.CodeEditor.Ace.theme' => [
-                'group' => 'backend_form',
+        $settings->load('Admin.settings');
+        $settings->add('Admin', [
+            'Admin.CodeEditor.Ace.theme' => [
+                'group' => 'admin_form',
                 'default' => 'twilight',
                 'input' => [
                     'type' => 'select',

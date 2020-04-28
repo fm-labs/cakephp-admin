@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
-use Backend\Action\Interfaces\ActionInterface;
+use Admin\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 
 class DashboardAction implements ActionInterface
@@ -13,7 +13,7 @@ class DashboardAction implements ActionInterface
      */
     public function getLabel()
     {
-        return __d('backend', 'Dashboard');
+        return __d('admin', 'Dashboard');
     }
 
     /**

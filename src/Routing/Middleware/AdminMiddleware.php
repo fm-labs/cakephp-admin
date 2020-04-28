@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Routing\Middleware;
+namespace Admin\Routing\Middleware;
 
-use Backend\Backend;
+use Admin\Admin;
 use Cake\Routing\Router;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -12,7 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * Applies routing rules to the request and creates the controller
  * instance if possible.
  */
-class BackendMiddleware
+class AdminMiddleware
 {
     protected $_iframe = false;
 
@@ -40,7 +40,7 @@ class BackendMiddleware
     {
         $params = $request->getServerParams();
 
-        $urlPrefix = '/' . trim(Backend::$urlPrefix, '/') . '/';
+        $urlPrefix = '/' . trim(Admin::$urlPrefix, '/') . '/';
         if (isset($params['REQUEST_URI']) && preg_match('/^' . preg_quote($urlPrefix, '/') . '/', $params['REQUEST_URI'])) {
             // iframe detection
             $query = $request->getQueryParams();

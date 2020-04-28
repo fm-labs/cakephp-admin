@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
@@ -12,7 +12,7 @@ use Cake\View\Helper;
 
 /**
  * Class FormatHelper
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  *
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Cake\View\Helper\NumberHelper $Number
@@ -137,7 +137,7 @@ class FormatterHelper extends Helper
 
         // array
         self::register('array', function ($val, $extra, $params, $view) {
-            return $view->element('Backend.array_to_list', ['array' => $val]);
+            return $view->element('Admin.array_to_list', ['array' => $val]);
         });
         self::register('json', function ($val, $extra, $params, $view) {
             if (is_string($val)) {
@@ -152,7 +152,7 @@ class FormatterHelper extends Helper
                 }
             }
 
-            return $view->element('Backend.array_to_list', ['array' => $val]);
+            return $view->element('Admin.array_to_list', ['array' => $val]);
         });
 
         // NULL

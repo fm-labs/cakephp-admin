@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action\Interfaces;
+namespace Admin\Action\Interfaces;
 
 /**
  * Interface IndexActionInterface
  *
- * @package Backend\Action\Interfaces
+ * @package Admin\Action\Interfaces
  */
 interface IndexActionInterface extends ActionInterface
 {

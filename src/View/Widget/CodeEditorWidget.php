@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Cake\Core\Configure;
 use Cake\View\Form\ContextInterface;
@@ -14,7 +14,7 @@ use Cake\View\Widget\TextareaWidget;
  * Code editor widget using Ace - The high performance code editor for the web
  * @link https://ace.c9.io/
  *
- * @package Backend\View\Widget
+ * @package Admin\View\Widget
  */
 class CodeEditorWidget extends TextareaWidget
 {
@@ -52,14 +52,14 @@ class CodeEditorWidget extends TextareaWidget
     {
         parent::__construct($templates);
         $this->_View = $view;
-        $this->_View->loadHelper('Backend.Backbone');
-        $this->_View->loadHelper('Backend.CodeEditor');
+        $this->_View->loadHelper('Admin.Backbone');
+        $this->_View->loadHelper('Admin.CodeEditor');
 
         $this->_templates->add([
             'codeeditor_editor' => '<div{{attrs}}>{{value}}</div>',
         ]);
 
-        $this->_config = (array)Configure::read('Backend.CodeEditor.Ace');
+        $this->_config = (array)Configure::read('Admin.CodeEditor.Ace');
     }
 
     /**

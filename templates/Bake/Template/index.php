@@ -7,9 +7,9 @@ $fields = collection($fields)
     })
     ->take(7);
 %>
-<?php $this->Breadcrumbs->add(__d('backend','<%= $pluralHumanName %>')); ?>
+<?php $this->Breadcrumbs->add(__d('admin','<%= $pluralHumanName %>')); ?>
 
-<?php $this->Toolbar->addLink(__d('backend','New {0}', __d('backend','<%= $singularHumanName %>')), ['action' => 'add'], ['data-icon' => 'plus']); ?>
+<?php $this->Toolbar->addLink(__d('admin','New {0}', __d('admin','<%= $singularHumanName %>')), ['action' => 'add'], ['data-icon' => 'plus']); ?>
 <%
 $done = [];
 foreach ($associations as $type => $data):
@@ -17,12 +17,12 @@ foreach ($associations as $type => $data):
         if ($details['controller'] != $this->name && !in_array($details['controller'], $done)):
 %>
 <?php $this->Toolbar->addLink(
-    __d('backend','List {0}', __d('backend','<%= $this->_pluralHumanName($alias) %>')),
+    __d('admin','List {0}', __d('admin','<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details["controller"] %>', 'action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
 <?php $this->Toolbar->addLink(
-    __d('backend','New {0}', __d('backend','<%= $this->_singularHumanName($alias) %>')),
+    __d('admin','New {0}', __d('admin','<%= $this->_singularHumanName($alias) %>')),
     ['controller' => '<%= $details["controller"] %>', 'action' => 'add'],
     ['data-icon' => 'plus']
 ) ?>
@@ -41,16 +41,16 @@ endforeach;
     }
     %>
     ] ?>
-    <?= $this->cell('Backend.DataTable', [[
+    <?= $this->cell('Admin.DataTable', [[
         'paginate' => true,
         'model' => '<%= $modelClass %>',
         'data' => $<%= $pluralVar %>,
         'fields' => $fields,
         'debug' => true,
         'rowActions' => [
-            [__d('backend','View'), ['action' => 'view', ':id'], ['class' => 'view']],
-            [__d('backend','Edit'), ['action' => 'edit', ':id'], ['class' => 'edit']],
-            [__d('backend','Delete'), ['action' => 'delete', ':id'], ['class' => 'delete', 'confirm' => __d('backend','Are you sure you want to delete # {0}?', ':id')]]
+            [__d('admin','View'), ['action' => 'view', ':id'], ['class' => 'view']],
+            [__d('admin','Edit'), ['action' => 'edit', ':id'], ['class' => 'edit']],
+            [__d('admin','Delete'), ['action' => 'delete', ':id'], ['class' => 'delete', 'confirm' => __d('admin','Are you sure you want to delete # {0}?', ':id')]]
         ]
     ]]);
     ?>

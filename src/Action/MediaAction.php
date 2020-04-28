@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 
 /**
  * Class MediaAction
  *
- * @package Backend\Action
+ * @package Admin\Action
  */
 class MediaAction extends BaseEntityAction
 {
@@ -19,7 +19,7 @@ class MediaAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend', 'Media');
+        return __d('admin', 'Media');
     }
 
     /**

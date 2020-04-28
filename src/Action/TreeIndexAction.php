@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 
@@ -9,7 +9,7 @@ class TreeIndexAction extends IndexAction
 {
     public function getLabel()
     {
-        return __d('backend', 'Index');
+        return __d('admin', 'Index');
     }
 
     public function _execute(Controller $controller)
@@ -30,7 +30,7 @@ class TreeIndexAction extends IndexAction
             $this->_config['fields.whitelist'] = true;
         }
 
-        //$controller->viewBuilder()->setTemplate('Backend.tree_index');
+        //$controller->viewBuilder()->setTemplate('Admin.tree_index');
 
         parent::_execute($controller);
     }

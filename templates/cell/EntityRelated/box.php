@@ -1,5 +1,5 @@
-<?php $this->loadHelper('Backend.DataTable'); ?>
-<?php $this->loadHelper('Backend.Box'); ?>
+<?php $this->loadHelper('Admin.DataTable'); ?>
+<?php $this->loadHelper('Admin.Box'); ?>
 <?php foreach ($elements as $element) : ?>
     <div class="related">
         <?php $this->Box->create($element['title']); ?>

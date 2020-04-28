@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\Event\Event;
 use Cake\View\Helper;
 
 /**
  * Class JsTreeHelper
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class JsTreeHelper extends Helper
@@ -21,7 +21,7 @@ class JsTreeHelper extends Helper
      */
     public function beforeLayout(Event $event)
     {
-        $this->Html->css('/backend/css/jstree/themes/backend/style', ['block' => true]);
-        $this->Html->script('/backend/libs/jstree/jstree.min', ['block' => 'script']);
+        $this->Html->css('/admin/css/jstree/themes/admin/style', ['block' => true]);
+        $this->Html->script('/admin/libs/jstree/jstree.min', ['block' => 'script']);
     }
 }

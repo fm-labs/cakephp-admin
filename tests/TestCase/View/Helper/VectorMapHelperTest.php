@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Test\TestCase\View\Helper;
+namespace Admin\Test\TestCase\View\Helper;
 
-use Backend\View\Helper\VectorMapHelper;
+use Admin\View\Helper\VectorMapHelper;
 use Cake\TestSuite\TestCase;
 use Cake\View\View;
 
 /**
- * Backend\View\Helper\VectorMapHelper Test Case
+ * Admin\View\Helper\VectorMapHelper Test Case
  */
 class VectorMapHelperTest extends TestCase
 {
     /**
      * Test subject
      *
-     * @var \Backend\View\Helper\VectorMapHelper
+     * @var \Admin\View\Helper\VectorMapHelper
      */
     public $VectorMap;
 

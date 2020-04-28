@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Component;
+namespace Admin\Controller\Component;
 
 use Cake\Controller\Component;
 use Cake\ORM\Table;
 
 /**
  * Class ToggleComponent
- * @package Backend\Controller\Component
+ * @package Admin\Controller\Component
  */
 class ToggleComponent extends Component
 {

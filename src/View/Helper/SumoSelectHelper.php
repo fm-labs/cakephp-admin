@@ -1,15 +1,15 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\View\Helper;
 
 class SumoSelectHelper extends Helper
 {
     protected $_defaultConfig = [
-        'scriptUrl' => '/backend/libs/sumoselect/jquery.sumoselect.min.js',
-        'cssUrl' => '/backend/libs/sumoselect/sumoselect.css',
+        'scriptUrl' => '/admin/libs/sumoselect/jquery.sumoselect.min.js',
+        'cssUrl' => '/admin/libs/sumoselect/sumoselect.css',
         'sumo' => [],
     ];
 
@@ -23,16 +23,16 @@ class SumoSelectHelper extends Helper
         $this->Html->css($this->getConfig('cssUrl'), ['block' => true]);
         $this->Html->script($this->getConfig('scriptUrl'), ['block' => true]);
 
-        $this->Form->addWidget('sumoselect', ['Backend\View\Widget\SumoSelectBoxWidget', '_view']);
+        $this->Form->addWidget('sumoselect', ['Admin\View\Widget\SumoSelectBoxWidget', '_view']);
     }
 
 //    public function selectbox($options = [])
 //    {
 //        $defaultSumo = [
-//            //'placeholder' => __d('backend', 'Select Here'),
+//            //'placeholder' => __d('admin', 'Select Here'),
 //            //'csvDispCount' => 3,
-//            //'captionFormat' => __d('backend', '{0} Selected'),
-//            //'captionFormatAllSelected' => __d('backend', '{0} all selected!'),
+//            //'captionFormat' => __d('admin', '{0} Selected'),
+//            //'captionFormatAllSelected' => __d('admin', '{0} all selected!'),
 //        ];
 //
 //        $options = array_merge($defaultSumo, $this->getConfig('sumo'), $options);

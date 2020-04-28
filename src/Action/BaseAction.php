@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
-use Backend\Action\Interfaces\ActionInterface;
+use Admin\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Core\InstanceConfigTrait;
 use Cake\ORM\TableRegistry;
@@ -119,7 +119,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
      */
     protected function _flashSuccess($msg = null)
     {
-        $msg = $msg ?: __d('backend', 'Ok');
+        $msg = $msg ?: __d('admin', 'Ok');
         $this->controller->Flash->success($msg);
     }
 
@@ -131,7 +131,7 @@ abstract class BaseAction /*extends Controller*/ implements ActionInterface
      */
     protected function _flashError($msg = null)
     {
-        $msg = $msg ?: __d('backend', 'Failed');
+        $msg = $msg ?: __d('admin', 'Failed');
         $this->controller->Flash->error($msg);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\View;
@@ -14,7 +14,7 @@ class HtmlTextWidget extends BasicWidget
      */
     public function __construct($templates, View $view)
     {
-        $view->loadHelper('Backend.HtmlEditor');
+        $view->loadHelper('Admin.HtmlEditor');
 
         parent::__construct($templates);
     }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 
@@ -12,7 +12,7 @@ class RedirectAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend', 'Redirect');
+        return __d('admin', 'Redirect');
     }
 
     /**

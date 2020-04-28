@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\View;
@@ -16,7 +16,7 @@ class ChosenSelectBoxWidget extends SelectBoxWidget
     {
         parent::__construct($templates);
 
-        $view->loadHelper('Backend.Chosen');
+        $view->loadHelper('Admin.Chosen');
     }
 
     /**
@@ -35,9 +35,9 @@ class ChosenSelectBoxWidget extends SelectBoxWidget
             'width' => '100%',
             'disable_search' => false,
             'disable_search_threshold' => 10,
-            'no_results_text' => __d('backend', 'No results match'),
-            'placeholder_text_multiple' => __d('backend', 'Select Some Options'),
-            'placeholder_text_single' => __d('backend', 'Select an Option'),
+            'no_results_text' => __d('admin', 'No results match'),
+            'placeholder_text_multiple' => __d('admin', 'Select Some Options'),
+            'placeholder_text_single' => __d('admin', 'Select an Option'),
         ];
 
         if (isset($data['chosen'])) {

@@ -17,8 +17,8 @@ $tableUrl = Router::url(['action' => 'table', 'model' => $modelName]);
     <script src="/boneform-js/node_modules/jquery/dist/jquery.js"></script>
     <script src="/boneform-js/node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
-    <?= $this->Html->css('Backend./js/footable-bootstrap/css/footable.bootstrap.css'); ?>
-    <?= $this->Html->script('Backend./js/footable-bootstrap/js/footable.js'); ?>
+    <?= $this->Html->css('Admin./js/footable-bootstrap/css/footable.bootstrap.css'); ?>
+    <?= $this->Html->script('Admin./js/footable-bootstrap/js/footable.js'); ?>
 
     <style>
         html {

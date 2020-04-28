@@ -1,1 +1,1 @@
-Backend Debug Panel
+Admin Debug Panel

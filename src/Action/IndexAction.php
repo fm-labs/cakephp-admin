@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Datasource\QueryInterface;
@@ -11,7 +11,7 @@ use Cake\Utility\Hash;
 /**
  * Class IndexAction
  *
- * @package Backend\Action
+ * @package Admin\Action
  */
 class IndexAction extends BaseAction
 {
@@ -106,12 +106,12 @@ class IndexAction extends BaseAction
 
         // actions
         if ($this->_config['actions'] !== false) {
-            //$event = $controller->dispatchEvent('Backend.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);
+            //$event = $controller->dispatchEvent('Admin.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);
             //$this->_config['actions'] = (array)$event->getData('actions');
         }
 
         //if ($this->_config['rowActions'] !== false) {
-        //    $event = $controller->dispatchEvent('Backend.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
+        //    $event = $controller->dispatchEvent('Admin.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
         //    $this->_config['rowActions'] = (array)$event->getData('actions');
         //}
 

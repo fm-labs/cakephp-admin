@@ -1,8 +1,8 @@
 <?php
-//$this->loadHelper('Backend.Chosen');
-$this->loadHelper('Backend.Box');
-$this->loadHelper('Backend.DataTable');
-$this->extend('Backend./Base/index');
+//$this->loadHelper('Admin.Chosen');
+$this->loadHelper('Admin.Box');
+$this->loadHelper('Admin.DataTable');
+$this->extend('Admin./Base/index');
 //$this->Toolbar->addLink(__('Add'), ['action' => 'add'], ['data-icon' => 'plus']);
 ?>
 <div class="index">
@@ -10,13 +10,13 @@ $this->extend('Backend./Base/index');
     <!-- Table stats -->
     <?php
     if (isset($tableStats)) {
-        echo $this->element('Backend.Action/Index/stats', ['stats' => $tableStats]);
+        echo $this->element('Admin.Action/Index/stats', ['stats' => $tableStats]);
     }
     ?>
 
     <!-- Filter form -->
     <?php if ($this->get('filters')) : ?>
-        <?= $this->element('Backend.filterbar', ['filters' => $this->get('filters')]); ?>
+        <?= $this->element('Admin.filterbar', ['filters' => $this->get('filters')]); ?>
     <?php endif; ?>
 
     <!-- Data table -->

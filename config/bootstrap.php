@@ -14,26 +14,26 @@ if (!Plugin::isLoaded('User')) {
 /**
  * Logs
  */
-if (!Log::getConfig('backend')) {
-    Log::setConfig('backend', [
+if (!Log::getConfig('admin')) {
+    Log::setConfig('admin', [
         'className' => 'Cake\Log\Engine\FileLog',
         'path' => LOGS,
-        'file' => 'backend',
+        'file' => 'admin',
         //'levels' => ['info'],
-        'scopes' => ['admin', 'backend'],
+        'scopes' => ['admin', 'admin'],
     ]);
 }
 
 /**
  * Cache config
  */
-if (!Cache::getConfig('backend')) {
-    Cache::setConfig('backend', [
+if (!Cache::getConfig('admin')) {
+    Cache::setConfig('admin', [
         'className' => 'File',
         'duration' => '+1 hours',
         'path' => CACHE,
-        'prefix' => 'backend_',
+        'prefix' => 'admin_',
     ]);
 }
 
-Configure::load('Backend.layout/admin');
+Configure::load('Admin.layout/admin');

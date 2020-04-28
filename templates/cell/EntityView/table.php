@@ -1,7 +1,7 @@
 <?php
 use Cake\Core\Configure;
 ?>
-<?php $this->loadHelper('Backend.Formatter'); ?>
+<?php $this->loadHelper('Admin.Formatter'); ?>
 <table class="entity-table table table-hover">
     <tbody>
     <?php foreach ($data as $field) : ?>

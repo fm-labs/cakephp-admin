@@ -9,14 +9,14 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
 
-    <?= $this->Html->css('Backend.layout/admin'); ?>
+    <?= $this->Html->css('Admin.layout/admin'); ?>
     <?= $this->fetch('css') ?>
     <!-- scripts -->
     <!--[if lt IE 9]>
-    <?= $this->Html->script('/backend/libs/html5shiv/html5shiv.min.js'); ?>
-    <?= $this->Html->script('/backend/libs/respond/respond.min.js'); ?>
+    <?= $this->Html->script('/admin/libs/html5shiv/html5shiv.min.js'); ?>
+    <?= $this->Html->script('/admin/libs/respond/respond.min.js'); ?>
     <![endif]-->
-    <?= $this->Html->script('/backend/libs/jquery/jquery.min.js'); ?>
+    <?= $this->Html->script('/admin/libs/jquery/jquery.min.js'); ?>
     <?= $this->fetch('headjs') ?>
 </head>
 <body class="body-iframe <?= $this->get('be_layout_body_class'); ?>">
@@ -28,8 +28,8 @@
         <section id="main-flash" class="flash-wrapper">
             <!-- Flash Auth -->
             <?php echo $this->Flash->render('auth') ?>
-            <!-- Flash Backend -->
-            <?php echo $this->Flash->render('backend') ?>
+            <!-- Flash Admin -->
+            <?php echo $this->Flash->render('admin') ?>
             <!-- Flash Default -->
             <?php echo $this->Flash->render() ?>
             <?php echo $this->fetch('flash'); ?>

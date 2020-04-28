@@ -4,7 +4,7 @@
  *
  * Allows templating of Controllers generated from bake.
  *
- * > Backend Extensions:
+ * > Admin Extensions:
  * >> Use prefixed AppController class
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)

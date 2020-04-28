@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 
 /**
  * Class TreeRepairAction
  *
- * @package Backend\Action
+ * @package Admin\Action
  */
 class TreeRepairAction extends BaseIndexAction
 {
@@ -17,7 +17,7 @@ class TreeRepairAction extends BaseIndexAction
      */
     public function getLabel()
     {
-        return __d('backend', 'Repair Tree');
+        return __d('admin', 'Repair Tree');
     }
 
     /**
@@ -35,7 +35,7 @@ class TreeRepairAction extends BaseIndexAction
     {
         if ($this->model()->hasBehavior('Tree')) {
             $this->model()->recover();
-            $controller->Flash->success(__d('backend', 'Tree for model {0} has been repaired', $this->model()->getAlias()));
+            $controller->Flash->success(__d('admin', 'Tree for model {0} has been repaired', $this->model()->getAlias()));
         } else {
             $controller->Flash->error('Tree behavior not loaded for model ' . $this->model()->getAlias());
         }

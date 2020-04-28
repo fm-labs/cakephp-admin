@@ -1,6 +1,6 @@
 <?php $this->extend('base'); ?>
-<?php $this->loadHelper('Backend.VectorMap'); ?>
-<?php $this->loadHelper('Backend.FlagIcon'); ?>
+<?php $this->loadHelper('Admin.VectorMap'); ?>
+<?php $this->loadHelper('Admin.FlagIcon'); ?>
 
 <!-- SECTION Flag Icons -->
 <div class="section-header">
@@ -281,7 +281,7 @@
 </div>
 <div id="vmap" style="width: 600px; height: 400px;"></div>
 <?php $this->append('script'); ?>
-<script type="text/javascript" src="/backend/libs/jqvmap/maps/jquery.vmap.world.js" charset="utf-8"></script>
+<script type="text/javascript" src="/admin/libs/jqvmap/maps/jquery.vmap.world.js" charset="utf-8"></script>
 <script type="text/javascript">
     jQuery(document).ready(function() {
         //jQuery('#vmap').vectorMap({ map: 'world_en' });

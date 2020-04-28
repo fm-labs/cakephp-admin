@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\View\Helper;
 
 /**
  * Class ChosenHelper
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  *
  * @property \Cake\View\Helper\HtmlHelper $Html
  */
@@ -20,7 +20,7 @@ class BackboneHelper extends Helper
      */
     public function initialize(array $config): void
     {
-        $this->_View->Html->script('/backend/libs/underscore/underscore-min.js', ['block' => true]);
-        $this->_View->Html->script('/backend/libs/backbone/backbone-min.js', ['block' => true]);
+        $this->_View->Html->script('/admin/libs/underscore/underscore-min.js', ['block' => true]);
+        $this->_View->Html->script('/admin/libs/backbone/backbone-min.js', ['block' => true]);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Routing\Router;
@@ -10,7 +10,7 @@ use Cake\Routing\Router;
  * Class IndexAction
  * ! Experimental | Unused !
  *
- * @package Backend\Action
+ * @package Admin\Action
  * @internal
  * @codeCoverageIgnore
  */
@@ -33,7 +33,7 @@ class FooTableIndexAction extends IndexAction
      */
     public function getLabel()
     {
-        return __d('backend', "Index");
+        return __d('admin', "Index");
     }
 
     /**
@@ -67,7 +67,7 @@ class FooTableIndexAction extends IndexAction
 
         // AJAX
         if ($this->_config['ajax']) {
-            //$dataUrl = Router::url(['plugin' => 'Backend', 'controller' => 'FooTables', 'action' => 'rows', 'model' => $this->_config['modelClass']]);
+            //$dataUrl = Router::url(['plugin' => 'Admin', 'controller' => 'FooTables', 'action' => 'rows', 'model' => $this->_config['modelClass']]);
             $dataUrl = $this->_config['ajax'];
             if ($dataUrl === true) {
                 $dataUrl = ['rows' => 1];
@@ -97,7 +97,7 @@ class FooTableIndexAction extends IndexAction
         $controller->set('rowsUrl', $dataUrl);
 
         $controller->set('_serialize', ['result']);
-        //$controller->render('Backend.foo_table_index');
+        //$controller->render('Admin.foo_table_index');
     }
 
     /**

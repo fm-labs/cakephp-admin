@@ -1,1 +1,1 @@
-<?php echo $this->cell('Backend.BackendMenu', ['default']);
+<?php echo $this->cell('Admin.AdminMenu', ['default']);

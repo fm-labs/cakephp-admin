@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 /**
  * Class DataTablesJsHelper
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class DataTableJsHelper extends DataTableHelper
@@ -55,18 +55,18 @@ class DataTableJsHelper extends DataTableHelper
     {
         parent::initialize($config);
 
-        //$this->Html->css('/backend/adminlte/plugins/datatables/jquery.dataTables.min.css', ['block' => true]);
-        //$this->Html->css('/backend/adminlte/plugins/datatables/dataTables.bootstrap.css', ['block' => true]);
-        //$this->Html->script('/backend/adminlte/plugins/datatables/jquery.dataTables.js', ['block' => true]);
-        //$this->Html->script('/backend/adminlte/plugins/datatables/dataTables.bootstrap.js', ['block' => true]);
+        //$this->Html->css('/admin/adminlte/plugins/datatables/jquery.dataTables.min.css', ['block' => true]);
+        //$this->Html->css('/admin/adminlte/plugins/datatables/dataTables.bootstrap.css', ['block' => true]);
+        //$this->Html->script('/admin/adminlte/plugins/datatables/jquery.dataTables.js', ['block' => true]);
+        //$this->Html->script('/admin/adminlte/plugins/datatables/dataTables.bootstrap.js', ['block' => true]);
 
-        //$this->Html->css('Backend./js/datatables/dataTables.bootstrap.css', ['block' => true]);
-        //$this->Html->script('Backend.datatables/jquery.dataTables', ['block' => true]);
-        //$this->Html->script('Backend.datatables/dataTables.bootstrap', ['block' => true]);
+        //$this->Html->css('Admin./js/datatables/dataTables.bootstrap.css', ['block' => true]);
+        //$this->Html->script('Admin.datatables/jquery.dataTables', ['block' => true]);
+        //$this->Html->script('Admin.datatables/dataTables.bootstrap', ['block' => true]);
 
-        $this->Html->css('/backend/vendor/DataTables/datatables.min.css', ['block' => true]);
-        $this->Html->script('/backend/vendor/DataTables/datatables.min.js', ['block' => true]);
-        $this->Html->script('/backend/js/backend.datatables.js', ['block' => true]);
+        $this->Html->css('/admin/vendor/DataTables/datatables.min.css', ['block' => true]);
+        $this->Html->script('/admin/vendor/DataTables/datatables.min.js', ['block' => true]);
+        $this->Html->script('/admin/js/admin.datatables.js', ['block' => true]);
     }
 
     /**
@@ -115,7 +115,7 @@ class DataTableJsHelper extends DataTableHelper
 
         // language
         $jsOpts['language'] = [
-            'processing' => __d('backend', 'Loading ...'),
+            'processing' => __d('admin', 'Loading ...'),
         ];
 
         $this->options($jsOpts);

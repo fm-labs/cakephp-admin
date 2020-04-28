@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Cake\Event\Event;
 use Cake\View\Helper;
@@ -9,7 +9,7 @@ use Cake\View\Helper;
 /**
  * Class ToolbarHelper
  *
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Bootstrap\View\Helper\UiHelper $Ui
  */
@@ -18,7 +18,7 @@ class ToolbarHelper extends Helper
     public $helpers = ['Html', 'Bootstrap.Ui'];
 
     protected $_defaultConfig = [
-        'element' => 'Backend.layout/admin/toolbar',
+        'element' => 'Admin.layout/admin/toolbar',
         'block' => 'toolbar',
         'options' => ['class' => ''],
     ];
@@ -230,7 +230,7 @@ class ToolbarHelper extends Helper
     public function beforeLayout(Event $event)
     {
         if (!$this->_rendered) {
-            //if ($event->getSubject() instanceof BackendView) {
+            //if ($event->getSubject() instanceof AdminView) {
                 $event->getSubject()->assign($this->getConfig('block'), $this->_View->element($this->getConfig('element'), [
                     'toolbar' => $this->render(),
                 ]));

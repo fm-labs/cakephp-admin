@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Cell;
+namespace Admin\View\Cell;
 
 use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
@@ -162,7 +162,7 @@ class EntityViewCell extends Cell
                     };
                 } else {
                     $formatter = function () {
-                        return __d('backend', 'Not assigned');
+                        return __d('admin', 'Not assigned');
                     };
                 }
             } elseif ($associations) {
@@ -179,7 +179,7 @@ class EntityViewCell extends Cell
                             $formatter = function($val) use ($assoc) {
                                 debug($val);
                                 //return sprintf("%d %s", count($val), $assoc->getName());
-                                return __d('backend', "{0} records", count($val));
+                                return __d('admin', "{0} records", count($val));
                             };
                             */
                             $formatter = function ($val, $row, $args, $view) use ($assoc) {
@@ -188,7 +188,7 @@ class EntityViewCell extends Cell
                                 }
 
                                 return $view->Html->link(
-                                    __d('backend', "{0} records", count($val)),
+                                    __d('admin', "{0} records", count($val)),
                                     [
                                         'controller' => $assoc->getName(),
                                         'action' => 'index',
@@ -199,7 +199,7 @@ class EntityViewCell extends Cell
                                     [
                                         'data-modal-frame',
                                         'data-modal-class' => 'modal-wide',
-                                        'data-modal-title' => __d('backend', "Related {0}", $assoc->getName()),
+                                        'data-modal-title' => __d('admin', "Related {0}", $assoc->getName()),
                                     ]
                                 );
                             };

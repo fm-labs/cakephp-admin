@@ -21,7 +21,7 @@ if (!$menu) {
 
 $html = "";
 foreach ($menu as $menuItem) {
-    $html .= $this->element('Backend.Menu/menu_item', ['item' => $menuItem]);
+    $html .= $this->element('Admin.Menu/menu_item', ['item' => $menuItem]);
 }
 echo $this->Html->tag($wrapper, $html, ['id' => $id, 'class' => $class]);
 

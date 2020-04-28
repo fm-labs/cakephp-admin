@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Cell;
+namespace Admin\View\Cell;
 
 use Cake\View\Cell;
 
@@ -34,6 +34,6 @@ class TreeViewCell extends Cell
         $treeList = $this->ShopCategories->find('threaded')->toArray();
 
         $this->set('items', $treeList);
-        $this->set('element', 'Backend.TreeView/list');
+        $this->set('element', 'Admin.TreeView/list');
     }
 }

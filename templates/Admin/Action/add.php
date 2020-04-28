@@ -18,13 +18,13 @@ $formOptions = $this->get('form.options', ['horizontal' => true]);
 /**
  * Helpers
  */
-//$this->loadHelper('Backend.Chosen');
+//$this->loadHelper('Admin.Chosen');
 $this->loadHelper('Bootstrap.Tabs');
 
 /**
  * Extend
  */
-//$this->extend('Backend./Base/form');
+//$this->extend('Admin./Base/form');
 ?>
 <div class="form form-add">
 
@@ -44,7 +44,7 @@ $this->loadHelper('Bootstrap.Tabs');
         } else {
             $this->Form->allControls();
         }
-        echo $this->Form->button(__d('backend', 'Submit'));
+        echo $this->Form->button(__d('admin', 'Submit'));
         echo $this->Form->end();
     }
     ?>

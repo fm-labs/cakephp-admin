@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Component;
+namespace Admin\Controller\Component;
 
 use Cake\Controller\Component\FlashComponent as CakeFlashComponent;
 
 /**
  * Class FlashComponent
  *
- * @package Backend\Controller\Component
+ * @package Admin\Controller\Component
  */
 class FlashComponent extends CakeFlashComponent
 {
@@ -45,7 +45,7 @@ class FlashComponent extends CakeFlashComponent
      */
     public function success($msg, array $options = [])
     {
-        $options += ['element' => 'Backend.success'];
+        $options += ['element' => 'Admin.success'];
         $this->set($msg, $options);
     }
 
@@ -58,7 +58,7 @@ class FlashComponent extends CakeFlashComponent
      */
     public function warning($msg, array $options = [])
     {
-        $options += ['element' => 'Backend.warning'];
+        $options += ['element' => 'Admin.warning'];
         $this->set($msg, $options);
     }
 
@@ -71,7 +71,7 @@ class FlashComponent extends CakeFlashComponent
      */
     public function error($msg, array $options = [])
     {
-        $options += ['element' => 'Backend.error'];
+        $options += ['element' => 'Admin.error'];
         $this->set($msg, $options);
     }
 
@@ -84,7 +84,7 @@ class FlashComponent extends CakeFlashComponent
      */
     public function info($msg, array $options = [])
     {
-        $options += ['element' => 'Backend.info'];
+        $options += ['element' => 'Admin.info'];
         $this->set($msg, $options);
     }
 }

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Admin;
+namespace Admin\Controller\Admin;
 
 use Cake\Http\Exception\BadRequestException;
 use Cake\Log\Log;
@@ -9,7 +9,7 @@ use Cake\Log\Log;
 /**
  * Class TreeController
  *
- * @package Backend\Controller\Admin
+ * @package Admin\Controller\Admin
  */
 class TreeController extends AppController
 {
@@ -20,7 +20,7 @@ class TreeController extends AppController
     {
         $modelName = $this->request->getQuery('model');
         if (!$modelName) {
-            $this->Flash->error(__d('backend', 'No model selected'));
+            $this->Flash->error(__d('admin', 'No model selected'));
 
             return;
         }
@@ -28,10 +28,10 @@ class TreeController extends AppController
             /** @var \Cake\ORM\Table $Model */
             $Model = $this->loadModel($modelName);
             if (!$Model->behaviors()->has('Tree')) {
-                $this->Flash->warning(__d('backend', 'Model {0} has no Tree behavior attached', $modelName));
+                $this->Flash->warning(__d('admin', 'Model {0} has no Tree behavior attached', $modelName));
             }
         } catch (\Exception $ex) {
-            $this->Flash->error(__d('backend', 'Failed to load model {0}', $modelName));
+            $this->Flash->error(__d('admin', 'Failed to load model {0}', $modelName));
 
             return;
         }
@@ -56,7 +56,7 @@ class TreeController extends AppController
         try {
             /** @var \Cake\ORM\Table $Model */
             $Model = $this->loadModel($modelName);
-            $Model->addBehavior('Backend.JsTree');
+            $Model->addBehavior('Admin.JsTree');
             $tree = $Model->find('jstree')->toArray();
         } catch (\Exception $ex) {
             Log::error('TreeController::treeData: ' . $ex->getMessage());
@@ -86,13 +86,13 @@ class TreeController extends AppController
         try {
             /** @var \Cake\ORM\Table $Model */
             $Model = $this->loadModel($modelName);
-            $Model->addBehavior('Backend.JsTree');
+            $Model->addBehavior('Admin.JsTree');
 
             $node = $Model->get($request['nodeId']);
             //$Model->behaviors()->Tree->setConfig('scope', ['site_id' => $node->site_id]);
             $node = $Model->moveTo($node, $request['newParentId'], $request['newPos'], $request['oldPos']);
 
-            $result = ['success' => __d('backend', "Node has been moved")];
+            $result = ['success' => __d('admin', "Node has been moved")];
         } catch (\Exception $ex) {
             Log::error('TreeController::treeData: ' . $ex->getMessage());
             //throw new InternalErrorException($ex->getMessage());

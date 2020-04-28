@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
@@ -9,7 +9,7 @@ use Cake\Datasource\EntityInterface;
 /**
  * Class UnpublishAction
  *
- * @package Backend\Action
+ * @package Admin\Action
  */
 class UnpublishAction extends BaseEntityAction
 {
@@ -20,7 +20,7 @@ class UnpublishAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend', 'Unpublish');
+        return __d('admin', 'Unpublish');
     }
 
     /**
@@ -49,9 +49,9 @@ class UnpublishAction extends BaseEntityAction
             $entity->is_published = false; //@TODO Use Publishabel behavior methods
 
             if ($this->model()->save($entity)) {
-                $controller->Flash->success(__d('backend', 'Unpublished'));
+                $controller->Flash->success(__d('admin', 'Unpublished'));
             } else {
-                $controller->Flash->error(__d('backend', 'Unpublish failed'));
+                $controller->Flash->error(__d('admin', 'Unpublish failed'));
             }
         } else {
             $controller->Flash->error('Publish behavior not loaded for model ' . $this->model()->getAlias());

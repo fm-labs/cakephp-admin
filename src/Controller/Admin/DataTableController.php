@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Admin;
+namespace Admin\Controller\Admin;
 
 use Cake\Core\Exception\Exception;
 use Cake\Http\Exception\BadRequestException;
@@ -13,7 +13,7 @@ use Cake\ORM\TableRegistry;
 /**
  * Class DataTableController
  *
- * @package Backend\Controller\Admin
+ * @package Admin\Controller\Admin
  * @deprecated Use SimpleTreeController instead
  */
 class DataTableController extends AppController
@@ -33,9 +33,9 @@ class DataTableController extends AppController
         }
 
         if ($this->_getModel($modelName)->reorder($scope, compact('field', 'order'))) {
-            $this->Flash->success(__d('backend', 'Reordering complete'));
+            $this->Flash->success(__d('admin', 'Reordering complete'));
         } else {
-            $this->Flash->error(__d('backend', 'Reordering failed'));
+            $this->Flash->error(__d('admin', 'Reordering failed'));
         }
         $this->redirect($this->referer());
     }

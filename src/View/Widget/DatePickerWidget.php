@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Widget;
+namespace Admin\View\Widget;
 
 use Cake\View\Form\ContextInterface;
 use Cake\View\StringTemplate;
@@ -25,7 +25,7 @@ class DatePickerWidget extends CakeDateTimeWidget
         $this->_templates = $templates;
         $this->_text = $text;
 
-        $view->loadHelper('Backend.Datepicker');
+        $view->loadHelper('Admin.Datepicker');
     }
 
     /**

@@ -26,7 +26,7 @@ $this->loadHelper('Bootstrap.Tabs');
                 <?php
                 $options = [
                     'data-lang' => $lang,
-                    'data-title' => __d('backend', 'Edit {0} translation', $langLabel),
+                    'data-title' => __d('admin', 'Edit {0} translation', $langLabel),
                     'class' => ($lang == Cake\I18n\I18n::getLocale()) ? 'active' : ''
                 ];
                 $langLabel = ($lang == Cake\I18n\I18n::getLocale()) ? '[' . $langLabel . ']' : $langLabel;
@@ -37,7 +37,7 @@ $this->loadHelper('Bootstrap.Tabs');
     </div>
     <?php endif; ?>
 
-    <?php //echo $this->cell('Backend.EntityView', [ $entity ], $viewOptions)->render();
+    <?php //echo $this->cell('Admin.EntityView', [ $entity ], $viewOptions)->render();
     echo $this->Form->create($entity, $formOptions);
     if ($fieldsets) {
         foreach ($fieldsets as $fieldset) {
@@ -55,7 +55,7 @@ $this->loadHelper('Bootstrap.Tabs');
     } else {
         echo $this->Form->allControls($inputFields, $inputOptions);
     }
-    echo $this->Form->submit(__d('backend', 'Save changes'));
+    echo $this->Form->submit(__d('admin', 'Save changes'));
     echo $this->Form->end();
     ?>
 

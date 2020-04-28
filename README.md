@@ -1,10 +1,10 @@
-# Backend plugin for CakePHP
+# Admin plugin for CakePHP
 
-A graphical administration backend boilerplate for CakePHP applications.
+A graphical administration boilerplate for CakePHP applications.
 
 ## Requirements
 
-CakePHP: 3.1.x - 3.3.x
+CakePHP: 4.0.x
 
 ## Dependencies
 
@@ -18,50 +18,47 @@ You can install this plugin into your CakePHP application using [composer](http:
 The recommended way to install composer packages is:
 
 ```
-composer require fm-labs/cakephp-backend
+composer require fm-labs/cakephp-admin
 ```
 
 - Enable in your ROOT/config/bootstrap.php
 
-    Plugin::load('Backend', ['bootstrap' => true, 'routes' => true]);
+    Plugin::load('Admin', ['bootstrap' => true, 'routes' => true]);
 
 
-- Copy default config from plugins/Backend/config/backend.default.php to ROOT/config/backend.php
+- Copy default config from plugins/Admin/config/admin.default.php to ROOT/config/admin.php
     Edit configuration settings, if necessary
 
 
 ## Features
 
-* Backend user management
-* Backend auth handling
-~~* Semantic UI Admin theme templates
-~~* Bake Semantic UI templates from bake shell
+* Admin user management
+* Admin auth handling
 * Bootstrap 3 Admin heme templates
 * Dashboard
 * System Info
 * Log viewer
 * Cronjob Management
-* ...
 
 ## Config/Settings
 
 | Key  | Config | Settings | Comment
 |---|---|---|---|
-|  Backend.path | x | - | |
-|  Backend.theme | x | - | |
-|  Backend.Dashboard.title | x | x | |
-|  Backend.Dashboard.skin | x | x | |
-|  Backend.Dashboard.url | x | - | |
-|  Backend.Dashboard.Panels | x | - | |
-|  Backend.Search.searchUrl | x | - | |
-|  Backend.Security.enable | x | x | |
-|  Backend.Security.forceSSL | x | x | |
-|  Backend.LogRotation | x | - | |
-|  Backend.Users | x | - | |
-|  Backend.Auth | x | - | |
-|  Backend.AdminLte.skin_class | x | x |DEPRECATED|
-|  Backend.AdminLte.layout_class | x | x |DEPRECATED|
-|  Backend.AdminLte.sidebar_class | x | x |DEPRECATED|
+|  Admin.path | x | - | |
+|  Admin.theme | x | - | |
+|  Admin.Dashboard.title | x | x | |
+|  Admin.Dashboard.skin | x | x | |
+|  Admin.Dashboard.url | x | - | |
+|  Admin.Dashboard.Panels | x | - | |
+|  Admin.Search.searchUrl | x | - | |
+|  Admin.Security.enable | x | x | |
+|  Admin.Security.forceSSL | x | x | |
+|  Admin.LogRotation | x | - | |
+|  Admin.Users | x | - | |
+|  Admin.Auth | x | - | |
+|  Admin.AdminLte.skin_class | x | x |DEPRECATED|
+|  Admin.AdminLte.layout_class | x | x |DEPRECATED|
+|  Admin.AdminLte.sidebar_class | x | x |DEPRECATED|
 
 
 ## Dependencies

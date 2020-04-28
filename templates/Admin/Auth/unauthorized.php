@@ -1,4 +1,4 @@
-<?php $this->assign('title', __d('backend','Unauthorized')); ?>
+<?php $this->assign('title', __d('admin','Unauthorized')); ?>
 
 <div class="ui middle aligned center aligned grid">
     <div class="column">
@@ -11,10 +11,10 @@
         <div class="ui divider"></div>
 
         <div>
-            <?= $this->Html->link(__d('backend','Go to dashboard page'), $be_dashboard_url); ?><br />
-            <?= $this->Html->link(__d('backend','Go to login page'), ['action' => 'login']); ?><br />
-            <?= $this->Html->link(__d('backend','Go to logout page'), ['action' => 'logout']); ?><br />
-            <?= $this->Html->link(__d('backend','Go to main page'), '/'); ?><br />
+            <?= $this->Html->link(__d('admin','Go to dashboard page'), $be_dashboard_url); ?><br />
+            <?= $this->Html->link(__d('admin','Go to login page'), ['action' => 'login']); ?><br />
+            <?= $this->Html->link(__d('admin','Go to logout page'), ['action' => 'logout']); ?><br />
+            <?= $this->Html->link(__d('admin','Go to main page'), '/'); ?><br />
         </div>
 
         <div class="ui hidden divider"></div>

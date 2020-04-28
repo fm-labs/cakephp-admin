@@ -51,29 +51,29 @@ $groupedFields = collection($fields)
 $groupedFields += ['number' => [], 'string' => [], 'boolean' => [], 'date' => [], 'text' => []];
 $pk = "\$$singularVar->{$primaryKey[0]}";
 %>
-<?php $this->Breadcrumbs->add(__d('backend','<%= $pluralHumanName %>'), ['action' => 'index']); ?>
+<?php $this->Breadcrumbs->add(__d('admin','<%= $pluralHumanName %>'), ['action' => 'index']); ?>
 <?php $this->Breadcrumbs->add($<%= $singularVar %>-><%= $displayField %>); ?>
 <?php $this->Toolbar->addLink(
-    __d('backend','Edit {0}', __d('backend','<%= $singularHumanName %>')),
+    __d('admin','Edit {0}', __d('admin','<%= $singularHumanName %>')),
     ['action' => 'edit', <%= $pk %>],
     ['data-icon' => 'edit']
 ) ?>
 <?php $this->Toolbar->addLink(
-    __d('backend','Delete {0}', __d('backend','<%= $singularHumanName %>')),
+    __d('admin','Delete {0}', __d('admin','<%= $singularHumanName %>')),
     ['action' => 'delete', <%= $pk %>],
-    ['data-icon' => 'trash', 'confirm' => __d('backend','Are you sure you want to delete # {0}?', <%= $pk %>)]) ?>
+    ['data-icon' => 'trash', 'confirm' => __d('admin','Are you sure you want to delete # {0}?', <%= $pk %>)]) ?>
 
 <?php $this->Toolbar->addLink(
-    __d('backend','List {0}', __d('backend','<%= $pluralHumanName %>')),
+    __d('admin','List {0}', __d('admin','<%= $pluralHumanName %>')),
     ['action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
 <?php $this->Toolbar->addLink(
-    __d('backend','New {0}', __d('backend','<%= $singularHumanName %>')),
+    __d('admin','New {0}', __d('admin','<%= $singularHumanName %>')),
     ['action' => 'add'],
     ['data-icon' => 'plus']
 ) ?>
-<?php $this->Toolbar->startGroup(__d('backend','More')); ?>
+<?php $this->Toolbar->startGroup(__d('admin','More')); ?>
 <%
 $done = [];
 foreach ($associations as $type => $data) {
@@ -81,12 +81,12 @@ foreach ($associations as $type => $data) {
         if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
 %>
 <?php $this->Toolbar->addLink(
-    __d('backend','List {0}', __d('backend','<%= $this->_pluralHumanName($alias) %>')),
+    __d('admin','List {0}', __d('admin','<%= $this->_pluralHumanName($alias) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'index'],
     ['data-icon' => 'list']
 ) ?>
 <?php $this->Toolbar->addLink(
-    __d('backend','New {0}', __d('backend','<%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>')),
+    __d('admin','New {0}', __d('admin','<%= Inflector::humanize(Inflector::singularize(Inflector::underscore($alias))) %>')),
     ['controller' => '<%= $details['controller'] %>', 'action' => 'add'],
     ['data-icon' => 'plus']
 ) ?>
@@ -103,7 +103,7 @@ foreach ($associations as $type => $data) {
     </h2>
 
     <?php
-    echo $this->cell('Backend.EntityView', [ $<%= $singularVar %> ], [
+    echo $this->cell('Admin.EntityView', [ $<%= $singularVar %> ], [
         'title' => $<%= $singularVar %>->title,
         'model' => '<%= $modelClass %>',
     ]);
@@ -119,12 +119,12 @@ foreach ($associations as $type => $data) {
             $details = $associationFields[$field];
 %>
         <tr>
-            <td><?= __d('backend','<%= Inflector::humanize($details['property']) %>') ?></td>
+            <td><?= __d('admin','<%= Inflector::humanize($details['property']) %>') ?></td>
             <td><?= $<%= $singularVar %>->has('<%= $details['property'] %>') ? $this->Html->link($<%= $singularVar %>-><%= $details['property'] %>-><%= $details['displayField'] %>, ['controller' => '<%= $details['controller'] %>', 'action' => 'view', $<%= $singularVar %>-><%= $details['property'] %>-><%= $details['primaryKey'][0] %>]) : '' ?></td>
         </tr>
 <% else : %>
         <tr>
-            <td><?= __d('backend','<%= Inflector::humanize($field) %>') ?></td>
+            <td><?= __d('admin','<%= Inflector::humanize($field) %>') ?></td>
             <td><?= h($<%= $singularVar %>-><%= $field %>) ?></td>
         </tr>
 <% endif; %>
@@ -135,7 +135,7 @@ foreach ($associations as $type => $data) {
 
 <% foreach ($groupedFields['number'] as $field) : %>
         <tr>
-            <td><?= __d('backend','<%= Inflector::humanize($field) %>') ?></td>
+            <td><?= __d('admin','<%= Inflector::humanize($field) %>') ?></td>
             <td><?= $this->Number->format($<%= $singularVar %>-><%= $field %>) ?></td>
         </tr>
 <% endforeach; %>
@@ -145,7 +145,7 @@ foreach ($associations as $type => $data) {
 
 <% foreach ($groupedFields['date'] as $field) : %>
         <tr class="date">
-            <td><%= "<%= __d('backend','" . Inflector::humanize($field) . "') %>" %></td>
+            <td><%= "<%= __d('admin','" . Inflector::humanize($field) . "') %>" %></td>
             <td><?= h($<%= $singularVar %>-><%= $field %>) ?></td>
         </tr>
 <% endforeach; %>
@@ -154,15 +154,15 @@ foreach ($associations as $type => $data) {
 <% if ($groupedFields['boolean']) : %>
 <% foreach ($groupedFields['boolean'] as $field) : %>
         <tr class="boolean">
-            <td><?= __d('backend','<%= Inflector::humanize($field) %>') ?></td>
-            <td><?= $<%= $singularVar %>-><%= $field %> ? __d('backend','Yes') : __d('backend','No'); ?></td>
+            <td><?= __d('admin','<%= Inflector::humanize($field) %>') ?></td>
+            <td><?= $<%= $singularVar %>-><%= $field %> ? __d('admin','Yes') : __d('admin','No'); ?></td>
         </tr>
 <% endforeach; %>
 <% endif; %>
 <% if ($groupedFields['text']) : %>
 <% foreach ($groupedFields['text'] as $field) : %>
         <tr class="text">
-            <td><?= __d('backend','<%= Inflector::humanize($field) %>') ?></td>
+            <td><?= __d('admin','<%= Inflector::humanize($field) %>') ?></td>
             <td><?= $this->Text->autoParagraph(h($<%= $singularVar %>-><%= $field %>)); ?></td>
         </tr>
 <% endforeach; %>
@@ -178,14 +178,14 @@ foreach ($relations as $alias => $details):
     %>
 <div class="related">
     <div class="ui basic segment">
-    <h4 class="ui header"><?= __d('backend','Related {0}', __d('backend','<%= $otherPluralHumanName %>')) ?></h4>
+    <h4 class="ui header"><?= __d('admin','Related {0}', __d('admin','<%= $otherPluralHumanName %>')) ?></h4>
     <?php if (!empty($<%= $singularVar %>-><%= $details['property'] %>)): ?>
     <table class="ui table">
         <tr>
 <% foreach ($details['fields'] as $field): %>
-            <th><?= __d('backend','<%= Inflector::humanize($field) %>') ?></th>
+            <th><?= __d('admin','<%= Inflector::humanize($field) %>') ?></th>
 <% endforeach; %>
-            <th class="actions"><?= __d('backend','Actions') ?></th>
+            <th class="actions"><?= __d('admin','Actions') ?></th>
         </tr>
         <?php foreach ($<%= $singularVar %>-><%= $details['property'] %> as $<%= $otherSingularVar %>): ?>
         <tr>
@@ -195,9 +195,9 @@ foreach ($relations as $alias => $details):
 
             <%- $otherPk = "\${$otherSingularVar}->{$details['primaryKey'][0]}"; %>
             <td class="actions">
-                <?= $this->Html->link(__d('backend','View'), ['controller' => '<%= $details['controller'] %>', 'action' => 'view', <%= $otherPk %>]) %>
-                <?= $this->Html->link(__d('backend','Edit'), ['controller' => '<%= $details['controller'] %>', 'action' => 'edit', <%= $otherPk %>]) %>
-                <?= $this->Form->postLink(__d('backend','Delete'), ['controller' => '<%= $details['controller'] %>', 'action' => 'delete', <%= $otherPk %>], ['confirm' => __d('backend','Are you sure you want to delete # {0}?', <%= $otherPk %>)]) %>
+                <?= $this->Html->link(__d('admin','View'), ['controller' => '<%= $details['controller'] %>', 'action' => 'view', <%= $otherPk %>]) %>
+                <?= $this->Html->link(__d('admin','Edit'), ['controller' => '<%= $details['controller'] %>', 'action' => 'edit', <%= $otherPk %>]) %>
+                <?= $this->Form->postLink(__d('admin','Delete'), ['controller' => '<%= $details['controller'] %>', 'action' => 'delete', <%= $otherPk %>], ['confirm' => __d('admin','Are you sure you want to delete # {0}?', <%= $otherPk %>)]) %>
             </td>
         </tr>
 

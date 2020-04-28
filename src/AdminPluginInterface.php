@@ -1,24 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend;
+namespace Admin;
 
 use Cake\Routing\RouteBuilder;
 
 /**
  * @deprecated
  */
-interface BackendPluginInterface
+interface AdminPluginInterface
 {
     /**
-     * @param \Backend\Backend $backend Backend object
+     * @param \Admin\Admin $admin Admin object
      * @return void
      */
-    public function backendBootstrap(Backend $backend);
+    public function adminBootstrap(Admin $admin);
 
     /**
      * @param \Cake\Routing\RouteBuilder $routes RouterBuilder object
      * @return void
      */
-    public function backendRoutes(RouteBuilder $routes);
+    public function adminRoutes(RouteBuilder $routes);
 }

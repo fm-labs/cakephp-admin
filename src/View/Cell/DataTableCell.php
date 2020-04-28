@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Cell;
+namespace Admin\View\Cell;
 
 use Cake\ORM\TableRegistry;
 use Cake\View\Cell;
@@ -49,7 +49,7 @@ class DataTableCell extends Cell
 
         // sortable
         if ($params['sortable'] === true) {
-            $params['sortable'] = ['plugin' => 'Backend', 'controller' => 'SimpleTree', 'action' => 'treeSort', 'model' => $params['model']];
+            $params['sortable'] = ['plugin' => 'Admin', 'controller' => 'SimpleTree', 'action' => 'treeSort', 'model' => $params['model']];
         }
 
         // additional view vars for the view cell

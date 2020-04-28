@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Bootstrap\View\Helper\ContentBlockHelperTrait;
 use Cake\View\Helper;
@@ -10,7 +10,7 @@ use Cake\View\StringTemplateTrait;
 /**
  * Class BoxHelper
  *
- * @package Backend\View\Helper
+ * @package Admin\View\Helper
  */
 class BoxHelper extends Helper
 {

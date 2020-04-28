@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller\Component;
+namespace Admin\Controller\Component;
 
-use Backend\Backend;
+use Admin\Admin;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\Event\EventListenerInterface;
@@ -12,13 +12,13 @@ use Cake\I18n\I18n;
 use Cake\Log\Log;
 
 /**
- * Class BackendComponent
+ * Class AdminComponent
  *
- * @package Backend\Controller\Component
- * @property \Backend\Controller\Component\AuthComponent $Auth
- * @property \Backend\Controller\Component\FlashComponent $Flash
+ * @package Admin\Controller\Component
+ * @property \Admin\Controller\Component\AuthComponent $Auth
+ * @property \Admin\Controller\Component\FlashComponent $Flash
  */
-class BackendComponent extends Component
+class AdminComponent extends Component
 {
     /**
      * @var array
@@ -29,12 +29,12 @@ class BackendComponent extends Component
      * @var array
      */
     protected $_defaultConfig = [
-        'flashClass' => '\Backend\Controller\Component\FlashComponent',
-        'flashKey' => 'backend',
-        'authClass' => '\Backend\Controller\Component\AuthComponent',
-        'authModel' => 'Backend.Users',
+        'flashClass' => '\Admin\Controller\Component\FlashComponent',
+        'flashKey' => 'admin',
+        'authClass' => '\Admin\Controller\Component\AuthComponent',
+        'authModel' => 'Admin.Users',
         'userSessionMaxLifetimeSec' => 15 * MINUTE,
-        'userSessionKey' => 'Backend.UserSession',
+        'userSessionKey' => 'Admin.UserSession',
     ];
 
     //protected $_cookieName;
@@ -78,13 +78,13 @@ class BackendComponent extends Component
 
         // Configure Security component
         // @todo @deprecated SecurityComponent will be dropped in CakePHP 4.0
-        if (Configure::read('Backend.Security.enabled') && !$controller->components()->has('Security')) {
+        if (Configure::read('Admin.Security.enabled') && !$controller->components()->has('Security')) {
             $controller->components()->load('Security');
         }
 
         // Configure Action component
         if (isset($controller->actions)) {
-            $controller->loadComponent('Backend.Action');
+            $controller->loadComponent('Admin.Action');
         }
 
         // Add Iframe request detector
@@ -94,7 +94,7 @@ class BackendComponent extends Component
 
         // Attach listeners
         // @todo Remove deprecated code
-        foreach (Backend::getListeners('Controller') as $listenerClass) {
+        foreach (Admin::getListeners('Controller') as $listenerClass) {
             try {
                 $modobj = new $listenerClass();
                 if ($modobj instanceof EventListenerInterface) {
@@ -115,7 +115,7 @@ class BackendComponent extends Component
         // i18n
         //I18n::setLocale('en_US');
 
-//        // Check backend cookie
+//        // Check admin cookie
 //        $this->Cookie = $controller->loadComponent('Cookie');
 //        $this->Cookie->setConfig('path', '/admin/');
 //        $this->Cookie->config([
@@ -159,15 +159,15 @@ class BackendComponent extends Component
         $controller = $event->getSubject();
 
         // Configure view
-        $controller->viewBuilder()->setClassName('Backend.Backend');
-        $controller->viewBuilder()->setLayout('Backend.admin');
-        $controller->viewBuilder()->setTheme(Configure::read('Backend.theme'));
+        $controller->viewBuilder()->setClassName('Admin.Admin');
+        $controller->viewBuilder()->setLayout('Admin.admin');
+        $controller->viewBuilder()->setTheme(Configure::read('Admin.theme'));
 
         // Handle iframe and ajax requests
         if ($this->getController()->getRequest()->is('iframe')) {
-            $controller->viewBuilder()->setLayout('Backend.iframe');
+            $controller->viewBuilder()->setLayout('Admin.iframe');
         } elseif ($this->getController()->getRequest()->is('ajax') && !$this->_registry->has('RequestHandler')) {
-            $controller->viewBuilder()->setLayout('Backend.ajax/admin');
+            $controller->viewBuilder()->setLayout('Admin.ajax/admin');
         }
 
         if ($controller->Auth->user('locale') && $controller->Auth->user('locale') != I18n::getLocale()) {

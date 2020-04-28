@@ -1,22 +1,22 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Controller;
+namespace Admin\Controller;
 
 //use Cake\Controller\Exception\MissingActionException;
 
 /**
- * Class BackendActionsTrait
+ * Class AdminActionsTrait
  *
- * Enables Backend Actions by overriding the controllers 'invokeAction' method
- * Requires BackendComponent loaded in the controller
+ * Enables Admin Actions by overriding the controllers 'invokeAction' method
+ * Requires AdminComponent loaded in the controller
  *
- * @package Backend\Controller
- * @property \Backend\Controller\Component\BackendComponent $Backend
+ * @package Admin\Controller
+ * @property \Admin\Controller\Component\AdminComponent $Admin
  *
  * @deprecated
  */
-trait BackendActionsTrait
+trait AdminActionsTrait
 {
     /**
      * @return null|\Cake\Http\Response
@@ -30,7 +30,7 @@ trait BackendActionsTrait
         } catch (MissingActionException $ex) {
             $action = $this->request->getParam('action');
 
-            if (!$this->Backend->hasAction($action)) {
+            if (!$this->Admin->hasAction($action)) {
                 throw new MissingActionException([
                     'controller' => $this->name . "Controller",
                     'action' => $this->request->getParam('action'),

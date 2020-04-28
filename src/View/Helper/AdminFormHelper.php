@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View\Helper;
+namespace Admin\View\Helper;
 
 use Bootstrap\View\Helper\FormHelper as BootstrapFormHelper;
 use Cake\View\View;
 
-class BackendFormHelper extends BootstrapFormHelper
+class AdminFormHelper extends BootstrapFormHelper
 {
     private $_fieldsetOptions = [];
 
@@ -17,28 +17,28 @@ class BackendFormHelper extends BootstrapFormHelper
     {
         parent::__construct($View, $config);
 
-        $this->templater()->load('Backend.form_templates');
+        $this->templater()->load('Admin.form_templates');
 
         $widgets = [
-            //'checkbox' => ['Backend\View\Widget\CheckboxWidget'],
+            //'checkbox' => ['Admin\View\Widget\CheckboxWidget'],
             // Chosen Select
-            //'select' => ['Backend\View\Widget\ChosenSelectBoxWidget', '_view'],
+            //'select' => ['Admin\View\Widget\ChosenSelectBoxWidget', '_view'],
             // Sumo Select
-            //'select' => ['Backend\View\Widget\SumoSelectBoxWidget', '_view'],
+            //'select' => ['Admin\View\Widget\SumoSelectBoxWidget', '_view'],
             // Select2
-            'select' => ['Backend\View\Widget\Select2Widget', '_view'],
+            'select' => ['Admin\View\Widget\Select2Widget', '_view'],
             // TinyMCE Html Editor
-            'htmleditor' => ['Backend\View\Widget\HtmlEditorWidget', '_view'],
-            'htmltext' => ['Backend\View\Widget\HtmlTextWidget', '_view'],
+            'htmleditor' => ['Admin\View\Widget\HtmlEditorWidget', '_view'],
+            'htmltext' => ['Admin\View\Widget\HtmlTextWidget', '_view'],
             // Date and Time Pickers
-            'datetime' => ['Backend\View\Widget\DatePickerWidget', 'text', '_view'], // override CakePHP built-in datetime control
-            //'datepicker' => ['Backend\View\Widget\DatePickerWidget', 'text', '_view'],
-            'timepicker' => ['Backend\View\Widget\TimePickerWidget'],
+            'datetime' => ['Admin\View\Widget\DatePickerWidget', 'text', '_view'], // override CakePHP built-in datetime control
+            //'datepicker' => ['Admin\View\Widget\DatePickerWidget', 'text', '_view'],
+            'timepicker' => ['Admin\View\Widget\TimePickerWidget'],
             // ACE Code Editor
-            //'codeeditor' => ['Backend\View\Widget\CodeEditorWidget', '_view'],
+            //'codeeditor' => ['Admin\View\Widget\CodeEditorWidget', '_view'],
             // Image select (experimental)
-            //'imageselect' => ['Backend\View\Widget\ImageSelectWidget'],
-            //'imagemodal' => ['Backend\View\Widget\ImageModalWidget'],
+            //'imageselect' => ['Admin\View\Widget\ImageSelectWidget'],
+            //'imagemodal' => ['Admin\View\Widget\ImageModalWidget'],
         ];
         foreach ($widgets as $type => $config) {
             $this->addWidget($type, $config);
@@ -125,8 +125,8 @@ class BackendFormHelper extends BootstrapFormHelper
                 //    break;
                 //case 'imageselect':
                 //case 'imagemodal':
-                //    $this->Html->css('Backend.imagepicker/image-picker', ['block' => true]);
-                //    $this->Html->script('Backend.imagepicker/image-picker.min', ['block' => 'script']);
+                //    $this->Html->css('Admin.imagepicker/image-picker', ['block' => true]);
+                //    $this->Html->script('Admin.imagepicker/image-picker.min', ['block' => 'script']);
                 //    break;
             }
         }

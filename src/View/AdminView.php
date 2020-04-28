@@ -1,31 +1,31 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\View;
+namespace Admin\View;
 
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\View\View;
 
 /**
- * Class BackendView
+ * Class AdminView
  *
- * @package Backend\View
+ * @package Admin\View
  */
-class BackendView extends View
+class AdminView extends View
 {
-    public $layout = "Backend.admin";
+    public $layout = "Admin.admin";
 
     /**
      * {@inheritDoc}
      */
     public function initialize(): void
     {
-        $this->loadHelper('Html', ['className' => '\Backend\View\Helper\BackendHtmlHelper']);
-        $this->loadHelper('Form', ['className' => '\Backend\View\Helper\BackendFormHelper']);
-        $this->loadHelper('Backend.Backend');
+        $this->loadHelper('Html', ['className' => '\Admin\View\Helper\AdminHtmlHelper']);
+        $this->loadHelper('Form', ['className' => '\Admin\View\Helper\AdminFormHelper']);
+        $this->loadHelper('Admin.Admin');
 
-        $this->getEventManager()->dispatch(new Event('Backend.View.initialize', $this));
+        $this->getEventManager()->dispatch(new Event('Admin.View.initialize', $this));
     }
 
     /**
@@ -37,7 +37,7 @@ class BackendView extends View
 
 
         if ($name != "content" && strlen($content) < 1) {
-            $blocks = (array)Configure::read('Backend.Layout.admin.blocks.' . $name);
+            $blocks = (array)Configure::read('Admin.Layout.admin.blocks.' . $name);
             foreach ($blocks as $item) {
                 if (isset($item['element'])) {
                     $content .= $this->element($item['element']);
@@ -47,7 +47,7 @@ class BackendView extends View
             }
 
             $event = $this->getEventManager()->dispatch(
-                new Event('Backend.View.fetch', $this, ['name' => $name, 'content' => $content])
+                new Event('Admin.View.fetch', $this, ['name' => $name, 'content' => $content])
             );
             $content = $event->getData('content');
         }

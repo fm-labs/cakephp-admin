@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Backend\Action;
+namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\ORM\Association;
@@ -10,7 +10,7 @@ use Cake\Utility\Inflector;
 /**
  * Class EditAction
  *
- * @package Backend\Action
+ * @package Admin\Action
  */
 class EditAction extends BaseEntityAction
 {
@@ -37,7 +37,7 @@ class EditAction extends BaseEntityAction
      */
     public function getLabel()
     {
-        return __d('backend', 'Edit');
+        return __d('admin', 'Edit');
     }
 
     /**
@@ -102,7 +102,7 @@ class EditAction extends BaseEntityAction
         if ($this->request->is(['put', 'post'])) {
             $entity = $this->model()->patchEntity($entity, $this->request->getData(), ['validate' => $this->_config['model.validator']]);
             if ($this->model()->save($entity)) {
-                $this->_flashSuccess(__d('backend', 'Saved!'));
+                $this->_flashSuccess(__d('admin', 'Saved!'));
 
                 return $this->redirect([$entity->id] + $controller->getRequest()->getQuery());
             } else {

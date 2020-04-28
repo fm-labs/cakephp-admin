@@ -1,8 +1,8 @@
 <?php
 use Cake\Core\Configure;
 ?>
-<?php $this->loadHelper('Backend.Formatter'); ?>
-<?php $this->loadHelper('Backend.DataTable'); ?>
+<?php $this->loadHelper('Admin.Formatter'); ?>
+<?php $this->loadHelper('Admin.DataTable'); ?>
 <?php $this->loadHelper('Bootstrap.Tabs'); ?>
 <div class="entity-view">
     <div class="box">

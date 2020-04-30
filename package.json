@@ -29,14 +29,10 @@
     "grunt-contrib-jshint": "~2.1.0",
     "grunt-contrib-less": "~2.0.0",
     "grunt-contrib-uglify": "~4.0.1",
-    "grunt-contrib-watch": "~1.1.0",
-    "less-plugin-autoprefix": "~2.0.0",
-    "less-plugin-clean-css": "~1.5.1"
+    "grunt-contrib-watch": "~1.1.0"
   },
   "dependencies": {
-    "backbone": "^1.4.0",
     "bootstrap": "^3.4",
-    "chosen": "^0.0.2",
     "datatables.net-bs": "^1.10.19",
     "datatables.net-buttons-bs": "^1.5.4",
     "datatables.net-colreorder-bs": "^1.5.1",

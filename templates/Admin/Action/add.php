@@ -18,7 +18,7 @@ $formOptions = $this->get('form.options', ['horizontal' => true]);
 /**
  * Helpers
  */
-//$this->loadHelper('Admin.Chosen');
+//;
 $this->loadHelper('Bootstrap.Tabs');
 
 /**

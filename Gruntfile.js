@@ -32,8 +32,8 @@ module.exports = function(grunt) {
           paths: ['webroot/less', 'webroot/css'],
           compress: true,
           plugins: [
-            new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]}),
-            new (require('less-plugin-clean-css'))({ advanced: true })
+            //new (require('less-plugin-autoprefix'))({browsers: ["last 2 versions"]}),
+            //new (require('less-plugin-clean-css'))({ advanced: true })
           ]
         },
         files: {
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
         },
         files: [
           // includes files within path
-          {expand: true, cwd: 'node_modules/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
+          //{expand: true, cwd: 'node_modules/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
           {expand: true, cwd: 'node_modules/bootstrap/', src: ['dist/**'], dest: 'webroot/libs/bootstrap/'},
           {expand: true, cwd: 'node_modules/chosen/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/chosen/'},
           {expand: true, cwd: 'node_modules/font-awesome/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/fontawesome/'},

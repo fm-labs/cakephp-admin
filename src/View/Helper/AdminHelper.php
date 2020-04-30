@@ -43,7 +43,6 @@ class AdminHelper extends Helper
 
         // default helpers
         $this->_View->loadHelper('Bootstrap.Ui');
-        $this->_View->loadHelper('Admin.Backbone');
         $this->_View->loadHelper('Admin.Breadcrumb');
         $this->_View->loadHelper('Admin.Toolbar');
 

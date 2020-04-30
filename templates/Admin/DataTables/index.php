@@ -14,7 +14,6 @@ $url = Router::url(['action' => 'ajax', 'model' => $modelName]);
 
     <script src="/boneform-js/node_modules/jquery/dist/jquery.js"></script>
     <script src="/boneform-js/node_modules/underscore/underscore.js"></script>
-    <script src="/boneform-js/node_modules/backbone/backbone.js"></script>
     <script src="/boneform-js/node_modules/bootstrap/dist/js/bootstrap.js"></script>
 
     <?= $this->Html->css('Admin./js/datatables/dataTables.bootstrap.css'); ?>

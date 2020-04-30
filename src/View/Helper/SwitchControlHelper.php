@@ -23,7 +23,6 @@ class SwitchControlHelper extends Helper
     {
         $this->Html->css('Admin./vendor/bootstrap-switch/css/bootstrap3/bootstrap-switch.css', ['block' => true]);
         $this->Html->script('Admin./vendor/bootstrap-switch/js/bootstrap-switch.js', ['block' => true]);
-        //$this->Form->addWidget('chosen', ['Admin\View\Widget\SwitchControlSelectBoxWidget']);
         $this->Form->addWidget('switch', ['Admin\View\Widget\SwitchControlWidget', '_view']);
     }
 }

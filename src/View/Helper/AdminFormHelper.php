@@ -21,8 +21,6 @@ class AdminFormHelper extends BootstrapFormHelper
 
         $widgets = [
             //'checkbox' => ['Admin\View\Widget\CheckboxWidget'],
-            // Chosen Select
-            //'select' => ['Admin\View\Widget\ChosenSelectBoxWidget', '_view'],
             // Sumo Select
             //'select' => ['Admin\View\Widget\SumoSelectBoxWidget', '_view'],
             // Select2

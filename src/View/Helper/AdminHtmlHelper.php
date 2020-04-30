@@ -20,7 +20,6 @@ class AdminHtmlHelper extends HtmlHelper
         /*
         '_jquery' => 'Admin.jquery/jquery-1.11.2.min',
         '_jqueryui' => ['Admin.jqueryui/jquery-ui.min' => ['_jquery']],
-        '_chosen' => ['Admin.chosen/chosen.jquery.min' => ['_jquery']],
         '_pickadate_picker' => ['Admin.pickadate/picker'],
         '_pickadate_date' => ['Admin.pickadate/picker.date'],
         '_pickadate_time' => ['Admin.pickadate/picker.time'],

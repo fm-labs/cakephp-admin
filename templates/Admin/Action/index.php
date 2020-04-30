@@ -1,5 +1,5 @@
 <?php
-//$this->loadHelper('Admin.Chosen');
+//;
 $this->loadHelper('Admin.Box');
 $this->loadHelper('Admin.DataTable');
 $this->extend('Admin./Base/index');

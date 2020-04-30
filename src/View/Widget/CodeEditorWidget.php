@@ -52,7 +52,6 @@ class CodeEditorWidget extends TextareaWidget
     {
         parent::__construct($templates);
         $this->_View = $view;
-        $this->_View->loadHelper('Admin.Backbone');
         $this->_View->loadHelper('Admin.CodeEditor');
 
         $this->_templates->add([

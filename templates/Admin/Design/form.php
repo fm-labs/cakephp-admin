@@ -4,7 +4,7 @@ $this->assign('title', __d('admin', 'Design Kitchensink'));
 $this->loadHelper('Admin.SwitchControl');
 $this->loadHelper('Admin.SumoSelect');
 $this->loadHelper('Admin.Select2');
-$this->loadHelper('Admin.Chosen');
+;
 $this->loadHelper('Admin.DateRangePicker');
 ?>
 <!-- SECTION INPUTS -->
@@ -62,11 +62,6 @@ $this->loadHelper('Admin.DateRangePicker');
         <?= $this->Form->control('h_sumo_select', ['type' => 'sumoselect', 'options' => $selectOptions]); ?>
         <?= $this->Form->control('h_sumo_select_empty', ['type' => 'sumoselect', 'empty' => 'EMPTY', 'options' => $selectOptions]); ?>
         <?= $this->Form->control('h_sumo_select_empty_true', ['type' => 'sumoselect', 'empty' => true, 'options' => $selectOptions]); ?>
-        <?= $this->Form->fieldsetEnd(); ?>
-        <?= $this->Form->fieldsetStart("Select Chosen"); ?>
-        <?= $this->Form->control('h_chosen_select', ['type' => 'chosen', 'options' => $selectOptions]); ?>
-        <?= $this->Form->control('h_chosen_select_empty', ['type' => 'chosen', 'empty' => 'EMPTY', 'options' => $selectOptions]); ?>
-        <?= $this->Form->control('h_chosen_select_empty_true', ['type' => 'chosen', 'empty' => true, 'options' => $selectOptions]); ?>
         <?= $this->Form->fieldsetEnd(); ?>
         <?= $this->Form->fieldsetStart("Checkbox"); ?>
         <?= $this->Form->control('h_checkbox', ['type' => 'checkbox']); ?>

@@ -17,7 +17,7 @@ $viewOptions = (array)$this->get('viewOptions');
 /**
  * Helpers
  */
-//$this->loadHelper('Admin.Chosen');
+//;
 $this->loadHelper('Admin.DataTable');
 $this->loadHelper('Bootstrap.Tabs');
 //$this->extend('Admin./Base/form');

@@ -3,5 +3,5 @@
 /node_modules/
 /bower_components/
 /webroot/js/datatables
-/webroot/libs1
-*.cache
+.phpunit.result.cache
+.yarnclean

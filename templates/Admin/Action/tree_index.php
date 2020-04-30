@@ -1,5 +1,5 @@
 <?php
-$this->loadHelper('Admin.Chosen');
+;
 $this->loadHelper('Admin.DataTable');
 
 //$this->Toolbar->addLink(__d('admin','Add'), ['action' => 'add'], ['class' => 'add']);

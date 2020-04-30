@@ -19,7 +19,7 @@ $inputOptions = $this->get('inputs.options', []);
 /**
  * Helpers
  */
-$this->loadHelper('Admin.Chosen');
+;
 $this->loadHelper('Bootstrap.Tabs');
 ?>
 <div class="edit">

@@ -56,7 +56,7 @@ trait JsTreeAwareTrait
         }
 
         if (!$Model->behaviors()->has('JsTree')) {
-            $Model->behaviors()->load('Banana.JsTree');
+            $Model->behaviors()->load('Cupcake.JsTree');
         }
 
         $jsTree = $Model->getJsTree();

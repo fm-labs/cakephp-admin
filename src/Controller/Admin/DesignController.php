@@ -16,10 +16,9 @@ class DesignController extends AppController
     ];
 
     /**
-     * Index action
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         $section = $this->request->getQuery('section');
         if ($section && in_array($section, $this->sections)) {
@@ -33,13 +32,15 @@ class DesignController extends AppController
         $flash = $this->request->getQuery('flash');
         if ($flash) {
             $this->Flash->{$flash}('Awesome!', ['title' => 'My title']);
-            $this->Flash->set('Realy cool!', ['title' => 'Just another flash message']);
         }
 
         $this->render($section);
     }
 
-    public function form()
+    /**
+     * @return void
+     */
+    public function form(): void
     {
         $form = new Form();
         $form->schema()
@@ -59,7 +60,7 @@ class DesignController extends AppController
 
         $selectOptions = [
             'apples' => 'Apples',
-            'bananas' => 'Bananas',
+            'cupcakes' => 'Cupcakes',
             'coconut' => 'Coconut',
         ];
 

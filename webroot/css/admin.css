@@ -1,6 +1,6 @@
-/** cakephp-backend - v1.4.0 **/
+/** cakephp-admin - v1.5.0 **/
 /**
- * Combined backend less element
+ * Combined admin less element
 **/
 @font-face {
   font-family: 'OpenSansRegular';
@@ -146,7 +146,7 @@ dl.dl-horizontal dd:first-child {
  */
 .link-frame::after {
   display: inline-block;
-  margin: 0 .25rem 0 0;
+  margin: 0 0.25rem 0 0;
   width: 1.18em;
   height: 1em;
   font-family: 'FontAwesome';
@@ -566,9 +566,9 @@ nav ul.pagination {
   font-size: 15px;
 }
 .small-box .icon {
-  -webkit-transition: all .3s linear;
-  -o-transition: all .3s linear;
-  transition: all .3s linear;
+  -webkit-transition: all 0.3s linear;
+  -o-transition: all 0.3s linear;
+  transition: all 0.3s linear;
   position: absolute;
   top: -10px;
   right: 10px;
@@ -684,7 +684,7 @@ form fieldset legend {
 }
 form fieldset legend::before {
   display: inline-block;
-  margin: 0 .25rem 0 0;
+  margin: 0 0.25rem 0 0;
   width: 1.18em;
   height: 1em;
   font-family: 'FontAwesome';
@@ -729,7 +729,7 @@ form fieldset.collapsed > legend {
 }
 form fieldset.collapsed > legend::before {
   display: inline-block;
-  margin: 0 .25rem 0 0;
+  margin: 0 0.25rem 0 0;
   width: 1.18em;
   height: 1em;
   font-family: 'FontAwesome';

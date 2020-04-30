@@ -2,6 +2,7 @@
 /**
  * @deprecated Use BreadcrumbHelper or Admin's Layout/BreadcrumbHelper instead
  */
+return;
 ?>
 <?= $this->Html->getCrumbList([
     'class' => 'breadcrumb'

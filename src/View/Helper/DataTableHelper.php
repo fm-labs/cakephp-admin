@@ -687,7 +687,7 @@ class DataTableHelper extends Helper
                 $filterInputOptions['type'] = 'text';
             }
 
-            if ($Model instanceof \Banana\Model\TableInputDataSourceInterface) {
+            if ($Model instanceof \Cupcake\Model\TableInputDataSourceInterface) {
                 $sources = $Model->getInputList($fieldName);
                 if ($sources) {
                     $filterInputOptions['options'] = $sources;

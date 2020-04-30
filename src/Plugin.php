@@ -4,17 +4,20 @@ declare(strict_types=1);
 namespace Admin;
 
 use Admin\Http\ActionDispatcherListener;
-use Banana\Plugin\BasePlugin;
+use Admin\Routing\Middleware\AdminMiddleware;
+use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Event\Event;
 use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
+use Cake\Http\MiddlewareQueue;
 use Cake\Log\Log;
 use Cake\Routing\Route\DashedRoute;
-use Cake\Routing\Router;
+use Cake\Routing\RouteBuilder;
 use Cake\Utility\Inflector;
+use Cupcake\Plugin\BasePlugin;
 use Settings\SettingsManager;
 
 /**
@@ -25,29 +28,48 @@ class Plugin extends BasePlugin implements EventListenerInterface
     use EventDispatcherTrait;
 
     /**
-     * @var \Banana\Application
+     * @var \Cake\Http\BaseApplication|\Cupcake\Application
      */
     protected $_app;
-
-    /**
-     * @var \Admin\Admin
-     */
-    protected $_admin;
-
-    /**
-     * {@inheritDoc}
-     */
-    public function initialize(): void
-    {
-        $this->_admin = new Admin();
-    }
 
     /**
      * {@inheritDoc}
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
-        parent::bootstrap($app);
+        /**
+         * Logs
+         */
+        if (!Log::getConfig('admin')) {
+            Log::setConfig('admin', [
+                'className' => 'Cake\Log\Engine\FileLog',
+                'path' => LOGS,
+                'file' => 'admin',
+                //'levels' => ['info'],
+                'scopes' => ['admin', 'admin'],
+            ]);
+        }
+
+        /**
+         * Cache config
+         */
+        if (!Cache::getConfig('admin')) {
+            Cache::setConfig('admin', [
+                'className' => 'File',
+                'duration' => '+1 hours',
+                'path' => CACHE,
+                'prefix' => 'admin_',
+            ]);
+        }
+
+        /**
+         * DebugKit
+         */
+        if (\Cake\Core\Plugin::isLoaded('DebugKit')) {
+            $panels = Configure::read('DebugKit.panels', []);
+            $panels['Admin.Admin'] = true;
+            Configure::write('DebugKit.panels', $panels);
+        }
 
         $app->addPlugin("User");
         $app->addPlugin("Bootstrap");
@@ -55,22 +77,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
         EventManager::instance()->on($this);
         EventManager::instance()->on(new ActionDispatcherListener());
 
-        if (\Cake\Core\Plugin::isLoaded('Settings')) {
-            //SettingsManager::register($this->getName(), Settings::class);
-            //EventManager::instance()->on(new Settings());
-        }
-
         $this->_app = $app;
-//        foreach ($this->_app->plugins()->loaded() as $pluginName) {
-//            $instance = $this->_app->plugins()->get($pluginName);
-//            if (method_exists($instance, 'adminBootstrap')) {
-//                try {
-//                    call_user_func([$instance, 'adminBootstrap'], $this->_admin);
-//                } catch (\Exception $ex) {
-//                    Log::error("Admin plugin bootstrapping failed: $pluginName: " . $ex->getMessage());
-//                }
-//            }
-//        }
     }
 
     /**
@@ -80,78 +87,111 @@ class Plugin extends BasePlugin implements EventListenerInterface
     {
         parent::routes($routes);
 
-        $routes->scope('/admin/admin/', ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'admin:admin:'], function ($routes) {
-            /** @var \Cake\Routing\RouteBuilder $routes */
-            $routes->connect(
-                '/login',
-                ['controller' => 'Auth', 'action' => 'login'],
-                ['_name' => 'user:login']
-            );
-            $routes->connect(
-                '/session',
-                ['controller' => 'Auth', 'action' => 'session'],
-                ['_name' => 'user:checkauth']
-            );
-            $routes->connect(
-                '/login-success',
-                ['controller' => 'Auth', 'action' => 'loginSuccess'],
-                ['_name' => 'user:loginsuccess']
-            );
+        $routes->scope(
+            '/' . Admin::$urlPrefix,
+            ['prefix' => 'Admin', '_namePrefix' => 'admin:'],
+            function (RouteBuilder $routes) {
+                $routes->registerMiddleware('admin', new AdminMiddleware($this->_app));
+                $routes->applyMiddleware('admin');
+                $routes->connect('/', ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index']);
 
-            // admin:admin:auth:logout
-            $routes->connect(
-                '/logout',
-                ['controller' => 'Auth', 'action' => 'logout'],
-                [ '_name' => 'user:logout']
-            );
+                $routes->scope(
+                    '/system',
+                    ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'admin:'],
+                    function ($routes) {
+                        $routes->connect(
+                            '/login',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
+                            ['_name' => 'user:login']
+                        );
+                        $routes->connect(
+                            '/session',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'session'],
+                            ['_name' => 'user:checkauth']
+                        );
+                        $routes->connect(
+                            '/login-success',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'loginSuccess'],
+                            ['_name' => 'user:loginsuccess']
+                        );
 
-            // admin:admin:auth:user
-            $routes->connect(
-                '/user',
-                ['controller' => 'Auth', 'action' => 'user'],
-                [ '_name' => 'user:profile']
-            );
+                        // admin:admin:auth:logout
+                        $routes->connect(
+                            '/logout',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
+                            [ '_name' => 'user:logout']
+                        );
 
-            // admin:admin:dashboard
-            $routes->connect(
-                '/',
-                ['controller' => 'Admin', 'action' => 'index'],
-                ['_name' => 'dashboard']
-            );
+                        // admin:admin:auth:user
+                        $routes->connect(
+                            '/user',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
+                            [ '_name' => 'user:profile']
+                        );
 
-            $routes->fallbacks(DashedRoute::class);
-        });
+                        // admin:admin:dashboard
+                        $routes->connect(
+                            '/',
+                            ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
+                            ['_name' => 'dashboard']
+                        );
 
-        $urlPrefix = '/' . trim(Admin::$urlPrefix, '/') . '/';
-        foreach ($this->_app->getPlugins()->with('routes') as $instance) {
-            //$instance = $this->_app->getPlugins()->get($pluginName);
-            $pluginName = $instance->getName();
-            if (method_exists($instance, 'adminRoutes')) {
-                try {
-                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
-                        'plugin' => $pluginName,
-                        'prefix' => 'Admin',
-                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName)),
-                    ], [$instance, 'adminRoutes']);
-                } catch (\Exception $ex) {
-                    Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
+                        $routes->fallbacks(DashedRoute::class);
+                    }
+                );
+
+                // load admin routes from admin plugins
+                /** @var \Admin\Core\AdminPluginInterface $plugin */
+                foreach (Admin::getPlugins() as $plugin) {
+                    $pluginName = $plugin->getName();
+                    try {
+                        $routes->scope(
+                            '/' . Inflector::dasherize($pluginName),
+                            [
+                                'plugin' => $plugin->getName() != "App" ? $plugin->getName() : null,
+                                'prefix' => 'Admin',
+                                '_namePrefix' => sprintf("%s:", Inflector::underscore($pluginName)),
+                            ],
+                            [$plugin, 'routes']
+                        );
+                    } catch (\Exception $ex) {
+                        Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
+                    }
                 }
-            } else {
-//                try {
-//                    Router::scope($urlPrefix . Inflector::underscore($pluginName), [
-//                        'plugin' => $pluginName,
-//                        'prefix' => 'Admin',
-//                        '_namePrefix' => sprintf("admin:%s:", Inflector::underscore($pluginName))
-//                    ], function(RouteBuilder $routes) {
-//                        $routes->fallbacks('DashedRoute');
-//                    });
-//                } catch (\Exception $ex) {
-//                    Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
-//                }
-            }
-        }
 
-        $event = $this->dispatchEvent('Admin.Routes.setup', ['routes' => $routes]);
+                // [deprecated] register admin plugin routes
+                // @TODO Remove legacy admin plugin route loader
+                /** @var \Cake\Core\PluginInterface $plugin */
+                foreach ($this->_app->getPlugins()->with('routes') as $plugin) {
+                    $pluginName = $plugin->getName();
+                    if (method_exists($plugin, 'adminRoutes')) {
+                        try {
+                            $routes->scope(
+                                '/' . Inflector::dasherize($pluginName),
+                                [
+                                    'plugin' => $plugin->getName(),
+                                    'prefix' => 'Admin',
+                                    '_namePrefix' => sprintf("%s:", Inflector::underscore($pluginName)),
+                                ],
+                                [$plugin, 'adminRoutes']
+                            );
+                        } catch (\Exception $ex) {
+                            Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
+                        }
+                    }
+                }
+
+                $event = $this->dispatchEvent('Admin.Routes.setup', ['routes' => $routes]);
+            } # End of admin root scope
+        );
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
+    {
+        return $middlewareQueue;
     }
 
     public function adminConfigurationUrl()
@@ -232,9 +272,8 @@ class Plugin extends BasePlugin implements EventListenerInterface
      * @param \Cake\Event\Event $event The event object
      * @return void
      */
-    public function buildAdminMenu(Event $event, \Banana\Menu\Menu $menu)
+    public function buildAdminMenu(Event $event, \Cupcake\Menu\Menu $menu)
     {
-
         if (Configure::read('debug')) {
             $menu->addItem([
                 'title' => __d('admin', 'Developer'),
@@ -282,7 +321,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
      * @param \Cake\Event\Event $event The event object
      * @return void
      */
-    public function buildAdminSystemMenu(Event $event, \Banana\Menu\Menu $menu)
+    public function buildAdminSystemMenu(Event $event, \Cupcake\Menu\Menu $menu)
     {
         $items = $this->_getMenuItems();
         foreach ($items as $item) {

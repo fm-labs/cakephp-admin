@@ -2,8 +2,8 @@
     <div class="pull-left">
         &nbsp;
     </div>
-    <div class="pull-right">
-        <small><a href="http://flowmotion-labs.com" target="_blank">fm-labs</a></small>
+    <div class="pull">
+        <small>&copy; <a href="https://www.flowmotion-labs.com" target="_blank">fm-labs</a></small>
     </div>
     <div class="clearfix"></div>
 </div>

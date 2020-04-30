@@ -1,6 +1,6 @@
 <?php
 /**
- * AdminLTE content header
+ * Content header
  *
  * Heading text is read from view vars 'heading'
  * Fallback to view var 'title'

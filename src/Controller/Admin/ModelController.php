@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
-use Banana\Model\TableInputSchema;
+use Cupcake\Model\TableInputSchema;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\Table;
 use Cake\Routing\Router;
@@ -65,7 +65,7 @@ class ModelController extends AppController
             $schema = $data = [];
             $inputSchema = new TableInputSchema();
             if (!$Model->hasBehavior('InputSchema')) {
-                $Model->addBehavior('Banana.InputSchema');
+                $Model->addBehavior('Cupcake.InputSchema');
             }
             $inputSchema = $Model->inputs();
             /*

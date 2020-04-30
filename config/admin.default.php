@@ -43,11 +43,4 @@ return [
      * Admin Search config
      */
     'Admin.Search.searchUrl' => ['plugin' => 'Admin', 'controller' => 'Search', 'action' => 'index'],
-
-    /**
-     * Admin AdminLTE theme options
-     */
-    //'Admin.AdminLte.skin_class' => 'skin-blue',
-    //'Admin.AdminLte.layout_class' => '',
-    //'Admin.AdminLte.sidebar_class' => 'sidebar-mini',
 ];

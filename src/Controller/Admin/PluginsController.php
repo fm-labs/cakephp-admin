@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
-use Banana\Banana;
+use Cupcake\Cupcake;
 use Cake\Core\App;
 use Cake\Core\Plugin;
 
@@ -16,7 +16,7 @@ class PluginsController extends AppController
     {
         $plugins = [];
         foreach (Plugin::loaded() as $pluginName) {
-            $plugins[$pluginName] = Banana::pluginInfo($pluginName);
+            $plugins[$pluginName] = Cupcake::pluginInfo($pluginName);
         }
 
         // find available plugins from known plugin folders
@@ -45,7 +45,7 @@ class PluginsController extends AppController
                     'handler_loaded' => false,
                 ];
                 /*
-                $installed[$f] = Banana::pluginInfo($f);
+                $installed[$f] = Cupcake::pluginInfo($f);
                 */
             }
         }

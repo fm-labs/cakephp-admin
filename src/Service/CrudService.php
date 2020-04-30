@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Service;
 
-use Admin\AdminService;
 use Cake\Event\Event;
 
 class CrudService extends AdminService

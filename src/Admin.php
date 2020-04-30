@@ -3,13 +3,15 @@ declare(strict_types=1);
 
 namespace Admin;
 
+use Admin\Core\AdminPluginCollection;
+use Admin\Core\AdminPluginInterface;
 use Admin\Service\ServiceRegistry;
-use Banana\Exception\ClassNotFoundException;
-use Banana\Menu\Menu;
 use Cake\Core\InstanceConfigTrait;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
 use Cake\Event\EventManager;
+use Cupcake\Exception\ClassNotFoundException;
+use Cupcake\Menu\Menu;
 
 /**
  * Class Admin
@@ -18,9 +20,9 @@ use Cake\Event\EventManager;
  */
 class Admin
 {
-    public static $urlPrefix = 'admin';
-
     use InstanceConfigTrait;
+
+    public static $urlPrefix = 'admin';
 
     /**
      * The service services.
@@ -59,6 +61,49 @@ class Admin
      */
     protected static $_hooks = [];
 
+    /**
+     * @var \Admin\Core\AdminPluginCollection
+     */
+    protected static $plugins;
+
+    /**
+     * Set the admin routing prefix.
+     * Defaults to 'admin'.
+     *
+     * @param string $prefix The URL routing prefix.
+     * @return void
+     */
+    public static function setUrlPrefix(string $prefix): void
+    {
+        static::$urlPrefix = trim(trim($prefix, '/'));
+    }
+
+    /**
+     * Get the shared plugin collection.
+     *
+     * This method should generally not be used during application
+     * runtime as plugins should be set during Application startup.
+     *
+     * @return \Admin\Core\AdminPluginCollection|\Iterator
+     */
+    public static function getPlugins(): AdminPluginCollection
+    {
+        if (!isset(static::$plugins)) {
+            static::$plugins = new AdminPluginCollection();
+        }
+
+        return static::$plugins;
+    }
+
+    /**
+     * @param \Admin\Core\AdminPluginInterface $plugin The admin plugin.
+     * @return void
+     */
+    public static function addPlugin(AdminPluginInterface $plugin): void
+    {
+        static::getPlugins()->add($plugin);
+    }
+
     public static function addFilter($name, $cb)
     {
         //@TODO Implement Me
@@ -85,7 +130,7 @@ class Admin
     }
 
     /**
-     * @return \Banana\Menu\Menu|array
+     * @return \Cupcake\Menu\Menu|array
      */
     public static function getMenu($menuId)
     {

@@ -47,7 +47,7 @@ module.exports = function(grunt) {
       }
     },
     copy: {
-      bower: {
+      libs: {
         options: {
           processContentExclude: ['**/*.{png,gif,jpg,ico,psd,ttf,otf,woff,svg}'],
           noProcess: ['**/*.{png,gif,jpg,ico,psd,ttf,otf,woff,woff2,svg}'], // processContentExclude has been renamed to noProcess
@@ -55,41 +55,28 @@ module.exports = function(grunt) {
         },
         files: [
           // includes files within path
-          //{expand: true, cwd: 'bower_components/AdminLTE/', src: ['dist/**', 'bootstrap/**'], dest: 'webroot/libs/adminlte/'},
-          {expand: true, cwd: 'bower_components/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
-          {expand: true, cwd: 'bower_components/bootstrap/', src: ['dist/**'], dest: 'webroot/libs/bootstrap/'},
-          {expand: true, cwd: 'bower_components/chosen/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/chosen/'},
-          {expand: true, cwd: 'bower_components/font-awesome/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/fontawesome/'},
-          {expand: true, cwd: 'bower_components/html5shiv/dist/', src: ['**'], dest: 'webroot/libs/html5shiv/'},
-          {expand: true, cwd: 'bower_components/ionicons/', src: ['css/**', 'fonts/**', 'png/**'], dest: 'webroot/libs/ionicons/'},
-          {expand: true, cwd: 'bower_components/image-picker/image-picker/', src: ['**'], dest: 'webroot/libs/image-picker/'},
-          {expand: true, cwd: 'bower_components/jquery/dist/', src: ['**'], dest: 'webroot/libs/jquery/'},
-          {expand: true, cwd: 'bower_components/jquery-ui/', src: ['*.js', 'themes/base/**'], dest: 'webroot/libs/jquery-ui/'},
-          {expand: true, cwd: 'bower_components/jstree/dist/', src: ['**'], dest: 'webroot/libs/jstree/'},
-          {expand: true, cwd: 'bower_components/pickadate/lib/compressed', src: ['**'], dest: 'webroot/libs/pickadate/'},
-          {expand: true, cwd: 'bower_components/respond/dest/', src: ['**'], dest: 'webroot/libs/respond/'},
-          {expand: true, cwd: 'bower_components/tinymce/', src: ['**'], dest: 'webroot/libs/tinymce/'},
+          {expand: true, cwd: 'node_modules/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
+          {expand: true, cwd: 'node_modules/bootstrap/', src: ['dist/**'], dest: 'webroot/libs/bootstrap/'},
+          {expand: true, cwd: 'node_modules/chosen/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/chosen/'},
+          {expand: true, cwd: 'node_modules/font-awesome/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/fontawesome/'},
+          {expand: true, cwd: 'node_modules/ionicons/', src: ['css/**', 'fonts/**', 'png/**'], dest: 'webroot/libs/ionicons/'},
+          {expand: true, cwd: 'node_modules/image-picker/image-picker/', src: ['**'], dest: 'webroot/libs/image-picker/'},
+          {expand: true, cwd: 'node_modules/jquery/dist/', src: ['**'], dest: 'webroot/libs/jquery/'},
+          {expand: true, cwd: 'node_modules/jquery-ui/', src: ['*.js', 'themes/base/**'], dest: 'webroot/libs/jquery-ui/'},
+          {expand: true, cwd: 'node_modules/jstree/dist/', src: ['**'], dest: 'webroot/libs/jstree/'},
+          {expand: true, cwd: 'node_modules/pickadate/lib/compressed', src: ['**'], dest: 'webroot/libs/pickadate/'},
+          {expand: true, cwd: 'node_modules/tinymce/', src: ['**'], dest: 'webroot/libs/tinymce/'},
           {expand: true, cwd: 'webroot/js/tinymce/langs/', src: ['**'], dest: 'webroot/libs/tinymce/langs/'},
-          {expand: true, cwd: 'bower_components/underscore/', src: ['*.js'], dest: 'webroot/libs/underscore/'},
-          {expand: true, cwd: 'bower_components/flag-icon-css/', src: ['css/**', 'flags/**'], dest: 'webroot/libs/flag-icon-css/'},
-          {expand: true, cwd: 'bower_components/sumoselect/', src: ['*.js', '*.css'], dest: 'webroot/libs/sumoselect/'},
-          {expand: true, cwd: 'bower_components/select2/', src: ['dist/**'], dest: 'webroot/libs/select2/'},
-          {expand: true, cwd: 'bower_components/select2-bootstrap-theme/', src: ['dist/**'], dest: 'webroot/libs/select2-bootstrap-theme/'},
-          {expand: true, cwd: 'bower_components/daterangepicker/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/daterangepicker/'}
-        ]
-      },
-      yarn: {
-        options: {
-          processContentExclude: ['**/*.{png,gif,jpg,ico,psd,ttf,otf,woff,svg}'],
-          noProcess: ['**/*.{png,gif,jpg,ico,psd,ttf,otf,woff,woff2,svg}'], // processContentExclude has been renamed to noProcess
-          encoding: null
-        },
-        files: [
+          {expand: true, cwd: 'node_modules/underscore/', src: ['*.js'], dest: 'webroot/libs/underscore/'},
+          {expand: true, cwd: 'node_modules/sumoselect/', src: ['*.js', '*.css'], dest: 'webroot/libs/sumoselect/'},
+          {expand: true, cwd: 'node_modules/select2/', src: ['dist/**'], dest: 'webroot/libs/select2/'},
+          {expand: true, cwd: 'node_modules/select2-bootstrap-theme/', src: ['dist/**'], dest: 'webroot/libs/select2-bootstrap-theme/'},
+          {expand: true, cwd: 'node_modules/daterangepicker/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/daterangepicker/'},
           {expand: true, cwd: 'node_modules/toastr/build/', src: ['**'], dest: 'webroot/libs/toastr/'},
           {expand: true, cwd: 'node_modules/sweetalert2/dist/', src: ['**'], dest: 'webroot/libs/sweetalert2/'},
           {expand: true, cwd: 'node_modules/jqvmap/dist/', src: ['**'], dest: 'webroot/libs/jqvmap/'}
         ]
-      }
+      },
     },
     watch: {
       assets: {

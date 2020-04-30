@@ -3,10 +3,10 @@
         <div class="sidebar-toggle">
             <a href="#" data-sidebar-toggle>
                 <i class="fa fa-cubes"></i>
-                <span><?= $this->get('be_title') ?></span>
+                <span><?= $this->get('be_title', 'Administration') ?></span>
             </a>
         </div>
-        <?= $this->fetch('sidebar_items'); ?>
+        <?= $this->fetch('sidebar_panels'); ?>
     </section>
     <script>
         // Nightmode: Restore state

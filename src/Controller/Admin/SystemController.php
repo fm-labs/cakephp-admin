@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
+use Admin\System\Health;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Routing\Router;
@@ -21,9 +22,20 @@ class SystemController extends AppController
      *
      * @return void
      */
-    public function index()
+    public function index(): void
     {
         //$this->set('template', 'index');
+    }
+
+    /**
+     * Helath method
+     *
+     * @return void
+     */
+    public function health(): void
+    {
+        $health = Health::check();
+        $this->set(compact('health'));
     }
 
     /**
@@ -33,7 +45,7 @@ class SystemController extends AppController
      * @param int $what PHP Info option
      * @return void
      */
-    public function php($what = INFO_ALL)
+    public function php($what = INFO_ALL): void
     {
         ob_start();
         phpinfo($what);
@@ -50,7 +62,7 @@ class SystemController extends AppController
      *
      * @return void
      */
-    public function globals()
+    public function globals(): void
     {
         $globals = [
             'APP', 'APP_DIR', 'CONFIG', 'CACHE', 'CAKE', 'CAKE_CORE_INCLUDE_PATH', 'CORE_PATH',
@@ -64,7 +76,7 @@ class SystemController extends AppController
      *
      * @return void
      */
-    public function routes()
+    public function routes(): void
     {
         $this->set('routes', Router::routes());
         $this->set('_serialize', 'routes');
@@ -75,7 +87,7 @@ class SystemController extends AppController
      *
      * @return void
      */
-    public function plugins()
+    public function plugins(): void
     {
         $plugins = [];
         foreach (Plugin::loaded() as $pluginName) {
@@ -98,7 +110,7 @@ class SystemController extends AppController
      *
      * @return void
      */
-    public function datetime()
+    public function datetime(): void
     {
         $data = [];
 
@@ -113,7 +125,7 @@ class SystemController extends AppController
      *
      * @return void
      */
-    public function session()
+    public function session(): void
     {
         $this->set('session', $this->request->getSession()->read());
     }
@@ -123,7 +135,7 @@ class SystemController extends AppController
      *
      * @return void
      */
-    public function config()
+    public function config(): void
     {
         $this->set('config', Configure::read());
     }

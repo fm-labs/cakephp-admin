@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
-use Banana\Menu\Menu;
+use Cupcake\Menu\Menu;
 use Cake\Event\Event;
 
 class MenuController extends AppController

@@ -1,4 +1,4 @@
-/** cakephp-backend - v1.4.0 **/
+/** cakephp-admin - v1.5.0 **/
 /*---------------------------------------------------
     LESS Elements 0.9
   ---------------------------------------------------
@@ -478,7 +478,7 @@ body.body-compact {
   z-index: 1032;
 }
 .main-sidebar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 230px;
@@ -505,6 +505,10 @@ body.body-compact {
   padding: 15px 30px;
 }
 .main-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 5px 15px;
   color: #444;
   border-top: 1px solid #d2d6de;
@@ -525,9 +529,4 @@ body.body-compact {
 }
 .main-toolbar {
   position: relative;
-}
-.main-toolbar nav.toolbar {
-  position: absolute;
-  right: 10px;
-  top: 5px;
 }

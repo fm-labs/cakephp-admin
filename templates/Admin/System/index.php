@@ -1,6 +1,6 @@
 <?php
 use Admin\Admin;
-use Banana\Banana;
+use Cupcake\Cupcake;
 use Cake\Core\Configure;
 
 $this->loadHelper('Bootstrap.Tabs');

@@ -87,7 +87,11 @@ class AdminHelper extends Helper
         //$this->Html->script('/admin/js/admin.alert.js', ['block' => true]);
     }
 
-    public function beforeRender(Event $event)
+    /**
+     * @param \Cake\Event\Event $event The event.
+     * @return void
+     */
+    public function beforeRender(Event $event): void
     {
         /** @var \Cake\View\View $view */
         $view = $event->getSubject();
@@ -96,7 +100,8 @@ class AdminHelper extends Helper
     }
 
     /**
-     * {@inheritDoc}
+     * @param \Cake\Event\Event $event The event.
+     * @return void
      */
     public function beforeLayout(Event $event)
     {
@@ -123,11 +128,12 @@ class AdminHelper extends Helper
         );
         //$view->Html->css('/admin/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
 
-        $view->append('meta', $this->Html->charset());
-        $view->Html->meta(['http-equiv' => 'X-UA-Compatible', 'content' => 'IE-edge'], null, ['block' => true]);
-        $view->Html->meta('robots', 'noindex,nofollow', ['block' => true]);
-        $view->Html->meta('mobile-web-app-capable', 'yes', ['block' => true]);
-        $view->Html->meta('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', ['block' => true]);
-        $this->Html->meta('icon', null, ['block' => true]);
+        //$view->append('meta', $this->Html->charset());
+        //$view->Html->meta(['http-equiv' => 'X-UA-Compatible', 'content' => 'IE-edge'], null, ['block' => true]);
+        //$view->Html->meta('robots', 'noindex,nofollow', ['block' => true]);
+        //$view->Html->meta('mobile-web-app-capable', 'yes', ['block' => true]);
+        //$view->Html->meta('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', ['block' => true]);
+        //$this->Html->meta('icon', null, ['block' => true]);
+        $view->Html->meta('generator', 'CakePHP Admin by fmlabs', ['block' => true]);
     }
 }

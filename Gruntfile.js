@@ -57,7 +57,7 @@ module.exports = function(grunt) {
           // includes files within path
           //{expand: true, cwd: 'node_modules/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
           {expand: true, cwd: 'node_modules/bootstrap/', src: ['dist/**'], dest: 'webroot/libs/bootstrap/'},
-          {expand: true, cwd: 'node_modules/chosen/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/chosen/'},
+          //{expand: true, cwd: 'node_modules/chosen/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/chosen/'},
           {expand: true, cwd: 'node_modules/font-awesome/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/fontawesome/'},
           {expand: true, cwd: 'node_modules/ionicons/', src: ['css/**', 'fonts/**', 'png/**'], dest: 'webroot/libs/ionicons/'},
           {expand: true, cwd: 'node_modules/image-picker/image-picker/', src: ['**'], dest: 'webroot/libs/image-picker/'},
@@ -74,7 +74,7 @@ module.exports = function(grunt) {
           {expand: true, cwd: 'node_modules/daterangepicker/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/daterangepicker/'},
           {expand: true, cwd: 'node_modules/toastr/build/', src: ['**'], dest: 'webroot/libs/toastr/'},
           {expand: true, cwd: 'node_modules/sweetalert2/dist/', src: ['**'], dest: 'webroot/libs/sweetalert2/'},
-          {expand: true, cwd: 'node_modules/jqvmap/dist/', src: ['**'], dest: 'webroot/libs/jqvmap/'}
+          //{expand: true, cwd: 'node_modules/jqvmap/dist/', src: ['**'], dest: 'webroot/libs/jqvmap/'}
         ]
       },
     },

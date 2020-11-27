@@ -15,6 +15,9 @@
  * Borders
  */
 /**
+ * Padding & Margin
+ */
+/**
  * Body
  */
 /**
@@ -419,7 +422,7 @@ nav.actionbar-nav ul li a {
   display: block;
   padding: 7px 12px;
   margin: 0 0 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5da;
   text-align: center;
 }
 /*
@@ -439,7 +442,7 @@ body {
   overflow-y: auto;
 }
 body.body-screen {
-  background: #ecf0f5;
+  background: #f8f8f8;
 }
 body.body-compact {
   font-size: 12px;
@@ -449,6 +452,10 @@ body.body-compact {
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
+  margin-bottom: 5em;
+}
+main {
+  min-height: 500px;
 }
 .main-header {
   position: relative;
@@ -486,14 +493,6 @@ body.body-compact {
   background-color: #222d32;
   z-index: 1020;
 }
-.content,
-.content-header {
-  padding-left: 15px;
-  padding-right: 15px;
-}
-.content {
-  padding-bottom: 2em;
-}
 .content-header h1 {
   margin-top: 10px;
   padding-bottom: 5px;
@@ -509,6 +508,7 @@ body.body-compact {
   bottom: 0;
   left: 0;
   right: 0;
+  background: #fff;
   padding: 5px 15px;
   color: #444;
   border-top: 1px solid #d2d6de;
@@ -520,7 +520,6 @@ body.body-compact {
   margin: 0;
   padding: 5px 15px;
   font-size: 90%;
-  background-color: transparent;
   border-bottom: 1px solid #e1e1e1;
   border-radius: 0;
 }
@@ -529,4 +528,17 @@ body.body-compact {
 }
 .main-toolbar {
   position: relative;
+}
+.main-toolbar nav.toolbar {
+  padding: 15px 0;
+  text-align: right;
+}
+.index,
+.view,
+.edit {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.form {
+  max-width: 900px;
 }

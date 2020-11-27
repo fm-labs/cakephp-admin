@@ -33,17 +33,17 @@ class EditAction extends BaseEntityAction
     //public $noTemplate = true;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Edit');
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'edit'];
     }
@@ -88,9 +88,9 @@ class EditAction extends BaseEntityAction
                 $field = false;
             }
 
+            $column = $this->model()->getSchema()->getColumn($_f);
             // get help text from column comment
             if ($field && !isset($field['help'])) {
-                $column = $this->model()->getSchema()->getColumn($_f);
                 if ($column && isset($column['comment'])) {
                     $field['help'] = $column['comment'];
                 }
@@ -100,13 +100,17 @@ class EditAction extends BaseEntityAction
         }
 
         if ($this->request->is(['put', 'post'])) {
-            $entity = $this->model()->patchEntity($entity, $this->request->getData(), ['validate' => $this->_config['model.validator']]);
+            $entity = $this->model()->patchEntity(
+                $entity,
+                $this->request->getData(),
+                ['validate' => $this->_config['model.validator']]
+            );
             if ($this->model()->save($entity)) {
-                $this->_flashSuccess(__d('admin', 'Saved!'));
+                $this->flashSuccess(__d('admin', 'Saved!'));
 
                 return $this->redirect([$entity->id] + $controller->getRequest()->getQuery());
             } else {
-                $this->_flashError();
+                $this->flashError();
             }
         }
 
@@ -122,10 +126,6 @@ class EditAction extends BaseEntityAction
             'horizontal' => true,
             'id' => $formId,
         ], $this->_config['form.options']);
-        $controller->set('form.options', $formOptions);
-        $controller->set('fields', $fields);
-        $controller->set('entity', $entity);
-        $controller->set('modelClass', $controller->loadModel()->getRegistryAlias());
 
         // associated
         /** @var \Cake\ORM\Association $assoc */
@@ -135,17 +135,28 @@ class EditAction extends BaseEntityAction
                 if (strrpos($fKey, '_id') !== false) {
                     $var = substr($fKey, 0, strrpos($fKey, '_id'));
                     $var = lcfirst(Inflector::camelize(Inflector::pluralize($var)));
-
-                    $list = $assoc->getTarget()->find('list')->order([$assoc->getTarget()->getDisplayField() => 'ASC'])->toArray();
-                    $controller->set($var, $list);
+                    if (!$controller->viewBuilder()->getVar($var)) {
+                        $list = $assoc->getTarget()
+                            ->find('list')
+                            ->order([$assoc->getTarget()->getDisplayField() => 'ASC'])
+                            ->toArray();
+                        $controller->set($var, $list);
+                        //debug("assoc list for " . $assoc->getName() . ": " . count($list)
+                        //    . " item using key " . $assoc->getForeignKey()
+                        //    . " prop: " . $assoc->getProperty() . " -> " . Inflector::variable($assoc->getProperty()));
+                    }
                 }
             } elseif ($assoc->type() == Association::ONE_TO_MANY) {
+                $var = Inflector::variable($assoc->getProperty());
                 // fetch list for 1-m relationships only if the property is set in entity
-                if ($entity->get($assoc->getProperty())) {
-                    $list = $assoc->getTarget()->find('list')->order([$assoc->getTarget()->getDisplayField() => 'ASC'])->toArray();
-                    $controller->set(Inflector::variable($assoc->getProperty()), $list);
+                if ($entity->get($assoc->getProperty()) && !$controller->viewBuilder()->getVar($var)) {
+                    $list = $assoc->getTarget()
+                        ->find('list')
+                        ->order([$assoc->getTarget()->getDisplayField() => 'ASC'])
+                        ->toArray();
+                    $controller->set($var, $list);
                     //debug("assoc list for " . $assoc->getName() . ": " . count($list)
-                    //    . " item using key " . $assoc->foreignKey()
+                    //    . " item using key " . $assoc->getForeignKey()
                     //    . " prop: " . $assoc->getProperty() . " -> " . Inflector::variable($assoc->getProperty()));
                 }
             } elseif ($assoc->type() == Association::ONE_TO_ONE) {
@@ -154,11 +165,22 @@ class EditAction extends BaseEntityAction
                 //$controller->set($assoc->foreignKey(), $list);
                 //debug($assoc->type());
             } elseif ($assoc->type() == Association::MANY_TO_MANY) {
-                $list = $assoc->getTarget()->find('list')->order([$assoc->getTarget()->getDisplayField() => 'ASC'])->toArray();
-                $controller->set(Inflector::variable($assoc->getProperty()), $list);
+                $var = Inflector::variable($assoc->getProperty());
+                if (!$controller->viewBuilder()->getVar($var)) {
+                    $list = $assoc->getTarget()
+                        ->find('list')
+                        ->order([$assoc->getTarget()->getDisplayField() => 'ASC'])
+                        ->toArray();
+                    $controller->set($var, $list);
+                }
             } else {
                 //debug($assoc->type());
             }
         }
+
+        $controller->set('form.options', $formOptions);
+        $controller->set('fields', $fields);
+        $controller->set('entity', $entity);
+        $controller->set('modelClass', $controller->loadModel()->getRegistryAlias());
     }
 }

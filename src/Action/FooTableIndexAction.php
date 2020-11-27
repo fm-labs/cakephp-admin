@@ -25,13 +25,13 @@ class FooTableIndexAction extends IndexAction
     {
         $this->_defaultConfig['ajax'] = true;
 
-        parent::__construct($controller, $config);
+        parent::__construct($config);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', "Index");
     }

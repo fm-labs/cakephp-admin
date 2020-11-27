@@ -9,8 +9,8 @@ use Cake\View\Helper;
 
 /**
  * Class ToastrHelper
- * @package Admin\View\Helper
  *
+ * @package Admin\View\Helper
  * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class ToastrHelper extends Helper
@@ -18,7 +18,7 @@ class ToastrHelper extends Helper
     public $helpers = ['Html'];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function initialize(array $config): void
     {
@@ -133,7 +133,7 @@ class ToastrHelper extends Helper
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function implementedEvents(): array
     {

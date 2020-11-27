@@ -13,9 +13,9 @@ use Cake\Controller\Controller;
  *
  * @package Admin\Controller\Base
  *
- * @property \Cake\Controller\Component\AuthComponent $Auth
  * @property \Admin\Controller\Component\FlashComponent $Flash
  * @property \Cake\Controller\Component\PaginatorComponent $Paginator
+ * @property \User\Controller\Component\AuthComponent $Auth
  *
  * @deprecated Use \Admin\Controller\Controller instead
  */

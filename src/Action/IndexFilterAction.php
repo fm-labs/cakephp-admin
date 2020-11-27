@@ -7,7 +7,7 @@ class IndexFilterAction extends IndexAction
 {
     public $template = 'Admin.index';
 
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', "Filter");
     }

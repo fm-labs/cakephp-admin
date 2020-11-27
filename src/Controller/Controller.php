@@ -10,8 +10,7 @@ namespace Admin\Controller;
  * which should run in admin context
  *
  * @package Admin\Controller\Base
- *
- * @property \Cake\Controller\Component\AuthComponent $Auth
+ * @property \User\Controller\Component\AuthComponent $Auth
  * @property \Admin\Controller\Component\FlashComponent $Flash
  * @property \Cake\Controller\Component\PaginatorComponent $Paginator
  */
@@ -23,6 +22,7 @@ class Controller extends \Cake\Controller\Controller
      * Use this method to add common initialization code like loading components.
      *
      * @return void
+     * @throws \Exception
      */
     public function initialize(): void
     {

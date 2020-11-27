@@ -1,7 +1,7 @@
-(function($, Backend, Backbone) {
+(function($, AdminJs, Backbone) {
 
-    if (typeof Backend === "undefined") {
-        console.warn("Backend DataTables: Backend object not found");
+    if (typeof AdminJs === "undefined") {
+        console.warn("AdminJs DataTables: AdminJs object not found");
         return false;
     }
 
@@ -50,9 +50,9 @@
 
         if (type === 'display') {
             if (data == true) {
-                return '<span class="text-success">' + Backend.Ui.Icon.create('check') + '</span>';
+                return '<span class="text-success">' + AdminJs.Ui.Icon.create('check') + '</span>';
             } else {
-                return '<span class="text-danger">' + Backend.Ui.Icon.create('close') + '</span>';
+                return '<span class="text-danger">' + AdminJs.Ui.Icon.create('close') + '</span>';
             }
         }
         return data;
@@ -139,7 +139,7 @@
                 case "ERROR": clazz = "danger"; break;
                 default: clazz = "default"; break;
             }
-            return Backend.Ui.Label.create(data, clazz)
+            return AdminJs.Ui.Label.create(data, clazz)
         }
         return data;
     }
@@ -214,7 +214,7 @@
         $(cell).addClass('actions').addClass('text-right');
     }
 
-    Backend.DataTablesHelper = {
+    AdminJs.DataTablesHelper = {
 
         // Helper methods
         'buildBooleanLabel': buildBooleanLabel,
@@ -245,7 +245,7 @@
     };
 
 
-    Backend.DataTablesView = Backbone.View.extend({
+    AdminJs.DataTablesView = Backbone.View.extend({
 
         events: {
            'resize': function() {
@@ -283,7 +283,7 @@
             });
             $table.on( 'draw.dt', function() {
                 //console.log("Draw complete");
-                Backend.Renderer.trigger('docready', self.$el);
+                AdminJs.Renderer.trigger('docready', self.$el);
 
             });
             $table.on( 'error.dt', function ( e, settings, techNote, message ) {
@@ -326,4 +326,4 @@
         }
     });
 
-})(jQuery, Backend, Backbone);
+})(jQuery, AdminJs, Backbone);

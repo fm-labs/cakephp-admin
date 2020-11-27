@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Action;
 
+use Admin\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\QueryInterface;
 use Cake\Routing\Router;
@@ -32,38 +33,35 @@ class IndexAction extends BaseAction
         'actions' => [],
         'query' => [],
         'queryObj' => null,
+        'contain' => [],
         'limit' => null,
         'ajax' => false,
+        'helpers' => [],
+        'template' => null, //deprecated //@todo Remove deprecated parameter
     ];
 
     protected $_defaultLimit = 15;
-    protected $_maxLimit = 1000;
+    //protected $_maxLimit = 1000;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function execute(Controller $controller)
     {
-        $viewVars = $controller->viewBuilder()->getVars();
-
-        // read config from controller view vars
-        foreach (array_keys($this->_defaultConfig) as $key) {
-            $this->_config[$key] = $viewVars[$key] ?? $this->_defaultConfig[$key];
-        }
+        parent::execute($controller);
 
         // detect model class
-        if (!isset($viewVars['modelClass'])) {
-            $this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
-        }
+        $this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->loadModel()->getRegistryAlias();
 
         // load helpers
-        if (isset($viewVars['helpers'])) {
-            $controller->viewBuilder()->setHelpers($viewVars['helpers'], true);
+        if ($this->_config['helpers']) {
+            $controller->viewBuilder()->setHelpers($this->_config['helpers'], true);
         }
 
         // custom template
-        if (isset($viewVars['template'])) {
-            $this->template = $viewVars['template'];
+        if (isset($this->_config['template'])) {
+            deprecationWarning("Using the 'template' var is deprecated. Use getAction()->setTemplate() instead.");
+            $this->setTemplate($this->_config['template']);
         }
 
         // fields
@@ -120,20 +118,16 @@ class IndexAction extends BaseAction
             $response = $this->_execute($controller);
         } catch (\Exception $ex) {
             $controller->Flash->error($ex->getMessage());
-        } finally {
         }
 
         return $response;
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function _execute(Controller $controller)
     {
-        // data
-        $this->controller = $controller;
-
         $controller->set('result', $this->_fetchResult());
         $controller->set('dataTable', [
             'filter' => $this->_config['filter'],
@@ -163,7 +157,7 @@ class IndexAction extends BaseAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function _fetchResult()
     {
@@ -233,16 +227,30 @@ class IndexAction extends BaseAction
     public function buildTableRowActions($row)
     {
         $actions = [];
-        foreach ($this->controller->Action->actions as $action => $conf) {
-            if ($conf['type'] != 'entity') {
-                continue;
+        /** @var \Admin\Controller\Component\ActionComponent $actionComponent */
+        $actionComponent = $this->controller->components()->get('Action');
+        //foreach ($actionComponent->getActionRegistry()->with(EntityActionInterface::class) as $action) {
+        foreach ($actionComponent->listActions() as $actionName) {
+            /** @var \Admin\Action\Interfaces\ActionInterface $action */
+            $action = $actionComponent->getAction($actionName);
+            if ($action instanceof EntityActionInterface) {
+                $actions[] = [
+                    'url' => Router::url(['action' => $actionName, $row[$this->model()->getPrimaryKey()]]),
+                    'title' => $action->getLabel(),
+                    'attrs' => $action->getAttributes(),
+                ];
             }
-            $actions[$action] = [
-                'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
-                'title' => $conf['label'],
-                'attrs' => $conf['attrs'],
-            ];
         }
+//        foreach ($this->controller->Action->actions as $action => $conf) {
+//            if ($conf['type'] != 'entity') {
+//                continue;
+//            }
+//            $actions[$action] = [
+//                'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
+//                'title' => $conf['label'],
+//                'attrs' => $conf['attrs'],
+//            ];
+//        }
 //        foreach ($this->controller->Action->listActions() as $action) {
 //            $_action = $this->controller->Action->getAction($action);
 //

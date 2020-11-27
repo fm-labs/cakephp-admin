@@ -45,7 +45,7 @@ class EntityViewCell extends Cell
     protected $_table;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct(
         ?Request $request = null,

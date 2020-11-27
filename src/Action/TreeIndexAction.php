@@ -7,7 +7,7 @@ use Cake\Controller\Controller;
 
 class TreeIndexAction extends IndexAction
 {
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Index');
     }

@@ -16,30 +16,33 @@ class PublishAction extends BaseEntityAction
     public $scope = ['table'];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Publish');
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'eye'];
     }
 
+    /**
+     * @inheritDoc
+     */
     public function isUsable(EntityInterface $entity)
     {
         return !$entity->get('is_published');
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function _execute(Controller $controller)
+    protected function _execute(Controller $controller)
     {
         if (!$this->model()->hasBehavior('Publish')) {
             $controller->Flash->error('Publish behavior not loaded for model ' . $this->model()->getAlias());

@@ -6,15 +6,13 @@ use Cake\Core\Configure;
 $this->loadHelper('Bootstrap.Tabs');
 $this->loadHelper('Admin.Box');
 ?>
-<?php //$this->Breadcrumbs->add(__d('admin','Admin'), ['controller' => 'Admin', 'action' => 'index']); ?>
-<?php //$this->Breadcrumbs->add(__d('admin','Systeminfo')); ?>
+<?php $this->Breadcrumbs->add(__d('admin','Systeminfo')); ?>
 <div class="index">
 
     <?php $this->Tabs->create(); ?>
     <?php $this->Tabs->add(__d('admin', 'System')); ?>
-    <div class="view">
-
-        <?php $this->Box->create("System overview", ['class' => '']); ?>
+    <div class="view container">
+        <?php $this->Box->create("System overview", ['class' => 'box-solid']); ?>
         <table class="table">
             <tr>
                 <td colspan="3">&nbsp;</td>

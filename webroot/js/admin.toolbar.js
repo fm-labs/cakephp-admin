@@ -1,6 +1,6 @@
 /**
- * Backend Toolbar
- * Register to Backend.Renderer event listener
+ * AdminJs Toolbar
+ * Register to AdminJs.Renderer event listener
  *
  * @link http://getbootstrap.com/javascript/#affix
  * @link http://stackoverflow.com/questions/22899844/unaffix-event-for-bootstrap-affix
@@ -13,7 +13,7 @@
  */
 (function( $ ) {
 
-    Backend.Renderer.addListener('docready', function(scope) {
+    AdminJs.Renderer.addListener('docready', function(scope) {
 
         $(scope).find('.toolbar-affix').each(function() {
             $(this).affix({
@@ -46,5 +46,5 @@
 
     });
 
-}( jQuery, Backend ));
+}( jQuery, AdminJs ));
 

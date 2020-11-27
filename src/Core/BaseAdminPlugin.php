@@ -3,6 +3,7 @@
 namespace Admin\Core;
 
 use Cake\Routing\RouteBuilder;
+use Cake\Utility\Inflector;
 
 class BaseAdminPlugin implements AdminPluginInterface
 {
@@ -24,11 +25,18 @@ class BaseAdminPlugin implements AdminPluginInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getRoutingPrefix(): string
+    {
+        return Inflector::dasherize($this->getName());
+    }
+
+    /**
      * @return void
      */
     public function bootstrap(): void
     {
-        // TODO: Implement bootstrap() method.
     }
 
     /**
@@ -37,6 +45,5 @@ class BaseAdminPlugin implements AdminPluginInterface
      */
     public function routes(RouteBuilder $routes): void
     {
-        // TODO: Implement routes() method.
     }
 }

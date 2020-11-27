@@ -1,6 +1,6 @@
 /**
- * Backend Toolbar
- * Register to Backend.Renderer event listener
+ * AdminJs Toolbar
+ * Register to AdminJs.Renderer event listener
  *
  * @link http://getbootstrap.com/javascript/#affix
  * @link http://stackoverflow.com/questions/22899844/unaffix-event-for-bootstrap-affix
@@ -13,7 +13,7 @@
  */
 (function( $ ) {
 
-    Backend.Renderer.addListener('docready', function(scope) {
+    AdminJs.Renderer.addListener('docready', function(scope) {
 
         /*
          $(scope).find('.htmleditor textarea').off();
@@ -29,7 +29,7 @@
          var $target = $('#' + target);
 
          var configData = $target.data('htmleditor');
-         if (Backend.settings.debug) {
+         if (AdminJs.settings.debug) {
          console.log("Loading HtmlEditor", target, configData);
          }
          $target.addClass('htmleditor-loaded').tinymce(configData);
@@ -46,11 +46,11 @@
 
     });
 
-    Backend.Renderer.addListener('unload', function(scope) {
+    AdminJs.Renderer.addListener('unload', function(scope) {
         $(scope).find('.htmleditor textarea.htmleditor-loaded').each(function() {
 
             var id = $(this).attr('id');
-            if (Backend.settings.debug) {
+            if (AdminJs.settings.debug) {
                 console.log("Unloading HtmlEditor", id);
             }
             tinymce.execCommand('mceRemoveControl', true, id);
@@ -59,4 +59,4 @@
     });
 
 
-}( jQuery, Backend ));
+}( jQuery, AdminJs ));

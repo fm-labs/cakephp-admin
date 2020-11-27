@@ -33,17 +33,17 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
     //public $template = 'Admin.add';
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Add');
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'plus'];
     }
@@ -66,32 +66,44 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function _execute(Controller $controller)
+    public function execute(Controller $controller)
     {
-        $viewVars = $controller->viewBuilder()->getVars();
-        
-        if (isset($viewVars['_entity']) && isset($viewVars[$viewVars['_entity']])) {
-            $entity = $viewVars[$viewVars['_entity']];
+        parent::execute($controller);
+
+        #debug($this->_config);
+
+        // load helpers
+        if (isset($this->_config['helpers'])) {
+            $controller->viewBuilder()->setHelpers($this->_config['helpers'], true);
+        }
+
+        // custom template
+        if (isset($this->_config['template'])) {
+            $this->template = $this->_config['template'];
+        }
+
+        if (isset($this->_config['entity']) && isset($this->_config[$this->_config['entity']])) {
+            $entity = $this->_config[$this->_config['entity']];
         } else {
             $entity = $this->model()->newEmptyEntity();
         }
 
         $_fields = $this->model()->getSchema()->columns();
-        if (isset($viewVars['fields'])) {
-            $_fields = array_merge($viewVars['fields'], $_fields);
+        if (isset($this->_config['fields'])) {
+            $_fields = array_merge($this->_config['fields'], $_fields);
         }
         $_fields = $this->_normalizeInputs($_fields);
 
         $fields = $blacklist = $whitelist = [];
-        if (isset($viewVars['fields.whitelist'])) {
-            $whitelist = $viewVars['fields.whitelist'];
+        if (isset($this->_config['fields.whitelist'])) {
+            $whitelist = $this->_config['fields.whitelist'];
         } else {
             $whitelist = array_keys($_fields);
         }
-        if (isset($viewVars['fields.blacklist'])) {
-            $blacklist = $viewVars['fields.blacklist'];
+        if (isset($this->_config['fields.blacklist'])) {
+            $blacklist = $this->_config['fields.blacklist'];
         }
 
         $fields['id'] = [];
@@ -109,18 +121,24 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
 
         $entity->setAccess($whitelist, true);
         $entity->setAccess($blacklist, false);
-        if (isset($viewVars['fields.access'])) {
-            $entity->setAccess($viewVars['fields.access'], true);
+        if (isset($this->_config['fields.access'])) {
+            $entity->setAccess($this->_config['fields.access'], true);
         }
 
         if ($this->request->is(['put', 'post'])) {
-            $entity = $this->model()->patchEntity($entity, $this->request->getData(), ['validate' => $this->_config['model.validator']]);
+            $entity = $this->model()->patchEntity(
+                $entity,
+                $this->request->getData(),
+                ['validate' => $this->_config['model.validator']]
+            );
             if ($this->model()->save($entity)) {
-                $this->_flashSuccess(__d('admin', 'Record created'));
-                $this->redirect(['action' => 'edit', $entity->id]);
+                $this->flashSuccess(__d('admin', 'Record created'));
+
+                $redirectUrl = $controller->referer(['action' => 'edit', $entity->id]);
+                $this->redirect($redirectUrl);
             } else {
                 debug($entity->getErrors());
-                $this->_flashError();
+                $this->flashError();
             }
         }
 
@@ -131,8 +149,11 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
                 if (strrpos($fKey, '_id') !== false) {
                     $var = substr($fKey, 0, strrpos($fKey, '_id'));
                     $var = lcfirst(Inflector::camelize(Inflector::pluralize($var)));
-                    if (!isset($viewVars[$var])) {
-                        $list = $assoc->getTarget()->find('list')->order([$assoc->getTarget()->getDisplayField() => 'ASC'])->toArray();
+                    if (!isset($this->_config[$var])) {
+                        $list = $assoc->getTarget()
+                            ->find('list')
+                            ->order([$assoc->getTarget()->getDisplayField() => 'ASC'])
+                            ->toArray();
                         $controller->set($var, $list);
                     }
                 }
@@ -154,35 +175,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         //$controller->set($this->_config);
 
         $controller->set('entity', $entity);
-        $controller->set('modelClass', $controller->modelClass);
+        $controller->set('modelClass', $controller->loadModel()->getRegistryAlias());
         $controller->set('fields', $fields);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function execute(Controller $controller)
-    {
-        // read config from controller view vars
-        foreach (array_keys($this->_defaultConfig) as $key) {
-            $this->_config[$key] = $viewVars[$key] ?? $this->_defaultConfig[$key];
-        }
-
-        // detect model class
-        if (!isset($viewVars['modelClass'])) {
-            $this->_config['modelClass'] = $controller->modelClass;
-        }
-
-        // load helpers
-        if (isset($viewVars['helpers'])) {
-            $controller->viewBuilder()->setHelpers($viewVars['helpers'], true);
-        }
-
-        // custom template
-        if (isset($viewVars['template'])) {
-            $this->template = $viewVars['template'];
-        }
-
-        return $this->_execute($controller);
     }
 }

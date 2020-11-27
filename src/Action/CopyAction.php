@@ -22,7 +22,7 @@ class CopyAction extends BaseEntityAction
     /**
      * {@inheritDoc}
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Copy');
     }
@@ -30,7 +30,7 @@ class CopyAction extends BaseEntityAction
     /**
      * {@inheritDoc}
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'clone'];
     }

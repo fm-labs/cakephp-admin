@@ -101,7 +101,7 @@ class ToolbarHelper extends Helper
     /**
      * Add a new toolbar link item.
      *
-     * @param string $title Link title
+     * @param string|array $title Link title
      * @param null|string $url Link Url
      * @param array $attr Link attributes
      * @return $this
@@ -129,7 +129,7 @@ class ToolbarHelper extends Helper
     /**
      * Add a new toolbar item (post-link).
      *
-     * @param string $title Link title
+     * @param string|array $title Link title
      * @param null|string $url Link Url
      * @param array $attr Link attributes
      * @param array $data Post data

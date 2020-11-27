@@ -3,29 +3,45 @@ declare(strict_types=1);
 
 namespace Admin;
 
+use Admin\Authorization\Middleware\UnauthorizedHandler\FlashRedirectHandler;
 use Admin\Http\ActionDispatcherListener;
+use Admin\Policy\AdminRequestPolicy;
 use Admin\Routing\Middleware\AdminMiddleware;
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceInterface;
+use Authentication\Identifier\IdentifierInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Middleware\RequestAuthorizationMiddleware;
+use Authorization\Policy\MapResolver;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\PluginApplicationInterface;
-use Cake\Event\Event;
 use Cake\Event\EventDispatcherTrait;
-use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
 use Cake\Http\MiddlewareQueue;
+use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Utility\Inflector;
+use Cupcake\Cupcake;
 use Cupcake\Plugin\BasePlugin;
-use Settings\SettingsManager;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Admin Plugin
  */
-class Plugin extends BasePlugin implements EventListenerInterface
+class Plugin extends BasePlugin implements
+    //EventListenerInterface,
+    \Authentication\AuthenticationServiceProviderInterface,
+    \Authorization\AuthorizationServiceProviderInterface
 {
     use EventDispatcherTrait;
+
+    public const AUTH_IDENTITY_ATTRIBUTE = 'adminIdentity';
 
     /**
      * @var \Cake\Http\BaseApplication|\Cupcake\Application
@@ -33,7 +49,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
     protected $_app;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
@@ -46,7 +62,7 @@ class Plugin extends BasePlugin implements EventListenerInterface
                 'path' => LOGS,
                 'file' => 'admin',
                 //'levels' => ['info'],
-                'scopes' => ['admin', 'admin'],
+                'scopes' => ['admin'],
             ]);
         }
 
@@ -73,32 +89,48 @@ class Plugin extends BasePlugin implements EventListenerInterface
 
         $app->addPlugin("User");
         $app->addPlugin("Bootstrap");
-
-        EventManager::instance()->on($this);
-        EventManager::instance()->on(new ActionDispatcherListener());
-
         $this->_app = $app;
+
+        EventManager::instance()->on(new ActionDispatcherListener());
+        Admin::addPlugin(new AdminPluginHandler());
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function routes(\Cake\Routing\RouteBuilder $routes): void
     {
-        parent::routes($routes);
-
         $routes->scope(
             '/' . Admin::$urlPrefix,
             ['prefix' => 'Admin', '_namePrefix' => 'admin:'],
             function (RouteBuilder $routes) {
-                $routes->registerMiddleware('admin', new AdminMiddleware($this->_app));
-                $routes->applyMiddleware('admin');
-                $routes->connect('/', ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index']);
+                $routes->registerMiddleware('admin_plugins', new AdminMiddleware($this->_app));
 
+                //if (Configure::read('Admin.Auth.authenticationEnabled')) {
+                    $routes->registerMiddleware('admin_authentication', $this->buildAuthenticationMiddleware());
+                //}
+
+                //if (Configure::read('Admin.Auth.authorizationEnabled')) {
+                    $routes->registerMiddleware('admin_authorization', $this->buildAuthorizationMiddleware());
+                    $routes->registerMiddleware('admin_request_authorization', new RequestAuthorizationMiddleware());
+                //}
+
+                $routes->applyMiddleware('admin_plugins');
+
+                //if (Configure::read('Admin.Auth.authenticationEnabled')) {
+                    $routes->applyMiddleware('admin_authentication');
+                //}
+
+                //if (Configure::read('Admin.Auth.authorizationEnabled')) {
+                    $routes->applyMiddleware('admin_authorization');
+                    $routes->applyMiddleware('admin_request_authorization');
+                //}
+
+                $routes->connect('/', ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index']);
                 $routes->scope(
                     '/system',
-                    ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'admin:'],
-                    function ($routes) {
+                    ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'system:'],
+                    function (RouteBuilder $routes) {
                         $routes->connect(
                             '/login',
                             ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
@@ -115,21 +147,21 @@ class Plugin extends BasePlugin implements EventListenerInterface
                             ['_name' => 'user:loginsuccess']
                         );
 
-                        // admin:admin:auth:logout
+                        // admin:system:auth:logout
                         $routes->connect(
                             '/logout',
                             ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
                             [ '_name' => 'user:logout']
                         );
 
-                        // admin:admin:auth:user
+                        // admin:system:auth:user
                         $routes->connect(
                             '/user',
                             ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
                             [ '_name' => 'user:profile']
                         );
 
-                        // admin:admin:dashboard
+                        // admin:system:dashboard
                         $routes->connect(
                             '/',
                             ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
@@ -144,18 +176,19 @@ class Plugin extends BasePlugin implements EventListenerInterface
                 /** @var \Admin\Core\AdminPluginInterface $plugin */
                 foreach (Admin::getPlugins() as $plugin) {
                     $pluginName = $plugin->getName();
+                    $pluginNamePrefix = sprintf("%s:", Inflector::underscore($pluginName));
                     try {
                         $routes->scope(
-                            '/' . Inflector::dasherize($pluginName),
+                            '/' . $plugin->getRoutingPrefix(),
                             [
                                 'plugin' => $plugin->getName() != "App" ? $plugin->getName() : null,
                                 'prefix' => 'Admin',
-                                '_namePrefix' => sprintf("%s:", Inflector::underscore($pluginName)),
+                                '_namePrefix' => $pluginNamePrefix,
                             ],
                             [$plugin, 'routes']
                         );
                     } catch (\Exception $ex) {
-                        Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
+                        Log::error("Admin routes loading failed: $pluginName: " . $ex->getMessage());
                     }
                 }
 
@@ -164,14 +197,15 @@ class Plugin extends BasePlugin implements EventListenerInterface
                 /** @var \Cake\Core\PluginInterface $plugin */
                 foreach ($this->_app->getPlugins()->with('routes') as $plugin) {
                     $pluginName = $plugin->getName();
+                    $pluginNamePrefix = sprintf("%s:", Inflector::underscore($pluginName));
                     if (method_exists($plugin, 'adminRoutes')) {
                         try {
                             $routes->scope(
                                 '/' . Inflector::dasherize($pluginName),
                                 [
-                                    'plugin' => $plugin->getName(),
+                                    'plugin' => $pluginName,
                                     'prefix' => 'Admin',
-                                    '_namePrefix' => sprintf("%s:", Inflector::underscore($pluginName)),
+                                    '_namePrefix' => $pluginNamePrefix,
                                 ],
                                 [$plugin, 'adminRoutes']
                             );
@@ -187,186 +221,106 @@ class Plugin extends BasePlugin implements EventListenerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @return \Authentication\Middleware\AuthenticationMiddleware
      */
-    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
+    public function buildAuthenticationMiddleware(): AuthenticationMiddleware
     {
-        return $middlewareQueue;
-    }
-
-    public function adminConfigurationUrl()
-    {
-        return \Cake\Core\Plugin::isLoaded('Settings') ? ['_name' => 'settings:manage', $this->getName()] : null;
+        return new AuthenticationMiddleware($this/*->getAuthenticationService()*/);
     }
 
     /**
-     * {@inheritDoc}
+     * Returns an authentication service instance.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request Request
+     * @return \Authentication\AuthenticationServiceInterface
      */
-    public function implementedEvents(): array
+    public function getAuthenticationService(ServerRequestInterface $request): AuthenticationServiceInterface
     {
-        return [
-            'Admin.Menu.build.admin_primary' => ['callable' => 'buildAdminMenu', 'priority' => 99 ],
-            'Admin.Menu.build.admin_system' => ['callable' => 'buildAdminSystemMenu', 'priority' => 99 ],
-            'Settings.build' => 'settings',
+        $service = new AuthenticationService([
+            //'authenticators' => [],
+            //'identifiers' => [],
+            //'identityClass' => Identity::class,
+            'identityAttribute' => static::AUTH_IDENTITY_ATTRIBUTE,
+            'queryParam' => 'redirect',
+            'unauthenticatedRedirect' => '/',
+        ]);
+
+        $fields = [
+            IdentifierInterface::CREDENTIAL_USERNAME => 'username',
+            IdentifierInterface::CREDENTIAL_PASSWORD => 'password',
         ];
+
+        // Load the authenticators, you want session first
+        $service->loadAuthenticator('Authentication.Session', [
+            'fields' => [
+                IdentifierInterface::CREDENTIAL_USERNAME => 'username',
+                'superuser' => true,
+            ],
+            //'sessionKey' => 'Admin',
+            //'identify' => false,
+            'identityAttribute' => static::AUTH_IDENTITY_ATTRIBUTE,
+        ]);
+        $service->loadAuthenticator('Authentication.Form', [
+            'loginUrl' => null,
+            'urlChecker' => 'Authentication.Default',
+            'fields' => $fields,
+        ]);
+
+        // Load identifiers
+        $service->loadIdentifier('Authentication.Password', [
+            'resolver' => [
+                'className' => 'Authentication.Orm',
+                'userModel' => 'Admin.Users',
+            ],
+            'fields' => $fields,
+            'passwordHasher' => null,
+        ]);
+
+        return $service;
     }
 
     /**
-     * {@inheritDoc}
+     * @return \Authorization\Middleware\AuthorizationMiddleware
      */
-    public function settings(Event $event, SettingsManager $settings)
+    public function buildAuthorizationMiddleware(): AuthorizationMiddleware
     {
-        //$settings::register($this->getName(), Settings::class);
-
-        $settings->load('Admin.settings');
-        $settings->add('Admin.Form', [
-            'Admin.CodeEditor.Ace.theme' => [
-                'default' => 'twilight',
-                'input' => [
-                    'type' => 'select',
-                    'options' => [
-                        'chaos' => 'chaos',
-                        'chrome' => 'chrome',
-                        'clouds' => 'clouds',
-                        'cloud_midnight' => 'cloud_midnight',
-                        'cobalt' => 'cobalt',
-                        'crimson_editor' => 'crimson_editor',
-                        'dawn' => 'dawn',
-                        'dracula' => 'dracula',
-                        'dreamweaver' => 'dreamweaver',
-                        'eclipse' => 'eclipse',
-                        'github' => 'github',
-                        'gob' => 'gob',
-                        'gruvbox' => 'gruvbox',
-                        'idle_fingers' => 'idle_fingers',
-                        'iplastic' => 'iplastic',
-                        'katzenmilch' => 'katzenmilch',
-                        'kr_theme' => 'kr_theme',
-                        'kuroir' => 'kuroir',
-                        'merbivore' => 'merbivore',
-                        'merbivore_soft' => 'merbivore_soft',
-                        'mono_industrial' => 'mono_industrial',
-                        'monokai' => 'monokai',
-                        'pastel_on_dark' => 'pastel_on_dark',
-                        'solarized_dark' => 'solarized_dark',
-                        'solarized_light' => 'solarized_light',
-                        'sqlserver' => 'sqlserver',
-                        'terminal' => 'terminal',
-                        'textmate' => 'textmate',
-                        'tomorrow' => 'tomorrow',
-                        'tomorrow_night' => 'tomorrow_night',
-                        'tomorrow_night_blue' => 'tomorrow_night_blue',
-                        'tomorrow_night_bright' => 'tomorrow_night_bright',
-                        'tomorrow_night_eighties' => 'tomorrow_night_eighties',
-                        'twilight' => 'twilight',
-                        'vibrant_ink' => 'vibrant_ink',
-                        'xcode' => 'xcode',
-                    ],
+        return new AuthorizationMiddleware($this, [
+            'requireAuthorizationCheck' => false,
+            //'identityDecorator' => function ($auth, User $user) {
+            //    return $user->setAuthorization($auth);
+            //},
+            'unauthorizedHandler' => [
+                'className' => FlashRedirectHandler::class, //PageRedirectHandler::class, // 'Authorization.Redirect',
+                'url' => '/' . Admin::$urlPrefix . '/system/auth/unauthorized',
+                'queryParam' => 'unauthorizedUrl',
+                'exceptions' => [
+                    \Authorization\Exception\MissingIdentityException::class,
+                    \Authorization\Exception\ForbiddenException::class,
                 ],
             ],
-
         ]);
     }
 
     /**
-     * @param \Cake\Event\Event $event The event object
-     * @return void
+     * Returns authorization service instance.
+     *
+     * @param \Psr\Http\Message\ServerRequestInterface $request Request
+     * @return \Authorization\AuthorizationServiceInterface
      */
-    public function buildAdminMenu(Event $event, \Cupcake\Menu\Menu $menu)
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
     {
-        if (Configure::read('debug')) {
-            $menu->addItem([
-                'title' => __d('admin', 'Developer'),
-                'data-icon' => 'paint-brush',
-                'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index'],
-                'children' => [
-                    'design' => [
-                        'title' => __d('admin', 'Design'),
-                        'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index'],
-                    ],
-                    /*
-                    'design_form' => [
-                        'title' => __d('admin', 'Forms'),
-                        'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'form'],
-                    ],
-                    'design_boxes' => [
-                        'title' => __d('admin', 'Boxes'),
-                        'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'boxes'],
-                    ],
-                    'design_tables' => [
-                        'title' => __d('admin', 'Tables'),
-                        'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'tables'],
-                    ],
-                    'design_component' => [
-                        'title' => __d('admin', 'Components'),
-                        'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'component'],
-                    ],
-                    'design_tabs' => [
-                        'title' => __d('admin', 'Tabs'),
-                        'data-icon' => 'paint-brush',
-                        'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'tabs'],
-                    ]
-                    */
-                ],
-            ]);
-        }
+        $resolver = new MapResolver();
+        // this is required for the RequestAuthorizationMiddleware to work
+        $resolver->map(ServerRequest::class, AdminRequestPolicy::class);
+
+        return new AuthorizationService($resolver);
     }
 
     /**
-     * @param \Cake\Event\Event $event The event object
-     * @return void
+     * @inheritDoc
      */
-    public function buildAdminSystemMenu(Event $event, \Cupcake\Menu\Menu $menu)
+    public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
-        $items = $this->_getMenuItems();
-        foreach ($items as $item) {
-            $menu->addItem($item);
-        }
-    }
-
-    /**
-     * @return array
-     */
-    protected function _getMenuItems()
-    {
-        return $items = [
-//                'overview' => [
-//                    'title' => 'Overview',
-//                    'url' => ['plugin' => 'Admin', 'controller' => 'Dashboard', 'action' => 'index'],
-//                    'data-icon' => 'info'
-//                ],
-            'system' => [
-                'title' => 'Systeminfo',
-                'url' => ['plugin' => 'Admin', 'controller' => 'System', 'action' => 'index'],
-                'data-icon' => 'info',
-            ],
-            'logs' => [
-                'title' => 'Logs',
-                'url' => ['plugin' => 'Admin', 'controller' => 'Logs', 'action' => 'index'],
-                'data-icon' => 'file-text-o',
-            ],
-            'cache' => [
-                'title' => 'Cache',
-                'url' => ['plugin' => 'Admin', 'controller' => 'Cache', 'action' => 'index'],
-                'data-icon' => 'hourglass-o',
-            ],
-            /*
-            'users' => [
-                'title' => 'Users',
-                'url' => ['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'index'],
-                'data-icon' => 'users',
-            ],
-            */
-            'plugins' => [
-                'title' => 'Plugins',
-                'url' => ['plugin' => 'Admin', 'controller' => 'Plugins', 'action' => 'index'],
-                'data-icon' => 'puzzle-piece',
-            ],
-        ];
+        return $middlewareQueue;
     }
 }

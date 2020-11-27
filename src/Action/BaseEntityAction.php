@@ -30,14 +30,14 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     /**
      * @var array List of enabled scopes
      */
-    public $scope = ['table', 'form'];
+    protected $scope = ['table', 'form'];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function __construct(Controller $controller, array $config = [])
+    public function __construct(array $config = [])
     {
-        parent::__construct($controller, $config);
+        parent::__construct($config);
         $config += ['filter' => null];
 
         if ($config['filter']) {
@@ -50,14 +50,14 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function entity()
     {
         $controller =& $this->controller;
 
         if (!$this->_entity) {
-            $entity = $controller->viewBuilder()->getVar('_entity');
+            $entity = $controller->viewBuilder()->getVar('entity');
             if ($entity) {
                 $this->_entity = $entity;
             } else {
@@ -73,45 +73,40 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function execute(Controller $controller)
     {
-        $viewVars = $controller->viewBuilder()->getVars();
-        
-        // read config from controller view vars
-        foreach (array_keys($this->_defaultConfig) as $key) {
-            $this->_config[$key] = $viewVars[$key] ?? $this->_defaultConfig[$key];
-        }
+        parent::execute($controller);
 
         // detect model class and load entity
-        if (!isset($viewVars['modelClass'])) {
+        if (!isset($this->_config['modelClass'])) {
             $this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
         }
-        if (!isset($viewVars['modelId'])) {
+        if (!isset($this->_config['modelId'])) {
             $modelId = $controller->getRequest()->getParam('id');
             if (!$modelId && isset($controller->getRequest()->getParam('pass')[0])) {
                 $modelId = $controller->getRequest()->getParam('pass')[0];
             }
             $this->_config['modelId'] = $modelId;
         }
-        if (isset($viewVars['entityOptions'])) {
-            $this->_config['entityOptions'] = $viewVars['entityOptions'];
-        }
-        if (isset($viewVars['entity'])) {
-            $this->_entity = $viewVars['entity'];
+
+        if (isset($this->_config['entity'])) {
+            $this->_entity = $this->_config['entity'];
         }
 
         // custom template
-        if (isset($viewVars['template'])) {
-            $this->template = $viewVars['template'];
+        if (isset($this->_config['template'])) {
+            $this->template = $this->_config['template'];
         }
 
         // breadcrumbs
-        if (!isset($viewVars['breadcrumbs'])) {
+        if (!isset($this->_config['breadcrumbs'])) {
             $breadcrumbs = [];
-            if ($controller->getRequest()->getParam('plugin')
-                && $controller->getRequest()->getParam('plugin') != $controller->getRequest()->getParam('controller')) {
+            if (
+                $controller->getRequest()->getParam('plugin')
+                && $controller->getRequest()->getParam('plugin') != $controller->getRequest()->getParam('controller')
+            ) {
                 $breadcrumbs[] = [
                     'title' => Inflector::humanize($controller->getRequest()->getParam('plugin')),
                     'url' => [
@@ -158,8 +153,8 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             //$controller->set('entity', $entity);
 
             // load helpers
-            if (isset($viewVars['helpers'])) {
-                $controller->viewBuilder()->setHelpers($viewVars['helpers'], true);
+            if (isset($this->_config['helpers'])) {
+                $controller->viewBuilder()->setHelpers($this->_config['helpers'], true);
             }
 
             return $this->_execute($controller);

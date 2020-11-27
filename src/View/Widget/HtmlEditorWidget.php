@@ -24,20 +24,21 @@ class HtmlEditorWidget extends BasicWidget
      * @var array
      */
     public static $defaultConfig = [
-        // A CSS selector for the areas that TinyMCE should make editable.
+        ## General
+        # A CSS selector for the areas that TinyMCE should make editable.
         'selector' => 'textarea.htmleditor',
-        // Which plugins TinyMCE will attempt to load when starting up
+        # Which plugins TinyMCE will attempt to load when starting up
         'plugins' => [
-            'image link lists code table media paste wordcount importcss wordcount',
+            'image link lists code table media paste wordcount importcss wordcount autoresize',
         ],
-        // This option allows you to disable the element path within the status bar at the bottom of the editor.
-        // Default: True
+        # Show the element path within the status bar at the bottom of the editor.
         'elementpath' => true,
-        // Height of the editable area in pixels.
+        # Height of the editable area in pixels.
         'height' => 300,
 
         'content_css' => null,
 
+        ## Toolbar / Menu
         'menubar' => false,
         'menu' => [
             //'file' => [ 'title' => 'File', 'items' => 'newdocument'],
@@ -46,13 +47,43 @@ class HtmlEditorWidget extends BasicWidget
             'formatselect | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | blockquote | code',
             'undo redo | cut copy paste | link image media | table',
         ],
-        // URL Handling
+        ## URL Handling
         'convert_urls' => false, // TinyMCE default: true
         'relative_urls' => false, // TinyMCE default: true
         'remove_script_host' => false, // TinyMCE default: true
         'document_base_url' => '/',
         //'importcss_append' => true,
         'cache_suffix' => null,
+
+        ## Content Filtering
+
+        # Wrap any non-block elements or text in given element
+        # https://www.tiny.cloud/docs/configure/content-filtering/#forced_root_block
+        'forced_root_block' => '',
+        'schema' => 'html5',
+
+        ## Plugin: table
+        'table_class_list' => [
+            ['title' => 'None', 'value' => ''],
+            ['title' => 'Standard', 'value' => 'table'],
+            ['title' => 'Striped', 'value' => 'table table-striped'],
+            ['title' => 'Condensed', 'value' => 'table table-condensed'],
+            ['title' => 'Condensed Striped', 'value' => 'table table-condensed table-striped'],
+            ['title' => 'Hover', 'value' => 'table table-hover'],
+        ],
+        'table_default_styles' => [
+            'width' => '100%',
+            'border-collapse' => 'collapse'
+        ],
+        'table_default_attributes' => [
+            'border' => 0
+        ],
+        //'table_style_by_css' => true,
+
+        ## Plugin: autoresize
+        'autoresize_on_init' => true,
+        'max_height' => 800,
+        'min_height' => 400
     ];
 
     /**

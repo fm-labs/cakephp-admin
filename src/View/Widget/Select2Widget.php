@@ -10,10 +10,26 @@ use Cake\View\Widget\SelectBoxWidget;
 
 class Select2Widget extends SelectBoxWidget
 {
+    protected $defaults = [
+        // original
+        'name' => '',
+        'empty' => true, // In the original SelectBoxWidget the default value is FALSE!
+        'escape' => true,
+        'options' => [],
+        'disabled' => null,
+        'val' => null,
+        'templateVars' => [],
+        // extended
+        'class' => 'form-control', // @TODO Move to string template
+        'multiple' => null,
+        'width' => null,
+    ];
+
     /**
      * Constructor.
      *
      * @param \Cake\View\StringTemplate $templates Templates list.
+     * @param \Cake\View\View $view View instance
      */
     public function __construct($templates, View $view)
     {
@@ -23,17 +39,14 @@ class Select2Widget extends SelectBoxWidget
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function render(array $data, ContextInterface $context): string
     {
-        $data += [
-            'id' => uniqid('select2'),
-            'class' => 'form-control',
-            'disabled' => null,
-            'multiple' => null,
-            'width' => null,
-        ];
+        $data += $this->mergeDefaults($data, $context);
+
+        $data['id'] = $data['id'] ?? uniqid('select2');
+        $data['class'] = $data['class'] ?? 'form-control';
 
         // https://select2.org/configuration/options-api
         $select2 = [

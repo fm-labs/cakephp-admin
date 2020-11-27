@@ -12,7 +12,7 @@ class ExternalEntityAction extends BaseEntityAction
 
     protected $_attributes = [];
 
-    protected $_label = 'External';
+    protected $label = 'External';
 
     public $scope = ['table'];
 
@@ -25,15 +25,15 @@ class ExternalEntityAction extends BaseEntityAction
         $this->_attributes = $options['attrs'];
         $this->scope = $options['scope'];
         $this->_url = $options['url'];
-        $this->_label = $options['label'] ?: Inflector::humanize($this->_action);
+        $this->label = $options['label'] ?: Inflector::humanize($this->_action);
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
-        return $this->_label;
+        return $this->label;
     }
 
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->_attributes;
     }

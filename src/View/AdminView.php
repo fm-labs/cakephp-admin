@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\View;
 
-use Admin\Ui\Header;
-use Admin\Ui\Sidebar;
-use Admin\Ui\Ui;
+use Admin\Ui;
 use Cake\Event\Event;
 use Cake\View\View;
 
@@ -16,45 +14,67 @@ use Cake\View\View;
  */
 class AdminView extends View
 {
+    /**
+     * @var string
+     */
     public $layout = "Admin.admin";
 
     /**
-     * @var \Admin\Ui\Ui
+     * @var \Cupcake\Ui\Ui
      */
     public $ui = null;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function initialize(): void
     {
+        // core admin helpers
         $this->loadHelper('Html', ['className' => '\Admin\View\Helper\AdminHtmlHelper']);
         $this->loadHelper('Form', ['className' => '\Admin\View\Helper\AdminFormHelper']);
         $this->loadHelper('Admin.Admin');
 
-        $this->ui = new Ui($this);
-        //$this->ui->add('header_panels_left', new Header\MenuPanel('system'));
-        $this->ui->add('header_panels_right', new Header\MenuPanel());
-        $this->ui->add('header_panels_right', new Header\UserPanel());
-        $this->ui->add('sidebar_panels', new Sidebar\MenuPanel());
-        //$this->getEventManager()->on($this->ui);
+        $this->ui = new \Cupcake\Ui\Ui($this);
+        $this->ui->add('header', new Ui\Layout\Header());
+        $this->ui->add('header_panels_right', new Ui\Layout\Header\MenuPanel());
+        $this->ui->add('header_panels_right', new Ui\Layout\Header\UserPanel());
 
+        $this->ui->add('footer', new Ui\Layout\Footer());
+
+        $this->ui->add('sidebar', new Ui\Layout\Sidebar());
+        $this->ui->add('sidebar_panels', new Ui\Layout\Sidebar\MenuPanel());
+        $this->getEventManager()->on($this->ui);
+
+        // trigger cc action 'admin_view_init'
+        \Cupcake\Cupcake::doAction('admin_view_init');
+
+        // dispatch 'Admin.View.initialize' event
         $this->getEventManager()->dispatch(new Event('Admin.View.initialize', $this));
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function fetch(string $name, string $default = ''): string
     {
+        // 0. check, if there is already content for that block
         $content = parent::fetch($name, '');
 
-        // get block contents from UI
+        // 1. try to get block contents from UI
         if ($name !== "content" && !$content) {
-            $content .= $this->ui->render($name);
+            $content .= $this->ui->fetch($name);
         }
 
-        // get layout block contents from default elements
+        // 2. deploy a cc filter
+        //$content = \Cupcake\Cupcake::doFilter('admin_view_fetch', compact('content'));
+
+        // 3. dispatch 'Admin.View.fetch' event
+        $event = $this->getEventManager()->dispatch(
+            new Event('Admin.View.fetch', $this, ['content' => $content, 'name' => $name])
+        );
+        $content = $event->getData('content');
+
+        // 4. fallback to the default layout elements for non-content blocks
         if ($this->getCurrentType() == 'layout' && $name !== "content" && !$content) {
             [$ns, $layout] = pluginSplit($this->layout, true);
             $elementPath = $ns . 'layout/' . $layout . '/' . $name;
@@ -63,12 +83,7 @@ class AdminView extends View
             }
         }
 
-        // dispatch 'Admin.View.fetch' event
-        $event = $this->getEventManager()->dispatch(
-            new Event('Admin.View.fetch', $this, ['name' => $name, 'content' => $content])
-        );
-        $content = $event->getData('content');
-
+        // 5. fallback to default content
         if (!$content) {
             $content = $default;
         }

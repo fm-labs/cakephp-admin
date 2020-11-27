@@ -5,13 +5,15 @@ namespace Admin;
 
 use Admin\Core\AdminPluginCollection;
 use Admin\Core\AdminPluginInterface;
-use Admin\Service\ServiceRegistry;
-use Cake\Core\InstanceConfigTrait;
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Event\Event;
+use Cake\Event\EventListenerInterface;
 use Cake\Event\EventManager;
+use Cake\Event\EventManagerInterface;
+use Cupcake\Cupcake;
 use Cupcake\Exception\ClassNotFoundException;
-use Cupcake\Menu\Menu;
+use Cupcake\Menu\MenuItemCollection;
 
 /**
  * Class Admin
@@ -20,51 +22,23 @@ use Cupcake\Menu\Menu;
  */
 class Admin
 {
-    use InstanceConfigTrait;
-
     public static $urlPrefix = 'admin';
 
     /**
-     * The service services.
-     *
-     * @var \Admin\Service\ServiceRegistry
+     * @var \Admin\Core\AdminPluginCollection
      */
-    protected $services;
-
-    /**
-     * Default configuration.
-     *
-     * @var array
-     */
-    protected $_defaultConfig = [
-        'services' => [
-            'Admin.Crud' => true,
-            'Admin.Publish' => false,
-            'Admin.Tree' => true,
-        ],
-    ];
+    protected static $plugins;
 
     /**
      * @var string
      */
     protected static $_version = null;
 
+    /**
+     * @var array
+     * @deprecated
+     */
     protected static $_listeners = [];
-
-    /**
-     * @var array Object storage
-     */
-    protected static $_objects = [];
-
-    /**
-     * @var array Hook callback storage
-     */
-    protected static $_hooks = [];
-
-    /**
-     * @var \Admin\Core\AdminPluginCollection
-     */
-    protected static $plugins;
 
     /**
      * Set the admin routing prefix.
@@ -104,43 +78,24 @@ class Admin
         static::getPlugins()->add($plugin);
     }
 
-    public static function addFilter($name, $cb)
-    {
-        //@TODO Implement Me
-    }
-
-    public static function applyFilter($name)
-    {
-        //@TODO Implement Me
-    }
-
-    public static function addHook($name, $cb)
-    {
-        //@TODO Implement Me
-    }
-
-    public static function applyHook($name)
-    {
-        //@TODO Implement Me
-    }
-
-    public static function getMailer()
-    {
-        //@TODO Implement Me
-    }
-
     /**
-     * @return \Cupcake\Menu\Menu|array
+     * @param string $menuName Admin menu name
+     * @return \Cupcake\Menu\MenuItemCollection
      */
-    public static function getMenu($menuId)
+    public static function getMenu(string $menuName): MenuItemCollection
     {
         //@TODO Cache
-        $menu = new Menu();
-        $event = EventManager::instance()->dispatch(new Event('Admin.Menu.build.' . $menuId, null, ['menu' => $menu]));
+
+        // 1. read from configuration
+        $items = (array)Configure::read('Admin.Menu.' . $menuName);
+        // 2. cc filter
+        $items = Cupcake::doFilter('admin_menu_init', $items, ['name' => $menuName]);
+        // 3. build MenuCollection and trigger menu build event
+        $menu = new MenuItemCollection($items);
+        $event = new Event('Admin.Menu.build.' . $menuName, null, ['menu' => $menu]);
+        $event = EventManager::instance()->dispatch($event);
 
         return $event->getData('menu');
-        //$event = EventManager::instance()->dispatch(new Event('Admin.Menu.init', null, ['menus' => [], 'menuId' => $menuId]));
-        //return (isset($event->getData('menus')[$menuId])) ? $event->getData('menus')[$menuId] : [];
     }
 
     /**
@@ -158,10 +113,12 @@ class Admin
     }
 
     /**
-     * @deprecated
+     * @param $type
+     * @param $listenerClass
      * @return void
+     * @deprecated
      */
-    public static function registerListener($type, $listenerClass)
+    public static function registerListener(string $type, $listenerClass)
     {
         if (!isset(static::$_listeners[$type])) {
             static::$_listeners[$type] = [];
@@ -175,101 +132,16 @@ class Admin
     }
 
     /**
-     * @deprecated
+     * @param string $type
      * @return array
+     * @deprecated
      */
-    public static function getListeners($type)
+    public static function getListeners(string $type)
     {
         if (!isset(static::$_listeners[$type])) {
             return [];
         }
 
         return static::$_listeners[$type];
-    }
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->services = new ServiceRegistry(EventManager::instance());
-    }
-
-    public function register($name, $object)
-    {
-        static::$_objects[$name] = $object;
-    }
-
-    public function get($name)
-    {
-        if (isset(static::$_objects[$name])) {
-            return static::$_objects[$name];
-        }
-
-        return null;
-    }
-
-    public function hook($name, callable $callback)
-    {
-        static::$_hooks[$name][] = $callback;
-    }
-
-    public function run()
-    {
-        //$this->loadRoutes();
-        $this->loadServices();
-        $this->initializeServices();
-    }
-
-    /**
-     * Fetch the ServiceRegistry
-     *
-     * @return \Admin\Service\ServiceRegistry
-     */
-    public function services()
-    {
-        return $this->services;
-    }
-
-    /**
-     * @deprecated Use services()->loaded() instead
-     */
-    public function loadedServices()
-    {
-        return $this->services->loaded();
-    }
-
-    /**
-     * @deprecated Use service()->get()
-     */
-    public function service($name)
-    {
-        return $this->services->get($name);
-    }
-
-    /**
-     * @TODO Make method protected
-     */
-    public function loadServices()
-    {
-        foreach ($this->getConfig('services') as $service => $enabled) {
-            [$service, $enabled] = is_numeric($service) ? [$enabled, true] : [$service, $enabled];
-            if ($enabled) {
-                $this->services->load($service);
-            }
-        }
-    }
-
-    /**
-     * Call the initialize method on all the loaded services.
-     *
-     * @return void
-     * @TODO Make method protected
-     */
-    public function initializeServices()
-    {
-        foreach ($this->services->loaded() as $service) {
-            $this->services->{$service}->initialize();
-        }
     }
 }

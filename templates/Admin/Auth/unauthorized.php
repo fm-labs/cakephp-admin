@@ -1,23 +1,24 @@
-<?php $this->assign('title', __d('admin','Unauthorized')); ?>
-
-<div class="ui middle aligned center aligned grid">
-    <div class="column">
-        <h2 class="ui icon header">
-            <div class="content">
-                <i class="white lock icon"></i>Forbidden
-            </div>
+<?php $this->assign('title', __d('admin', 'Unauthorized')); ?>
+<div class="index container">
+    <div class="text-center">
+        <h2 class="text-danger">
+            <i class="fa fa-lock fa-2x"></i>
+            <br />
+            Forbidden
         </h2>
-
-        <div class="ui divider"></div>
-
+        <p>
+            Sorry, you are not authorized to access the requested resource.
+        </p>
+        <hr />
         <div>
-            <?= $this->Html->link(__d('admin','Go to dashboard page'), $be_dashboard_url); ?><br />
-            <?= $this->Html->link(__d('admin','Go to login page'), ['action' => 'login']); ?><br />
-            <?= $this->Html->link(__d('admin','Go to logout page'), ['action' => 'logout']); ?><br />
-            <?= $this->Html->link(__d('admin','Go to main page'), '/'); ?><br />
+            <?= $this->Html->link(__d('admin', 'Go to login page'), [
+                    'action' => 'login',
+                    '?' => ['redirect' => $this->request->getQuery('unauthorizedUrl')],
+            ]); ?><br />
+            <?= $this->Html->link(__d('admin', 'Go to logout page'), ['action' => 'logout']); ?><br />
+            <?= $this->Html->link(__d('admin', 'Go to main page'), '/'); ?><br />
+            <?= $this->Html->link(__d('admin', 'Go to back'), 'javascript:history.go(-1)'); ?><br />
         </div>
-
-        <div class="ui hidden divider"></div>
-        <?php debug($this->request->getSession()->read()); ?>
+        <hr />
     </div>
 </div>

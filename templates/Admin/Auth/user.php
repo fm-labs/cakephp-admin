@@ -26,7 +26,7 @@ use Cake\Core\Configure;
             <?=
             $this->Ui->link(
                 __d('admin', 'Goto Dashboard'),
-                ['_name' => 'admin:admin:user:login'],
+                ['_name' => 'admin:system:user:login'],
                 ['icon' => 'home', 'class' => 'btn btn-default btn-block']
             ); ?>
             <?=

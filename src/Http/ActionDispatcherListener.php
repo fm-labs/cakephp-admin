@@ -11,7 +11,7 @@ use Cake\Http\ControllerFactory;
 class ActionDispatcherListener implements EventListenerInterface
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function implementedEvents(): array
     {

@@ -1,36 +1,39 @@
 <?php
 return [
     'Settings' => [
+        'Admin' => [
+            'groups' => [
+                'Admin.Dashboard' => [
+                    'label' => __('Dashboard'),
+                ],
+                'Admin.Security' => [
+                    'label' => __('Security'),
+                ],
+                'Admin.Theme' => [
+                    'label' => __('Theme'),
+                ],
+            ],
 
-        'Admin.General' => [
-            'label' => __('Admin General Settings'),
-            'settings' => [
+            'schema' => [
                 'Admin.Dashboard.title' => [
+                    'group' => 'Admin.Dashboard',
                     'type' => 'string',
                     'input' => [],
                 ],
-            ],
-        ],
-
-        'Admin.Security' => [
-            'label' => __('Security'),
-            'settings' => [
                 'Admin.Security.enabled' => [
+                    'group' => 'Admin.Security',
                     'type' => 'boolean',
-                    'label' => 'Enable Admin Security',
-                    'help' => 'Enables advanced security mechanism',
+                    'label' => __('Enable Admin Security'),
+                    'help' => __('Enables advanced security mechanism'),
                 ],
                 'Admin.Security.forceSSL' => [
+                    'group' => 'Admin.Security',
                     'type' => 'boolean',
-                    'label' => 'Force SSL',
+                    'label' => __('Force SSL'),
                     'help' => '',
                 ],
-            ],
-        ],
-
-        'Admin.Theme' => [
-            'settings' => [
                 'Admin.Theme.name' => [
+                    'group' => 'Admin.Theme',
                     'type' => 'string',
                     'input' => [
                         'type' => 'select',
@@ -41,6 +44,7 @@ return [
                     'default' => 'theme-default',
                 ],
                 'Admin.Theme.skin' => [
+                    'group' => 'Admin.Theme',
                     'type' => 'string',
                     'input' => [
                         'type' => 'select',
@@ -56,18 +60,68 @@ return [
                     'default' => 'skin-blue',
                 ],
                 'Admin.Theme.bodyClass' => [
+                    'group' => 'Admin.Theme',
                     'type' => 'string',
                 ],
                 'Admin.Theme.darkmode' => [
+                    'group' => 'Admin.Theme',
                     'type' => 'boolean',
                 ],
                 'Admin.Theme.enableJsFlash' => [
-                    'label' => 'Pretty Flash messages',
+                    'group' => 'Admin.Theme',
+                    'label' => __('Pretty Flash messages'),
                     'type' => 'boolean',
                 ],
                 'Admin.Theme.enableJsAlerts' => [
-                    'label' => 'Pretty Alert messages',
+                    'group' => 'Admin.Theme',
+                    'label' => __('Pretty Alert messages'),
                     'type' => 'boolean',
+                ],
+
+                'Admin.CodeEditor.Ace.theme' => [
+                    'group' => 'Admin.Theme',
+                    'default' => 'twilight',
+                    'input' => [
+                        'type' => 'select',
+                        'options' => [
+                            'chaos' => 'chaos',
+                            'chrome' => 'chrome',
+                            'clouds' => 'clouds',
+                            'cloud_midnight' => 'cloud_midnight',
+                            'cobalt' => 'cobalt',
+                            'crimson_editor' => 'crimson_editor',
+                            'dawn' => 'dawn',
+                            'dracula' => 'dracula',
+                            'dreamweaver' => 'dreamweaver',
+                            'eclipse' => 'eclipse',
+                            'github' => 'github',
+                            'gob' => 'gob',
+                            'gruvbox' => 'gruvbox',
+                            'idle_fingers' => 'idle_fingers',
+                            'iplastic' => 'iplastic',
+                            'katzenmilch' => 'katzenmilch',
+                            'kr_theme' => 'kr_theme',
+                            'kuroir' => 'kuroir',
+                            'merbivore' => 'merbivore',
+                            'merbivore_soft' => 'merbivore_soft',
+                            'mono_industrial' => 'mono_industrial',
+                            'monokai' => 'monokai',
+                            'pastel_on_dark' => 'pastel_on_dark',
+                            'solarized_dark' => 'solarized_dark',
+                            'solarized_light' => 'solarized_light',
+                            'sqlserver' => 'sqlserver',
+                            'terminal' => 'terminal',
+                            'textmate' => 'textmate',
+                            'tomorrow' => 'tomorrow',
+                            'tomorrow_night' => 'tomorrow_night',
+                            'tomorrow_night_blue' => 'tomorrow_night_blue',
+                            'tomorrow_night_bright' => 'tomorrow_night_bright',
+                            'tomorrow_night_eighties' => 'tomorrow_night_eighties',
+                            'twilight' => 'twilight',
+                            'vibrant_ink' => 'vibrant_ink',
+                            'xcode' => 'xcode',
+                        ],
+                    ],
                 ],
             ],
         ],

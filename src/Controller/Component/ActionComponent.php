@@ -8,10 +8,7 @@ use Admin\Action\ExternalEntityAction;
 use Admin\Action\InlineEntityAction;
 use Admin\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Component;
-use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Core\Plugin;
-use Cake\Event\EventListenerInterface;
 use Cake\Http\Exception\NotFoundException;
 use Cake\Http\Response;
 use Cake\ORM\TableRegistry;
@@ -21,8 +18,6 @@ use Cake\Utility\Inflector;
  * Class ActionComponent
  *
  * @package Admin\Controller\Component
- * @TODO Replace ActionRegistry with dynamic initialization of Action objects (load on-the-fly instead of preloading all available actions)
- * @TODO Add method to easily attach event listeners to the Action object
  */
 class ActionComponent extends Component
 {
@@ -48,6 +43,7 @@ class ActionComponent extends Component
 
     /**
      * @var \Cake\ORM\Table Active primary table
+     * @deprecated
      */
     protected $_model;
 
@@ -64,13 +60,29 @@ class ActionComponent extends Component
      */
     public function initialize(array $config): void
     {
-        $this->_actionRegistry = new ActionRegistry($this->getController());
+        $this->_actionRegistry = new ActionRegistry();
 
         // normalize action configs and add actions to actions registry
-        $actions = ($this->getController() && isset($this->getController()->actions)) ? $this->getController()->actions : [];
+        $actions = $this->getController() && isset($this->getController()->actions)
+            ? $this->getController()->actions : [];
         foreach ($actions as $action => $actionConfig) {
+            if (isset($actionConfig['inline'])) {
+                $this->registerInline($action, $actionConfig);
+                continue;
+            }
+            if (is_string($actionConfig)) {
+                $actionConfig = ['className' => $actionConfig];
+            }
             $this->_addAction($action, $actionConfig);
         }
+    }
+
+    /**
+     * @return \Admin\Action\ActionRegistry
+     */
+    public function getActionRegistry(): ActionRegistry
+    {
+        return $this->_actionRegistry;
     }
 
     /**
@@ -78,31 +90,10 @@ class ActionComponent extends Component
      * @param array $actionConfig Action config
      * @return void
      */
-    protected function _addAction($action, $actionConfig = [])
+    protected function _addAction($action, array $actionConfig = [])
     {
-        if ($actionConfig === false) {
-            return;
-        }
-        if (is_string($actionConfig)) {
-            $actionConfig = ['className' => $actionConfig];
-        }
-        $actionConfig = array_merge([
-            'className' => null,
-            'label' => Inflector::humanize($action),
-            'attrs' => [],
-            'scope' => [],
-            'type' => null,
-        ], $actionConfig);
-
-        if ($actionConfig['type'] === null) {
-            $className = App::className($actionConfig['className'], 'Action', 'Action');
-            $reflection = new \ReflectionClass($className);
-            $ifaces = $reflection->getInterfaceNames();
-            $actionConfig['type'] = in_array('Admin\\Action\\Interfaces\\EntityActionInterface', $ifaces) ? 'entity' : 'table';
-        }
-
-        $this->actions[$action] = $actionConfig;
-        //$this->_actionRegistry->load($action, $actionConfig);
+        $actionConfig += ['className' => null];
+        $this->_actionRegistry->load($action, $actionConfig);
     }
 
     /**
@@ -112,17 +103,13 @@ class ActionComponent extends Component
      */
     public function startup()
     {
-        if (Configure::read('debug') && !isset($this->actions['debug'])) {
-            //$actionConfig = ['className' => 'Admin.Debug'];
-            //$this->_actionRegistry->load('debug', $actionConfig);
-            //$this->actions['debug'] = $actionConfig;
-
-            /*
-            $infoAction = ['className' => 'Admin.View', 'label' => 'Info'];
-            $this->_actionRegistry->load('info', $infoAction);
-            $this->actions['info'] = $infoAction;
-            */
-        }
+//        if (Configure::read('debug') && !$this->_actionRegistry->has('debug')) {
+//            $actionConfig = ['className' => 'Admin.Debug'];
+//            $this->_actionRegistry->load('debug', $actionConfig);
+//
+//            $infoAction = ['className' => 'Admin.Info';
+//            $this->_actionRegistry->load('info', $infoAction);
+//        }
     }
 
     /**
@@ -170,24 +157,24 @@ class ActionComponent extends Component
      */
     public function getAction($action)
     {
-        if (!$this->_actionRegistry->has($action)) {
-            if (!array_key_exists($action, $this->actions)) {
-                throw new NotFoundException("Action not found");
-            }
-            $this->_actionRegistry->load($action, $this->actions[$action]);
-        }
-
         return $this->_actionRegistry->get($action);
     }
 
     /**
      * @param null|string $action Action name
      * @return bool
-     * @deprecated
      */
     public function hasAction($action)
     {
         return $this->_actionRegistry->has($action);
+    }
+
+    /**
+     * @return array
+     */
+    public function listActions()
+    {
+        return $this->_actionRegistry->loaded();
     }
 
     /**
@@ -206,14 +193,6 @@ class ActionComponent extends Component
     }
 
     /**
-     * @return array
-     */
-    public function listActions()
-    {
-        return array_keys($this->actions);
-    }
-
-    /**
      * @param null|string $action Action name
      * @return null|\Cake\Http\Response
      */
@@ -225,24 +204,18 @@ class ActionComponent extends Component
         }
 
         // Prevent double execution (auto and manual)
-        if (isset($this->_executed[$action]) && $this->_executed[$action] === true) {
+        if (isset($this->_executed[$action])) {
             return null;
         }
 
         // Get Action class instance
         $this->_action = $this->getAction($action);
 
-        // Init primary model
-        $this->model();
-
-        // Attach Action instance to controllers event manager
-        if ($this->_action instanceof EventListenerInterface) {
-            $this->getController()->getEventManager()->on($this->_action);
-        }
-
         // Dispatch 'beforeAction' Event
-        //@TODO Rename to 'Admin.Controller.beforeAction'
-        $event = $this->getController()->dispatchEvent('Admin.beforeAction', [ 'name' => $action, 'action' => $this->_action ]);
+        $event = $this->getController()->dispatchEvent(
+            'Admin.Controller.beforeAction',
+            [ 'name' => $action, 'action' => $this->_action ]
+        );
         if ($event->getResult() instanceof Response) {
             return $event->getResult();
         }
@@ -250,64 +223,45 @@ class ActionComponent extends Component
         // Execute the action in context of current controller
         $this->_executed[$action] = true;
         $response = $this->_action->execute($this->getController());
-        if ($response instanceof Response) {
-            return $response;
-        }
+        //if ($response instanceof Response) {
+        //    return $response;
+        //}
 
         // Dispatch 'afterAction' Event
-        //@TODO Rename to 'Admin.Controller.afterAction'
-        $event = $this->getController()->dispatchEvent('Admin.afterAction', [ 'name' => $action, 'action' => $this->_action ]);
+        $event = $this->getController()->dispatchEvent(
+            'Admin.Controller.afterAction',
+            [ 'name' => $action, 'action' => $this->_action, 'response' => $response]
+        );
         if ($event->getResult() instanceof Response) {
             return $event->getResult();
         }
+
+        return $response;
     }
 
     /**
-     * @param \Cake\Event\Event $event The controller event
-     * @return null|\Cake\Http\Response
+     * @param \Cake\Event\EventInterface $event The controller event
+     * @return void
      */
-    public function beforeRender(\Cake\Event\EventInterface $event)
+    public function beforeRender(\Cake\Event\EventInterface $event): void
     {
         if ($this->getController()->getRequest()->getParam('action')) {
             $action = $this->getController()->getRequest()->getParam('action');
-            if (isset($this->actions[$action])) {
-                /** @var \Admin\Controller\Component\Controller $controller */
+            if ($this->hasAction($action)) {
+                /** @var \Cake\Controller\Controller $controller */
                 $controller = $event->getSubject();
+                $actionObj = $this->getAction($action);
 
-                // Inject template and layout via controller view vars
-                //$template = (isset($controller->viewVars['template'])) ? $controller->viewVars['template'] : $controller->viewBuilder()->getTemplate();
-                //$layout = (isset($controller->viewVars['layout'])) ? $controller->viewVars['layout'] : $controller->viewBuilder()->layout();
-
-                // Check if a custom Action class template in the controller's template path,
-                // otherwise use the default Action class template.
-                // Default Action class template path: {plugin}/src/Template/{prefix}/Action/{action}.ctp
-                // Custom Action class template path: {plugin}/src/Template/{prefix}/{controller}/{action}.ctp
-                //@TODO Check all application template paths, not only the first configured
-                $templateFile = sprintf(
-                    "%ssrc/Template/%s/%s.ctp",
-                    $this->getController()->getRequest()->getParam('plugin') ? Plugin::path($this->getController()->getRequest()->getParam('plugin')) : App::path('Template')[0],
-                    $controller->viewBuilder()->getTemplatePath(),
-                    Inflector::underscore($action)
-                );
-                if (!file_exists($templateFile)) {
-                    // build action template path
-                    $templatePath = 'Action';
-                    if ($this->getController()->getRequest()->getParam('prefix')) {
-                        $templatePath = Inflector::camelize($this->getController()->getRequest()->getParam('prefix')) . '/' . $templatePath;
+                $builder = $controller->viewBuilder();
+                if ($builder->getTemplate() === null) {
+                    $templatePath = $actionObj->getTemplatePath();
+                    if ($controller->getRequest()->getParam('prefix')) {
+                        $templatePath = Inflector::camelize($controller->getRequest()->getParam('prefix'))
+                            . '/' . $templatePath;
                     }
+                    $controller->viewBuilder()->setPlugin($actionObj->getPlugin());
                     $controller->viewBuilder()->setTemplatePath($templatePath);
-                    //$controller->viewBuilder()->setPlugin('Admin');
-
-                    // use action class name as default template name
-                    $template = $this->_action->template ?? null;
-                    if (!$template/* && isset($config['className'])*/) {
-                        $config = $this->actions[$action];
-                        [$plugin, $actionClass] = pluginSplit($config['className']);
-                        $actionClass = Inflector::underscore($actionClass);
-                        $template = $plugin ? $plugin . '.' . $actionClass : $actionClass;
-                    }
-
-                    $controller->viewBuilder()->setTemplate($template);
+                    $controller->viewBuilder()->setTemplate($actionObj->getTemplate());
                 }
 
                 // Auto-execute Action class
@@ -319,27 +273,6 @@ class ActionComponent extends Component
                 }
             }
         }
-    }
-
-    /**
-     * @return \Cake\ORM\Table
-     */
-    public function model()
-    {
-        if (!$this->_model) {
-            $modelClass = $this->getController() && isset($this->getController()->modelClass)
-                ? $this->getController()->modelClass
-                : null;
-
-            if (!$modelClass) {
-                return null;
-                // @TODO Throw exception
-            }
-
-            $this->_model = TableRegistry::getTableLocator()->get($modelClass);
-        }
-
-        return $this->_model;
     }
 
     /**

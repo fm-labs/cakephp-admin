@@ -10,7 +10,7 @@ class TreeMoveUpAction extends BaseEntityAction
     /**
      * {@inheritDoc}
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Move Up');
     }
@@ -18,7 +18,7 @@ class TreeMoveUpAction extends BaseEntityAction
     /**
      * {@inheritDoc}
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'chevron-up'];
     }

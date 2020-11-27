@@ -22,15 +22,15 @@ class AdminFormHelper extends BootstrapFormHelper
         $widgets = [
             //'checkbox' => ['Admin\View\Widget\CheckboxWidget'],
             // Sumo Select
-            //'select' => ['Admin\View\Widget\SumoSelectBoxWidget', '_view'],
+            'select' => ['Admin\View\Widget\SumoSelectBoxWidget', '_view'],
             // Select2
-            'select' => ['Admin\View\Widget\Select2Widget', '_view'],
+            //'select' => ['Admin\View\Widget\Select2Widget', '_view'],
             // TinyMCE Html Editor
             'htmleditor' => ['Admin\View\Widget\HtmlEditorWidget', '_view'],
-            'htmltext' => ['Admin\View\Widget\HtmlTextWidget', '_view'],
+            //'htmltext' => ['Admin\View\Widget\HtmlTextWidget', '_view'],
             // Date and Time Pickers
             'datetime' => ['Admin\View\Widget\DatePickerWidget', 'text', '_view'], // override CakePHP built-in datetime control
-            //'datepicker' => ['Admin\View\Widget\DatePickerWidget', 'text', '_view'],
+            'datepicker' => ['Admin\View\Widget\DatePickerWidget', 'text', '_view'],
             'timepicker' => ['Admin\View\Widget\TimePickerWidget'],
             // ACE Code Editor
             //'codeeditor' => ['Admin\View\Widget\CodeEditorWidget', '_view'],

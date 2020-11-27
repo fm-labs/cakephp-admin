@@ -2,7 +2,7 @@
 
 
     if (typeof FooTable === "undefined") {
-        console.warn("Backend FooTable: Missing FooTable instance");
+        console.warn("AdminJs FooTable: Missing FooTable instance");
     }
 
     FooTable.Table.prototype.urlCache = {
@@ -28,35 +28,35 @@
 
 
 
-    if (typeof window.Backend === "undefined") {
-        console.warn("Backend FooTable: Missing Backend instance");
+    if (typeof window.AdminJs === "undefined") {
+        console.warn("AdminJs FooTable: Missing AdminJs instance");
     }
 
-    Backend = window.Backend || {};
-    Backend.FooTable = Backend.FooTable || {};
-    Backend.FooTable.Formatters = Backend.FooTable.Formatters || {};
+    AdminJs = window.AdminJs || {};
+    AdminJs.FooTable = AdminJs.FooTable || {};
+    AdminJs.FooTable.Formatters = AdminJs.FooTable.Formatters || {};
 
-    Backend.FooTable.Formatters.boolean = function(value, options, rowData){
+    AdminJs.FooTable.Formatters.boolean = function(value, options, rowData){
         if (value === null) return '';
         var clazz = (value === "true") ? "text-success" : "text-danger";
         return '<span class="'+ clazz +'"><i class="fa fa-circle"></i></span>';
     };
 
-    Backend.FooTable.Formatters.link = function(value, options, rowData){
+    AdminJs.FooTable.Formatters.link = function(value, options, rowData){
         return (value === null) ? '' : '<a href="#" data-id="' + rowData.id +'">' + value + '</a>';
     };
 
-    Backend.FooTable.Formatters.currency = function(value, options, rowData){
+    AdminJs.FooTable.Formatters.currency = function(value, options, rowData){
         return (value === null) ? '' : '<span class="currency">' + value + '</span>';
     };
 
-    Backend.FooTable.Formatters.related = function(value, options, rowData){
+    AdminJs.FooTable.Formatters.related = function(value, options, rowData){
         if (value === null) return '';
         var val = value.name || value.title || value.display_name || value.id || value;
         return '<span class="related">' + val + '</span>';
     };
 
-    Backend.FooTable.Formatters.media_file = Backend.FooTable.Formatters.mediafile = function(value, options, rowData){
+    AdminJs.FooTable.Formatters.media_file = AdminJs.FooTable.Formatters.mediafile = function(value, options, rowData){
         if (value === null || typeof value !== "object") return '<img width="30" src="" />';
 
         return  '<a href="' + value.full_url +'" target="_blank" data-original-value="' + value.path +'">' +
@@ -64,7 +64,7 @@
             '</a>';
     };
 
-    Backend.FooTable.Formatters.status = function(value, options, rowData){
+    AdminJs.FooTable.Formatters.status = function(value, options, rowData){
         if (!value || typeof(value) !== "object") {
             return value;
         }
@@ -76,7 +76,7 @@
         return '<span class="label label-'+clazz+'"  data-value="' + status + '">' + label + '</span>';
     };
 
-    Backend.FooTable.Formatters.datetime = function(value, options, rowData){
+    AdminJs.FooTable.Formatters.datetime = function(value, options, rowData){
         if (value === null) return '';
 
         if (typeof(moment) === "undefined") {
@@ -93,7 +93,7 @@
         return moment.utc(value).format("DD MMM YYYY, HH:mm");
     };
 
-    Backend.FooTable.Formatters.actions = function(value, options, rowData, x){
+    AdminJs.FooTable.Formatters.actions = function(value, options, rowData, x){
 
         if (value === null) return '';
 

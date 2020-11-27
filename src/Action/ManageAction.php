@@ -25,7 +25,7 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Manage');
     }
@@ -33,7 +33,7 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
     /**
      * {@inheritDoc}
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'file-o'];
     }

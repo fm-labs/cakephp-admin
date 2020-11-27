@@ -66,8 +66,9 @@ class SystemController extends AppController
     {
         $globals = [
             'APP', 'APP_DIR', 'CONFIG', 'CACHE', 'CAKE', 'CAKE_CORE_INCLUDE_PATH', 'CORE_PATH',
-            'DS', 'LOGS', 'ROOT', 'TESTS', 'TMP', 'WWW_ROOT',
+            'DS', 'LOGS', 'RESOURCES', 'ROOT', 'TESTS', 'TMP', 'WWW_ROOT'
         ];
+        sort($globals);
         $this->set(compact('globals'));
     }
 

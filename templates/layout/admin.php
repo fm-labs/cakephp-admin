@@ -1,8 +1,13 @@
+<?php
+/**
+ * @property \Admin\View\AdminView $this
+ */
+?>
 <!DOCTYPE html>
 <html lang="<?= Cake\I18n\I18n::getLocale(); ?>">
 <head>
     <?= $this->Html->charset() ?>
-    <title><?= $this->fetch('title') ?></title>
+    <title><?= $this->fetch('title') ?> | <?= $this->get('be_title'); ?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
@@ -17,7 +22,9 @@
 <div class="wrapper">
 
     <!-- Main Header -->
-    <?php echo $this->fetch('header'); ?>
+    <header class="main-header">
+        <?php echo $this->fetch('header'); ?>
+    </header>
 
     <!-- Left side column. contains the logo and sidebar -->
     <?php echo $this->fetch('sidebar'); ?>
@@ -29,7 +36,7 @@
             <?= $this->Flash->render(); ?>
             <?= $this->Flash->render('auth'); ?>
             <?= $this->Flash->render('admin'); ?>
-            <?php echo $this->fetch('flash'); ?>
+            <?= $this->fetch('flash'); ?>
         </section>
 
         <!-- Breadcrumbs -->

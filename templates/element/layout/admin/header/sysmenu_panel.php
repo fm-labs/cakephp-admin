@@ -1,7 +1,10 @@
 <?php
+/**
+ * @property array $items
+ */
 $this->loadHelper('Bootstrap.Menu');
 
-$items = \Admin\Admin::getMenu('admin_system');
+//$items = \Admin\Admin::getMenu('admin_system');
 ?>
 <li class="dropdown sys-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -16,7 +19,7 @@ $items = \Admin\Admin::getMenu('admin_system');
             'classes' => [
                 'menu' => 'menu',
             ],
-            'items' => $items
+            'items' => $items,
         ])->render();
         ?>
         </li>

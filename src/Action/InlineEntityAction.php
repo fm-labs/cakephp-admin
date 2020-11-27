@@ -19,7 +19,7 @@ class InlineEntityAction extends BaseEntityAction
 
     public function __construct(Controller $controller, array $options = [], ?callable $callable = null, ?callable $filter = null)
     {
-        parent::__construct($controller, []);
+        parent::__construct([]);
         $options += ['action' => null, 'form' => null, 'label' => null, 'scope' => [], 'attrs' => []];
 
         $this->action = $options['action'];
@@ -34,7 +34,7 @@ class InlineEntityAction extends BaseEntityAction
         $this->_filter = null;
     }
 
-    public function getLabel()
+    public function getLabel(): string
     {
         if ($this->options['label']) {
             return $this->options['label'];
@@ -43,7 +43,7 @@ class InlineEntityAction extends BaseEntityAction
         return Inflector::humanize(Inflector::underscore($this->action));
     }
 
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return $this->_attributes;
     }

@@ -1,39 +1,33 @@
 (function($) {
-    var Backend = {
+    var AdminJs = {
         init: false,
         settings: {
             rootUrl: '/',
-            adminUrl: '/admin/'
+            adminUrl: '/admin/',
+            debug: false
         },
 
         _cssLoaded: [],
         _jsLoaded: []
     };
 
-    Backend.initialize = function(settings) {
-        console.log("[backendjs] INIT", settings);
+    AdminJs.initialize = function(settings) {
         this.settings = settings;
         this.init = true;
+        AdminJs.Console.log("[adminjs] INIT", settings);
     };
 
-    Backend.isFrame = function() {
+    AdminJs.isFrame = function() {
         var parent = window.parent || window;
         return parent !== window;
     };
 
-    Backend.parsePostMessage = function (msg, origin, source) {
-
-        // collapse workaround
-        // @TODO: Find out why a message with content 'collapse' is received on page load
-        if (typeof(msg) === 'string' && msg === "collapse") {
-            return false;
-        }
-
+    AdminJs.parsePostMessage = function (msg, origin, source) {
         var parsed;
         try {
             parsed = JSON.parse(msg);
         } catch (ex) {
-            console.log(ex);
+            AdminJs.Console.log(ex);
             return;
         }
 
@@ -42,21 +36,21 @@
 
         switch(type) {
             case "hello":
-                //console.log("hello received");
+                //AdminJs.Console.log("hello received");
                 break;
 
             default:
-                console.log("Unknown message type: " + parsed.type);
+                AdminJs.Console.log("Unknown message type: " + parsed.type);
                 return;
         }
     };
 
-    Backend.sendPostMessage = function(msg) {
-        //console.log("[frame] send msg: " + msg.type);
+    AdminJs.sendPostMessage = function(msg) {
+        //AdminJs.Console.log("[frame] send msg: " + msg.type);
 
         // check if current window is a framed window
-        if (!Backend.isFrame()) {
-            //console.log("sending aborted: already on master");
+        if (!AdminJs.isFrame()) {
+            //AdminJs.Console.log("sending aborted: already on master");
             return;
         }
 
@@ -69,10 +63,10 @@
         parent.postMessage(msg, hostUrl);
     };
 
-    Backend.loadCss = function(filename) {
+    AdminJs.loadCss = function(filename) {
 
         if (this._cssLoaded.find(function(f) { return f == filename})) {
-            console.log("[loadCss] File " + filename + " already loaded");
+            AdminJs.Console.log("[loadCss] File " + filename + " already loaded");
             return;
         }
 
@@ -85,10 +79,10 @@
         this._cssLoaded.push(filename);
     };
 
-    Backend.loadJs = function(filename) {
+    AdminJs.loadJs = function(filename) {
 
         if (this._jsLoaded.find(function(f) { return f == filename})) {
-            console.log("[loadJs] File " + filename + " already loaded");
+            AdminJs.Console.log("[loadJs] File " + filename + " already loaded");
             return;
         }
 
@@ -100,7 +94,15 @@
         this._jsLoaded.push(filename);
     };
 
-    Backend.Frame = {
+    AdminJs.Console = {
+        log: function() {
+            if (AdminJs.settings.debug === true) {
+                console.log.apply(null, arguments);
+            }
+        }
+    };
+
+    AdminJs.Frame = {
 
         /**
          * Reload the closest frame (window or ajax-content container)
@@ -122,22 +124,22 @@
     /**
      * Url
      */
-    Backend.Url = {};
-    Backend.Url.buildAdminUrl = function (path) {
-        return Backend.settings.adminUrl + path;
+    AdminJs.Url = {};
+    AdminJs.Url.buildAdminUrl = function (path) {
+        return AdminJs.settings.adminUrl + path;
     };
 
     /**
      * Loader
      */
-    Backend.Loader = {
+    AdminJs.Loader = {
         show: function() {
-            //console.log("show loader");
+            //AdminJs.Console.log("show loader");
             $('#loader').show();
         },
 
         hide: function() {
-            //console.log("hide loader");
+            //AdminJs.Console.log("hide loader");
             $('#loader').hide();
         }
     };
@@ -146,13 +148,13 @@
      * Flash messages
      */
 
-    Backend.Flash = {
+    AdminJs.Flash = {
 
         el: '#main-flash', // @TODO remove dependency on container with id
 
         message: function(type, msg, persist)
         {
-            console.log("Flash: [" + type + "] " + msg);
+            AdminJs.Console.log("Flash: [" + type + "] " + msg);
 
             var $alert = $('<div>', {
                 class: 'alert alert-' + type
@@ -187,7 +189,7 @@
      * Util
      * Collection of helper methods
      */
-    Backend.Util = {
+    AdminJs.Util = {
 
         _domIdCounter: 0,
 
@@ -216,7 +218,7 @@
                 var key = scope + '_scrollTop'
                 var scrollTop = window.localStorage.setItem(key, val);
             } else {
-                console.log("[backendjs] LocalStorage is not available");
+                AdminJs.Console.log("[adminjs] LocalStorage is not available");
             }
         },
 
@@ -237,7 +239,7 @@
     /**
      * Renderer
      */
-    Backend.Renderer = {
+    AdminJs.Renderer = {
 
         callbacks: {},
 
@@ -248,7 +250,7 @@
             }
 
             if (typeof callback !== "function") {
-                console.warn("[backendjs|renderer] ERROR Given callback is not a valid function");
+                console.warn("[adminjs|renderer] ERROR Given callback is not a valid function");
                 return;
             }
 
@@ -281,7 +283,7 @@
     /**
      * Links
      */
-    Backend.Modal = {
+    AdminJs.Modal = {
 
         _modalTemplate: '<div class="modal-dialog"> \
     <div class="modal-content"> \
@@ -298,7 +300,7 @@
 </div><!-- /.modal-dialog -->',
 
         create: function (options) {
-            var modalId = Backend.Util.uniqueDomId('modal');
+            var modalId = AdminJs.Util.uniqueDomId('modal');
             var $modal = $('<div>', {
                 id: 'modal' + modalId,
                 class: 'modal fade',
@@ -320,7 +322,7 @@
             modalOptions = modalOptions || {};
             options = options || {};
 
-            var modalId = Backend.Util.uniqueDomId('modal');
+            var modalId = AdminJs.Util.uniqueDomId('modal');
             var $modal = $('<div>', {
                 id: 'modal' + modalId,
                 class: 'modal fade',
@@ -338,11 +340,11 @@
 
             $modal.on('hidden.bs.modal', function(ev) {
 
-                console.log("[backendjs] modal " + modalId + " is now hidden");
-                console.log(ev);
+                AdminJs.Console.log("[adminjs] modal " + modalId + " is now hidden");
+                AdminJs.Console.log(ev);
                 // http://stackoverflow.com/questions/11570333/how-to-get-twitter-bootstrap-modals-invoker-element
                 var $invoker = $(ev.relatedTarget) || $(window);
-                console.log($invoker);
+                AdminJs.Console.log($invoker);
 
                 $invoker.focus();
             });
@@ -357,12 +359,12 @@
 
         openIframe: function (url, modalOptions, options)
         {
-            console.log("[backendjs] Open Iframe Modal with URL " + url);
+            AdminJs.Console.log("[adminjs] Open Iframe Modal with URL " + url);
 
             modalOptions = modalOptions || {};
             options = options || {};
 
-            var modalId = Backend.Util.uniqueDomId('modal');
+            var modalId = AdminJs.Util.uniqueDomId('modal');
             var $modal = $('<div>', {
                 id: 'modal' + modalId,
                 class: ((options.class) ? options.class + ' ' : '') + 'modal fade',
@@ -394,25 +396,26 @@
             });
             $modal.on('hidden.bs.modal', function(ev) {
 
-                console.log("[backendjs] modal " + modalId + " is now hidden");
-                //console.log(ev);
+                AdminJs.Console.log("[adminjs] modal " + modalId + " is now hidden");
+                //AdminJs.Console.log(ev);
                 // http://stackoverflow.com/questions/11570333/how-to-get-twitter-bootstrap-modals-invoker-element
                 var $invoker = $(ev.relatedTarget) || $(window);
-                //console.log($invoker);
+                //AdminJs.Console.log($invoker);
                 $invoker.focus();
             });
             return $modal;
-            //return Backend.Modal.open($iframe, modalOptions, options);
+            //return AdminJs.Modal.open($iframe, modalOptions, options);
         }
     };
 
     /**
      * Ajax
      */
-    Backend.Ajax = {
+    AdminJs.Ajax = {
         loadHtml: function (target, url, ajaxSettings, options)
         {
             var $target = $(target);
+            //AdminJs.Console.log("ajax target", $target);
             /*
              if ($target.parent().hasClass('ajax-content')) {
              $target = $target.parent();
@@ -429,7 +432,7 @@
                 global: true,
                 context: $target,
                 beforeSend: function() {
-                    Backend.Renderer.onUnload($target);
+                    AdminJs.Renderer.onUnload($target);
                     $target
                         .addClass('ajax-content')
                         .addClass('ajax-content-loading')
@@ -440,6 +443,7 @@
                         $target.html('- Empty response -');
                         return;
                     }
+                    //AdminJs.Console.log("ajax result", data);
                     $target.html(data);
                 },
                 complete: function(xhr, textStatus) {
@@ -447,13 +451,13 @@
                         .addClass('ajax-content-loaded')
                         .removeClass('ajax-content-loading');
 
-                    Backend.Renderer.onReady($target);
+                    AdminJs.Renderer.onReady($target);
                 },
                 error: function(xhr, textStatus, errorThrown) {
-                    console.log("request failed", xhr, textStatus, errorThrown);
+                    AdminJs.Console.log("request failed", xhr, textStatus, errorThrown);
                     //$target.html(xhr.responseText);
 
-                    Backend.Modal.open(xhr.responseText);
+                    AdminJs.Modal.open(xhr.responseText);
 
                     /*
                     var cId = $target.attr('id');
@@ -493,7 +497,7 @@
         /**
          * @param target
          * @param form
-         * @deprecated Use Backend.Ajax.postForm() instead
+         * @deprecated Use AdminJs.Ajax.postForm() instead
          */
         submitForm: function(target, form) {
 
@@ -503,18 +507,18 @@
             var url = $form.data('url') || $form.attr('action');
             var method = $form.attr('method') || 'POST';
 
-            console.log("Submit AJAX form", method, url, data);
+            AdminJs.Console.log("Submit AJAX form", method, url, data);
 
-            Backend.Ajax.loadHtml($target, url, {
+            AdminJs.Ajax.loadHtml($target, url, {
                 method: method,
                 data: data
             }).done(function() {
-                console.log("AJAX FORM SUBMITTED");
+                AdminJs.Console.log("AJAX FORM SUBMITTED");
             }).fail(function() {
                 console.error("AJAX FORM FAILED");
             }).then(function() {
                 if ($target.data('url').length > 0) {
-                    console.log("AJAX FORM has been submitted in ajax content container");
+                    AdminJs.Console.log("AJAX FORM has been submitted in ajax content container");
                 }
             });
 
@@ -527,20 +531,20 @@
             var url = $form.data('url') || $form.attr('action');
             var method = $form.attr('method') || 'POST';
 
-            console.log("POST AJAX form", method, url, data);
+            AdminJs.Console.log("POST AJAX form", method, url, data);
         }
     };
 
     /**
      * UI Elements
      */
-    Backend.Ui = Backend.Ui || {};
+    AdminJs.Ui = AdminJs.Ui || {};
 
     /**
      * UI Elements: Label
      * @type {{create: Function}|*}
      */
-    Backend.Ui.Label = Backend.Ui.Label || {
+    AdminJs.Ui.Label = AdminJs.Ui.Label || {
         create: function(label, clazz) {
             return '<span class="label label-' + clazz + '">' + label + '</span>';
         }
@@ -550,7 +554,7 @@
      * UI Elements: Text
      * @type {{create: Function}|*}
      */
-    Backend.Ui.Text = Backend.Ui.Text || {
+    AdminJs.Ui.Text = AdminJs.Ui.Text || {
         create: function(text, clazz) {
             return '<span class="text-' + clazz + '">' + text + '</span>';
         }
@@ -560,7 +564,7 @@
      * UI Elements: Link
      * @type {{create: Function}|*}
      */
-    Backend.Ui.Link = {
+    AdminJs.Ui.Link = {
         create: function(title, url, attrs) {
             attrs = attrs || {};
             var opts = _.extend({},
@@ -578,7 +582,7 @@
      * UI Elements: Link
      * @type {{create: Function}|*}
      */
-    Backend.Ui.Icon = {
+    AdminJs.Ui.Icon = {
         create: function(icon, attrs, clazzes) {
             attrs = _.extend({}, {}, attrs);
             return $('<i>', { class: 'fa fa-' + icon})
@@ -592,36 +596,36 @@
      * Bind global jQuery AJAX events
      */
     $(document).ajaxStart(function(event, xhr) {
-        //Backend.Flash.clearAll();
-        Backend.Loader.show();
+        //AdminJs.Flash.clearAll();
+        AdminJs.Loader.show();
     });
 
     $(document).ajaxStop(function(event, xhr) {
-        Backend.Loader.hide();
+        AdminJs.Loader.hide();
     });
 
     $(document).ajaxSend(function(event, xhr, settings) {
-        console.log("AJAX SEND: ", settings.url);
+        AdminJs.Console.log("AJAX SEND: ", settings.url);
     });
 
     $(document).ajaxSuccess(function(event, xhr, settings) {
-        console.log("AJAX SUCCESS: ", settings.url);
+        AdminJs.Console.log("AJAX SUCCESS: ", settings.url);
     });
 
     $(document).ajaxError(function(event, xhr, settings, thrownError) {
         console.error("AJAX ERROR: ", thrownError, xhr);
-        //Backend.Flash.error("Ups, something went wrong: " + thrownError);
+        //AdminJs.Flash.error("Ups, something went wrong: " + thrownError);
     });
 
 
     $(document).ajaxComplete(function(event, xhr, options){
         var ct = xhr.getResponseHeader("content-type") || "";
-        //console.log("AJAX response content-type: " + ct);
+        //AdminJs.Console.log("AJAX response content-type: " + ct);
         if (ct.indexOf('html') > -1) {
-            //console.log("AJAX call obviously returned some HTML");
+            //AdminJs.Console.log("AJAX call obviously returned some HTML");
         }
         if (ct.indexOf('json') > -1) {
-            //console.log("AJAX call obviously returned some JSON");
+            //AdminJs.Console.log("AJAX call obviously returned some JSON");
         }
     });
 
@@ -644,7 +648,7 @@
 
         var id = $container.attr('id');
         var url = $container.attr('data-url');
-        console.log("AJAX content reloading [" + id + "]: " + url);
+        AdminJs.Console.log("AJAX content reloading [" + id + "]: " + url);
 
 
         if (!url) {
@@ -652,19 +656,19 @@
             return;
         }
 
-        Backend.Ajax.loadHtml($container, url, {});
+        AdminJs.Ajax.loadHtml($container, url, {});
 
     });
 
 //
 // Tabs (bootstrap)
 //
-    $(document).on('click','.tabs .nav a', function (ev) {
-
-        console.log('tabs nav link clicked: ' + this.hash);
+    $(document).on('click','.tabs .tab-nav a', function (ev) {
 
         var $tabLink = $(ev.target);
         var url = $tabLink.attr("data-url");
+
+        //AdminJs.Console.log('tabs nav link clicked: ' + this.hash, url);
 
         if (typeof url !== "undefined" && !$tabLink.hasClass('tab-loaded') && !$tabLink.hasClass('tab-loading')) {
             var target = this.hash;
@@ -677,13 +681,15 @@
             // ajax load from data-url
             $tab.html("Loading ...");
             $tabLink.addClass('tab-loading').tab('show');
-            Backend.Ajax.loadHtml($tab, url, {}).then(function() {
+            AdminJs.Ajax.loadHtml($tab, url, {}).then(function() {
 
-                console.log("Tab " + target + " loaded");
+                //AdminJs.Console.log("Tab " + target + " loaded");
 
-                //$tabLink.tab('show');
                 $tabLink.addClass('tab-loaded');
                 $tabLink.removeClass('tab-loading');
+                //$tabLink.tab('show');
+            }).then(function() {
+                AdminJs.Console.log("After loading");
             });
         } else {
             $tabLink.tab('show');
@@ -699,8 +705,8 @@
 //
 // Tab reload with double click
 //
-    $(document).on('dblclick','.tabs .nav a', function (ev) {
-        console.log('tabs nav link dblclicked: ' + this.hash);
+    $(document).on('dblclick','.tabs .tab-nav a', function (ev) {
+        AdminJs.Console.log('tabs nav link dblclicked: ' + this.hash);
         $(this).removeClass('tab-loaded');
         $(this).trigger('click');
 
@@ -711,16 +717,16 @@
 
 //
 // Bind history events
-// @TODO Move functionality to Backend.History
+// @TODO Move functionality to AdminJs.History
 //
     $(window).on('popstate', function(ev) {
         var state = ev.originalEvent.state;
-        console.log("Popstate! ", window.location.href, state, ev);
+        AdminJs.Console.log("Popstate! ", window.location.href, state, ev);
 
         if (state !== null) {
-            if (state.context && state.context === "backend") {
+            if (state.context && state.context === "admin") {
                 if (state.scopeId && state.scopeId !== "DOCUMENT") {
-                    Backend.Ajax.loadHtml($('#' + state.scopeId), location.href);
+                    AdminJs.Ajax.loadHtml($('#' + state.scopeId), location.href);
                 } else {
                     window.location.href = location.href;
                 }
@@ -741,12 +747,12 @@
         var target = $select.data('target');
         var url = $select.data('url');
 
-        Backend.Ajax.loadHtml($('#' + target), url).then(function() {
-            console.log("Select Ajax loaded some html");
+        AdminJs.Ajax.loadHtml($('#' + target), url).then(function() {
+            AdminJs.Console.log("Select Ajax loaded some html");
         });
 
 
-        console.log("Select Ajax changed", $select.val(), $select);
+        AdminJs.Console.log("Select Ajax changed", $select.val(), $select);
     });
 
 //
@@ -769,14 +775,14 @@
         var url = $form.data('url') || $(this).attr('action');
         var method = $form.attr('method') || 'POST';
 
-        console.log("Submit form", method, url, data);
+        AdminJs.Console.log("Submit form", method, url, data);
 
         // If we are in an ajax content container
         // submit form via AJAX
         /*
          var $container = $form.closest('.ajax-content');
          if ($container.length > 0) {
-         Backend.Ajax.submitForm($container, ev.target);
+         AdminJs.Ajax.submitForm($container, ev.target);
          ev.preventDefault();
          ev.stopPropagation();
          }
@@ -792,10 +798,10 @@
                 $submitBtn.addClass('btn-loading').text('Saving ...');
             }
         }).done(function(response) {
-            console.log("Ajax form DONE", response)
+            AdminJs.Console.log("Ajax form DONE", response)
             $submitBtn.removeClass('btn-default').addClass('btn-success').html('Saved <i class="fa fa-check"></i> ');
         }).fail(function(response) {
-            console.log("Ajax form FAIL", response)
+            AdminJs.Console.log("Ajax form FAIL", response)
             $submitBtn.removeClass('btn-default').addClass('btn-danger').html("Saving failed :(");
         }).always(function() {
             $submitBtn.removeClass('btn-loading');
@@ -817,35 +823,34 @@
 // listen for post messages
     $(window).on('message', function(event) {
 
-        console.log(event);
+        //AdminJs.Console.log(event);
 
         var hostUrl = window.location.protocol + "//" + window.location.host
         var origin = event.origin || event.originalEvent.origin; // For Chrome, the origin property is in the event.originalEvent object.
         if (origin !== hostUrl) {
-            console.log("message not allowed from " + origin + ". Expects " + hostUrl);
+            AdminJs.Console.log("message not allowed from " + origin + ". Expects " + hostUrl);
             return;
         }
 
         var data = event.data || event.originalEvent.data;
         var source = event.source || event.originalEvent.source;
 
-        console.log("[master] received message: " + data);
-
-        Backend.parsePostMessage(data, origin, source);
+        //AdminJs.Console.log("[adminjs] received message: " + data);
+        //AdminJs.parsePostMessage(data, origin, source);
     });
 
 
 // send hello message from iframes
     $(document).on('ready', function() {
-        Backend.sendPostMessage({ type: 'hello' });
+        AdminJs.sendPostMessage({ type: 'hello' });
     });
 
     /**
-     * Register global Backend.Renderer event listener
+     * Register global AdminJs.Renderer event listener
      */
-    Backend.Renderer.addListener('docready', function(scope) {
+    AdminJs.Renderer.addListener('docready', function(scope) {
 
-        //console.log("[backendjs] DOCUMENT IS READY");
+        //AdminJs.Console.log("[adminjs] DOCUMENT IS READY");
         var scopeId;
         switch (scope) {
             case undefined:
@@ -856,11 +861,11 @@
             default:
                 scopeId = $(scope).attr('id');
         }
-        //console.log("[backendjs] Renderer docready in scope: " + scopeId);
+        //AdminJs.Console.log("[adminjs] Renderer docready in scope: " + scopeId);
 
         // icon links
         //$(scope).find("a[data-icon]:not(.icon-loaded)").each(function() {
-            //console.log("link " + this.href + " has icon " + $(this).data('icon'));
+            //AdminJs.Console.log("link " + this.href + " has icon " + $(this).data('icon'));
 
         //    var $ico = $('<i>', { "class": 'fa fa-' + $(this).data('icon') }).html("");
         //    $(this).prepend($ico.prop('outerHTML') + "&nbsp").addClass('icon-loaded');
@@ -920,7 +925,7 @@
             var $container = $(this);
             var id = $container.attr('id');
             var url = $container.data('url');
-            console.log("AJAX content loading [" + id + "]: " + url);
+            AdminJs.Console.log("AJAX content loading [" + id + "]: " + url);
 
             if ($container.hasClass('ajax-content-loading') || $container.hasClass('ajax-content-loaded')) {
                 return;
@@ -931,7 +936,7 @@
                 return;
             }
 
-            Backend.Ajax.loadHtml($('#' + id), url, {});
+            AdminJs.Ajax.loadHtml($('#' + id), url, {});
         });
 
         //
@@ -958,7 +963,7 @@
 
             var $a = $(ev.currentTarget);
             var url = $a.attr('href');
-            console.log("Ajax link clicked: " + url, ev);
+            AdminJs.Console.log("Ajax link clicked: " + url, ev);
 
             if (!url) {
                 //return false;
@@ -968,11 +973,11 @@
                 method: "GET",
                 url: url,
                 success: function(data) {
-                    console.log("Ajax link success", data);
-                    Backend.Flash.message('success', "Request successful");
+                    AdminJs.Console.log("Ajax link success", data);
+                    AdminJs.Flash.message('success', "Request successful");
                 },
                 error: function(xhr, err) {
-                    Backend.Flash.message('error', "Request failed");
+                    AdminJs.Flash.message('error', "Request failed");
                     console.error("Ajax link error", err);
                 }
             });
@@ -994,19 +999,19 @@
             var modalClass = $target.data('modalClass') || ($target.hasClass('link-modal-wide')) ? 'modal-wide' : '';
             var modalTitle = $target.data('modalTitle') || ev.target.title || ev.target.innerText;
 
-            Backend.Ajax.load(url).done(function(html) {
+            AdminJs.Ajax.load(url).done(function(html) {
                 var $container = $('<div>', {class: 'ajax-content ajax-content-loaded', 'data-url': url}).html(html);
-                var $modal = Backend.Modal.open($container, {}, {
+                var $modal = AdminJs.Modal.open($container, {}, {
                     'title': modalTitle,
                     'class': modalClass
                 });
                 $modal.on('shown.bs.modal', function() {
-                    console.log("modal shown");
+                    AdminJs.Console.log("modal shown");
                 });
                 $modal.on('hidden.bs.modal', function() {
-                    console.log("modal hidden");
+                    AdminJs.Console.log("modal hidden");
                 });
-                Backend.Renderer.onReady($container);
+                AdminJs.Renderer.onReady($container);
             });
 
 
@@ -1018,8 +1023,8 @@
         $(scope).off('click','a[data-modal-frame], a.link-modal-frame');
         $(scope).on('click','a[data-modal-frame], a.link-modal-frame', function (ev) {
 
-            if(Backend.isFrame()) {
-                console.log("Trying to open iframe modal within modal. Open in same window");
+            if(AdminJs.isFrame()) {
+                AdminJs.Console.log("Trying to open iframe modal within modal. Open in same window");
                 return;
             }
 
@@ -1041,20 +1046,20 @@
                 url += '?iframe=1'
             }
 
-            var $modal = Backend.Modal.openIframe(url, modalOptions, {
+            var $modal = AdminJs.Modal.openIframe(url, modalOptions, {
                 title: modalTitle,
                 class: modalClass
             });
 
             $modal.on('shown.bs.modal', function() {
-                console.log("iframe modal shown");
+                AdminJs.Console.log("iframe modal shown");
             });
             $modal.on('hidden.bs.modal', function() {
                 //$target.closest('.ajax-content').trigger('reload');
 
                 if (modalReloadOnClose) {
                     //$target.closest('.ajax-content').trigger('reload');
-                    Backend.Frame.reloadClosest($target);
+                    AdminJs.Frame.reloadClosest($target);
                 }
             });
 
@@ -1068,7 +1073,7 @@
 
 
         $(scope).find('div.flash > div').each(function() {
-            var $flash = $(Backend.Flash.el);
+            var $flash = $(AdminJs.Flash.el);
 
             $(this).appendTo($flash);
         });
@@ -1105,14 +1110,14 @@
                 scopeId = null;
             }
 
-            console.log("[global] Link clicked in scope: " + href, scopeId);
+            AdminJs.Console.log("[global] Link clicked in scope: " + href, scopeId);
 
 
             if (scopeId !== null) {
 
-                Backend.Ajax.loadHtml($scope, href).always(function() {
+                AdminJs.Ajax.loadHtml($scope, href).always(function() {
                     //if (!!window.history) {
-                    //    history.pushState({ context: 'backend', scopeId: scopeId }, '', href);
+                    //    history.pushState({ context: 'admin', scopeId: scopeId }, '', href);
                     //}
                 });
                 ev.preventDefault();
@@ -1132,25 +1137,24 @@
             }
         }
 
-        //console.log("Scrolling to offset " + scopeOffset);
+        //AdminJs.Console.log("Scrolling to offset " + scopeOffset);
         //$(window).scrollTop(scopeOffset);
 
     });
 
-
-    Backend.initialize(window.BackendSettings);
-    window.Backend = Backend;
+    AdminJs.initialize(window.AdminJsSettings);
+    window.AdminJs = AdminJs;
 
 
     $(document).ready(function() {
-        if (Backend.init !== true) {
-            console.warn("Backend not initialized. Aborting.");
+        if (AdminJs.init !== true) {
+            console.warn("AdminJs not initialized. Aborting.");
             return;
         }
-        Backend.Renderer.onReady();
+        AdminJs.Renderer.onReady();
     });
 
     $(window).on('unload', function() {
-        Backend.Renderer.onUnload();
+        AdminJs.Renderer.onUnload();
     })
 })(jQuery);

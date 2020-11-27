@@ -15,7 +15,7 @@ class TreeRepairAction extends BaseIndexAction
     /**
      * {@inheritDoc}
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Repair Tree');
     }
@@ -23,7 +23,7 @@ class TreeRepairAction extends BaseIndexAction
     /**
      * {@inheritDoc}
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'wrench'];
     }

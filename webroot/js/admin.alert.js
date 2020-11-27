@@ -1,12 +1,12 @@
 /**
- * Backend Alert & Confirmation Boxes replacement extension
+ * AdminJs Alert & Confirmation Boxes replacement extension
  *
  * !Experimental!
  */
-(function( $, Backend ) {
+(function( $, AdminJs ) {
 
-    Backend = Backend || {};
-    Backend.Alert = function() {
+    AdminJs = AdminJs || {};
+    AdminJs.Alert = function() {
 
         return {
 
@@ -59,17 +59,17 @@
 
             alert: function(msg) {
                 console.log("ALERT", msg);
-                Backend.Alert.openModal(msg, {}, { title: 'Alert', 'class': 'modal-info' }, 'alert');
+                AdminJs.Alert.openModal(msg, {}, { title: 'Alert', 'class': 'modal-info' }, 'alert');
             },
 
             prompt: function(msg) {
                 console.log("PROMPT", msg);
-                Backend.Alert.openModal(msg, {}, { title: 'Prompt', 'class': 'modal-info' }, 'prompt');
+                AdminJs.Alert.openModal(msg, {}, { title: 'Prompt', 'class': 'modal-info' }, 'prompt');
             },
 
             confirm: function(msg) {
                 console.log("CONFIRM", msg);
-                Backend.Alert.openModal(msg,  {}, { title: 'Confirm', 'class': 'modal-info' }, 'confirm');
+                AdminJs.Alert.openModal(msg,  {}, { title: 'Confirm', 'class': 'modal-info' }, 'confirm');
                 return false;
             },
 
@@ -78,7 +78,7 @@
                 options = options || {};
                 template = template || 'alert';
 
-                var modalId = Backend.Util.uniqueDomId('modal');
+                var modalId = AdminJs.Util.uniqueDomId('modal');
                 var $modal = $('<div>', {
                     id: 'modal' + modalId,
                     class: 'modal fade',
@@ -115,11 +115,11 @@
     }();
 
     //window._alert = window.alert;
-    //window.alert = Backend.Alert.alert;
+    //window.alert = AdminJs.Alert.alert;
     //window._prompt = window.prompt;
-    //window.prompt = Backend.Alert.prompt;
+    //window.prompt = AdminJs.Alert.prompt;
     //window._confirm = window.confirm;
-    //window.confirm = Backend.Alert.confirm;
+    //window.confirm = AdminJs.Alert.confirm;
 
-}( jQuery, Backend ));
+}( jQuery, AdminJs ));
 

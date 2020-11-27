@@ -2,6 +2,6 @@
 /vendor/
 /node_modules/
 /bower_components/
-/webroot/js/datatables
+/webroot/vendor/datatables
 .phpunit.result.cache
 .yarnclean

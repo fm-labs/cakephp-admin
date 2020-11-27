@@ -3,19 +3,19 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Component;
 
-use Admin\Admin;
+use Authentication\AuthenticationService;
+use Authentication\Identity;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
-use Cake\Event\EventListenerInterface;
 use Cake\Http\ServerRequest as Request;
-use Cake\I18n\I18n;
-use Cake\Log\Log;
+use Cake\Routing\Router;
 
 /**
  * Class AdminComponent
  *
  * @package Admin\Controller\Component
- * @property \Admin\Controller\Component\AuthComponent $Auth
+ * @property \Authentication\Controller\Component\AuthenticationComponent $Authentication
+ * @property \Authorization\Controller\Component\AuthorizationComponent $Authorization
  * @property \Admin\Controller\Component\FlashComponent $Flash
  */
 class AdminComponent extends Component
@@ -40,16 +40,18 @@ class AdminComponent extends Component
     //protected $_cookieName;
 
     /**
-     * {@inheritDoc}
+     * @param array $config The component config.
+     * @return void
+     * @throws \Exception
      */
     public function initialize(array $config): void
     {
         $controller = $this->getController();
 
         // Configure RequestHandler component
-        if (!$this->_registry->has('RequestHandler')) {
-            //$this->_registry->load('RequestHandler');
-        }
+        //if (!$this->_registry->has('RequestHandler')) {
+        //    $this->_registry->load('RequestHandler');
+        //}
 
         // Configure Flash component
         if ($this->_registry->has('Flash') && !is_a($this->_registry->get('Flash'), $this->_config['flashClass'])) {
@@ -60,27 +62,53 @@ class AdminComponent extends Component
             'key' => $this->_config['flashKey'],
         ]);
 
-        // Configure Auth component
-        if ($this->_registry->has('Auth') && !is_a($this->_registry->get('Auth'), $this->_config['authClass'])) {
-            $this->_registry->unload('Auth');
-        }
-        $controller->loadComponent('Auth', ['className' => $this->_config['authClass']]);
-        $this->_registry->get('Auth')->setConfig([
-            'userModel' => $this->_config['authModel'],
-        ]);
+        //if (Configure::read('Admin.Auth.authenticationEnabled')) {
+            $this->Authentication = $controller->loadComponent('Authentication.Authentication');
+            $this->Authentication->setConfig([
+                //'logoutRedirect' => false,
+                //'requireIdentity' => true,
+                'identityAttribute' => \Admin\Plugin::AUTH_IDENTITY_ATTRIBUTE,
+                //'identityCheckEvent' => 'Controller.initialize',
+            ]);
+            $authService = $this->Authentication->getAuthenticationService();
+            if ($authService instanceof AuthenticationService) {
+                $authService->setConfig([
+                    //'authenticators' => [],
+                    //'identifiers' => [],
+                    //'identityClass' => Identity::class,
+                    //'identityAttribute' => 'identity',
+                    'identityAttribute' => \Admin\Plugin::AUTH_IDENTITY_ATTRIBUTE,
+                    //'queryParam' => null,
+                    'unauthenticatedRedirect' => Router::url(['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login', 'prefix' => 'Admin']),
+                ]);
+            }
+        //}
 
-        // Configure UserSession component
-        $controller->loadComponent('User.UserSession');
-        $this->_registry->get('UserSession')->setConfig([
-            'maxLifetimeSec' => $this->_config['userSessionMaxLifetimeSec'],
-            'sessionKey' => $this->_config['userSessionKey'],
-        ]);
+        //if (Configure::read('Admin.Auth.authorizationEnabled')) {
+            $this->Authorization = $controller->loadComponent('Authorization.Authorization');
+            $this->Authorization->setConfig([
+                'identityAttribute' => \Admin\Plugin::AUTH_IDENTITY_ATTRIBUTE,
+                //'serviceAttribute' => 'authorization',
+                //'authorizationEvent' => 'Controller.startup',
+                //'skipAuthorization' => [],
+                //'authorizeModel' => [],
+                //'actionMap' => [],
+            ]);
+        //}
+        $controller->loadComponent('User.Auth');
 
-        // Configure Security component
-        // @todo @deprecated SecurityComponent will be dropped in CakePHP 4.0
-        if (Configure::read('Admin.Security.enabled') && !$controller->components()->has('Security')) {
-            $controller->components()->load('Security');
-        }
+//        // @todo Configure UserSession component
+//        $controller->loadComponent('User.UserSession');
+//        $this->_registry->get('UserSession')->setConfig([
+//            'maxLifetimeSec' => $this->_config['userSessionMaxLifetimeSec'],
+//            'sessionKey' => $this->_config['userSessionKey'],
+//        ]);
+
+//        // Configure Security component
+//        // @todo @deprecated SecurityComponent will be dropped in CakePHP 4.0
+//        if (Configure::read('Admin.Security.enabled') && !$controller->components()->has('Security')) {
+//            $controller->components()->load('Security');
+//        }
 
         // Configure Action component
         if (isset($controller->actions)) {
@@ -92,25 +120,28 @@ class AdminComponent extends Component
             return $request->getQuery('iframe') == true || $request->getParam('iframe') == true;
         });
 
-        // Attach listeners
-        // @todo Remove deprecated code
-        foreach (Admin::getListeners('Controller') as $listenerClass) {
-            try {
-                $modobj = new $listenerClass();
-                if ($modobj instanceof EventListenerInterface) {
-                    $controller->getEventManager()->on($modobj);
-                }
-            } catch (\Exception $ex) {
-                Log::alert("Failed to load class $listenerClass: " . $ex->getMessage());
-                continue;
-            }
-        }
+//        // Attach listeners
+//        // @todo Remove deprecated code
+//        foreach (Admin::getListeners('Controller') as $listenerClass) {
+//            try {
+//                $modobj = new $listenerClass();
+//                if ($modobj instanceof EventListenerInterface) {
+//                    $controller->getEventManager()->on($modobj);
+//                }
+//            } catch (\Exception $ex) {
+//                Log::alert("Failed to load class $listenerClass: " . $ex->getMessage());
+//                continue;
+//            }
+//        }
 
         //@todo move to CORS-Component/-Middleware
         $controller->setResponse($controller->getResponse()
             ->withHeader('Access-Control-Allow-Origin', '*')
             ->withHeader('Access-Control-Allow-Headers', 'POST, GET, OPTIONS')
-            ->withHeader('Access-Control-Allow-Methods', 'Origin, Authorization, X-Requested-With, Content-Type, Accept'));
+            ->withHeader(
+                'Access-Control-Allow-Methods',
+                'Origin, Authorization, X-Requested-With, Content-Type, Accept'
+            ));
 
         // i18n
         //I18n::setLocale('en_US');
@@ -150,7 +181,7 @@ class AdminComponent extends Component
 //    }
 
     /**
-     * @param \Cake\Event\Event $event The event object
+     * @param \Cake\Event\EventInterface $event The event object
      * @return void
      */
     public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -170,45 +201,17 @@ class AdminComponent extends Component
             $controller->viewBuilder()->setLayout('Admin.ajax/admin');
         }
 
-        if ($controller->Auth->user('locale') && $controller->Auth->user('locale') != I18n::getLocale()) {
-            I18n::setLocale($controller->Auth->user('locale'));
-        }
+        //@todo Use locale selector middleware
+        //if ($controller->Auth->user('locale') && $controller->Auth->user('locale') != I18n::getLocale()) {
+        //    I18n::setLocale($controller->Auth->user('locale'));
+        //}
     }
 
     /**
-     * @param \Cake\Event\Event $event The event object
      * @return void
      */
-    public function beforeRender(\Cake\Event\EventInterface $event)
+    public function startup(): void
     {
-    }
-
-    /**
-     * Convenience method to configure auth component
-     *
-     * @param string $key Auth config key
-     * @param null $val Config value
-     * @param bool|true $merge Merge flag
-     * @return void
-     * @deprecated
-     */
-    public function configAuth($key, $val = null, $merge = true)
-    {
-        $this->getController()->Auth->setConfig($key, $val, $merge);
-    }
-
-    /**
-     * Convenience method to configure flash component
-     *
-     * @param string $key Flash config key
-     * @param null $val Config value
-     * @param bool|true $merge Merge flag
-     * @return void
-     * @deprecated
-     */
-    public function configFlash($key, $val = null, $merge = true)
-    {
-        $this->getController()->Flash->setConfig($key, $val, $merge);
     }
 
     /**
@@ -218,8 +221,8 @@ class AdminComponent extends Component
     {
         return [
             'Controller.initialize' => 'beforeFilter',
-            //'Controller.startup' => 'startup',
-            'Controller.beforeRender' => 'beforeRender',
+            'Controller.startup' => 'startup',
+            //'Controller.beforeRender' => 'beforeRender',
             //'Controller.beforeRedirect' => 'beforeRedirect',
             //'Controller.shutdown' => 'shutdown'
         ];

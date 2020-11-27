@@ -2,13 +2,13 @@
 /**
  * Default pagination template element
  */
+$counterFormat = $counterFormat ?? 'range';
 $counter = $counter ?? []; // Paginator::counter options
 $numbers = $numbers ?? []; // Paginator::number options
-return;
 ?>
 <nav class="nav-pagination" style="margin: 0.5em 0 1em 0">
     <ul class="pagination pagination-counter">
-        <li><span><?= $this->Paginator->counter('pages') ?></span></li>
+        <li><span><?= $this->Paginator->counter($counterFormat, $counter) ?></span></li>
     </ul>
 
     <ul class="pagination pagination-menu pull-right">

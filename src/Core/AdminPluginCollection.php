@@ -28,7 +28,17 @@ class AdminPluginCollection implements \Iterator
     }
 
     /**
+     * @param string $pluginName Plugin name
+     * @return bool
+     */
+    public function has(string $pluginName): bool
+    {
+        return isset($this->plugins[$pluginName]);
+    }
+
+    /**
      * Return the current element
+     *
      * @link https://php.net/manual/en/iterator.current.php
      * @return mixed Can return any type.
      */
@@ -41,6 +51,7 @@ class AdminPluginCollection implements \Iterator
 
     /**
      * Move forward to next element
+     *
      * @link https://php.net/manual/en/iterator.next.php
      * @return void Any returned value is ignored.
      */
@@ -53,6 +64,7 @@ class AdminPluginCollection implements \Iterator
 
     /**
      * Return the key of the current element
+     *
      * @link https://php.net/manual/en/iterator.key.php
      * @return string|float|int|bool|null scalar on success, or null on failure.
      */
@@ -63,6 +75,7 @@ class AdminPluginCollection implements \Iterator
 
     /**
      * Checks if current position is valid
+     *
      * @link https://php.net/manual/en/iterator.valid.php
      * @return bool The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
@@ -74,6 +87,7 @@ class AdminPluginCollection implements \Iterator
 
     /**
      * Rewind the Iterator to the first element
+     *
      * @link https://php.net/manual/en/iterator.rewind.php
      * @return void Any returned value is ignored.
      */

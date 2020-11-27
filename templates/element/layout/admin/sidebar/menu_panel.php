@@ -1,4 +1,5 @@
 <?php
+return false;
 $this->loadHelper('Bootstrap.Menu');
 
 $menuTemplates = [
@@ -45,6 +46,6 @@ foreach (['admin_primary', 'admin_secondary'] as $menuId) {
     echo $this->Menu->create([
         'templates' => $menuTemplates,
         'classes' => $menuClasses,
-        'items' => $menu->getItems(),
+        'items' => $menu->toArray(),
     ])->render();
 }

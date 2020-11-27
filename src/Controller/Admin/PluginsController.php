@@ -9,6 +9,10 @@ use Cake\Core\Plugin;
 
 class PluginsController extends AppController
 {
+    public $actions = []; //@TODO Disable ActionComponent
+
+    public $modelClass = false;
+
     /**
      * Displays information about loaded Cake plugins
      */

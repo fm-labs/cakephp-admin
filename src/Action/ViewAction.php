@@ -12,7 +12,9 @@ use Cake\ORM\Association;
 
 class ViewAction extends BaseEntityAction implements EventListenerInterface
 {
-    public $scope = ['table', 'form'];
+    protected $scope = ['table', 'form'];
+
+    //protected $template = "view";
 
     protected $_defaultConfig = [
         'entity' => null,
@@ -28,26 +30,24 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         'tabs' => [],
     ];
 
-    public $template = "Admin.view";
-
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'View');
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'file-o'];
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function _execute(Controller $controller)
     {

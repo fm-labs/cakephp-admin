@@ -7,16 +7,15 @@
 
     <?= $this->Form->control('username', [
         'label' => false,
-        'placeholder' => __d('admin', 'Username')
+        'placeholder' => __d('admin', 'Username'),
     ]); ?>
     <?= $this->Form->control('password', [
         'type' => 'password',
         'label' => false,
-        'placeholder' => __d('admin', 'Password')
+        'placeholder' => __d('admin', 'Password'),
     ]); ?>
     <?= $this->Form->button(__d('admin', 'Login'), [
-        'class' => 'btn btn-lg btn-primary btn-block'
+        'class' => 'btn btn-lg btn-primary btn-block',
     ]); ?>
     <?= $this->Form->end(); ?>
-
 </div> <!-- /container -->

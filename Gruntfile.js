@@ -22,7 +22,7 @@ module.exports = function(grunt) {
           'webroot/css/layout/admin.css': 'webroot/less/layout/admin.less',
           'webroot/css/layout/iframe.css': 'webroot/less/layout/iframe.less',
           'webroot/css/layout/dark.css': 'webroot/less/layout/dark.less',
-          'webroot/css/admin.css': 'webroot/less/admin.less',
+          'webroot/css/ui.css': 'webroot/less/ui.less',
           'webroot/css/jstree/themes/admin/style.css': 'webroot/less/plugins/jstree/jstree.less'
         }
 
@@ -41,7 +41,7 @@ module.exports = function(grunt) {
           'webroot/css/layout/admin.min.css': 'webroot/less/layout/admin.less',
           'webroot/css/layout/iframe.min.css': 'webroot/less/layout/iframe.less',
           'webroot/css/layout/dark.min.css': 'webroot/less/layout/dark.less',
-          'webroot/css/admin.min.css': 'webroot/less/admin.less',
+          'webroot/css/ui.min.css': 'webroot/less/ui.less',
           'webroot/css/jstree/themes/admin/style.min.css': 'webroot/less/plugins/jstree/jstree.less'
         }
       }

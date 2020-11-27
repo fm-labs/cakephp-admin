@@ -1,11 +1,11 @@
 /**
- * Backend Tooltip handler
+ * AdminJs Tooltip handler
  *
  * Attaches Bootstrap tooltip feature to items with [data-toggle="tooltip"] attribute
  */
 (function( $ ) {
 
-    Backend.Renderer.addListener('docready', function(scope) {
+    AdminJs.Renderer.addListener('docready', function(scope) {
         // Tooltip
         $(scope).find('[data-toggle="tooltip"]').tooltip({
             //selector: '[data-toggle="tooltip"]',
@@ -51,4 +51,4 @@
 
     });
 
-}( jQuery, Backend ));
+}( jQuery, AdminJs ));

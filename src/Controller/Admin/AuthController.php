@@ -7,23 +7,38 @@ use Cake\Core\Configure;
 
 /**
  * Class AuthController
- * d
+ *
  * @package Admin\Controller\Admin
- * @property \Admin\Controller\Component\AuthComponent $Auth
- * @property \User\Controller\Component\UserSessionComponent $UserSession
  */
 class AuthController extends AppController
 {
     public $modelClass = false;
 
     /**
-     * @param \Cake\Event\Event $event The event object
+     * @inheritDoc
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+
+        //if (Configure::read('Admin.Auth.authenticationEnabled')) {
+            $this->Authentication->allowUnauthenticated(['login', 'logout', 'unauthorized', 'session']);
+        //}
+        //if (Configure::read('Admin.Auth.authorizationEnabled')) {
+            $this->Authorization->setConfig([
+                'skipAuthorization' => ['login', 'logout', 'unauthorized', 'session'],
+            ]);
+        //}
+    }
+
+    /**
+     * @param \Cake\Event\EventInterface $event The event object
      * @return \Cake\Http\Response|null|void
      */
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
-        $this->Auth->allow(['login', 'unauthorized', 'session']);
+
         $this->viewBuilder()->setLayout('Admin.auth');
     }
 
@@ -31,14 +46,27 @@ class AuthController extends AppController
      * Login method
      *
      * @return null|\Cake\Http\Response
+     * @throws \Exception
      */
     public function login()
     {
+        $user = $this->Auth->user();
+        if ($user) {
+            $this->Flash->info("Already logged in");
+            //if ($user->can('access', $this)) {
+                // do something
+            //}
+            //return;
+        }
+
         $user = $this->Auth->login();
         if ($this->components()->has('RequestHandler') && $this->components()->get('RequestHandler')->accepts('json')) {
             $this->viewBuilder()->setClassName('Json');
         } elseif ($user) {
-            return $this->redirect($this->Auth->redirectUrl());
+            $redirectUrl = $this->Auth->redirectUrl();
+            $redirectUrl = $redirectUrl ?: ['_name' => 'admin:system:dashboard'];
+
+            return $this->redirect($redirectUrl);
         }
 
         $this->set('login', [
@@ -50,28 +78,19 @@ class AuthController extends AppController
     }
 
     /**
-     * Login success method
-     *
-     * @return \Cake\Http\Response
-     */
-    public function loginSuccess()
-    {
-        $redirect = ['_name' => 'admin:admin:dashboard'];
-        if (Configure::check('Admin.Dashboard.url')) {
-            $redirect = Configure::read('Admin.Dashboard.url');
-        }
-
-        return $this->redirect($redirect);
-    }
-
-    /**
      * Logout method
      *
      * @return \Cake\Http\Response
      */
     public function logout()
     {
-        return $this->redirect($this->Auth->logout());
+        $redirect = $this->Authentication->logout();
+        $redirect = $redirect ?: ['_name' => 'admin:system:user:login'];
+        //@TODO: Fix admin user logout: Authentication identity not cleared, when logging out from admin
+        // WORKAROUND: Redirects to user logout to make sure user is logged out
+        $redirect = '/user/logout';
+
+        return $this->redirect($redirect);
     }
 
     /**
@@ -88,6 +107,7 @@ class AuthController extends AppController
      * Current user
      *
      * @return void
+     * @todo Evaluate
      */
     public function user()
     {
@@ -100,11 +120,20 @@ class AuthController extends AppController
      * Return client session info in JSON format
      *
      * @return void
+     * @todo Evaluate
      */
     public function session()
     {
         $this->viewBuilder()->setClassName('Json');
-        $data = $this->UserSession->extractSessionInfo();
+        //$data = $this->UserSession->extractSessionInfo();
+        //$data = ['id' => $this->Auth->user('id')];
+        $data = [
+            't' => time(),
+        ];
+        $identity = $this->Authentication->getIdentity();
+        if ($identity) {
+            $data['id'] = $identity->getIdentifier();
+        }
         $this->set('data', $data);
         $this->set('_serialize', 'data');
     }

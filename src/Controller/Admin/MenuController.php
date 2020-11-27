@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
-use Cupcake\Menu\Menu;
+use Cupcake\Menu\MenuItemCollection;
 use Cake\Event\Event;
 
 class MenuController extends AppController
@@ -13,12 +13,12 @@ class MenuController extends AppController
     public function index()
     {
 
-        $menu = new Menu();
+        $menu = new MenuItemCollection();
         $this->getEventManager()->dispatch(new Event('Admin.Sidebar.build', $menu, ['request' => $this->request]));
         $this->set('admin.sidebar.menu', $menu);
 
         /*
-        $menu = new Menu();
+        $menu = new MenuItemCollection();
         $menu->addItem('Test 1', '#');
         $menu->addItem('Test 2', '#', [], [
             'test2_a' => [

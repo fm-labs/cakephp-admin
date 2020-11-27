@@ -13,6 +13,11 @@ interface AdminPluginInterface
     public function getName(): string;
 
     /**
+     * @return string
+     */
+    public function getRoutingPrefix(): string;
+
+    /**
      * @return void
      */
     public function bootstrap(): void;

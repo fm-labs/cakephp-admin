@@ -36,7 +36,10 @@ if (!isset($menu)) {
 //                'trailItem' => 'active'
     ];
     $menuTemplates = []; //['navList' => '<ul class="{{class}}" style="max-height: 500px;">{{items}}</ul>'];
-    echo $this->Menu->create(['templates' => $menuTemplates, 'classes' => $menuClasses, 'items' => $menu->getItems()])->render();
-    return;
+    echo $this->Menu->create([
+        'templates' => $menuTemplates,
+        'classes' => $menuClasses,
+        'items' => $menu->toArray(),
+    ])->render();
     ?>
 </li>

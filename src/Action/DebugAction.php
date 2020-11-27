@@ -12,31 +12,31 @@ use Cake\Datasource\EntityInterface;
 class DebugAction extends BaseEntityAction implements ActionInterface, IndexActionInterface, EntityActionInterface
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Debug');
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'wrench'];
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function getScope()
+    public function getScope(): array
     {
         return ['table', 'form'];
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function isUsable(EntityInterface $entity)
     {
@@ -45,7 +45,7 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
 
     /**
      * @param \Cake\Controller\Controller $controller
-     * @return \Cake\Http\Response|null
+     * @return \Cake\Http\Response|void|null
      */
     protected function _execute(Controller $controller)
     {

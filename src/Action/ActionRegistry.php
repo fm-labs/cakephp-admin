@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Admin\Action\Interfaces\ActionInterface;
-use Cake\Controller\Controller;
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
 use RuntimeException;
@@ -14,15 +13,8 @@ use RuntimeException;
  */
 class ActionRegistry extends ObjectRegistry
 {
-    protected $_controller;
-
-    public function __construct(Controller $controller)
-    {
-        $this->_controller = $controller;
-    }
-
     /**
-     * Resolve a checkout step classname.
+     * Resolve a action classname.
      *
      * Part of the template method for Cake\Core\ObjectRegistry::load()
      *
@@ -39,12 +31,12 @@ class ActionRegistry extends ObjectRegistry
     }
 
     /**
-     * Throws an exception when a checkout step is missing.
+     * Throws an exception when a action is missing.
      *
      * Part of the template method for Cake\Core\ObjectRegistry::load()
      *
      * @param string $class The classname that is missing.
-     * @param string $plugin The plugin the checkout step is missing in.
+     * @param string $plugin The plugin the action is missing in.
      * @return void
      * @throws \RuntimeException
      */
@@ -54,14 +46,14 @@ class ActionRegistry extends ObjectRegistry
     }
 
     /**
-     * Create the checkout step instance.
+     * Create the action instance.
      *
      * Part of the template method for Cake\Core\ObjectRegistry::load()
      *
-     * @param string|\Psr\Log\LoggerInterface $class The classname or object to make.
+     * @param string|\Admin\Action\Interfaces\ActionInterface $class The classname or object to make.
      * @param string $alias The alias of the object.
-     * @param array $settings An array of settings to use for the checkout step.
-     * @return \Psr\Log\LoggerInterface The constructed checkout step class.
+     * @param array $settings An array of settings to use for the action.
+     * @return \Admin\Action\Interfaces\ActionInterface The constructed action class.
      * @throws \RuntimeException when an object doesn't implement the correct interface.
      */
     protected function _create($class, $alias, $settings)
@@ -75,7 +67,7 @@ class ActionRegistry extends ObjectRegistry
         }
 
         if (!isset($instance)) {
-            $instance = new $class($this->_controller, $settings);
+            $instance = new $class($settings);
         }
 
         if ($instance instanceof ActionInterface) {
@@ -85,5 +77,19 @@ class ActionRegistry extends ObjectRegistry
         throw new RuntimeException(
             'Action ' . $alias . ' must implement ActionInterface.'
         );
+    }
+
+    /**
+     * @param string $className Class or Interface to inherit from
+     * @return \Generator
+     */
+    public function with(string $className = ActionInterface::class): \Generator
+    {
+        foreach ($this->loaded() as $actionName) {
+            $action = $this->get($actionName);
+            if ($action instanceof $className) {
+                yield $action;
+            }
+        }
     }
 }

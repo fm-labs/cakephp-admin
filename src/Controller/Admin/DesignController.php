@@ -15,6 +15,10 @@ class DesignController extends AppController
         'tabs',
     ];
 
+    public $modelClass = false;
+
+    public $actions = [];
+
     /**
      * @return void
      */
@@ -46,11 +50,21 @@ class DesignController extends AppController
         $form->schema()
             ->addField('h_text', ['type' => 'string'])
             ->addField('h_text_error', ['type' => 'string'])
-            ->addField('h_checkbox', ['type' => 'tinyint']);
+            ->addField('h_checkbox', ['type' => 'tinyint'])
+            ->addField('text_error', ['type' => 'string'])
+            ->addField('checkbox', ['type' => 'tinyint'])
+        ;
 
         $form->getValidator()
             ->requirePresence('h_text_error', true)
-            ->notEmptyString('h_text_error');
+            ->notEmptyString('h_text_error')
+
+            ->requirePresence('text_error', true)
+            ->notEmptyString('text_error')
+
+            ->requirePresence('checkbox', true)
+            ->equals('checkbox', 1)
+        ;
 
         if ($this->request->is(['post'])) {
             $form->execute($this->request->getData());

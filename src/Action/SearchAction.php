@@ -15,7 +15,7 @@ class SearchAction implements IndexActionInterface
     /**
      * {@inheritDoc}
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Search');
     }
@@ -23,7 +23,7 @@ class SearchAction implements IndexActionInterface
     /**
      * {@inheritDoc}
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'search'];
     }
@@ -40,7 +40,7 @@ class SearchAction implements IndexActionInterface
     /**
      * @return array List of scope strings
      */
-    public function getScope()
+    public function getScope(): array
     {
     }
 }

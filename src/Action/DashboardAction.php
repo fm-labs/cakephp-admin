@@ -6,35 +6,19 @@ namespace Admin\Action;
 use Admin\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 
-class DashboardAction implements ActionInterface
+class DashboardAction extends BaseAction
 {
     /**
      * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Dashboard');
     }
 
     /**
-     * @return mixed
-     */
-    public function getAttributes()
-    {
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    public function getScope()
-    {
-        return [];
-    }
-
-    /**
      * @param \Cake\Controller\Controller $controller
-     * @return null|\Cake\Http\Response
+     * @return void
      */
     public function execute(Controller $controller)
     {

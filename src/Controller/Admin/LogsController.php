@@ -24,6 +24,10 @@ class LogsController extends AppController
         'delete' => ['logs.delete'],
     ];
 
+    public $actions = []; //@TODO Disable ActionComponent
+
+    public $modelClass = false;
+
     /**
      * @var string
      */

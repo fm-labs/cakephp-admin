@@ -17,7 +17,7 @@ class MediaAction extends BaseEntityAction
     /**
      * {@inheritDoc}
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         return __d('admin', 'Media');
     }
@@ -25,7 +25,7 @@ class MediaAction extends BaseEntityAction
     /**
      * {@inheritDoc}
      */
-    public function getAttributes()
+    public function getAttributes(): array
     {
         return ['data-icon' => 'media'];
     }

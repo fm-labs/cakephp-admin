@@ -45,4 +45,19 @@ class AdminController extends AppController
         $layout->add('header_panels_right', HeaderNav::class);
         */
     }
+
+    /**
+     *
+     * @param string|null $path The unmatched uri path
+     * @return void
+     */
+    public function fallback(?string $path = null): void
+    {
+        $this->Flash->error(__('Sorry, this admin url you requested is not connected: {0}', h($path)));
+        //$this->redirect($this->referer(['action' => 'index']));
+        $this->setAction('index');
+
+        $this->setResponse($this->getResponse()
+            ->withStatus(404));
+    }
 }

@@ -27,7 +27,6 @@ use Cake\Log\Log;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Utility\Inflector;
-use Cupcake\Cupcake;
 use Cupcake\Plugin\BasePlugin;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -87,8 +86,8 @@ class Plugin extends BasePlugin implements
             Configure::write('DebugKit.panels', $panels);
         }
 
-        $app->addPlugin("User");
-        $app->addPlugin("Bootstrap");
+        $app->addPlugin('User');
+        $app->addPlugin('Bootstrap');
         $this->_app = $app;
 
         EventManager::instance()->on(new ActionDispatcherListener());
@@ -169,6 +168,7 @@ class Plugin extends BasePlugin implements
                         );
 
                         $routes->fallbacks(DashedRoute::class);
+
                     }
                 );
 
@@ -176,12 +176,12 @@ class Plugin extends BasePlugin implements
                 /** @var \Admin\Core\AdminPluginInterface $plugin */
                 foreach (Admin::getPlugins() as $plugin) {
                     $pluginName = $plugin->getName();
-                    $pluginNamePrefix = sprintf("%s:", Inflector::underscore($pluginName));
+                    $pluginNamePrefix = sprintf('%s:', Inflector::underscore($pluginName));
                     try {
                         $routes->scope(
                             '/' . $plugin->getRoutingPrefix(),
                             [
-                                'plugin' => $plugin->getName() != "App" ? $plugin->getName() : null,
+                                'plugin' => $plugin->getName() != 'App' ? $plugin->getName() : null,
                                 'prefix' => 'Admin',
                                 '_namePrefix' => $pluginNamePrefix,
                             ],
@@ -197,7 +197,7 @@ class Plugin extends BasePlugin implements
                 /** @var \Cake\Core\PluginInterface $plugin */
                 foreach ($this->_app->getPlugins()->with('routes') as $plugin) {
                     $pluginName = $plugin->getName();
-                    $pluginNamePrefix = sprintf("%s:", Inflector::underscore($pluginName));
+                    $pluginNamePrefix = sprintf('%s:', Inflector::underscore($pluginName));
                     if (method_exists($plugin, 'adminRoutes')) {
                         try {
                             $routes->scope(
@@ -214,6 +214,13 @@ class Plugin extends BasePlugin implements
                         }
                     }
                 }
+
+                // catch-all fallback
+                $routes->connect(
+                    '/{path}',
+                    ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'fallback'],
+                    ['path' => '.*', 'pass' => ['path']]
+                );
 
                 $event = $this->dispatchEvent('Admin.Routes.setup', ['routes' => $routes]);
             } # End of admin root scope

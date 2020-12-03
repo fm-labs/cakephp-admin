@@ -3,9 +3,10 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
-use Cupcake\Cupcake;
 use Cake\Core\App;
+use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cupcake\Cupcake;
 
 class PluginsController extends AppController
 {
@@ -15,6 +16,8 @@ class PluginsController extends AppController
 
     /**
      * Displays information about loaded Cake plugins
+     *
+     * @return void
      */
     public function index()
     {
@@ -25,14 +28,12 @@ class PluginsController extends AppController
 
         // find available plugins from known plugin folders
         $installed = [];
-        foreach (App::path('Plugin') as $path) {
-            //debug($path);
+        foreach (App::path('plugins') as $path) {
             if (!is_dir($path)) {
                 continue;
             }
 
             $files = scandir($path);
-            //debug($files);
             foreach ($files as $f) {
                 $pluginPath = rtrim($path, '/') . '/' . $f;
                 if ($f == '.' || $f == '..' || !is_dir($pluginPath)) {
@@ -54,12 +55,33 @@ class PluginsController extends AppController
             }
         }
 
+        $configured = Configure::read('plugins');
+        foreach ($configured as $pluginName => $pluginPath) {
+            if (isset($plugins[$pluginName]) || isset($installed[$pluginName])) {
+                continue;
+            }
+            $installed[$pluginName] = [
+                'name' => $pluginName,
+                'path' => $pluginPath,
+                'loaded' => Plugin::isLoaded($pluginName),
+                'handler_class' => null,
+                'handler_loaded' => false,
+            ];
+        }
+
+        ksort($plugins);
+        ksort($installed);
+
         $this->set('plugins', $plugins);
         $this->set('installed', $installed);
-        $this->set('_serialize', $plugins);
+        $this->set('_serialize', ['plugins', 'installed']);
     }
 
-    public function enable($pluginName)
+    /**
+     * @param string|null $pluginName Plugin name
+     * @return void
+     */
+    public function enable(?string $pluginName = null)
     {
         $pluginsFile = CONFIG . DS . 'local/plugins.php';
 
@@ -76,7 +98,11 @@ class PluginsController extends AppController
         $this->redirect(['action' => 'index']);
     }
 
-    public function disable($pluginName)
+    /**
+     * @param string|null $pluginName Plugin name
+     * @return void
+     */
+    public function disable(?string $pluginName = null)
     {
         $pluginsFile = CONFIG . DS . 'local/plugins.php';
 
@@ -93,7 +119,11 @@ class PluginsController extends AppController
         $this->redirect(['action' => 'index']);
     }
 
-    public function uninstall($pluginName)
+    /**
+     * @param string|null $pluginName Plugin name
+     * @return void
+     */
+    public function uninstall(?string $pluginName = null)
     {
         $pluginsFile = CONFIG . DS . 'local/plugins.php';
 

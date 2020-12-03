@@ -5,6 +5,7 @@ namespace Admin\View\Helper;
 
 use Cake\Event\Event;
 use Cake\View\Helper;
+use Cake\View\View;
 
 /**
  * Class ToolbarHelper
@@ -52,6 +53,13 @@ class ToolbarHelper extends Helper
         return $this;
     }
 
+    public function initialize(array $config): void
+    {
+        parent::initialize($config);
+
+        $this->create($config);
+    }
+
     /**
      * Create a new toolbar.
      * Clears items and optionally applies a custom config
@@ -65,6 +73,29 @@ class ToolbarHelper extends Helper
         $this->_rendered = false;
         $this->_grouping = false;
         $this->setConfig($config);
+
+
+        // parse toolbar actions defined in 'toolbar.actions' view-var
+        $toolbarActions = $this->_View->get('toolbar.actions');
+
+        if ($toolbarActions) {
+            array_walk($toolbarActions, function ($action) {
+                $title = $url = null;
+                $attr = [];
+                if (!is_array($action)) {
+                    throw new \RuntimeException('Invalid toolbar action item');
+                }
+                if (count($action) == 2) {
+                    [$title, $url] = $action;
+                } elseif (count($action) === 3) {
+                    [$title, $url, $attr] = $action;
+                } else {
+                    extract($action, EXTR_IF_EXISTS); // maybe it's an assoc array. try to extract available vars from action
+                }
+
+                $this->add($title, compact('url', 'attr'));
+            });
+        }
 
         return $this;
     }
@@ -201,27 +232,6 @@ class ToolbarHelper extends Helper
      */
     public function beforeRender(Event $event)
     {
-        // parse toolbar actions defined in 'toolbar.actions' view-var
-        $toolbarActions = (array)$event->getSubject()->get('toolbar.actions');
-
-        if ($toolbarActions) {
-            array_walk($toolbarActions, function ($action) {
-                $title = $url = null;
-                $attr = [];
-                if (!is_array($action)) {
-                    throw new \RuntimeException('Invalid toolbar action item');
-                }
-                if (count($action) == 2) {
-                    [$title, $url] = $action;
-                } elseif (count($action) === 3) {
-                    [$title, $url, $attr] = $action;
-                } else {
-                    extract($action, EXTR_IF_EXISTS); // maybe it's an assoc array. try to extract available vars from action
-                }
-
-                $this->add($title, compact('url', 'attr'));
-            });
-        }
     }
 
     /**
@@ -229,6 +239,8 @@ class ToolbarHelper extends Helper
      */
     public function beforeLayout(Event $event)
     {
+        /*
+        debug("Toolbar::beforeLayout: render!" . $event->getSubject()->getCurrentType());
         if (!$this->_rendered) {
             //if ($event->getSubject() instanceof AdminView) {
                 $event->getSubject()->assign($this->getConfig('block'), $this->_View->element($this->getConfig('element'), [
@@ -236,6 +248,7 @@ class ToolbarHelper extends Helper
                 ]));
             //}
         }
+        */
     }
 
     /**

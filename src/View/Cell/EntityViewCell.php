@@ -192,9 +192,11 @@ class EntityViewCell extends Cell
                                     [
                                         'controller' => $assoc->getName(),
                                         'action' => 'index',
-                                        '_filter' => [
-                                            $assoc->getForeignKey() => $row->get($assoc->getTarget()->getPrimaryKey()),
-                                        ],
+                                        '?' => [
+                                            '_filter' => [
+                                                $assoc->getForeignKey() => $row->get($assoc->getTarget()->getPrimaryKey()),
+                                            ],
+                                        ]
                                     ],
                                     [
                                         'data-modal-frame',

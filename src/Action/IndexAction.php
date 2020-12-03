@@ -103,10 +103,10 @@ class IndexAction extends BaseAction
         $this->_config['fields'] = $cols;
 
         // actions
-        if ($this->_config['actions'] !== false) {
+        //if ($this->_config['actions'] !== false) {
             //$event = $controller->dispatchEvent('Admin.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);
             //$this->_config['actions'] = (array)$event->getData('actions');
-        }
+        //}
 
         //if ($this->_config['rowActions'] !== false) {
         //    $event = $controller->dispatchEvent('Admin.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
@@ -173,18 +173,19 @@ class IndexAction extends BaseAction
             //    $this->_config['filter'] = false;
             //}
 
-            if ($this->_config['paginate']) {
+            //if ($this->_config['paginate']) {
                 //$maxLimit = $this->_maxLimit;
                 //$limit = (isset($this->_config['query']['limit'])) ? $this->_config['query']['limit'] : $this->_defaultLimit;
                 //$limit = ($limit <= $maxLimit) ? $limit : $maxLimit;
                 //$this->_config['query']['limit'] = $limit;
-            }
+            //}
 
             // build query
             if ($this->_config['queryObj'] instanceof QueryInterface) {
                 $query = $this->_config['queryObj'];
             } else {
                 $query = $this->model()->find();
+                $query->applyOptions(['contain' => $this->_config['contain']]);
                 $query->applyOptions($this->_config['query']);
             }
 
@@ -199,10 +200,10 @@ class IndexAction extends BaseAction
 
             // search support with FriendsOfCake/Search plugin
             if ($this->_config['filter'] && $this->model()->behaviors()->has('Search')) {
-                if ($this->controller->request->is(['post', 'put'])) {
-                    $query->find('search', ['search' => $this->controller->request->getData()]);
-                } elseif ($this->controller->request->getQuery()) {
-                    $query->find('search', ['search' => $this->controller->request->getQuery()]);
+                if ($this->controller->getRequest()->is(['post', 'put'])) {
+                    $query->find('search', ['search' => $this->controller->getRequest()->getData()]);
+                } elseif ($this->controller->getRequest()->getQuery()) {
+                    $query->find('search', ['search' => $this->controller->getRequest()->getQuery()]);
                 }
             }
 

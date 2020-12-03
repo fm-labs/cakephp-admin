@@ -2,7 +2,7 @@
 <?php $this->Breadcrumbs->add(__d('admin', 'Plugins'), ['action' => 'index']); ?>
 <?php $this->loadHelpers('Admin.Ui'); ?>
 <div class="index">
-    <table class="table">
+    <table class="table table-striped table-hover">
         <tr>
             <th>Name</th>
             <th>Loaded</th>
@@ -32,11 +32,14 @@
                 <?php else : ?>
                     <?= $this->Html->link('Enable', ['controller' => 'Plugins', 'action' => 'enable', $info['name']]); ?>
                 <?php endif; ?>
-                |
-                <?= $this->Html->link('Uninstall', ['controller' => 'Plugins', 'action' => 'uninstall', $info['name']]); ?>
+                
+                <?php //@todo Uninstall plugin //echo  $this->Html->link('Uninstall', ['controller' => 'Plugins', 'action' => 'uninstall', $info['name']]); ?>
             </td>
         </tr>
         <?php endforeach; ?>
+        <tr>
+            <td colspan="8"><span class="text-bold">Installed, but inactive plugins</span></td>
+        </tr>
         <?php foreach ((array)$this->get('installed') as $pluginName => $info) : ?>
             <tr>
                 <td><?= h($info['name']); ?></td>

@@ -21,6 +21,8 @@ use Cake\View\StringTemplateTrait;
  * @property \Cake\View\Helper\FormHelper $Form
  * @property \Cake\View\Helper\PaginatorHelper $Paginator
  * @property \Admin\View\Helper\FormatterHelper $Formatter
+ * @property \Bootstrap\View\Helper\ButtonHelper $Button
+ * @property \Bootstrap\View\Helper\IconHelper $Icon
  */
 class DataTableHelper extends Helper
 {
@@ -80,7 +82,7 @@ class DataTableHelper extends Helper
             'footer' => '<tfoot><tr>{{cellheads}}{{actionshead}}</tr></tfoot>',
             'headCell' => '<th{{attrs}}>{{content}}</th>',
             'headCellActions' => '<th{{attrs}} style="text-align: right;">{{content}}</th>',
-            'body' => '<tbody>{{rows}}</tbody>',
+            'body' => '<tbody>{{rows}}{{reduceRow}}</tbody>',
             'row' => '<tr{{attrs}}>{{cells}}{{actionscell}}</tr>',
             'rowCell' => '<td{{attrs}}>{{content}}</td>',
             'rowActionsCell' => '<td class="actions" style="text-align: right;"{{attrs}}>{{actions}}</td>',
@@ -175,7 +177,7 @@ class DataTableHelper extends Helper
             $this->_table = $this->_params['model'];
             $this->_params['model'] = $this->_table->getAlias();
         } elseif ($this->_params['model'] instanceof Association) {
-            $this->_table = $this->_params['model']->target();
+            $this->_table = $this->_params['model']->getTarget();
             $this->_params['model'] = $this->_table->getAlias();
         }
 
@@ -372,18 +374,16 @@ class DataTableHelper extends Helper
             $script = $this->_renderScript();
         }
 
-        $container = $this->templater()->format('table_container', [
+        return $this->templater()->format('table_container', [
             'attrs' => $this->templater()->formatAttributes($options, ['pagination', 'table', 'script']),
             'pagination' => $pagination,
             'table' => $table,
             'script' => $script,
         ]);
-
-        return $container;
     }
 
     /**
-     * @deprecated Use render() instread
+     * @deprecated Use render() instead
      * @return string
      */
     public function renderAll()
@@ -736,14 +736,20 @@ class DataTableHelper extends Helper
         foreach ($this->_fields as $fieldName => $field) {
             $reducedData = null;
             if (isset($this->_params['reduce'][$fieldName])) {
-                $reduce = $this->_params['reduce'][$fieldName] + ['formatter' => null, 'callable' => null];
+                $reduce = $this->_params['reduce'][$fieldName] + ['formatter' => null, 'formatterArgs' => [], 'callable' => null];
 
                 $rawData = null;
                 if (isset($this->_reduceStack[$fieldName])) {
                     $rawData = $this->_reduceStack[$fieldName];
                 }
 
-                $reducedData = $this->_formatRowCellData($fieldName, $rawData, $reduce['formatter'], [], null);
+                // fallback to field formatter
+                if ($reduce['formatter'] === null) {
+                    $reduce['formatter'] = $this->_fields[$fieldName]['formatter'] ?? null;
+                    $reduce['formatterArgs'] = $this->_fields[$fieldName]['formatterArgs'] ?? [];
+                }
+
+                $reducedData = $this->_formatRowCellData($fieldName, $rawData, $reduce['formatter'], $reduce['formatterArgs'], null);
             }
 
             $html .= $this->templater()->format('rowCell', [
@@ -843,10 +849,10 @@ class DataTableHelper extends Helper
             //    $field['formatterArgs'] = $field['formatter'];
             //    $field['formatter'] = array_pop($field['formatterArgs']);
             //}
-            $cellData = $this->_formatRowCellData($fieldName, $cellData, $field['formatter'], $field['formatterArgs'], $row);
+            $formattedData = $this->_formatRowCellData($fieldName, $cellData, $field['formatter'], $field['formatterArgs'], $row);
 
             $html .= $this->templater()->format('rowCell', [
-                'content' => $cellData,
+                'content' => $formattedData,
                 'attrs' => $this->_buildFieldAttributes($fieldName, $field),
             ]);
 
@@ -895,7 +901,7 @@ class DataTableHelper extends Helper
     }
 
     /**
-     * @param string $script Script source
+     * @param null|string $script Script source
      * @param array $options Script render options
      * @return string|void
      * @deprecated
@@ -971,7 +977,7 @@ class DataTableHelper extends Helper
      *
      * @param string $fieldName Field name
      * @param mixed $cellData Cell data
-     * @param array $formatter Formatter name
+     * @param mixed $formatter Formatter name
      * @param array $formatterArgs Formatter args
      * @param array $row Table row data
      * @return string
@@ -1012,7 +1018,7 @@ class DataTableHelper extends Helper
         //
         // Jquery UI Sortable DataTable
         //
-        if (el.attr('data-ui-sortable') == 1) {
+        if (el.attr('data-ui-sortable') === "1") {
 
             console.log("init sortable for dt " + dtId);
 
@@ -1048,7 +1054,6 @@ class DataTableHelper extends Helper
 
                                     if (data.error !== undefined) {
                                         alert("Ups. Something went wrong! " + data.error);
-                                        return;
                                     }
                                 },
                                 error: function(err) {
@@ -1129,42 +1134,42 @@ SCRIPT;
         return $actions;
     }
 
-    /**
-     * @param array $rowActions List of row actions
-     * @param array $row Table row data
-     * @return string
-     * @deprecated Unused
-     */
-    protected function _renderRowActionsOld(array $rowActions, $row = [])
-    {
-        $html = "";
-        $row = is_object($row) ? $row->toArray() : $row;
-        // rowActions
-        foreach ($rowActions as $rowAction) {
-            $title = $url = null;
-            $attr = [];
-
-            if (count($rowAction) == 1) {
-                [$title] = $rowAction;
-            } elseif (count($rowAction) == 2) {
-                [$title, $url] = $rowAction;
-            } elseif (count($rowAction) >= 3) {
-                [$title, $url, $attr] = $rowAction;
-            }
-
-            $title = $this->_replaceTokens($title, $row);
-            $url = $this->_replaceTokens($url, $row);
-            $attr = $this->_replaceTokens($attr, $row);
-
-            $rowActionLink = $this->Html->link($title, $url, $attr);
-
-            $html .= $this->templater()->format('rowAction', [
-                'content' => $rowActionLink,
-            ]);
-        }
-
-        return $html;
-    }
+//    /**
+//     * @param array $rowActions List of row actions
+//     * @param array $row Table row data
+//     * @return string
+//     * @deprecated Unused
+//     */
+//    protected function _renderRowActionsOld(array $rowActions, $row = [])
+//    {
+//        $html = "";
+//        $row = is_object($row) ? $row->toArray() : $row;
+//        // rowActions
+//        foreach ($rowActions as $rowAction) {
+//            $title = $url = null;
+//            $attr = [];
+//
+//            if (count($rowAction) == 1) {
+//                [$title] = $rowAction;
+//            } elseif (count($rowAction) == 2) {
+//                [$title, $url] = $rowAction;
+//            } elseif (count($rowAction) >= 3) {
+//                [$title, $url, $attr] = $rowAction;
+//            }
+//
+//            $title = $this->_replaceTokens($title, $row);
+//            $url = $this->_replaceTokens($url, $row);
+//            $attr = $this->_replaceTokens($attr, $row);
+//
+//            $rowActionLink = $this->Html->link($title, $url, $attr);
+//
+//            $html .= $this->templater()->format('rowAction', [
+//                'content' => $rowActionLink,
+//            ]);
+//        }
+//
+//        return $html;
+//    }
 
     /**
      * @param string $tokenStr Template

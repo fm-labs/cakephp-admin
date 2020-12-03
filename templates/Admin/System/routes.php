@@ -12,7 +12,6 @@ use Cake\Error\Debugger;
             <th>Template</th>
             <th>Defaults</th>
             <th>Name</th>
-            <th>Class</th>
             <th>Ext</th>
             <th>Options</th>
         </tr>

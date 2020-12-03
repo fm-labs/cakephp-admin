@@ -21,11 +21,6 @@ $this->loadHelper('Admin.Box');
                 <td colspan="3" style="font-weight: bold;">System</td>
             </tr>
             <tr>
-                <td>Debug Mode</td>
-                <td><?= Configure::read('debug'); ?>&nbsp;</td>
-                <td>&nbsp;</td>
-            </tr>
-            <tr>
                 <td>Cake Version</td>
                 <td><?= Configure::version(); ?>&nbsp;</td>
                 <td>&nbsp;</td>
@@ -33,6 +28,16 @@ $this->loadHelper('Admin.Box');
             <tr>
                 <td>Admin Version</td>
                 <td><?= Admin::version(); ?>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>Debug Mode</td>
+                <td><?= Configure::read('debug'); ?>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>DebugKit loaded</td>
+                <td><?= \Cake\Core\Plugin::isLoaded('DebugKit'); ?> &nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>
@@ -100,6 +105,11 @@ $this->loadHelper('Admin.Box');
             <tr>
                 <td>Log errors</td>
                 <td><?= ini_get('log_errors'); ?>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>PHP error log file</td>
+                <td><?= ini_get('error_log'); ?>&nbsp;</td>
                 <td>&nbsp;</td>
             </tr>
             <tr>

@@ -1,8 +1,12 @@
 <?php
-if (!isset($toolbar) || $this->get('_no_toolbar')) {
-    return;
+/**
+ * @var \Cake\View\View $this
+ */
+
+if (!$this->helpers()->has('Toolbar')) {
+    return (\Cake\Core\Configure::read('debug')) ? '[Toolbar Helper not loaded]' : '';
 }
 ?>
 <nav class="toolbar">
-    <?php echo $toolbar; ?>
+    <?php echo $this->Toolbar->render(); ?>
 </nav>

@@ -118,7 +118,6 @@ class FormatterHelper extends Helper
 
         // currency
         self::register('currency', function ($val, $extra, $params) {
-
             $currency = $params['currency'] ?? Configure::read('Shop.defaultCurrency'); // @TODO Use App-level default currency
             $currency = !$currency && $extra && isset($extra, $params['currency_field'])
                 ? Hash::get($extra, $params['currency_field']) : $currency;

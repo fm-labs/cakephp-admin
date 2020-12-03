@@ -17,7 +17,7 @@ class AdminView extends View
     /**
      * @var string
      */
-    public $layout = "Admin.admin";
+    public $layout = 'Admin.admin';
 
     /**
      * @var \Cupcake\Ui\Ui
@@ -35,14 +35,18 @@ class AdminView extends View
         $this->loadHelper('Admin.Admin');
 
         $this->ui = new \Cupcake\Ui\Ui($this);
-        $this->ui->add('header', new Ui\Layout\Header());
-        $this->ui->add('header_panels_right', new Ui\Layout\Header\MenuPanel());
-        $this->ui->add('header_panels_right', new Ui\Layout\Header\UserPanel());
+        try {
+            $this->ui->add('header', new Ui\Layout\Header());
+            $this->ui->add('header_panels_right', new Ui\Layout\Header\MenuPanel());
+            $this->ui->add('header_panels_right', new Ui\Layout\Header\UserPanel());
 
-        $this->ui->add('footer', new Ui\Layout\Footer());
+            $this->ui->add('footer', new Ui\Layout\Footer());
 
-        $this->ui->add('sidebar', new Ui\Layout\Sidebar());
-        $this->ui->add('sidebar_panels', new Ui\Layout\Sidebar\MenuPanel());
+            $this->ui->add('sidebar', new Ui\Layout\Sidebar());
+            $this->ui->add('sidebar_panels', new Ui\Layout\Sidebar\MenuPanel());
+        } catch (\Exception $ex) {
+            debug($ex->getMessage());
+        }
         $this->getEventManager()->on($this->ui);
 
         // trigger cc action 'admin_view_init'
@@ -61,7 +65,7 @@ class AdminView extends View
         $content = parent::fetch($name, '');
 
         // 1. try to get block contents from UI
-        if ($name !== "content" && !$content) {
+        if ($name !== 'content' && !$content) {
             $content .= $this->ui->fetch($name);
         }
 
@@ -75,7 +79,7 @@ class AdminView extends View
         $content = $event->getData('content');
 
         // 4. fallback to the default layout elements for non-content blocks
-        if ($this->getCurrentType() == 'layout' && $name !== "content" && !$content) {
+        if ($this->getCurrentType() == static::TYPE_LAYOUT && $name !== 'content' && !$content) {
             [$ns, $layout] = pluginSplit($this->layout, true);
             $elementPath = $ns . 'layout/' . $layout . '/' . $name;
             if ($this->elementExists($elementPath)) {
@@ -87,6 +91,10 @@ class AdminView extends View
         if (!$content) {
             $content = $default;
         }
+
+        //if (!$content && Configure::read('debug')) {
+        //    $content = sprintf('[block "%s" not found]', $name);
+        //}
 
         return $content;
     }

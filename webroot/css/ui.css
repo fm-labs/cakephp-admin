@@ -71,6 +71,7 @@
   padding: 0 !important;
 }
 .text-strong,
+.text-bold,
 .strong {
   font-weight: bold !important;
 }
@@ -820,6 +821,81 @@ form input.timepicker {
   width: 220px;
   max-width: 220px;
 }
+/* Backend UI Checkbox */
+/* https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */
+div.checkbox {
+  min-height: unset;
+  margin: 0;
+  padding: 0.5em 0 0.5em;
+  display: inline-block;
+  /* Hide the browser's default checkbox */
+  /* Create a custom checkbox */
+  /* On mouse-over, add a grey background color */
+  /* When the checkbox is checked, add a blue background */
+  /* Create the checkmark/indicator (hidden when not checked) */
+  /* Show the checkmark when checked */
+  /* Style the checkmark/indicator */
+}
+div.checkbox > label {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  line-height: 1.2em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+div.checkbox > label input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
+  margin-left: -35px;
+  margin-top: 0;
+  z-index: 8000;
+}
+div.checkbox .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border: 1px solid #C1C1C1;
+  background: transparent;
+  font-family: Verdana, sans-serif;
+}
+div.checkbox > label:hover input ~ .checkmark {
+  background-color: #FFF;
+}
+div.checkbox > label:hover input ~ .checkmark::after {
+  border-color: #88C7EA;
+}
+div.checkbox input:checked ~ .checkmark {
+  background-color: #3c8dbc;
+  border-color: #3c8dbc;
+}
+div.checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+div.checkbox > label input:checked ~ .checkmark:after {
+  display: block;
+}
+div.checkbox .checkmark:after {
+  left: 8px;
+  top: 2px;
+  width: 8px;
+  height: 16px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
 /**
  * Backend Navigation Style Sheet
  *
@@ -961,6 +1037,76 @@ ul.nav.nav-horizontal > li > a:link {
 .progress.xs {
   height: 10px;
   margin-bottom: 10px;
+}
+/* Tables */
+table.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table.table tr th,
+table.table tr td {
+  /*
+    border: 1px solid @table-border-color;
+    background-color: #f7f7f7;
+    color: #333;
+    */
+}
+table.table tr th {
+  /*
+    background-color: @color-primary;
+    background-repeat: repeat-x;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAWCAIAAACOpGH9AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAl2cEFnAAAAAQAAABYAwhbbewAAAAlwSFlzAAALEAAACxABrSO9dQAAAAZiS0dEAAAAAAAA+UO7fwAAACNJREFUCNdj+P//P9O/f/+YYDQE/wfyITRMDFkeu1qEeiAfAE2gQb0aij7cAAAAAElFTkSuQmCC);
+    height: 22px;
+    */
+  font-weight: bold;
+  text-decoration: none;
+  padding: 5px;
+  text-align: left;
+  vertical-align: bottom;
+}
+table.table tr th a.asc:after {
+  content: ' ⇣';
+}
+table.table tr th a.desc:after {
+  content: ' ⇡';
+}
+table.table tr:nth-child(2n+1) td,
+table.table tr:nth-child(2n+1) th[scope="row"] {
+  /*
+    background-color:#fff;
+    */
+}
+table.table tr th[scope="row"] {
+  /*
+    background-repeat: no-repeat;
+    background-position: top left;
+    background-image: url(data:image/gif;base64,R0lGODlhCQAKAIAAAOrNqf///yH5BAAAAAAALAAAAAAJAAoAAAIOjI+ZwH3NEFyRqgCu3gUAOw==);
+    */
+}
+table.table tr:HOVER td,
+table.table tr:HOVER th[scope="row"] {
+  background-color: #E7FF91;
+}
+/**
+ * Stripped table
+ */
+table.table-striped > tbody > tr:nth-of-type(2n+1) {
+  background-color: #f9f9f9;
+}
+/**
+ * Fixed table
+ */
+table.table-fixed {
+  table-layout: fixed;
+}
+/**
+ * Condensed table
+ */
+/**
+ * Table
+ */
+table.info.table tr td:first-child {
+  font-weight: bold;
 }
 .modal .modal-dialog {
   width: 50%;

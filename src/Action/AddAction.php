@@ -26,6 +26,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         'fields.whitelist' => [],
         'fields.blacklist' => [],
         'model.validator' => 'default',
+        'redirectUrl' => true,
     ];
 
     public $scope = ['index'];
@@ -48,7 +49,11 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         return ['data-icon' => 'plus'];
     }
 
-    protected function _normalizeInputs(array $inputs = [])
+    /**
+     * @param array $inputs
+     * @return array
+     */
+    protected function _normalizeInputs(array $inputs = []): array
     {
         $normalized = [];
         foreach ($inputs as $_f => $field) {
@@ -66,7 +71,8 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
     }
 
     /**
-     * @inheritDoc
+     * @param \Cake\Controller\Controller $controller
+     * @return \Cake\Http\Response|void|null
      */
     public function execute(Controller $controller)
     {
@@ -134,8 +140,14 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
             if ($this->model()->save($entity)) {
                 $this->flashSuccess(__d('admin', 'Record created'));
 
-                $redirectUrl = $controller->referer(['action' => 'edit', $entity->id]);
-                $this->redirect($redirectUrl);
+                if ($this->_config['redirectUrl']) {
+                    $redirectUrl = $this->_config['redirectUrl'] === true
+                        ? ['action' => 'edit', $entity->id]
+                        : $this->_config['redirectUrl'];
+                    $redirectUrl = $controller->referer($redirectUrl);
+                    //debug($redirectUrl);
+                    return $this->redirect($redirectUrl);
+                }
             } else {
                 debug($entity->getErrors());
                 $this->flashError();
@@ -166,7 +178,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
 //                //debug($assoc);
 //                //$controller->set($assoc->foreignKey(), $list);
 //                //debug($assoc->type());
-            } else {
+            //} else {
                 //debug($assoc->type());
             }
         }

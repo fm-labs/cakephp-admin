@@ -44,7 +44,7 @@ $this->loadHelper('Bootstrap.Tabs');
         } else {
             $this->Form->allControls();
         }
-        echo $this->Form->button(__d('admin', 'Submit'));
+        echo $this->Form->submit(__d('admin', 'Add'));
         echo $this->Form->end();
     }
     ?>

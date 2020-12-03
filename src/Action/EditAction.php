@@ -28,6 +28,7 @@ class EditAction extends BaseEntityAction
         'fieldsets' => [],
         'form.options' => [],
         'model.validator' => 'default',
+        'redirectUrl' => true,
     ];
 
     //public $noTemplate = true;
@@ -48,6 +49,11 @@ class EditAction extends BaseEntityAction
         return ['data-icon' => 'edit'];
     }
 
+    /**
+     * @param \Cake\Controller\Controller $controller Controller instance
+     * @return \Cake\Http\Response|void|null
+     * @throws \Exception
+     */
     protected function _execute(Controller $controller)
     {
         $entity = $this->entity();
@@ -108,7 +114,12 @@ class EditAction extends BaseEntityAction
             if ($this->model()->save($entity)) {
                 $this->flashSuccess(__d('admin', 'Saved!'));
 
-                return $this->redirect([$entity->id] + $controller->getRequest()->getQuery());
+                $redirectUrl = $this->_config['redirectUrl'] === true
+                    ? [$entity->id] + $controller->getRequest()->getQuery()
+                    : $this->_config['redirectUrl'];
+                $redirectUrl = $controller->referer($redirectUrl);
+                //debug($redirectUrl);
+                return $this->redirect($redirectUrl);
             } else {
                 $this->flashError();
             }
@@ -159,7 +170,7 @@ class EditAction extends BaseEntityAction
                     //    . " item using key " . $assoc->getForeignKey()
                     //    . " prop: " . $assoc->getProperty() . " -> " . Inflector::variable($assoc->getProperty()));
                 }
-            } elseif ($assoc->type() == Association::ONE_TO_ONE) {
+            //} elseif ($assoc->type() == Association::ONE_TO_ONE) {
                 //$list = ['foo' => 'bar'];
                 //debug($assoc);
                 //$controller->set($assoc->foreignKey(), $list);
@@ -173,9 +184,10 @@ class EditAction extends BaseEntityAction
                         ->toArray();
                     $controller->set($var, $list);
                 }
-            } else {
-                //debug($assoc->type());
             }
+            //else {
+                //debug($assoc->type());
+            //}
         }
 
         $controller->set('form.options', $formOptions);

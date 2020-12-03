@@ -1,3 +1,8 @@
+<?php
+/**
+ * @var array $globals
+ */
+?>
 <?php $this->Breadcrumbs->add(__d('admin', 'Admin'), ['controller' => 'Admin', 'action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(__d('admin', 'Systeminfo'), ['action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(__d('admin', 'Globals')); ?>
@@ -6,8 +11,8 @@
     <table class="table table-striped table-hover">
         <?php foreach ($globals as $global) : ?>
             <tr>
-                <td><?php echo $global; ?>&nbsp;</td>
-                <td><?php echo constant($global); ?>&nbsp;</td>
+                <td style="width: 50%; font-weight: bold;"><?= h($global); ?>&nbsp;</td>
+                <td><?= h(constant($global)); ?>&nbsp;</td>
             </tr>
         <?php endforeach; ?>
     </table>
@@ -18,8 +23,8 @@
     <table class="table table-striped table-hover">
         <?php foreach (get_defined_constants(false) as $global => $value) : ?>
             <tr>
-                <td><?php echo $global; ?>&nbsp;</td>
-                <td><?php echo $value; ?>&nbsp;</td>
+                <td style="width: 50%; font-weight: bold;"><?= h($global); ?>&nbsp;</td>
+                <td style="word-break: break-word;"><?= h($value); ?>&nbsp;</td>
             </tr>
         <?php endforeach; ?>
     </table>

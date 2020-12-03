@@ -23,7 +23,7 @@ class AdminMiddleware implements MiddlewareInterface
     /**
      * @inheritDoc
      */
-    public function __construct(RoutingApplicationInterface $app)
+    public function __construct(?RoutingApplicationInterface $app = null)
     {
 //        // register url filter for persistent URL parameters.
 //        // injects 'iframe' param on url creation

@@ -8,6 +8,11 @@ use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cupcake\Cupcake;
 
+/**
+ * Class PluginsController
+ *
+ * @package Admin\Controller\Admin
+ */
 class PluginsController extends AppController
 {
     public $actions = []; //@TODO Disable ActionComponent
@@ -18,8 +23,9 @@ class PluginsController extends AppController
      * Displays information about loaded Cake plugins
      *
      * @return void
+     * @TODO Refactor with PluginManager
      */
-    public function index()
+    public function index(): void
     {
         $plugins = [];
         foreach (Plugin::loaded() as $pluginName) {
@@ -78,10 +84,11 @@ class PluginsController extends AppController
     }
 
     /**
-     * @param string|null $pluginName Plugin name
-     * @return void
+     * @param string $pluginName Plugin name
+     * @param bool|null $newState Plugin enabled state
+     * @return false|int
      */
-    public function enable(?string $pluginName = null)
+    protected function _setPluginState(string $pluginName, ?bool $newState)
     {
         $pluginsFile = CONFIG . DS . 'local/plugins.php';
 
@@ -90,11 +97,38 @@ class PluginsController extends AppController
             $plugins = include $pluginsFile;
         }
 
-        $plugins['Plugin'][$pluginName] = ['bootstrap' => true, 'routes' => true];
+        $plugins['Plugin'][$pluginName] = ['bootstrap' => $newState, 'routes' => $newState];
+        if ($newState === null) {
+            if (isset($plugins['Plugin'][$pluginName])) {
+                unset($plugins['Plugin'][$pluginName]);
+            }
+        }
 
-        file_put_contents($pluginsFile, "<?php\n" . 'return ' . var_export($plugins, true) . ';' . "\n");
+        return file_put_contents($pluginsFile, "<?php\n" . 'return ' . var_export($plugins, true) . ';' . "\n");
+    }
 
-        $this->Flash->success("Plugin $pluginName enabled");
+    /**
+     * @param string|null $pluginName Plugin name
+     * @return void
+     */
+    public function view(?string $pluginName = null): void
+    {
+        $pluginInfo = Cupcake::pluginInfo($pluginName);
+
+        $this->set(compact('pluginInfo'));
+    }
+
+    /**
+     * @param string|null $pluginName Plugin name
+     * @return void
+     */
+    public function enable(?string $pluginName = null): void
+    {
+        if ($this->_setPluginState($pluginName, true)) {
+            $this->Flash->success(__('Plugin {0} enabled', $pluginName));
+        }
+
+        //$this->setAction('view', $pluginName);
         $this->redirect(['action' => 'index']);
     }
 
@@ -102,20 +136,13 @@ class PluginsController extends AppController
      * @param string|null $pluginName Plugin name
      * @return void
      */
-    public function disable(?string $pluginName = null)
+    public function disable(?string $pluginName = null): void
     {
-        $pluginsFile = CONFIG . DS . 'local/plugins.php';
-
-        $plugins = [];
-        if (file_exists($pluginsFile)) {
-            $plugins = include $pluginsFile;
+        if ($this->_setPluginState($pluginName, false)) {
+            $this->Flash->success(__('Plugin {0} disabled', $pluginName));
         }
 
-        $plugins['Plugin'][$pluginName] = ['bootstrap' => false, 'routes' => false];
-
-        file_put_contents($pluginsFile, "<?php\n" . 'return ' . var_export($plugins, true) . ';' . "\n");
-
-        $this->Flash->success("Plugin $pluginName disabled");
+        //$this->setAction('view', $pluginName);
         $this->redirect(['action' => 'index']);
     }
 
@@ -123,22 +150,13 @@ class PluginsController extends AppController
      * @param string|null $pluginName Plugin name
      * @return void
      */
-    public function uninstall(?string $pluginName = null)
+    public function uninstall(?string $pluginName = null): void
     {
-        $pluginsFile = CONFIG . DS . 'local/plugins.php';
-
-        $plugins = [];
-        if (file_exists($pluginsFile)) {
-            $plugins = include $pluginsFile;
+        if ($this->_setPluginState($pluginName, false)) {
+            $this->Flash->success(__('Plugin {0} uninstalled', $pluginName));
         }
 
-        if (isset($plugins['Plugin'][$pluginName])) {
-            unset($plugins['Plugin'][$pluginName]);
-        }
-
-        file_put_contents($pluginsFile, "<?php\n" . 'return ' . var_export($plugins, true) . ';' . "\n");
-
-        $this->Flash->success("Plugin $pluginName disabled");
+        //$this->setAction('view', $pluginName);
         $this->redirect(['action' => 'index']);
     }
 }

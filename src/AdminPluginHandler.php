@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace Admin;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\Routing\Router;
-use Settings\SettingsManager;
 
 class AdminPluginHandler extends \Admin\Core\BaseAdminPlugin implements EventListenerInterface
 {
@@ -104,18 +102,18 @@ HTML;
      */
     public function buildAdminMenu(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
     {
+        /*
         if (Configure::read('debug')) {
             $menu->addItem([
                 'title' => __d('admin', 'Developer'),
                 'data-icon' => 'paint-brush',
                 'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index'],
                 'children' => [
+                    /*
                     'design' => [
-                        'title' => __d('admin', 'Design'),
-                        'data-icon' => 'paint-brush',
+                        'title' => __d('admin'  'data-icon' => 'paint-brush',
                         'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index'],
                     ],
-                    /*
                     'design_form' => [
                         'title' => __d('admin', 'Forms'),
                         'data-icon' => 'paint-brush',
@@ -141,10 +139,10 @@ HTML;
                         'data-icon' => 'paint-brush',
                         'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index', 'section' => 'tabs'],
                     ]
-                    */
                 ],
             ]);
         }
+        */
     }
 
     /**
@@ -154,27 +152,11 @@ HTML;
      */
     public function buildAdminSystemMenu(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
     {
-        $items = $this->_getMenuItems();
-        foreach ($items as $item) {
-            $menu->addItem($item);
-        }
-    }
-
-    /**
-     * @return array
-     */
-    protected function _getMenuItems()
-    {
-        return $items = [
-//                'overview' => [
-//                    'title' => 'Overview',
-//                    'url' => ['plugin' => 'Admin', 'controller' => 'Dashboard', 'action' => 'index'],
-//                    'data-icon' => 'info'
-//                ],
+        $items = [
             'system' => [
                 'title' => 'Systeminfo',
                 'url' => ['plugin' => 'Admin', 'controller' => 'System', 'action' => 'index'],
-                'data-icon' => 'info',
+                'data-icon' => 'info-circle',
             ],
             'logs' => [
                 'title' => 'Logs',
@@ -186,18 +168,19 @@ HTML;
                 'url' => ['plugin' => 'Admin', 'controller' => 'Cache', 'action' => 'index'],
                 'data-icon' => 'hourglass-o',
             ],
-            /*
-            'users' => [
-                'title' => 'Users',
-                'url' => ['plugin' => 'Admin', 'controller' => 'Users', 'action' => 'index'],
-                'data-icon' => 'users',
-            ],
-            */
             'plugins' => [
                 'title' => 'Plugins',
                 'url' => ['plugin' => 'Admin', 'controller' => 'Plugins', 'action' => 'index'],
                 'data-icon' => 'puzzle-piece',
             ],
+            'design' => [
+                'title' => __d('admin', 'Appearance'),
+                'data-icon' => 'paint-brush',
+                'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index'],
+            ],
         ];
+        foreach ($items as $item) {
+            $menu->addItem($item);
+        }
     }
 }

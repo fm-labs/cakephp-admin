@@ -52,7 +52,7 @@ class AuthController extends AppController
     {
         $user = $this->Auth->user();
         if ($user) {
-            $this->Flash->info("Already logged in");
+            //$this->Flash->info("Already logged in");
             //if ($user->can('access', $this)) {
                 // do something
             //}

@@ -5,17 +5,18 @@ namespace Admin\Controller\Admin;
 
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Event\EventInterface;
-use Settings\Form\SettingsForm;
-use Settings\Settings\SettingsSchema;
 
 /**
  * Class SettingsController
  *
  * @package Admin\Controller\Admin
+ * @property \Settings\Model\Table\SettingsTable $Settings
+ *
+ * @deprecated
  */
 class SettingsController extends AppController
 {
-    public $modelClass = "Settings.Settings";
+    public $modelClass = 'Settings.Settings';
 
     /**
      * @throws \Exception
@@ -28,14 +29,6 @@ class SettingsController extends AppController
         if (!\Cake\Core\Plugin::isLoaded('Settings')) {
             throw new MissingPluginException(['plugin' => 'Settings']);
         }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function beforeFilter(EventInterface $event)
-    {
-        parent::beforeFilter($event);
     }
 
     /**
@@ -53,9 +46,9 @@ class SettingsController extends AppController
 
         if ($this->getRequest()->is(['post'])) {
             if ($this->Settings->addAll($this->getRequest()->getData())) {
-                $this->Flash->success("Settings updated");
+                $this->Flash->success('Settings updated');
             } else {
-                $this->Flash->error("Failed to update settings");
+                $this->Flash->error('Failed to update settings');
             }
         }
     }

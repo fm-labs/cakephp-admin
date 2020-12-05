@@ -125,7 +125,14 @@ class Plugin extends BasePlugin implements
                     $routes->applyMiddleware('admin_request_authorization');
                 //}
 
-                $routes->connect('/', ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index']);
+                //admin:dashboard
+                $routes->connect(
+                    '/',
+                    ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
+                    ['_name' => 'dashboard']
+                );
+
+                //admin:system:*
                 $routes->scope(
                     '/system',
                     ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'system:'],
@@ -168,7 +175,6 @@ class Plugin extends BasePlugin implements
                         );
 
                         $routes->fallbacks(DashedRoute::class);
-
                     }
                 );
 

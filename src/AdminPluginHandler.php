@@ -178,6 +178,11 @@ HTML;
                 'data-icon' => 'paint-brush',
                 'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index'],
             ],
+            'health' => [
+                'title' => __d('admin', 'Health Status'),
+                'data-icon' => 'heartbeat',
+                'url' => ['plugin' => 'Admin', 'controller' => 'Health', 'action' => 'index'],
+            ],
         ];
         foreach ($items as $item) {
             $menu->addItem($item);

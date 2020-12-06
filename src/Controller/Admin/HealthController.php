@@ -64,18 +64,22 @@ class HealthController extends AppController
                 'category' => 'system',
                 'callback' => function () {
                     $dirs = \Cupcake\Cupcake::getSysDirs();
-
                     $out = '';
+                    $fail = 0;
                     foreach ($dirs as $dir) {
-                        if (!file_exists($dir)) {
-                            $out .= sprintf("Not found: %s\n", $dir);
+                        $isDir = file_exists($dir) && is_dir($dir);
+                        //$isWritable = is_writable($dir);
+                        if (!$isDir) {
+                            $fail++;
                         }
-                    }
-                    if ($out) {
-                        return HealthStatus::crit($out);
+                        $out .= sprintf("%s: %s\n", $dir, $isDir ? 'OK' : 'NOTFOUND');
                     }
 
-                    return HealthStatus::ok('All system directories exist');
+                    if ($fail > 0) {
+                        return HealthStatus::crit(__('{0} directories not found', $fail) . "\n" . $out);
+                    }
+
+                    return HealthStatus::ok(__('All system directories exist') . "\n" . $out);
                 },
             ])
             ->addCheck('admin_configuration', [

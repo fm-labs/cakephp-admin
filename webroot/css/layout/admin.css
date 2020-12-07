@@ -88,6 +88,7 @@
 .navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li {
   padding: 0;
   margin: 0;
+  list-style: none inside none;
 }
 .navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li.header,
 .navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li.footer {
@@ -117,7 +118,7 @@
 }
 .navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul li a {
   margin: 0;
-  display: block;
+  display: inline-block;
 }
 .navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul li a h3,
 .navbar ul.navbar-nav > li.dropdown > ul.dropdown-menu li ul li a h4 {

@@ -9,7 +9,7 @@ use User\Model\Table\UsersTable as BaseUsersTable;
 class UsersTable extends BaseUsersTable
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function initialize(array $config): void
     {
@@ -25,7 +25,7 @@ class UsersTable extends BaseUsersTable
      * @param array $options Finder options
      * @return \Cake\ORM\Query
      */
-    public function findAdminAuthUser(Query $query, array $options)
+    public function findAuthUser(Query $query, array $options)
     {
         $query
             ->where([

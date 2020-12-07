@@ -8,7 +8,7 @@ use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
 use Cake\Routing\Router;
 
-class AdminPluginHandler extends \Admin\Core\BaseAdminPlugin implements EventListenerInterface
+class AdminPlugin extends \Admin\Core\BaseAdminPlugin implements EventListenerInterface
 {
     /**
      * @inheritDoc
@@ -24,8 +24,8 @@ class AdminPluginHandler extends \Admin\Core\BaseAdminPlugin implements EventLis
     public function implementedEvents(): array
     {
         return [
-            'Admin.Menu.build.admin_primary' => ['callable' => 'buildAdminMenu', 'priority' => 99 ],
-            'Admin.Menu.build.admin_system' => ['callable' => 'buildAdminSystemMenu', 'priority' => 99 ],
+            'Admin.Menu.build.admin_primary' => ['callable' => 'adminMenuBuildPrimary', 'priority' => 99 ],
+            'Admin.Menu.build.admin_system' => ['callable' => 'adminMenuBuildSystem', 'priority' => 99 ],
             //'Controller.beforeRedirect' => 'controllerBeforeRedirect',
         ];
     }
@@ -100,7 +100,7 @@ HTML;
      * @param \Cupcake\Menu\MenuItemCollection $menu The menu
      * @return void
      */
-    public function buildAdminMenu(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
+    public function adminMenuBuildPrimary(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
     {
         /*
         if (Configure::read('debug')) {
@@ -150,7 +150,7 @@ HTML;
      * @param \Cupcake\Menu\MenuItemCollection $menu The menu
      * @return void
      */
-    public function buildAdminSystemMenu(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
+    public function adminMenuBuildSystem(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
     {
         $items = [
             'system' => [
@@ -184,8 +184,6 @@ HTML;
                 'url' => ['plugin' => 'Admin', 'controller' => 'Health', 'action' => 'index'],
             ],
         ];
-        foreach ($items as $item) {
-            $menu->addItem($item);
-        }
+        $menu->addItems($items);
     }
 }

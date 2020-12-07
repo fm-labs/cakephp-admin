@@ -26,6 +26,7 @@ use Cake\Http\ServerRequest;
 use Cake\Log\Log;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use Cupcake\Plugin\BasePlugin;
 use Psr\Http\Message\ServerRequestInterface;
@@ -35,8 +36,8 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class Plugin extends BasePlugin implements
     //EventListenerInterface,
-    \Authentication\AuthenticationServiceProviderInterface,
-    \Authorization\AuthorizationServiceProviderInterface
+    \Authentication\AuthenticationServiceProviderInterface
+    //\Authorization\AuthorizationServiceProviderInterface
 {
     use EventDispatcherTrait;
 
@@ -91,7 +92,7 @@ class Plugin extends BasePlugin implements
         $this->_app = $app;
 
         EventManager::instance()->on(new ActionDispatcherListener());
-        Admin::addPlugin(new AdminPluginHandler());
+        Admin::addPlugin(new AdminPlugin());
     }
 
     /**
@@ -110,8 +111,8 @@ class Plugin extends BasePlugin implements
                 //}
 
                 //if (Configure::read('Admin.Auth.authorizationEnabled')) {
-                    $routes->registerMiddleware('admin_authorization', $this->buildAuthorizationMiddleware());
-                    $routes->registerMiddleware('admin_request_authorization', new RequestAuthorizationMiddleware());
+                //    $routes->registerMiddleware('admin_authorization', $this->buildAuthorizationMiddleware());
+                //    $routes->registerMiddleware('admin_request_authorization', new RequestAuthorizationMiddleware());
                 //}
 
                 $routes->applyMiddleware('admin_plugins');
@@ -121,8 +122,8 @@ class Plugin extends BasePlugin implements
                 //}
 
                 //if (Configure::read('Admin.Auth.authorizationEnabled')) {
-                    $routes->applyMiddleware('admin_authorization');
-                    $routes->applyMiddleware('admin_request_authorization');
+                    //$routes->applyMiddleware('admin_authorization');
+                    //$routes->applyMiddleware('admin_request_authorization');
                 //}
 
                 //admin:dashboard
@@ -228,7 +229,7 @@ class Plugin extends BasePlugin implements
                     ['path' => '.*', 'pass' => ['path']]
                 );
 
-                $event = $this->dispatchEvent('Admin.Routes.setup', ['routes' => $routes]);
+                $this->dispatchEvent('Admin.Routes.setup', ['routes' => $routes]);
             } # End of admin root scope
         );
     }
@@ -238,7 +239,7 @@ class Plugin extends BasePlugin implements
      */
     public function buildAuthenticationMiddleware(): AuthenticationMiddleware
     {
-        return new AuthenticationMiddleware($this/*->getAuthenticationService()*/);
+        return new AuthenticationMiddleware($this);
     }
 
     /**
@@ -255,7 +256,7 @@ class Plugin extends BasePlugin implements
             //'identityClass' => Identity::class,
             'identityAttribute' => static::AUTH_IDENTITY_ATTRIBUTE,
             'queryParam' => 'redirect',
-            'unauthenticatedRedirect' => '/',
+            'unauthenticatedRedirect' => Router::url(['_name' => 'admin:system:user:login']),
         ]);
 
         $fields = [
@@ -267,10 +268,9 @@ class Plugin extends BasePlugin implements
         $service->loadAuthenticator('Authentication.Session', [
             'fields' => [
                 IdentifierInterface::CREDENTIAL_USERNAME => 'username',
-                'superuser' => true,
             ],
-            //'sessionKey' => 'Admin',
-            //'identify' => false,
+            'sessionKey' => 'Admin',
+            'identify' => true,
             'identityAttribute' => static::AUTH_IDENTITY_ATTRIBUTE,
         ]);
         $service->loadAuthenticator('Authentication.Form', [
@@ -284,6 +284,7 @@ class Plugin extends BasePlugin implements
             'resolver' => [
                 'className' => 'Authentication.Orm',
                 'userModel' => 'Admin.Users',
+                'finder' => 'authUser',
             ],
             'fields' => $fields,
             'passwordHasher' => null,
@@ -292,42 +293,42 @@ class Plugin extends BasePlugin implements
         return $service;
     }
 
-    /**
-     * @return \Authorization\Middleware\AuthorizationMiddleware
-     */
-    public function buildAuthorizationMiddleware(): AuthorizationMiddleware
-    {
-        return new AuthorizationMiddleware($this, [
-            'requireAuthorizationCheck' => false,
-            //'identityDecorator' => function ($auth, User $user) {
-            //    return $user->setAuthorization($auth);
-            //},
-            'unauthorizedHandler' => [
-                'className' => FlashRedirectHandler::class, //PageRedirectHandler::class, // 'Authorization.Redirect',
-                'url' => '/' . Admin::$urlPrefix . '/system/auth/unauthorized',
-                'queryParam' => 'unauthorizedUrl',
-                'exceptions' => [
-                    \Authorization\Exception\MissingIdentityException::class,
-                    \Authorization\Exception\ForbiddenException::class,
-                ],
-            ],
-        ]);
-    }
-
-    /**
-     * Returns authorization service instance.
-     *
-     * @param \Psr\Http\Message\ServerRequestInterface $request Request
-     * @return \Authorization\AuthorizationServiceInterface
-     */
-    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
-    {
-        $resolver = new MapResolver();
-        // this is required for the RequestAuthorizationMiddleware to work
-        $resolver->map(ServerRequest::class, AdminRequestPolicy::class);
-
-        return new AuthorizationService($resolver);
-    }
+//    /**
+//     * @return \Authorization\Middleware\AuthorizationMiddleware
+//     */
+//    public function buildAuthorizationMiddleware(): AuthorizationMiddleware
+//    {
+//        return new AuthorizationMiddleware($this, [
+//            'requireAuthorizationCheck' => false,
+//            //'identityDecorator' => function ($auth, User $user) {
+//            //    return $user->setAuthorization($auth);
+//            //},
+//            'unauthorizedHandler' => [
+//                'className' => FlashRedirectHandler::class, //PageRedirectHandler::class, // 'Authorization.Redirect',
+//                'url' => '/' . Admin::$urlPrefix . '/system/auth/unauthorized',
+//                'queryParam' => 'unauthorizedUrl',
+//                'exceptions' => [
+//                    \Authorization\Exception\MissingIdentityException::class,
+//                    \Authorization\Exception\ForbiddenException::class,
+//                ],
+//            ],
+//        ]);
+//    }
+//
+//    /**
+//     * Returns authorization service instance.
+//     *
+//     * @param \Psr\Http\Message\ServerRequestInterface $request Request
+//     * @return \Authorization\AuthorizationServiceInterface
+//     */
+//    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+//    {
+//        $resolver = new MapResolver();
+//        // this is required for the RequestAuthorizationMiddleware to work
+//        $resolver->map(ServerRequest::class, AdminRequestPolicy::class);
+//
+//        return new AuthorizationService($resolver);
+//    }
 
     /**
      * @inheritDoc

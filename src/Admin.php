@@ -111,13 +111,14 @@ class Admin
     }
 
     /**
-     * @param $type
-     * @param $listenerClass
+     * @param string $type Listener type
+     * @param string $listenerClass Listener class
      * @return void
      * @deprecated
      */
-    public static function registerListener(string $type, $listenerClass)
+    public static function registerListener(string $type, string $listenerClass): void
     {
+        deprecationWarning('Admin::registerListener() is deprecated.');
         if (!isset(static::$_listeners[$type])) {
             static::$_listeners[$type] = [];
         }
@@ -130,12 +131,13 @@ class Admin
     }
 
     /**
-     * @param string $type
+     * @param string $type Listener type
      * @return array
      * @deprecated
      */
-    public static function getListeners(string $type)
+    public static function getListeners(string $type): array
     {
+        deprecationWarning('Admin::getListeners() is deprecated.');
         if (!isset(static::$_listeners[$type])) {
             return [];
         }

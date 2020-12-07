@@ -29,7 +29,7 @@ class BaseAdminPlugin implements AdminPluginInterface
      */
     public function getRoutingPrefix(): string
     {
-        return Inflector::dasherize($this->getName());
+        return Inflector::underscore($this->getName());
     }
 
     /**

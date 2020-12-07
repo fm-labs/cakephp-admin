@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
-use Cake\Core\Configure;
-
 /**
  * Class AuthController
  *
@@ -21,13 +19,14 @@ class AuthController extends AppController
     {
         parent::initialize();
 
-        //if (Configure::read('Admin.Auth.authenticationEnabled')) {
+        if ($this->Authentication) {
             $this->Authentication->allowUnauthenticated(['login', 'logout', 'unauthorized', 'session']);
-        //}
+        }
+
         //if (Configure::read('Admin.Auth.authorizationEnabled')) {
-            $this->Authorization->setConfig([
-                'skipAuthorization' => ['login', 'logout', 'unauthorized', 'session'],
-            ]);
+        //    $this->Authorization->setConfig([
+        //        'skipAuthorization' => ['login', 'logout', 'unauthorized', 'session'],
+        //    ]);
         //}
     }
 
@@ -43,6 +42,23 @@ class AuthController extends AppController
     }
 
     /**
+     * User profile view
+     *
+     * @return null|\Cake\Http\Response
+     */
+    public function user()
+    {
+        $user = $this->getRequest()->getAttribute('adminIdentity');
+        $this->set('user', $user);
+        $this->set('_serialize', ['user']);
+
+        //@todo Remove
+        if (!$user) {
+            return $this->render('user_noauth');
+        }
+    }
+
+    /**
      * Login method
      *
      * @return null|\Cake\Http\Response
@@ -50,31 +66,26 @@ class AuthController extends AppController
      */
     public function login()
     {
-        $user = $this->Auth->user();
-        if ($user) {
-            //$this->Flash->info("Already logged in");
-            //if ($user->can('access', $this)) {
-                // do something
-            //}
-            //return;
-        }
+        /*
+        $user = $this->Authentication->getIdentity();
+        if ($user) {}
+        */
 
-        $user = $this->Auth->login();
-        if ($this->components()->has('RequestHandler') && $this->components()->get('RequestHandler')->accepts('json')) {
-            $this->viewBuilder()->setClassName('Json');
-        } elseif ($user) {
-            $redirectUrl = $this->Auth->redirectUrl();
+        $result = $this->Authentication->getResult();
+        // login successful
+        if ($result->isValid()) {
+            $redirectUrl = $this->Authentication->getLoginRedirect();
             $redirectUrl = $redirectUrl ?: ['_name' => 'admin:system:dashboard'];
+            $this->Flash->success('Login successful');
 
             return $this->redirect($redirectUrl);
         }
 
-        $this->set('login', [
-            'user' => $user ? $user['id'] : null,
-        ]);
-        $this->set('_serialize', ['login']);
-
-        return null;
+        // login failed (via POST)
+        if ($this->request->is('post') && !$result->isValid()) {
+            $this->dispatchEvent('User.Auth.error', ['scope' => 'Admin'], $this);
+            $this->Flash->error(__('Invalid login credentials'), ['key' => 'auth']);
+        }
     }
 
     /**
@@ -86,11 +97,27 @@ class AuthController extends AppController
     {
         $redirect = $this->Authentication->logout();
         $redirect = $redirect ?: ['_name' => 'admin:system:user:login'];
-        //@TODO: Fix admin user logout: Authentication identity not cleared, when logging out from admin
-        // WORKAROUND: Redirects to user logout to make sure user is logged out
-        $redirect = '/user/logout';
 
         return $this->redirect($redirect);
+    }
+
+    /**
+     * Return client session info in JSON format
+     *
+     * @return void
+     */
+    public function session()
+    {
+        $this->viewBuilder()->setClassName('Json');
+        $data = [
+            't' => time(),
+        ];
+        $identity = $this->Authentication->getIdentity();
+        if ($identity) {
+            $data['id'] = $identity->getIdentifier();
+        }
+        $this->set('data', $data);
+        $this->set('_serialize', 'data');
     }
 
     /**
@@ -101,40 +128,5 @@ class AuthController extends AppController
     public function unauthorized()
     {
         $this->setResponse($this->getResponse()->withStatus(403));
-    }
-
-    /**
-     * Current user
-     *
-     * @return void
-     * @todo Evaluate
-     */
-    public function user()
-    {
-        $user = $this->Auth->user();
-        $this->set('user', $user);
-        $this->set('_serialize', ['user']);
-    }
-
-    /**
-     * Return client session info in JSON format
-     *
-     * @return void
-     * @todo Evaluate
-     */
-    public function session()
-    {
-        $this->viewBuilder()->setClassName('Json');
-        //$data = $this->UserSession->extractSessionInfo();
-        //$data = ['id' => $this->Auth->user('id')];
-        $data = [
-            't' => time(),
-        ];
-        $identity = $this->Authentication->getIdentity();
-        if ($identity) {
-            $data['id'] = $identity->getIdentifier();
-        }
-        $this->set('data', $data);
-        $this->set('_serialize', 'data');
     }
 }

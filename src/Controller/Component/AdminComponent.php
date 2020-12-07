@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Controller\Component;
 
 use Authentication\AuthenticationService;
-use Authentication\Identity;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
 use Cake\Http\ServerRequest as Request;
@@ -23,7 +22,7 @@ class AdminComponent extends Component
     /**
      * @var array
      */
-    public $components = [];
+    public $components = ['Admin.Flash'];
 
     /**
      * @var array
@@ -46,6 +45,8 @@ class AdminComponent extends Component
      */
     public function initialize(array $config): void
     {
+        parent::initialize($config);
+
         $controller = $this->getController();
 
         // Configure RequestHandler component
@@ -71,20 +72,25 @@ class AdminComponent extends Component
                 //'identityCheckEvent' => 'Controller.initialize',
             ]);
             $authService = $this->Authentication->getAuthenticationService();
-            if ($authService instanceof AuthenticationService) {
-                $authService->setConfig([
-                    //'authenticators' => [],
-                    //'identifiers' => [],
-                    //'identityClass' => Identity::class,
-                    //'identityAttribute' => 'identity',
-                    'identityAttribute' => \Admin\Plugin::AUTH_IDENTITY_ATTRIBUTE,
-                    //'queryParam' => null,
-                    'unauthenticatedRedirect' => Router::url(['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login', 'prefix' => 'Admin']),
-                ]);
-            }
+        if ($authService instanceof AuthenticationService) {
+            $authService->setConfig([
+                //'authenticators' => [],
+                //'identifiers' => [],
+                //'identityClass' => Identity::class,
+                //'identityAttribute' => 'identity',
+                'identityAttribute' => \Admin\Plugin::AUTH_IDENTITY_ATTRIBUTE,
+                //'queryParam' => null,
+                'unauthenticatedRedirect' => Router::url([
+                    'plugin' => 'Admin',
+                    'controller' => 'Auth',
+                    'action' => 'login',
+                    'prefix' => 'Admin',
+                ]),
+            ]);
+        }
         //}
 
-        //if (Configure::read('Admin.Auth.authorizationEnabled')) {
+        if (Configure::read('Admin.Auth.authorizationEnabled')) {
             $this->Authorization = $controller->loadComponent('Authorization.Authorization');
             $this->Authorization->setConfig([
                 'identityAttribute' => \Admin\Plugin::AUTH_IDENTITY_ATTRIBUTE,
@@ -94,8 +100,8 @@ class AdminComponent extends Component
                 //'authorizeModel' => [],
                 //'actionMap' => [],
             ]);
-        //}
-        $controller->loadComponent('User.Auth');
+        }
+        //$controller->loadComponent('User.Auth');
 
 //        // @todo Configure UserSession component
 //        $controller->loadComponent('User.UserSession');
@@ -205,6 +211,11 @@ class AdminComponent extends Component
         //if ($controller->Auth->user('locale') && $controller->Auth->user('locale') != I18n::getLocale()) {
         //    I18n::setLocale($controller->Auth->user('locale'));
         //}
+
+        $user = $controller->getRequest()->getAttribute('adminIdentity');
+        if ($user && !$user->is_superuser) {
+            $this->Flash->warning('Non super-user detectected');
+        }
     }
 
     /**

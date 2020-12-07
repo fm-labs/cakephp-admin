@@ -18,6 +18,7 @@
     <div id="page">
         <div id="flash" class="container">
             <?= $this->Flash->render(); ?>
+            <?= $this->Flash->render('admin'); ?>
             <?= $this->Flash->render('auth'); ?>
             <?= $this->fetch('flash') ?>
         </div>

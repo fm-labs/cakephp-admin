@@ -33,7 +33,7 @@
     "image-picker": "^0.3.1",
     "ionicons": "^5.0.1",
     "jquery": "^3.5.0",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.0",
     "jstree": "^3.3.9",
     "pickadate": "^3.6",
     "select2": "^4.0.13",

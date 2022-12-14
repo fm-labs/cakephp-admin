@@ -10,6 +10,7 @@ namespace Admin\Controller;
  * which should run in admin context
  *
  * @package Admin\Controller\Base
+ * @property \Admin\Controller\Component\ActionComponent $Action
  * @property \User\Controller\Component\AuthComponent $Auth
  * @property \Admin\Controller\Component\FlashComponent $Flash
  * @property \Cake\Controller\Component\PaginatorComponent $Paginator

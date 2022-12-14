@@ -5,7 +5,6 @@ namespace Admin\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Http\Exception\BadRequestException;
-use DebugKit\Cache\Engine\DebugEngine;
 
 /**
  * Class CacheController

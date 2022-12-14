@@ -28,7 +28,7 @@
  * @param jsTree array jsTree params. See jsTree documentation for options
  * @link https://www.jstree.com/
  */
-$this->loadHelper('Admin.JsTree');
+$this->loadHelper('Sugar.JsTree');
 
 
 $selected = $this->request->getQuery('id');

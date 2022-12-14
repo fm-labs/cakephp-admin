@@ -1,5 +1,5 @@
 <?php $this->Breadcrumbs->add(__d('admin','Tree Viewer')); ?>
-<?php $this->loadHelper('Admin.JsTree'); ?>
+<?php $this->loadHelper('Sugar.JsTree'); ?>
 <?php $this->assign('heading', __d('admin','Tree Viewer')); ?>
 <div class="form">
 

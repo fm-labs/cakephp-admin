@@ -14,7 +14,14 @@ class InlineEntityAction extends BaseEntityAction
     protected $_executed = false;
     protected $_filter;
 
+    /**
+     * @var string The action name or alias
+     */
     public $action;
+
+    /**
+     * @var array Options for this action
+     */
     public $options;
 
     public function __construct(Controller $controller, array $options = [], ?callable $callable = null, ?callable $filter = null)
@@ -46,6 +53,10 @@ class InlineEntityAction extends BaseEntityAction
     public function getAttributes(): array
     {
         return $this->_attributes;
+    }
+
+    public function getUrl($id) {
+        return ['action' => $this->action, $id];
     }
 
     protected function _execute(Controller $controller)

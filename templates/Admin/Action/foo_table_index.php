@@ -1,5 +1,5 @@
 <?php
-$this->loadHelper('Admin.FooTable');
+$this->loadHelper('Sugar.FooTable');
 ?>
 <div class="index">
     <div class="box">

@@ -16,27 +16,3 @@
     </div>
     <div class="clearfix"></div>
 </div>
-<?php $this->append('script'); ?>
-<script>
-    $(document).ready(function() {
-        if (window.AdminJs) {
-            var adminBaseUrl = window.AdminJs.settings.adminUrl;
-            var url = adminBaseUrl + '/system/auth/session';
-
-            setInterval(function() {
-                $.ajax(url, {
-                    success: function(data) {
-                       console.log("ping-success", data);
-                    },
-                    complete: function(data) {
-                        console.log("ping-complete", data);
-                    },
-                    error: function(data) {
-                        console.log("ping-error", data);
-                    },
-                });
-            }, 60000);
-        }
-    });
-</script>
-<?php $this->end(); ?>

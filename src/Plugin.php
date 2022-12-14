@@ -89,7 +89,30 @@ class Plugin extends BasePlugin implements
 
         $app->addPlugin('User');
         $app->addPlugin('Bootstrap');
+        $app->addPlugin('Sugar');
         $this->_app = $app;
+
+        class_alias('\\Sugar\\View\\Helper\\BoxHelper', '\\Admin\\View\\Helper\\BoxHelper');
+        class_alias('\\Sugar\\View\\Helper\\CodeEditorHelper', '\\Admin\\View\\Helper\\CodeEditorHelper');
+        class_alias('\\Sugar\\View\\Helper\\DataTableHelper', '\\Admin\\View\\Helper\\DataTableHelper');
+        class_alias('\\Sugar\\View\\Helper\\DataTableJsHelper', '\\Admin\\View\\Helper\\DataTableJsHelper');
+        class_alias('\\Sugar\\View\\Helper\\FlagIconHelper', '\\Admin\\View\\Helper\\FlagIconHelper');
+        class_alias('\\Sugar\\View\\Helper\\FormatterHelper', '\\Admin\\View\\Helper\\FormatterHelper');
+        class_alias('\\Sugar\\View\\Helper\\JsTreeHelper', '\\Admin\\View\\Helper\\JsTreeHelper');
+        class_alias('\\Sugar\\View\\Helper\\Select2Helper', '\\Admin\\View\\Helper\\Select2Helper');
+        class_alias('\\Sugar\\View\\Helper\\SumoSelectHelper', '\\Admin\\View\\Helper\\SumoSelectHelper');
+        class_alias('\\Sugar\\View\\Helper\\SweetAlert2Helper', '\\Admin\\View\\Helper\\SweetAlert2Helper');
+        class_alias('\\Sugar\\View\\Helper\\ToastrHelper', '\\Admin\\View\\Helper\\ToastrHelper');
+
+        class_alias('\\Sugar\\View\\Widget\\CheckboxWidget', '\\Admin\\View\\Widget\\CheckboxWidget');
+        class_alias('\\Sugar\\View\\Widget\\CodeEditorWidget', '\\Admin\\View\\Widget\\CodeEditorWidget');
+        class_alias('\\Sugar\\View\\Widget\\DatePickerWidget', '\\Admin\\View\\Widget\\DatePickerWidget');
+        class_alias('\\Sugar\\View\\Widget\\DateRangePickerWidget', '\\Admin\\View\\Widget\\DateRangePickerWidget');
+        class_alias('\\Sugar\\View\\Widget\\HtmlEditorWidget', '\\Admin\\View\\Widget\\HtmlEditorWidget');
+        class_alias('\\Sugar\\View\\Widget\\ImageSelectWidget', '\\Admin\\View\\Widget\\ImageSelectWidget');
+        class_alias('\\Sugar\\View\\Widget\\Select2Widget', '\\Admin\\View\\Widget\\Select2Widget');
+        class_alias('\\Sugar\\View\\Widget\\SumoSelectBoxWidget', '\\Admin\\View\\Widget\\SumoSelectBoxWidget');
+        class_alias('\\Sugar\\View\\Widget\\TimePickerWidget', '\\Admin\\View\\Widget\\TimePickerWidget');
 
         EventManager::instance()->on(new ActionDispatcherListener());
         Admin::addPlugin(new AdminPlugin());

@@ -44,6 +44,7 @@ class AdminController extends AppController
         $layout->add('header_panels_left', HeaderNav::class);
         $layout->add('header_panels_right', HeaderNav::class);
         */
+        $this->Action->execute();
     }
 
     /**

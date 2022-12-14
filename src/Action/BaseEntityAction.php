@@ -49,6 +49,11 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         }
     }
 
+    public function getUrl($id)
+    {
+        return ['action' => $this->action, $id];
+    }
+
     /**
      * @inheritDoc
      */

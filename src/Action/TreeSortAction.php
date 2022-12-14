@@ -45,6 +45,6 @@ class TreeSortAction extends IndexAction
         $controller->set('dataUrl', ['plugin' => 'Admin', 'controller' => 'Tree', 'action' => 'jstreeData', 'model' => $controller->modelClass]);
         $controller->set('sortUrl', ['plugin' => 'Admin', 'controller' => 'Tree', 'action' => 'jstreeSort', 'model' => $controller->modelClass]);
 
-        return $controller->render('Admin.tree_sort');
+        return $controller->render('Admin.Action/tree_sort');
     }
 }

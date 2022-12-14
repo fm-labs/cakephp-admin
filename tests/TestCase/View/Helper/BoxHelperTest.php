@@ -27,7 +27,7 @@ class BoxHelperTest extends TestCase
         $expected = <<<HTML
 <div class="box box-default"><div class="box-header with-border"><h3 class="box-title">Collapsable</h3><div class="box-tools pull-right"><button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button></div></div><div class="box-body">The body of the box</div></div>
 HTML;
-        //$this->assertEquals($expected, $view->Box->render());
         $this->markTestIncomplete();
+        $this->assertEquals($expected, $view->Box->render());
     }
 }

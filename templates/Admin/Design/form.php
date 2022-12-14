@@ -10,10 +10,10 @@ $helpText = "This is some help text to better describe the purpose of this field
 
 $this->extend('base');
 $this->assign('title', __d('admin', 'Design Kitchensink'));
-//$this->loadHelper('Admin.SwitchControl');
-//$this->loadHelper('Admin.SumoSelect');
-//$this->loadHelper('Admin.Select2');
-//$this->loadHelper('Admin.DateRangePicker');
+//$this->loadHelper('Sugar.SwitchControl');
+//$this->loadHelper('Sugar.SumoSelect');
+//$this->loadHelper('Sugar.Select2');
+//$this->loadHelper('Sugar.DateRangePicker');
 ?>
 <div class="row">
     <div class="col-md-6">

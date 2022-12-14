@@ -1,4 +1,4 @@
-<?php $this->loadHelper('Admin.DataTable'); ?>
+<?php $this->loadHelper('Sugar.DataTable'); ?>
 <?php foreach ($elements as $element) : ?>
     <div class="related">
         <h3><?= h($element['title']); ?></h3>

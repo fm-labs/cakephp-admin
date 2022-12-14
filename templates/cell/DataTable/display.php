@@ -1,6 +1,6 @@
 <?php
-$this->loadHelper('Admin.DataTable');
-//$this->loadHelper('Admin.DataTableJs');
+$this->loadHelper('Sugar.DataTable');
+//$this->loadHelper('Sugar.DataTableJs');
 
 if (empty($dataTable['class'])) {
     $dataTable['class'] = 'table table-condensed table-striped table-hover';

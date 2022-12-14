@@ -1,5 +1,5 @@
 <?php $this->extend('base'); ?>
-<?php $this->loadHelper('Admin.FlagIcon'); ?>
+<?php $this->loadHelper('Sugar.FlagIcon'); ?>
 
 <!-- SECTION Flag Icons -->
 <div class="section-header">

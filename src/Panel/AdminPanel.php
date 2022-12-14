@@ -13,10 +13,26 @@ class AdminPanel extends DebugPanel
 {
     public $plugin = 'Admin';
 
-    public function data()
+    /**
+     * @return string
+     */
+    public function title()
     {
-        $plugins = Admin::getPlugins();
+        return "Admin";
+    }
 
-        return compact('plugins');
+//    public function data()
+//    {
+//        $plugins = Admin::getPlugins();
+//
+//        return compact('plugins');
+//    }
+
+    /**
+     * @return string
+     */
+    public function elementName()
+    {
+        return $this->plugin . '.debug_kit/admin_panel';
     }
 }

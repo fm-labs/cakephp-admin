@@ -1,5 +1,5 @@
 <?php
-$this->loadHelper('Admin.DataTableJs');
+$this->loadHelper('Sugar.DataTableJs');
 ?>
 <div class="index">
     <?php

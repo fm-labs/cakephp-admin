@@ -1,5 +1,5 @@
-<?php $this->loadHelper('Admin.DataTable'); ?>
-<?php $this->loadHelper('Admin.Box'); ?>
+<?php $this->loadHelper('Sugar.DataTable'); ?>
+<?php $this->loadHelper('Sugar.Box'); ?>
 <?php foreach ($elements as $element) : ?>
     <div class="related">
         <?php $this->Box->create($element['title']); ?>

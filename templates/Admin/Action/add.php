@@ -26,26 +26,28 @@ $this->loadHelper('Bootstrap.Tabs');
  */
 //$this->extend('Admin./Base/form');
 ?>
-<div class="form form-add">
+<div class="container">
+    <div class="form form-add">
 
-    <?php
-    if ($this->fetch('content')) {
-        echo $this->fetch('content');
-    } else {
-        echo $this->Form->create($entity, $formOptions);
-        if ($fieldsets) {
-            foreach ($fieldsets as $fieldset) {
-                $this->Form->allControls($fieldset['inputs'], $fieldset['options']);
-            }
-        } elseif ($fields) {
-            foreach ($fields as $field => $config) {
-                echo $this->Form->control($field, $config);
-            }
+        <?php
+        if ($this->fetch('content')) {
+            echo $this->fetch('content');
         } else {
-            $this->Form->allControls();
+            echo $this->Form->create($entity, $formOptions);
+            if ($fieldsets) {
+                foreach ($fieldsets as $fieldset) {
+                    $this->Form->allControls($fieldset['inputs'], $fieldset['options']);
+                }
+            } elseif ($fields) {
+                foreach ($fields as $field => $config) {
+                    echo $this->Form->control($field, $config);
+                }
+            } else {
+                $this->Form->allControls();
+            }
+            echo $this->Form->submit(__d('admin', 'Add'));
+            echo $this->Form->end();
         }
-        echo $this->Form->submit(__d('admin', 'Add'));
-        echo $this->Form->end();
-    }
-    ?>
+        ?>
+    </div>
 </div>

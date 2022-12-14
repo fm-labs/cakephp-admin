@@ -1,5 +1,5 @@
 <?php $this->extend('base'); ?>
-<?php $this->loadHelper('Admin.VectorMap'); ?>
+<?php $this->loadHelper('Sugar.VectorMap'); ?>
 
 <!-- SECTION Vector maps -->
 <div class="section-header">

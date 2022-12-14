@@ -28,20 +28,20 @@ class AdminHelper extends Helper
     {
         $this->_themeConfig = (array)Configure::read('Admin.Theme') + $this->_themeConfig;
 
-        $this->Html->script('Admin./libs/jquery/jquery.min.js', ['block' => 'headjs']);
+        $this->Html->script('Sugar./libs/jquery/jquery.min.js', ['block' => 'headjs']);
 
         /*
          * 3rd party dependencies
          */
         // Bootstrap
-        $this->Html->css('Admin./libs/bootstrap/dist/css/bootstrap.min.css', ['block' => true]);
-        $this->Html->script('Admin./libs/bootstrap/dist/js/bootstrap.min.js', ['block' => true]);
+        $this->Html->css('Sugar./libs/bootstrap/dist/css/bootstrap.min.css', ['block' => true]);
+        $this->Html->script('Sugar./libs/bootstrap/dist/js/bootstrap.min.js', ['block' => true]);
         // Underscore
-        $this->Html->script('Admin./libs/underscore/underscore-min.js', ['block' => true]);
+        $this->Html->script('Sugar./libs/underscore/underscore-min.js', ['block' => true]);
         // FontAwesome
-        $this->Html->css('Admin./libs/fontawesome/css/font-awesome.min.css', ['block' => true]);
+        $this->Html->css('Sugar./libs/fontawesome/css/font-awesome.min.css', ['block' => true]);
         // MomentJS
-        $this->Html->script('Admin./vendor/momentjs/moment.min.js', ['block' => true]);
+        $this->Html->script('Sugar./vendor/momentjs/moment.min.js', ['block' => true]);
 
         // default helpers
         $this->_View->loadHelper('Bootstrap.Ui');
@@ -53,7 +53,7 @@ class AdminHelper extends Helper
         }
 
         if (Configure::read('Admin.Theme.enableJsAlerts')) {
-            $this->_View->loadHelper('Admin.SweetAlert2');
+            $this->_View->loadHelper('Sugar.SweetAlert2');
         }
 
         /*
@@ -84,8 +84,9 @@ class AdminHelper extends Helper
         $this->Html->script('Admin.admin.js', ['block' => true]);
         $this->Html->script('Admin.admin.iconify.js', ['block' => true]);
         $this->Html->script('Admin.admin.tooltip.js', ['block' => true]);
+        $this->Html->script('Admin.admin.checkauth.js', ['block' => true]);
         //$this->Html->script('Admin.admin.alert.js', ['block' => true]);
-        $this->Html->css('Admin.ui', ['block' => true]);
+        $this->Html->css('Sugar.ui', ['block' => true]);
     }
 
     /**

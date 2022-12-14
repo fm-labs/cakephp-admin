@@ -13,6 +13,12 @@ use Cake\Datasource\EntityInterface;
 interface EntityActionInterface extends ActionInterface
 {
     /**
+     * @param mixed $id The entity id
+     * @return string|array
+     */
+    public function getUrl($id);
+
+    /**
      * @return bool
      */
     public function isUsable(EntityInterface $entity);

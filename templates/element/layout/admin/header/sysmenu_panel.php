@@ -2,7 +2,7 @@
 /**
  * @property array $items
  */
-$this->loadHelper('Bootstrap.Menu');
+$this->loadHelper('BootstrapMenu', ['className' => '\\Bootstrap\\View\\Helper\\MenuHelper']);
 
 //$items = \Admin\Admin::getMenu('admin_system');
 ?>
@@ -15,7 +15,7 @@ $this->loadHelper('Bootstrap.Menu');
         <li class="header hidden"></li>
         <li>
         <?php
-        echo $this->Menu->create([
+        echo $this->BootstrapMenu->create([
             'classes' => [
                 'menu' => 'menu',
             ],

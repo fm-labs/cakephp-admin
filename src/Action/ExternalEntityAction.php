@@ -38,15 +38,27 @@ class ExternalEntityAction extends BaseEntityAction
         return $this->_attributes;
     }
 
-    protected function _execute(Controller $controller)
+    /**
+     * @inheritDoc
+     *
+     * The $id parameter is ignored here. The entity ID is always used instead.
+     */
+    public function getUrl($id)
     {
-        $entity = $this->entity();
-
-        return $controller->redirect($this->_buildUrl($this->_url, $entity->toArray()));
+        return $this->_buildUrl(['id' => $id]);
     }
 
-    protected function _buildUrl($template, $entity)
+    protected function _execute(Controller $controller)
     {
-        return $this->_replaceTokens($template, $entity);
+        $redirectUrl = $this->_buildUrl();
+        return $controller->redirect($redirectUrl);
+    }
+
+    protected function _buildUrl($data = null)
+    {
+        if ($data === null) {
+            $data = $this->entity()->toArray();
+        }
+        return $this->_replaceTokens($this->_url, $data);
     }
 }

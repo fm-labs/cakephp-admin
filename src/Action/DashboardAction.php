@@ -8,6 +8,8 @@ use Cake\Controller\Controller;
 
 class DashboardAction extends BaseAction
 {
+    //public $template = "Admin.Action/dashboard";
+
     /**
      * @return string
      */

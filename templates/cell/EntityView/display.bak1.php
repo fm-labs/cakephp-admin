@@ -2,7 +2,7 @@
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 ?>
-<?php $this->loadHelper('Admin.Formatter'); ?>
+<?php $this->loadHelper('Sugar.Formatter'); ?>
 <div class="entity-view">
 
     <?php if ($title): ?>

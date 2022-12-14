@@ -234,9 +234,12 @@ class IndexAction extends BaseAction
         foreach ($actionComponent->listActions() as $actionName) {
             /** @var \Admin\Action\Interfaces\ActionInterface $action */
             $action = $actionComponent->getAction($actionName);
+
+            /** @var \Admin\Action\Interfaces\EntityActionInterface $action */
             if ($action instanceof EntityActionInterface) {
                 $actions[] = [
-                    'url' => Router::url(['action' => $actionName, $row[$this->model()->getPrimaryKey()]]),
+                    //'url' => Router::url(['action' => $actionName, $row[$this->model()->getPrimaryKey()]]),
+                    'url' => $action->getUrl($row[$this->model()->getPrimaryKey()]),
                     'title' => $action->getLabel(),
                     'attrs' => $action->getAttributes(),
                 ];

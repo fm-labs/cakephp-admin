@@ -4,7 +4,7 @@ use Cupcake\Cupcake;
 use Cake\Core\Configure;
 
 $this->loadHelper('Bootstrap.Tabs');
-$this->loadHelper('Admin.Box');
+$this->loadHelper('Sugar.Box');
 ?>
 <?php $this->Breadcrumbs->add(__d('admin','Systeminfo')); ?>
 <div class="index">

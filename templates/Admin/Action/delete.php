@@ -15,7 +15,7 @@ $viewOptions = (array) $this->get('viewOptions');
  * Helpers
  */
 ;
-$this->loadHelper('Admin.DataTable');
+$this->loadHelper('Sugar.DataTable');
 $this->loadHelper('Bootstrap.Tabs');
 ?>
 <div class="view">

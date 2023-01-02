@@ -16,6 +16,11 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     use EntityActionFilterTrait;
 
     /**
+     * @var string
+     */
+    protected $_action;
+
+    /**
      * @var array
      */
     protected $_defaultConfig = [
@@ -51,7 +56,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 
     public function getUrl($id)
     {
-        return ['action' => $this->action, $id];
+        return ['action' => $this->_action, $id];
     }
 
     /**

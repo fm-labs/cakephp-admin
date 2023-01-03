@@ -13,9 +13,16 @@
         <?= $this->Html->link(__('Logout'), ['_name' => 'admin:system:user:logout']); ?> |
     </p>
 
+    <h3>Locale</h3>
+    <?php echo $this->element('Admin.array_to_tablelist', ['data' => $this->get('locale')]); ?>
+
+    <h3>Config</h3>
+    <?php echo $this->element('Admin.array_to_tablelist', ['data' => $this->get('config')]); ?>
+
+    <h3>Plugins</h3>
     <table class="table table-striped">
         <tr>
-            <th>Admin Plugin name</th>
+            <th>Plugin name</th>
         </tr>
         <?php
         if ($plugins) {

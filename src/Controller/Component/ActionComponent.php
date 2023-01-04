@@ -94,7 +94,7 @@ class ActionComponent extends Component
      */
     protected function _addAction($action, array $actionConfig = [])
     {
-        $actionConfig += ['className' => null];
+        $actionConfig += ['className' => null, '_action' => $action];
         $this->_actionRegistry->load($action, $actionConfig);
     }
 

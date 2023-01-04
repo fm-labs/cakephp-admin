@@ -8,5 +8,7 @@ if (!$this->helpers()->has('Toolbar')) {
 }
 ?>
 <nav class="toolbar">
-    <?php echo $this->Toolbar->render(); ?>
+    <div class="container-fluid">
+        <?= $this->Toolbar->render(); ?>
+    </div>
 </nav>

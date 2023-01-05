@@ -6,6 +6,11 @@ namespace Admin\Controller\Admin;
 use Cupcake\Menu\MenuItemCollection;
 use Cake\Event\Event;
 
+/**
+ * MenuController
+ *
+ * @deprecated Used for testing only
+ */
 class MenuController extends AppController
 {
     public $modelClass = false;

@@ -13,10 +13,11 @@ use Cake\View\View;
  * @package Admin\View\Helper
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Bootstrap\View\Helper\UiHelper $Ui
+ * @property \Bootstrap\View\Helper\ButtonHelper $Button
  */
 class ToolbarHelper extends Helper
 {
-    public $helpers = ['Html', 'Bootstrap.Ui'];
+    public $helpers = ['Html', 'Bootstrap.Ui', 'Bootstrap.Button'];
 
     protected $_defaultConfig = [
         'element' => 'Admin.layout/admin/toolbar',
@@ -220,11 +221,19 @@ class ToolbarHelper extends Helper
      */
     public function render($options = [], $childMenuOptions = [], $itemOptions = [])
     {
-        $options = array_merge($this->getConfig('options'), $options);
-        $html = $this->Ui->menu($this->getMenuItems(), $options, $childMenuOptions, $itemOptions);
+        //$options = array_merge($this->getConfig('options'), $options);
+        //$html = $this->Ui->menu($this->getMenuItems(), $options, $childMenuOptions, $itemOptions);
+        $html = "";
+        foreach ($this->getMenuItems() as $item) {
+            $html .= $this->_renderMenuItem($item);
+        }
         $this->_rendered = true;
-
         return $html;
+    }
+
+    protected function _renderMenuItem(array $item)
+    {
+        return $this->Button->create($item['title'], $item);
     }
 
     /**

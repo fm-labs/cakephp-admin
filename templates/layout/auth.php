@@ -5,11 +5,6 @@
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->Html->css('Admin.layout/auth.min.css'); ?>
-    <!-- scripts -->
-    <!--[if lt IE 9]>
-    <?= $this->Html->script('/admin/libs/html5shiv/html5shiv.min.js'); ?>
-    <?= $this->Html->script('/admin/libs/respond/respond.min.js'); ?>
-    <![endif]-->
     <?= $this->fetch('headjs') ?>
 </head>
 <body>

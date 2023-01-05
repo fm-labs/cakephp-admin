@@ -1,0 +1,292 @@
+
+@import "../mixins/elements.less";
+@import "../mixins/mixins.less";
+@import "../vars.less";
+
+
+/**
+ * General Inputs
+ */
+input[readonly] {
+  cursor: not-allowed;
+}
+
+/**
+ * Forms
+ */
+
+form {
+  //max-width: 800px;
+}
+
+form.form,
+form.form-horizontal {
+  padding: 15px;
+  //background-color: #FFF;
+}
+
+form label {
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  //font-weight: 700;
+  //font-variant-caps: all-small-caps;
+  font-weight: normal;
+  font-variant: normal;
+  color: #444;
+}
+
+
+form .form-group {
+  margin-bottom: 8px;
+  //border-bottom: 1px solid #3C8DBC;
+  //padding-bottom: 15px;
+}
+
+form .form-control {
+  font-size: @font-size-default;
+  color: @color-text;
+  border-color: #A4A4A4;
+  border-radius: 2px;
+  padding: 6px 12px;
+  //width: auto;
+  min-width: @form-input-w;
+}
+
+form div.required > label,
+form div.required .control-label {
+  font-weight: bold;
+
+  &:after {
+    content: "*";
+  }
+}
+
+form div.input {
+  margin-bottom: 0.5em;
+}
+
+form textarea {
+  height: auto;
+  min-height: 100px;
+  max-width: 100%;
+}
+
+form textarea ~ button {
+  margin-top: 0.5em;
+}
+form div.actions {
+  border-top: 1px solid #ccc;
+  padding: 1rem 0;
+}
+
+/**
+ * Fieldset
+ */
+form fieldset {
+  //border-bottom: 1px solid @color-primary !important;
+  //border-width: 0 0 1px 0 !important;
+  padding: 0;
+  margin: 0 0 1em 0;
+  transition: height 1s;
+  //border-bottom: 1px solid #CCC;
+
+  &:hover {
+    //box-shadow: 2px 2px 2px #CCC;
+  }
+}
+
+form fieldset legend {
+  //background-color: #f9f9f9;
+  //color: @color-primary-inverse;
+  border: none;
+  display: block;
+  margin: 0 0 0.5em 0;
+  width: 100%;
+  //padding: 0 0 0 5px;
+  line-height: 30px;
+  //font-size: 18px;
+  font-variant: small-caps;
+  border-bottom: 1px solid @border-color-base;
+
+  &::before {
+    .faicon("\f107");
+  }
+
+  &::after {
+    font-size: 80%;
+    font-style: italic;
+    //content: " (click to hide)";
+  }
+
+  ~ * {
+    margin-top: 0.3em;
+  }
+
+}
+
+form fieldset > .body,
+form fieldset > .form-group {
+  padding: 0;
+  height: auto;
+  overflow: visible;
+}
+
+form fieldset.collapsed {
+
+  margin-bottom: 0.5em;
+
+  > .body, .form-group {
+     height: 0;
+     transition: height 2s;
+     overflow: hidden;
+     margin: 0;
+  }
+
+  > legend {
+    display: block;
+    visibility: visible;
+    height: auto !important;
+    //border-bottom: 1px solid #f8f8f8;
+
+    &::before {
+      .faicon("\f105");
+    }
+
+
+    &::after {
+      //content: " (click to open)";
+    }
+
+    ~ * {
+      margin-top: 0.3em;
+    }
+  }
+
+}
+
+//form .input-checkbox,
+//form .checkbox-wrapper {
+//  input[type="checkbox"],
+//  input[type="radio"] {
+//    margin: 0 5px 0 0;
+//    margin-top: 1px\9;
+//    line-height: normal;
+//    //display: inline-block;
+//  }
+//}
+
+
+/**
+ * Number
+ */
+form .input-number {
+  input {
+    width: @form-input-w;
+  }
+}
+
+/**
+ * Select
+ */
+form .input-select {
+  label {
+    display: block;
+  }
+}
+
+/**
+ * Datetime
+ */
+form .input-datetime {
+  select {
+    width: 110px;
+  }
+}
+
+/**
+ * Imagepicker
+ */
+form .imageselect {
+  ul.image_picker_selector {
+    .thumbnail .image_picker_image {
+      max-width: 100px;
+      height: 100px;
+    }
+
+    .thumbnail {
+      position: relative;
+    }
+
+    .thumbnail p {
+      padding: 3px;
+      max-width: 100px;
+      overflow: hidden;
+      font-size: 0.6rem;
+    }
+  }
+}
+
+/**
+ * Checkbox / Radio
+ */
+.input-checkbox input[type=checkbox],
+.input-checkbox input[type=radio] {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  margin: 0 5px 0 0;
+  padding: 0;
+}
+
+/**
+ * Datepicker
+ */
+
+form .input-datepicker {
+
+}
+
+form input.datepicker,
+form input.timepicker {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEwAACxMBAJqcGAAAA8VJREFUWIXFV09oHHUU/t6bnV2TjmlAkyAN7aFFZIvdhIW4G7ubIhYP1igoFPXgTezBU05KvFhKD4JUsSA9SvEPa0GLBylUut3YxIZtNi0uhRZKjdoYU5I0S+ru7LznxZ1Md2cnzR/cD4aZ3/e+ee+b9/vNP8Ia6BtMv6+iHxBzkQ05dCWXuxOoT6ZHhOgoATeqhhz6NZebCdIbQcGBgYEOh81zRGQCeEIVy7Mzt7PN9IlEoq0C/omJwgT0sKL818zt80E1OCio2tYOgNwx6NEg/f1IJMLM7kXRGnoACNUT0aEh6xGbe+yqlKGo+p3UnxjaU8/ZaiwDTrmej8fjppjWLgAIOaGFycnzd71xbwc4lkx9GirLgkBusqHfNXOtjBv1W4idT3zFYWt3TWOb1b9jg+nMvoMHtzV0IDY4NELAu0S+abYKRKDXaPmfBQBvA94OqB6uk5rt7VgU4N6qRm5Fo9GwX2ZVDXUCJYHc9ZC3KqpmvVaY3VpeA50P1AeeWllBJwsNq+Ksqh4PVVZORTq6nvO9NNbEH21tBiuGRfR7qH5U2t7+mUFo0DPQUTtuWIQehMsmzhhKbxTGL7wMAPv2H3iGHT3lL+cd1tL9LxxD37k2lnsFAGLJAy9C6SgCptUNxRKpm8S820cjgPwJwAS4J8BwTWxDcAcs2xj8WDNd4VKWgOAO1MAA9z6EriY2wdi5xiPGq28tAjugkFkFGh4u6wEDRlAHmxsQfXN6IvflZorX0J9MpVVxDswRH4N+xaVQmLi4JcUBYGo8d1FBP/jFfDsgTEtBCaPRaDjc+fhZL1dZnB8uFouVWHJolEj313gSOjE1kf0RRIsPbWAtdHV18ZKNF+o5AIBqH4jcmDK+DcrV8rug5QY2NAXd3d32vd/nXq/nAEANOsGy2nYintxyA5lMxgHwtZeb+m9/9efs2HpyBRroH0wnBfSqhypMX8qejsfjZjViHX8gUbn0Xj6ft/ueTb2lyk/XeGXKXB278MuGDAAUI2DEHSq+AXDasixjyfbwACzLGgVgq0MvEcM1TaLXATQ10PJF2HIDgVMgIleI+Jg7JrkGAKVSyUHYOubVlkolBwCI6AwU12s8EQobMKA7AND0RO4ygMv10Xw+bwMY9TuzMJ79yjcjyS7yabivAQbviSVTJ8Ghk+zIpl7HVWbDgHMYoOf94q4BZaj3042Ij0DliG5ylRgQIOCj0E1PgvnNlVoX5hoNGPj8/6quulrL/ZGcnfltuqd357yS7lVRS7ceAtI5KH38ZG/3h8ViUQHgX+6Ir/q7g4/6AAAAAElFTkSuQmCC') !important;
+  background-repeat: no-repeat !important;
+  background-position: 7px center !important;
+  background-size: 20px auto !important;
+  //background-color: transparent !important;
+  background-color: @input-bg;
+  padding-left: 40px;
+  cursor: auto;
+  max-width: 200px;
+}
+
+
+/**
+ * Horizontal
+ */
+
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: @screen-sm-min) {
+  form.form-horizontal {
+
+    .control-label {
+      text-align: right;
+      display: block;
+    }
+
+    .control-help {
+      text-align: right;
+    }
+  }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: @screen-md-min) {
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: @screen-lg-min) {
+
+}

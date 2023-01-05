@@ -18,12 +18,12 @@ module.exports = function(grunt) {
           banner: '/** <%= pkg.title || pkg.name %> - v<%= pkg.version %> **/\n'
         },
         files: {
-          'webroot/css/layout/auth.css': 'webroot/less/layout/auth.less',
-          'webroot/css/layout/admin.css': 'webroot/less/layout/admin.less',
-          'webroot/css/layout/iframe.css': 'webroot/less/layout/iframe.less',
+          'webroot/css/layout/layout.auth.css': 'webroot/less/layout/layout.auth.less',
+          'webroot/css/layout/layout.admin.css': 'webroot/less/layout/layout.admin.less',
+          'webroot/css/layout/layout.iframe.css': 'webroot/less/layout/layout.iframe.less',
           'webroot/css/layout/dark.css': 'webroot/less/layout/dark.less',
-          'webroot/css/ui.css': 'webroot/less/ui.less',
-          'webroot/css/jstree/themes/admin/style.css': 'webroot/less/plugins/jstree/jstree.less'
+          'webroot/css/admin/admin.css': 'webroot/less/admin/admin.less',
+          'webroot/css/jstree/themes/admin/style.css': 'webroot/less/jstree/themes/admin/style.less'
         }
 
       },
@@ -37,12 +37,12 @@ module.exports = function(grunt) {
           ]
         },
         files: {
-          'webroot/css/layout/auth.min.css': 'webroot/less/layout/auth.less',
-          'webroot/css/layout/admin.min.css': 'webroot/less/layout/admin.less',
-          'webroot/css/layout/iframe.min.css': 'webroot/less/layout/iframe.less',
+          'webroot/css/layout/layout.auth.min.css': 'webroot/less/layout/layout.auth.less',
+          'webroot/css/layout/layout.admin.min.css': 'webroot/less/layout/layout.admin.less',
+          'webroot/css/layout/layout.iframe.min.css': 'webroot/less/layout/layout.iframe.less',
           'webroot/css/layout/dark.min.css': 'webroot/less/layout/dark.less',
-          'webroot/css/ui.min.css': 'webroot/less/ui.less',
-          'webroot/css/jstree/themes/admin/style.min.css': 'webroot/less/plugins/jstree/jstree.less'
+          'webroot/css/admin/admin.min.css': 'webroot/less/admin/admin.less',
+          'webroot/css/jstree/themes/admin/style.min.css': 'webroot/less/jstree/themes/admin/style.less'
         }
       }
     },

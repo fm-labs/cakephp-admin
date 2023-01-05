@@ -18,6 +18,16 @@ class BreadcrumbHelper extends Helper
         'class' => 'breadcrumb',
     ];
 
+    public function initialize(array $config): void
+    {
+        $this->Breadcrumbs->setTemplates([
+            'wrapper' => '<nav aria-label="breadcrumb"><ol{{attrs}}>{{content}}</ol></nav>',
+            //'item' => '<li{{attrs}}><a href="{{url}}"{{innerAttrs}}>{{title}}</a></li>{{separator}}',
+            //'itemWithoutLink' => '<li{{attrs}}><span{{innerAttrs}}>{{title}}</span></li>{{separator}}',
+            //'separator' => '<li{{attrs}}><span{{innerAttrs}}>{{separator}}</span></li>'
+        ]);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -80,6 +90,14 @@ class BreadcrumbHelper extends Helper
 
         // inject admin dashboard url on first position
         $this->Breadcrumbs->prepend($this->_View->get('be_title'), $this->_View->get('be_dashboard_url'));
+
+        // add custom class to each item
+        $crumbs = $this->Breadcrumbs->getCrumbs();
+        $crumbs = collection($crumbs)->map(function ($crumb) {
+            $crumb['options']['class'] = 'breadcrumb-item';
+            return $crumb;
+        })->toArray();
+        $this->Breadcrumbs->reset()->add($crumbs);
 
         $breadcrumbsHtml = $this->Breadcrumbs->render($this->getConfig());
         $event->getSubject()->assign('breadcrumbs', $breadcrumbsHtml);

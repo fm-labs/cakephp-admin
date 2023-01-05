@@ -12,7 +12,7 @@ if (empty($headers)) {
 }
 
 ?>
-<table class="table table-condensed">
+<table class="table table-sm">
     <thead>
     <tr>
     <?php foreach ($headers as $h => $hconf): ?>

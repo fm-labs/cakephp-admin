@@ -1,0 +1,220 @@
+@import "../vars";
+
+.box {
+  margin-bottom: @box-padding-base * 2;
+  border-radius: 0; //@border-radius-base;
+  //background: @box-background;
+  //box-shadow: @box-shadow-base;
+  border: 1px solid transparent;
+
+  .box-header {
+    padding: @box-padding-base;
+    font-weight: 700;
+    background: @box-header-background;
+
+    &.with-border {
+      border-bottom: @box-border-base;
+    }
+  }
+
+  .box-body {
+    //padding: @box-padding-base;
+
+    table {
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  .box-footer {
+    padding: @box-padding-base;
+
+    &.with-border {
+      border-top: @box-border-base;
+    }
+  }
+
+  .btn-box-tool {
+    padding: 5px;
+    font-size: 12px;
+    background: transparent;
+    color: #97a0b3;
+  }
+
+
+  &.box-default {
+    border-top: 2px solid @box-border-base;
+  }
+
+  &.box-primary {
+    border-top: 2px solid @color-primary;
+  }
+
+  &.box-success {
+    border-top: 2px solid @color-success;
+  }
+
+  &.box-danger {
+    border-top: 2px solid @color-danger;
+  }
+
+  &.box-warning {
+    border-top: 2px solid @color-warning;
+  }
+
+  &.box-info {
+    border-top: 2px solid @color-info;
+  }
+}
+
+
+.box-solid {
+  border: @box-border-base;
+
+  &.box-primary {
+    border-color: @color-primary;
+    .box-header {
+      background-color: @color-primary;
+      color: @color-highlight;
+    }
+  }
+
+  &.box-success {
+    border-color: @color-success;
+    .box-header {
+      background-color: @color-success;
+      color: @color-highlight;
+    }
+  }
+
+  &.box-danger {
+    border-color: @color-danger;
+    .box-header {
+      background-color: @color-danger;
+      color: @color-highlight;
+    }
+  }
+
+  &.box-warning {
+    border-color: @color-warning;
+    .box-header {
+      background-color: @color-warning;
+      color: @color-highlight;
+    }
+  }
+
+  &.box-info {
+    border-color: @color-info;
+    .box-header {
+      background-color: @color-info;
+      color: @color-highlight;
+    }
+  }
+
+}
+
+/** INFO BOX (inspired by AdminLTE) **/
+.info-box {
+  display: block;
+  min-height: 90px;
+  background: #fff;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  border-radius: 2px;
+  margin-bottom: 15px;
+}
+
+.info-box-icon {
+  border-top-left-radius: 2px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 2px;
+  display: block;
+  float: left;
+  height: 90px;
+  width: 90px;
+  text-align: center;
+  font-size: 45px;
+  line-height: 90px;
+  background: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.info-box-content {
+  padding: 5px 10px;
+  margin-left: 90px;
+}
+
+.info-box-text {
+  display: block;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+.info-box-number {
+  display: block;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.info-box .progress, .info-box .progress .progress-bar {
+  border-radius: 0;
+}
+.info-box .progress {
+  //background: rgba(0,0,0,0.2);
+  margin: 5px -10px 5px -10px;
+  height: 2px;
+}
+
+/** SMALL BOX (inspired by AdminLTE) **/
+.small-box {
+  border-radius: 2px;
+  position: relative;
+  display: block;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+.small-box > .inner {
+  padding: 10px;
+}
+.small-box h3, .small-box p {
+  z-index: 5;
+}
+.small-box h3 {
+  font-size: 38px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  white-space: nowrap;
+  padding: 0;
+}
+.small-box p {
+  font-size: 15px;
+}
+.small-box .icon {
+  -webkit-transition: all .3s linear;
+  -o-transition: all .3s linear;
+  transition: all .3s linear;
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  z-index: 0;
+  font-size: 90px;
+  color: rgba(0,0,0,0.15);
+}
+.small-box > .small-box-footer {
+  position: relative;
+  text-align: center;
+  padding: 3px 0;
+  color: #fff;
+  color: rgba(255,255,255,0.8);
+  display: block;
+  z-index: 10;
+  background: rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+.small-box > .small-box-footer:hover {
+  color: #fff;
+  background: rgba(0,0,0,0.15);
+}

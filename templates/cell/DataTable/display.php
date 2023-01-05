@@ -3,7 +3,7 @@ $this->loadHelper('Sugar.DataTable');
 //$this->loadHelper('Sugar.DataTableJs');
 
 if (empty($dataTable['class'])) {
-    $dataTable['class'] = 'table table-condensed table-striped table-hover';
+    $dataTable['class'] = 'table table-sm table-striped table-hover';
 }
 ?>
 <?php if (isset($dataTable['title'])) : ?>

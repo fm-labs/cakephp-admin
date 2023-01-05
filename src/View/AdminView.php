@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\View;
 
 use Admin\Ui;
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\View\View;
 
@@ -32,13 +33,35 @@ class AdminView extends View
         // core admin helpers
         $this->loadHelper('Html', ['className' => '\Admin\View\Helper\AdminHtmlHelper']);
         $this->loadHelper('Form', ['className' => '\Admin\View\Helper\AdminFormHelper']);
-        $this->loadHelper('Admin.Admin');
 
+        // default helpers
+        $this->loadHelper('Bootstrap.Bootstrap5');
+        $this->loadHelper('Bootstrap.Ui');
+
+        $this->loadHelper('Sugar.Jquery');
+        $this->loadHelper('Sugar.FontAwesome');
+        //$this->loadHelper('Sugar.MomentJs');
+
+        $this->loadHelper('Admin.AdminJs');
+        $this->loadHelper('Admin.AdminTheme');
+        $this->loadHelper('Admin.Breadcrumb');
+        $this->loadHelper('Admin.Toolbar');
+
+        if (Configure::read('Admin.Theme.enableJsFlash')) {
+            $this->loadHelper('Sugar.Toastr');
+        }
+
+        if (Configure::read('Admin.Theme.enableJsAlerts')) {
+            $this->loadHelper('Sugar.SweetAlert2');
+        }
+
+        // configure UI
         $this->ui = new \Cupcake\Ui\Ui($this);
         try {
             $this->ui->add('header', new Ui\Layout\Header());
-            $this->ui->add('header_panels_right', new Ui\Layout\Header\MenuPanel());
-            $this->ui->add('header_panels_right', new Ui\Layout\Header\UserPanel());
+            //$this->ui->add('header_panels_right', new Ui\Layout\Header\MenuPanel());
+            $this->ui->add('header_panels_right', new Ui\Layout\Header\HeaderSysMenu());
+            //$this->ui->add('header_panels_right', new Ui\Layout\Header\UserPanel());
 
             $this->ui->add('footer', new Ui\Layout\Footer());
 
@@ -47,12 +70,12 @@ class AdminView extends View
         } catch (\Exception $ex) {
             debug($ex->getMessage());
         }
-        $this->getEventManager()->on($this->ui);
 
         // trigger cc action 'admin_view_init'
-        \Cupcake\Cupcake::doAction('admin_view_init');
+        //\Cupcake\Cupcake::doAction('admin_view_init');
 
         // dispatch 'Admin.View.initialize' event
+        $this->getEventManager()->on($this->ui);
         $this->getEventManager()->dispatch(new Event('Admin.View.initialize', $this));
     }
 

@@ -14,8 +14,6 @@
         'label' => false,
         'placeholder' => __d('admin', 'Password'),
     ]); ?>
-    <?= $this->Form->button(__d('admin', 'Login'), [
-        'class' => 'btn btn-lg btn-primary btn-block',
-    ]); ?>
+    <?= $this->Form->submit(__d('admin', 'Login')); ?>
     <?= $this->Form->end(); ?>
 </div> <!-- /container -->

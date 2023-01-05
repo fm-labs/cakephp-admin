@@ -1,0 +1,55 @@
+@import "../vars";
+
+/* Tabs */
+.tabs .tab-nav {
+  border-bottom: 1px solid @border-color-base;
+}
+
+.tabs .nav-tabs {
+  border-bottom: none;
+
+  > li:first-child {
+    margin-left: @padding-base;
+  }
+
+  > li {
+    a, a:link, a:focus, a:hover {
+      outline: 0;
+      border-bottom: 1px solid transparent;
+    }
+  }
+
+  > li:hover {
+    a {
+      border-bottom-color: gray;
+    }
+  }
+
+  > li.active, li:link, li:focus {
+    a {
+      border-bottom-color: white;
+    }
+  }
+}
+
+.tabs .tab-content {
+  //background-color: #FFF;
+}
+
+.tabs .tab-content > .tab-pane.active {
+  //box-shadow: 0px 2px 2px #CCC;
+}
+
+.tabs .tab-content > .tab-pane {
+  padding-top: @padding-base;
+  padding-bottom: @padding-base;
+  border-top: none;
+  //overflow-x: auto;
+}
+
+.tabs.with-border {
+  .tab-content > .tab-pane {
+    border: 1px solid #DDD;
+    padding: @padding-base;
+  }
+}

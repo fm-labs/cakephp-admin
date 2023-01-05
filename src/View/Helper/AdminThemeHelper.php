@@ -15,7 +15,7 @@ use Cake\View\Helper;
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Cake\View\Helper\UrlHelper $Url
  */
-class AdminHelper extends Helper
+class AdminThemeHelper extends Helper
 {
     public $helpers = ['Html', 'Url'];
 
@@ -28,65 +28,7 @@ class AdminHelper extends Helper
     {
         $this->_themeConfig = (array)Configure::read('Admin.Theme') + $this->_themeConfig;
 
-        $this->Html->script('Sugar./libs/jquery/jquery.min.js', ['block' => 'headjs']);
-
-        /*
-         * 3rd party dependencies
-         */
-        // Bootstrap
-        $this->Html->css('Sugar./libs/bootstrap/dist/css/bootstrap.min.css', ['block' => true]);
-        $this->Html->script('Sugar./libs/bootstrap/dist/js/bootstrap.min.js', ['block' => true]);
-        // Underscore
-        $this->Html->script('Sugar./libs/underscore/underscore-min.js', ['block' => true]);
-        // FontAwesome
-        $this->Html->css('Sugar./libs/fontawesome/css/font-awesome.min.css', ['block' => true]);
-        // MomentJS
-        $this->Html->script('Sugar./vendor/momentjs/moment.min.js', ['block' => true]);
-
-        // default helpers
-        $this->_View->loadHelper('Bootstrap.Ui');
-        $this->_View->loadHelper('Admin.Breadcrumb');
-        $this->_View->loadHelper('Admin.Toolbar');
-
-        if (Configure::read('Admin.Theme.enableJsFlash')) {
-            $this->_View->loadHelper('Admin.Toastr');
-        }
-
-        if (Configure::read('Admin.Theme.enableJsAlerts')) {
-            $this->_View->loadHelper('Sugar.SweetAlert2');
-        }
-
-        /*
-        $this->_View->loadHelper('User.UserSession', [
-            'sessionKey' => 'Admin.UserSession',
-            'loginUrl' => ['_name' => 'admin:system:user:login'],
-            'checkUrl' => ['_name' => 'admin:system:user:checkauth']
-        ]);
-        */
-
-        /*
-         * Admin UI
-         */
-
-        // Inject adminjs init script
-        $adminjs = [
-            'rootUrl' => $this->Url->build('/', ['fullBase' => true]),
-            'adminUrl' => $this->Url->build('/' . \Admin\Admin::$urlPrefix, ['fullBase' => true]),
-            'debug' => Configure::read('debug'),
-        ];
-
-        $script = sprintf('var AdminJsSettings = window.AdminJsSettings = %s;', json_encode($adminjs));
-        if (Configure::read('debug')) {
-            $script .= 'console.log("[adminjs] global settings", window.AdminJsSettings);';
-        }
-        $this->Html->scriptBlock($script, ['block' => true, 'safe' => false]);
-
-        $this->Html->script('Admin.admin.js', ['block' => true]);
-        $this->Html->script('Admin.admin.iconify.js', ['block' => true]);
-        $this->Html->script('Admin.admin.tooltip.js', ['block' => true]);
-        $this->Html->script('Admin.admin.checkauth.js', ['block' => true]);
-        //$this->Html->script('Admin.admin.alert.js', ['block' => true]);
-        $this->Html->css('Sugar.ui', ['block' => true]);
+        $this->Html->css('Admin.admin/admin.min', ['block' => true]);
     }
 
     /**

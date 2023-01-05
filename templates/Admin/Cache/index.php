@@ -17,7 +17,7 @@ $formatter = function ($url) {
 };
 ?>
 <div class="index">
-    <table class="table table-condensed">
+    <table class="table table-sm">
         <tr>
             <th><?= __d('admin', 'Alias'); ?></th>
             <th><?= __d('admin', 'Cache config'); ?></th>

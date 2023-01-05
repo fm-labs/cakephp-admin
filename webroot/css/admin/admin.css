@@ -1,12 +1,7 @@
 /** cakephp-admin - v1.5.0 **/
 /**
- * Combined ui less element
+ * All admin elements
 **/
-@font-face {
-  font-family: 'OpenSansRegular';
-  src: url('../fonts/OpenSansRegular.eot');
-  src: url('../fonts/OpenSansRegular.eot') format('embedded-opentype'), url('../fonts/OpenSansRegular.woff2') format('woff2'), url('../fonts/OpenSansRegular.woff') format('woff'), url('../fonts/OpenSansRegular.ttf') format('truetype'), url('../fonts/OpenSansRegular.svg#OpenSansRegular') format('svg');
-}
 .ajax-content .hidden-ajax {
   display: none;
   visibility: hidden;
@@ -402,9 +397,6 @@ nav ul.pagination {
 /**
  * Button
  */
-.btn {
-  border-radius: 0;
-}
 .box {
   margin-bottom: 20px;
   border-radius: 0;
@@ -781,6 +773,14 @@ form .imageselect ul.image_picker_selector .thumbnail p {
 /**
  * Checkbox / Radio
  */
+.input-checkbox input[type=checkbox],
+.input-checkbox input[type=radio] {
+  width: 25px;
+  height: 25px;
+  vertical-align: middle;
+  margin: 0 5px 0 0;
+  padding: 0;
+}
 /**
  * Datepicker
  */
@@ -790,7 +790,7 @@ form input.timepicker {
   background-repeat: no-repeat !important;
   background-position: 7px center !important;
   background-size: 20px auto !important;
-  background-color: #fff;
+  background-color: transparent;
   padding-left: 40px;
   cursor: auto;
   max-width: 200px;
@@ -1175,10 +1175,6 @@ table.info.table tr td:first-child {
   border: 1px solid #DDD;
   padding: 15px;
 }
-body {
-  font-family: 'Tahoma', 'Geneva', 'Helvetica', 'Arial', sans-serif;
-  font-size: 14px;
-}
 body.has-toolbar-fixed {
   padding-top: 140px;
 }
@@ -1318,18 +1314,4 @@ ul.array-list li.has-children {
 }
 ul.array-list li.has-children::before {
   content: "*";
-}
-.skin-purple {
-  /** Layout - Header **/
-  /** Layout - Sidebar **/
-  /** Layout - Navbar - UserMenu **/
-}
-.skin-purple .main-header {
-  background-color: #800080 !important;
-}
-.skin-purple .sidebar .sidebar-toggle {
-  background-color: #6d0080 !important;
-}
-.skin-purple .navbar .user-menu ul.dropdown-menu > li.user-header {
-  background-color: #800080 !important;
 }

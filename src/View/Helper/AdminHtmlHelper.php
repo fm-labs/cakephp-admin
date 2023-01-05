@@ -10,6 +10,7 @@ use Cake\View\Helper\HtmlHelper;
  *
  * @package Admin\View\Helper
  * @codeCoverageIgnore
+ * @deprecated
  */
 class AdminHtmlHelper extends HtmlHelper
 {

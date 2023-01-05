@@ -92,6 +92,7 @@ class Plugin extends BasePlugin implements
         $app->addPlugin('Sugar');
         $this->_app = $app;
 
+        //@todo Remove Sugar class aliases
         class_alias('\\Sugar\\View\\Helper\\BoxHelper', '\\Admin\\View\\Helper\\BoxHelper');
         class_alias('\\Sugar\\View\\Helper\\CodeEditorHelper', '\\Admin\\View\\Helper\\CodeEditorHelper');
         class_alias('\\Sugar\\View\\Helper\\DataTableHelper', '\\Admin\\View\\Helper\\DataTableHelper');

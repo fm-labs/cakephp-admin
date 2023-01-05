@@ -7,12 +7,12 @@
     "admin"
   ],
   "homepage": "https://github.com/fmlabs/cakephp-admin",
-  "license": "SEE LICENSE IN LICENSE.txt",
-  "private": true,
+  "license": "MIT",
+  "private": false,
   "author": {
-    "name": "Florian Beisskammer",
-    "email": "office@flowmotion-labs.com",
-    "url": "http://www.flowmotion-labs.com/"
+    "name": "fmlabs",
+    "email": "mail@fmlabs.eu",
+    "url": "https://fmlabs.eu/"
   },
   "contributors": [],
   "repository": {
@@ -23,26 +23,10 @@
     "node": ">= 0.10.0"
   },
   "devDependencies": {
-    "grunt": "^1.1.0",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-less": "~2.0.0",
-    "grunt-contrib-watch": "~1.1.0",
-    "bootstrap": "^3.4",
-    "daterangepicker": "^3.0.5",
-    "font-awesome": "^4.7.0",
-    "image-picker": "^0.3.1",
-    "ionicons": "^5.0.1",
-    "jquery": "^3.5.0",
-    "jquery-ui": "^1.12.1",
-    "jstree": "^3.3.9",
-    "pickadate": "^3.6",
-    "select2": "^4.0.13",
-    "select2-bootstrap-theme": "^0.1.0-beta.10",
-    "sumoselect": "^3.0.5",
-    "sweetalert2": "^9.10.12",
-    "tinymce": "^5.2.2",
-    "toastr": "^2.1.4",
-    "underscore": "^1.10.2"
+    "grunt": "^1.5.0",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-watch": "*"
   },
   "dependencies": {
   }

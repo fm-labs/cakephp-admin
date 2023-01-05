@@ -5,7 +5,7 @@ $this->DataTable->init($dataTable);
 ?>
 <?= $this->DataTable->pagination(); ?>
 
-<?= $this->DataTable->create('table table-hover table-condensed table-striped'); ?>
+<?= $this->DataTable->create('table table-hover table-sm table-striped'); ?>
 <?= $this->DataTable->renderHead(); ?>
 <?= $this->DataTable->renderBody(); ?>
 <?= $this->DataTable->end(); ?>

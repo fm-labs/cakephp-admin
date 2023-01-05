@@ -1,0 +1,364 @@
+/**
+ * Common Backend CSS Stylesheet
+ */
+
+@import "../mixins/elements.less";
+@import "../vars.less";
+
+/**
+ * Helper classes
+ */
+.clearfix {
+  clear: both;
+  height: 0;
+}
+
+.padding-reset{
+  padding: 0 !important;
+}
+
+.text-strong, .text-bold, .strong {
+  font-weight: bold !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.no-border {
+  border: 0 none;
+}
+
+.no-border-radius {
+  border-radius: 0;
+}
+
+/**
+ * Lists
+ */
+
+dl,
+dl.dl-horizontal {
+  dt {
+    text-align: left;
+    padding-top: 0.6rem;
+    width: 220px;
+    display: inline-block;
+    border-top: 1px solid #e8e8e8;
+  }
+  dd {
+    display: block;
+    margin-left: 0; // bootstrap override
+    padding-left: 0;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+    border-top: 1px solid #e8e8e8;
+    max-height: 200px;
+    overflow-y: scroll;
+
+    pre {
+      max-height: 300px;
+      overflow-y: scroll;
+    }
+  }
+
+  dt:first-child {
+    border-top: 0 none;
+  }
+
+  dd:first-child {
+    border-top: 0 none;
+  }
+}
+
+dl.dl-striped {
+  dd:nth-child(2n-1) {
+    //background-color: #f3f3f3;
+  }
+}
+
+
+.index, .view, .form {
+
+  //overflow-x: scroll;
+
+  > h1, > h2 {
+    margin: 0.5rem 0 1rem;
+    //padding: 0;
+  }
+
+  table .thumb {
+    width: 30px;
+    height: auto;
+    vertical-align: middle;
+  }
+}
+
+.view, .form {
+
+  //max-width: @content-max-w;
+  //margin: 0 auto;
+
+  &.fluid {
+    max-width: none;
+    margin: inherit;
+  }
+}
+
+/**
+ * Links
+ */
+.link-frame {
+
+  &::after {
+    .faicon(" \f08e");
+    opacity: 0.1;
+  }
+
+  &:hover::after {
+    opacity: 0.9;
+  }
+}
+
+.link-frame-modal,
+.link-modal-frame {
+
+}
+
+/**
+ * Images
+ */
+.image, .thumb {
+  max-width: 100%;
+
+  > img {
+    max-width: 100%;
+  }
+}
+
+.thumb-md, .image.thumbnail {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.thumb-sm {
+  max-width: 30px;
+  max-height: 30px;
+}
+
+.thumb-lg {
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.thumbnail .caption {
+  word-break: break-all;
+}
+
+/**
+ * Labels
+ */
+.label[data-toggle-url] {
+  cursor: pointer;
+
+  &.loading {
+    background-color: #AAA;
+  }
+
+  &.loading-error::before {
+    content: "!";
+  }
+}
+
+/**
+ * Form Image Select
+ */
+.input-imageselect {
+
+  .thumbnails.image_picker_selector.grouped {
+    ul li {
+      //float: none;
+      //display: inline-block;
+    }
+
+    ul li.group_title {
+      font-weight: bold;
+      font-size: 130%;
+    }
+
+    ul li .thumbnail {
+      position: relative;
+      text-align: center;
+      padding: 0;
+
+      &:after {
+        clear: both;
+      }
+    }
+
+    ul li .thumbnail img {
+      height: 100px;
+    }
+
+    ul li .thumbnail p {
+      text-align: center;
+      padding: 0.2em;
+      background-color: #efefef;
+    }
+
+
+  }
+
+}
+
+/**
+ * Tabs
+ */
+.tab-pane.active {
+  padding: 0.5rem 0;
+}
+
+.nav-tabs > li > a {
+  border-radius: 0;
+}
+
+
+/**
+ * Iframe
+ */
+iframe {
+  border: none;
+}
+
+
+/**
+ * Pagination
+ */
+nav ul.pagination {
+  margin: 0.3rem 0;
+}
+
+
+/** Image Picker **/
+.imageselect_wrap {
+  padding: 1em 0;
+  max-height: 700px;
+  //overflow: scroll;
+  //overflow-x: hidden;
+}
+
+.imageselect img.image_picker_image {
+  max-height: 100px;
+
+  &~ p {
+    font-size: 0.66rem;
+    display: none;
+  }
+}
+
+
+/**
+ * Actions
+ */
+
+.actions {
+  ul {
+    li {
+      list-style: none;
+    }
+  }
+}
+
+.actions.right {
+  text-align: right;
+
+  ul {
+    li {
+      list-style: none;
+    }
+  }
+}
+
+.actions.grouped {
+
+  ul {
+    li {
+      display: inline-block;
+    }
+  }
+}
+
+/** Pagination **/
+.pagination {
+  margin: 0;
+}
+
+/** Entity View **/
+.entity-view {
+  position: relative;
+  max-width: 100%;
+
+  h1 {
+    border: none;
+  }
+
+  .entity-table {
+      max-width: 100%;
+      overflow: scroll;
+
+      tr td:first-child {
+          min-width: 20%;
+          //background-color: #EAEAEA;
+          font-weight: 700;
+          vertical-align: top;
+      }
+  }
+}
+
+/**
+ * Ajax loaded content
+ */
+.ajax-content {
+  .index, .view, .form {
+    max-width: none;
+  }
+}
+
+/**
+ * Attachments (deprecated)
+ */
+.attachments.editor {
+
+  h4.ui.header {
+    margin-top: 1em !important;
+  }
+}
+
+.attachments.editor .attachments {
+
+  .attachment {
+    //border: 1px solid #CCC;
+    //display: inline-block;
+    //padding: 5px;
+
+    .image {
+
+      img {
+        max-height: 100px;
+      }
+    }
+
+    .actions {
+      font-size: 10px;
+    }
+  }
+
+}

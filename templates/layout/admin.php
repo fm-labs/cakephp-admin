@@ -15,22 +15,23 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->Html->css('Admin.layout/admin'); ?>
+    <?= $this->Html->css('Admin.layout/layout.admin'); ?>
     <?= $this->fetch('headjs') ?>
 </head>
 <body class="body-screen sidebar-mini sidebar-collapsed <?= $this->get('be_layout_body_class'); ?>">
 <div class="wrapper">
 
-    <!-- Main Header -->
-    <header class="main-header">
-        <?php echo $this->fetch('header'); ?>
-    </header>
 
     <!-- Left side column. contains the logo and sidebar -->
     <?php echo $this->fetch('sidebar'); ?>
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <?php echo $this->fetch('header'); ?>
+        </header>
 
         <section id="main-flash" class="flash-wrapper">
             <?= $this->Flash->render(); ?>
@@ -41,7 +42,9 @@
 
         <!-- Breadcrumbs -->
         <section id="main-breadcrumbs" class="main-breadcrumbs">
-            <?php echo $this->fetch('breadcrumbs'); ?>
+            <div class="container-fluid">
+                <?php echo $this->fetch('breadcrumbs'); ?>
+            </div>
         </section>
 
         <!-- Toolbar -->
@@ -55,7 +58,7 @@
         <!-- Left container -->
         <?php if ($this->fetch('left')) : ?>
             <aside id="main-left" class="content-aside content-left">
-                <?php echo $this->fetch('left'); ?>
+                <?php //echo $this->fetch('left'); ?>
             </aside>
         <?php endif; ?>
 
@@ -83,13 +86,13 @@
         <!-- Bottom -->
         <?php echo $this->fetch('bottom'); ?>
 
+        <!-- Main Footer -->
+        <footer id="main-footer" class="main-footer">
+            <?php echo $this->fetch('footer'); ?>
+        </footer>
+
     </div>
     <!-- /.content-wrapper -->
-
-    <!-- Main Footer -->
-    <footer id="main-footer" class="main-footer">
-        <?php echo $this->fetch('footer'); ?>
-    </footer>
 
     <!-- Control Sidebar -->
     <?php //echo $this->fetch('control_sidebar'); ?>

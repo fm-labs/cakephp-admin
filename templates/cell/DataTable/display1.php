@@ -6,7 +6,7 @@ $this->loadHelper('Sugar.DataTable');
 $this->DataTable->create($params);
 ?>
 <?= $this->DataTable->pagination(); ?>
-<table class="<?= $this->DataTable->tableClass('table table-striped table-hover table-condensed'); ?>">
+<table class="<?= $this->DataTable->tableClass('table table-striped table-hover table-sm'); ?>">
     <thead>
         <?= $this->DataTable->renderHead(); ?>
         <th class="actions"><?= __d('admin','Actions') ?></th>

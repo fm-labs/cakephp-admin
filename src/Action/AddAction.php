@@ -90,11 +90,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
             $this->template = $this->_config['template'];
         }
 
-        if (isset($this->_config['entity']) && isset($this->_config[$this->_config['entity']])) {
-            $entity = $this->_config[$this->_config['entity']];
-        } else {
-            $entity = $this->model()->newEmptyEntity();
-        }
+        $entity = $this->_config['entity'] ?? $this->model()->newEmptyEntity();
 
         $_fields = $this->model()->getSchema()->columns();
         if (isset($this->_config['fields'])) {
@@ -125,12 +121,14 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
             $fields[$field] = $config;
         }
 
+        // set access
         $entity->setAccess($whitelist, true);
         $entity->setAccess($blacklist, false);
         if (isset($this->_config['fields.access'])) {
             $entity->setAccess($this->_config['fields.access'], true);
         }
 
+        // process data submission
         if ($this->request->is(['put', 'post'])) {
             $entity = $this->model()->patchEntity(
                 $entity,
@@ -140,12 +138,11 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
             if ($this->model()->save($entity)) {
                 $this->flashSuccess(__d('admin', 'Record created'));
 
+                // redirect after add
                 if ($this->_config['redirectUrl']) {
                     $redirectUrl = $this->_config['redirectUrl'] === true
                         ? ['action' => 'edit', $entity->id]
                         : $this->_config['redirectUrl'];
-                    $redirectUrl = $controller->referer($redirectUrl);
-                    //debug($redirectUrl);
                     return $this->redirect($redirectUrl);
                 }
             } else {

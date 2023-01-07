@@ -314,7 +314,7 @@ body.darkmode .select2-dropdown {
 }
 body.darkmode .codeeditor.ace_editor {
   border: 1px solid #314354;
-  font-size: 14px;
+  font-size: 1rem;
 }
 body.darkmode .tabs .nav-tabs {
   border-color: #314354;

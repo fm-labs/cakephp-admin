@@ -29,10 +29,11 @@
  */
 //@font-family-primary: 'Open Sans', sans-serif;
 //@font-size-default: 12px;
-@font-family-primary: 'Tahoma', 'Geneva', 'Helvetica','Arial', sans-serif;
-@font-size-small: 12px;
-@font-size-default: 14px;
-@font-size-large: 16px;
+//@font-family-primary: 'Tahoma', 'Geneva', 'Helvetica','Arial', sans-serif;
+@font-family-primary: inherit;
+@font-size-small: 0.825rem;
+@font-size-default: 1rem;
+@font-size-large: 1.25rem;
 
 /**
  * Borders
@@ -52,7 +53,7 @@
  */
 @body-offset-top: 0;
 @body-offset-bottom: 3rem;
-@body-font-size: @font-size-default;
+@body-font-size: @font-size-small;
 
 /**
  * Header
@@ -98,7 +99,8 @@
 /**
  * Forms
  */
-@form-max-w: 500px;
+@form-font-size: @body-font-size;
+@form-max-w: 900px;
 @form-input-w: 300px;
 
 /**

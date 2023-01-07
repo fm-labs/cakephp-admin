@@ -12,6 +12,9 @@
     More info at: http://lesselements.com
   ---------------------------------------------------*/
 /**
+ * Backend mixins
+ */
+/**
  * Colors
  */
 /**
@@ -143,9 +146,15 @@ dl.dl-horizontal dd:first-child {
 /**
  * Containers
  */
+.index,
+.view,
+.edit {
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
 .index table .thumb,
 .view table .thumb,
-.form table .thumb {
+.edit table .thumb {
   width: 30px;
   height: auto;
   vertical-align: middle;
@@ -453,9 +462,18 @@ ul.array-list li.has-children::before {
   color: #fff;
   background: rgba(0, 0, 0, 0.15);
 }
-/**
- * Backend mixins
- */
+.btn-xs {
+  --bs-btn-padding-y: 0.25rem;
+  --bs-btn-padding-x: 0.5rem;
+  --bs-btn-font-size: 0.65rem;
+  line-height: 0.75rem;
+}
+.btn-xxs {
+  --bs-btn-padding-y: 0.1rem;
+  --bs-btn-padding-x: 0.25rem;
+  --bs-btn-font-size: 0.6rem;
+  line-height: 0.75rem;
+}
 /**
  * General Inputs
  */
@@ -465,28 +483,14 @@ input[readonly] {
 /**
  * Forms
  */
-form.form,
-form.form-horizontal {
-  padding: 15px;
-}
-form label {
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: 5px;
-  font-weight: normal;
-  font-variant: normal;
-  color: #444;
+form.form {
+  max-width: 900px;
 }
 form .form-group {
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
 }
 form .form-control {
-  font-size: 14px;
-  color: #333;
-  border-color: #A4A4A4;
-  border-radius: 2px;
-  padding: 6px 12px;
-  min-width: 300px;
+  font-size: 0.825rem;
 }
 form div.required > label,
 form div.required .control-label {
@@ -496,9 +500,6 @@ form div.required > label:after,
 form div.required .control-label:after {
   content: "*";
 }
-form div.input {
-  margin-bottom: 0.5em;
-}
 form textarea {
   height: auto;
   min-height: 100px;
@@ -506,10 +507,6 @@ form textarea {
 }
 form textarea ~ button {
   margin-top: 0.5em;
-}
-form div.actions {
-  border-top: 1px solid #ccc;
-  padding: 1rem 0;
 }
 /**
  * Fieldset
@@ -594,6 +591,17 @@ form fieldset.collapsed > legend ~ * {
   margin-top: 0.3em;
 }
 /**
+ * Checkbox / Radio
+ */
+form .input-checkbox input[type=checkbox],
+form .input-checkbox input[type=radio] {
+  width: 1.25rem;
+  height: 1.25rem;
+  vertical-align: middle;
+  margin: 0 5px 0 0;
+  padding: 0;
+}
+/**
  * Number
  */
 form .input-number input {
@@ -628,17 +636,6 @@ form .imageselect ul.image_picker_selector .thumbnail p {
   font-size: 0.6rem;
 }
 /**
- * Checkbox / Radio
- */
-.input-checkbox input[type=checkbox],
-.input-checkbox input[type=radio] {
-  width: 1.25rem;
-  height: 1.25rem;
-  vertical-align: middle;
-  margin: 0 5px 0 0;
-  padding: 0;
-}
-/**
  * Datepicker
  */
 form input.datepicker,
@@ -657,13 +654,6 @@ form input.timepicker {
  */
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
-  form.form-horizontal .control-label {
-    text-align: right;
-    display: block;
-  }
-  form.form-horizontal .control-help {
-    text-align: right;
-  }
 }
 /* Medium devices (desktops, 992px and up) */
 /* Large devices (large desktops, 1200px and up) */
@@ -754,8 +744,8 @@ form input.timepicker {
   padding: 0.33em 0.66em;
   display: block;
   text-decoration: none;
-  font-family: 'Tahoma', 'Geneva', 'Helvetica', 'Arial', sans-serif;
-  font-size: 14px;
+  font-family: inherit;
+  font-size: 0.825rem;
   color: #333;
 }
 .be-nav ul {
@@ -813,7 +803,7 @@ form input.timepicker {
  */
 .be-nav.large a {
   line-height: 30px;
-  font-size: 16px;
+  font-size: 1.25rem;
 }
 /* Nested Navs */
 ul.nav.nav-nested > li > ul {

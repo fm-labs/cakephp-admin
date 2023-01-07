@@ -126,20 +126,8 @@ body {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
-body {
-  margin: 0;
-  font-family: var(--bs-body-font-family);
-  font-size: var(--bs-body-font-size);
-  font-weight: var(--bs-body-font-weight);
-  line-height: var(--bs-body-line-height);
-  color: var(--bs-body-color);
-  text-align: var(--bs-body-text-align);
-  background-color: var(--bs-body-bg);
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: transparent;
-}
-body {
-  font-size: 0.875rem;
+:root {
+  --bs-body-font-size: 0.825rem;
 }
 .content {
   padding-bottom: 5em;
@@ -159,13 +147,4 @@ body {
 .toolbar .btn-toolbar .btn ~ .btn-group,
 .toolbar .btn-toolbar .btn-group ~ .btn-group {
   margin-left: 0.25rem;
-}
-.index,
-.view,
-.edit {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-.form {
-  max-width: 900px;
 }

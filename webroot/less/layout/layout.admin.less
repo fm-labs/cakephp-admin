@@ -10,22 +10,26 @@
 //@import "_toolbar.less";
 @import "_dashboard.less";
 
-body {
-  margin: 0;
-  font-family: var(--bs-body-font-family);
-  font-size: var(--bs-body-font-size);
-  font-weight: var(--bs-body-font-weight);
-  line-height: var(--bs-body-line-height);
-  color: var(--bs-body-color);
-  text-align: var(--bs-body-text-align);
-  background-color: var(--bs-body-bg);
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: transparent;
+:root {
+  --bs-body-font-size: @body-font-size;
 }
 
-body {
-  font-size: .875rem;
-}
+//body {
+//  margin: 0;
+//  font-family: var(--bs-body-font-family);
+//  font-size: var(--bs-body-font-size);
+//  font-weight: var(--bs-body-font-weight);
+//  line-height: var(--bs-body-line-height);
+//  color: var(--bs-body-color);
+//  text-align: var(--bs-body-text-align);
+//  background-color: var(--bs-body-bg);
+//  -webkit-text-size-adjust: 100%;
+//  -webkit-tap-highlight-color: transparent;
+//}
+
+//body {
+//  font-size: .875rem;
+//}
 
 //body {
 //  font-family: @font-family-primary;
@@ -214,15 +218,4 @@ body {
       margin-left: 0.25rem;
     }
   }
-}
-
-
-// legacy containers (equivalent to bootstrap's container)
-.index, .view, .edit {
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-
-.form {
-  max-width: 900px;
 }

@@ -1,6 +1,6 @@
 
 @import "../mixins/elements.less";
-@import "../mixins/mixins.less";
+@import "../mixins/faicon.less";
 @import "../vars.less";
 
 
@@ -15,42 +15,42 @@ input[readonly] {
  * Forms
  */
 
-form {
-  //max-width: 800px;
+form.form {
+  max-width: @form-max-w;
 }
 
 form.form,
 form.form-horizontal {
-  padding: 15px;
+  //padding: 15px;
   //background-color: #FFF;
 }
 
-form label {
-  display: inline-block;
-  max-width: 100%;
-  margin-bottom: 5px;
-  //font-weight: 700;
-  //font-variant-caps: all-small-caps;
-  font-weight: normal;
-  font-variant: normal;
-  color: #444;
-}
+//form label {
+//  display: inline-block;
+//  max-width: 100%;
+//  margin-bottom: 5px;
+//  //font-weight: 700;
+//  //font-variant-caps: all-small-caps;
+//  font-weight: normal;
+//  font-variant: normal;
+//  color: #444;
+//}
 
 
 form .form-group {
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   //border-bottom: 1px solid #3C8DBC;
   //padding-bottom: 15px;
 }
 
 form .form-control {
-  font-size: @font-size-default;
-  color: @color-text;
-  border-color: #A4A4A4;
-  border-radius: 2px;
-  padding: 6px 12px;
-  //width: auto;
-  min-width: @form-input-w;
+  font-size: @form-font-size;
+  //color: @color-text;
+  //border-color: #A4A4A4;
+  //border-radius: 2px;
+  //padding: 6px 12px;
+  ////width: auto;
+  //min-width: @form-input-w;
 }
 
 form div.required > label,
@@ -62,9 +62,9 @@ form div.required .control-label {
   }
 }
 
-form div.input {
-  margin-bottom: 0.5em;
-}
+//form div.input {
+//  margin-bottom: 0.5em;
+//}
 
 form textarea {
   height: auto;
@@ -75,10 +75,11 @@ form textarea {
 form textarea ~ button {
   margin-top: 0.5em;
 }
-form div.actions {
-  border-top: 1px solid #ccc;
-  padding: 1rem 0;
-}
+
+//form div.actions {
+//  border-top: 1px solid #ccc;
+//  padding: 1rem 0;
+//}
 
 /**
  * Fieldset
@@ -166,6 +167,18 @@ form fieldset.collapsed {
 }
 
 /**
+ * Checkbox / Radio
+ */
+form .input-checkbox input[type=checkbox],
+form .input-checkbox input[type=radio] {
+  width: 1.25rem;
+  height: 1.25rem;
+  vertical-align: middle;
+  margin: 0 5px 0 0;
+  padding: 0;
+}
+
+/**
  * Number
  */
 form .input-number {
@@ -216,18 +229,6 @@ form .imageselect {
 }
 
 /**
- * Checkbox / Radio
- */
-.input-checkbox input[type=checkbox],
-.input-checkbox input[type=radio] {
-  width: 1.25rem;
-  height: 1.25rem;
-  vertical-align: middle;
-  margin: 0 5px 0 0;
-  padding: 0;
-}
-
-/**
  * Datepicker
  */
 
@@ -256,17 +257,17 @@ form input.timepicker {
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: @screen-sm-min) {
-  form.form-horizontal {
-
-    .control-label {
-      text-align: right;
-      display: block;
-    }
-
-    .control-help {
-      text-align: right;
-    }
-  }
+  //form.form-horizontal {
+  //
+  //  .control-label {
+  //    text-align: right;
+  //    display: block;
+  //  }
+  //
+  //  .control-help {
+  //    text-align: right;
+  //  }
+  //}
 }
 
 /* Medium devices (desktops, 992px and up) */

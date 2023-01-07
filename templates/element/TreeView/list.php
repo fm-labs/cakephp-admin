@@ -1,5 +1,5 @@
 <ul>
-    <?php foreach ($primary as $item): ?>
+    <?php foreach ($items as $item): ?>
     <li>
         <div class="item">
             <a class="handle" href="#">X</a>

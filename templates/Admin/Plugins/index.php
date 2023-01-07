@@ -1,6 +1,6 @@
 <?php $this->Breadcrumbs->add(__d('admin', 'Admin'), ['controller' => 'Admin', 'action' => 'index']); ?>
 <?php $this->Breadcrumbs->add(__d('admin', 'Plugins'), ['action' => 'index']); ?>
-<?php $this->loadHelpers('Admin.Ui'); ?>
+<?php $this->loadHelper('Cupcake.Status'); ?>
 <div class="index">
     <table class="table table-striped table-hover">
         <tr>
@@ -16,21 +16,27 @@
         <?php foreach ((array)$this->get('plugins') as $pluginName => $info) : ?>
         <tr>
             <td><?= h($info['name']); ?></td>
-            <td><?= $this->Ui->statusLabel($info['loaded']); ?></td>
-            <td><?= $this->Ui->statusLabel($info['handler_class']); ?></td>
-            <td><?= $this->Ui->statusLabel($info['path']); ?></td>
-            <td><?= $this->Ui->statusLabel($info['handler_bootstrap']); ?></td>
-            <td><?= $this->Ui->statusLabel($info['handler_routes']); ?></td>
+            <td><?= $this->Status->boolean(!!$info['loaded']); ?></td>
+            <td><?= $this->Status->display($info['handler_class']); ?></td>
+            <td><?= $this->Status->display($info['path']); ?></td>
+            <td><?= $this->Status->boolean(!!$info['handler_bootstrap']); ?></td>
+            <td><?= $this->Status->boolean(!!$info['handler_routes']); ?></td>
             <td>
                 <?php if ($info['configuration_url']) : ?>
                     <?= $this->Html->link('Configure', $info['configuration_url']); ?>
                 <?php endif; ?>
             </td>
-            <td>
+            <td class="actions">
                 <?php if ($info['handler_bootstrap']) : ?>
-                    <?= $this->Html->link('Disable', ['controller' => 'Plugins', 'action' => 'disable', $info['name']]); ?>
+                    <?= $this->Html->link('Disable',
+                        ['controller' => 'Plugins', 'action' => 'disable', $info['name']],
+                        ['class' => 'btn btn-xs btn-secondary']
+                    ); ?>
                 <?php else : ?>
-                    <?= $this->Html->link('Enable', ['controller' => 'Plugins', 'action' => 'enable', $info['name']]); ?>
+                    <?= $this->Html->link('Enable',
+                        ['controller' => 'Plugins', 'action' => 'enable', $info['name']],
+                        ['class' => 'btn btn-xs btn-primary']
+                    ); ?>
                 <?php endif; ?>
                 
                 <?php //@todo Uninstall plugin //echo  $this->Html->link('Uninstall', ['controller' => 'Plugins', 'action' => 'uninstall', $info['name']]); ?>
@@ -43,15 +49,16 @@
         <?php foreach ((array)$this->get('installed') as $pluginName => $info) : ?>
             <tr>
                 <td><?= h($info['name']); ?></td>
-                <td><?= $this->Ui->statusLabel($info['loaded']); ?></td>
-                <td><?= $this->Ui->statusLabel($info['handler_class']); ?></td>
-                <td><?= $this->Ui->statusLabel($info['path']); ?></td>
+                <td><?= $this->Status->boolean(!!$info['loaded']); ?></td>
+                <td><?= $this->Status->boolean(!!$info['handler_class']); ?></td>
+                <td><?= $this->Status->display($info['path']); ?></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td>
-                <?= $this->Html->link('Enable', ['controller' => 'Plugins', 'action' => 'enable', $info['name']]); ?>
-
+                <td class="actions">
+                    <?= $this->Html->link('Enable', ['controller' => 'Plugins', 'action' => 'enable', $info['name']],
+                        ['class' => 'btn btn-xs btn-primary']
+                    ); ?>
                 </td>
             </tr>
         <?php endforeach; ?>

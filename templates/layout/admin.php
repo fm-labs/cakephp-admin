@@ -24,7 +24,7 @@
     <!-- Header -->
     <?php echo $this->fetch('header'); ?>
 
-    <div class="container-fluid">
+    <div class="container-fluid px-0">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
             <?php echo $this->fetch('sidebar'); ?>
         </nav>

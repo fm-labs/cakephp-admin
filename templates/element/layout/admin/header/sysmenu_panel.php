@@ -19,7 +19,7 @@ $this->loadHelper('BootstrapMenu', ['className' => '\\Bootstrap\\View\\Helper\\M
             'classes' => [
                 'menu' => 'menu',
             ],
-            'items' => $items,
+            'items' => $primary,
         ])->render();
         ?>
         </li>

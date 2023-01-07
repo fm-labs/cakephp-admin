@@ -36,7 +36,7 @@ class AdminJsHelper extends Helper
         $this->Html->scriptBlock($script, ['block' => true, 'safe' => false]);
 
         $this->Html->script('Admin.admin.js', ['block' => true]);
-        //$this->Html->script('Admin.admin.iconify.js', ['block' => true]);
+        $this->Html->script('Admin.admin.iconify.js', ['block' => true]);
         //$this->Html->script('Admin.admin.tooltip.js', ['block' => true]);
         //$this->Html->script('Admin.admin.checkauth.js', ['block' => true]);
         //$this->Html->script('Admin.admin.alert.js', ['block' => true]);

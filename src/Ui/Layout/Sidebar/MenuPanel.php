@@ -2,21 +2,24 @@
 
 namespace Admin\Ui\Layout\Sidebar;
 
-use Admin\Ui\Layout\LayoutElement;
+use Admin\Ui\Layout\BaseLayoutElement;
 use Cake\Core\Configure;
 
-class MenuPanel extends LayoutElement
+class MenuPanel extends BaseLayoutElement
 {
     protected $elementName = ""; //"Admin.layout/admin/sidebar/menu_panel";
+
+    public function initialize(): void
+    {
+        $this->_View->loadHelper('Bootstrap.Menu');
+    }
 
     /**
      * @param \Cake\View\View $view
      * @return string
      */
-    public function render(\Cake\View\View $view): string
+    public function render(): string
     {
-        $view->loadHelper('Bootstrap.Menu');
-
         $menuTemplates = [
             'navLink' => '<a href="{{url}}"{{attrs}}><span>{{content}}</span></a>',
             'navList' => '<ul class="{{class}}">{{title}}{{items}}</ul>',
@@ -47,7 +50,7 @@ class MenuPanel extends LayoutElement
                 continue;
             }
 
-            $html .= $view->Menu->create([
+            $html .= $this->_View->Menu->create([
                 'templates' => $menuTemplates,
                 'classes' => $menuClasses,
                 'items' => $menu->toArray(),

@@ -27,8 +27,10 @@ class CacheController extends AppController
         $caches = [];
         foreach (Cache::configured() as $alias) {
             $cache = Cache::getConfig($alias);
-            if (is_object($cache['className'])) {
-                if (\Cake\Core\Plugin::isLoaded('DebugKit') && $cache['className'] instanceof \DebugKit\Cache\Engine\DebugEngine) {
+            if (isset($cache['className']) && is_object($cache['className'])) {
+                if (\Cake\Core\Plugin::isLoaded('DebugKit')
+                    &&  $cache['className'] instanceof \DebugKit\Cache\Engine\DebugEngine)
+                {
                     if (!$cache['className']->engine()) {
                         $cache['className']->init();
                     }

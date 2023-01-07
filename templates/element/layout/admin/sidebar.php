@@ -1,45 +1,28 @@
-<?php
-/**
- * Default admin layout sidebar element.
- *
- * Subsections:
- * - sidebar_panels
- *
- * @property \Admin\View\AdminView $this
- */
-?>
-<aside class="main-sidebar">
-    <section class="sidebar">
-        <div class="sidebar-toggle">
-            <a href="#" data-sidebar-toggle>
-                <i class="fa fa-cubes"></i>
-                <span><?= $this->get('be_title', __('Administration')) ?></span>
+<div class="position-sticky pt-3 sidebar-sticky">
+    <!-- <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">
+                Dashboard
             </a>
-        </div>
-        <?= $this->fetch('sidebar_panels'); ?>
-    </section>
-    <script>
-        // Nightmode: Restore state
-        if (!!window.localStorage /*&& window.localStorage.key('be.sidebar')*/) {
-            var enabled = window.localStorage.getItem('be.sidebar');
-            //console.log("Restoring sidebar", enabled);
-            if (enabled === true || enabled === 'true') {
-                $('body').removeClass('sidebar-collapsed');
-            }
-        }
-        $(document).ready(function() {
-            $('[data-sidebar-toggle]').click(function(ev) {
-                $body = $('body');
-                $body.toggleClass('sidebar-collapsed');
+        </li>
+    </ul>
+    -->
 
-                if (!!window.localStorage) {
-                    console.log("Saving sidebar state", !$body.hasClass('sidebar-collapsed'));
-                    window.localStorage.setItem('be.sidebar', !$body.hasClass('sidebar-collapsed'));
-                }
+    <?= $this->fetch('sidebar_content') ?>
 
-                ev.preventDefault();
-                return false;
-            });
-        })
-    </script>
-</aside>
+    <!--
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
+        <span>Saved reports</span>
+        <a class="link-secondary" href="#" aria-label="Add a new report">
+            <?= '' // $this->FontAwesome4->icon('plus'); ?>
+        </a>
+    </h6>
+    <ul class="nav flex-column mb-2">
+        <li class="nav-item">
+            <a class="nav-link" href="#">
+                Current month
+            </a>
+        </li>
+    </ul>
+    -->
+</div>

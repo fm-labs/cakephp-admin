@@ -7,7 +7,7 @@ use Cake\Utility\Inflector;
 use Cupcake\Ui\UiElement;
 use Cupcake\Ui\UiElementInterface;
 
-abstract class LayoutElement extends UiElement
+abstract class BaseLayoutElement extends UiElement
 {
     public $plugin = 'Admin';
 

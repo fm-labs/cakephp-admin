@@ -7,10 +7,10 @@
 </div>
 
 <div class="" style="margin-bottom: 10px;">
-    <?= $this->Html->link('Flash success', ['?' => ['flash' => 'success']], ['class' => 'btn btn-default']); ?>
-    <?= $this->Html->link('Flash warning', ['?' => ['flash' => 'warning']], ['class' => 'btn btn-default']); ?>
-    <?= $this->Html->link('Flash error', ['?' => ['flash' => 'error']], ['class' => 'btn btn-default']); ?>
-    <?= $this->Html->link('Flash info', ['?' => ['flash' => 'info']], ['class' => 'btn btn-default']); ?>
+    <?= $this->Html->link('Flash success', ['?' => ['flash' => 'success']], ['class' => 'btn btn-outline-secondary']); ?>
+    <?= $this->Html->link('Flash warning', ['?' => ['flash' => 'warning']], ['class' => 'btn btn-outline-secondary']); ?>
+    <?= $this->Html->link('Flash error', ['?' => ['flash' => 'error']], ['class' => 'btn btn-outline-secondary']); ?>
+    <?= $this->Html->link('Flash info', ['?' => ['flash' => 'info']], ['class' => 'btn btn-outline-secondary']); ?>
 </div>
 
 <div class="row">

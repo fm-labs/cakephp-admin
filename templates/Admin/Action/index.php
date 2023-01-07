@@ -19,12 +19,12 @@ if (isset($tableStats)) {
 <?php endif; ?>
 
 <!-- Data table -->
-<?php $this->Box->create(false/*, ['class' => 'box']*/); ?>
+<?php //$this->Box->create(false/*, ['class' => 'box']*/); ?>
 <?php
 $this->DataTable->create($this->get('dataTable'), $this->get('result'));
 echo $this->DataTable->renderAll();
 ?>
-<?php echo $this->Box->render(); ?>
+<?php // echo $this->Box->render(); ?>
 
 <?php if ($this->get('debug')) : ?>
     <?php $this->Box->create("Debug"); ?>

@@ -2,9 +2,9 @@
 
 namespace Admin\Ui\Layout\Header;
 
-use Admin\Ui\Layout\LayoutElement;
+use Admin\Ui\Layout\BaseLayoutElement;
 
-class HeaderSysMenu extends LayoutElement
+class HeaderSysMenu extends BaseLayoutElement
 {
     protected $elementName = "Admin.layout/admin/header/sysmenu";
 

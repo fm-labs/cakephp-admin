@@ -18,7 +18,7 @@ $this->DataTable->create($params);
             <?= $this->DataTable->renderRowCells($row); ?>
             <td class="actions">
                 <div class="dropdown">
-                    <button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <button class="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Actions
                         <span class="caret"></span>
                     </button>

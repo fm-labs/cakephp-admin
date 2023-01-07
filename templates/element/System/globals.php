@@ -3,9 +3,6 @@
  * @var array $globals
  */
 ?>
-<?php $this->Breadcrumbs->add(__d('admin', 'Admin'), ['controller' => 'Admin', 'action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('admin', 'Systeminfo'), ['action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('admin', 'Globals')); ?>
 <div class="view container">
     <?= $this->Box->create(__d('admin', 'CAKEPHP Globals'), ['class' => 'box-solid']); ?>
     <table class="table table-striped table-hover">

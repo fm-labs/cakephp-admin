@@ -25,17 +25,18 @@
                     <?= $this->Html->link(
                         __d('admin', 'View'),
                         ['action' => 'view', $file['id']],
-                        ['class' => 'btn btn-sm btn-default', 'data-icon' => 'file-txt-o']
+                        ['class' => 'btn btn-sm btn-outline-secondary', 'data-icon' => 'file-txt-o']
                     ) ?>
                     <?= $this->Ui->link(
                         __d('admin', 'Clear'),
                         ['action' => 'clear', $file['id']],
-                        ['class' => 'btn btn-sm btn-default', 'data-icon' => 'trash']
+                        ['class' => 'btn btn-sm btn-outline-secondary', 'data-icon' => 'trash']
                     ) ?>
                     <?= $this->Ui->postLink(
                         __d('admin', 'Delete'),
                         ['action' => 'delete', $file['id']],
-                        ['class' => 'btn-danger btn-default btn-sm btn', 'data-icon' => 'trash', 'confirm' => __d('admin', 'Are you sure you want to delete {0}?', $file['name'])]
+                        ['class' => 'btn btn-danger btn-sm', 'data-icon' => 'trash',
+                            'confirm' => __d('admin', 'Are you sure you want to delete {0}?', $file['name'])]
                     ) ?>
                 </td>
             </tr>

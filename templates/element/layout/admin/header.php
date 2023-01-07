@@ -1,30 +1,29 @@
 <?php
 /**
- * Admin layout header element
  *
- * Subsections:
- * - header_panels_left: Navbar items for left navbar
- * - header_panels_right Navbar items for right navbar
  */
-$this->loadHelper('Bootstrap.Navbar');
 ?>
-<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Administration</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <?= $this->Html->link(
+            __('Administration'),
+            '/admin',
+            ['class' => 'navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6']); ?>
+    <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <input class="form-control form-control-dark w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
 
-                <li class="nav-item">
-                    <?= $this->Html->link(__d('admin', 'Frontend'), '/', ['target' => '_blank', 'class' => 'nav-link']); ?>
-                </li>
+    <div class="navbar-nav flex-row pe-3">
 
-                <?= $this->fetch('header_panels_left'); ?>
-                <?= $this->fetch('header_panels_right'); ?>
-
-            </ul>
+        <div class="nav-item text-nowrap">
+            <?= $this->Html->link(
+                    __d('admin', 'Frontend'),
+                    '/',
+                    ['target' => '_blank', 'class' => 'nav-link px-3']); ?>
         </div>
+
+        <?= $this->fetch('header_panels_left'); ?>
+        <?= $this->fetch('header_panels_right'); ?>
+
     </div>
-</nav>
+</header>

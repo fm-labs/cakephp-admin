@@ -2,13 +2,18 @@
 /**
  * @var \Cake\View\View $this
  */
-
-if (!$this->helpers()->has('Toolbar')) {
-    return (\Cake\Core\Configure::read('debug')) ? '[Toolbar Helper not loaded]' : '';
-}
+$this->loadHelper('Admin.Toolbar');
 ?>
-<nav class="toolbar">
+<div class="main-toolbar">
     <div class="container-fluid">
-        <?= $this->Toolbar->render(); ?>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-1 mb-3 border-bottom toolbar">
+            <div>
+                <h3><?= $this->fetch('title'); ?></h3>
+            </div>
+            <div class="btn-toolbar">
+                <?= $this->Toolbar->render(); ?>
+            </div>
+        </div>
+
     </div>
-</nav>
+</div>

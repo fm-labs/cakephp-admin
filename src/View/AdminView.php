@@ -39,7 +39,7 @@ class AdminView extends View
         $this->loadHelper('Bootstrap.Ui');
 
         $this->loadHelper('Sugar.Jquery');
-        $this->loadHelper('Sugar.FontAwesome');
+        $this->loadHelper('Sugar.FontAwesome4');
         //$this->loadHelper('Sugar.MomentJs');
 
         $this->loadHelper('Admin.AdminJs');
@@ -58,15 +58,15 @@ class AdminView extends View
         // configure UI
         $this->ui = new \Cupcake\Ui\Ui($this);
         try {
-            $this->ui->add('header', new Ui\Layout\Header());
+            $this->ui->add('header', Ui\Layout\Header::class);
             //$this->ui->add('header_panels_right', new Ui\Layout\Header\MenuPanel());
-            $this->ui->add('header_panels_right', new Ui\Layout\Header\HeaderSysMenu());
+            //$this->ui->add('header_panels_right', Ui\Layout\Header\HeaderSysMenu::class);
             //$this->ui->add('header_panels_right', new Ui\Layout\Header\UserPanel());
 
-            $this->ui->add('footer', new Ui\Layout\Footer());
+            $this->ui->add('footer', Ui\Layout\Footer::class);
 
-            $this->ui->add('sidebar', new Ui\Layout\Sidebar());
-            $this->ui->add('sidebar_panels', new Ui\Layout\Sidebar\MenuPanel());
+            $this->ui->add('sidebar', Ui\Layout\Sidebar::class);
+            $this->ui->add('sidebar_panels', Ui\Layout\Sidebar\MenuPanel::class);
         } catch (\Exception $ex) {
             debug($ex->getMessage());
         }

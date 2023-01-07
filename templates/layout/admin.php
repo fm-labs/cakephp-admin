@@ -21,78 +21,76 @@
 <body class="body-screen sidebar-mini sidebar-collapsed <?= $this->get('be_layout_body_class'); ?>">
 <div class="wrapper">
 
+    <!-- Header -->
+    <?php echo $this->fetch('header'); ?>
 
-    <!-- Left side column. contains the logo and sidebar -->
-    <?php echo $this->fetch('sidebar'); ?>
+    <div class="container-fluid">
+        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <?php echo $this->fetch('sidebar'); ?>
+        </nav>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper col-md-9 col-lg-10 ms-sm-auto">
 
-        <!-- Main Header -->
-        <header class="main-header">
-            <?php echo $this->fetch('header'); ?>
-        </header>
-
-        <section id="main-flash" class="flash-wrapper">
-            <?= $this->Flash->render(); ?>
-            <?= $this->Flash->render('auth'); ?>
-            <?= $this->Flash->render('admin'); ?>
-            <?= $this->fetch('flash'); ?>
-        </section>
-
-        <!-- Breadcrumbs -->
-        <section id="main-breadcrumbs" class="main-breadcrumbs">
-            <div class="container-fluid">
-                <?php echo $this->fetch('breadcrumbs'); ?>
+            <div id="main-flash" class="flash-wrapper">
+                <?= $this->Flash->render(); ?>
+                <?= $this->Flash->render('auth'); ?>
+                <?= $this->Flash->render('admin'); ?>
+                <?= $this->fetch('flash'); ?>
             </div>
-        </section>
 
-        <!-- Toolbar -->
-        <section id="main-toolbar" class="main-toolbar">
+            <!-- Breadcrumbs -->
+            <div id="main-breadcrumbs" class="main-breadcrumbs mt-2">
+                <div class="container-fluid">
+                    <?php echo $this->fetch('breadcrumbs'); ?>
+                </div>
+            </div>
+
+            <!-- Toolbar -->
             <?php echo $this->fetch('toolbar'); ?>
-        </section>
 
-        <!-- Top -->
-        <?php echo $this->fetch('top'); ?>
+            <!-- Top -->
+            <?php echo $this->fetch('top'); ?>
 
-        <!-- Left container -->
-        <?php if ($this->fetch('left')) : ?>
-            <aside id="main-left" class="content-aside content-left">
-                <?php //echo $this->fetch('left'); ?>
-            </aside>
-        <?php endif; ?>
+            <!-- Left container -->
+            <?php if ($this->fetch('left')) : ?>
+                <aside id="main-left" class="content-aside content-left">
+                    <?php //echo $this->fetch('left'); ?>
+                </aside>
+            <?php endif; ?>
 
-        <!-- Right column -->
-        <?php if ($this->fetch('right')) : ?>
-            <aside id="main-right" class="content-aside content-right">
-                <?php echo $this->fetch('right'); ?>
-            </aside>
-        <?php endif; ?>
+            <!-- Right column -->
+            <?php if ($this->fetch('right')) : ?>
+                <aside id="main-right" class="content-aside content-right">
+                    <?php echo $this->fetch('right'); ?>
+                </aside>
+            <?php endif; ?>
 
-        <!-- Main content -->
-        <main id="main" class="content">
+            <!-- Main content -->
+            <main id="main" class="content">
 
-            <!-- Before -->
-            <?php echo $this->fetch('before'); ?>
+                <!-- Before -->
+                <?php echo $this->fetch('before'); ?>
 
-            <!-- Content -->
-            <?php echo $this->fetch('content'); ?>
+                <!-- Content -->
+                <?php echo $this->fetch('content'); ?>
 
-            <!-- After -->
-            <?php echo $this->fetch('after'); ?>
-        </main>
-        <!-- /.content -->
+                <!-- After -->
+                <?php echo $this->fetch('after'); ?>
+            </main>
+            <!-- /.content -->
 
-        <!-- Bottom -->
-        <?php echo $this->fetch('bottom'); ?>
+            <!-- Bottom -->
+            <?php echo $this->fetch('bottom'); ?>
 
-        <!-- Main Footer -->
-        <footer id="main-footer" class="main-footer">
-            <?php echo $this->fetch('footer'); ?>
-        </footer>
+            <!-- Main Footer -->
+            <footer id="main-footer" class="main-footer">
+                <?php echo $this->fetch('footer'); ?>
+            </footer>
 
+        </div>
+        <!-- /.content-wrapper -->
     </div>
-    <!-- /.content-wrapper -->
 
     <!-- Control Sidebar -->
     <?php //echo $this->fetch('control_sidebar'); ?>

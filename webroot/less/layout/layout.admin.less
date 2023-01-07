@@ -8,7 +8,24 @@
 //@import "_header.less";
 //@import "_sidebar.less";
 //@import "_toolbar.less";
+@import "_dashboard.less";
 
+body {
+  margin: 0;
+  font-family: var(--bs-body-font-family);
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bs-body-font-weight);
+  line-height: var(--bs-body-line-height);
+  color: var(--bs-body-color);
+  text-align: var(--bs-body-text-align);
+  background-color: var(--bs-body-bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-size: .875rem;
+}
 
 //body {
 //  font-family: @font-family-primary;
@@ -27,10 +44,10 @@
 //}
 
 .wrapper {
-  height: 100%;
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: auto;
+  //height: 100%;
+  //position: relative;
+  //overflow-x: hidden;
+  //overflow-y: auto;
   //margin-bottom: 5em;
 }
 
@@ -72,96 +89,138 @@
 //  z-index: 1032;
 //}
 
-.main-sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: @sidebar-w;
-  height: 100%;
-  background-color: @sidebar-bg-color;
-  z-index: 1020;
-}
+//.main-sidebar {
+//  position: fixed;
+//  top: 0;
+//  left: 0;
+//  width: @sidebar-w;
+//  height: 100%;
+//  background-color: @sidebar-bg-color;
+//  z-index: 1020;
+//}
 
-.content-wrapper {
-  padding-left: @sidebar-w;
-}
+//.main-header {
+//  .navbar-brand-wrapper {
+//    width: @sidebar-w;
+//    min-width: @sidebar-w;
+//    max-width: @sidebar-w;
+//  }
+//}
 
-.content, .content-header {
-  //padding-left: 15px;
-  //padding-right: 15px;
-}
+//.main-sidebar {
+//  position: fixed;
+//  height: 100vh;
+//  max-height: 100vh;
+//  overflow-x: auto;
+//  overflow-y: hidden;
+//  width: @sidebar-w;
+//  //background-color: red;
+//}
+//
+//.content-wrapper {
+//  padding-left: @sidebar-w;
+//}
+
+//.content, .content-header {
+//  //padding-left: 15px;
+//  //padding-right: 15px;
+//}
 
 .content {
-  padding-bottom: 2em;
+  padding-bottom: 5em;
   //overflow: scroll;
 }
 
-.content-header h1 {
-  margin-top: 10px;
-  //margin: 10px -15px 10px -15px;
-  //border-bottom: 1px solid @border-color-base;
-  padding-bottom: 5px;
-  font-size: 26px;
-  line-height: 1.1em;
-}
-
-.content-header .content-header-banner {
-  // background-color: #ccc
-  margin: 0 -15px 15px -15px;
-  padding: 15px 30px;
-}
+//.content-header h1 {
+//  margin-top: 10px;
+//  //margin: 10px -15px 10px -15px;
+//  //border-bottom: 1px solid @border-color-base;
+//  padding-bottom: 5px;
+//  font-size: 26px;
+//  line-height: 1.1em;
+//}
+//
+//.content-header .content-header-banner {
+//  // background-color: #ccc
+//  margin: 0 -15px 15px -15px;
+//  padding: 15px 30px;
+//}
 
 .main-footer {
-  position: static;
-  bottom: 0;
-  //left: 0;
-  //right: 0;
-  background: #fff;
-  padding: 5px 15px;
-  color: #444;
-  border-top: 1px solid #d2d6de;
-
-  //a {
-  //  color: @color-link;
-  //}
+  display: none;
+  //position: fixed;
+  //width: 100%;
+  //bottom: 0;
+  ////background: #fff;
+  //padding: 5px 15px;
+  ////color: #444;
+  //border-top: 1px solid #d2d6de;
+  //
+  ////a {
+  ////  color: @color-link;
+  ////}
 }
+
+//.main-breadcrumbs {
+//
+//  ol.breadcrumb {
+//    margin: 0;
+//    padding: 5px 15px;
+//    font-size: 90%;
+//    //background-color: #FFF;
+//    border-bottom: 1px solid #e1e1e1;
+//    border-radius: 0;
+//  }
+//
+//  ol.breadcrumb > li + li::before {
+//    padding: 0 0 0 5px;
+//  }
+//}
+
 
 .main-breadcrumbs {
-
-  ul.breadcrumb {
-    margin: 0;
-    padding: 5px 15px;
-    font-size: 90%;
-    //background-color: #FFF;
-    border-bottom: 1px solid #e1e1e1;
-    border-radius: 0;
-  }
-
-  ul.breadcrumb > li + li::before {
-    padding: 0 0 0 5px;
+  ol, ul {
+    margin-bottom: 0;
   }
 }
 
-.main-toolbar {
+//.main-toolbar {
+//
+//  position: relative;
+//
+//  nav.toolbar {
+//    //position: absolute;
+//    //right: 10px;
+//    //top: 5px;
+//    padding: 15px 0;
+//    text-align: right;
+//  }
+//
+//  nav.toolbar:after {
+//    //clear: both;
+//  }
+//}
 
-  position: relative;
 
-  nav.toolbar {
-    //position: absolute;
-    //right: 10px;
-    //top: 5px;
-    padding: 15px 0;
-    text-align: right;
-  }
+.toolbar {
+  border-bottom: 1px solid #CCC;
 
-  nav.toolbar:after {
-    //clear: both;
+  .btn-toolbar {
+    .btn ~ .btn,
+    .btn-group ~ .btn,
+    .btn ~ .btn-group,
+    .btn-group ~ .btn-group
+    {
+      margin-left: 0.25rem;
+    }
   }
 }
 
+
+// legacy containers (equivalent to bootstrap's container)
 .index, .view, .edit {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
 }
 
 .form {

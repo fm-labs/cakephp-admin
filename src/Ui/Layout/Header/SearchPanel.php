@@ -2,9 +2,9 @@
 
 namespace Admin\Ui\Layout\Header;
 
-use Admin\Ui\Layout\LayoutElement;
+use Admin\Ui\Layout\BaseLayoutElement;
 
-class SearchPanel extends LayoutElement
+class SearchPanel extends BaseLayoutElement
 {
     protected $elementName = "Admin.layout/admin/header/search_panel";
 }

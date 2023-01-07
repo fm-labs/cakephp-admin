@@ -11,7 +11,7 @@ if (!$searchUrl) {
     <div class="form-group">
         <input type="text" class="form-control" name="q" placeholder="Search">
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-outline-secondary">Submit</button>
 </form>
 </li>
 <script>

@@ -47,25 +47,25 @@ $identityClass = $authentication->getConfig('identityClass');
             $this->Ui->link(
                 __d('admin', 'Goto Dashboard'),
                 ['_name' => 'admin:system:dashboard'],
-                ['icon' => 'home', 'class' => 'btn btn-default btn-block']
+                ['icon' => 'home', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
             <?=
             $this->Ui->link(
                 __d('admin', 'Edit profile'),
                 ['_name' => 'admin:system:user:profile'],
-                ['icon' => 'edit', 'class' => 'btn btn-default btn-block']
+                ['icon' => 'edit', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
             <?=
             $this->Ui->link(
                 __d('admin', 'Change password'),
                 ['_name' => 'user:passwordchange'],
-                ['icon' => 'key', 'class' => 'btn btn-default btn-block']
+                ['icon' => 'key', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
             <?=
             $this->Ui->link(
                 __d('admin', 'Logout'),
                 ['_name' => 'admin:system:user:logout'],
-                ['icon' => 'sign-out', 'class' => 'btn btn-default btn-block']
+                ['icon' => 'sign-out', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
         </div>
     </div>

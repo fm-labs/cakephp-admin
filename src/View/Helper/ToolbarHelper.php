@@ -233,6 +233,7 @@ class ToolbarHelper extends Helper
 
     protected function _renderMenuItem(array $item)
     {
+        $item += ['size' => 'sm'];
         return $this->Button->create($item['title'], $item);
     }
 

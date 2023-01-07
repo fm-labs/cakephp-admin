@@ -244,9 +244,6 @@ iframe {
 /**
  * Pagination
  */
-nav ul.pagination {
-  margin: 0.3rem 0;
-}
 /** Image Picker **/
 .imageselect_wrap {
   padding: 1em 0;
@@ -775,8 +772,8 @@ form .imageselect ul.image_picker_selector .thumbnail p {
  */
 .input-checkbox input[type=checkbox],
 .input-checkbox input[type=radio] {
-  width: 25px;
-  height: 25px;
+  width: 1.25rem;
+  height: 1.25rem;
   vertical-align: middle;
   margin: 0 5px 0 0;
   padding: 0;
@@ -820,81 +817,6 @@ form input.timepicker {
   display: inline-block;
   width: 220px;
   max-width: 220px;
-}
-/* Backend UI Checkbox */
-/* https://www.w3schools.com/howto/howto_css_custom_checkbox.asp */
-div.checkbox {
-  min-height: unset;
-  margin: 0;
-  padding: 0.5em 0 0.5em;
-  display: inline-block;
-  /* Hide the browser's default checkbox */
-  /* Create a custom checkbox */
-  /* On mouse-over, add a grey background color */
-  /* When the checkbox is checked, add a blue background */
-  /* Create the checkmark/indicator (hidden when not checked) */
-  /* Show the checkmark when checked */
-  /* Style the checkmark/indicator */
-}
-div.checkbox > label {
-  display: inline-block;
-  position: relative;
-  padding-left: 35px;
-  cursor: pointer;
-  line-height: 1.2em;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-div.checkbox > label input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  width: 25px;
-  height: 25px;
-  margin-left: -35px;
-  margin-top: 0;
-  z-index: 8000;
-}
-div.checkbox .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
-  border: 1px solid #C1C1C1;
-  background: transparent;
-  font-family: Verdana, sans-serif;
-}
-div.checkbox > label:hover input ~ .checkmark {
-  background-color: #FFF;
-}
-div.checkbox > label:hover input ~ .checkmark::after {
-  border-color: #88C7EA;
-}
-div.checkbox input:checked ~ .checkmark {
-  background-color: #3c8dbc;
-  border-color: #3c8dbc;
-}
-div.checkbox .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-div.checkbox > label input:checked ~ .checkmark:after {
-  display: block;
-}
-div.checkbox .checkmark:after {
-  left: 8px;
-  top: 2px;
-  width: 8px;
-  height: 16px;
-  border: solid white;
-  border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg);
 }
 /**
  * Backend Navigation Style Sheet
@@ -1140,43 +1062,6 @@ table.info.table tr td:first-child {
 .modal .modal-dialog.modal-danger .modal-content {
   background-color: #DC3601;
   color: #FFF;
-}
-/* Tabs */
-.tabs .tab-nav {
-  border-bottom: 1px solid #d1d5da;
-}
-.tabs .nav-tabs {
-  border-bottom: none;
-}
-.tabs .nav-tabs > li:first-child {
-  margin-left: 15px;
-}
-.tabs .nav-tabs > li a,
-.tabs .nav-tabs > li a:link,
-.tabs .nav-tabs > li a:focus,
-.tabs .nav-tabs > li a:hover {
-  outline: 0;
-  border-bottom: 1px solid transparent;
-}
-.tabs .nav-tabs > li:hover a {
-  border-bottom-color: gray;
-}
-.tabs .nav-tabs > li.active a,
-.tabs .nav-tabs li:link a,
-.tabs .nav-tabs li:focus a {
-  border-bottom-color: white;
-}
-.tabs .tab-content > .tab-pane {
-  padding-top: 15px;
-  padding-bottom: 15px;
-  border-top: none;
-}
-.tabs.with-border .tab-content > .tab-pane {
-  border: 1px solid #DDD;
-  padding: 15px;
-}
-body.has-toolbar-fixed {
-  padding-top: 140px;
 }
 .dtable-container {
   width: 100%;

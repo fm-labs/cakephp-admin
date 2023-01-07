@@ -16,7 +16,7 @@ $translations = $this->get('translations.languages');
  */
 $this->loadHelper('Bootstrap.Tabs');
 ?>
-<div class="container">
+<div class="edit">
     <div class="form form-edit">
 
         <?php if ($translations) : ?>

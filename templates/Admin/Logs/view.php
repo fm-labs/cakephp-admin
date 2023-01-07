@@ -26,7 +26,7 @@
             h($this->get('log'));
         ?></textarea>
         <div>
-            <?= $this->Html->link(__d('admin', 'Load more'), ['action' => 'view', $logFile, 'page' => $page + 1], ['class' => 'btn btn-default']); ?>
+            <?= $this->Html->link(__d('admin', 'Load more'), ['action' => 'view', $logFile, 'page' => $page + 1], ['class' => 'btn btn-outline-secondary']); ?>
         </div>
     </div>
 </div>

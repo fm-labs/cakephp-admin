@@ -29,7 +29,10 @@ $formatter = function ($url) {
                 <td><?= h($alias); ?></td>
                 <td><?= $formatter($cacheConfig); ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__d('admin', 'Clear cache'), ['action' => 'clear', $alias], ['class' => 'btn btn-sm btn-default']); ?>
+                    <?= $this->Html->link(
+                            __d('admin', 'Clear cache'),
+                            ['action' => 'clear', $alias],
+                            ['class' => 'btn btn-sm btn-outline-primary']); ?>
                 </td>
             </tr>
         <?php endforeach; ?>

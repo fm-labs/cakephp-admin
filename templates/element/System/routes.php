@@ -1,9 +1,3 @@
-<?php
-use Cake\Error\Debugger;
-?>
-<?php $this->Breadcrumbs->add(__d('admin', 'Admin'), ['controller' => 'Admin', 'action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('admin', 'Systeminfo'), ['action' => 'index']); ?>
-<?php $this->Breadcrumbs->add(__d('admin', 'Routes')); ?>
 <div class="index">
     <?= $this->Box->create(__("Connected Routes"), ['class' => 'box-solid']); ?>
     <table class="table table-striped table-hover">

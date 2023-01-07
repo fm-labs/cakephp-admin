@@ -89,7 +89,9 @@ class BreadcrumbHelper extends Helper
         }
 
         // inject admin dashboard url on first position
-        $this->Breadcrumbs->prepend($this->_View->get('be_title'), $this->_View->get('be_dashboard_url'));
+        $rootCrumbTitle = $this->_View->get('admin_breadcrumb_root_title', __d('admin', 'Dashboard'));
+        $rootCrumbUrl = $this->_View->get('admin_breadcrumb_root_url', '/admin');
+        $this->Breadcrumbs->prepend($rootCrumbTitle, $rootCrumbUrl);
 
         // add custom class to each item
         $crumbs = $this->Breadcrumbs->getCrumbs();

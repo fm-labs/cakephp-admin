@@ -41,14 +41,14 @@
                 <?= $this->Html->link(
                     __d('admin', 'Profile'),
                     ['_name' => 'admin:system:user:profile'],
-                    ['class' => 'btn btn-default btn-flat']
+                    ['class' => 'btn btn-outline-secondary btn-flat']
                 ); ?>
             </div>
             <div class="pull-right">
                 <?= $this->Html->link(
                     __d('admin', 'Sign out'),
                     ['_name' => 'admin:system:user:logout'],
-                    ['class' => 'btn btn-default btn-flat']
+                    ['class' => 'btn btn-outline-secondary btn-flat']
                 ); ?>
             </div>
             <div class="clearfix"></div>

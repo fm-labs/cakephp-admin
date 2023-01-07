@@ -3,7 +3,20 @@ declare(strict_types=1);
 
 namespace Admin\Ui\Layout;
 
-class Sidebar extends LayoutElement
+use Admin\Ui\Layout\Sidebar\SidebarMenu;
+
+class Sidebar extends BaseLayoutElement
 {
     protected $elementName = "Admin.layout/admin/sidebar";
+
+    /**
+     * {@inheritDoc}}
+     * @throws \Exception
+     */
+    public function initialize(): void {
+        $bodyClass = $this->_View->get('body_class', '');
+        $bodyClass = $bodyClass ? $bodyClass . ' sidebar-enabled' : 'sidebar-enabled';
+
+        $this->_Ui->add('sidebar_content', SidebarMenu::class);
+    }
 }

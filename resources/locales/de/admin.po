@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2018-09-13 09:33+0200\n"
-"PO-Revision-Date: 2018-09-13 09:33+0200\n"
+"PO-Revision-Date: 2023-01-07 01:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: EMAIL@ADDRESS\n"
 "Language: de_DE\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 3.2.2\n"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Action/AddAction.php:38
 msgid "Add"
@@ -420,9 +420,7 @@ msgstr "Log Rotation"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:47
 msgid "Alias"
-msgstr ""
-"Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} "
-"to {{end}} of {{count}} records"
+msgstr "Alias"
 
 #: /home/low/workspaces/cakesites/cakephp3-backend/src/Template/Admin/Logs/index.ctp:48
 msgid "Path"

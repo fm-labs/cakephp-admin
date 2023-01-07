@@ -1,0 +1,38 @@
+/*
+ * Alert styles
+ * Override styles of Bootstrap alerts
+ */
+@import "../vars.less";
+
+
+.alert {
+  border-radius: 0;
+  border-width: 0;
+  border-style: none;
+
+  h3, h4, h5 {
+    font-weight: 600;
+    margin-top: 0;
+    color: inherit;
+
+    .icon {
+      margin-right: 10px;
+    }
+  }
+}
+.alert-success {
+  background-color: @color-success;
+  color: @color-highlight;
+}
+.alert-warning {
+  background-color: @color-warning;
+  color: @color-highlight;
+}
+.alert-danger {
+  background-color: @color-danger;
+  color: @color-highlight;
+}
+.alert-info {
+  background-color: @color-info;
+  color: @color-highlight;
+}

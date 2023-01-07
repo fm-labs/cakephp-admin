@@ -6,7 +6,33 @@
 @import "../vars.less";
 
 /**
+ * Backgrounds
+ */
+.bg-primary {
+  background-color: @color-primary !important;
+  color: @color-highlight;
+}
+.bg-success {
+  background-color: @color-success !important;
+  color: @color-highlight;
+}
+.bg-warning {
+  background-color: @color-warning !important;
+  color: @color-highlight;
+}
+.bg-danger {
+  background-color: @color-danger !important;
+  color: @color-highlight;
+}
+.bg-info {
+  background-color: @color-info !important;
+  color: @color-highlight;
+}
+
+
+/**
  * Helper classes
+ * @deprecated Use bootstrap util methods instead
  */
 .clearfix {
   clear: both;
@@ -43,6 +69,7 @@
 
 /**
  * Lists
+ * @deprecated
  */
 
 dl,
@@ -86,14 +113,15 @@ dl.dl-striped {
 }
 
 
+/**
+ * Containers
+ */
 .index, .view, .form {
 
-  //overflow-x: scroll;
-
-  > h1, > h2 {
-    margin: 0.5rem 0 1rem;
-    //padding: 0;
-  }
+  //> h1, > h2 {
+  //  margin: 0.5rem 0 1rem;
+  //  //padding: 0;
+  //}
 
   table .thumb {
     width: 30px;
@@ -103,9 +131,6 @@ dl.dl-striped {
 }
 
 .view, .form {
-
-  //max-width: @content-max-w;
-  //margin: 0 auto;
 
   &.fluid {
     max-width: none;
@@ -134,39 +159,9 @@ dl.dl-striped {
 }
 
 /**
- * Images
+ * Status
  */
-.image, .thumb {
-  max-width: 100%;
-
-  > img {
-    max-width: 100%;
-  }
-}
-
-.thumb-md, .image.thumbnail {
-  max-width: 100px;
-  max-height: 100px;
-}
-
-.thumb-sm {
-  max-width: 30px;
-  max-height: 30px;
-}
-
-.thumb-lg {
-  max-width: 150px;
-  max-height: 150px;
-}
-
-.thumbnail .caption {
-  word-break: break-all;
-}
-
-/**
- * Labels
- */
-.label[data-toggle-url] {
+.status[data-toggle-url] {
   cursor: pointer;
 
   &.loading {
@@ -175,92 +170,6 @@ dl.dl-striped {
 
   &.loading-error::before {
     content: "!";
-  }
-}
-
-/**
- * Form Image Select
- */
-.input-imageselect {
-
-  .thumbnails.image_picker_selector.grouped {
-    ul li {
-      //float: none;
-      //display: inline-block;
-    }
-
-    ul li.group_title {
-      font-weight: bold;
-      font-size: 130%;
-    }
-
-    ul li .thumbnail {
-      position: relative;
-      text-align: center;
-      padding: 0;
-
-      &:after {
-        clear: both;
-      }
-    }
-
-    ul li .thumbnail img {
-      height: 100px;
-    }
-
-    ul li .thumbnail p {
-      text-align: center;
-      padding: 0.2em;
-      background-color: #efefef;
-    }
-
-
-  }
-
-}
-
-/**
- * Tabs
- */
-.tab-pane.active {
-  padding: 0.5rem 0;
-}
-
-.nav-tabs > li > a {
-  border-radius: 0;
-}
-
-
-/**
- * Iframe
- */
-iframe {
-  border: none;
-}
-
-
-/**
- * Pagination
- */
-//nav ul.pagination {
-//  margin: 0.3rem 0;
-//}
-
-
-/** Image Picker **/
-.imageselect_wrap {
-  padding: 1em 0;
-  max-height: 700px;
-  //overflow: scroll;
-  //overflow-x: hidden;
-}
-
-.imageselect img.image_picker_image {
-  max-height: 100px;
-
-  &~ p {
-    font-size: 0.66rem;
-    display: none;
   }
 }
 
@@ -288,77 +197,9 @@ iframe {
 }
 
 .actions.grouped {
-
   ul {
     li {
       display: inline-block;
     }
   }
-}
-
-/** Pagination **/
-.pagination {
-  margin: 0;
-}
-
-/** Entity View **/
-.entity-view {
-  position: relative;
-  max-width: 100%;
-
-  h1 {
-    border: none;
-  }
-
-  .entity-table {
-      max-width: 100%;
-      overflow: scroll;
-
-      tr td:first-child {
-          min-width: 20%;
-          //background-color: #EAEAEA;
-          font-weight: 700;
-          vertical-align: top;
-      }
-  }
-}
-
-/**
- * Ajax loaded content
- */
-.ajax-content {
-  .index, .view, .form {
-    max-width: none;
-  }
-}
-
-/**
- * Attachments (deprecated)
- */
-.attachments.editor {
-
-  h4.ui.header {
-    margin-top: 1em !important;
-  }
-}
-
-.attachments.editor .attachments {
-
-  .attachment {
-    //border: 1px solid #CCC;
-    //display: inline-block;
-    //padding: 5px;
-
-    .image {
-
-      img {
-        max-height: 100px;
-      }
-    }
-
-    .actions {
-      font-size: 10px;
-    }
-  }
-
 }

@@ -2,11 +2,6 @@
 /**
  * All admin elements
 **/
-.ajax-content .hidden-ajax {
-  display: none;
-  visibility: hidden;
-  opacity: 0;
-}
 /**
  * Common Backend CSS Stylesheet
  */
@@ -56,7 +51,31 @@
  * Boxes
  */
 /**
+ * Backgrounds
+ */
+.bg-primary {
+  background-color: #3c8dbc !important;
+  color: #FFF;
+}
+.bg-success {
+  background-color: #49B52A !important;
+  color: #FFF;
+}
+.bg-warning {
+  background-color: #f39c12 !important;
+  color: #FFF;
+}
+.bg-danger {
+  background-color: #DC3601 !important;
+  color: #FFF;
+}
+.bg-info {
+  background-color: #5EA5CF !important;
+  color: #FFF;
+}
+/**
  * Helper classes
+ * @deprecated Use bootstrap util methods instead
  */
 .clearfix {
   clear: both;
@@ -87,6 +106,7 @@
 }
 /**
  * Lists
+ * @deprecated
  */
 dl dt,
 dl.dl-horizontal dt {
@@ -120,14 +140,9 @@ dl dd:first-child,
 dl.dl-horizontal dd:first-child {
   border-top: 0 none;
 }
-.index > h1,
-.view > h1,
-.form > h1,
-.index > h2,
-.view > h2,
-.form > h2 {
-  margin: 0.5rem 0 1rem;
-}
+/**
+ * Containers
+ */
 .index table .thumb,
 .view table .thumb,
 .form table .thumb {
@@ -165,96 +180,16 @@ dl.dl-horizontal dd:first-child {
   opacity: 0.9;
 }
 /**
- * Images
+ * Status
  */
-.image,
-.thumb {
-  max-width: 100%;
-}
-.image > img,
-.thumb > img {
-  max-width: 100%;
-}
-.thumb-md,
-.image.thumbnail {
-  max-width: 100px;
-  max-height: 100px;
-}
-.thumb-sm {
-  max-width: 30px;
-  max-height: 30px;
-}
-.thumb-lg {
-  max-width: 150px;
-  max-height: 150px;
-}
-.thumbnail .caption {
-  word-break: break-all;
-}
-/**
- * Labels
- */
-.label[data-toggle-url] {
+.status[data-toggle-url] {
   cursor: pointer;
 }
-.label[data-toggle-url].loading {
+.status[data-toggle-url].loading {
   background-color: #AAA;
 }
-.label[data-toggle-url].loading-error::before {
+.status[data-toggle-url].loading-error::before {
   content: "!";
-}
-/**
- * Form Image Select
- */
-.input-imageselect .thumbnails.image_picker_selector.grouped ul li.group_title {
-  font-weight: bold;
-  font-size: 130%;
-}
-.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail {
-  position: relative;
-  text-align: center;
-  padding: 0;
-}
-.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail:after {
-  clear: both;
-}
-.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail img {
-  height: 100px;
-}
-.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail p {
-  text-align: center;
-  padding: 0.2em;
-  background-color: #efefef;
-}
-/**
- * Tabs
- */
-.tab-pane.active {
-  padding: 0.5rem 0;
-}
-.nav-tabs > li > a {
-  border-radius: 0;
-}
-/**
- * Iframe
- */
-iframe {
-  border: none;
-}
-/**
- * Pagination
- */
-/** Image Picker **/
-.imageselect_wrap {
-  padding: 1em 0;
-  max-height: 700px;
-}
-.imageselect img.image_picker_image {
-  max-height: 100px;
-}
-.imageselect img.image_picker_image ~ p {
-  font-size: 0.66rem;
-  display: none;
 }
 /**
  * Actions
@@ -271,69 +206,33 @@ iframe {
 .actions.grouped ul li {
   display: inline-block;
 }
-/** Pagination **/
-.pagination {
-  margin: 0;
+ul.array-list .key {
+  font-weight: bold;
 }
-/** Entity View **/
-.entity-view {
-  position: relative;
-  max-width: 100%;
+ul.array-list.collapse > li > ul {
+  display: none;
 }
-.entity-view h1 {
-  border: none;
+ul.array-list li.has-children {
+  list-style-type: square;
+  cursor: pointer;
+  color: red;
 }
-.entity-view .entity-table {
-  max-width: 100%;
-  overflow: scroll;
+ul.array-list li.has-children::before {
+  content: "*";
 }
-.entity-view .entity-table tr td:first-child {
-  min-width: 20%;
-  font-weight: 700;
-  vertical-align: top;
-}
-/**
- * Ajax loaded content
- */
 .ajax-content .index,
 .ajax-content .view,
 .ajax-content .form {
   max-width: none;
 }
-/**
- * Attachments (deprecated)
- */
-.attachments.editor h4.ui.header {
-  margin-top: 1em !important;
-}
-.attachments.editor .attachments .attachment .image img {
-  max-height: 100px;
-}
-.attachments.editor .attachments .attachment .actions {
-  font-size: 10px;
-}
-.bg-primary {
-  background-color: #3c8dbc !important;
-  color: #FFF;
-}
-.bg-success {
-  background-color: #49B52A !important;
-  color: #FFF;
-}
-.bg-warning {
-  background-color: #f39c12 !important;
-  color: #FFF;
-}
-.bg-danger {
-  background-color: #DC3601 !important;
-  color: #FFF;
-}
-.bg-info {
-  background-color: #5EA5CF !important;
-  color: #FFF;
+.ajax-content .hidden-ajax {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
 }
 /*
- * Alert Boxes
+ * Alert styles
+ * Override styles of Bootstrap alerts
  */
 .alert {
   border-radius: 0;
@@ -368,32 +267,6 @@ iframe {
   background-color: #5EA5CF;
   color: #FFF;
 }
-/**
- * Labels
- */
-.label {
-  border-width: 0;
-  border-style: none;
-}
-.label-success {
-  background-color: #49B52A;
-  color: #FFF;
-}
-.label-warning {
-  background-color: #f39c12;
-  color: #FFF;
-}
-.label-danger {
-  background-color: #DC3601;
-  color: #FFF;
-}
-.label-info {
-  background-color: #5EA5CF;
-  color: #FFF;
-}
-/**
- * Button
- */
 .box {
   margin-bottom: 20px;
   border-radius: 0;
@@ -579,19 +452,6 @@ iframe {
 .small-box > .small-box-footer:hover {
   color: #fff;
   background: rgba(0, 0, 0, 0.15);
-}
-.dashboard-item {
-  padding: 1em;
-  margin: 0 0 1em 0;
-  border: 1px solid #eee;
-  box-shadow: 0px 0px 3px #ccc;
-}
-.dashboard-item h3 {
-  margin: 0 0 1rem 0;
-}
-.dashboard-item h3 ~ h4 {
-  margin: 0.33rem;
-  font-size: 1.1em;
 }
 /**
  * Backend mixins
@@ -807,6 +667,41 @@ form input.timepicker {
 }
 /* Medium devices (desktops, 992px and up) */
 /* Large devices (large desktops, 1200px and up) */
+/**
+ * Form Image Select
+ */
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li.group_title {
+  font-weight: bold;
+  font-size: 130%;
+}
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail {
+  position: relative;
+  text-align: center;
+  padding: 0;
+}
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail:after {
+  clear: both;
+}
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail img {
+  height: 100px;
+}
+.input-imageselect .thumbnails.image_picker_selector.grouped ul li .thumbnail p {
+  text-align: center;
+  padding: 0.2em;
+  background-color: #efefef;
+}
+/** Image Picker **/
+.imageselect_wrap {
+  padding: 1em 0;
+  max-height: 700px;
+}
+.imageselect img.image_picker_image {
+  max-height: 100px;
+}
+.imageselect img.image_picker_image ~ p {
+  font-size: 0.66rem;
+  display: none;
+}
 .filter-form-container {
   margin: 0.5em 0;
 }
@@ -817,6 +712,33 @@ form input.timepicker {
   display: inline-block;
   width: 220px;
   max-width: 220px;
+}
+/**
+ * Images
+ */
+.image,
+.thumb {
+  max-width: 100%;
+}
+.image > img,
+.thumb > img {
+  max-width: 100%;
+}
+.thumb-md,
+.image.thumbnail {
+  max-width: 100px;
+  max-height: 100px;
+}
+.thumb-sm {
+  max-width: 30px;
+  max-height: 30px;
+}
+.thumb-lg {
+  max-width: 150px;
+  max-height: 150px;
+}
+.thumbnail .caption {
+  word-break: break-all;
 }
 /**
  * Backend Navigation Style Sheet
@@ -1063,6 +985,81 @@ table.info.table tr td:first-child {
   background-color: #DC3601;
   color: #FFF;
 }
+/* Tabs */
+.tabs .tab-nav {
+  border-bottom: 1px solid #d1d5da;
+}
+.tabs .nav-tabs {
+  border-bottom: none;
+}
+.tabs .nav-tabs > li:first-child {
+  margin-left: 15px;
+}
+.tabs .tab-content > .tab-pane {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-top: none;
+}
+.tabs.with-border .tab-content > .tab-pane {
+  border: 1px solid #DDD;
+  padding: 15px;
+}
+form .input-switch .bootstrap-switch {
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+/**
+ * Backend specific Chosen select overrides
+ */
+.chosen-container-single .chosen-single {
+  box-shadow: none;
+  line-height: 28px;
+  height: 30px;
+  border-radius: 0;
+}
+.chosen-container-single .chosen-drop {
+  margin-top: -4px;
+  border-radius: 0;
+}
+.chosen-container-single .chosen-single div b {
+  background-position-y: 4px;
+}
+/**
+ * Select2 Integration for Backend
+ */
+.select2-container--bootstrap {
+  display: inline-block !important;
+  min-width: 300px;
+}
+.select2-container .select2-selection,
+.select2-container--bootstrap .select2-selection {
+  border-radius: 0 !important;
+}
+form .input-date .select2-container,
+form .input-datetime .select2-container {
+  min-width: 60px;
+  max-width: 100px;
+  width: auto;
+  display: inline-block;
+}
+/**
+ * SumoSelect Integration for Backend
+ */
+.SumoSelect {
+  width: auto !important;
+  min-width: 200px !important;
+}
+.SumoSelect > .SelectBox {
+  padding: 6px 12px;
+}
+.SumoSelect > .optWrapper {
+  width: auto !important;
+  min-width: 200px !important;
+}
+form .input-date .SumoSelect,
+form .input-datetime .SumoSelect {
+  min-width: 0 !important;
+}
 .dtable-container {
   width: 100%;
   max-width: 100%;
@@ -1120,83 +1117,25 @@ table.info.table tr td:first-child {
   margin: 0;
 }
 /**
- * Backend specific Chosen select overrides
+ * DataTable styles
  */
-.chosen-container-single .chosen-single {
-  box-shadow: none;
-  line-height: 28px;
-  height: 30px;
-  border-radius: 0;
+.datatable-container table td.actions button.dropdown {
+  padding: 0.5rem;
+  line-height: 0.6rem;
 }
-.chosen-container-single .chosen-drop {
-  margin-top: -4px;
-  border-radius: 0;
+.datatable-container table td.actions button.dropdown > .fa {
+  font-size: 12px;
 }
-.chosen-container-single .chosen-single div b {
-  background-position-y: 4px;
+.dashboard-item {
+  padding: 1em;
+  margin: 0 0 1em 0;
+  border: 1px solid #eee;
+  box-shadow: 0px 0px 3px #ccc;
 }
-/**
- * Select2 Integration for Backend
- */
-.select2-container--bootstrap {
-  display: inline-block !important;
-  min-width: 300px;
+.dashboard-item h3 {
+  margin: 0 0 1rem 0;
 }
-.select2-container .select2-selection,
-.select2-container--bootstrap .select2-selection {
-  border-radius: 0 !important;
-}
-form .input-date .select2-container,
-form .input-datetime .select2-container {
-  min-width: 60px;
-  max-width: 100px;
-  width: auto;
-  display: inline-block;
-}
-/**
- * SumoSelect Integration for Backend
- */
-.SumoSelect {
-  width: auto !important;
-  min-width: 200px !important;
-}
-.SumoSelect > .SelectBox {
-  padding: 6px 12px;
-}
-.SumoSelect > .optWrapper {
-  width: auto !important;
-  min-width: 200px !important;
-}
-form .input-date .SumoSelect,
-form .input-datetime .SumoSelect {
-  min-width: 0 !important;
-}
-form .input-switch .bootstrap-switch {
-  margin-top: 6px;
-  margin-bottom: 6px;
-}
-/**
- * Backend DataTables styles
- */
-table.dataTable tbody tr {
-  background-color: transparent;
-}
-table.dataTable thead th.sorting,
-table.dataTable thead th.sorting_asc,
-table.dataTable thead th.sorting_desc {
-  padding-right: 15px !important;
-}
-ul.array-list .key {
-  font-weight: bold;
-}
-ul.array-list.collapse > li > ul {
-  display: none;
-}
-ul.array-list li.has-children {
-  list-style-type: square;
-  cursor: pointer;
-  color: red;
-}
-ul.array-list li.has-children::before {
-  content: "*";
+.dashboard-item h3 ~ h4 {
+  margin: 0.33rem;
+  font-size: 1.1em;
 }

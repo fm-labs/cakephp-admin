@@ -1,0 +1,59 @@
+
+/**
+ * Form Image Select
+ */
+.input-imageselect {
+
+  .thumbnails.image_picker_selector.grouped {
+    ul li {
+      //float: none;
+      //display: inline-block;
+    }
+
+    ul li.group_title {
+      font-weight: bold;
+      font-size: 130%;
+    }
+
+    ul li .thumbnail {
+      position: relative;
+      text-align: center;
+      padding: 0;
+
+      &:after {
+        clear: both;
+      }
+    }
+
+    ul li .thumbnail img {
+      height: 100px;
+    }
+
+    ul li .thumbnail p {
+      text-align: center;
+      padding: 0.2em;
+      background-color: #efefef;
+    }
+
+
+  }
+
+}
+
+
+/** Image Picker **/
+.imageselect_wrap {
+  padding: 1em 0;
+  max-height: 700px;
+  //overflow: scroll;
+  //overflow-x: hidden;
+}
+
+.imageselect img.image_picker_image {
+  max-height: 100px;
+
+  &~ p {
+    font-size: 0.66rem;
+    display: none;
+  }
+}

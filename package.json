@@ -1,6 +1,6 @@
 {
   "name": "cakephp-admin",
-  "version": "1.5.0",
+  "version": "2.0.0",
   "description": "CakePHP Administrative GUI",
   "keywords": [
     "cakephp",
@@ -26,8 +26,12 @@
     "grunt": "^1.5.0",
     "grunt-contrib-copy": "*",
     "grunt-contrib-less": "*",
-    "grunt-contrib-watch": "*"
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-clean": "*"
   },
-  "dependencies": {
+  "dependencies": {},
+  "scripts": {
+    "clean": "grunt clean",
+    "build": "grunt build"
   }
 }

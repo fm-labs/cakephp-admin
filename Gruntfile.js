@@ -11,6 +11,10 @@ module.exports = function(grunt) {
       '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
     // Task configuration.
+    clean: {
+      build: ['webroot/libs/']
+    },
+
     less: {
       development: {
         options: {
@@ -55,26 +59,7 @@ module.exports = function(grunt) {
         },
         files: [
           // includes files within path
-          //{expand: true, cwd: 'node_modules/backbone/', src: ['**'], dest: 'webroot/libs/backbone/'},
-          {expand: true, cwd: 'node_modules/bootstrap/', src: ['dist/**'], dest: 'webroot/libs/bootstrap/'},
-          //{expand: true, cwd: 'node_modules/chosen/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/chosen/'},
-          {expand: true, cwd: 'node_modules/font-awesome/', src: ['css/**', 'fonts/**'], dest: 'webroot/libs/fontawesome/'},
-          {expand: true, cwd: 'node_modules/ionicons/', src: ['css/**', 'fonts/**', 'png/**'], dest: 'webroot/libs/ionicons/'},
-          {expand: true, cwd: 'node_modules/image-picker/image-picker/', src: ['**'], dest: 'webroot/libs/image-picker/'},
-          {expand: true, cwd: 'node_modules/jquery/dist/', src: ['**'], dest: 'webroot/libs/jquery/'},
-          {expand: true, cwd: 'node_modules/jquery-ui/', src: ['*.js', 'themes/base/**'], dest: 'webroot/libs/jquery-ui/'},
-          {expand: true, cwd: 'node_modules/jstree/dist/', src: ['**'], dest: 'webroot/libs/jstree/'},
-          {expand: true, cwd: 'node_modules/pickadate/lib/compressed', src: ['**'], dest: 'webroot/libs/pickadate/'},
-          {expand: true, cwd: 'node_modules/tinymce/', src: ['**'], dest: 'webroot/libs/tinymce/'},
-          {expand: true, cwd: 'webroot/js/tinymce/langs/', src: ['**'], dest: 'webroot/libs/tinymce/langs/'},
-          {expand: true, cwd: 'node_modules/underscore/', src: ['*.js'], dest: 'webroot/libs/underscore/'},
-          {expand: true, cwd: 'node_modules/sumoselect/', src: ['*.js', '*.css'], dest: 'webroot/libs/sumoselect/'},
-          {expand: true, cwd: 'node_modules/select2/', src: ['dist/**'], dest: 'webroot/libs/select2/'},
-          {expand: true, cwd: 'node_modules/select2-bootstrap-theme/', src: ['dist/**'], dest: 'webroot/libs/select2-bootstrap-theme/'},
-          {expand: true, cwd: 'node_modules/daterangepicker/', src: ['*.js', '*.css', '*.png'], dest: 'webroot/libs/daterangepicker/'},
-          {expand: true, cwd: 'node_modules/toastr/build/', src: ['**'], dest: 'webroot/libs/toastr/'},
-          {expand: true, cwd: 'node_modules/sweetalert2/dist/', src: ['**'], dest: 'webroot/libs/sweetalert2/'},
-          //{expand: true, cwd: 'node_modules/jqvmap/dist/', src: ['**'], dest: 'webroot/libs/jqvmap/'}
+          //{expand: true, cwd: 'node_modules/bootstrap/', src: ['dist/**'], dest: 'webroot/libs/bootstrap/'},
         ]
       },
     },
@@ -95,8 +80,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
   // Default task.
-  grunt.registerTask('default', ['less', 'copy']);
+  grunt.registerTask('default', ['less']);
+  grunt.registerTask('build', ['clean', 'less', 'copy']);
 
 };

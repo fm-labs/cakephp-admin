@@ -19,7 +19,8 @@ class SidebarMenu extends BaseLayoutElement
         $primary = \Admin\Admin::getMenu('admin_primary')->toArray();
         $secondary = \Admin\Admin::getMenu('admin_secondary')->toArray();
         $system = \Admin\Admin::getMenu('admin_system')->toArray();
-        return compact('primary', 'secondary', 'system');
+        $developer = \Admin\Admin::getMenu('admin_developer')->toArray();
+        return compact('primary', 'secondary', 'system', 'developer');
     }
 
 //    /**

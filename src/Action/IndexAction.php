@@ -150,7 +150,7 @@ class IndexAction extends BaseAction
         }
 
         $toolbarActions = $controller->viewBuilder()->getVar('toolbar.actions');
-        $toolbarActions[] = [__('Add'), ['action' => 'add'], ['data-icon' => 'plus']];
+        $toolbarActions[] = [__d('admin', 'Add'), ['action' => 'add'], ['data-icon' => 'plus']];
         $controller->set('toolbar.actions', $toolbarActions);
 
         $controller->set('_serialize', ['result']);

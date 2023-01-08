@@ -82,7 +82,7 @@ setTimeout(function() {
 HTML;
         $replace = [
             '/\{\{TIMEOUT\}\}/' => 5000,
-            '/\{\{TITLE\}\}/' => __('You will be redirected shortly ...'),
+            '/\{\{TITLE\}\}/' => __d('admin', 'You will be redirected shortly ...'),
             '/\{\{URL\}\}/' => Router::url($url, true),
         ];
 
@@ -105,7 +105,7 @@ HTML;
     public function adminMenuBuildPrimary(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
     {
         $menu->addItem([
-            'title' => __('Dashboard'),
+            'title' => __d('admin', 'Dashboard'),
             'url' => ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
             'data-icon' => 'tachometer'
         ]);

@@ -54,7 +54,7 @@ class AdminController extends AppController
      */
     public function fallback(?string $path = null): void
     {
-        $this->Flash->error(__('Sorry, this admin url you requested is not connected: {0}', h($path)));
+        $this->Flash->error(__d('admin', 'Sorry, this admin url you requested is not connected: {0}', h($path)));
         //$this->redirect($this->referer(['action' => 'index']));
         $this->setAction('index');
 

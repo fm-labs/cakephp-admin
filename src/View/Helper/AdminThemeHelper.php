@@ -39,10 +39,10 @@ class AdminThemeHelper extends Helper
     {
         /** @var \Cake\View\View $view */
         $view = $event->getSubject();
-        $view->set('admin_layout_title', Configure::read('Admin.Dashboard.title', __('Administration')));
+        $view->set('admin_layout_title', Configure::read('Admin.Dashboard.title', __d('admin', 'Administration')));
         $view->set('admin_dashboard_url', $this->Url->build(Configure::read('Admin.Dashboard.url')));
         // @TODO Remove deprecated layout view vars
-        $view->set('be_title', Configure::read('Admin.Dashboard.title', __('Administration')));
+        $view->set('be_title', Configure::read('Admin.Dashboard.title', __d('admin', 'Administration')));
         $view->set('be_dashboard_url', $this->Url->build(Configure::read('Admin.Dashboard.url')));
     }
 
@@ -84,6 +84,6 @@ class AdminThemeHelper extends Helper
         //$view->Html->meta('mobile-web-app-capable', 'yes', ['block' => true]);
         //$view->Html->meta('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', ['block' => true]);
         //$this->Html->meta('icon', null, ['block' => true]);
-        $view->Html->meta('generator', __('CakePHP Admin by fmlabs'), ['block' => true]);
+        $view->Html->meta('generator', __d('admin', 'CakePHP Admin by fmlabs'), ['block' => true]);
     }
 }

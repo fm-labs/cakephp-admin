@@ -58,7 +58,7 @@ class FormatterHelper extends Helper
                 $StatusHelper = $this->_View->loadHelper('Cupcake.Status');
                 return $StatusHelper->boolean($val);
             }
-            return $val === true ? __("Yes") : __("No");
+            return $val === true ? __d('admin', "Yes") : __d('admin', "No");
         });
 
         // date

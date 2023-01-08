@@ -33,7 +33,7 @@ class HealthController extends AppController
                         return 'Your PHP version must be equal or higher than 7.2.0 to use CakePHP.';
                     }
 
-                    return HealthStatus::ok(__('You are using supported PHP version {0}', PHP_VERSION));
+                    return HealthStatus::ok(__d('admin', 'You are using supported PHP version {0}', PHP_VERSION));
                 },
             ])
             ->addCheck('sys_php_ext_intl', [
@@ -47,7 +47,7 @@ class HealthController extends AppController
                         return 'ICU >= 50.1 is needed to use CakePHP. Please update the `libicu` package of your system.';
                     }
 
-                    return HealthStatus::ok(__('You are using supported ICU version {0}', INTL_ICU_VERSION));
+                    return HealthStatus::ok(__d('admin', 'You are using supported ICU version {0}', INTL_ICU_VERSION));
                 },
             ])
             ->addCheck('sys_php_ext_mbstring', [
@@ -57,7 +57,7 @@ class HealthController extends AppController
                         return 'You must enable the mbstring extension to use CakePHP.';
                     }
 
-                    return HealthStatus::ok(__('The PHP extension {0} is loaded', 'mbstring'));
+                    return HealthStatus::ok(__d('admin', 'The PHP extension {0} is loaded', 'mbstring'));
                 },
             ])
             ->addCheck('sys_dirs_exist', [
@@ -76,22 +76,22 @@ class HealthController extends AppController
                     }
 
                     if ($fail > 0) {
-                        return HealthStatus::crit(__('{0} directories not found', $fail) . "\n" . $out);
+                        return HealthStatus::crit(__d('admin', '{0} directories not found', $fail) . "\n" . $out);
                     }
 
-                    return HealthStatus::ok(__('All system directories exist') . "\n" . $out);
+                    return HealthStatus::ok(__d('admin', 'All system directories exist') . "\n" . $out);
                 },
             ])
             ->addCheck('admin_configuration', [
                 'category' => 'configuration',
-                'label' => __('Checks if the admin plugin is properly configured'),
+                'label' => __d('admin', 'Checks if the admin plugin is properly configured'),
                 'callback' => function () {
                     return HealthStatus::warn('The admin plugin is not properly configured');
                 },
             ])
             ->addCheck('admin_security', [
                 'category' => 'configuration',
-                'label' => __('Checks if the admin plugin is properly secured'),
+                'label' => __d('admin', 'Checks if the admin plugin is properly secured'),
                 'callback' => function () {
                     if (Configure::read('Admin.Security.enable') !== true) {
                         return HealthStatus::warn('The admin plugin security settings are not enabled');

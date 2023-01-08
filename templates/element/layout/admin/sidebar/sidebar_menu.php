@@ -18,7 +18,8 @@ $this->loadHelper('Bootstrap.Nav');
 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">
     <span>User</span>
 </h6>
-<?= $this->Nav->create($user = $user ?? [], ['class' => 'nav flex-column']); ?>
+<?= '' // $this->Nav->create($user = $user ?? [], ['class' => 'nav flex-column']); ?>
+<?= $this->element('Admin.layout/admin/sidebar/sidebar_menu_item', ['menu' => $user ?? []]); ?>
 
 
 <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted text-uppercase">

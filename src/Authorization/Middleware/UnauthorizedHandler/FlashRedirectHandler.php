@@ -36,7 +36,7 @@ class FlashRedirectHandler extends RedirectHandler
             $session = $request->getSession();
             $messages = $session->read('Flash.' . $flash['key']);
             $messages[] = [
-                'message' => __(
+                'message' => __d('admin', 
                     'UNAUTHORIZED! You are not allowed to access the resource at {0}',
                     $request->getUri()->getPath()
                 ),

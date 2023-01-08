@@ -616,7 +616,7 @@ class DataTableHelper extends Helper
             $rows = sprintf(
                 "<tr><td colspan=\"%d\">%s</td></tr>",
                 count($this->_fields),
-                __('No data available')
+                __d('admin', 'No data available')
             );
         }
 

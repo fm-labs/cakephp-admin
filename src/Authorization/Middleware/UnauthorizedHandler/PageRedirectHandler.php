@@ -77,8 +77,8 @@ HTML;
         //@todo Make params configurable
         $replace = [
             '/\{\{TIMEOUT\}\}/' => 2000,
-            '/\{\{TITLE\}\}/' => __('UNAUTHORIZED'),
-            '/\{\{MESSAGE\}\}/' => __(
+            '/\{\{TITLE\}\}/' => __d('admin', 'UNAUTHORIZED'),
+            '/\{\{MESSAGE\}\}/' => __d('admin', 
                 'You are not allowed to access the resource at {0}',
                 $request->getUri()->getPath()
             ),

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-01-07 00:46+0000\n"
+"POT-Creation-Date: 2023-01-08 19:07+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,253 +14,368 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/AddAction.php:41
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/AddAction.php:41
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/IndexAction.php:153
 msgid "Add"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/AddAction.php:139
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/AddAction.php:139
 msgid "Record created"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/BaseAction.php:242
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/BaseAction.php:242
 msgid "Ok"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/BaseAction.php:254
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/BaseAction.php:254
 msgid "Failed"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/CopyAction.php:27
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/CopyAction.php:27
 msgid "Copy"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/DashboardAction.php:18
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/DashboardAction.php:18
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/AdminPlugin.php:108
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/BreadcrumbHelper.php:92
 msgid "Dashboard"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/DebugAction.php:19
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/DebugAction.php:19
 msgid "Debug"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/DeleteAction.php:19
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/DeleteAction.php:19
 msgid "Delete"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/DeleteAction.php:41
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/DeleteAction.php:41
 msgid "Deleted"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/DeleteAction.php:53
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/DeleteAction.php:53
 msgid "You must confirm to delete record"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/EditAction.php:41
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/EditAction.php:41
 msgid "Edit"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/EditAction.php:115
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/EditAction.php:115
 msgid "Saved!"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/FooTableIndexAction.php:36
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeIndexAction.php:12
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/FooTableIndexAction.php:36
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeIndexAction.php:12
 msgid "Index"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/IndexFilterAction.php:12
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/IndexFilterAction.php:12
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/DataTableHelper.php:704
 msgid "Filter"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/ManageAction.php:30
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/ManageAction.php:30
 msgid "Manage"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/ManageAction.php:50
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/ManageAction.php:66
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/ViewAction.php:110
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/ManageAction.php:50
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/ManageAction.php:66
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/ViewAction.php:110
 msgid "Data"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/MediaAction.php:22
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/MediaAction.php:22
 msgid "Media"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/PublishAction.php:23
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/PublishAction.php:23
 msgid "Publish"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/PublishAction.php:59
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/PublishAction.php:59
 msgid "Updated"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/PublishAction.php:62
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/PublishAction.php:62
 msgid "Update failed"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/RedirectAction.php:15
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/RedirectAction.php:15
 msgid "Redirect"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/SearchAction.php:20
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/SearchAction.php:20
 msgid "Search"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeMoveDownAction.php:20
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeMoveDownAction.php:20
 msgid "Move Down"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeMoveDownAction.php:40
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeMoveDownAction.php:40
 msgid "The {0} has been moved down."
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeMoveDownAction.php:42
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeMoveUpAction.php:37
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeMoveDownAction.php:42
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeMoveUpAction.php:37
 msgid "The {0} could not be moved. Please, try again."
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeMoveUpAction.php:15
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeMoveUpAction.php:15
 msgid "Move Up"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeMoveUpAction.php:35
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeMoveUpAction.php:35
 msgid "The {0} has been moved up."
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeRepairAction.php:20
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeRepairAction.php:20
 msgid "Repair Tree"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeRepairAction.php:38
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeRepairAction.php:38
 msgid "Tree for model {0} has been repaired"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeSortAction.php:19
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeSortAction.php:19
 msgid "Sort"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeSortAction.php:37
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/TreeController.php:31
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeSortAction.php:37
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/TreeController.php:31
 msgid "Model {0} has no Tree behavior attached"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/TreeSortAction.php:40
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/SimpleTreeController.php:36
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/TreeController.php:34
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/TreeSortAction.php:40
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/SimpleTreeController.php:36
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/TreeController.php:34
 msgid "Failed to load model {0}"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/UnpublishAction.php:23
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/UnpublishAction.php:23
 msgid "Unpublish"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/UnpublishAction.php:52
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/UnpublishAction.php:52
 msgid "Unpublished"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/UnpublishAction.php:54
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/UnpublishAction.php:54
 msgid "Unpublish failed"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Action/ViewAction.php:38
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Action/ViewAction.php:38
 msgid "View"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/AdminPlugin.php:177
-msgid "Appearance"
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/AdminPlugin.php:85
+msgid "You will be redirected shortly ..."
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/AdminPlugin.php:182
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/AdminPlugin.php:184
 msgid "Health Status"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/AdminController.php:29
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/AdminPlugin.php:201
+msgid "Appearance"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/AdminPlugin.php:218
+msgid "My profile"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/AdminPlugin.php:223
+msgid "Logout"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Authorization/Middleware/UnauthorizedHandler/FlashRedirectHandler.php:39
+msgid "UNAUTHORIZED! You are not allowed to access the resource at {0}"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Authorization/Middleware/UnauthorizedHandler/PageRedirectHandler.php:80
+msgid "UNAUTHORIZED"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Authorization/Middleware/UnauthorizedHandler/PageRedirectHandler.php:81
+msgid "You are not allowed to access the resource at {0}"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/AdminController.php:29
 msgid "System Dashboard"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/CacheController.php:70
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/AdminController.php:57
+msgid "Sorry, this admin url you requested is not connected: {0}"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/AuthController.php:87
+msgid "Invalid login credentials"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/CacheController.php:70
 msgid "Cache cleared"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/CacheController.php:72
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/CacheController.php:72
 msgid "Failed to clear cache"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/DataTableController.php:36
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/DataTableController.php:36
 msgid "Reordering complete"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/DataTableController.php:38
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/DataTableController.php:38
 msgid "Reordering failed"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/LogsController.php:98
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/LogsController.php:129
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/LogsController.php:157
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:36
+msgid "You are using supported PHP version {0}"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:50
+msgid "You are using supported ICU version {0}"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:60
+msgid "The PHP extension {0} is loaded"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:79
+msgid "{0} directories not found"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:82
+msgid "All system directories exist"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:87
+msgid "Checks if the admin plugin is properly configured"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:94
+msgid "Checks if the admin plugin is properly secured"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:98
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:129
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:157
 msgid "No logFile selected"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/LogsController.php:104
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:104
 msgid "Logfile {0} not found in {1}"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/LogsController.php:135
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:135
 msgid "Logfile {0} not found"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/LogsController.php:142
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:142
 msgid "Logfile {0} cleared"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/LogsController.php:144
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:144
 msgid "Failed to clear logFile {0}"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/LogsController.php:163
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:163
 msgid "Logfile {0} deleted"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/LogsController.php:165
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:165
 msgid "Logfile {0} could not be deleted"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/SimpleTreeController.php:23
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/TreeController.php:23
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/PluginsController.php:128
+msgid "Plugin {0} enabled"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/PluginsController.php:142
+msgid "Plugin {0} disabled"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/PluginsController.php:156
+msgid "Plugin {0} uninstalled"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/SimpleTreeController.php:23
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/TreeController.php:23
 msgid "No model selected"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/SimpleTreeController.php:33
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/SimpleTreeController.php:33
 msgid "Model {0} has no SimpleTree behavior attached"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Controller/Admin/TreeController.php:95
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/TreeController.php:95
 msgid "Node has been moved"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Service/PublishService.php:34
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Service/PublishService.php:34
 msgid "Translations"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Service/PublishService.php:41
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Service/PublishService.php:41
 msgid "Publishing"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/Shell/Task/RootUserTask.php:21
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/Shell/Task/RootUserTask.php:21
 msgid "Create admin root user"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/View/Cell/EntityRelatedCell.php:48
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/View/Cell/EntityRelatedCell.php:56
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/View/Cell/EntityRelatedCell.php:64
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/View/Cell/EntityRelatedCell.php:84
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/View/Cell/EntityViewCell.php:204
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Cell/EntityRelatedCell.php:48
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Cell/EntityRelatedCell.php:56
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Cell/EntityRelatedCell.php:64
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Cell/EntityRelatedCell.php:84
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Cell/EntityViewCell.php:204
 msgid "Related {0}"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/View/Cell/EntityViewCell.php:165
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Cell/EntityViewCell.php:165
 msgid "Not assigned"
 msgstr ""
 
-#: ./mnt/DATA/workspaces/php/cakephp-admin-bs5/src/View/Cell/EntityViewCell.php:191
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Cell/EntityViewCell.php:191
 msgid "{0} records"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/AdminThemeHelper.php:42
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/AdminThemeHelper.php:45
+msgid "Administration"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/AdminThemeHelper.php:87
+msgid "CakePHP Admin by fmlabs"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/DataTableHelper.php:566
+msgid "Actions"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/DataTableHelper.php:619
+msgid "No data available"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/DataTableHelper.php:672
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/FormatterHelper.php:61
+msgid "No"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/DataTableHelper.php:672
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/FormatterHelper.php:61
+msgid "Yes"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/DataTableHelper.php:674
+msgid "All"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/DataTableHelper.php:895
+msgid "Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records"
+msgstr ""
+
+#: ./mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/DataTableJsHelper.php:118
+msgid "Loading ..."
 msgstr ""
 

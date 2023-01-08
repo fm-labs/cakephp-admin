@@ -125,7 +125,7 @@ class PluginsController extends AppController
     public function enable(?string $pluginName = null): void
     {
         if ($this->_setPluginState($pluginName, true)) {
-            $this->Flash->success(__('Plugin {0} enabled', $pluginName));
+            $this->Flash->success(__d('admin', 'Plugin {0} enabled', $pluginName));
         }
 
         //$this->setAction('view', $pluginName);
@@ -139,7 +139,7 @@ class PluginsController extends AppController
     public function disable(?string $pluginName = null): void
     {
         if ($this->_setPluginState($pluginName, false)) {
-            $this->Flash->success(__('Plugin {0} disabled', $pluginName));
+            $this->Flash->success(__d('admin', 'Plugin {0} disabled', $pluginName));
         }
 
         //$this->setAction('view', $pluginName);
@@ -153,7 +153,7 @@ class PluginsController extends AppController
     public function uninstall(?string $pluginName = null): void
     {
         if ($this->_setPluginState($pluginName, false)) {
-            $this->Flash->success(__('Plugin {0} uninstalled', $pluginName));
+            $this->Flash->success(__d('admin', 'Plugin {0} uninstalled', $pluginName));
         }
 
         //$this->setAction('view', $pluginName);

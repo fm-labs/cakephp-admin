@@ -84,7 +84,7 @@ class AuthController extends AppController
         // login failed (via POST)
         if ($this->request->is('post') && !$result->isValid()) {
             $this->dispatchEvent('User.Auth.error', ['scope' => 'Admin'], $this);
-            $this->Flash->error(__('Invalid login credentials'), ['key' => 'auth']);
+            $this->Flash->error(__d('admin', 'Invalid login credentials'), ['key' => 'auth']);
         }
     }
 

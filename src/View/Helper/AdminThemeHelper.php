@@ -39,6 +39,9 @@ class AdminThemeHelper extends Helper
     {
         /** @var \Cake\View\View $view */
         $view = $event->getSubject();
+        $view->set('admin_layout_title', Configure::read('Admin.Dashboard.title', __('Administration')));
+        $view->set('admin_dashboard_url', $this->Url->build(Configure::read('Admin.Dashboard.url')));
+        // @TODO Remove deprecated layout view vars
         $view->set('be_title', Configure::read('Admin.Dashboard.title', __('Administration')));
         $view->set('be_dashboard_url', $this->Url->build(Configure::read('Admin.Dashboard.url')));
     }
@@ -67,8 +70,11 @@ class AdminThemeHelper extends Helper
         }
 
         $view->set(
-            'be_layout_body_class',
-            trim(join(' ', [$themeClass, $themeSkinClass, $themeBodyClass]))
+            'admin_layout_html_class',
+            trim(join(' ', [$themeClass, $themeSkinClass])));
+        $view->set(
+            'admin_layout_body_class',
+            trim(join(' ', [$themeBodyClass]))
         );
         //$view->Html->css('/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
 

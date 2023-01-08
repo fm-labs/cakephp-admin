@@ -10,7 +10,6 @@ if (empty($headers)) {
         }
     }
 }
-
 ?>
 <table class="table table-sm">
     <thead>

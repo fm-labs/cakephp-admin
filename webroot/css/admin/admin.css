@@ -247,6 +247,7 @@ ul.array-list li.has-children::before {
   border-radius: 0;
   border-width: 0;
   border-style: none;
+  margin: 0;
 }
 .alert h3,
 .alert h4,

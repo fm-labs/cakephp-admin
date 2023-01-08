@@ -24,10 +24,10 @@ class AdminPlugin extends \Admin\Core\BaseAdminPlugin implements EventListenerIn
     public function implementedEvents(): array
     {
         return [
-            'Admin.Menu.build.admin_primary' => ['callable' => 'adminMenuBuildPrimary', 'priority' => 99 ],
-            'Admin.Menu.build.admin_system' => ['callable' => 'adminMenuBuildSystem', 'priority' => 99 ],
-            'Admin.Menu.build.admin_developer' => ['callable' => 'adminMenuBuildDev', 'priority' => 99 ],
-            'Admin.Menu.build.admin_user' => ['callable' => 'adminMenuBuildUser', 'priority' => 99 ],
+            'Admin.Menu.build.admin_primary' => ['callable' => 'adminMenuBuildPrimary', 'priority' => 1 ],
+            'Admin.Menu.build.admin_system' => ['callable' => 'adminMenuBuildSystem', 'priority' => 10 ],
+            'Admin.Menu.build.admin_developer' => ['callable' => 'adminMenuBuildDev', 'priority' => 10 ],
+            'Admin.Menu.build.admin_user' => ['callable' => 'adminMenuBuildUser', 'priority' => 10 ],
             //'Controller.beforeRedirect' => 'controllerBeforeRedirect',
         ];
     }
@@ -104,6 +104,11 @@ HTML;
      */
     public function adminMenuBuildPrimary(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
     {
+        $menu->addItem([
+            'title' => __('Dashboard'),
+            'url' => ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
+            'data-icon' => 'tachometer'
+        ]);
         /*
         if (Configure::read('debug')) {
             $menu->addItem([

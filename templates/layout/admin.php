@@ -4,10 +4,10 @@
  */
 ?>
 <!DOCTYPE html>
-<html lang="<?= Cake\I18n\I18n::getLocale(); ?>">
+<html lang="<?= Cake\I18n\I18n::getLocale(); ?>" class="<?= $this->get('admin_layout_html_class'); ?>">
 <head>
     <?= $this->Html->charset() ?>
-    <title><?= $this->fetch('title') ?> | <?= $this->get('be_title'); ?></title>
+    <title><?= $this->fetch('title') ?> | <?= $this->get('admin_layout_title'); ?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
@@ -18,7 +18,7 @@
     <?= $this->Html->css('Admin.layout/layout.admin'); ?>
     <?= $this->fetch('headjs') ?>
 </head>
-<body class="body-screen sidebar-mini sidebar-collapsed <?= $this->get('be_layout_body_class'); ?>">
+<body class="<?= $this->get('admin_layout_body_class'); ?>">
 <div class="wrapper">
 
     <!-- Header -->

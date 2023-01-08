@@ -2,9 +2,8 @@
 <div class="index">
 
     <?php $this->Tabs->create(); ?>
-    <?php $this->Tabs->add(__d('admin', 'LogViewer')); ?>
-    <h2><?= __d('admin', 'LogViewer'); ?></h2>
-    <table class="ui table striped">
+    <?php $this->Tabs->add(__d('admin', 'Logs')); ?>
+    <table class="table table-striped table-hover table-sm">
         <thead>
         <tr>
             <th><?= __d('admin', 'Logfile'); ?></th>
@@ -25,7 +24,7 @@
                     <?= $this->Html->link(
                         __d('admin', 'View'),
                         ['action' => 'view', $file['id']],
-                        ['class' => 'btn btn-xs btn-outline-secondary', 'data-icon' => 'file-txt-o']
+                        ['class' => 'btn btn-xs btn-outline-secondary', 'data-icon' => 'eye']
                     ) ?>
                     <?= $this->Ui->link(
                         __d('admin', 'Clear'),
@@ -45,8 +44,7 @@
 
 
     <?php $this->Tabs->add(__d('admin', 'Log Rotation')); ?>
-    <h2><?= __d('admin', 'Log Rotation'); ?></h2>
-    <table class="ui table striped">
+    <table class="table table-striped table-hover table-sm">
         <thead>
         <tr>
             <th><?= __d('admin', 'Alias'); ?></th>

@@ -75,10 +75,8 @@ class ToolbarHelper extends Helper
         $this->_grouping = false;
         $this->setConfig($config);
 
-
         // parse toolbar actions defined in 'toolbar.actions' view-var
         $toolbarActions = $this->_View->get('toolbar.actions');
-
         if ($toolbarActions) {
             array_walk($toolbarActions, function ($action) {
                 $title = $url = null;

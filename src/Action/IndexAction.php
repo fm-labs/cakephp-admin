@@ -149,9 +149,9 @@ class IndexAction extends BaseAction
             $controller->set('tableStats', $this->model()->getStats());
         }
 
-        $controller->set('toolbar.actions', [
-            [__('Add'), ['action' => 'add'], ['data-icon' => 'plus']],
-        ]);
+        $toolbarActions = $controller->viewBuilder()->getVar('toolbar.actions');
+        $toolbarActions[] = [__('Add'), ['action' => 'add'], ['data-icon' => 'plus']];
+        $controller->set('toolbar.actions', $toolbarActions);
 
         $controller->set('_serialize', ['result']);
     }

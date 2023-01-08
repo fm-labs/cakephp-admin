@@ -463,16 +463,22 @@ ul.array-list li.has-children::before {
   background: rgba(0, 0, 0, 0.15);
 }
 .btn-xs {
-  --bs-btn-padding-y: 0.3rem;
+  --bs-btn-padding-y: 0.375rem;
   --bs-btn-padding-x: 0.5rem;
-  --bs-btn-font-size: 0.75rem;
-  line-height: 0.75rem;
+  --bs-btn-font-size: 0.7rem !important;
+  --bs-btn-line-height: 0.75rem;
 }
 .btn-xxs {
+  --bs-btn-padding-y: 0.25rem;
+  --bs-btn-padding-x: 0.5rem;
+  --bs-btn-font-size: 0.7rem !important;
+  --bs-btn-line-height: 0.75rem;
+}
+.btn-xxxs {
   --bs-btn-padding-y: 0.1rem;
   --bs-btn-padding-x: 0.25rem;
-  --bs-btn-font-size: 0.6rem;
-  line-height: 0.75rem;
+  --bs-btn-font-size: 0.6rem !important;
+  --bs-btn-line-height: 0.75rem;
 }
 /**
  * General Inputs
@@ -1109,13 +1115,6 @@ form .input-datetime .SumoSelect {
 /**
  * DataTable styles
  */
-.datatable-container table td.actions button.dropdown {
-  padding: 0.5rem;
-  line-height: 0.6rem;
-}
-.datatable-container table td.actions button.dropdown > .fa {
-  font-size: 12px;
-}
 .dashboard-item {
   padding: 1em;
   margin: 0 0 1em 0;

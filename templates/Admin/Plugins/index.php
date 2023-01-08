@@ -2,7 +2,7 @@
 <?php $this->Breadcrumbs->add(__d('admin', 'Plugins'), ['action' => 'index']); ?>
 <?php $this->loadHelper('Cupcake.Status'); ?>
 <div class="index">
-    <table class="table table-striped table-hover">
+    <table class="table table-striped table-hover table-sm">
         <tr>
             <th>Name</th>
             <th>Loaded</th>
@@ -30,12 +30,12 @@
                 <?php if ($info['handler_bootstrap']) : ?>
                     <?= $this->Html->link('Disable',
                         ['controller' => 'Plugins', 'action' => 'disable', $info['name']],
-                        ['class' => 'btn btn-xs btn-secondary']
+                        ['class' => 'btn btn-xxs btn-secondary']
                     ); ?>
                 <?php else : ?>
                     <?= $this->Html->link('Enable',
                         ['controller' => 'Plugins', 'action' => 'enable', $info['name']],
-                        ['class' => 'btn btn-xs btn-primary']
+                        ['class' => 'btn btn-xxs btn-primary']
                     ); ?>
                 <?php endif; ?>
                 
@@ -57,7 +57,7 @@
                 <td>&nbsp;</td>
                 <td class="actions">
                     <?= $this->Html->link('Enable', ['controller' => 'Plugins', 'action' => 'enable', $info['name']],
-                        ['class' => 'btn btn-xs btn-primary']
+                        ['class' => 'btn btn-xxs btn-primary']
                     ); ?>
                 </td>
             </tr>

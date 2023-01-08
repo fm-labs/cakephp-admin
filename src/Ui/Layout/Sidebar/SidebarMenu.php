@@ -7,6 +7,7 @@ use Cake\Core\Configure;
 
 class SidebarMenu extends BaseLayoutElement
 {
+    //protected $elementName = "Admin.layout/admin/sidebar/sidebar_collapsible_menu";
     protected $elementName = "Admin.layout/admin/sidebar/sidebar_menu";
 
     public function initialize(): void
@@ -20,7 +21,8 @@ class SidebarMenu extends BaseLayoutElement
         $secondary = \Admin\Admin::getMenu('admin_secondary')->toArray();
         $system = \Admin\Admin::getMenu('admin_system')->toArray();
         $developer = \Admin\Admin::getMenu('admin_developer')->toArray();
-        return compact('primary', 'secondary', 'system', 'developer');
+        $user = \Admin\Admin::getMenu('admin_user')->toArray();
+        return compact('primary', 'secondary', 'system', 'developer', 'user');
     }
 
 //    /**

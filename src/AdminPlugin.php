@@ -26,6 +26,8 @@ class AdminPlugin extends \Admin\Core\BaseAdminPlugin implements EventListenerIn
         return [
             'Admin.Menu.build.admin_primary' => ['callable' => 'adminMenuBuildPrimary', 'priority' => 99 ],
             'Admin.Menu.build.admin_system' => ['callable' => 'adminMenuBuildSystem', 'priority' => 99 ],
+            'Admin.Menu.build.admin_developer' => ['callable' => 'adminMenuBuildDev', 'priority' => 99 ],
+            'Admin.Menu.build.admin_user' => ['callable' => 'adminMenuBuildUser', 'priority' => 99 ],
             //'Controller.beforeRedirect' => 'controllerBeforeRedirect',
         ];
     }
@@ -173,15 +175,49 @@ HTML;
                 'url' => ['plugin' => 'Admin', 'controller' => 'Plugins', 'action' => 'index'],
                 'data-icon' => 'puzzle-piece',
             ],
+            'health' => [
+                'title' => __d('admin', 'Health Status'),
+                'data-icon' => 'heartbeat',
+                'url' => ['plugin' => 'Admin', 'controller' => 'Health', 'action' => 'index'],
+            ],
+        ];
+        $menu->addItems($items);
+    }
+
+    /**
+     * @param \Cake\Event\Event $event The event object
+     * @param \Cupcake\Menu\MenuItemCollection $menu The menu
+     * @return void
+     */
+    public function adminMenuBuildDev(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
+    {
+        $items = [
             'design' => [
                 'title' => __d('admin', 'Appearance'),
                 'data-icon' => 'paint-brush',
                 'url' => ['plugin' => 'Admin', 'controller' => 'Design', 'action' => 'index'],
             ],
-            'health' => [
-                'title' => __d('admin', 'Health Status'),
-                'data-icon' => 'heartbeat',
-                'url' => ['plugin' => 'Admin', 'controller' => 'Health', 'action' => 'index'],
+        ];
+        $menu->addItems($items);
+    }
+
+    /**
+     * @param \Cake\Event\Event $event The event object
+     * @param \Cupcake\Menu\MenuItemCollection $menu The menu
+     * @return void
+     */
+    public function adminMenuBuildUser(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
+    {
+        $items = [
+            'admin_user_profile' => [
+                'title' => __d('admin', 'My profile'),
+                'data-icon' => 'user',
+                'url' => ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'index'],
+            ],
+            'admin_user_logout' => [
+                'title' => __d('admin', 'Logout'),
+                'data-icon' => 'sign-out',
+                'url' => ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
             ],
         ];
         $menu->addItems($items);

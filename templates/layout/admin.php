@@ -25,12 +25,12 @@
     <?php echo $this->fetch('header'); ?>
 
     <div class="container-fluid px-0">
-        <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+        <nav id="sidebarMenu" class="col-xs-12 col-sm-12 col-md-2 col-lg-1 d-md-block bg-light sidebar collapse">
             <?php echo $this->fetch('sidebar'); ?>
         </nav>
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper col-md-9 col-lg-10 ms-sm-auto">
+        <div class="content-wrapper col-md-10 col-lg-11 ms-sm-auto">
 
             <div id="main-flash" class="flash-wrapper">
                 <?= $this->Flash->render(); ?>

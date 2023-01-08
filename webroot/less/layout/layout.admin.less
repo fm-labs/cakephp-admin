@@ -6,7 +6,7 @@
 @import "../vars.less";
 //@import "_default.less";
 //@import "_header.less";
-//@import "_sidebar.less";
+@import "_sidebar_collapsible.less";
 //@import "_toolbar.less";
 @import "_dashboard.less";
 
@@ -27,9 +27,9 @@
 //  -webkit-tap-highlight-color: transparent;
 //}
 
-//body {
-//  font-size: .875rem;
-//}
+body {
+  font-size: .875rem;
+}
 
 //body {
 //  font-family: @font-family-primary;
@@ -218,4 +218,9 @@
       margin-left: 0.25rem;
     }
   }
+}
+
+.navbar-brand, #sidebarMenu {
+  min-width: 150px;
+  max-width: 200px;
 }

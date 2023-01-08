@@ -1,4 +1,4 @@
-/** cakephp-admin - v1.5.0 **/
+/** cakephp-admin - v2.0.0 **/
 /**
  * All admin elements
 **/
@@ -463,9 +463,9 @@ ul.array-list li.has-children::before {
   background: rgba(0, 0, 0, 0.15);
 }
 .btn-xs {
-  --bs-btn-padding-y: 0.25rem;
+  --bs-btn-padding-y: 0.3rem;
   --bs-btn-padding-x: 0.5rem;
-  --bs-btn-font-size: 0.65rem;
+  --bs-btn-font-size: 0.75rem;
   line-height: 0.75rem;
 }
 .btn-xxs {

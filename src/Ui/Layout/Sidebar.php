@@ -7,7 +7,8 @@ use Admin\Ui\Layout\Sidebar\SidebarMenu;
 
 class Sidebar extends BaseLayoutElement
 {
-    protected $elementName = "Admin.layout/admin/sidebar";
+    protected $elementName = "Admin.layout/admin/sidebar_sticky";
+    //protected $elementName = "Admin.layout/admin/sidebar_collapsible";
 
     /**
      * {@inheritDoc}}

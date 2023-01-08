@@ -1,20 +1,21 @@
 <?php
 /**
- * Copy admin.default.php to your app's config folder,
- * rename to admin.php and adjust contents
+ * Default configuration for Admin plugin
  */
 
 return [
 
+    'Admin.version' => '2.0.3',
+
     /**
      * Admin plugin route path
      */
-    'Admin.path' => '/admin',
+    //'Admin.path' => '/admin',
 
     /**
      * Admin theme name
      */
-    'Admin.theme' => null,
+    //'Admin.theme' => null,
 
     /**
      * Admin Dashboard
@@ -22,8 +23,9 @@ return [
      * - title: Dashboard title string
      * - url: Url to Dashboard
      */
-    'Admin.Dashboard.title' => 'Admin',
+    'Admin.Dashboard.title' => __('Administration'),
     'Admin.Dashboard.url' => ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
+    'Admin.Dashboard.panels' => [],
 
     /**
      * Admin Security
@@ -31,16 +33,16 @@ return [
      * - enabled: Enables SecurityComponent
      * - forceSSL: Force https scheme for all admin requests
      */
-    'Admin.Security.enabled' => false,
-    'Admin.Security.forceSSL' => false,
+    //'Admin.Security.enabled' => false,
+    //'Admin.Security.forceSSL' => false,
 
     /**
      * Admin AuthComponent config
      */
-    'Admin.Auth' => [],
+    //'Admin.Auth' => [],
 
     /**
      * Admin Search config
      */
-    'Admin.Search.searchUrl' => ['plugin' => 'Admin', 'controller' => 'Search', 'action' => 'index'],
+    //'Admin.Search.searchUrl' => ['plugin' => 'Admin', 'controller' => 'Search', 'action' => 'index'],
 ];

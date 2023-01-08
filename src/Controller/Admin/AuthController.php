@@ -75,7 +75,7 @@ class AuthController extends AppController
         // login successful
         if ($result->isValid()) {
             $redirectUrl = $this->Authentication->getLoginRedirect();
-            $redirectUrl = $redirectUrl ?: ['_name' => 'admin:system:dashboard'];
+            $redirectUrl = $redirectUrl ?: ['_name' => 'admin:admin:dashboard'];
             $this->Flash->success('Login successful');
 
             return $this->redirect($redirectUrl);
@@ -96,7 +96,7 @@ class AuthController extends AppController
     public function logout()
     {
         $redirect = $this->Authentication->logout();
-        $redirect = $redirect ?: ['_name' => 'admin:system:user:login'];
+        $redirect = $redirect ?: ['_name' => 'admin:admin:user:login'];
 
         return $this->redirect($redirect);
     }

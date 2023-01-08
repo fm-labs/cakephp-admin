@@ -101,13 +101,21 @@ class Admin
      */
     public static function version()
     {
-        if (!isset(static::$_version)) {
-            //phpcs::disable
-            static::$_version = @file_get_contents(Plugin::path('Admin') . DS . 'VERSION.txt');
-            //phpcs::enable
+        $version = Configure::read('Admin.version');
+        if ($version !== null) {
+            return $version;
         }
 
-        return static::$_version;
+        $filePath = Plugin::path('Admin') . DS . 'VERSION.txt';
+        if (is_file($filePath)) {
+            //phpcs::disable
+            $version = @file_get_contents(Plugin::path('Admin') . DS . 'VERSION.txt');
+            //phpcs::enable
+            Configure::write('Admin.version', $version);
+            return $version;
+        }
+
+        return 'unknown';
     }
 
     /**

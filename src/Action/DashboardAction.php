@@ -24,5 +24,7 @@ class DashboardAction extends BaseAction
      */
     public function execute(Controller $controller)
     {
+        $controller->viewBuilder()->addHelper('Bootstrap.Button');
+        $controller->viewBuilder()->addHelper('Sugar.Box');
     }
 }

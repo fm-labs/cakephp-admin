@@ -76,7 +76,11 @@ class AdminMiddleware implements MiddlewareInterface
             $prefix == 'Admin' ||
             preg_match('/^\/' . Admin::$urlPrefix . '/', $request->getUri()->getPath())
         ) {
+            /** @var \Admin\Core\AdminPluginInterface $plugin */
             foreach (Admin::getPlugins() as $plugin) {
+                // @TODO Only bootstrap plugins with 'bootstrap' hook enabled
+                $plugin->bootstrap();
+
                 if ($plugin instanceof EventListenerInterface) {
                     EventManager::instance()->on($plugin);
                 }

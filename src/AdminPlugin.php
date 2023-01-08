@@ -3,9 +3,12 @@ declare(strict_types=1);
 
 namespace Admin;
 
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
+use Cake\Routing\Route\DashedRoute;
+use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
 class AdminPlugin extends \Admin\Core\BaseAdminPlugin implements EventListenerInterface
@@ -16,6 +19,78 @@ class AdminPlugin extends \Admin\Core\BaseAdminPlugin implements EventListenerIn
     public function bootstrap(): void
     {
         parent::bootstrap();
+
+        Configure::read('Admin.admin');
+    }
+
+//    public function getRoutingPrefix(): string
+//    {
+//        return "system";
+//    }
+
+    public function routes(RouteBuilder $routes): void
+    {
+        parent::routes($routes);
+
+        //admin:index
+        $routes->connect(
+            '/',
+            ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
+            ['_name' => 'index']
+        );
+
+        //admin:admin:*
+//        $routes->scope(
+//            '/system',
+//            ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'system:'],
+//            function (RouteBuilder $routes) {
+
+                // admin:admin:index
+//                $routes->connect(
+//                    '/',
+//                    ['plugin' => 'Admin', 'controller' => 'System', 'action' => 'index'],
+//                    ['_name' => 'index']
+//                );
+
+                // admin:admin:user:login
+                $routes->connect(
+                    '/login',
+                    ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
+                    ['_name' => 'user:login']
+                );
+
+                // admin:admin:user:checkauth
+                $routes->connect(
+                    '/session',
+                    ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'session'],
+                    ['_name' => 'user:checkauth']
+                );
+
+                // admin:admin:user:loginsuccess
+                $routes->connect(
+                    '/login-success',
+                    ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'loginSuccess'],
+                    ['_name' => 'user:loginsuccess']
+                );
+
+                // admin:admin:user:logout
+                $routes->connect(
+                    '/logout',
+                    ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
+                    [ '_name' => 'user:logout']
+                );
+
+                // admin:admin:user:profile
+                $routes->connect(
+                    '/user',
+                    ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
+                    [ '_name' => 'user:profile']
+                );
+
+                $routes->fallbacks(DashedRoute::class);
+//            }
+//        );
+
     }
 
     /**
@@ -107,6 +182,7 @@ HTML;
         $menu->addItem([
             'title' => __d('admin', 'Dashboard'),
             'url' => ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
+            //'url' => '/' . \Admin\Admin::$urlPrefix,
             'data-icon' => 'tachometer'
         ]);
         /*

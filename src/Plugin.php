@@ -53,6 +53,8 @@ class Plugin extends BasePlugin implements
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
+        Configure::load('Admin.admin');
+
         /**
          * Logs
          */
@@ -150,58 +152,9 @@ class Plugin extends BasePlugin implements
                     //$routes->applyMiddleware('admin_request_authorization');
                 //}
 
-                //admin:dashboard
-                $routes->connect(
-                    '/',
-                    ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
-                    ['_name' => 'dashboard']
-                );
-
-                //admin:system:*
-                $routes->scope(
-                    '/system',
-                    ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'system:'],
-                    function (RouteBuilder $routes) {
-                        $routes->connect(
-                            '/login',
-                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
-                            ['_name' => 'user:login']
-                        );
-                        $routes->connect(
-                            '/session',
-                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'session'],
-                            ['_name' => 'user:checkauth']
-                        );
-                        $routes->connect(
-                            '/login-success',
-                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'loginSuccess'],
-                            ['_name' => 'user:loginsuccess']
-                        );
-
-                        // admin:system:auth:logout
-                        $routes->connect(
-                            '/logout',
-                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
-                            [ '_name' => 'user:logout']
-                        );
-
-                        // admin:system:auth:user
-                        $routes->connect(
-                            '/user',
-                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
-                            [ '_name' => 'user:profile']
-                        );
-
-                        // admin:system:dashboard
-                        $routes->connect(
-                            '/',
-                            ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
-                            ['_name' => 'dashboard']
-                        );
-
-                        $routes->fallbacks(DashedRoute::class);
-                    }
-                );
+                $fallbackAdminRootUrl = ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'];
+                $adminRootUrl = Configure::read('Admin.Dashboard.url', $fallbackAdminRootUrl);
+                $routes->connect('/', $adminRootUrl);
 
                 // load admin routes from admin plugins
                 /** @var \Admin\Core\AdminPluginInterface $plugin */
@@ -230,6 +183,7 @@ class Plugin extends BasePlugin implements
                     $pluginName = $plugin->getName();
                     $pluginNamePrefix = sprintf('%s:', Inflector::underscore($pluginName));
                     if (method_exists($plugin, 'adminRoutes')) {
+                        deprecationWarning("Plugin::adminRoutes() is deprecated. Use Admin::routes() instead.");
                         try {
                             $routes->scope(
                                 '/' . Inflector::dasherize($pluginName),
@@ -280,7 +234,7 @@ class Plugin extends BasePlugin implements
             //'identityClass' => Identity::class,
             'identityAttribute' => static::AUTH_IDENTITY_ATTRIBUTE,
             'queryParam' => 'redirect',
-            'unauthenticatedRedirect' => Router::url(['_name' => 'admin:system:user:login']),
+            'unauthenticatedRedirect' => Router::url(['_name' => 'admin:admin:user:login']),
         ]);
 
         $fields = [

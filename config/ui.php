@@ -1,4 +1,8 @@
 <?php
+/**
+ * ! UNUSED !
+ * ! EXPERIMENTAL !
+ */
 return [
     'Admin.Theme' => [
         'layout_blocks' => [

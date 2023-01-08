@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\View\Helper;
 
+use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Utility\Inflector;
 use Cake\View\Helper;
@@ -89,8 +90,11 @@ class BreadcrumbHelper extends Helper
         }
 
         // inject admin dashboard url on first position
-        $rootCrumbTitle = $this->_View->get('admin_breadcrumb_root_title', __d('admin', 'Dashboard'));
-        $rootCrumbUrl = $this->_View->get('admin_breadcrumb_root_url', '/admin');
+        $dashboardTitle = Configure::read('Admin.Dashboard.title');
+        $dashboardUrl = Configure::read('Admin.Dashboard.url', '/admin');
+
+        $rootCrumbTitle = $this->_View->get('admin_breadcrumb_root_title', __('Administration'));
+        $rootCrumbUrl = $this->_View->get('admin_breadcrumb_root_url', $dashboardUrl);
         $this->Breadcrumbs->prepend($rootCrumbTitle, $rootCrumbUrl);
 
         // add custom class to each item

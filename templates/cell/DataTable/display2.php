@@ -1,5 +1,5 @@
 <?php
-$this->loadHelper('Sugar.DataTable');
+$this->loadHelper('Admin.DataTable');
 $this->Html->script('Admin.jquery/jquery-ui.min', ['block' => 'script']);
 $this->DataTable->init($dataTable);
 ?>

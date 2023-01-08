@@ -1,7 +1,7 @@
 <?php
 use Cake\Utility\Hash;
 
-$this->loadHelper('Sugar.DataTable');
+$this->loadHelper('Admin.DataTable');
 
 $this->DataTable->create($params);
 ?>

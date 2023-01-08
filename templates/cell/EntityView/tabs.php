@@ -2,8 +2,8 @@
 use Cake\Core\Configure;
 use Cake\Utility\Inflector;
 ?>
-<?php $this->loadHelper('Sugar.Formatter'); ?>
-<?php $this->loadHelper('Sugar.DataTable'); ?>
+<?php $this->loadHelper('Admin.Formatter'); ?>
+<?php $this->loadHelper('Admin.DataTable'); ?>
 <?php $this->loadHelper('Bootstrap.Tabs'); ?>
 <div class="entity-view">
 

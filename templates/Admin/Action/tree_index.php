@@ -1,6 +1,6 @@
 <?php
 ;
-$this->loadHelper('Sugar.DataTable');
+$this->loadHelper('Admin.DataTable');
 
 //$this->Toolbar->addLink(__d('admin','Add'), ['action' => 'add'], ['class' => 'add']);
 ?>

@@ -3,7 +3,7 @@ $data = $data ?? [];
 $debug = $debug ?? false;
 $entity = $entity ?? null;
 ?>
-<?php $this->loadHelper('Sugar.Formatter'); ?>
+<?php $this->loadHelper('Admin.Formatter'); ?>
 <table class="entity-table table table-hover">
     <tbody>
     <?php foreach ($data as $field) : ?>

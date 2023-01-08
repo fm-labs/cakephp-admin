@@ -1,6 +1,6 @@
 <?php
-$this->loadHelper('Sugar.DataTable');
-//$this->loadHelper('Sugar.DataTableJs');
+$this->loadHelper('Admin.DataTable');
+//$this->loadHelper('Admin.DataTableJs');
 
 if (empty($dataTable['class'])) {
     $dataTable['class'] = 'table table-sm table-striped table-hover';

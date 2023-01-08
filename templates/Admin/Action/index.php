@@ -1,7 +1,7 @@
 <?php
 //;
 $this->loadHelper('Sugar.Box');
-$this->loadHelper('Sugar.DataTable');
+$this->loadHelper('Admin.DataTable');
 $this->extend('Admin./Base/index');
 //$this->Toolbar->addLink(__('Add'), ['action' => 'add'], ['data-icon' => 'plus']);
 ?>

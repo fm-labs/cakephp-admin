@@ -46,13 +46,13 @@ $identityClass = $authentication->getConfig('identityClass');
             <?=
             $this->Ui->link(
                 __d('admin', 'Goto Dashboard'),
-                ['_name' => 'admin:system:dashboard'],
+                ['_name' => 'admin:admin:index'],
                 ['icon' => 'home', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
             <?=
             $this->Ui->link(
                 __d('admin', 'Edit profile'),
-                ['_name' => 'admin:system:user:profile'],
+                ['_name' => 'admin:admin:user:profile'],
                 ['icon' => 'edit', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
             <?=
@@ -64,7 +64,7 @@ $identityClass = $authentication->getConfig('identityClass');
             <?=
             $this->Ui->link(
                 __d('admin', 'Logout'),
-                ['_name' => 'admin:system:user:logout'],
+                ['_name' => 'admin:admin:user:logout'],
                 ['icon' => 'sign-out', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
         </div>

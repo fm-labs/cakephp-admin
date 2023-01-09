@@ -8,11 +8,11 @@ class AdminPluginCollection implements \Iterator
     /**
      * @var array
      */
-    protected $plugins = [];
+    protected array $plugins = [];
 
-    protected $names = [];
+    protected array $names = [];
 
-    protected $pos = 0;
+    protected int $pos = 0;
 
     /**
      * @param \Admin\Core\AdminPluginInterface $plugin The admin plugin.
@@ -42,7 +42,7 @@ class AdminPluginCollection implements \Iterator
      * @link https://php.net/manual/en/iterator.current.php
      * @return mixed Can return any type.
      */
-    public function current()
+    public function current(): mixed
     {
         $name = $this->names[$this->pos] ?? null;
 
@@ -55,7 +55,7 @@ class AdminPluginCollection implements \Iterator
      * @link https://php.net/manual/en/iterator.next.php
      * @return void Any returned value is ignored.
      */
-    public function next()
+    public function next(): void
     {
         if ($this->pos < count($this->names)) {
             $this->pos++;
@@ -68,7 +68,7 @@ class AdminPluginCollection implements \Iterator
      * @link https://php.net/manual/en/iterator.key.php
      * @return string|float|int|bool|null scalar on success, or null on failure.
      */
-    public function key()
+    public function key(): mixed
     {
         return $this->names[$this->pos] ?? null;
     }
@@ -80,7 +80,7 @@ class AdminPluginCollection implements \Iterator
      * @return bool The return value will be casted to boolean and then evaluated.
      * Returns true on success or false on failure.
      */
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->names[$this->pos]);
     }
@@ -91,7 +91,7 @@ class AdminPluginCollection implements \Iterator
      * @link https://php.net/manual/en/iterator.rewind.php
      * @return void Any returned value is ignored.
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->pos = 0;
     }

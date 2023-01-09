@@ -10,22 +10,17 @@
             <th>Path</th>
             <th>Bootstrap</th>
             <th>Routes</th>
-            <th>Settings</th>
             <th>Actions</th>
         </tr>
         <?php foreach ((array)$this->get('plugins') as $pluginName => $info) : ?>
         <tr>
-            <td><?= h($info['name']); ?></td>
+            <td><?= $this->Html->link($info['name'], ['action' => 'view', $pluginName]); ?></td>
             <td><?= $this->Status->boolean(!!$info['loaded']); ?></td>
             <td><?= $this->Status->display($info['handler_class']); ?></td>
             <td><?= $this->Status->display($info['path']); ?></td>
             <td><?= $this->Status->boolean(!!$info['handler_bootstrap']); ?></td>
             <td><?= $this->Status->boolean(!!$info['handler_routes']); ?></td>
-            <td>
-                <?php if ($info['configuration_url']) : ?>
-                    <?= $this->Html->link('Configure', $info['configuration_url']); ?>
-                <?php endif; ?>
-            </td>
+
             <td class="actions">
                 <?php if ($info['handler_bootstrap']) : ?>
                     <?= $this->Html->link('Disable',
@@ -52,7 +47,6 @@
                 <td><?= $this->Status->boolean(!!$info['loaded']); ?></td>
                 <td><?= $this->Status->boolean(!!$info['handler_class']); ?></td>
                 <td><?= $this->Status->display($info['path']); ?></td>
-                <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
                 <td class="actions">

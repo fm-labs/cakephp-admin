@@ -7,6 +7,7 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cupcake\Cupcake;
+use Cupcake\PluginManager;
 
 /**
  * Class PluginsController
@@ -113,9 +114,14 @@ class PluginsController extends AppController
      */
     public function view(?string $pluginName = null): void
     {
-        $pluginInfo = Cupcake::pluginInfo($pluginName);
+        $pluginInfo = PluginManager::getPluginInfo($pluginName);
 
-        $this->set(compact('pluginInfo'));
+        $readme = '';
+        if ($pluginInfo['readme_file']) {
+            $readme = PluginManager::getReadme($pluginName);
+        }
+
+        $this->set(compact('pluginInfo', 'readme'));
     }
 
     /**

@@ -61,7 +61,7 @@ class AuthController extends AppController
     /**
      * Login method
      *
-     * @return null|\Cake\Http\Response
+     * @return null|\Cake\Http\Response|void
      * @throws \Exception
      */
     public function login()
@@ -75,8 +75,9 @@ class AuthController extends AppController
         // login successful
         if ($result->isValid()) {
             $redirectUrl = $this->Authentication->getLoginRedirect();
-            $redirectUrl = $redirectUrl ?: ['_name' => 'admin:admin:dashboard'];
-            $this->Flash->success('Login successful');
+            $redirectUrl = $redirectUrl ?: ['_name' => 'admin:admin:index'];
+            $redirectUrl2 = ['_name' => 'admin:admin:index'];
+            $this->Flash->success(__('You are logged in now'), ['key' => 'auth']);
 
             return $this->redirect($redirectUrl);
         }

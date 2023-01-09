@@ -200,12 +200,12 @@ class Plugin extends BasePlugin implements
                     }
                 }
 
-                // catch-all fallback
-                $routes->connect(
-                    '/{path}',
-                    ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'fallback'],
-                    ['path' => '.*', 'pass' => ['path']]
-                );
+//                // catch-all fallback
+//                $routes->connect(
+//                    '/{path}',
+//                    ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'fallback'],
+//                    ['path' => '.*', 'pass' => ['path']]
+//                );
 
                 $this->dispatchEvent('Admin.Routes.setup', ['routes' => $routes]);
             } # End of admin root scope

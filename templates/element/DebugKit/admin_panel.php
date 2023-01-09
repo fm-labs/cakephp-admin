@@ -9,8 +9,8 @@
     <h2>Admin Panel</h2>
     <p>
         Quicklinks:
-        <?= $this->Html->link(__('Admin Dashboard'), ['_name' => 'admin:system:dashboard']); ?> |
-        <?= $this->Html->link(__('Logout'), ['_name' => 'admin:system:user:logout']); ?> |
+        <?= $this->Html->link(__('Admin Dashboard'), ['_name' => 'admin:admin:index']); ?> |
+        <?= $this->Html->link(__('Logout'), ['_name' => 'admin:admin:user:logout']); ?> |
     </p>
 
     <h3>Locale</h3>

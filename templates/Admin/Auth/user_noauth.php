@@ -21,7 +21,7 @@
             <?=
             $this->Ui->link(
                 __d('admin', 'Goto Dashboard'),
-                ['_name' => 'admin:system:dashboard'],
+                ['_name' => 'admin:admin:index'],
                 ['icon' => 'home', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
     </div>

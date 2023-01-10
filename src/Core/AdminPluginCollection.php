@@ -8,11 +8,11 @@ class AdminPluginCollection implements \Iterator
     /**
      * @var array
      */
-    protected array $plugins = [];
+    protected $plugins = [];
 
-    protected array $names = [];
+    protected $names = [];
 
-    protected int $pos = 0;
+    protected $pos = 0;
 
     /**
      * @param \Admin\Core\AdminPluginInterface $plugin The admin plugin.
@@ -42,7 +42,8 @@ class AdminPluginCollection implements \Iterator
      * @link https://php.net/manual/en/iterator.current.php
      * @return mixed Can return any type.
      */
-    public function current(): mixed
+    #[\ReturnTypeWillChange]
+    public function current()
     {
         $name = $this->names[$this->pos] ?? null;
 

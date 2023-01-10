@@ -3,13 +3,6 @@ declare(strict_types=1);
 
 // phpcs:ignoreFile
 
-use Cake\Cache\Cache;
-use Cake\Core\Configure;
-use Cake\Core\Plugin;
-use Cake\Datasource\ConnectionManager;
-use Seo\Sitemap\Sitemap;
-use Seo\Test\App\Error\ExceptionRenderer;
-
 $findRoot = function ($root) {
     do {
         $lastRoot = $root;

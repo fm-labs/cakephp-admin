@@ -6,7 +6,7 @@ $this->loadHelper('Bootstrap.Button')
     <?php foreach($menu as $item):
         $menuId = uniqid('menu');
         $active = false;
-        $linkClass = 'nav-link pt-1 pb-1';
+        $linkClass = 'nav-link py-1';
         $collapseClass = 'collapse';
         $ariaExpanded = "false";
 
@@ -49,7 +49,7 @@ $this->loadHelper('Bootstrap.Button')
             echo $this->Html->link($item['title'], $item['url'], $linkOptions);
             ?>
             <div class="<?= $collapseClass ?>" id="<?= $menuId ?>" style="width: 99%;">
-                <ul class="list-unstyled fw-normal ps-3 m-0 bg-white border-bottom">
+                <ul class="list-unstyled fw-normal px-0 py-2 m-0 bg-white border-bottom">
                     <?php foreach($item['children'] as $child): ?>
                         <?php
                         $title = $child['title'];
@@ -57,13 +57,14 @@ $this->loadHelper('Bootstrap.Button')
                         $options = $child['attr'];
                         //unset($options['url']);
                         //unset($options['children']);
-                        $options['class'] = 'nav-link py-1';
+                        //$options['class'] = 'link-dark d-inline-flex text-decoration-none rounded'
+                        $options['class'] = 'link-dark d-inline-flex text-decoration-none';
 
                         if (\Cake\Routing\Router::normalize($child['url']) === \Cake\Routing\Router::normalize($this->getRequest()->getPath())) {
                             $options['class'] .= ' active';
                         }
                         ?>
-                        <li class="nav-item">
+                        <li class="ps-3 pe-2 py-0">
                             <?= $this->Html->link(
                                     $title,
                                     $url,

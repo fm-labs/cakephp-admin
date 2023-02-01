@@ -69,6 +69,11 @@
   font-weight: 500;
   color: #333;
 }
+.sidebar .nav-link a {
+  font-size: 14px;
+  line-height: 1.2em;
+  padding: 5px 0;
+}
 .sidebar .nav-link .feather {
   margin-right: 4px;
   color: #727272;
@@ -147,9 +152,4 @@
 .toolbar .btn-toolbar .btn ~ .btn-group,
 .toolbar .btn-toolbar .btn-group ~ .btn-group {
   margin-left: 0.25rem;
-}
-.navbar-brand,
-#sidebarMenu {
-  min-width: 150px;
-  max-width: 200px;
 }

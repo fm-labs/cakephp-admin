@@ -45,7 +45,7 @@
             <tr>
                 <td><?= h($info['name']); ?></td>
                 <td><?= $this->Status->boolean(!!$info['loaded']); ?></td>
-                <td><?= $this->Status->boolean(!!$info['handler_class']); ?></td>
+                <td><?= h($info['handler_class']); ?></td>
                 <td><?= $this->Status->display($info['path']); ?></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>

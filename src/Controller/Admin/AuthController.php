@@ -77,7 +77,7 @@ class AuthController extends AppController
             $redirectUrl = $this->Authentication->getLoginRedirect();
             $redirectUrl = $redirectUrl ?: ['_name' => 'admin:admin:index'];
             $redirectUrl2 = ['_name' => 'admin:admin:index'];
-            $this->Flash->success(__('You are logged in now'), ['key' => 'auth']);
+            $this->Flash->success(__d('admin', 'You are logged in now'), ['key' => 'auth']);
 
             return $this->redirect($redirectUrl);
         }

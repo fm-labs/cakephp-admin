@@ -4,13 +4,13 @@ return [
         'Admin' => [
             'groups' => [
                 'Admin.Dashboard' => [
-                    'label' => __('Dashboard'),
+                    'label' => __d('admin', 'Dashboard'),
                 ],
                 'Admin.Security' => [
-                    'label' => __('Security'),
+                    'label' => __d('admin', 'Security'),
                 ],
                 'Admin.Theme' => [
-                    'label' => __('Theme'),
+                    'label' => __d('admin', 'Theme'),
                 ],
             ],
 
@@ -23,13 +23,13 @@ return [
                 'Admin.Security.enabled' => [
                     'group' => 'Admin.Security',
                     'type' => 'boolean',
-                    'label' => __('Enable Admin Security'),
-                    'help' => __('Enables advanced security mechanism'),
+                    'label' => __d('admin', 'Enable Admin Security'),
+                    'help' => __d('admin', 'Enables advanced security mechanism'),
                 ],
                 'Admin.Security.forceSSL' => [
                     'group' => 'Admin.Security',
                     'type' => 'boolean',
-                    'label' => __('Force SSL'),
+                    'label' => __d('admin', 'Force SSL'),
                     'help' => '',
                 ],
                 'Admin.Theme.name' => [
@@ -69,12 +69,12 @@ return [
                 ],
                 'Admin.Theme.enableJsFlash' => [
                     'group' => 'Admin.Theme',
-                    'label' => __('Pretty Flash messages'),
+                    'label' => __d('admin', 'Pretty Flash messages'),
                     'type' => 'boolean',
                 ],
                 'Admin.Theme.enableJsAlerts' => [
                     'group' => 'Admin.Theme',
-                    'label' => __('Pretty Alert messages'),
+                    'label' => __d('admin', 'Pretty Alert messages'),
                     'type' => 'boolean',
                 ],
 

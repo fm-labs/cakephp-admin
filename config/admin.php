@@ -23,7 +23,7 @@ return [
      * - title: Dashboard title string
      * - url: Url to Dashboard
      */
-    'Admin.Dashboard.title' => __('Administration'),
+    'Admin.Dashboard.title' => __d('admin', 'Administration'),
     'Admin.Dashboard.url' => ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
     'Admin.Dashboard.panels' => [],
 

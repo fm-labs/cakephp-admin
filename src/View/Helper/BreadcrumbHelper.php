@@ -93,7 +93,7 @@ class BreadcrumbHelper extends Helper
         $dashboardTitle = Configure::read('Admin.Dashboard.title');
         $dashboardUrl = Configure::read('Admin.Dashboard.url', '/admin');
 
-        $rootCrumbTitle = $this->_View->get('admin_breadcrumb_root_title', __('Administration'));
+        $rootCrumbTitle = $this->_View->get('admin_breadcrumb_root_title', __d('admin', 'Administration'));
         $rootCrumbUrl = $this->_View->get('admin_breadcrumb_root_url', $dashboardUrl);
         $this->Breadcrumbs->prepend($rootCrumbTitle, $rootCrumbUrl);
 

@@ -10,7 +10,7 @@ $this->loadHelper('Bootstrap.Tabs');
         <div class="col-md-3">
             <div class="actionbar">
                 <nav class="actionbar-nav">
-                    <?php echo $this->Toolbar->render(['class' => 'actionbar-menu']); ?>
+                    <?php //echo $this->Toolbar->render(['class' => 'actionbar-menu']); ?>
                 </nav>
             </div>
         </div>

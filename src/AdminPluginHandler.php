@@ -11,7 +11,7 @@ use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 
-class AdminPlugin extends \Admin\Core\BaseAdminPlugin implements EventListenerInterface
+class AdminPluginHandler extends \Admin\Core\BaseAdminPlugin implements EventListenerInterface
 {
     /**
      * @inheritDoc

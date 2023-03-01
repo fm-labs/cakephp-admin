@@ -94,11 +94,10 @@ class Plugin extends BasePlugin implements
         $this->_app = $app;
 
         EventManager::instance()->on(new ActionDispatcherListener());
-        Admin::addPlugin(new AdminPlugin());
+        Admin::addPlugin(new AdminPluginHandler());
 
-        Configure::load('Admin.admin', 'default');
-        //Configure::load('Admin', 'settings');
-        //Settings::load('Admin')
+        Configure::load('Admin.admin');
+        Configure::load('Admin', 'settings');
     }
 
     /**

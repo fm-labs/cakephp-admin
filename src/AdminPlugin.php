@@ -34,7 +34,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Admin Plugin
  */
-class Plugin extends BasePlugin implements
+class AdminPlugin extends BasePlugin implements
     //EventListenerInterface,
     \Authentication\AuthenticationServiceProviderInterface
     //\Authorization\AuthorizationServiceProviderInterface
@@ -94,7 +94,7 @@ class Plugin extends BasePlugin implements
         $this->_app = $app;
 
         EventManager::instance()->on(new ActionDispatcherListener());
-        Admin::addPlugin(new AdminPluginHandler());
+        Admin::addPlugin(new AdminAdmin());
 
         Configure::load('Admin.admin');
         Configure::load('Admin', 'settings');

@@ -34,28 +34,6 @@ class AdminMiddleware implements MiddlewareInterface
 //        });
     }
 
-//    /**
-//     * @param \Psr\Http\Message\ServerRequestInterface $request The request.
-//     * @param \Psr\Http\Message\ResponseInterface $response The response.
-//     * @param callable $next The next middleware to call.
-//     * @return \Psr\Http\Message\ResponseInterface A response.
-//     */
-//    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, $next)
-//    {
-//        $params = $request->getServerParams();
-//
-//        $urlPrefix = '/' . trim(Admin::$urlPrefix, '/') . '/';
-//        if (isset($params['REQUEST_URI']) && preg_match('/^' . preg_quote($urlPrefix, '/') . '/', $params['REQUEST_URI'])) {
-//            // iframe detection
-//            $query = $request->getQueryParams();
-//            if (isset($query['iframe'])) {
-//                $this->_iframe = (bool)$query['iframe'];
-//            }
-//        }
-//
-//        return $next($request, $response);
-//    }
-
     /**
      * Process an incoming server request.
      *

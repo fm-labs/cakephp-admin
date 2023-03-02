@@ -68,7 +68,7 @@ class AdminComponent extends Component
             $this->Authentication->setConfig([
                 //'logoutRedirect' => false,
                 //'requireIdentity' => true,
-                'identityAttribute' => \Admin\Plugin::AUTH_IDENTITY_ATTRIBUTE,
+                'identityAttribute' => \Admin\AdminPlugin::AUTH_IDENTITY_ATTRIBUTE,
                 //'identityCheckEvent' => 'Controller.initialize',
             ]);
             $authService = $this->Authentication->getAuthenticationService();
@@ -78,7 +78,7 @@ class AdminComponent extends Component
                 //'identifiers' => [],
                 //'identityClass' => Identity::class,
                 //'identityAttribute' => 'identity',
-                'identityAttribute' => \Admin\Plugin::AUTH_IDENTITY_ATTRIBUTE,
+                'identityAttribute' => \Admin\AdminPlugin::AUTH_IDENTITY_ATTRIBUTE,
                 //'queryParam' => null,
                 'unauthenticatedRedirect' => Router::url([
                     'plugin' => 'Admin',
@@ -93,7 +93,7 @@ class AdminComponent extends Component
         if (Configure::read('Admin.Auth.authorizationEnabled')) {
             $this->Authorization = $controller->loadComponent('Authorization.Authorization');
             $this->Authorization->setConfig([
-                'identityAttribute' => \Admin\Plugin::AUTH_IDENTITY_ATTRIBUTE,
+                'identityAttribute' => \Admin\AdminPlugin::AUTH_IDENTITY_ATTRIBUTE,
                 //'serviceAttribute' => 'authorization',
                 //'authorizationEvent' => 'Controller.startup',
                 //'skipAuthorization' => [],

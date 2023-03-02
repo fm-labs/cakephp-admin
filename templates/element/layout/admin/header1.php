@@ -9,7 +9,7 @@
 ?>
 <nav class="navbar navbar-static-top" role="navigation">
     <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-        <span class="sr-only"><?= __('Toggle navigation'); ?></span>
+        <span class="sr-only"><?= __d('admin', 'Toggle navigation'); ?></span>
     </a>
 
     <div class="navbar-menu-left">

@@ -14,7 +14,7 @@
 <?php $this->Toolbar->addLink(
     __d('admin', 'Delete'),
     ['action' => 'delete', $logFile],
-    ['data-icon' => 'trash', 'confirm' => __('Are you sure?')]
+    ['data-icon' => 'trash', 'confirm' => __d('admin', 'Are you sure?')]
 ) ?>
 <div class="view admin logs">
     <h2 class="ui header">

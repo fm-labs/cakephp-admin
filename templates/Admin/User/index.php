@@ -3,12 +3,12 @@
 // breadcrumbs
 $this->loadHelper('User.Auth');
 $this->loadHelper('Admin.Breadcrumb');
-$this->Breadcrumb->add(__d('user', 'My Account'));
+$this->Breadcrumb->add(__d('admin',  'My Account'));
 
 // no robots
 $this->Html->meta('robots', 'noindex,nofollow', ['block' => true]);
 
-$this->assign('title', __d('user', 'My Account'));
+$this->assign('title', __d('admin',  'My Account'));
 $this->assign('heading', '');
 
 //$user = $this->getRequest()->getSession()->read('Auth');
@@ -22,7 +22,7 @@ $admin = $this->getRequest()->getSession()->read('Admin');
     <h2 style="text-align: center;"><?= h($admin->username); ?></h2>
     <hr />
     <div class="actions" style="text-align: center;">
-        <?= $this->Html->link(__d('user', 'Change password'), ['_name' => 'user:passwordchange']); ?><br />
-        <?= $this->Html->link(__d('user', 'Logout'), ['action' => 'logout']); ?>
+        <?= $this->Html->link(__d('admin',  'Change password'), ['_name' => 'user:passwordchange']); ?><br />
+        <?= $this->Html->link(__d('admin',  'Logout'), ['action' => 'logout']); ?>
     </div>
 </div>

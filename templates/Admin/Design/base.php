@@ -2,7 +2,7 @@
 foreach (['form', 'boxes', 'tables', 'components', 'tabs', 'icons', 'vectormap'] as $section) {
     $this->Toolbar->addLink($section, ['controller' => 'Design', 'action' => 'index', '?' => ['section' => $section]]);
 }
-$this->assign('heading', __('Design {0}', $this->request->getQuery('section') ?: 'Index'));
+$this->assign('heading', __d('admin', 'Design {0}', $this->request->getQuery('section') ?: 'Index'));
 ?>
 <style>
     .design-index .section-header {

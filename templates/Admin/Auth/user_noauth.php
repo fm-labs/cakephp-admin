@@ -14,7 +14,7 @@
                 Your are running the Admin interface without authentication!
             </div>
             <p>
-                <?= $this->Html->link(__('Enable admin authentication now'), '#'); ?>
+                <?= $this->Html->link(__d('admin', 'Enable admin authentication now'), '#'); ?>
             </p>
         </div>
         <div class="extra content">

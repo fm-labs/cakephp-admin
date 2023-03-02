@@ -2,7 +2,7 @@
 /**
  * @var array $caches Map of cache configurations
  */
-$this->assign('heading', __('Cache configuration'));
+$this->assign('heading', __d('admin', 'Cache configuration'));
 
 $formatter = function ($url) {
     $parts = [];

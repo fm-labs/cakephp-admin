@@ -1,5 +1,5 @@
 <div class="index">
-    <?= $this->Box->create(__("Connected Routes"), ['class' => 'box-solid']); ?>
+    <?= $this->Box->create(__d('admin', "Connected Routes"), ['class' => 'box-solid']); ?>
     <table class="table table-striped table-hover">
         <thead>
         <tr>

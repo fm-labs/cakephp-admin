@@ -13,7 +13,7 @@
         <div class="sidebar-toggle">
             <a href="#" data-sidebar-toggle>
                 <i class="fa fa-cubes"></i>
-                <span><?= $this->get('be_title', __('Administration')) ?></span>
+                <span><?= $this->get('be_title', __d('admin', 'Administration')) ?></span>
             </a>
         </div>
         <?= $this->fetch('sidebar_panels'); ?>

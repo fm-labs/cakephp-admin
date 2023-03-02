@@ -3,7 +3,7 @@
 $this->loadHelper('Sugar.Box');
 $this->loadHelper('Admin.DataTable');
 $this->extend('Admin./Base/index');
-//$this->Toolbar->addLink(__('Add'), ['action' => 'add'], ['data-icon' => 'plus']);
+//$this->Toolbar->addLink(__d('admin', 'Add'), ['action' => 'add'], ['data-icon' => 'plus']);
 ?>
 
 <!-- Table stats -->

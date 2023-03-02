@@ -31,14 +31,14 @@ $healthIcon = function ($status) use ($healthClass) {
 };
 ?>
 <div class="index">
-    <h2><?= __('Health Status'); ?></h2>
+    <h2><?= __d('admin', 'Health Status'); ?></h2>
 
     <?php if ($health) : ?>
     <table class="table table-striped">
         <tr>
-            <th><?= __('Check'); ?></th>
-            <th><?= __('Status'); ?></th>
-            <th><?= __('Message'); ?></th>
+            <th><?= __d('admin', 'Check'); ?></th>
+            <th><?= __d('admin', 'Status'); ?></th>
+            <th><?= __d('admin', 'Message'); ?></th>
         </tr>
         <?php foreach ($health as $checkName => $status) : ?>
             <tr class="<?= $healthClass($status->getStatus()); ?>">

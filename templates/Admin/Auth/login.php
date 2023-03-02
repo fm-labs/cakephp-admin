@@ -2,7 +2,7 @@
 //$this->extend('User./base');
 
 $this->assign('heading', ' ');
-$this->assign('title', __('Login'))
+$this->assign('title', __d('admin', 'Login'))
 ?>
 <div class="">
 
@@ -19,16 +19,16 @@ $this->assign('title', __('Login'))
         <?= $this->Form->text('username', [
             'class' => 'form-control',
             'type' => "text",
-            'placeholder' => __d('user', 'yourname@example.org'),
+            'placeholder' => __d('admin',  'yourname@example.org'),
         ]); ?>
-        <?= $this->Form->label('username', __('Email')); ?>
+        <?= $this->Form->label('username', __d('admin', 'Email')); ?>
     </div>
     <div class="form-floating">
         <?= $this->Form->password('password', [
             'class' => 'form-control',
             'type' => 'password',
-            'placeholder' => __d('user', 'Type your password here'),
-            'label' => __d('user', 'Password')]); ?>
+            'placeholder' => __d('admin',  'Type your password here'),
+            'label' => __d('admin',  'Password')]); ?>
         <?= $this->Form->label('password'); ?>
     </div>
 
@@ -40,7 +40,7 @@ $this->assign('title', __('Login'))
     </div>
     -->
 
-    <?= $this->Form->button(__d('user', 'Sign in'), [
+    <?= $this->Form->button(__d('admin',  'Sign in'), [
         'class' => 'w-100 btn btn-lg btn-primary',
     ]); ?>
     <?= $this->Form->end(); ?>

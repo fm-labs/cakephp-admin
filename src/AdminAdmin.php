@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin;
 
+use Admin\Health\AdminConfigHealthCheck;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
@@ -10,6 +11,8 @@ use Cake\Event\EventListenerInterface;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
+use Cupcake\Health\HealthManager;
+use Cupcake\Health\HealthStatus;
 
 class AdminAdmin extends \Admin\Core\BaseAdminPlugin implements EventListenerInterface
 {
@@ -104,6 +107,7 @@ class AdminAdmin extends \Admin\Core\BaseAdminPlugin implements EventListenerInt
             'Admin.Menu.build.admin_developer' => ['callable' => 'adminMenuBuildDev', 'priority' => 10 ],
             'Admin.Menu.build.admin_user' => ['callable' => 'adminMenuBuildUser', 'priority' => 10 ],
             //'Controller.beforeRedirect' => 'controllerBeforeRedirect',
+            'Health.beforeCheck' => ['callable' => 'beforeHealthCheck']
         ];
     }
 
@@ -302,5 +306,35 @@ HTML;
             ],
         ];
         $menu->addItems($items);
+    }
+
+    /**
+     * @param EventInterface $event The event object
+     * @return void
+     */
+    public function beforeHealthCheck(EventInterface $event)
+    {
+        /** @var HealthManager $healthManager */
+        $healthManager = $event->getSubject();
+        $healthManager
+            ->addCheck('admin_configuration', new AdminConfigHealthCheck())
+//            ->addCheck('admin_configuration', [
+//                'category' => 'configuration',
+//                'label' => __d('admin', 'Checks if the admin plugin is properly configured'),
+//                'callback' => function () {
+//                    return HealthStatus::warn('The admin plugin is not properly configured');
+//                },
+//            ])
+            ->addCheck('admin_security', [
+                'category' => 'configuration',
+                'label' => __d('admin', 'Checks if the admin plugin is properly secured'),
+                'callback' => function () {
+                    if (Configure::read('Admin.Security.enable') !== true) {
+                        return HealthStatus::warn('The admin plugin security settings are not enabled');
+                    }
+
+                    return HealthStatus::ok('The admin plugin security settings are properly configured');
+                },
+            ]);
     }
 }

@@ -24,8 +24,6 @@ class HealthController extends AppController
             $checks = Cupcake::doFilter('health_checks_init', []);
             $hm = new \Cupcake\Health\HealthManager($checks);
 
-            $this->dispatchEvent('Health.beforeCheck', [], $hm);
-
             $hm->addCheck('sys_php_version', [
                 'category' => 'system',
                 'callback' => function () {
@@ -81,26 +79,8 @@ class HealthController extends AppController
 
                     return HealthStatus::ok(__d('admin', 'All system directories exist') . "\n" . $out);
                 },
-            ])
-            ->addCheck('admin_configuration', [
-                'category' => 'configuration',
-                'label' => __d('admin', 'Checks if the admin plugin is properly configured'),
-                'callback' => function () {
-                    return HealthStatus::warn('The admin plugin is not properly configured');
-                },
-            ])
-            ->addCheck('admin_security', [
-                'category' => 'configuration',
-                'label' => __d('admin', 'Checks if the admin plugin is properly secured'),
-                'callback' => function () {
-                    if (Configure::read('Admin.Security.enable') !== true) {
-                        return HealthStatus::warn('The admin plugin security settings are not enabled');
-                    }
-
-                    return HealthStatus::ok('The admin plugin security settings are properly configured');
-                },
             ]);
-
+            $this->dispatchEvent('Health.beforeCheck', [], $hm);
             $hm->check();
             $this->dispatchEvent('Health.afterCheck', [], $hm);
             $health = $hm->getResults();

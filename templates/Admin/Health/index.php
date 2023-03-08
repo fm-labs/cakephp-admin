@@ -29,10 +29,10 @@ $healthIcon = function ($status) use ($healthClass) {
         ]);
     }
 };
+
+$this->assign('title', __d('admin', 'Health Status'))
 ?>
 <div class="index">
-    <h2><?= __d('admin', 'Health Status'); ?></h2>
-
     <?php if ($health) : ?>
     <table class="table table-striped">
         <tr>

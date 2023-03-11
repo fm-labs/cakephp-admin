@@ -8,18 +8,11 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
-
-    <?= $this->Html->css('Admin.layout/admin'); ?>
     <?= $this->fetch('css') ?>
-    <!-- scripts -->
-    <!--[if lt IE 9]>
-    <?= $this->Html->script('/admin/libs/html5shiv/html5shiv.min.js'); ?>
-    <?= $this->Html->script('/admin/libs/respond/respond.min.js'); ?>
-    <![endif]-->
-    <?= $this->Html->script('/admin/libs/jquery/jquery.min.js'); ?>
+    <?= $this->Html->css('Admin.layout/layout.admin'); ?>
     <?= $this->fetch('headjs') ?>
 </head>
-<body class="body-iframe <?= $this->get('be_layout_body_class'); ?>">
+<body class="<?= $this->get('admin_layout_body_class'); ?>">
 <div class="wrapper">
 
     <!-- Content Wrapper. Contains page content -->

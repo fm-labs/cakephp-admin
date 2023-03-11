@@ -91,13 +91,22 @@ class FormatterHelper extends Helper
 
         // link
         self::register('link', function ($val, $extra, $params) {
-            $title = $url = $val;
+            $url = $val;
+
+            if (is_callable($params)) {
+                $params = $params($val, $extra);
+            }
+
             if (isset($params['url'])) {
                 $url = $params['url'];
                 unset($params['url']);
             }
+            if ($url && is_callable($url)) {
+                $url = $url($val, $extra);
+            }
 
-            $url = $this->Html->Url->build($url, true);
+            $url = $this->Html->Url->build($url, ['full' => true]);
+            $title = $url;
             if (isset($params['title'])) {
                 $title = $params['title'];
             }

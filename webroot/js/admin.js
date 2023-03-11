@@ -300,14 +300,14 @@
 
         _modalTemplate: '<div class="modal-dialog"> \
     <div class="modal-content"> \
-    <div class="modal-header"> \
-    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> \
-<h4 class="modal-title"></h4> \
-</div> \
+ <div class="modal-header">\
+<h5 class="modal-title"></h5>\
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>\
+</div>\n\
 <div class="modal-body"> \
 </div> \
 <div class="modal-footer"> \
-    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> \
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> \
 </div> \
 </div><!-- /.modal-content --> \
 </div><!-- /.modal-dialog -->',
@@ -315,8 +315,8 @@
         create: function (options) {
             var modalId = AdminJs.Util.uniqueDomId('modal');
             var $modal = $('<div>', {
-                id: 'modal' + modalId,
-                class: 'modal fade',
+                id: modalId,
+                class: 'modal show fade',
                 tabIndex: -1,
                 role: 'dialog'
             }).html(this._modalTemplate);
@@ -337,8 +337,8 @@
 
             var modalId = AdminJs.Util.uniqueDomId('modal');
             var $modal = $('<div>', {
-                id: 'modal' + modalId,
-                class: 'modal fade',
+                id: modalId,
+                class: 'modal show fade',
                 tabIndex: -1,
                 role: 'dialog'
             }).html(this._modalTemplate);
@@ -362,6 +362,9 @@
                 $invoker.focus();
             });
             $modal.modal(modalOptions);
+            $modal.on('click', '[data-bs-dismiss="modal"]').click(() => {
+                console.log("Clicked");
+            })
 
             return $modal;
         },
@@ -378,10 +381,11 @@
 
             var modalId = AdminJs.Util.uniqueDomId('modal');
             var $modal = $('<div>', {
-                id: 'modal' + modalId,
-                class: ((options.class) ? options.class + ' ' : '') + 'modal fade',
-                tabIndex: -1,
-                role: 'dialog'
+                id: modalId,
+                class: ((options.class) ? options.class + ' ' : '') + 'modal show fade',
+                tabindex: -1,
+                //role: 'dialog',
+                'aria-hidden': "false",
             }).html(this._modalTemplate);
 
 
@@ -415,6 +419,11 @@
                 //AdminJs.Console.log($invoker);
                 $invoker.focus();
             });
+            $modal.on('click', '[data-bs-dismiss="modal"]', () => {
+                $modal.hide();
+                //$modal.dispose();
+                $modal.remove();
+            })
 
             return $modal;
             //return AdminJs.Modal.open($iframe, modalOptions, options);
@@ -1090,6 +1099,9 @@
                     AdminJs.Frame.reloadClosest($target);
                 }
             });
+            console.log($modal);
+            $modal.appendTo($('body'))
+            $modal.show();
 
             ev.stopPropagation();
             ev.preventDefault();

@@ -152,7 +152,7 @@ class ActionComponent extends Component
     }
 
     /**
-     * @param null|string $action Action name
+     * @param null|string|InlineEntityAction $action Action name
      * @param array $options Action options
      * @param null|callable $callable Action callback
      * @return void

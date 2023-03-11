@@ -17,6 +17,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
     //protected $template = "view";
 
     protected $_defaultConfig = [
+        'label' => null,
         'entity' => null,
         'entityOptions' => [],
         'modelClass' => null,
@@ -30,12 +31,14 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         'tabs' => [],
     ];
 
+    protected $_defaultAttrs = ['data-icon' => 'file-o'];
+
     /**
      * @inheritDoc
      */
     public function getLabel(): string
     {
-        return __d('admin', 'View');
+        return $this->getConfig('label', __d('admin', 'View'));
     }
 
     /**
@@ -43,7 +46,8 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
      */
     public function getAttributes(): array
     {
-        return ['data-icon' => 'file-o'];
+        $attrs = $this->getConfig('attrs', []);
+        return array_merge($this->_defaultAttrs, $attrs);
     }
 
     /**
@@ -115,7 +119,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
     public function implementedEvents(): array
     {
         return [
-            //'Controller.beforeRender' => 'beforeRender'
+            'Controller.beforeRender' => 'beforeRender'
         ];
     }
 }

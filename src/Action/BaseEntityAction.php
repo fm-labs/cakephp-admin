@@ -136,15 +136,17 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
                         'action' => 'index',
                     ],
                 ];
-                $breadcrumbs[] = [
-                    'title' => $this->entity()->get($this->model()->getDisplayField()),
-                    'url' => [
-                        'plugin' => $controller->getRequest()->getParam('plugin'),
-                        'controller' => $controller->getRequest()->getParam('controller'),
-                        'action' => 'view',
-                        $this->entity()->get($this->model()->getPrimaryKey()),
-                    ],
-                ];
+                if ($this->_entity) {
+                    $breadcrumbs[] = [
+                        'title' => $this->_entity->get($this->model()->getDisplayField()),
+                        'url' => [
+                            'plugin' => $controller->getRequest()->getParam('plugin'),
+                            'controller' => $controller->getRequest()->getParam('controller'),
+                            'action' => 'view',
+                            $this->_entity->get($this->model()->getPrimaryKey()),
+                        ],
+                    ];
+                }
                 $breadcrumbs[] = [
                     'title' => $this->getLabel(),
                 ];

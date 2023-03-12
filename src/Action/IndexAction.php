@@ -55,7 +55,7 @@ class IndexAction extends BaseAction
 
         // load helpers
         if ($this->_config['helpers']) {
-            $controller->viewBuilder()->setHelpers($this->_config['helpers'], true);
+            $controller->viewBuilder()->addHelpers($this->_config['helpers']);
         }
 
         // custom template

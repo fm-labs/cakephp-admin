@@ -35,7 +35,7 @@ $this->loadHelper('Bootstrap.Tabs');
     <?php
     if ($this->fetch('content')) {
         echo $this->fetch('content');
-    } else {
+    } elseif ($entity) {
         echo $this->cell('Admin.EntityView', [ $entity ], $viewOptions)->render('table');
     }
     ?>

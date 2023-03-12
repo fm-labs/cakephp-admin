@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin;
 
 use Admin\Health\AdminConfigHealthCheck;
+use Admin\Health\AdminSecurityHealthCheck;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
@@ -318,23 +319,6 @@ HTML;
         $healthManager = $event->getSubject();
         $healthManager
             ->addCheck('admin_configuration', new AdminConfigHealthCheck())
-//            ->addCheck('admin_configuration', [
-//                'category' => 'configuration',
-//                'label' => __d('admin', 'Checks if the admin plugin is properly configured'),
-//                'callback' => function () {
-//                    return HealthStatus::warn('The admin plugin is not properly configured');
-//                },
-//            ])
-            ->addCheck('admin_security', [
-                'category' => 'configuration',
-                'label' => __d('admin', 'Checks if the admin plugin is properly secured'),
-                'callback' => function () {
-                    if (Configure::read('Admin.Security.enable') !== true) {
-                        return HealthStatus::warn('The admin plugin security settings are not enabled');
-                    }
-
-                    return HealthStatus::ok('The admin plugin security settings are properly configured');
-                },
-            ]);
+            ->addCheck('admin_security', new AdminSecurityHealthCheck());
     }
 }

@@ -13,6 +13,6 @@ class AdminConfigHealthCheck implements HealthCheckInterface
      */
     public function getHealthStatus(): HealthStatus
     {
-        return HealthStatus::ok('Ok');
+        return HealthStatus::ok('The admin plugin is properly configured');
     }
 }

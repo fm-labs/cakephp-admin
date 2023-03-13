@@ -39,10 +39,10 @@ class DeleteAction extends BaseEntityAction
                             $controller->Flash->success(__d('admin', 'Deleted'));
                             return $controller->redirect(['action' => 'index']);
                         } else {
-                            $controller->Flash->error(__("Failed to delete record(s)"));
+                            $controller->Flash->error(__d('admin', "Failed to delete record(s)"));
                         }
                     } else {
-                        $controller->Flash->error(__("Delete failed. No entity selected"));
+                        $controller->Flash->error(__d('admin', "Delete failed. No entity selected"));
                     }
 
                     //return $controller->redirect($controller->referer(['action' => 'index']));
@@ -53,7 +53,7 @@ class DeleteAction extends BaseEntityAction
 
             $controller->set('entity', $entity);
         } catch (RecordNotFoundException $ex) {
-            $controller->Flash->error(__("Record not found"));
+            $controller->Flash->error(__d('admin', "Record not found"));
             return $controller->redirect($controller->referer(['action' => 'index']));
         }
     }

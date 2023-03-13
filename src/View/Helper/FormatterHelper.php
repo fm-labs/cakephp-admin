@@ -54,10 +54,10 @@ class FormatterHelper extends Helper
 
         // boolean
         self::register('boolean', function ($val, $extra, $params) {
-            if (\Cake\Core\Plugin::isLoaded('Cupcake')) {
-                $StatusHelper = $this->_View->loadHelper('Cupcake.Status');
-                return $StatusHelper->boolean($val);
-            }
+//            if (\Cake\Core\Plugin::isLoaded('Cupcake')) {
+//                $StatusHelper = $this->_View->loadHelper('Cupcake.Status');
+//                return $StatusHelper->boolean($val);
+//            }
             return $val === true ? __d('admin', "Yes") : __d('admin', "No");
         });
 

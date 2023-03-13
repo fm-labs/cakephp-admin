@@ -21,4 +21,6 @@ use Cake\Core\Configure;
             </dd>
         <?php endforeach; ?>
     </dl>
+
+    <?php debug($data); ?>
 </div>

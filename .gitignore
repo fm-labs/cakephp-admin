@@ -5,3 +5,4 @@
 /webroot/vendor/datatables
 .phpunit.result.cache
 .yarnclean
+composer.lock

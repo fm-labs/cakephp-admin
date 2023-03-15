@@ -76,8 +76,6 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
      */
     public function execute(Controller $controller)
     {
-        parent::execute($controller);
-
         #debug($this->_config);
 
         // load helpers

@@ -64,9 +64,25 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
      */
     public function entity()
     {
-        $controller =& $this->controller;
-
+        $controller = $this->getController();
         if (!$this->_entity) {
+
+            // detect model class and load entity
+            if (!isset($this->_config['modelClass'])) {
+                $this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
+            }
+            if (!isset($this->_config['modelId'])) {
+                $modelId = $controller->getRequest()->getParam('id');
+                if (!$modelId && isset($controller->getRequest()->getParam('pass')[0])) {
+                    $modelId = $controller->getRequest()->getParam('pass')[0];
+                }
+                $this->_config['modelId'] = $modelId;
+            }
+
+            if (isset($this->_config['entity'])) {
+                $this->_entity = $this->_config['entity'];
+            }
+
             $entity = $controller->viewBuilder()->getVar('entity');
             if ($entity) {
                 $this->_entity = $entity;
@@ -92,21 +108,6 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     {
         parent::execute($controller);
 
-        // detect model class and load entity
-        if (!isset($this->_config['modelClass'])) {
-            $this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
-        }
-        if (!isset($this->_config['modelId'])) {
-            $modelId = $controller->getRequest()->getParam('id');
-            if (!$modelId && isset($controller->getRequest()->getParam('pass')[0])) {
-                $modelId = $controller->getRequest()->getParam('pass')[0];
-            }
-            $this->_config['modelId'] = $modelId;
-        }
-
-        if (isset($this->_config['entity'])) {
-            $this->_entity = $this->_config['entity'];
-        }
 
         // custom template
         if (isset($this->_config['template'])) {

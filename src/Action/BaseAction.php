@@ -21,19 +21,19 @@ abstract class BaseAction implements ActionInterface
     protected $label;
 
     /**
-     * @var string Action plugin
+     * @var string|null Action plugin
      */
-    protected $plugin = "Admin";
+    protected ?string $plugin = "Admin";
 
     /**
-     * @var \Cake\Controller\Controller Active controller
+     * @var Controller|null Active controller. Available only after setController() has been called.
      */
-    protected $controller;
+    protected ?Controller $controller = null;
 
     /**
-     * @var \Cake\Http\ServerRequest Active request
+     * @var \Cake\Http\ServerRequest|null Active request. Available only after setController() has been called.
      */
-    protected $request;
+    protected ?\Cake\Http\ServerRequest $request = null;
 
     /**
      * @var array List of action scopes
@@ -46,19 +46,26 @@ abstract class BaseAction implements ActionInterface
     protected $template = null;
 
     /**
-     * @var null Action view template path
+     * @var string|null Action view template path
      */
-    protected $templatePath = "Action";
+    protected ?string $templatePath = "Action";
 
     /**
-     * @var \Cake\ORM\Table
+     * @var \Cake\ORM\Table|null
      */
-    protected $table;
+    protected ?Table $table = null;
 
     /**
      * @var array Default configuration
+     * @deprecated
      */
     protected $_defaultConfig = [];
+
+    /**
+     * @var array Instance configuration
+     * @deprecated
+     */
+    protected $_config = [];
 
     /**
      * @param array $config Action config
@@ -68,19 +75,24 @@ abstract class BaseAction implements ActionInterface
         $this->setConfig($config);
     }
 
+//    /**
+//     * @return \Cake\Http\Response|void|null
+//     */
+//    public function __invoke()
+//    {
+//        $this->execute($this->getController());
+//    }
+
     /**
      * Execute the action in context of controller.
      * Subclasses SHOULD call this parent method in order to properly use the convenience methods in this class.
      *
-     * @param \Cake\Controller\Controller $controller Active controller
+     * @param Controller $controller Active controller
      * @return \Cake\Http\Response|void|null
      */
     public function execute(Controller $controller)
     {
-        $this->controller = $controller;
-        $this->request = $controller->getRequest();
-
-        $this->mergeControllerVars();
+        // @todo Make BaseAction::execute() abstract
     }
 
     /**
@@ -90,12 +102,95 @@ abstract class BaseAction implements ActionInterface
      */
     protected function mergeControllerVars(): void
     {
-        $viewVars = $this->controller()->viewBuilder()->getVars();
+        //$controllerVars = ['modelClass'];
+        if (isset($this->getController()->modelClass) && !$this->get('modelClass')) {
+            $this->set('modelClass', $this->getController()->modelClass);
+        }
+        if (isset($this->getController()->defaultTable) && !$this->get('modelClass')) {
+            $this->set('modelClass', $this->getController()->defaultTable);
+        }
+
+
+        $viewVars = $this->getController()->viewBuilder()->getVars();
 
         // read config from controller view vars
         foreach (array_keys($this->_defaultConfig) as $key) {
             $this->_config[$key] = $viewVars[$key] ?? $this->_defaultConfig[$key];
         }
+
+        // apply config vars as controller view vars, if not set
+        foreach ($this->_config as $key => $val) {
+            if ($this->get($key) === null) {
+                $this->set($key, $val);
+            }
+        }
+    }
+
+    public function getName()
+    {
+        return $this->getController()->getRequest()->getParam('action');
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function getVar(string $key): mixed
+    {
+        return $this->getController()->viewBuilder()->getVar($key);
+    }
+
+    /**
+     * @return array
+     */
+    public function getVars(): array
+    {
+        return $this->getController()->viewBuilder()->getVars();
+    }
+
+    /**
+     * Alias for getVar().
+     *
+     * @param string $key
+     * @return mixed
+     */
+    public function get(string $key): mixed
+    {
+        return $this->getVar($key);
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $val
+     * @return $this
+     */
+    public function setVar(string $key, mixed $val): static
+    {
+        $this->getController()->viewBuilder()->setVar($key, $val);
+        return $this;
+    }
+
+    /**
+     * @param array $data
+     * @param bool $merge
+     * @return $this
+     */
+    public function setVars(array $data, bool $merge = true): static
+    {
+        $this->getController()->viewBuilder()->setVars($data, $merge);
+        return $this;
+    }
+
+    /**
+     * Alias for setVar().
+     *
+     * @param string $key
+     * @param mixed $val
+     * @return $this
+     */
+    public function set(string $key, mixed $val): static
+    {
+        return $this->setVar($key, $val);
     }
 
     /**
@@ -145,15 +240,15 @@ abstract class BaseAction implements ActionInterface
     /**
      * @return string
      */
-    public function getPlugin()
+    public function getPlugin(): string
     {
         return $this->plugin;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTemplate()
+    public function getTemplate(): ?string
     {
         if ($this->template === null) {
             $className = static::class;
@@ -168,9 +263,9 @@ abstract class BaseAction implements ActionInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getTemplatePath()
+    public function getTemplatePath(): ?string
     {
         return $this->templatePath;
     }
@@ -180,7 +275,7 @@ abstract class BaseAction implements ActionInterface
      * @param string|null $templatePath Action template path
      * @return $this
      */
-    public function setTemplate(string $template, ?string $templatePath = null)
+    public function setTemplate(string $template, ?string $templatePath = null): static
     {
         [$plugin, $template] = pluginSplit($template);
         $this->plugin = $plugin;
@@ -193,9 +288,20 @@ abstract class BaseAction implements ActionInterface
     /**
      * Controller accessor.
      *
-     * @return \Cake\Controller\Controller
+     * @return Controller
+     * @deprecated Use getController() instead.
      */
     public function controller(): Controller
+    {
+        deprecationWarning("BaseAction::controller() is deprecated. Use getController() instead.");
+
+        return $this->getController();
+    }
+
+    /**
+     * @return Controller
+     */
+    public function getController(): Controller
     {
         if (!$this->controller) {
             throw new \RuntimeException(
@@ -207,14 +313,30 @@ abstract class BaseAction implements ActionInterface
     }
 
     /**
+     * @param Controller|null $controller
+     * @return $this
+     */
+    public function setController(?Controller $controller): static
+    {
+        $this->controller = $controller;
+        $this->request = $controller->getRequest();
+
+        $this->mergeControllerVars();
+
+        return $this;
+    }
+
+    /**
      * Model accessor.
      *
-     * @return bool|\Cake\ORM\Table
+     * @return \Cake\ORM\Table
      */
     public function model(): Table
     {
         if (!$this->table) {
-            $this->table = $this->controller()->loadModel();
+            // @todo Use TableLocator instead
+            //$this->table = $this->getController()->loadModel();
+            $this->table = $this->getController()->fetchTable($this->get('modelClass'));
         }
 
         return $this->table;
@@ -228,30 +350,30 @@ abstract class BaseAction implements ActionInterface
      */
     protected function redirect($url)
     {
-        return $this->controller()->redirect($url);
+        return $this->getController()->redirect($url);
     }
 
     /**
      * Convenience method for flashing success messages
      *
-     * @param string $msg The flash message
+     * @param string|null $msg The flash message
      * @return void
      */
-    protected function flashSuccess($msg = null): void
+    protected function flashSuccess(string $msg = null): void
     {
         $msg = $msg ?: __d('admin', 'Ok');
-        $this->controller()->Flash->success($msg);
+        $this->getController()->Flash->success($msg);
     }
 
     /**
      * Convenience method for flashing success messages
      *
-     * @param string $msg The flash message
+     * @param string|null $msg The flash message
      * @return void
      */
-    protected function flashError($msg = null): void
+    protected function flashError(string $msg = null): void
     {
         $msg = $msg ?: __d('admin', 'Failed');
-        $this->controller()->Flash->error($msg);
+        $this->getController()->Flash->error($msg);
     }
 }

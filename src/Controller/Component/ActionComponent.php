@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace Admin\Controller\Component;
 
 use Admin\Action\ActionRegistry;
+use Admin\Action\BaseAction;
 use Admin\Action\ExternalEntityAction;
 use Admin\Action\InlineEntityAction;
+use Admin\Action\Interfaces\ActionInterface;
 use Admin\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Component;
 use Cake\Core\Configure;
@@ -33,10 +35,10 @@ class ActionComponent extends Component
      */
     protected $_actionRegistry;
 
-    /**
-     * @var \Cake\Controller\Controller Active controller
-     */
-    protected $_controller;
+//    /**
+//     * @var \Cake\Controller\Controller Active controller
+//     */
+//    protected $_controller;
 
     /**
      * @var \Admin\Action\Interfaces\EntityActionInterface|object Active action
@@ -116,26 +118,27 @@ class ActionComponent extends Component
         $request = $this->getController()->getRequest();
         $actionName = $request->getParam('action');
         try {
+            // check if the action method is available in controller
+            // in not a MissingActionException is thrown
             $controllerAction = $this->getController()->getAction();
-            // ... the action method is available in controller
 
-            // check if it is a registered action
-            if ($this->hasAction($actionName)) {
-                $action = $this->getAction($actionName);
-                //debug("Found matching inline action: " . get_class($action) . ":" . $action->getLabel());
-                if (!($action instanceof InlineEntityAction)) {
-                    //debug("WARNING: Local controller action is not instance of InlineEntityAction");
-                }
-            }
+//            // check if it is a registered action
+//            if ($this->hasAction($actionName)) {
+//                $action = $this->getAction($actionName);
+//                //debug("Found matching inline action: " . get_class($action) . ":" . $action->getLabel());
+//                if (!($action instanceof InlineEntityAction)) {
+//                    //debug("WARNING: Local controller action is not instance of InlineEntityAction");
+//                }
+//            }
 
         } catch (\Cake\Controller\Exception\MissingActionException $ex) {
             //debug("Action not found: " . $ex->getMessage());
             // ... the action method is not defined in controller
             // check if it is a registered action
-            $action = $this->getAction($actionName);
+            //$action = $this->getAction($actionName);
 
             // ... the action is registered
-            if ($action) {
+            if ($this->hasAction($actionName)) {
                 //debug("Found matching action: " . $action->getLabel());
                 $this->execute($actionName);
                 $this->getController()->render();
@@ -191,24 +194,22 @@ class ActionComponent extends Component
     }
 
     /**
-     * @param null|string $action Action name
-     * @return null|\Admin\Action\Interfaces\ActionInterface|object
+     * @param string $action Action name
+     * @return null|\Admin\Action\BaseAction
      */
-    public function getAction($action)
+    public function getAction(string $action): ?\Admin\Action\BaseAction
     {
-//        try {
-//            return $this->_actionRegistry->get($action);
-//        } catch (\RuntimeException $ex) {
-//            return null;
-//        }
-        return $this->_actionRegistry->get($action);
+        $action = $this->_actionRegistry->get($action);
+        $action->setController($this->getController());
+
+        return $action;
     }
 
     /**
-     * @param null|string $action Action name
+     * @param string $action Action name
      * @return bool
      */
-    public function hasAction($action)
+    public function hasAction(string $action): bool
     {
         return $this->_actionRegistry->has($action);
     }
@@ -216,31 +217,31 @@ class ActionComponent extends Component
     /**
      * @return array
      */
-    public function listActions()
+    public function listActions(): array
     {
         return $this->_actionRegistry->loaded();
     }
 
-    /**
-     * @param null|string $action Action name
-     * @return array
-     * @deprecated Not in use
-     */
-    public function getActionUrl($action)
-    {
-        $actionObj = $this->getAction($action);
-        if ($actionObj instanceof EntityActionInterface) {
-            return ['action' => $action, ':id'];
-        } else {
-            return ['action' => $action];
-        }
-    }
+//    /**
+//     * @param null|string $action Action name
+//     * @return array
+//     * @deprecated Not in use
+//     */
+//    public function getActionUrl($action)
+//    {
+//        $actionObj = $this->getAction($action);
+//        if ($actionObj instanceof EntityActionInterface) {
+//            return ['action' => $action, ':id'];
+//        } else {
+//            return ['action' => $action];
+//        }
+//    }
 
     /**
      * @param null|string $actionName Action name
      * @return null|\Cake\Http\Response
      */
-    public function execute($actionName = null)
+    public function execute(?string $actionName = null)
     {
         $controller = $this->getController();
 
@@ -248,7 +249,6 @@ class ActionComponent extends Component
         if ($actionName === null) {
             $actionName = $controller->getRequest()->getParam('action');
         }
-        $actionEventKey = $controller->getName() . "." . $actionName;
 
         // Prevent double execution (auto and manual)
         if (isset($this->_executed[$actionName])) {
@@ -257,12 +257,19 @@ class ActionComponent extends Component
         $this->_executed[$actionName] = true;
 
         // Get Action class instance
-        $this->_action = $this->getAction($actionName);
+        $actionObj = $this->getAction($actionName);
+        return $this->dispatch($actionObj);
+    }
+    
+    public function dispatch(BaseAction $action)
+    {
+        $controller = $this->getController();
+        $actionEventKey = $controller->getName() . "." . $action->getName();
 
         // Dispatch 'beforeAction' Event
         $event = $controller->dispatchEvent(
             'Admin.Controller.beforeAction',
-            ['name' => $actionEventKey, 'action' => $this->_action],
+            ['name' => $actionEventKey, 'action' => $action],
             $controller
         );
         if ($event->getResult() instanceof Response) {
@@ -272,20 +279,20 @@ class ActionComponent extends Component
         // Prepare view
         $builder = $controller->viewBuilder();
         if ($builder->getTemplate() === null) {
-            $templatePath = $this->_action->getTemplatePath();
+            $templatePath = $action->getTemplatePath();
             if ($controller->getRequest()->getParam('prefix')) {
                 $templatePath = Inflector::camelize($controller->getRequest()->getParam('prefix'))
                     . '/' . $templatePath;
             }
-            $controller->viewBuilder()->setPlugin($this->_action->getPlugin());
+            $controller->viewBuilder()->setPlugin($action->getPlugin());
             $controller->viewBuilder()->setTemplatePath($templatePath);
-            $controller->viewBuilder()->setTemplate($this->_action->getTemplate());
+            $controller->viewBuilder()->setTemplate($action->getTemplate());
         }
 
         // Execute the action in context of current controller
-        //$actionCallable = \Closure::fromCallable([$this->_action, 'invoke']);
+        //$actionCallable = \Closure::fromCallable([$action, 'invoke']);
         //$controller->invokeAction($actionCallable);
-        $response = $this->_action->execute($controller);
+        $response = $action->execute($controller);
         //if ($response instanceof Response) {
         //    return $response;
         //}
@@ -293,7 +300,7 @@ class ActionComponent extends Component
         // Dispatch 'afterAction' Event
         $event = $controller->dispatchEvent(
             'Admin.Controller.afterAction',
-            ['name' => $actionEventKey, 'action' => $this->_action, 'response' => $response],
+            ['name' => $actionEventKey, 'action' => $action, 'response' => $response],
             $controller
         );
         if ($event->getResult() instanceof Response) {

@@ -20,6 +20,8 @@ class EditAction extends BaseEntityAction
      * @var array
      */
     protected $_defaultConfig = [
+        'modelClass' => null,
+        'modelId' => null,
         'actions' => [],
         'rowActions' => [],
         'fields' => [],

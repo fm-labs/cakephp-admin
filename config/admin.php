@@ -5,7 +5,7 @@
 
 return [
 
-    'Admin.version' => '2.0.3',
+    //'Admin.version' => '2.0.12',
 
     /**
      * Admin plugin route path

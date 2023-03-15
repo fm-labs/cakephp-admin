@@ -2,7 +2,6 @@
 
 namespace Admin\System;
 
-use _HumbugBox09702017065e\React\Socket\Connection;
 use Cake\Datasource\ConnectionManager;
 
 /**

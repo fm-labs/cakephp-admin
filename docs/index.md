@@ -101,6 +101,7 @@
 * ServiceRegistry - Registry for admin services
 
 #### Built-in services
+
 * CrudService - Automatically register CRUD actions for controllers with `scaffold` property set.
 * PublishService - Automatically register publishing actions for controllers with a primary model using the `Publishable` behavior.
 * TreeService - Automatically register tree-operation actions for controllers with a primary model using the `Tree` behavior.
@@ -179,7 +180,7 @@
 
 ## Shell / CLI
 
-* AdminShell
+* ~~AdminShell~~
 
 ### Tasks
 

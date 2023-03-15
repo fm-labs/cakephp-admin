@@ -24,6 +24,7 @@ class SystemController extends AppController
      */
     public function index(): void
     {
+        // php info
         ob_start();
         phpinfo(INFO_ALL);
         $phpinfo = ob_get_contents();
@@ -31,6 +32,7 @@ class SystemController extends AppController
         $phpinfo = preg_replace('%^.*<body>(.*)</body>.*$%ms', '$1', $phpinfo);
         $this->set(compact('phpinfo'));
 
+        // globals
         $globals = [
             'APP', 'APP_DIR', 'CONFIG', 'CACHE', 'CAKE', 'CAKE_CORE_INCLUDE_PATH', 'CORE_PATH',
             'DS', 'LOGS', 'RESOURCES', 'ROOT', 'TESTS', 'TMP', 'WWW_ROOT'

@@ -154,17 +154,17 @@ $this->loadHelper('Sugar.Box');
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Display Locale</td>
+            <td>Display Locale (QUERY: lang)</td>
             <td><?= h($this->request->getQuery('lang')); ?>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Data Locale</td>
+            <td>Data Locale (QUERY: locale)</td>
             <td><?= h($this->request->getQuery('locale')); ?>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>Available Languages (Multilang.Locales)</td>
+            <td>Available Languages (CONFIG: Multilang.Locales)</td>
             <td><?= join(', ', (array)Configure::read('Multilang.Locales')); ?>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
@@ -176,27 +176,27 @@ $this->loadHelper('Sugar.Box');
         </tr>
         <tr>
             <td>User Locale</td>
-            <td><?= $this->request->getSession()->read('Admin.User.locale'); ?>&nbsp;</td>
+            <td><?= $this->request->getSession()->read('Admin.locale'); ?>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td>User Currency</td>
-            <td><?= $this->request->getSession()->read('Admin.User.currency'); ?>&nbsp;</td>
+            <td><?= $this->request->getSession()->read('Admin.currency'); ?>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
             <td>User Timezone</td>
-            <td><?= $this->request->getSession()->read('Admin.User.timezone'); ?>&nbsp;</td>
+            <td><?= $this->request->getSession()->read('Admin.timezone'); ?>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>
         <tr>
-            <td>User Time</td>
+            <td>User Time (i18n)</td>
             <td><?=
                 $this->Time->format(
                     new \DateTime(),
                     \IntlDateFormatter::FULL,
                     false,
-                    $this->request->getSession()->read('Admin.User.timezone')
+                    $this->request->getSession()->read('Admin.timezone')
                 ); ?>&nbsp;</td>
             <td>&nbsp;</td>
         </tr>

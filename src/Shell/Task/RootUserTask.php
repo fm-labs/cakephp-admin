@@ -8,6 +8,8 @@ use Cake\Console\Shell;
 
 /**
  * @property \Admin\Model\Table\UsersTable $Users
+ * @todo Refactor as command
+ * @deprecated Use commands instead
  */
 class RootUserTask extends Shell
 {

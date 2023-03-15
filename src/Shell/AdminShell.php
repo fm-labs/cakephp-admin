@@ -10,6 +10,7 @@ use Cake\Console\Shell;
  * Class AdminShell
  * @package Admin\Shell
  * @property \Admin\Shell\Task\RootUserTask $RootUser
+ * @deprecated Use commands instead
  */
 class AdminShell extends Shell
 {

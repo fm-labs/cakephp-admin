@@ -45,6 +45,16 @@ $this->loadHelper('Sugar.Box');
             <td>&nbsp;</td>
         </tr>
         <tr>
+            <td>PHP sapi</td>
+            <td><?= php_sapi_name(); ?>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>PHP uname</td>
+            <td><?= php_uname(); ?>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
             <td>Memory limit</td>
             <td><?= ini_get('memory_limit'); ?>&nbsp;</td>
             <td>&nbsp;</td>

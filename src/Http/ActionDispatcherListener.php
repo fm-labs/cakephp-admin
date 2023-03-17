@@ -8,6 +8,11 @@ use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Http\ControllerFactory;
 
+/**
+ * @internal Experimental Action-aware dispatcher
+ * @deprecated Dispatcher is deprecated.
+ * @todo Migrate
+ */
 class ActionDispatcherListener implements EventListenerInterface
 {
     /**

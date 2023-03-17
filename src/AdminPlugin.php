@@ -53,6 +53,18 @@ class AdminPlugin extends BasePlugin implements
      */
     public function bootstrap(PluginApplicationInterface $app): void
     {
+        $app->addPlugin('Settings');
+        $app->addPlugin('User');
+        $app->addPlugin('Bootstrap');
+        $app->addPlugin('Sugar');
+        $this->_app = $app;
+
+        /**
+         * Configuration
+         */
+        Configure::load('Admin.admin');
+        Configure::load('Admin', 'settings');
+
         /**
          * Logs
          */
@@ -87,17 +99,12 @@ class AdminPlugin extends BasePlugin implements
             Configure::write('DebugKit.panels', $panels);
         }
 
-        $app->addPlugin('Settings');
-        $app->addPlugin('User');
-        $app->addPlugin('Bootstrap');
-        $app->addPlugin('Sugar');
-        $this->_app = $app;
-
-        EventManager::instance()->on(new ActionDispatcherListener());
+        /**
+         * Admin
+         */
         Admin::addPlugin(new AdminAdmin());
 
-        Configure::load('Admin.admin');
-        Configure::load('Admin', 'settings');
+        EventManager::instance()->on(new ActionDispatcherListener());
     }
 
     /**

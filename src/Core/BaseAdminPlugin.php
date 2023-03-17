@@ -7,7 +7,7 @@ use Cake\Utility\Inflector;
 
 class BaseAdminPlugin implements AdminPluginInterface
 {
-    protected $name;
+    protected ?string $name = null;
 
     /**
      * @inheritDoc

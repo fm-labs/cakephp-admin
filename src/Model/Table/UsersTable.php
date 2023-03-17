@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Model\Table;
 
 use Cake\ORM\Query;
+use User\Model\Entity\User;
 use User\Model\Table\UsersTable as BaseUsersTable;
 
 class UsersTable extends BaseUsersTable
@@ -15,7 +16,8 @@ class UsersTable extends BaseUsersTable
     {
         parent::initialize($config);
 
-        $this->setEntityClass('\User\Model\Entity\User');
+        //@todo Use AdminUser entity
+        $this->setEntityClass(User::class);
     }
 
     /**

@@ -33,7 +33,7 @@ class AdminComponent extends Component
         'authClass' => '\Admin\Controller\Component\AuthComponent',
         'authModel' => 'Admin.Users',
         'userSessionMaxLifetimeSec' => 15 * MINUTE,
-        'userSessionKey' => 'Admin.UserSession',
+        'userSessionKey' => 'AdminUserSession',
     ];
 
     //protected $_cookieName;
@@ -101,11 +101,10 @@ class AdminComponent extends Component
                 //'actionMap' => [],
             ]);
         }
-        //$controller->loadComponent('User.Auth');
 
 //        // @todo Configure UserSession component
-//        $controller->loadComponent('User.UserSession');
-//        $this->_registry->get('UserSession')->setConfig([
+//        //$controller->loadComponent('User.Auth');
+//        $controller->loadComponent('User.UserSession', [
 //            'maxLifetimeSec' => $this->_config['userSessionMaxLifetimeSec'],
 //            'sessionKey' => $this->_config['userSessionKey'],
 //        ]);
@@ -214,7 +213,7 @@ class AdminComponent extends Component
 
         $user = $controller->getRequest()->getAttribute('adminIdentity');
         if ($user && !$user->is_superuser) {
-            $this->Flash->warning('Non super-user detectected');
+            $this->Flash->warning('Non super-user detected');
         }
     }
 

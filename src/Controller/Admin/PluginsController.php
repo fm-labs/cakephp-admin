@@ -3,10 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
-use Cake\Core\App;
-use Cake\Core\Configure;
-use Cake\Core\Plugin;
-use Cupcake\Cupcake;
+use Cake\Collection\Collection;
 use Cupcake\PluginManager;
 
 /**
@@ -16,7 +13,7 @@ use Cupcake\PluginManager;
  */
 class PluginsController extends AppController
 {
-    public $actions = []; //@TODO Disable ActionComponent
+    public array $actions = []; //@TODO Disable ActionComponent
 
     public $modelClass = false;
 
@@ -28,60 +25,31 @@ class PluginsController extends AppController
      */
     public function index(): void
     {
-        $plugins = [];
-        foreach (Plugin::loaded() as $pluginName) {
-            $plugins[$pluginName] = Cupcake::pluginInfo($pluginName);
-        }
-
         // find available plugins from known plugin folders
-        $installed = [];
-        foreach (App::path('plugins') as $path) {
-            if (!is_dir($path)) {
-                continue;
-            }
-
-            $files = scandir($path);
-            foreach ($files as $f) {
-                $pluginPath = rtrim($path, '/') . '/' . $f;
-                if ($f == '.' || $f == '..' || !is_dir($pluginPath)) {
-                    continue;
+        $plugins = (new Collection([]))
+            ->append(PluginManager::findLocalPlugins())
+            ->append(PluginManager::findVendorPlugins())
+            ->reduce(function ($plugins, $plugin) {
+                if (!isset($plugins[$plugin['name']])) {
+                    $plugins[$plugin['name']] = $plugin;
                 }
-                if (isset($plugins[$f])) {
-                    continue;
-                }
-                $installed[$f] = [
-                    'name' => $f,
-                    'path' => $pluginPath,
-                    'loaded' => Plugin::isLoaded($f),
-                    'handler_class' => null,
-                    'handler_loaded' => false,
-                ];
-                /*
-                $installed[$f] = Cupcake::pluginInfo($f);
-                */
-            }
-        }
+                return $plugins;
+            }, []);
 
-        $configured = Configure::read('plugins');
-        foreach ($configured as $pluginName => $pluginPath) {
-            if (isset($plugins[$pluginName]) || isset($installed[$pluginName])) {
-                continue;
-            }
-            $installed[$pluginName] = [
-                'name' => $pluginName,
-                'path' => $pluginPath,
-                'loaded' => Plugin::isLoaded($pluginName),
-                'handler_class' => null,
-                'handler_loaded' => false,
-            ];
-        }
+        $plugins = (new Collection($plugins))
+            ->map(function ($plugin) {
+                $pluginInfo = PluginManager::getPluginInfo($plugin['name']);
+                //$plugin['loaded'] = Plugin::isLoaded($plugin['name']);
+                //$plugin['composer_name'] = PluginManager::getComposerPackageName($plugin['name']);
+                //$plugin['version'] = PluginManager::getInstalledComposerPackageVersion($plugin['name']);
+                return array_merge($plugin, $pluginInfo);
+            })
+            ->sortBy('name')
+            ->sortBy('loaded')
+        ;
 
-        ksort($plugins);
-        ksort($installed);
-
-        $this->set('plugins', $plugins);
-        $this->set('installed', $installed);
-        $this->set('_serialize', ['plugins', 'installed']);
+        $this->set('plugins', $plugins->toArray());
+        $this->set('_serialize', ['plugins']);
     }
 
     /**
@@ -98,11 +66,15 @@ class PluginsController extends AppController
             $plugins = include $pluginsFile;
         }
 
-        $plugins['Plugin'][$pluginName] = ['bootstrap' => $newState, 'routes' => $newState];
         if ($newState === null) {
             if (isset($plugins['Plugin'][$pluginName])) {
                 unset($plugins['Plugin'][$pluginName]);
             }
+        }
+        elseif (!$newState) {
+            $plugins['Plugin'][$pluginName] = false;
+        } else {
+            $plugins['Plugin'][$pluginName] = ['bootstrap' => $newState, 'routes' => $newState];
         }
 
         return file_put_contents($pluginsFile, "<?php\n" . 'return ' . var_export($plugins, true) . ';' . "\n");
@@ -115,54 +87,47 @@ class PluginsController extends AppController
     public function view(?string $pluginName = null): void
     {
         $pluginInfo = PluginManager::getPluginInfo($pluginName);
-
-        $readme = '';
-        if ($pluginInfo['readme_file']) {
-            $readme = PluginManager::getReadme($pluginName);
-        }
+        $readme = PluginManager::getReadme($pluginName);
 
         $this->set(compact('pluginInfo', 'readme'));
     }
 
     /**
      * @param string|null $pluginName Plugin name
-     * @return void
+     * @return \Cake\Http\Response|null
      */
-    public function enable(?string $pluginName = null): void
+    public function enable(?string $pluginName = null): ?\Cake\Http\Response
     {
         if ($this->_setPluginState($pluginName, true)) {
             $this->Flash->success(__d('admin', 'Plugin {0} enabled', $pluginName));
         }
 
-        //$this->setAction('view', $pluginName);
-        $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'index']);
     }
 
     /**
      * @param string|null $pluginName Plugin name
-     * @return void
+     * @return \Cake\Http\Response|null
      */
-    public function disable(?string $pluginName = null): void
+    public function disable(?string $pluginName = null): ?\Cake\Http\Response
     {
         if ($this->_setPluginState($pluginName, false)) {
             $this->Flash->success(__d('admin', 'Plugin {0} disabled', $pluginName));
         }
 
-        //$this->setAction('view', $pluginName);
-        $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'index']);
     }
 
     /**
      * @param string|null $pluginName Plugin name
-     * @return void
+     * @return \Cake\Http\Response|null
      */
-    public function uninstall(?string $pluginName = null): void
+    public function uninstall(?string $pluginName = null): ?\Cake\Http\Response
     {
         if ($this->_setPluginState($pluginName, false)) {
             $this->Flash->success(__d('admin', 'Plugin {0} uninstalled', $pluginName));
         }
 
-        //$this->setAction('view', $pluginName);
-        $this->redirect(['action' => 'index']);
+        return $this->redirect(['action' => 'index']);
     }
 }

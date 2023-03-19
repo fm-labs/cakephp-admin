@@ -5,24 +5,28 @@
     <table class="table table-striped table-hover table-sm">
         <tr>
             <th>Name</th>
+            <th>Version</th>
             <th>Loaded</th>
-            <th>Class</th>
             <th>Path</th>
+            <th>Class</th>
             <th>Bootstrap</th>
             <th>Routes</th>
+            <th>Local</th>
             <th>Actions</th>
         </tr>
-        <?php foreach ((array)$this->get('plugins') as $pluginName => $info) : ?>
+        <?php foreach ((array)$this->get('plugins') as $info) : ?>
         <tr>
-            <td><?= $this->Html->link($info['name'], ['action' => 'view', $pluginName]); ?></td>
+            <td><?= $this->Html->link($info['name'], ['action' => 'view', $info['name']]); ?></td>
+            <td><?= h($info['composer_name'] ?? 'local'); ?>:<?= h($info['version'] ?? 'dev'); ?></td>
             <td><?= $this->Status->boolean(!!$info['loaded']); ?></td>
-            <td><?= $this->Status->display($info['handler_class']); ?></td>
-            <td><?= $this->Status->display($info['path']); ?></td>
-            <td><?= $this->Status->boolean(!!$info['handler_bootstrap']); ?></td>
-            <td><?= $this->Status->boolean(!!$info['handler_routes']); ?></td>
+            <td><?= $this->Status->display($info['path'] ?? "?"); ?></td>
+            <td><?= $this->Status->display($info['instance']['class'] ?? "<span class='text-muted fst-italic'>Not loaded</span>"); ?></td>
+            <td><?= $this->Status->boolean($info['instance']['bootstrap'] ?? false); ?></td>
+            <td><?= $this->Status->boolean($info['instance']['routes'] ?? false); ?></td>
+            <td><?= $this->Status->boolean($info['local'] ?? false); ?></td>
 
             <td class="actions">
-                <?php if ($info['handler_bootstrap']) : ?>
+                <?php if (!!$info['loaded']) : ?>
                     <?= $this->Html->link('Disable',
                         ['controller' => 'Plugins', 'action' => 'disable', $info['name']],
                         ['class' => 'btn btn-xxs btn-secondary']
@@ -37,24 +41,6 @@
                 <?php //@todo Uninstall plugin //echo  $this->Html->link('Uninstall', ['controller' => 'Plugins', 'action' => 'uninstall', $info['name']]); ?>
             </td>
         </tr>
-        <?php endforeach; ?>
-        <tr>
-            <td colspan="8"><span class="text-bold">Installed, but inactive plugins</span></td>
-        </tr>
-        <?php foreach ((array)$this->get('installed') as $pluginName => $info) : ?>
-            <tr>
-                <td><?= h($info['name']); ?></td>
-                <td><?= $this->Status->boolean(!!$info['loaded']); ?></td>
-                <td><?= h($info['handler_class']); ?></td>
-                <td><?= $this->Status->display($info['path']); ?></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td class="actions">
-                    <?= $this->Html->link('Enable', ['controller' => 'Plugins', 'action' => 'enable', $info['name']],
-                        ['class' => 'btn btn-xxs btn-primary']
-                    ); ?>
-                </td>
-            </tr>
         <?php endforeach; ?>
     </table>
 </div>

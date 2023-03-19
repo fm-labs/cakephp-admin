@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
-use Admin\System\Health;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Routing\Router;
@@ -64,16 +63,5 @@ class SystemController extends AppController
 
 
         $this->set('_serialize', ['plugins', 'routes']);
-    }
-
-    /**
-     * Helath method
-     *
-     * @return void
-     */
-    public function health(): void
-    {
-        $health = Health::check();
-        $this->set(compact('health'));
     }
 }

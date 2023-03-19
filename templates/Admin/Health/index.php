@@ -40,12 +40,14 @@ $this->assign('title', __d('admin', 'Health Status'))
             <th><?= __d('admin', 'Status'); ?></th>
             <th><?= __d('admin', 'Message'); ?></th>
         </tr>
-        <?php foreach ($health as $checkName => $status) : ?>
+        <?php foreach ($health as $checkName => $results) : ?>
+        <?php foreach ($results as $status) : ?>
             <tr class="<?= $healthClass($status->getStatus()); ?>">
                 <td><?= h($checkName); ?></td>
                 <td><?= $healthIcon($status->getStatus()); ?></td>
                 <td><?= nl2br($status->getMessage()); ?></td>
             </tr>
+        <?php endforeach; ?>
         <?php endforeach; ?>
     </table>
     <?php endif; ?>

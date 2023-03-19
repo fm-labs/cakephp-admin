@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Controller\Admin;
 
 use Cake\Collection\Collection;
+use Cake\Core\Configure;
 use Cupcake\PluginManager;
 
 /**
@@ -35,8 +36,9 @@ class PluginsController extends AppController
                 }
                 return $plugins;
             }, []);
+        ksort($plugins);
 
-        $plugins = (new Collection($plugins))
+        $plugins = (new Collection(array_values($plugins)))
             ->map(function ($plugin) {
                 $pluginInfo = PluginManager::getPluginInfo($plugin['name']);
                 //$plugin['loaded'] = Plugin::isLoaded($plugin['name']);
@@ -71,10 +73,17 @@ class PluginsController extends AppController
                 unset($plugins['Plugin'][$pluginName]);
             }
         }
-        elseif (!$newState) {
-            $plugins['Plugin'][$pluginName] = false;
-        } else {
-            $plugins['Plugin'][$pluginName] = ['bootstrap' => $newState, 'routes' => $newState];
+//        elseif (!$newState) {
+////            if (Configure::check('Plugin.' . $pluginName)) {
+////                $this->Flash->error(__("Core plugin {0} can not be disabled", $pluginName));
+////                return false;
+////            }
+//            $plugins['Plugin'][$pluginName] = false;
+//        } else {
+//            $plugins['Plugin'][$pluginName] = ['bootstrap' => $newState, 'routes' => $newState];
+//        }
+        else {
+            $plugins['Plugin'][$pluginName] = $newState;
         }
 
         return file_put_contents($pluginsFile, "<?php\n" . 'return ' . var_export($plugins, true) . ';' . "\n");

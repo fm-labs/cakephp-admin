@@ -46,7 +46,7 @@ class AuthController extends AppController
      *
      * @return null|\Cake\Http\Response
      */
-    public function user()
+    public function user(): ?\Cake\Http\Response
     {
         $user = $this->getRequest()->getAttribute('adminIdentity');
         $this->set('user', $user);
@@ -56,6 +56,8 @@ class AuthController extends AppController
         if (!$user) {
             return $this->render('user_noauth');
         }
+
+        return null;
     }
 
     /**
@@ -75,8 +77,7 @@ class AuthController extends AppController
         // login successful
         if ($result->isValid()) {
             $redirectUrl = $this->Authentication->getLoginRedirect();
-            $redirectUrl = $redirectUrl ?: ['_name' => 'admin:admin:index'];
-            $redirectUrl2 = ['_name' => 'admin:admin:index'];
+            $redirectUrl = $redirectUrl ?: ['_name' => 'admin:index'];
             $this->Flash->success(__d('admin', 'You are logged in now'), ['key' => 'auth']);
 
             return $this->redirect($redirectUrl);
@@ -97,7 +98,7 @@ class AuthController extends AppController
     public function logout()
     {
         $redirect = $this->Authentication->logout();
-        $redirect = $redirect ?: ['_name' => 'admin:admin:user:login'];
+        $redirect = $redirect ?: ['_name' => 'admin:auth:user:login'];
 
         return $this->redirect($redirect);
     }

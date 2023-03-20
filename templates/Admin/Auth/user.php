@@ -1,33 +1,7 @@
-<?php
-/**
- * @var object|null $user
- * @var \Authentication\IdentityInterface $identity
- * @var \Authentication\AuthenticationService $authentication
- */
-$identity = $this->getRequest()->getAttribute('identity');
-$authentication = $this->getRequest()->getAttribute('authentication');
-$authProvider = $authentication->getAuthenticationProvider();
-$identityProvider = $authentication->getIdentificationProvider();
-$identityAttr = $authentication->getIdentityAttribute();
-$identityClass = $authentication->getConfig('identityClass');
-?>
+
 <?php $this->Breadcrumbs->add(__d('admin', 'User'), ['action' => 'user']); ?>
 <?php $this->assign('title', $user['name']); ?>
 <div class="users view container" style="text-align: center;">
-    <h2>
-        <?= h($user['name']); ?>
-    </h2>
-
-    <div style="text-align: left">
-    <?php if ($identity) : ?>
-        IdentityID: <?= h($identity->getIdentifier()); ?><br />
-        IdentityDataClass: <?= h(get_class($identity->getOriginalData())); ?><br />
-        IdentityProvider: <?= h($identityProvider ? get_class($identityProvider) : '-'); ?><br />
-        IdentityAttr: <?= h($identityAttr); ?><br />
-        IdentityClass: <?= h($identityClass) . " - Actual: " . get_class($identity); ?><br />
-        AuthProvider: <?= h(get_class($authProvider)); ?><br />
-    <?php endif; ?>
-    </div>
 
     <div>
         <div class="image" style="margin: 1em 0;">
@@ -42,31 +16,39 @@ $identityClass = $authentication->getConfig('identityClass');
                 <span class="date">Joined <?= h($user['created']->nice()) ?></span>
             </p>
         </div>
-        <div class="extra content">
+        <div class="d-flex flex-column">
             <?=
-            $this->Ui->link(
+            $this->Html->link(
                 __d('admin', 'Goto Dashboard'),
-                ['_name' => 'admin:admin:index'],
-                ['icon' => 'home', 'class' => 'btn btn-outline-secondary btn-block']
+                ['_name' => 'admin:index'],
+                ['data-icon' => 'home', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
             <?=
-            $this->Ui->link(
+            $this->Html->link(
                 __d('admin', 'Edit profile'),
-                ['_name' => 'admin:admin:user:profile'],
-                ['icon' => 'edit', 'class' => 'btn btn-outline-secondary btn-block']
+                ['_name' => 'admin:auth:user:profile'],
+                ['data-icon' => 'edit', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
+            <?php /*
+            $this->Html->link(
+                __d('admin', 'Change password'),
+                ['plugin' => 'User', 'controller' => 'Users', 'action' => 'passwordReset', $user['id']],
+                ['data-icon' => 'key', 'class' => 'btn btn-outline-secondary btn-block']
+            ); */ ?>
             <?=
-            $this->Ui->link(
+            $this->Html->link(
                 __d('admin', 'Change password'),
                 ['_name' => 'user:passwordchange'],
-                ['icon' => 'key', 'class' => 'btn btn-outline-secondary btn-block']
+                ['data-icon' => 'key', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
             <?=
-            $this->Ui->link(
+            $this->Html->link(
                 __d('admin', 'Logout'),
-                ['_name' => 'admin:admin:user:logout'],
-                ['icon' => 'sign-out', 'class' => 'btn btn-outline-secondary btn-block']
+                ['_name' => 'admin:auth:user:logout'],
+                ['data-icon' => 'sign-out', 'class' => 'btn btn-outline-secondary btn-block']
             ); ?>
         </div>
+
+
     </div>
 </div>

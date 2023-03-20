@@ -34,67 +34,7 @@ class AdminAdmin extends \Admin\Core\BaseAdminPlugin implements EventListenerInt
 
     public function routes(RouteBuilder $routes): void
     {
-        parent::routes($routes);
-
-        //admin:index
-        $routes->connect(
-            '/',
-            ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
-            ['_name' => 'index']
-        );
-
-        //admin:admin:*
-//        $routes->scope(
-//            '/system',
-//            ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'system:'],
-//            function (RouteBuilder $routes) {
-
-                // admin:admin:index
-//                $routes->connect(
-//                    '/',
-//                    ['plugin' => 'Admin', 'controller' => 'System', 'action' => 'index'],
-//                    ['_name' => 'index']
-//                );
-
-                // admin:admin:user:login
-                $routes->connect(
-                    '/login',
-                    ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
-                    ['_name' => 'user:login']
-                );
-
-                // admin:admin:user:checkauth
-                $routes->connect(
-                    '/session',
-                    ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'session'],
-                    ['_name' => 'user:checkauth']
-                );
-
-                // admin:admin:user:loginsuccess
-                $routes->connect(
-                    '/login-success',
-                    ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'loginSuccess'],
-                    ['_name' => 'user:loginsuccess']
-                );
-
-                // admin:admin:user:logout
-                $routes->connect(
-                    '/logout',
-                    ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
-                    [ '_name' => 'user:logout']
-                );
-
-                // admin:admin:user:profile
-                $routes->connect(
-                    '/user',
-                    ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
-                    [ '_name' => 'user:profile']
-                );
-
-                $routes->fallbacks(DashedRoute::class);
-//            }
-//        );
-
+        $routes->fallbacks(DashedRoute::class);
     }
 
     /**
@@ -298,7 +238,7 @@ HTML;
             'admin_user_profile' => [
                 'title' => __d('admin', 'My profile'),
                 'data-icon' => 'user',
-                'url' => ['plugin' => 'Admin', 'controller' => 'User', 'action' => 'index'],
+                'url' => ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
             ],
             'admin_user_logout' => [
                 'title' => __d('admin', 'Logout'),

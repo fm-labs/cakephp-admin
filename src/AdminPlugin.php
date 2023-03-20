@@ -119,7 +119,7 @@ class AdminPlugin extends BasePlugin implements
                 $routes->registerMiddleware('admin_plugins', new AdminMiddleware($this->_app));
 
                 //if (Configure::read('Admin.Auth.authenticationEnabled')) {
-                    $routes->registerMiddleware('admin_authentication', $this->buildAuthenticationMiddleware());
+                $routes->registerMiddleware('admin_authentication', $this->buildAuthenticationMiddleware());
                 //}
 
                 //if (Configure::read('Admin.Auth.authorizationEnabled')) {
@@ -130,12 +130,12 @@ class AdminPlugin extends BasePlugin implements
                 $routes->applyMiddleware('admin_plugins');
 
                 //if (Configure::read('Admin.Auth.authenticationEnabled')) {
-                    $routes->applyMiddleware('admin_authentication');
+                $routes->applyMiddleware('admin_authentication');
                 //}
 
                 //if (Configure::read('Admin.Auth.authorizationEnabled')) {
-                    //$routes->applyMiddleware('admin_authorization');
-                    //$routes->applyMiddleware('admin_request_authorization');
+                //$routes->applyMiddleware('admin_authorization');
+                //$routes->applyMiddleware('admin_request_authorization');
                 //}
 
                 $fallbackAdminRootUrl = ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'];
@@ -162,29 +162,29 @@ class AdminPlugin extends BasePlugin implements
                     }
                 }
 
-                // [deprecated] register admin plugin routes
-                // @TODO Remove legacy admin plugin route loader
-                /** @var \Cake\Core\PluginInterface $plugin */
-                foreach ($this->_app->getPlugins()->with('routes') as $plugin) {
-                    $pluginName = $plugin->getName();
-                    $pluginNamePrefix = sprintf('%s:', Inflector::underscore($pluginName));
-                    if (method_exists($plugin, 'adminRoutes')) {
-                        deprecationWarning("Plugin::adminRoutes() is deprecated. Use Admin::routes() instead.");
-                        try {
-                            $routes->scope(
-                                '/' . Inflector::dasherize($pluginName),
-                                [
-                                    'plugin' => $pluginName,
-                                    'prefix' => 'Admin',
-                                    '_namePrefix' => $pluginNamePrefix,
-                                ],
-                                [$plugin, 'adminRoutes']
-                            );
-                        } catch (\Exception $ex) {
-                            Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
-                        }
-                    }
-                }
+//                // [deprecated] register admin plugin routes
+//                // @TODO Remove legacy admin plugin route loader
+//                /** @var \Cake\Core\PluginInterface $plugin */
+//                foreach ($this->_app->getPlugins()->with('routes') as $plugin) {
+//                    $pluginName = $plugin->getName();
+//                    $pluginNamePrefix = sprintf('%s:', Inflector::underscore($pluginName));
+//                    if (method_exists($plugin, 'adminRoutes')) {
+//                        deprecationWarning("Plugin::adminRoutes() is deprecated. Use Admin::routes() instead.");
+//                        try {
+//                            $routes->scope(
+//                                '/' . Inflector::dasherize($pluginName),
+//                                [
+//                                    'plugin' => $pluginName,
+//                                    'prefix' => 'Admin',
+//                                    '_namePrefix' => $pluginNamePrefix,
+//                                ],
+//                                [$plugin, 'adminRoutes']
+//                            );
+//                        } catch (\Exception $ex) {
+//                            Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
+//                        }
+//                    }
+//                }
 
 //                // catch-all fallback
 //                $routes->connect(
@@ -192,6 +192,64 @@ class AdminPlugin extends BasePlugin implements
 //                    ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'fallback'],
 //                    ['path' => '.*', 'pass' => ['path']]
 //                );
+
+                //admin:index
+                $routes->connect(
+                    '/',
+                    ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
+                    ['_name' => 'index']
+                );
+
+                //admin:auth:*
+                $routes->scope(
+                    '/auth',
+                    ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'auth:'],
+                    function (RouteBuilder $routes) {
+
+                        $routes->connect(
+                            '/',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'index'],
+                            ['_name' => 'index']
+                        );
+
+                        // admin:auth:user:login
+                        $routes->connect(
+                            '/login',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
+                            ['_name' => 'user:login']
+                        );
+
+                        // admin:auth:user:checkauth
+                        $routes->connect(
+                            '/session',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'session'],
+                            ['_name' => 'user:checkauth']
+                        );
+
+                        // admin:auth:user:loginsuccess
+                        $routes->connect(
+                            '/login-success',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'loginSuccess'],
+                            ['_name' => 'user:loginsuccess']
+                        );
+
+                        // admin:auth:user:logout
+                        $routes->connect(
+                            '/logout',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
+                            ['_name' => 'user:logout']
+                        );
+
+                        // admin:auth:user:profile
+                        $routes->connect(
+                            '/user',
+                            ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
+                            ['_name' => 'user:profile']
+                        );
+
+                        //$routes->fallbacks(DashedRoute::class);
+                    }
+                );
 
                 $this->dispatchEvent('Admin.Routes.setup', ['routes' => $routes]);
             } # End of admin root scope
@@ -220,7 +278,7 @@ class AdminPlugin extends BasePlugin implements
             //'identityClass' => Identity::class,
             'identityAttribute' => static::AUTH_IDENTITY_ATTRIBUTE,
             'queryParam' => 'redirect',
-            'unauthenticatedRedirect' => Router::url(['_name' => 'admin:admin:user:login']),
+            'unauthenticatedRedirect' => Router::url(['_name' => 'admin:auth:user:login']),
         ]);
 
         $fields = [

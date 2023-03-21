@@ -49,8 +49,9 @@ class BreadcrumbHelper extends Helper
         //@TODO _no_breadcrumbs and layout_no_breadcrumbs are deprecated. Set `breadcrumbs` to FALSE instead
         if (
             $event->getSubject()->get('breadcrumbs') === false
-            || $event->getSubject()->get('_no_breadcrumbs') === true
             || $event->getSubject()->get('layout_no_breadcrumbs') === true
+            || $event->getSubject()->get('_no_breadcrumbs') === true
+            || $event->getSubject()->get('breadcrumbs_disable') === true
         ) {
             return;
         }

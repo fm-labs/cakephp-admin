@@ -40,7 +40,7 @@
             </div>
 
             <!-- Breadcrumbs -->
-            <div id="main-breadcrumbs" class="main-breadcrumbs mt-2">
+            <div id="main-breadcrumbs" class="main-breadcrumbs">
                 <div class="container-fluid">
                     <?php echo $this->fetch('breadcrumbs'); ?>
                 </div>

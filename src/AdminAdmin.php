@@ -34,6 +34,7 @@ class AdminAdmin extends \Admin\Core\BaseAdminPlugin implements EventListenerInt
 
     public function routes(RouteBuilder $routes): void
     {
+        $routes->connect('/plugins/view/**', ['controller' => 'Plugins', 'action' => 'view', 'pass' => [1]]);
         $routes->fallbacks(DashedRoute::class);
     }
 

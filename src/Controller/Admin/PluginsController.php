@@ -5,6 +5,7 @@ namespace Admin\Controller\Admin;
 
 use Cake\Collection\Collection;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cupcake\PluginManager;
 
 /**
@@ -30,6 +31,7 @@ class PluginsController extends AppController
         $plugins = (new Collection([]))
             ->append(PluginManager::findLocalPlugins())
             ->append(PluginManager::findVendorPlugins())
+            ->append(PluginManager::findLoadedPlugins())
             ->reduce(function ($plugins, $plugin) {
                 if (!isset($plugins[$plugin['name']])) {
                     $plugins[$plugin['name']] = $plugin;
@@ -51,6 +53,7 @@ class PluginsController extends AppController
         ;
 
         $this->set('plugins', $plugins->toArray());
+        $this->set('loaded', Plugin::loaded());
         $this->set('_serialize', ['plugins']);
     }
 

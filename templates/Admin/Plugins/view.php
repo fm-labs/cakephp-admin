@@ -7,6 +7,7 @@ $this->Breadcrumbs->add(__d('admin', 'Plugins'), ['action' => 'index']);
 $this->Breadcrumbs->add(__d('admin', 'Plugin: {0}', $pluginInfo['name']));
 
 $this->assign('title', $pluginInfo['name']);
+$this->assign('heading', $pluginInfo['name']);
 ?>
 <div class="view">
 
@@ -17,7 +18,7 @@ $this->assign('title', $pluginInfo['name']);
             $readmeHtml = $this->CommonMark->convert($this->get('readme'));
             echo $this->Html->div('markdown plugin-readme mb-3', $readmeHtml);
         } else {
-            echo $this->Html->tag('textarea', $this->get('readme'));
+            echo $this->Html->tag('textarea', $this->get('readme'), ['class' => 'w-100', 'style' => 'min-height: 300px;']);
         }
     }
     ?>

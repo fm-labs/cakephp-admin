@@ -77,13 +77,5 @@ class AdminThemeHelper extends Helper
             trim(join(' ', [$themeBodyClass]))
         );
         //$view->Html->css('/css/skins/'.$themeSkinClass.'.min.css', ['block' => true]);
-
-        //$view->append('meta', $this->Html->charset());
-        //$view->Html->meta(['http-equiv' => 'X-UA-Compatible', 'content' => 'IE-edge'], null, ['block' => true]);
-        //$view->Html->meta('robots', 'noindex,nofollow', ['block' => true]);
-        //$view->Html->meta('mobile-web-app-capable', 'yes', ['block' => true]);
-        //$view->Html->meta('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', ['block' => true]);
-        //$this->Html->meta('icon', null, ['block' => true]);
-        $view->Html->meta('generator', __d('admin', 'CakePHP Admin by fmlabs'), ['block' => true]);
     }
 }

@@ -12,6 +12,7 @@ use Cake\View\View;
  * Class AdminView
  *
  * @package Admin\View
+ * @property \Admin
  */
 class AdminView extends View
 {
@@ -34,18 +35,14 @@ class AdminView extends View
         $this->loadHelper('Html', ['className' => '\Admin\View\Helper\AdminHtmlHelper']);
         $this->loadHelper('Form', ['className' => '\Admin\View\Helper\AdminFormHelper']);
 
-        // default helpers
+        $this->loadHelper('Cupcake.Meta');
+
         $this->loadHelper('Bootstrap.Bootstrap5');
         $this->loadHelper('Bootstrap.Ui');
 
         $this->loadHelper('Sugar.Jquery');
         $this->loadHelper('Sugar.FontAwesome4');
         //$this->loadHelper('Sugar.MomentJs');
-
-        $this->loadHelper('Admin.AdminJs');
-        $this->loadHelper('Admin.AdminTheme');
-        $this->loadHelper('Admin.Breadcrumb');
-        $this->loadHelper('Admin.Toolbar');
 
         if (Configure::read('Admin.Theme.enableJsFlash')) {
             $this->loadHelper('Sugar.Toastr');
@@ -54,6 +51,23 @@ class AdminView extends View
         if (Configure::read('Admin.Theme.enableJsAlerts')) {
             $this->loadHelper('Sugar.SweetAlert2');
         }
+
+        $this->loadHelper('Admin.AdminJs');
+        $this->loadHelper('Admin.AdminTheme');
+        $this->loadHelper('Admin.Breadcrumb');
+        $this->loadHelper('Admin.Toolbar');
+
+        // meta
+        $this->Html->meta('robots', 'noindex, nofollow', ['block' => true]);
+        //$view->append('meta', $this->Html->charset());
+        //$view->Html->meta(['http-equiv' => 'X-UA-Compatible', 'content' => 'IE-edge'], null, ['block' => true]);
+        //$view->Html->meta('robots', 'noindex,nofollow', ['block' => true]);
+        //$view->Html->meta('mobile-web-app-capable', 'yes', ['block' => true]);
+        //$view->Html->meta('viewport', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no', ['block' => true]);
+        //$this->Html->meta('icon', null, ['block' => true]);
+        $this->Meta->setGenerator('CakePHP admin by fmlabs');
+        $this->Meta->setRobots('noindex,nofollow');
+
 
         // configure UI
         $this->ui = new \Cupcake\Ui\Ui($this);

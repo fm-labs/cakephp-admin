@@ -36,6 +36,7 @@ class AdminView extends View
         $this->loadHelper('Form', ['className' => '\Admin\View\Helper\AdminFormHelper']);
 
         $this->loadHelper('Cupcake.Meta');
+        $this->loadHelper('Cupcake.Status');
 
         $this->loadHelper('Bootstrap.Bootstrap5');
         $this->loadHelper('Bootstrap.Ui');

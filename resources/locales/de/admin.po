@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-03-13 00:09+0000\n"
-"PO-Revision-Date: 2023-03-13 01:33+0100\n"
+"POT-Creation-Date: 2023-03-25 15:43+0000\n"
+"PO-Revision-Date: 2023-03-25 16:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: EMAIL@ADDRESS\n"
 "Language: de_DE\n"
@@ -21,15 +21,15 @@ msgstr ""
 msgid "Add"
 msgstr "Hinzufügen"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Action/AddAction.php:139
+#: mnt/DATA/workspaces/php/cakephp-admin/src/Action/AddAction.php:137
 msgid "Record created"
 msgstr "Eintrag erstellt"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Action/BaseAction.php:242
+#: mnt/DATA/workspaces/php/cakephp-admin/src/Action/BaseAction.php:364
 msgid "Ok"
 msgstr "Ok"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Action/BaseAction.php:254
+#: mnt/DATA/workspaces/php/cakephp-admin/src/Action/BaseAction.php:376
 msgid "Failed"
 msgstr "Fehlgeschlagen"
 
@@ -38,7 +38,7 @@ msgid "Copy"
 msgstr "Kopieren"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Action/DashboardAction.php:18
-#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:188
+#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:129
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Action/dashboard.php:2
 msgid "Dashboard"
 msgstr "Dashboard"
@@ -74,11 +74,11 @@ msgstr "Löschen des Eintrags bestätigen"
 msgid "Record not found"
 msgstr "Eintrag nicht gefunden"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Action/EditAction.php:41
+#: mnt/DATA/workspaces/php/cakephp-admin/src/Action/EditAction.php:43
 msgid "Edit"
 msgstr "Bearbeiten"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Action/EditAction.php:115
+#: mnt/DATA/workspaces/php/cakephp-admin/src/Action/EditAction.php:117
 msgid "Saved!"
 msgstr "Gespeichert!"
 
@@ -188,33 +188,32 @@ msgstr "Nicht veröffentlicht"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Action/UnpublishAction.php:54
 msgid "Unpublish failed"
-msgstr ""
+msgstr "Fehler beim Deaktivieren der Veröffentlichung"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Action/ViewAction.php:41
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Logs/index.php:25
 msgid "View"
 msgstr "Ansehen"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:165
+#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:106
 msgid "You will be redirected shortly ..."
 msgstr "Sie werden in Kürze weitergeleitet ..."
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:265
+#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:206
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Health/index.php:33
 msgid "Health Status"
 msgstr "Systemzustand"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:282
+#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:223
 msgid "Appearance"
 msgstr "Darstellung"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:299
+#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:240
 msgid "My profile"
 msgstr "Mein Profil"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:304
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user.php:66
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/User/index.php:26
+#: mnt/DATA/workspaces/php/cakephp-admin/src/AdminAdmin.php:245
+#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user.php:46
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/DebugKit/admin_panel.php:13
 msgid "Logout"
 msgstr "Abmelden"
@@ -222,6 +221,8 @@ msgstr "Abmelden"
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Authorization/Middleware/UnauthorizedHandler/FlashRedirectHandler.php:39
 msgid "UNAUTHORIZED! You are not allowed to access the resource at {0}"
 msgstr ""
+"UNAUTHORIZED! Sie haben nicht die Berechtigungen auf die Resource "
+"zuzugreifen: {0}"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Authorization/Middleware/UnauthorizedHandler/PageRedirectHandler.php:80
 msgid "UNAUTHORIZED"
@@ -229,17 +230,17 @@ msgstr ""
 
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Authorization/Middleware/UnauthorizedHandler/PageRedirectHandler.php:81
 msgid "You are not allowed to access the resource at {0}"
-msgstr ""
+msgstr "Sie haben nicht die Berechtigungen auf die Resource zuzugreifen: {0}"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/AdminController.php:32
 msgid "System Dashboard"
 msgstr "System Übersicht"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/AuthController.php:80
+#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/AuthController.php:81
 msgid "You are logged in now"
 msgstr "Sie sind nun eingeloggt"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/AuthController.php:88
+#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/AuthController.php:89
 msgid "Invalid login credentials"
 msgstr "Zugangsdaten ungültig"
 
@@ -258,26 +259,6 @@ msgstr "Neusortierung abgeschlossen"
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/DataTableController.php:38
 msgid "Reordering failed"
 msgstr "Neusortierung fehlgeschlagen"
-
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:34
-msgid "You are using supported PHP version {0}"
-msgstr ""
-
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:48
-msgid "You are using supported ICU version {0}"
-msgstr ""
-
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:58
-msgid "The PHP extension {0} is loaded"
-msgstr ""
-
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:77
-msgid "{0} directories not found"
-msgstr ""
-
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/HealthController.php:80
-msgid "All system directories exist"
-msgstr ""
 
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:98
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/LogsController.php:129
@@ -309,17 +290,17 @@ msgstr "Lodatei {0} gelöscht"
 msgid "Logfile {0} could not be deleted"
 msgstr "Lodatei {0} konnte nicht gelöscht werden"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/PluginsController.php:134
+#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/PluginsController.php:114
 msgid "Plugin {0} enabled"
-msgstr ""
+msgstr "Plugin {0} aktiviert"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/PluginsController.php:148
+#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/PluginsController.php:127
 msgid "Plugin {0} disabled"
-msgstr ""
+msgstr "Plugin {0} deaktiviert"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/PluginsController.php:162
+#: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/PluginsController.php:140
 msgid "Plugin {0} uninstalled"
-msgstr ""
+msgstr "Plugin {0} deinstalliert"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/SimpleTreeController.php:23
 #: mnt/DATA/workspaces/php/cakephp-admin/src/Controller/Admin/TreeController.php:23
@@ -343,10 +324,6 @@ msgstr "Übersetzungen"
 msgid "Publishing"
 msgstr "Wird veröffentlicht"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/src/Shell/Task/RootUserTask.php:21
-msgid "Create admin root user"
-msgstr "Admin Benutzer erstellen"
-
 #: mnt/DATA/workspaces/php/cakephp-admin/src/View/Cell/EntityRelatedCell.php:48
 #: mnt/DATA/workspaces/php/cakephp-admin/src/View/Cell/EntityRelatedCell.php:56
 #: mnt/DATA/workspaces/php/cakephp-admin/src/View/Cell/EntityRelatedCell.php:64
@@ -365,15 +342,11 @@ msgstr "{0} Einträge"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/AdminThemeHelper.php:42
 #: mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/AdminThemeHelper.php:45
-#: mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/BreadcrumbHelper.php:96
+#: mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/BreadcrumbHelper.php:97
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/layout/admin/header.php:8
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/layout/admin/sidebar1.php:16
 msgid "Administration"
-msgstr ""
-
-#: mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/AdminThemeHelper.php:87
-msgid "CakePHP Admin by fmlabs"
-msgstr ""
+msgstr "Administration"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/src/View/Helper/DataTableHelper.php:566
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Cache/index.php:24
@@ -455,10 +428,9 @@ msgstr "Login"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/login.php:22
 msgid "yourname@example.org"
-msgstr ""
+msgstr "ihrname@example.org"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/login.php:24
-#| msgid "Email To"
 msgid "Email"
 msgstr "Email"
 
@@ -501,28 +473,27 @@ msgstr "Zur Hauptseite"
 msgid "Go to back"
 msgstr "Zurück"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user.php:14
+#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user.php:2
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user_noauth.php:1
 msgid "User"
 msgstr "Benutzer"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user.php:48
+#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user.php:22
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user_noauth.php:23
 msgid "Goto Dashboard"
 msgstr "Zur Übersicht"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user.php:54
+#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user.php:28
 msgid "Edit profile"
 msgstr "Profil bearbeiten"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user.php:60
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/User/index.php:25
+#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user.php:40
 msgid "Change password"
 msgstr "Passwort ändern"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Auth/user_noauth.php:17
 msgid "Enable admin authentication now"
-msgstr ""
+msgstr "Admin Authentifizierung aktivieren"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Cache/index.php:5
 msgid "Cache configuration"
@@ -542,7 +513,6 @@ msgid "Clear cache"
 msgstr "Cache leeren"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Design/base.php:5
-#| msgid "Delete {0}"
 msgid "Design {0}"
 msgstr "Design {0}"
 
@@ -552,15 +522,15 @@ msgstr ""
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Health/index.php:39
 msgid "Check"
-msgstr ""
+msgstr "Überprüfen"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Health/index.php:40
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Health/index.php:41
 msgid "Message"
-msgstr ""
+msgstr "Nachricht"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Logs/index.php:5
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Logs/view.php:2
@@ -628,7 +598,7 @@ msgstr "Emain an"
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Logs/view.php:1
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Plugins/index.php:1
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Logs/view.php:5
 msgid "List {0}"
@@ -644,7 +614,7 @@ msgstr "Mehr anzeigen"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Plugins/index.php:2
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Plugins/view.php:6
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Plugins/view.php:28
+#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Plugins/view.php:29
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/System/index.php:10
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/System/plugins.php:2
 msgid "Plugins"
@@ -654,7 +624,7 @@ msgstr "Plugins"
 msgid "Plugin: {0}"
 msgstr "Plugin: {0}"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Plugins/view.php:28
+#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/Plugins/view.php:29
 msgid "Back to {0}"
 msgstr "Zurück zu {0}"
 
@@ -667,7 +637,6 @@ msgid "Systeminfo"
 msgstr "Systeminfo"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/System/index.php:8
-#| msgid "PHP Info"
 msgid "Info"
 msgstr "Info"
 
@@ -695,11 +664,6 @@ msgstr "PHP Info"
 msgid "Date and TIme"
 msgstr "Datum & Uhrzeit"
 
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/User/index.php:6
-#: mnt/DATA/workspaces/php/cakephp-admin/templates/Admin/User/index.php:11
-msgid "My Account"
-msgstr "Mein Konto"
-
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/Action/Edit/info_publish.php:8
 msgid "Published"
 msgstr "Veröffentlicht"
@@ -713,9 +677,8 @@ msgid "This node has no view page"
 msgstr "Dieser Knoten hat keine Detailseite"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/DebugKit/admin_panel.php:12
-#| msgid "Dashboard"
 msgid "Admin Dashboard"
-msgstr ""
+msgstr "Admin Übersicht"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/Menu/menu_item.php:15
 msgid "Untitled Menu Item"
@@ -745,11 +708,11 @@ msgstr "CAKEPHP Globals"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/System/globals.php:19
 msgid "PHP constants"
-msgstr ""
+msgstr "PHP Konstanten"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/System/routes.php:2
 msgid "Connected Routes"
-msgstr ""
+msgstr "Verknüpften Routen"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/System/session.php:2
 msgid "Session Info"
@@ -769,7 +732,6 @@ msgid "Value"
 msgstr "Wert"
 
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/layout/admin/footer.php:12
-#| msgid "Session Info"
 msgid "Session Ends: {0}"
 msgstr "Session endet: {0}"
 
@@ -795,6 +757,12 @@ msgstr "Abmelden"
 #: mnt/DATA/workspaces/php/cakephp-admin/templates/element/layout/admin/header1.php:12
 msgid "Toggle navigation"
 msgstr "Navigation ein-/ausschalten"
+
+#~ msgid "Create admin root user"
+#~ msgstr "Admin Benutzer erstellen"
+
+#~ msgid "My Account"
+#~ msgstr "Mein Konto"
 
 #~ msgid "Details"
 #~ msgstr "Details"

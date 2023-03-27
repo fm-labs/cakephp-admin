@@ -1,6 +1,8 @@
 <?php
 /**
  * Edit Action Admin Template
+ *
+ * @property \Cake\ORM\Entity $entity
  */
 $entity = $this->get('entity');
 //$title = $this->get('title', @array_pop(explode('\\', get_class($entity))));
@@ -18,6 +20,13 @@ $this->loadHelper('Bootstrap.Tabs');
 ?>
 <div class="edit">
     <div class="form form-edit">
+
+        <?php if ($entity->getErrors()) : ?>
+            <div>
+                <div class="text-danger fw-bold py-1">Validation Errors</div>
+                <?= $this->element('Admin.array_to_list', ['array' => $entity->getErrors()]); ?>
+            </div>
+        <?php endif; ?>
 
         <?php if ($translations) : ?>
             <div>
@@ -69,5 +78,6 @@ $this->loadHelper('Bootstrap.Tabs');
             <?php echo $this->Tabs->render(); ?>
         <?php endif; ?>
 
+        <?php debug($entity->toArray()); ?>
     </div>
 </div>

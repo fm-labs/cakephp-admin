@@ -23,6 +23,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         'actions' => [],
         'rowActions' => [],
         'fields' => [],
+        'fields.access' => [],
         'fields.whitelist' => [],
         'fields.blacklist' => [],
         'model.validator' => 'default',

@@ -93,6 +93,10 @@ abstract class BaseAction implements ActionInterface
     public function execute(Controller $controller)
     {
         // @todo Make BaseAction::execute() abstract
+//        debug("Execute");
+//        debug(get_class($controller));
+//        debug($controller->viewBuilder()->getVars());
+        //$this->setController($controller);
     }
 
     /**
@@ -110,10 +114,8 @@ abstract class BaseAction implements ActionInterface
             $this->set('modelClass', $this->getController()->defaultTable);
         }
 
-
-        $viewVars = $this->getController()->viewBuilder()->getVars();
-
         // read config from controller view vars
+        $viewVars = $this->getController()->viewBuilder()->getVars();
         foreach (array_keys($this->_defaultConfig) as $key) {
             $this->_config[$key] = $viewVars[$key] ?? $this->_defaultConfig[$key];
         }

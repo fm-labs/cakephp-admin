@@ -49,7 +49,7 @@ class IndexAction extends BaseAction
     public function execute(Controller $controller)
     {
         parent::execute($controller);
-
+        //debug($this->_config);
         // detect model class
         $this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->loadModel()->getRegistryAlias();
 

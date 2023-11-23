@@ -7,6 +7,7 @@ use Admin\Action\Interfaces\EntityActionInterface;
 use Admin\Action\Traits\EntityActionFilterTrait;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
+use Cake\Error\Debugger;
 use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
@@ -19,13 +20,6 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
      * @var string
      */
     protected $_action;
-
-    /**
-     * @var array
-     */
-    protected $_defaultConfig = [
-        'actions' => [],
-    ];
 
     /**
      * @var \Cake\Datasource\EntityInterface
@@ -66,34 +60,26 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     {
         $controller = $this->getController();
         if (!$this->_entity) {
-
-            // detect model class and load entity
-            if (!isset($this->_config['modelClass'])) {
-                $this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
-            }
-            if (!isset($this->_config['modelId'])) {
-                $modelId = $controller->getRequest()->getParam('id');
-                if (!$modelId && isset($controller->getRequest()->getParam('pass')[0])) {
-                    $modelId = $controller->getRequest()->getParam('pass')[0];
-                }
-                $this->_config['modelId'] = $modelId;
-            }
-
+            // entity from config
             if (isset($this->_config['entity'])) {
                 $this->_entity = $this->_config['entity'];
             }
 
-            $entity = $controller->viewBuilder()->getVar('entity');
-            if ($entity) {
-                $this->_entity = $entity;
-            } else {
+            // entity from view var
+            if (!$this->_entity) {
+                $this->_entity = $controller->viewBuilder()->getVar('entity');
+            }
+
+            // entity from model lookup
+            if (!$this->_entity) {
+                //debug("fetching entity");
+                //Debugger::dump(Debugger::trace());
+                //debug($this->_config);
                 if (!$this->_config['modelId']) {
                     throw new \Exception(static::class . ' has no model ID defined');
                 }
                 $options = $this->_config['entityOptions'] ?? [];
-                if (isset($this->_config['related'])) {
-                    $options['contain'] = $this->_config['related'];
-                }
+                $options['contain'] = $this->_config['contain'] ?? [];
                 $this->_entity = $this->model()->get($this->_config['modelId'], $options);
             }
         }
@@ -108,75 +94,95 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     {
         parent::execute($controller);
 
-
-        // custom template
-        if (isset($this->_config['template'])) {
-            $this->template = $this->_config['template'];
-        }
-
-        // breadcrumbs
-        if (!isset($this->_config['breadcrumbs'])) {
-            $breadcrumbs = [];
-            if (
-                $controller->getRequest()->getParam('plugin')
-                && $controller->getRequest()->getParam('plugin') != $controller->getRequest()->getParam('controller')
-            ) {
-                $breadcrumbs[] = [
-                    'title' => Inflector::humanize($controller->getRequest()->getParam('plugin')),
-                    'url' => [
-                        'plugin' => $controller->getRequest()->getParam('plugin'),
-                        'controller' => $controller->getRequest()->getParam('plugin'),
-                        'action' => 'index',
-                    ],
-                ];
-                $breadcrumbs[] = [
-                    'title' => Inflector::humanize($controller->getRequest()->getParam('controller')),
-                    'url' => [
-                        'plugin' => $controller->getRequest()->getParam('plugin'),
-                        'controller' => $controller->getRequest()->getParam('controller'),
-                        'action' => 'index',
-                    ],
-                ];
-                if ($this->_entity) {
-                    $breadcrumbs[] = [
-                        'title' => $this->_entity->get($this->model()->getDisplayField()),
-                        'url' => [
-                            'plugin' => $controller->getRequest()->getParam('plugin'),
-                            'controller' => $controller->getRequest()->getParam('controller'),
-                            'action' => 'view',
-                            $this->_entity->get($this->model()->getPrimaryKey()),
-                        ],
-                    ];
-                }
-                $breadcrumbs[] = [
-                    'title' => $this->getLabel(),
-                ];
-            }
-
-            $controller->set('breadcrumbs', $breadcrumbs);
-        }
-
-        // i18n
-        if ($this->model()->hasBehavior('Translate')) {
-            $translation = $controller->getRequest()->getQuery('translation') ?: I18n::getLocale();
-            $this->model()->setLocale($translation);
-            $controller->set('translation', $translation);
-            $controller->set('translations.languages', (array)Configure::read('Multilang.Locales'));
-        }
+        //debug("execute base entity action");
+        //debug($this->_config);
 
         try {
-            //$entity = $this->entity();
-            //$controller->set('entity', $entity);
-
             // load helpers
             if (isset($this->_config['helpers'])) {
                 $controller->viewBuilder()->setHelpers($this->_config['helpers'], true);
+            }
+
+            // detect model class and load entity
+            $this->_config['modelClass'] = $this->_config['modelClass'] ?? null;
+            if (!$this->_config['modelClass']) {
+                $this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
+            }
+
+            // detect model id
+            $this->_config['modelId'] = $this->_config['modelId'] ?? null;
+            if (!$this->_config['modelId']) {
+                $this->_config['modelId'] = $controller->getRequest()->getParam('id') ?: null;
+            }
+            if (!$this->_config['modelId']) {
+                $this->_config['modelId'] = $controller->getRequest()->getParam('pass')[0] ?? null;
+            }
+
+            // get entity
+            $entity = $this->entity();
+            if (!$entity) {
+                throw new BadRequestException('ViewAction: Entity not found');
+            }
+
+            // custom template
+            if (isset($this->_config['template'])) {
+                $this->template = $this->_config['template'];
+            }
+
+            // breadcrumbs
+            if (!isset($this->_config['breadcrumbs'])) {
+                $breadcrumbs = [];
+                if (
+                    $controller->getRequest()->getParam('plugin')
+                    && $controller->getRequest()->getParam('plugin') != $controller->getRequest()->getParam('controller')
+                ) {
+                    $breadcrumbs[] = [
+                        'title' => Inflector::humanize($controller->getRequest()->getParam('plugin')),
+                        'url' => [
+                            'plugin' => $controller->getRequest()->getParam('plugin'),
+                            'controller' => $controller->getRequest()->getParam('plugin'),
+                            'action' => 'index',
+                        ],
+                    ];
+                    $breadcrumbs[] = [
+                        'title' => Inflector::humanize($controller->getRequest()->getParam('controller')),
+                        'url' => [
+                            'plugin' => $controller->getRequest()->getParam('plugin'),
+                            'controller' => $controller->getRequest()->getParam('controller'),
+                            'action' => 'index',
+                        ],
+                    ];
+                    if ($this->_entity) {
+                        $breadcrumbs[] = [
+                            'title' => $this->_entity->get($this->model()->getDisplayField()),
+                            'url' => [
+                                'plugin' => $controller->getRequest()->getParam('plugin'),
+                                'controller' => $controller->getRequest()->getParam('controller'),
+                                'action' => 'view',
+                                $this->_entity->get($this->model()->getPrimaryKey()),
+                            ],
+                        ];
+                    }
+                    $breadcrumbs[] = [
+                        'title' => $this->getLabel(),
+                    ];
+                }
+                $controller->set('breadcrumbs', $breadcrumbs);
+            }
+
+            // i18n
+            if ($this->model()->hasBehavior('Translate')) {
+                $translation = $controller->getRequest()->getQuery('translation') ?: I18n::getLocale();
+                $this->model()->setLocale($translation);
+                $controller->set('translation', $translation);
+                $controller->set('translations.languages', (array)Configure::read('Multilang.Locales'));
             }
 
             return $this->_execute($controller);
         } catch (\Cake\Core\Exception\Exception $ex) {
             throw $ex;
         } catch (\Exception $ex) {
+            debug($ex->getMessage());
             $controller->Flash->error($ex->getMessage());
             //$controller->redirect($controller->referer());
         }

@@ -14,19 +14,16 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
 {
     protected $scope = ['table', 'form'];
 
-    //protected $template = "view";
-
     protected $_defaultConfig = [
+        'modelClass' => null,
+        'modelId' => null,
         'label' => null,
         'entity' => null,
         'entityOptions' => [],
-        'modelClass' => null,
-        'modelId' => null,
         'fields' => [],
-        'fields.whitelist' => [],
-        'fields.blacklist' => [],
+        'include' => [],
+        'exclude' => [],
         'related' => [],
-        'viewOptions' => [],
         'actions' => [],
         'tabs' => [],
     ];
@@ -55,8 +52,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
      */
     public function _execute(Controller $controller)
     {
-        $viewVars = $controller->viewBuilder()->getVars();
-        if (!isset($viewVars['related'])) {
+        if (!isset($this->_config['related'])) {
             $related = [];
             foreach ($this->model()->associations() as $assoc) {
                 /** @var \Cake\ORM\Association $assoc */
@@ -67,42 +63,31 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
                         $related[] = $assoc->getAlias();
                 }
             }
-            $controller->set('related', $related);
+            $this->set('related', $related);
         }
 
-        if ($this->_config['entity'] !== null) {
-            $entity = $this->_entity = $this->_config['entity'];
-            $this->_config['modelId'] = $entity->id;
-        } else {
-            // attempt to get model ID from request if not set
-            if (!$this->_config['modelId']) {
-                $this->_config['modelId'] = $controller->getRequest()->getParam('id') ?: null;
-            }
-            if (!$this->_config['modelId']) {
-                $this->_config['modelId'] = $controller->getRequest()->getParam('pass')[0] ?? null;
-            }
-            if (!$this->_config['modelId']) {
-                throw new BadRequestException('ViewAction: Model ID missing');
-            }
-            $entity = $this->entity();
+        $entity = $this->entity();
+        if (!$entity) {
+            throw new BadRequestException('ViewAction: Entity not found');
         }
 
-        $this->_config['viewOptions']['model'] = $this->_config['modelClass'];
-        $this->_config['viewOptions']['title'] = $entity->get($this->model()->getDisplayField());
-        $this->_config['viewOptions']['debug'] = Configure::read('debug');
-        $this->_config['viewOptions']['fields'] = $this->_config['fields'];
-        $this->_config['viewOptions']['whitelist'] = $this->_config['fields.whitelist'];
-        $this->_config['viewOptions']['blacklist'] = $this->_config['fields.blacklist'];
-        //$this->_config['viewOptions']['related'] = $this->_config['related'];
-        $controller->set('viewOptions', $this->_config['viewOptions']);
-        $controller->set('title', $entity->get($this->model()->getDisplayField()));
+        // entity view vars
         $controller->set('modelClass', $this->_config['modelClass']);
         $controller->set('entity', $entity);
+
+        //$viewOptions['debug'] = Configure::read('debug');
+        //$viewOptions['title'] = $entity->get($this->model()->getDisplayField());
+        $viewOptions['modelClass'] = $this->_config['modelClass'];
+        $viewOptions['fields'] = $this->_config['fields'];
+        //$viewOptions['whitelist'] = $this->_config['include'];
+        //$viewOptions['blacklist'] = $this->_config['exclude'];
+        $controller->set('viewOptions', $viewOptions);
+
         $controller->set('actions', $this->_config['actions']);
         $controller->set('tabs', $this->_config['tabs']);
-        //$controller->set('associations', $this->model()->associations());
+
+        $controller->set('title', $entity->get($this->model()->getDisplayField()));
         $controller->set('_serialize', ['entity']);
-        //$controller->render();
     }
 
     public function beforeRender(Event $event)

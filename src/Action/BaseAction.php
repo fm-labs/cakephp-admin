@@ -7,6 +7,7 @@ use Admin\Action\Interfaces\ActionInterface;
 use Admin\Action\Interfaces\EntityActionInterface;
 use Admin\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
+use Cake\Core\Exception\CakeException;
 use Cake\Core\InstanceConfigTrait;
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
@@ -14,6 +15,8 @@ use Cake\Utility\Inflector;
 abstract class BaseAction implements ActionInterface
 {
     use InstanceConfigTrait;
+
+    protected $_defaultConfig = [];
 
     /**
      * @var string Action label
@@ -56,18 +59,6 @@ abstract class BaseAction implements ActionInterface
     protected ?Table $table = null;
 
     /**
-     * @var array Default configuration
-     * @deprecated
-     */
-    protected $_defaultConfig = [];
-
-    /**
-     * @var array Instance configuration
-     * @deprecated
-     */
-    protected $_config = [];
-
-    /**
      * @param array $config Action config
      */
     public function __construct(array $config = [])
@@ -92,11 +83,7 @@ abstract class BaseAction implements ActionInterface
      */
     public function execute(Controller $controller)
     {
-        // @todo Make BaseAction::execute() abstract
-//        debug("Execute");
-//        debug(get_class($controller));
-//        debug($controller->viewBuilder()->getVars());
-        //$this->setController($controller);
+        //$this->mergeControllerVars();
     }
 
     /**
@@ -120,12 +107,12 @@ abstract class BaseAction implements ActionInterface
             $this->_config[$key] = $viewVars[$key] ?? $this->_defaultConfig[$key];
         }
 
-        // apply config vars as controller view vars, if not set
-        foreach ($this->_config as $key => $val) {
-            if ($this->get($key) === null) {
-                $this->set($key, $val);
-            }
-        }
+//        // apply config vars as controller view vars, if not set
+//        foreach ($this->_config as $key => $val) {
+//            if ($this->get($key) === null) {
+//                $this->set($key, $val);
+//            }
+//        }
     }
 
     public function getName()
@@ -192,6 +179,20 @@ abstract class BaseAction implements ActionInterface
      */
     public function set(string $key, mixed $val): static
     {
+        // legacy workaround
+        if ($key === "fields.whitelist") {
+            $key = "include";
+        } elseif ($key === "fields.blacklist") {
+            $key = "exclude";
+        }
+
+        if (in_array($key, array_keys($this->_defaultConfig))) {
+            //debug("Trying to set config variable as template variable: {$key}");
+            deprecationWarning("Trying to set config variable as template variable: {$key}");
+            //$this->_config[$key] = $val;
+            $this->setConfig($key, $val);
+        }
+
         return $this->setVar($key, $val);
     }
 
@@ -252,14 +253,14 @@ abstract class BaseAction implements ActionInterface
      */
     public function getTemplate(): ?string
     {
-        if ($this->template === null) {
-            $className = static::class;
-            [$ns, $actionClass] = namespaceSplit($className);
-            $actionClass = substr($actionClass, 0, -strlen("Action"));
-            $actionClass = Inflector::underscore($actionClass);
-
-            return $this->plugin ? $this->plugin . '.' . $actionClass : $actionClass;
-        }
+//        if ($this->template === null) {
+//            $className = static::class;
+//            [$ns, $actionClass] = namespaceSplit($className);
+//            $actionClass = substr($actionClass, 0, -strlen("Action"));
+//            $actionClass = Inflector::underscore($actionClass);
+//
+//            return $this->plugin ? $this->plugin . '.' . $actionClass : $actionClass;
+//        }
 
         return $this->template;
     }
@@ -279,8 +280,8 @@ abstract class BaseAction implements ActionInterface
      */
     public function setTemplate(string $template, ?string $templatePath = null): static
     {
-        [$plugin, $template] = pluginSplit($template);
-        $this->plugin = $plugin;
+        //[$plugin, $template] = pluginSplit($template);
+        //$this->plugin = $plugin;
         $this->template = $template;
         $this->templatePath = $templatePath;
 
@@ -336,8 +337,13 @@ abstract class BaseAction implements ActionInterface
     public function model(): Table
     {
         if (!$this->table) {
-            // @todo Use TableLocator instead
-            //$this->table = $this->getController()->loadModel();
+            $modelClass = $this->get('modelClass');
+
+//            if (!$modelClass) {
+//                throw new CakeException("No modelClass found for Action " . static::class);
+//            }
+            deprecationWarning("No modelClass defined for Action " . static::class);
+
             $this->table = $this->getController()->fetchTable($this->get('modelClass'));
         }
 
@@ -377,5 +383,24 @@ abstract class BaseAction implements ActionInterface
     {
         $msg = $msg ?: __d('admin', 'Failed');
         $this->getController()->Flash->error($msg);
+    }
+
+    /**
+     * @param array $columns Columns schema
+     * @return array
+     */
+    protected function _normalizeColumns(array $columns)
+    {
+        $normalized = [];
+        foreach ($columns as $col => $conf) {
+            if (is_numeric($col)) {
+                $col = $conf;
+                $conf = [];
+            }
+
+            $normalized[$col] = $conf;
+        }
+
+        return $normalized;
     }
 }

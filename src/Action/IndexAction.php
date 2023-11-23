@@ -6,7 +6,6 @@ namespace Admin\Action;
 use Admin\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\QueryInterface;
-use Cake\Routing\Router;
 use Cake\Utility\Hash;
 
 /**
@@ -21,23 +20,26 @@ class IndexAction extends BaseAction
      */
     protected $_defaultConfig = [
         'modelClass' => null,
+        'data' => [],
+        'fields' => [], // map of field column
+        'exclude' => [], // list of column names to exclude
+        'include' => [], // list of column names to include
         'paginate' => true,
         'filter' => false,
         'sortable' => true,
-        'data' => [],
-        'fields' => [],
-        'fields.blacklist' => [],
-        'fields.whitelist' => [],
-        'filters' => [],
+        'ajax' => false,
+        'queryObj' => null, // table query object instance
+        'query' => [], // query options
+        'filters' => [], // query conditions
+        'contain' => [], // query contain param
+        'limit' => null, // query limit
+        'helpers' => [],
         'rowActions' => [],
         'actions' => [],
-        'query' => [],
-        'queryObj' => null,
-        'contain' => [],
-        'limit' => null,
-        'ajax' => false,
-        'helpers' => [],
-        'template' => null, //deprecated //@todo Remove deprecated parameter
+
+        // deprecated
+        'fields.whitelist' => [],
+        'fields.blacklist' => []
     ];
 
     protected $_defaultLimit = 15;
@@ -49,7 +51,17 @@ class IndexAction extends BaseAction
     public function execute(Controller $controller)
     {
         parent::execute($controller);
-        //debug($this->_config);
+
+        // legacy settings
+        if (isset($this->_config['fields.whitelist'])) {
+            $this->_config['include'] = $this->_config['fields.whitelist'];
+            unset($this->_config['fields.whitelist']);
+        }
+        if (isset($this->_config['fields.blacklist'])) {
+            $this->_config['exclude'] = $this->_config['fields.blacklist'];
+            unset($this->_config['fields.blacklist']);
+        }
+
         // detect model class
         $this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->loadModel()->getRegistryAlias();
 
@@ -65,41 +77,32 @@ class IndexAction extends BaseAction
         }
 
         // fields
-        //$cols = $this->_normalizeColumns($this->_config['fields']);
-
-        // UGLY WORKAROUND TO PREVENT BREAKING OLDER ADMIN PAGES USING THE DEPRECATED CONFIG SCHEME
-        $cols = [];
-        // fields whitelist
-        if ($this->_config['fields.whitelist'] === true) {
-            $cols = $this->_normalizeColumns($this->_config['fields']);
-        } elseif (!empty($this->_config['fields.whitelist'])) {
-            foreach ($this->_config['fields.whitelist'] as $whiteListed) {
-                if (!array_key_exists($whiteListed, $cols)) {
-                    $cols[$whiteListed] = [];
-                }
-            }
-        }
-
-        $normalized = $this->_normalizeColumns($this->_config['fields']);
-        foreach ($normalized as $name => $col) {
-            $cols[$name] = $col;
-        }
-        // END OF WORKAROUND
+        $cols = $this->_normalizeColumns($this->_config['fields']);
 
         if (empty($cols)) {
             // if no fields are defined, use first 10 columns from table schema
             $cols = array_slice($this->model()->getSchema()->columns(), 0, 10);
+            $cols = $this->_normalizeColumns($cols);
         }
-        $cols = $this->_normalizeColumns($cols);
+
+        // fields whitelist
+        if ($this->_config['include'] === true) {
+            $this->_config['include'] = array_keys($cols);
+        }
+
+        if (!empty($this->_config['include'])) {
+            $cols = array_filter($cols, function ($key) {
+                return in_array($key, $this->_config['include']);
+            }, ARRAY_FILTER_USE_KEY);
+        }
 
         // fields blacklist
-        if ($this->_config['fields.blacklist']) {
-            foreach ($this->_config['fields.blacklist'] as $blackListed) {
-                if (array_key_exists($blackListed, $cols)) {
-                    unset($cols[$blackListed]);
-                }
-            }
+        if ($this->_config['exclude']) {
+            $cols = array_filter($cols, function ($key) {
+                return !in_array($key, $this->_config['exclude']);
+            }, ARRAY_FILTER_USE_KEY);
         }
+
         $this->_config['fields'] = $cols;
 
         // actions
@@ -135,8 +138,6 @@ class IndexAction extends BaseAction
             'sortable' => $this->_config['sortable'],
             'model' => $this->_config['modelClass'],
             'fields' => $this->_config['fields'],
-            //'fieldsWhitelist' => $this->_config['fields.whitelist'],
-            //'fieldsBlacklist' => $this->_config['fields.blacklist'],
             'rowActions' => $this->_config['rowActions'],
             //'data' => $result,
             'rowActionCallbacks' => [
@@ -269,22 +270,4 @@ class IndexAction extends BaseAction
         return $actions;
     }
 
-    /**
-     * @param array $columns Columns schema
-     * @return array
-     */
-    protected function _normalizeColumns(array $columns)
-    {
-        $normalized = [];
-        foreach ($columns as $col => $conf) {
-            if (is_numeric($col)) {
-                $col = $conf;
-                $conf = [];
-            }
-
-            $normalized[$col] = $conf;
-        }
-
-        return $normalized;
-    }
 }

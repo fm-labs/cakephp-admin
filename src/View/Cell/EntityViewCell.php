@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace Admin\View\Cell;
 
-use Cake\Core\Configure;
 use Cake\Datasource\EntityInterface;
 use Cake\Event\EventManager;
 use Cake\Http\Response;
 use Cake\Http\ServerRequest as Request;
-use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use Cake\View\Cell;
 
@@ -23,26 +21,16 @@ class EntityViewCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = ['model', 'fields', 'whitelist', 'blacklist', 'title', 'helpers', 'debug'];
+    protected $_validCellOptions = ['modelClass', 'fields', 'helpers'];
 
-    public $model;
+    /**
+     * @deprecated
+     */
+    public $modelClass;
 
     public $fields = [];
 
-    public $whitelist = [];
-
-    public $blacklist = [];
-
-    public $title;
-
     public $helpers = [];
-
-    public $debug = false;
-
-    /**
-     * @var \Cake\ORM\Table
-     */
-    protected $_table;
 
     /**
      * @inheritDoc
@@ -54,6 +42,12 @@ class EntityViewCell extends Cell
         array $cellOptions = []
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
+
+        $Table = $this->loadModel();
+        if (empty($this->fields)) {
+            $this->fields = $Table->getSchema()->columns();
+        }
+        $this->defaultTable = $this->modelClass;
     }
 
     /**
@@ -64,32 +58,24 @@ class EntityViewCell extends Cell
      */
     public function display(EntityInterface $entity)
     {
-        $Table = $this->_getTable();
+        $Table = $this->loadModel();
 
-        if ($this->title === null && $Table) {
-            $displayField = $Table->getDisplayField();
-            $this->title = $entity->get($displayField);
-        }
-        if (!$this->title === null) {
-            $this->title = sprintf("%s #%s", Inflector::singularize(pluginSplit($this->model)[1]), $entity->id);
-        }
+//        if ($this->title === null && $Table) {
+//            $displayField = $Table->getDisplayField();
+//            $this->title = $entity->get($displayField);
+//        }
+//        if (!$this->title === null) {
+//            $this->title = sprintf("%s #%s", Inflector::singularize(pluginSplit($this->model)[1]), $entity->id);
+//        }
 
-        $defaultField = ['title' => null, 'class' => null, 'formatter' => null, 'formatterArgs' => []];
+        $defaultField = ['label' => null, 'class' => null, 'formatter' => null, 'formatterArgs' => []];
         $fields = [];
         foreach ($this->fields as $field => $config) {
             if (is_numeric($field)) {
                 $field = $config;
                 $config = $defaultField;
             }
-
             $fields[$field] = $config + $defaultField;
-        }
-
-        if ($this->whitelist === true) {
-            $this->whitelist = array_keys($fields);
-        }
-        if (empty($this->whitelist)) {
-            $this->whitelist = $entity->getVisible();
         }
 
         if ($Table) {
@@ -101,7 +87,7 @@ class EntityViewCell extends Cell
 
         $data = [];
         //$properties = $entity->getVisible();
-        $virtualProperties = $entity->getVirtual();
+        //$virtualProperties = $entity->getVirtual();
 
         $belongsTo = [];
         if ($associations) {
@@ -112,19 +98,11 @@ class EntityViewCell extends Cell
             }
         }
 
-        $propDataFormatter = function ($property) use (&$data, $entity, $fields, $associations, $schema, $defaultField, $virtualProperties, $belongsTo) {
+        $propDataFormatter = function ($property) use (&$data, $entity, $fields, $associations, $schema, $belongsTo) {
 
-            if (!empty($this->whitelist) && !in_array($property, $this->whitelist)) {
-                return false;
-            }
-
-            if (!empty($this->blacklist) && in_array($property, $this->blacklist)) {
-                return false;
-            }
-
-            $field = $fields[$property] ?? $defaultField;
-            $fieldLabel = $field['title'] ?: Inflector::humanize($property);
-            $isVirtual = in_array($property, $virtualProperties);
+            $field = $fields[$property];
+            $fieldLabel = $field['label'] ?: Inflector::humanize($property);
+            $isVirtual = in_array($property, $entity->getVirtual());
 
             $val = $entity->get($property);
 
@@ -248,26 +226,13 @@ class EntityViewCell extends Cell
             return true;
         };
 
-        array_walk($this->whitelist, $propDataFormatter);
+        $fieldNames = array_keys($fields);
+        array_walk($fieldNames, $propDataFormatter);
 
-        $this->set('debug', $this->debug && Configure::read('debug'));
-        $this->set('model', $this->model);
+        $this->set('model', $this->modelClass);
         $this->set('entity', $entity);
         $this->set('associations', $associations);
         $this->set('schema', $schema);
-        $this->set('title', $this->title);
         $this->set('data', $data);
-    }
-
-    /**
-     * @return \Cake\ORM\Table
-     */
-    protected function _getTable()
-    {
-        if (!$this->_table && $this->model) {
-            $this->_table = TableRegistry::getTableLocator()->get($this->model);
-        }
-
-        return $this->_table;
     }
 }

@@ -139,7 +139,7 @@ class ActionComponent extends Component
 
             // ... the action is registered
             if ($this->hasAction($actionName)) {
-                //debug("Found matching action: " . $action->getLabel());
+                //debug("Found matching action: " . $actionName);
                 $this->execute($actionName);
                 $this->getController()->render();
                 return $this->getController()->getResponse();
@@ -260,7 +260,7 @@ class ActionComponent extends Component
         $actionObj = $this->getAction($actionName);
         return $this->dispatch($actionObj);
     }
-    
+
     public function dispatch(BaseAction $action)
     {
         $controller = $this->getController();
@@ -278,16 +278,38 @@ class ActionComponent extends Component
 
         // Prepare view
         $builder = $controller->viewBuilder();
+
+        //$controller->viewBuilder()->setPlugin($action->getPlugin());
+        //$controller->viewBuilder()->setTemplatePath($action->getTemplatePath());
+        //$controller->viewBuilder()->setTemplate($action->getTemplate());
+
         if ($builder->getTemplate() === null) {
+
             $templatePath = $action->getTemplatePath();
             if ($controller->getRequest()->getParam('prefix')) {
                 $templatePath = Inflector::camelize($controller->getRequest()->getParam('prefix'))
                     . '/' . $templatePath;
             }
+
+            $template = $action->getTemplate();
+            if (!$template) {
+                $template = $action->getPlugin() ? $action->getPlugin() . "." . $action->getName() : $action->getName();
+            }
+
+            //debug("no template" . $action->getPlugin() . "::" . $templatePath . "::" . $template);
             $controller->viewBuilder()->setPlugin($action->getPlugin());
             $controller->viewBuilder()->setTemplatePath($templatePath);
-            $controller->viewBuilder()->setTemplate($action->getTemplate());
+            $controller->viewBuilder()->setTemplate($template);
+
+            if ($action->getTemplate()) {
+                $builder->setTemplatePath('');
+                $builder->setTemplate($action->getTemplate());
+            }
         }
+
+        $controller->viewBuilder()->setVar('_action_plugin', $controller->viewBuilder()->getPlugin());
+        $controller->viewBuilder()->setVar('_action_template_path', $controller->viewBuilder()->getTemplatePath());
+        $controller->viewBuilder()->setVar('_action_template', $controller->viewBuilder()->getTemplate());
 
         // Execute the action in context of current controller
         //$actionCallable = \Closure::fromCallable([$action, 'invoke']);

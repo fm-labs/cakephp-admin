@@ -20,13 +20,13 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
      * @var array
      */
     protected $_defaultConfig = [
+        'fields' => [],
+        'include' => [],
+        'exclude' => [],
+        'allowAccess' => [],
         'actions' => [],
         'rowActions' => [],
-        'fields' => [],
-        'fields.access' => [],
-        'fields.whitelist' => [],
-        'fields.blacklist' => [],
-        'model.validator' => 'default',
+        'validator' => 'default',
         'redirectUrl' => true,
     ];
 
@@ -78,6 +78,19 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
     public function execute(Controller $controller)
     {
         #debug($this->_config);
+        // @todo Remove legacy settings
+        if (isset($this->_config['fields.whitelist'])) {
+            $this->_config['include'] = $this->_config['fields.whitelist'];
+            unset($this->_config['fields.whitelist']);
+        }
+        if (isset($this->_config['fields.blacklist'])) {
+            $this->_config['exclude'] = $this->_config['fields.blacklist'];
+            unset($this->_config['fields.blacklist']);
+        }
+        if (isset($this->_config['fields.access'])) {
+            $this->_config['allowAccess'] = $this->_config['fields.access'];
+            unset($this->_config['fields.access']);
+        }
 
         // load helpers
         if (isset($this->_config['helpers'])) {
@@ -91,40 +104,33 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
 
         $entity = $this->_config['entity'] ?? $this->model()->newEmptyEntity();
 
-        $_fields = $this->model()->getSchema()->columns();
+        $fields = $this->model()->getSchema()->columns();
         if (isset($this->_config['fields'])) {
-            $_fields = array_merge($this->_config['fields'], $_fields);
+            $fields = array_merge($this->_config['fields'], $fields);
         }
-        $_fields = $this->_normalizeInputs($_fields);
+        $fields = $this->_normalizeInputs($fields);
 
-        $fields = $blacklist = $whitelist = [];
-        if (isset($this->_config['fields.whitelist'])) {
-            $whitelist = $this->_config['fields.whitelist'];
-        } else {
-            $whitelist = array_keys($_fields);
-        }
-        if (isset($this->_config['fields.blacklist'])) {
-            $blacklist = $this->_config['fields.blacklist'];
-        }
+        // whitelist
+        if (!empty($this->_config['include'])) {
+            $fields = array_filter($fields, function ($key) {
+                return in_array($key, $this->_config['include']);
+            }, ARRAY_FILTER_USE_KEY);
 
-        $fields['id'] = [];
-        foreach ($_fields as $field => $config) {
-            if (!empty($whitelist) && !in_array($field, $whitelist)) {
-                continue;
-            }
-
-            if (!empty($blacklist) && in_array($field, $blacklist)) {
-                continue;
-            }
-
-            $fields[$field] = $config;
+            $entity->setAccess($this->_config['include'], true);
         }
 
-        // set access
-        $entity->setAccess($whitelist, true);
-        $entity->setAccess($blacklist, false);
-        if (isset($this->_config['fields.access'])) {
-            $entity->setAccess($this->_config['fields.access'], true);
+        // blacklist
+        if (!empty($this->_config['exclude'])) {
+            $fields = array_filter($fields, function ($key) {
+                return !in_array($key, $this->_config['exclude']);
+            }, ARRAY_FILTER_USE_KEY);
+
+            $entity->setAccess($this->_config['exclude'], false);
+        }
+
+        // allow field access
+        if (isset($this->_config['allowAccess'])) {
+            $entity->setAccess($this->_config['allowAccess'], true);
         }
 
         // process data submission
@@ -132,7 +138,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
             $entity = $this->model()->patchEntity(
                 $entity,
                 $this->request->getData(),
-                ['validate' => $this->_config['model.validator']]
+                ['validate' => $this->_config['validator']]
             );
             if ($this->model()->save($entity)) {
                 $this->flashSuccess(__d('admin', 'Record created'));

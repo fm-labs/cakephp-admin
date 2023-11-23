@@ -9,10 +9,10 @@
  * - viewOptions: EntityView options array
  */
 $entity = $this->get('entity');
-$title = $this->get('title', get_class($entity));
 $viewOptions = (array)$this->get('viewOptions');
 
-//$this->assign('title', $title);
+$title = $this->get('title', get_class($entity));
+$this->assign('title', $title);
 
 /**
  * Helpers
@@ -21,15 +21,17 @@ $viewOptions = (array)$this->get('viewOptions');
 $this->loadHelper('Admin.DataTable');
 $this->loadHelper('Bootstrap.Tabs');
 //$this->extend('Admin./Base/form');
+
 ?>
 <div class="view">
-    <?php
-    echo ($this->fetch('content')) ?: $this->cell('Admin.EntityView', [ $entity ], $viewOptions)->render('table');
+    <?= $this->fetch('content'); ?>
+    <?= $this->cell('Admin.EntityView', [ $entity ], $viewOptions)
+        ->render('table');
     ?>
 
-    <?php echo $this->cell('Admin.EntityRelated', [ $entity ], [
+    <?= $this->cell('Admin.EntityRelated', [ $entity ], [
         'modelClass' => $this->get('modelClass'),
-        'related' => $this->get('related')
+        'related' => $this->get('related'),
     ])->render('box');
     ?>
 
@@ -45,6 +47,5 @@ $this->loadHelper('Bootstrap.Tabs');
         <?php //debug($entity); ?>
         <small><?php echo h(__FILE__); ?></small>
     <?php endif; ?>
-
 
 </div>

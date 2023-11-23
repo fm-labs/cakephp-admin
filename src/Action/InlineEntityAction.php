@@ -8,6 +8,8 @@ use Cake\Utility\Inflector;
 
 class InlineEntityAction extends BaseEntityAction
 {
+    protected $_defaultConfig = [];
+
     public $scope = [];
     protected $_attributes = [];
     protected $_callable;

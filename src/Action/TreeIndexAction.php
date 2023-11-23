@@ -15,6 +15,8 @@ class TreeIndexAction extends IndexAction
     public function _execute(Controller $controller)
     {
         $displayField = $this->model()->getDisplayField();
+
+        // @todo Ensure model has TreeBehavior loaded
         $treeList = $this->model()->find('treeList', ['spacer' => '_ '])->toArray();
 
         if (!isset($this->_config['fields'][$displayField])) {
@@ -26,11 +28,9 @@ class TreeIndexAction extends IndexAction
             };
         }
 
-        if (!$this->_config['fields.whitelist']) {
-            $this->_config['fields.whitelist'] = true;
+        if (empty($this->_config['include'])) {
+            $this->_config['include'] = array_keys($this->_config['fields']);
         }
-
-        //$controller->viewBuilder()->setTemplate('Admin.tree_index');
 
         parent::_execute($controller);
     }

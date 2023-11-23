@@ -15,8 +15,10 @@
     <?= $this->Html->meta('icon') ?>
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
+    <?= $this->fetch('admin_css') ?>
     <?= $this->Html->css('Admin.layout/layout.admin'); ?>
     <?= $this->fetch('headjs') ?>
+    <?= $this->fetch('admin_headjs') ?>
 </head>
 <body class="<?= $this->get('admin_layout_body_class'); ?>">
 <div class="wrapper">
@@ -99,5 +101,6 @@
 <!-- ./wrapper -->
 
 <?= $this->fetch('script'); ?>
+<?= $this->fetch('admin_script'); ?>
 </body>
 </html>

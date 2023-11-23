@@ -10,6 +10,8 @@ use Cake\Http\Exception\NotFoundException;
 
 class DeleteAction extends BaseEntityAction
 {
+    protected $_defaultConfig = [];
+
     public $scope = ['table', 'form'];
 
     /**

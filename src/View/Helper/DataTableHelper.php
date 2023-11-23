@@ -658,7 +658,10 @@ class DataTableHelper extends Helper
             $column = ['type' => 'string', 'null' => true, 'default' => null];
 
             if ($Model) {
-                $column = $Model->getSchema()->getColumn($fieldName);
+                $_column = $Model->getSchema()->getColumn($fieldName);
+                if ($_column) {
+                    $column = $_column;
+                }
             }
             //$column['null'] = true;
             //$column['default'] = null;

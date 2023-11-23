@@ -52,7 +52,7 @@ class EntityRelatedCell extends Cell
                     continue;
                 }
 
-                $relatedEntity = $entity->get($assoc->getProperty());
+                $relatedPropertyData = $entity->get($assoc->getProperty());
                 $title = __d('admin', 'Related {0}', $assoc->getName());
 
                 switch ($assoc->type()) {
@@ -64,7 +64,7 @@ class EntityRelatedCell extends Cell
                             'title' => __d('admin', 'Related {0}', $assoc->getName()),
                             'render' => 'cell',
                             'cell' => 'Admin.EntityView',
-                            'cellParams' => [ $relatedEntity ],
+                            'cellParams' => [ $relatedPropertyData ],
                             'cellOptions' => $config,
                             'cellTemplate' => 'table',
                         ];
@@ -73,8 +73,8 @@ class EntityRelatedCell extends Cell
                     case \Cake\ORM\Association::ONE_TO_MANY:
                         $dataTable = array_merge([
                             'model' => $assoc->getTarget(),
-                            'data' => $relatedEntity,
-                            'fieldsBlacklist' => [$assoc->getForeignKey()],
+                            'data' => $relatedPropertyData,
+                            'exclude' => [$assoc->getForeignKey()],
                             'filter' => false,
                             'actions' => false,
                             'rowActions' => false,

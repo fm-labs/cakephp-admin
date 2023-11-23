@@ -45,8 +45,8 @@ class DataTableHelper extends Helper
         'id' => null,
         'class' => '',
         'fields' => [],
-        'fieldsWhitelist' => null,
-        'fieldsBlacklist' => null,
+        'include' => null,
+        'exclude' => null,
         'actions' => [],
         'rowActions' => [],
         'paging' => false,
@@ -59,7 +59,14 @@ class DataTableHelper extends Helper
         'ajax' => false,
     ];
 
-    protected $_defaultField = ['type' => null, 'label' => null, 'class' => null, 'formatter' => null, 'formatterArgs' => [], 'schema' => null];
+    protected $_defaultField = [
+        'type' => null,
+        'label' => null,
+        'class' => null,
+        'formatter' => null,
+        'formatterArgs' => [],
+        'schema' => null
+    ];
 
     protected $_tableArgs = [];
 
@@ -176,15 +183,15 @@ class DataTableHelper extends Helper
         }
 
         // fields whitelist
-        if (is_array($this->_params['fieldsWhitelist']) && empty($this->_params['fieldsWhitelist'])) {
-            $this->_params['fieldsWhitelist'] = null;
-        } elseif ($this->_params['fieldsWhitelist'] === true) {
-            $this->_params['fieldsWhitelist'] = null;
+        if (is_array($this->_params['include']) && empty($this->_params['include'])) {
+            $this->_params['include'] = null;
+        } elseif ($this->_params['include'] === true) {
+            $this->_params['include'] = null;
         }
 
         // fields blacklist
-        if (is_array($this->_params['fieldsBlacklist']) && empty($this->_params['fieldsBlacklist'])) {
-            $this->_params['fieldsBlacklist'] = null;
+        if (is_array($this->_params['exclude']) && empty($this->_params['exclude'])) {
+            $this->_params['exclude'] = null;
         }
 
         // fields
@@ -249,6 +256,13 @@ class DataTableHelper extends Helper
 
             return $this;
         }
+
+        if ($key === "fieldWhitelist") {
+            $key = "include";
+        } elseif ($key === "fieldBlacklist") {
+            $key = "exclude";
+        }
+
         $this->_params[$key] = $val;
 
         return $this;
@@ -305,7 +319,7 @@ class DataTableHelper extends Helper
         $this->_params['data'] = $data;
 
         /*
-        if (empty($this->_params['fieldsWhitelist'])) {
+        if (empty($this->_params['include'])) {
             if ($data instanceof CollectionInterface) {
                 $firstRow = $data->first();
             } else {
@@ -313,7 +327,7 @@ class DataTableHelper extends Helper
             }
             $firstRow = is_object($firstRow) ? $firstRow->toArray() : $firstRow;
             if ($firstRow) {
-                $this->_params['fieldsWhitelist'] = array_keys($firstRow);
+                $this->_params['include'] = array_keys($firstRow);
             }
         }
         */
@@ -420,12 +434,12 @@ class DataTableHelper extends Helper
                 $fieldConfig = [];
             }
 
-            if (is_array($this->_params['fieldsWhitelist']) && !in_array($field, $this->_params['fieldsWhitelist'])) {
+            if (is_array($this->_params['include']) && !in_array($field, $this->_params['include'])) {
                 //debug("field $field is NOT whitelisted");
                 continue;
             }
 
-            if (is_array($this->_params['fieldsBlacklist']) && in_array($field, $this->_params['fieldsBlacklist'])) {
+            if (is_array($this->_params['exclude']) && in_array($field, $this->_params['exclude'])) {
                 //debug("field $field is blacklisted");
                 continue;
             }

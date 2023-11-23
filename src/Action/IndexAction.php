@@ -53,11 +53,11 @@ class IndexAction extends BaseAction
         parent::execute($controller);
 
         // legacy settings
-        if (isset($this->_config['fields.whitelist'])) {
+        if (!empty($this->_config['fields.whitelist'])) {
             $this->_config['include'] = $this->_config['fields.whitelist'];
             unset($this->_config['fields.whitelist']);
         }
-        if (isset($this->_config['fields.blacklist'])) {
+        if (!empty($this->_config['fields.blacklist'])) {
             $this->_config['exclude'] = $this->_config['fields.blacklist'];
             unset($this->_config['fields.blacklist']);
         }
@@ -97,13 +97,15 @@ class IndexAction extends BaseAction
         }
 
         // fields blacklist
-        if ($this->_config['exclude']) {
+        if (!empty($this->_config['exclude'])) {
             $cols = array_filter($cols, function ($key) {
                 return !in_array($key, $this->_config['exclude']);
             }, ARRAY_FILTER_USE_KEY);
         }
 
         $this->_config['fields'] = $cols;
+
+        //debug($this->_config);
 
         // actions
         //if ($this->_config['actions'] !== false) {
@@ -116,14 +118,11 @@ class IndexAction extends BaseAction
         //    $this->_config['rowActions'] = (array)$event->getData('actions');
         //}
 
-        $response = null;
         try {
-            $response = $this->_execute($controller);
+            $this->_execute($controller);
         } catch (\Exception $ex) {
             $controller->Flash->error($ex->getMessage());
         }
-
-        return $response;
     }
 
     /**
@@ -131,7 +130,6 @@ class IndexAction extends BaseAction
      */
     protected function _execute(Controller $controller)
     {
-        $controller->set('result', $this->_fetchResult());
         $controller->set('dataTable', [
             'filter' => $this->_config['filter'],
             'paginate' => $this->_config['paginate'],
@@ -145,6 +143,9 @@ class IndexAction extends BaseAction
             ],
         ]);
         //$controller->set('actions', $this->_config['actions']);
+
+        // @TODO Figure out why 'fields' config is lost, after calling _fetchResult !?!?
+        $controller->set('result', $this->_fetchResult());
 
         if ($this->model() && $this->model()->hasBehavior('Stats')) {
             $controller->set('tableStats', $this->model()->getStats());

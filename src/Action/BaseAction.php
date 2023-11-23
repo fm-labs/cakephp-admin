@@ -338,13 +338,14 @@ abstract class BaseAction implements ActionInterface
     {
         if (!$this->table) {
             $modelClass = $this->get('modelClass');
+//            debug("fetch table" . $modelClass);
 
 //            if (!$modelClass) {
 //                throw new CakeException("No modelClass found for Action " . static::class);
 //            }
             deprecationWarning("No modelClass defined for Action " . static::class);
 
-            $this->table = $this->getController()->fetchTable($this->get('modelClass'));
+            $this->table = $this->getController()->fetchTable($modelClass);
         }
 
         return $this->table;

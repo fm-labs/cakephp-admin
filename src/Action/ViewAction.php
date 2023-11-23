@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Http\Exception\BadRequestException;
@@ -23,6 +22,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         'fields' => [],
         'include' => [],
         'exclude' => [],
+        'contain' => [],
         'related' => [],
         'actions' => [],
         'tabs' => [],

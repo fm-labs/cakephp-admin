@@ -71,7 +71,6 @@ class RootUserCommand extends Command
         }
 
         do {
-            $io->
             $email = trim($io->ask("Enter root email address: "));
             $strlen = strlen($email);
         } while ($strlen < 1);

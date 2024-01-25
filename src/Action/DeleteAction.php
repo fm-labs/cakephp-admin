@@ -54,6 +54,10 @@ class DeleteAction extends BaseEntityAction
             }
 
             $controller->set('entity', $entity);
+            $controller->set('viewOptions', [
+                'modelClass' => $this->model()->getRegistryAlias(), // @deprecated
+                'defaultTable' => $this->model()->getRegistryAlias(),
+            ]);
         } catch (RecordNotFoundException $ex) {
             $controller->Flash->error(__d('admin', "Record not found"));
             return $controller->redirect($controller->referer(['action' => 'index']));

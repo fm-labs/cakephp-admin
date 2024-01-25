@@ -32,6 +32,8 @@ class EntityViewCell extends Cell
 
     public $helpers = [];
 
+    public $defaultTable = null;
+
     /**
      * @inheritDoc
      */
@@ -43,11 +45,15 @@ class EntityViewCell extends Cell
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
-        $Table = $this->loadModel();
+        if ($this->modelClass && !$this->defaultTable) {
+            $this->defaultTable = $this->modelClass;
+        }
+
+        //$Table = $this->loadModel();
+        $Table = $this->fetchTable();
         if (empty($this->fields)) {
             $this->fields = $Table->getSchema()->columns();
         }
-        $this->defaultTable = $this->modelClass;
     }
 
     /**
@@ -58,7 +64,8 @@ class EntityViewCell extends Cell
      */
     public function display(EntityInterface $entity)
     {
-        $Table = $this->loadModel();
+        //$Table = $this->loadModel();
+        $Table = $this->fetchTable();
 
 //        if ($this->title === null && $Table) {
 //            $displayField = $Table->getDisplayField();

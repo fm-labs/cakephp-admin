@@ -10,7 +10,6 @@
  */
 $entity = $this->get('entity');
 $viewOptions = (array) $this->get('viewOptions');
-
 /**
  * Helpers
  */

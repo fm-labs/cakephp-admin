@@ -3,14 +3,14 @@ declare(strict_types=1);
 
 namespace Admin\Test\TestCase\Command;
 
-use Admin\Command\RootUserCommand;
+use Admin\Command\BakeWsdlCommand;
 use Cake\TestSuite\ConsoleIntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
 /**
  * Admin\Command\RootUserCommand Test Case
  *
- * @uses \Admin\Command\RootUserCommand
+ * @uses \Admin\Command\BakeWsdlCommand
  */
 class RootUserCommandTest extends TestCase
 {
@@ -30,7 +30,7 @@ class RootUserCommandTest extends TestCase
      * Test buildOptionParser method
      *
      * @return void
-     * @uses \Admin\Command\RootUserCommand::buildOptionParser()
+     * @uses \Admin\Command\BakeWsdlCommand::buildOptionParser()
      */
     public function testBuildOptionParser(): void
     {
@@ -41,7 +41,7 @@ class RootUserCommandTest extends TestCase
      * Test execute method
      *
      * @return void
-     * @uses \Admin\Command\RootUserCommand::execute()
+     * @uses \Admin\Command\BakeWsdlCommand::execute()
      */
     public function testExecute(): void
     {

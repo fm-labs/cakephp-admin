@@ -140,7 +140,10 @@ class ActionComponent extends Component
             // ... the action is registered
             if ($this->hasAction($actionName)) {
                 //debug("Found matching action: " . $actionName);
-                $this->execute($actionName);
+                $result = $this->execute($actionName);
+                if ($result instanceof Response) {
+                    return $result;
+                }
                 $this->getController()->render();
                 return $this->getController()->getResponse();
             }

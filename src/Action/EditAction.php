@@ -25,8 +25,10 @@ class EditAction extends BaseEntityAction
         'actions' => [],
         'rowActions' => [],
         'fields' => [],
-        'fields.whitelist' => [],
-        'fields.blacklist' => [],
+        'exclude' => [],
+        'include' => [],
+        'fields.whitelist' => [], // deprecated use 'include' instead
+        'fields.blacklist' => [], // deprecated use 'exclude' instead
         'fieldsets' => [],
         'form.options' => [],
         'model.validator' => 'default',
@@ -115,13 +117,16 @@ class EditAction extends BaseEntityAction
             );
             if ($this->model()->save($entity)) {
                 $this->flashSuccess(__d('admin', 'Saved!'));
+                //$controller->set('entity', $entity);
 
                 $redirectUrl = $this->_config['redirectUrl'] === true
                     ? [$entity->id] + $controller->getRequest()->getQuery()
                     : $this->_config['redirectUrl'];
                 $redirectUrl = $controller->referer($redirectUrl);
                 //debug($redirectUrl);
-                return $this->redirect($redirectUrl);
+                $redirectResponse = $this->redirect($redirectUrl);
+                //debug($redirectResponse);
+                return $redirectResponse;
             } else {
                 $this->flashError();
             }

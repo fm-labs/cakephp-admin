@@ -11,18 +11,15 @@
     <header>
     </header>
     <div id="page" class="user-wrapper text-center">
-        <!--
-        <div id="flash" class="container">
-            <?= $this->Flash->render(); ?>
-            <?= $this->Flash->render('admin'); ?>
-            <?= $this->Flash->render('auth'); ?>
-            <?= $this->fetch('flash') ?>
-        </div>
-        -->
         <main id="content" class="user-container text-center">
             <div class="user-view view form-user w-100 m-auto">
-                <?= $this->Flash->render('auth'); ?>
                 <h1 class="h3 mb-3 fw-normal"><?= $this->fetch('heading', $this->fetch('title')); ?></h1>
+
+                <div id="flash" class="mb-3">
+                    <?= $this->Flash->render(); ?>
+                    <?= $this->Flash->render('admin'); ?>
+                    <?= $this->Flash->render('auth'); ?>
+                </div>
                 <?= $this->fetch('content'); ?>
             </div>
 

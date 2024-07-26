@@ -181,8 +181,10 @@ abstract class BaseAction implements ActionInterface
     {
         // legacy workaround
         if ($key === "fields.whitelist") {
+            \Cake\Core\deprecationWarning("The `fields.whitelist` option is deprecated. Use `include` instead.");
             $key = "include";
         } elseif ($key === "fields.blacklist") {
+            \Cake\Core\deprecationWarning("The `fields.blacklist` option is deprecated. Use `exclude` instead.");
             $key = "exclude";
         }
 

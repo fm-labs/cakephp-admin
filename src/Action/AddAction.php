@@ -28,6 +28,8 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         'rowActions' => [],
         'validator' => 'default',
         'redirectUrl' => true,
+        //'fields.whitelist' => [], // deprecated use 'include' instead
+        //'fields.blacklist' => [], // deprecated use 'exclude' instead
     ];
 
     public $scope = ['index'];
@@ -77,17 +79,20 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
      */
     public function execute(Controller $controller)
     {
-        #debug($this->_config);
+        # debug($this->_config);
         // @todo Remove legacy settings
         if (isset($this->_config['fields.whitelist'])) {
+            \Cake\Core\deprecationWarning('The `fields.whitelist` option is deprecated. Use `include` instead.');
             $this->_config['include'] = $this->_config['fields.whitelist'];
             unset($this->_config['fields.whitelist']);
         }
         if (isset($this->_config['fields.blacklist'])) {
+            \Cake\Core\deprecationWarning('The `fields.blacklist` option is deprecated. Use `exclude` instead.');
             $this->_config['exclude'] = $this->_config['fields.blacklist'];
             unset($this->_config['fields.blacklist']);
         }
         if (isset($this->_config['fields.access'])) {
+            \Cake\Core\deprecationWarning('The `fields.access` option is deprecated. Use `allowAccess` instead.');
             $this->_config['allowAccess'] = $this->_config['fields.access'];
             unset($this->_config['fields.access']);
         }

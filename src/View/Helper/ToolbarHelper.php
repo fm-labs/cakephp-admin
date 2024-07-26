@@ -249,6 +249,7 @@ class ToolbarHelper extends Helper
     {
         /*
         debug("Toolbar::beforeLayout: render!" . $event->getSubject()->getCurrentType());
+        */
         if (!$this->_rendered) {
             //if ($event->getSubject() instanceof AdminView) {
                 $event->getSubject()->assign($this->getConfig('block'), $this->_View->element($this->getConfig('element'), [
@@ -256,7 +257,6 @@ class ToolbarHelper extends Helper
                 ]));
             //}
         }
-        */
     }
 
     /**

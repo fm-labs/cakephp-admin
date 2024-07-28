@@ -63,7 +63,8 @@ class IndexAction extends BaseAction
         }
 
         // detect model class
-        $this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->loadModel()->getRegistryAlias();
+        //$this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->loadModel()->getRegistryAlias();
+        //$this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->fetchTable()->getRegistryAlias();
 
         // load helpers
         if ($this->_config['helpers']) {

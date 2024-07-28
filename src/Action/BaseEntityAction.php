@@ -106,7 +106,8 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             // detect model class and load entity
             $this->_config['modelClass'] = $this->_config['modelClass'] ?? null;
             if (!$this->_config['modelClass']) {
-                $this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
+                //$this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
+                $this->_config['modelClass'] = $controller->fetchTable()->getRegistryAlias();
             }
 
             // detect model id

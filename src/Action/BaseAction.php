@@ -84,6 +84,7 @@ abstract class BaseAction implements ActionInterface
     public function execute(Controller $controller)
     {
         //$this->mergeControllerVars();
+        $this->setController($controller);
     }
 
     /**
@@ -95,10 +96,10 @@ abstract class BaseAction implements ActionInterface
     {
         //$controllerVars = ['modelClass'];
         if (isset($this->getController()->modelClass) && !$this->get('modelClass')) {
-            $this->set('modelClass', $this->getController()->modelClass);
+            $this->setConfig('modelClass', $this->getController()->modelClass);
         }
         if (isset($this->getController()->defaultTable) && !$this->get('modelClass')) {
-            $this->set('modelClass', $this->getController()->defaultTable);
+            $this->setConfig('modelClass', $this->getController()->defaultTable);
         }
 
         // read config from controller view vars
@@ -339,18 +340,25 @@ abstract class BaseAction implements ActionInterface
     public function model(): Table
     {
         if (!$this->table) {
-            $modelClass = $this->get('modelClass');
-//            debug("fetch table" . $modelClass);
-
-//            if (!$modelClass) {
-//                throw new CakeException("No modelClass found for Action " . static::class);
-//            }
-            deprecationWarning("No modelClass defined for Action " . static::class);
-
+            $modelClass = $this->detectModelClass();
             $this->table = $this->getController()->fetchTable($modelClass);
         }
 
         return $this->table;
+    }
+
+    protected function detectModelClass() {
+        $modelClass = $this->getConfig('modelClass');
+        if (!$modelClass) {
+            $modelClass = $this->get('modelClass');
+        }
+        if (!$modelClass) {
+            $modelClass = $this->controller ? $this->controller->defaultTable : null;
+        }
+        if (!$modelClass) {
+            $modelClass = $this->controller ? $this->controller->modelClass : null;
+        }
+        return $modelClass;
     }
 
     /**

@@ -31,7 +31,8 @@ class EntityRelatedCell extends Cell
     public function display($entity)
     {
         /** @var \Cake\ORM\Table $Model */
-        $Model = $this->loadModel($this->modelClass);
+        //$Model = $this->loadModel($this->modelClass);
+        $Model = $this->fetchTable($this->modelClass);
 
         $elements = [];
         foreach ($this->related as $alias => $relatedConfig) {

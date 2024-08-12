@@ -352,11 +352,25 @@ abstract class BaseAction implements ActionInterface
         if (!$modelClass) {
             $modelClass = $this->get('modelClass');
         }
-        if (!$modelClass) {
-            $modelClass = $this->controller ? $this->controller->defaultTable : null;
+
+        if (!$modelClass && $this->controller) {
+            // get protected defaultTable member via reflection
+            //$modelClass = $this->controller->defaultTable ?: null;
+            $reflection = new \ReflectionClass($this->controller);
+            if ($reflection->hasProperty('defaultTable')) {
+                $property = $reflection->getProperty('defaultTable');
+                $property->setAccessible(true);
+                $modelClass = $property->getValue($this->controller);
+            }
         }
-        if (!$modelClass) {
-            $modelClass = $this->controller ? $this->controller->modelClass : null;
+        if (!$modelClass && $this->controller) {
+            //$modelClass = $this->controller->modelClass ?: null;
+            $reflection = new \ReflectionClass($this->controller);
+            if ($reflection->hasProperty('modelClass')) {
+                $property = $reflection->getProperty('modelClass');
+                $property->setAccessible(true);
+                $modelClass = $property->getValue($this->controller);
+            }
         }
         return $modelClass;
     }

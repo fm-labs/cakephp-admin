@@ -8,6 +8,7 @@ use Admin\Action\Traits\EntityActionFilterTrait;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Error\Debugger;
+use Cake\Http\Exception\BadRequestException;
 use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;

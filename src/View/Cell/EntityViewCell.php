@@ -32,7 +32,7 @@ class EntityViewCell extends Cell
 
     public $helpers = [];
 
-    public $defaultTable = null;
+    public $defaultTable;
 
     /**
      * @inheritDoc
@@ -50,7 +50,7 @@ class EntityViewCell extends Cell
         }
 
         //$Table = $this->loadModel();
-        $Table = $this->fetchTable();
+        $Table = $this->fetchTable($this->defaultTable ?? $this->modelClass);
         if (empty($this->fields)) {
             $this->fields = $Table->getSchema()->columns();
         }

@@ -361,6 +361,7 @@ abstract class BaseAction implements ActionInterface
                 $property = $reflection->getProperty('defaultTable');
                 $property->setAccessible(true);
                 $modelClass = $property->getValue($this->controller);
+                $property->setAccessible(false);
             }
         }
         if (!$modelClass && $this->controller) {
@@ -370,6 +371,7 @@ abstract class BaseAction implements ActionInterface
                 $property = $reflection->getProperty('modelClass');
                 $property->setAccessible(true);
                 $modelClass = $property->getValue($this->controller);
+                $property->setAccessible(false);
             }
         }
         return $modelClass;

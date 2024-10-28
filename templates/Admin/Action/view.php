@@ -8,8 +8,12 @@
  * - entity: Entity instance
  * - viewOptions: EntityView options array
  */
-$entity = $this->get('entity');
 $viewOptions = (array)$this->get('viewOptions');
+$entity = $this->get('entity');
+
+if (!$entity) {
+    throw new \Exception('Entity not found');
+}
 
 $title = $this->get('title', get_class($entity));
 $this->assign('title', $title);

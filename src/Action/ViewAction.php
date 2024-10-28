@@ -12,7 +12,6 @@ use Cake\ORM\Association;
 class ViewAction extends BaseEntityAction implements EventListenerInterface
 {
     protected $scope = ['table', 'form'];
-
     protected $_defaultConfig = [
         'modelClass' => null,
         'modelId' => null,
@@ -77,10 +76,10 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
 
         //$viewOptions['debug'] = Configure::read('debug');
         //$viewOptions['title'] = $entity->get($this->model()->getDisplayField());
-        $viewOptions['modelClass'] = $this->_config['modelClass'];
-        $viewOptions['fields'] = $this->_config['fields'];
         //$viewOptions['whitelist'] = $this->_config['include'];
         //$viewOptions['blacklist'] = $this->_config['exclude'];
+        $viewOptions['modelClass'] = $this->_config['modelClass'];
+        $viewOptions['fields'] = $this->_config['fields'];
         $controller->set('viewOptions', $viewOptions);
 
         $controller->set('actions', $this->_config['actions']);

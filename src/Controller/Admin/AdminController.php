@@ -32,6 +32,7 @@ class AdminController extends AppController
         $this->set('dashboard.title', Configure::read('Admin.Dashboard.title', __d('admin', 'System Dashboard')));
         $this->set('dashboard.panels', Configure::read('Admin.Dashboard.panels', []));
         $this->Action->execute();
+        $this->render('dashboard');
     }
 
 //    /**

@@ -19,7 +19,7 @@ class AdminView extends View
     /**
      * @var string
      */
-    public $layout = 'Admin.admin';
+    public string $layout = 'Admin.admin';
 
     /**
      * @var \Cupcake\Ui\Ui

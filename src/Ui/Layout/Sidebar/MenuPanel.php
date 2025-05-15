@@ -1,22 +1,29 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Ui\Layout\Sidebar;
 
+use Admin\Admin;
 use Admin\Ui\Layout\BaseLayoutElement;
 use Cake\Core\Configure;
 
 class MenuPanel extends BaseLayoutElement
 {
-    protected $elementName = ""; //"Admin.layout/admin/sidebar/menu_panel";
+    /**
+     * @inheritDoc
+     */
+    protected ?string $elementName = ''; //"Admin.layout/admin/sidebar/menu_panel";
 
+    /**
+     * @inheritDoc
+     */
     public function initialize(): void
     {
         $this->_View->loadHelper('Bootstrap.Menu');
     }
 
     /**
-     * @param \Cake\View\View $view
-     * @return string
+     * @inheritDoc
      */
     public function render(): string
     {
@@ -39,10 +46,10 @@ class MenuPanel extends BaseLayoutElement
             'trailItem' => 'active',
         ];
 
-        $html = "";
+        $html = '';
         foreach (['admin_primary', 'admin_secondary'] as $menuId) {
             //$menu = $this->get('admin.sidebar.menu');
-            $menu = \Admin\Admin::getMenu($menuId);
+            $menu = Admin::getMenu($menuId);
             if (!$menu) {
                 if (Configure::read('debug')) {
                     $html .= "Menu $menuId not found";

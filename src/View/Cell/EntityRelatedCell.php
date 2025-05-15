@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\View\Cell;
 
+use Cake\Datasource\EntityInterface;
+use Cake\ORM\Association;
 use Cake\View\Cell;
 
 /**
@@ -16,7 +18,7 @@ class EntityRelatedCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = ['modelClass', 'entity', 'related'];
+    protected array $_validCellOptions = ['modelClass', 'entity', 'related'];
 
     public $modelClass;
 
@@ -28,7 +30,7 @@ class EntityRelatedCell extends Cell
      * @param \Cake\Datasource\EntityInterface $entity Entity object
      * @return void
      */
-    public function display($entity)
+    public function display(EntityInterface $entity): void
     {
         /** @var \Cake\ORM\Table $Model */
         //$Model = $this->loadModel($this->modelClass);
@@ -48,7 +50,7 @@ class EntityRelatedCell extends Cell
                     $elements[] = [
                         'title' => __d('admin', 'Related {0}', $assoc->getName()),
                         'render' => 'content',
-                        'content' => sprintf("Associated property not set: %s (%s)", $assoc->getProperty(), $assoc->type()),
+                        'content' => sprintf('Associated property not set: %s (%s)', $assoc->getProperty(), $assoc->type()),
                     ];
                     continue;
                 }
@@ -57,8 +59,8 @@ class EntityRelatedCell extends Cell
                 $title = __d('admin', 'Related {0}', $assoc->getName());
 
                 switch ($assoc->type()) {
-                    case \Cake\ORM\Association::MANY_TO_ONE:
-                    case \Cake\ORM\Association::ONE_TO_ONE:
+                    case Association::MANY_TO_ONE:
+                    case Association::ONE_TO_ONE:
                         $config = ['title' => $title] + $relatedConfig;
 
                         $elements[] = [
@@ -71,7 +73,7 @@ class EntityRelatedCell extends Cell
                         ];
                         break;
 
-                    case \Cake\ORM\Association::ONE_TO_MANY:
+                    case Association::ONE_TO_MANY:
                         $dataTable = array_merge([
                             'model' => $assoc->getTarget(),
                             'data' => $relatedPropertyData,
@@ -88,7 +90,7 @@ class EntityRelatedCell extends Cell
                         ];
                         break;
 
-                    case \Cake\ORM\Association::MANY_TO_MANY:
+                    case Association::MANY_TO_MANY:
                     default:
                         //$html = __d('admin', 'Association type not implemented {0}', $assoc->type());
                         break;

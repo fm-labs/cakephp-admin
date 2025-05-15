@@ -16,7 +16,7 @@ class ToggleComponent extends Component
      * Default configuration
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
     ];
 
     /**
@@ -53,6 +53,6 @@ class ToggleComponent extends Component
         $controller->viewBuilder()->setClassName('Json');
         $controller->viewBuilder()->setLayout(false);
         $controller->set('result', $result);
-        $controller->set('_serialize', 'result');
+        $controller->viewBuilder()->setOption('serialize', 'result');
     }
 }

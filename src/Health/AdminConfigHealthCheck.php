@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Health;
 
-use Cake\Core\Configure;
 use Cupcake\Health\HealthCheckInterface;
 use Cupcake\Health\HealthStatus;
 

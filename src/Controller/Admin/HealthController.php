@@ -10,6 +10,7 @@ use Cupcake\Health\Check\PhpExtensionCheck;
 use Cupcake\Health\Check\PhpVersionCheck;
 use Cupcake\Health\Check\SysDirCheck;
 use Cupcake\Health\HealthManager;
+use Exception;
 
 /**
  * Class HealthController
@@ -31,7 +32,7 @@ class HealthController extends AppController
                 'system:php_ext' => new PhpExtensionCheck(),
                 'system:cakephp' => new CakePhpHealthCheck(),
                 'system:dirs' => new SysDirCheck(),
-                'app:db_connection' => new DatabaseConnectionCheck()
+                'app:db_connection' => new DatabaseConnectionCheck(),
             ];
 
             $checks = Cupcake::doFilter('health_checks_init', $checks);
@@ -45,7 +46,7 @@ class HealthController extends AppController
             $hm->check();
             $this->dispatchEvent('Health.afterCheck', [], $hm);
             $health = $hm->getResults();
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $this->Flash->error($ex->getMessage());
         }
 

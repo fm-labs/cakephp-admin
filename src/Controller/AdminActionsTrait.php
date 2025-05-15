@@ -13,13 +13,12 @@ namespace Admin\Controller;
  *
  * @package Admin\Controller
  * @property \Admin\Controller\Component\AdminComponent $Admin
- *
  * @deprecated
  */
 trait AdminActionsTrait
 {
     /**
-     * @return null|\Cake\Http\Response
+     * @return \Cake\Http\Response|null
      */
     public function invokeAction()
     {

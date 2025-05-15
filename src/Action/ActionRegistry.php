@@ -21,7 +21,7 @@ class ActionRegistry extends ObjectRegistry
      * @param string $class Partial classname to resolve.
      * @return string|false Either the correct classname or false.
      */
-    protected function _resolveClassName($class): ?string
+    protected function _resolveClassName(string $class): ?string
     {
         if (is_object($class)) {
             return $class;
@@ -56,7 +56,7 @@ class ActionRegistry extends ObjectRegistry
      * @return \Admin\Action\Interfaces\ActionInterface The constructed action class.
      * @throws \RuntimeException when an object doesn't implement the correct interface.
      */
-    protected function _create($class, $alias, $settings)
+    protected function _create(object|string $class, string $alias, array $config): object
     {
         if (is_callable($class)) {
             $class = $class($alias);
@@ -67,7 +67,7 @@ class ActionRegistry extends ObjectRegistry
         }
 
         if (!isset($instance)) {
-            $instance = new $class($settings);
+            $instance = new $class($config);
         }
 
         if ($instance instanceof ActionInterface) {

@@ -9,7 +9,7 @@ class DataTablesController extends AppController
 {
     public function index()
     {
-        $this->viewBuilder()->setLayout(false);
+        $this->viewBuilder()->disableAutoLayout();
     }
 
     public function ajax()
@@ -35,7 +35,7 @@ class DataTablesController extends AppController
         $recordsFiltered = $recordsTotal = $query->count();
 
         if ($request['search'] && $request['search']['value']) {
-            $query->find('search', ['search' => ['q' => $request['search']['value']]]);
+            $query->find('search', search: ['q' => $request['search']['value']]);
             //$query->where(['subject LIKE' => sprintf('%%%s%%',$request['search']['value'])]);
             $recordsFiltered = $query->count();
         }
@@ -61,7 +61,7 @@ class DataTablesController extends AppController
                 $orderDir = $_order['dir'];
                 $order[$orderField] = $orderDir;
             }
-            $query->order($order);
+            $query->orderBy($order);
         }
 
         if ($request['paginate']) {
@@ -78,7 +78,7 @@ class DataTablesController extends AppController
 
         if ($Model->behaviors()->has('Tree')) {
             $displayField = $Model->getDisplayField();
-            $treeList = $Model->find('treeList', ['spacer' => '_ '])->toArray();
+            $treeList = $Model->find('treeList', spacer: '_ ')->toArray();
             for ($i = 0; $i < count($data); $i++) {
                 $data[$i][$displayField] = $treeList[$data[$i]['id']];
             }
@@ -87,6 +87,6 @@ class DataTablesController extends AppController
         $draw = $request['draw'] ?? -1;
 
         $this->set(compact('model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data'));
-        $this->set('_serialize', ['model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data']);
+        $this->viewBuilder()->setOption('serialize', ['model', 'request', 'draw', 'recordsTotal', 'recordsFiltered', 'data']);
     }
 }

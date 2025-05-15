@@ -3,19 +3,21 @@ declare(strict_types=1);
 
 namespace Admin;
 
+use Admin\Core\BaseAdminPlugin;
 use Admin\Health\AdminConfigHealthCheck;
 use Admin\Health\AdminSecurityHealthCheck;
 use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Event\EventInterface;
 use Cake\Event\EventListenerInterface;
+use Cake\Http\Response;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
-use Cupcake\Health\HealthManager;
-use Cupcake\Health\HealthStatus;
+use Cupcake\Menu\MenuItemCollection;
+use Psr\Http\Message\MessageInterface;
 
-class AdminAdmin extends \Admin\Core\BaseAdminPlugin implements EventListenerInterface
+class AdminAdmin extends BaseAdminPlugin implements EventListenerInterface
 {
     /**
      * @inheritDoc
@@ -32,6 +34,9 @@ class AdminAdmin extends \Admin\Core\BaseAdminPlugin implements EventListenerInt
 //        return "system";
 //    }
 
+    /**
+     * @inheritDoc
+     */
     public function routes(RouteBuilder $routes): void
     {
         $routes->connect('/plugins/view/**', ['controller' => 'Plugins', 'action' => 'view', 'pass' => [1]]);
@@ -49,7 +54,7 @@ class AdminAdmin extends \Admin\Core\BaseAdminPlugin implements EventListenerInt
             'Admin.Menu.build.admin_developer' => ['callable' => 'adminMenuBuildDev', 'priority' => 10 ],
             'Admin.Menu.build.admin_user' => ['callable' => 'adminMenuBuildUser', 'priority' => 10 ],
             //'Controller.beforeRedirect' => 'controllerBeforeRedirect',
-            'Health.beforeCheck' => ['callable' => 'beforeHealthCheck']
+            'Health.beforeCheck' => ['callable' => 'beforeHealthCheck'],
         ];
     }
 
@@ -59,7 +64,7 @@ class AdminAdmin extends \Admin\Core\BaseAdminPlugin implements EventListenerInt
      * @param \Cake\Http\Response $response The response object
      * @return \Cake\Http\Response|\Psr\Http\Message\MessageInterface
      */
-    public function controllerBeforeRedirect(EventInterface $event, $url, \Cake\Http\Response $response)
+    public function controllerBeforeRedirect(EventInterface $event, mixed $url, Response $response): Response|MessageInterface
     {
         // @todo Refactor using a View
         $html = <<<HTML
@@ -123,13 +128,13 @@ HTML;
      * @param \Cupcake\Menu\MenuItemCollection $menu The menu
      * @return void
      */
-    public function adminMenuBuildPrimary(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
+    public function adminMenuBuildPrimary(Event $event, MenuItemCollection $menu): void
     {
         $menu->addItem([
             'title' => __d('admin', 'Dashboard'),
             'url' => ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
             //'url' => '/' . \Admin\Admin::$urlPrefix,
-            'data-icon' => 'tachometer'
+            'data-icon' => 'tachometer',
         ]);
         /*
         if (Configure::read('debug')) {
@@ -179,7 +184,7 @@ HTML;
      * @param \Cupcake\Menu\MenuItemCollection $menu The menu
      * @return void
      */
-    public function adminMenuBuildSystem(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
+    public function adminMenuBuildSystem(Event $event, MenuItemCollection $menu): void
     {
         $items = [
             'system' => [
@@ -216,7 +221,7 @@ HTML;
      * @param \Cupcake\Menu\MenuItemCollection $menu The menu
      * @return void
      */
-    public function adminMenuBuildDev(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
+    public function adminMenuBuildDev(Event $event, MenuItemCollection $menu): void
     {
         $items = [
             'design' => [
@@ -233,7 +238,7 @@ HTML;
      * @param \Cupcake\Menu\MenuItemCollection $menu The menu
      * @return void
      */
-    public function adminMenuBuildUser(Event $event, \Cupcake\Menu\MenuItemCollection $menu)
+    public function adminMenuBuildUser(Event $event, MenuItemCollection $menu): void
     {
         $items = [
             'admin_user_profile' => [
@@ -251,12 +256,12 @@ HTML;
     }
 
     /**
-     * @param EventInterface $event The event object
+     * @param \Cake\Event\EventInterface $event The event object
      * @return void
      */
-    public function beforeHealthCheck(EventInterface $event)
+    public function beforeHealthCheck(EventInterface $event): void
     {
-        /** @var HealthManager $healthManager */
+        /** @var \Cupcake\Health\HealthManager $healthManager */
         $healthManager = $event->getSubject();
         $healthManager
             ->addCheck('admin_configuration', new AdminConfigHealthCheck())

@@ -5,6 +5,8 @@
     "require": {
         "php": ">=8.2",
         "cakephp/cakephp": "^5",
+        "cakephp/authentication": "^3",
+        "cakephp/authorization": "^3",
         "fm-labs/cakephp-cupcake": "^5",
         "fm-labs/cakephp-bootstrap": "^5",
         "fm-labs/cakephp-sugar": "^5",

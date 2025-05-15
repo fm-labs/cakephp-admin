@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Ui\Layout\Header;
 
@@ -6,5 +7,5 @@ use Admin\Ui\Layout\BaseLayoutElement;
 
 class UserPanel extends BaseLayoutElement
 {
-    protected $elementName = "Admin.layout/admin/header/user_panel";
+    protected ?string $elementName = 'Admin.layout/admin/header/user_panel';
 }

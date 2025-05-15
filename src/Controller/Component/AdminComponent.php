@@ -22,19 +22,22 @@ class AdminComponent extends Component
     /**
      * @var array
      */
-    public $components = ['Admin.Flash'];
+    public array $components = ['Admin.Flash'];
 
     /**
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'flashClass' => '\Admin\Controller\Component\FlashComponent',
         'flashKey' => 'admin',
         'authClass' => '\Admin\Controller\Component\AuthComponent',
         'authModel' => 'Admin.Users',
-        'userSessionMaxLifetimeSec' => 15 * MINUTE,
+        'userSessionMaxLifetimeSec' => 15 * 60,
         'userSessionKey' => 'AdminUserSession',
     ];
+
+    private Component $Authentication;
+    private Component $Authorization;
 
     //protected $_cookieName;
 

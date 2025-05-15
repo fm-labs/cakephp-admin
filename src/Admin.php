@@ -20,23 +20,23 @@ use Cupcake\Menu\MenuItemCollection;
  */
 class Admin
 {
-    public static $urlPrefix = 'admin';
+    public static string $urlPrefix = 'admin';
 
     /**
      * @var \Admin\Core\AdminPluginCollection
      */
-    protected static $plugins;
+    protected static AdminPluginCollection $plugins;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected static $_version = null;
+    protected static ?string $_version = null;
 
     /**
      * @var array
      * @deprecated
      */
-    protected static $_listeners = [];
+    protected static array $_listeners = [];
 
     /**
      * Set the admin routing prefix.
@@ -99,7 +99,7 @@ class Admin
     /**
      * @return string Admin version number
      */
-    public static function version()
+    public static function version(): string
     {
         $version = Configure::read('Admin.version');
         if ($version !== null) {
@@ -109,9 +109,10 @@ class Admin
         $filePath = Plugin::path('Admin') . DS . 'VERSION.txt';
         if (is_file($filePath)) {
             //phpcs::disable
-            $version = @file_get_contents(Plugin::path('Admin') . DS . 'VERSION.txt');
+            $version = file_get_contents(Plugin::path('Admin') . DS . 'VERSION.txt');
             //phpcs::enable
             Configure::write('Admin.version', $version);
+
             return $version;
         }
 
@@ -126,7 +127,7 @@ class Admin
      */
     public static function registerListener(string $type, string $listenerClass): void
     {
-        deprecationWarning('Admin::registerListener() is deprecated.');
+        deprecationWarning('4.0.1', 'Admin::registerListener() is deprecated.');
         if (!isset(static::$_listeners[$type])) {
             static::$_listeners[$type] = [];
         }
@@ -145,7 +146,7 @@ class Admin
      */
     public static function getListeners(string $type): array
     {
-        deprecationWarning('Admin::getListeners() is deprecated.');
+        deprecationWarning('4.0.1', 'Admin::getListeners() is deprecated.');
         if (!isset(static::$_listeners[$type])) {
             return [];
         }

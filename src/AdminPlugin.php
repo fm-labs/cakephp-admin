@@ -3,32 +3,27 @@ declare(strict_types=1);
 
 namespace Admin;
 
-use Admin\Authorization\Middleware\UnauthorizedHandler\FlashRedirectHandler;
 use Admin\Http\ActionDispatcherListener;
-use Admin\Policy\AdminRequestPolicy;
 use Admin\Routing\Middleware\AdminMiddleware;
 use Authentication\AuthenticationService;
 use Authentication\AuthenticationServiceInterface;
-use Authentication\Identifier\IdentifierInterface;
+use Authentication\AuthenticationServiceProviderInterface;
 use Authentication\Middleware\AuthenticationMiddleware;
-use Authorization\AuthorizationService;
-use Authorization\AuthorizationServiceInterface;
-use Authorization\Middleware\AuthorizationMiddleware;
-use Authorization\Middleware\RequestAuthorizationMiddleware;
-use Authorization\Policy\MapResolver;
 use Cake\Cache\Cache;
 use Cake\Core\BasePlugin;
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Core\PluginApplicationInterface;
 use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventManager;
+use Cake\Http\BaseApplication;
 use Cake\Http\MiddlewareQueue;
-use Cake\Http\ServerRequest;
 use Cake\Log\Log;
-use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
+use Cupcake\Application;
+use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -36,7 +31,7 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class AdminPlugin extends BasePlugin implements
     //EventListenerInterface,
-    \Authentication\AuthenticationServiceProviderInterface
+    AuthenticationServiceProviderInterface
     //\Authorization\AuthorizationServiceProviderInterface
 {
     use EventDispatcherTrait;
@@ -46,7 +41,7 @@ class AdminPlugin extends BasePlugin implements
     /**
      * @var \Cake\Http\BaseApplication|\Cupcake\Application
      */
-    protected $_app;
+    protected BaseApplication|Application $_app;
 
     /**
      * @inheritDoc
@@ -93,7 +88,7 @@ class AdminPlugin extends BasePlugin implements
         /**
          * DebugKit
          */
-        if (\Cake\Core\Plugin::isLoaded('DebugKit')) {
+        if (Plugin::isLoaded('DebugKit')) {
             $panels = Configure::read('DebugKit.panels', []);
             $panels['Admin.Admin'] = true;
             Configure::write('DebugKit.panels', $panels);
@@ -110,12 +105,12 @@ class AdminPlugin extends BasePlugin implements
     /**
      * @inheritDoc
      */
-    public function routes(\Cake\Routing\RouteBuilder $routes): void
+    public function routes(RouteBuilder $routes): void
     {
         $routes->scope(
             '/' . Admin::$urlPrefix,
             ['prefix' => 'Admin', '_namePrefix' => 'admin:'],
-            function (RouteBuilder $routes) {
+            function (RouteBuilder $routes): void {
                 $routes->registerMiddleware('admin_plugins', new AdminMiddleware($this->_app));
 
                 //if (Configure::read('Admin.Auth.authenticationEnabled')) {
@@ -155,43 +150,45 @@ class AdminPlugin extends BasePlugin implements
                                 'prefix' => 'Admin',
                                 '_namePrefix' => $pluginNamePrefix,
                             ],
-                            [$plugin, 'routes']
+                            function (RouteBuilder $routes) use ($plugin): void {
+                                $plugin->routes($routes);
+                            }
                         );
-                    } catch (\Exception $ex) {
+                    } catch (Exception $ex) {
                         Log::error("Admin routes loading failed: $pluginName: " . $ex->getMessage());
                     }
                 }
 
-//                // [deprecated] register admin plugin routes
-//                // @TODO Remove legacy admin plugin route loader
-//                /** @var \Cake\Core\PluginInterface $plugin */
-//                foreach ($this->_app->getPlugins()->with('routes') as $plugin) {
-//                    $pluginName = $plugin->getName();
-//                    $pluginNamePrefix = sprintf('%s:', Inflector::underscore($pluginName));
-//                    if (method_exists($plugin, 'adminRoutes')) {
-//                        deprecationWarning("Plugin::adminRoutes() is deprecated. Use Admin::routes() instead.");
-//                        try {
-//                            $routes->scope(
-//                                '/' . Inflector::dasherize($pluginName),
-//                                [
-//                                    'plugin' => $pluginName,
-//                                    'prefix' => 'Admin',
-//                                    '_namePrefix' => $pluginNamePrefix,
-//                                ],
-//                                [$plugin, 'adminRoutes']
-//                            );
-//                        } catch (\Exception $ex) {
-//                            Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
-//                        }
-//                    }
-//                }
+            //                // [deprecated] register admin plugin routes
+            //                // @TODO Remove legacy admin plugin route loader
+            //                /** @var \Cake\Core\PluginInterface $plugin */
+            //                foreach ($this->_app->getPlugins()->with('routes') as $plugin) {
+            //                    $pluginName = $plugin->getName();
+            //                    $pluginNamePrefix = sprintf('%s:', Inflector::underscore($pluginName));
+            //                    if (method_exists($plugin, 'adminRoutes')) {
+            //                        deprecationWarning("Plugin::adminRoutes() is deprecated. Use Admin::routes() instead.");
+            //                        try {
+            //                            $routes->scope(
+            //                                '/' . Inflector::dasherize($pluginName),
+            //                                [
+            //                                    'plugin' => $pluginName,
+            //                                    'prefix' => 'Admin',
+            //                                    '_namePrefix' => $pluginNamePrefix,
+            //                                ],
+            //                                [$plugin, 'adminRoutes']
+            //                            );
+            //                        } catch (\Exception $ex) {
+            //                            Log::error("Admin plugin loading failed: $pluginName: " . $ex->getMessage());
+            //                        }
+            //                    }
+            //                }
 
-//                // catch-all fallback
-//                $routes->connect(
-//                    '/{path}',
-//                    ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'fallback'],
-//                    ['path' => '.*', 'pass' => ['path']]
-//                );
+            //                // catch-all fallback
+            //                $routes->connect(
+            //                    '/{path}',
+            //                    ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'fallback'],
+            //                    ['path' => '.*', 'pass' => ['path']]
+            //                );
 
                 //admin:index
                 $routes->connect(
@@ -204,7 +201,7 @@ class AdminPlugin extends BasePlugin implements
                 $routes->scope(
                     '/auth',
                     ['prefix' => 'Admin', 'plugin' => 'Admin', '_namePrefix' => 'auth:'],
-                    function (RouteBuilder $routes) {
+                    function (RouteBuilder $routes): void {
 
                         $routes->connect(
                             '/',
@@ -282,14 +279,14 @@ class AdminPlugin extends BasePlugin implements
         ]);
 
         $fields = [
-            IdentifierInterface::CREDENTIAL_USERNAME => 'username',
-            IdentifierInterface::CREDENTIAL_PASSWORD => 'password',
+            'username' => 'username',
+            'password' => 'password',
         ];
 
         // Load the authenticators, you want session first
         $service->loadAuthenticator('Authentication.Session', [
             'fields' => [
-                IdentifierInterface::CREDENTIAL_USERNAME => 'username',
+                'username' => 'username',
             ],
             'sessionKey' => 'Admin',
             'identify' => true,

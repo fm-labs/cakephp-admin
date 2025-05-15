@@ -5,5 +5,5 @@ namespace Admin\Ui\Layout;
 
 class Footer extends BaseLayoutElement
 {
-    protected $elementName = "Admin.layout/admin/footer";
+    protected ?string $elementName = 'Admin.layout/admin/footer';
 }

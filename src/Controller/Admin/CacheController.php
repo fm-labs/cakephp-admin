@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace Admin\Controller\Admin;
 
 use Cake\Cache\Cache;
+use Cake\Core\Plugin;
 use Cake\Http\Exception\BadRequestException;
+use DebugKit\Cache\Engine\DebugEngine;
 
 /**
  * Class CacheController
@@ -13,9 +15,7 @@ use Cake\Http\Exception\BadRequestException;
  */
 class CacheController extends AppController
 {
-    public $actions = []; //@TODO Disable ActionComponent
-
-    public $modelClass = false;
+    public array $actions = []; //@TODO Disable ActionComponent
 
     /**
      * List cache configs
@@ -28,9 +28,10 @@ class CacheController extends AppController
         foreach (Cache::configured() as $alias) {
             $cache = Cache::getConfig($alias);
             if (isset($cache['className']) && is_object($cache['className'])) {
-                if (\Cake\Core\Plugin::isLoaded('DebugKit')
-                    &&  $cache['className'] instanceof \DebugKit\Cache\Engine\DebugEngine)
-                {
+                if (
+                    Plugin::isLoaded('DebugKit')
+                    && $cache['className'] instanceof DebugEngine
+                ) {
                     if (!$cache['className']->engine()) {
                         $cache['className']->init();
                     }
@@ -57,7 +58,7 @@ class CacheController extends AppController
     /**
      * Clear cache by config name
      *
-     * @param null|string $config Cache config name.
+     * @param string|null $config Cache config name.
      * @return void
      */
     public function clear(?string $config = null): void

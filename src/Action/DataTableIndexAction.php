@@ -138,7 +138,7 @@ class DataTableIndexAction extends IndexAction
                     $_plugin = $_plugin ? Inflector::camelize(Inflector::pluralize($_plugin)) : $this->model()->getAlias();
                     $order[$_plugin . '.' . $_field] = $orderDir;
                 }
-                $query->order($order);
+                $query->orderBy($order);
             }
 
             try {
@@ -166,7 +166,7 @@ class DataTableIndexAction extends IndexAction
                 debug('AN ERROR OCCUREDED: ' . $ex->getMessage());
                 $controller->set('error', $ex->getMessage());
                 $controller->set('data', []);
-                $controller->set('_serialize', ['data', 'error']);
+                $controller->viewBuilder()->setOption('serialize', ['data', 'error']);
 
                 return $controller->render();
             }
@@ -175,7 +175,7 @@ class DataTableIndexAction extends IndexAction
 
             if ($this->model()->behaviors()->has('Tree')) {
                 $displayField = $this->model()->getDisplayField();
-                $treeList = $this->model()->find('treeList', ['spacer' => '_ '])->toArray();
+                $treeList = $this->model()->find('treeList', spacer: '_ ')->toArray();
                 for ($i = 0; $i < count($data); $i++) {
                     $data[$i][$displayField] = $treeList[$data[$i]['id']];
                 }
@@ -184,7 +184,7 @@ class DataTableIndexAction extends IndexAction
             $draw = $request['draw'] ?? -1;
 
             $controller->set(compact('request', 'draw', 'recordsTotal', 'recordsFiltered', 'data'));
-            $controller->set('_serialize', ['request', 'draw', 'recordsTotal', 'recordsFiltered', 'data']);
+            $controller->viewBuilder()->setOption('serialize', ['request', 'draw', 'recordsTotal', 'recordsFiltered', 'data']);
 
             return $controller->render();
         }
@@ -215,7 +215,7 @@ class DataTableIndexAction extends IndexAction
             'extra' => $dtjsOpts,
         ]);
         $controller->set('actions', $this->_config['actions']);
-        $controller->set('_serialize', ['result']);
+        $controller->viewBuilder()->setOption('serialize', ['result']);
 
         //$controller->render('Admin.data_table_index');
     }

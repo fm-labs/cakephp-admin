@@ -21,7 +21,7 @@ class EntityViewCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = ['modelClass', 'fields', 'helpers'];
+    protected array $_validCellOptions = ['modelClass', 'fields', 'helpers'];
 
     /**
      * @deprecated
@@ -32,7 +32,7 @@ class EntityViewCell extends Cell
 
     public $helpers = [];
 
-    public $defaultTable;
+    public ?string $defaultTable;
 
     /**
      * @inheritDoc

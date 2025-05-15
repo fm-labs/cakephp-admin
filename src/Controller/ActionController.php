@@ -7,6 +7,8 @@ use Admin\Action\Interfaces\ActionInterface;
 use Cake\Controller\Controller;
 use Cake\Controller\Exception\MissingActionException;
 use Cake\Event\EventInterface;
+use Cake\Http\Response;
+use Closure;
 use LogicException;
 
 class ActionController extends Controller
@@ -15,7 +17,7 @@ class ActionController extends Controller
 
     public $action;
 
-    public $autoRender = true;
+    public bool $autoRender = true;
 
     /**
      * @param \Cake\Controller\Controller $controller The parent controller instance
@@ -33,9 +35,9 @@ class ActionController extends Controller
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function invokeAction(\Closure $action, array $args): void
+    public function invokeAction(Closure $action, array $args): void
     {
         $request = $this->request;
         if (!isset($request)) {
@@ -43,7 +45,7 @@ class ActionController extends Controller
         }
         if (!$this->isAction($request->getParam('action'))) {
             throw new MissingActionException([
-                'controller' => $this->name . "Controller",
+                'controller' => $this->name . 'Controller',
                 'action' => $request->getParam('action'),
                 'prefix' => $request->getParam('prefix'),
                 'plugin' => $request->getParam('plugin'),
@@ -59,15 +61,15 @@ class ActionController extends Controller
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function __get($key)
+    public function __get($key): mixed
     {
         return $this->controller->{$key};
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __set($key, $val): void
     {
@@ -86,9 +88,9 @@ class ActionController extends Controller
     //}
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function render($view = null, $layout = null): \Cake\Http\Response
+    public function render($view = null, $layout = null): Response
     {
         $response = $this->controller->render($view, $layout);
         $this->setResponse($response);
@@ -97,7 +99,7 @@ class ActionController extends Controller
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function ddispatchEvent(string $name, ?array $data = null, ?object $subject = null): EventInterface
     {

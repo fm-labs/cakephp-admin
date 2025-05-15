@@ -13,28 +13,32 @@ use DebugKit\DebugPanel;
  */
 class AdminPanel extends DebugPanel
 {
-    public $plugin = 'Admin';
+    public string $plugin = 'Admin';
 
     /**
      * @return string
      */
-    public function title()
+    public function title(): string
     {
-        return "Admin";
+        return 'Admin';
     }
 
-    public function data()
+    /**
+     * @return array
+     */
+    public function data(): array
     {
         $config = Configure::read();
         $plugins = Admin::getPlugins();
         $locale = ['default' => I18n::getDefaultLocale(), 'current' => I18n::getLocale()];
+
         return compact('config', 'plugins', 'locale');
     }
 
     /**
      * @return string
      */
-    public function elementName()
+    public function elementName(): string
     {
         return $this->plugin . '.DebugKit/admin_panel';
     }

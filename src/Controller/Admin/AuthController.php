@@ -50,7 +50,7 @@ class AuthController extends AppController
     {
         $user = $this->getRequest()->getAttribute('adminIdentity');
         $this->set('user', $user);
-        $this->set('_serialize', ['user']);
+        $this->viewBuilder()->setOption('serialize', ['user']);
 
         //@todo Remove
         if (!$user) {
@@ -119,7 +119,7 @@ class AuthController extends AppController
             $data['id'] = $identity->getIdentifier();
         }
         $this->set('data', $data);
-        $this->set('_serialize', 'data');
+        $this->viewBuilder()->setOption('serialize', 'data');
     }
 
     /**

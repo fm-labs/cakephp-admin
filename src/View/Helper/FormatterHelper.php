@@ -4,17 +4,20 @@ declare(strict_types=1);
 namespace Admin\View\Helper;
 
 use Cake\Core\Configure;
+use Cake\Core\Plugin;
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\ResultSet;
 use Cake\Utility\Hash;
 use Cake\Utility\Text;
 use Cake\View\Helper;
+use DateTimeInterface;
+use Exception;
+use RuntimeException;
 
 /**
  * Class FormatHelper
  *
  * @package Admin\View\Helper
- *
  * @property \Cake\View\Helper\HtmlHelper $Html
  * @property \Cake\View\Helper\NumberHelper $Number
  * @property \Cake\View\Helper\TimeHelper $Time
@@ -25,14 +28,14 @@ class FormatterHelper extends Helper
     /**
      * @var array
      */
-    protected static $_formatters = [];
+    protected static array $_formatters = [];
 
     /**
      * @param string $formatterName Formatter alias
      * @param callable $formatter Formatter callback
      * @return void
      */
-    public static function register($formatterName, callable $formatter)
+    public static function register(string $formatterName, callable $formatter): void
     {
         self::$_formatters[$formatterName] = $formatter;
     }
@@ -40,10 +43,10 @@ class FormatterHelper extends Helper
     /**
      * @var array
      */
-    public $helpers = ['Html', 'Number', 'Time', 'Bootstrap.Ui'];
+    public array $helpers = ['Html', 'Number', 'Time', 'Bootstrap.Ui'];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function initialize(array $config): void
     {
@@ -54,11 +57,13 @@ class FormatterHelper extends Helper
 
         // boolean
         self::register('boolean', function ($val, $extra, $params) {
-            if (\Cake\Core\Plugin::isLoaded('Cupcake')) {
+            if (Plugin::isLoaded('Cupcake')) {
                 $StatusHelper = $this->_View->loadHelper('Cupcake.Status');
+
                 return $StatusHelper->boolean($val);
             }
-            return $val === true ? __d('admin', "Yes") : __d('admin', "No");
+
+            return $val === true ? __d('admin', 'Yes') : __d('admin', 'No');
         });
 
         // date
@@ -69,7 +74,7 @@ class FormatterHelper extends Helper
             if (isset($params['format'])) {
                 $format = $params['format'];
             }
-            if ($val instanceof \DateTimeInterface) {
+            if ($val instanceof DateTimeInterface) {
                 return $this->Time->format($val, $format);
             }
 
@@ -82,7 +87,7 @@ class FormatterHelper extends Helper
             if (isset($params['format'])) {
                 $format = $params['format'];
             }
-            if ($val instanceof \DateTimeInterface) {
+            if ($val instanceof DateTimeInterface) {
                 return $this->Time->format($val, $format);
             }
 
@@ -156,10 +161,10 @@ class FormatterHelper extends Helper
                     $val = json_decode($val, true);
 
                     if (json_last_error()) {
-                        throw new \RuntimeException(json_last_error_msg());
+                        throw new RuntimeException(json_last_error_msg());
                     }
-                } catch (\Exception $ex) {
-                    return "JSON ERROR: " . $ex->getMessage();
+                } catch (Exception $ex) {
+                    return 'JSON ERROR: ' . $ex->getMessage();
                 }
             }
 
@@ -220,19 +225,19 @@ class FormatterHelper extends Helper
     /**
      * @return array
      */
-    public function getFormatters()
+    public function getFormatters(): array
     {
         return array_keys(self::$_formatters);
     }
 
     /**
      * @param mixed $value Value to format
-     * @param null|string|callable $formatter Formatter to use
+     * @param callable|string|null $formatter Formatter to use
      * @param array $formatterArgs Formatter callback arguments
      * @param array $extra Extra data passed to the formatter callback
      * @return mixed
      */
-    public function format($value, $formatter = null, $formatterArgs = [], $extra = [])
+    public function format(mixed $value, string|callable|null $formatter = null, array $formatterArgs = [], array $extra = []): mixed
     {
         if ($formatter === false) {
             return $value;
@@ -250,26 +255,26 @@ class FormatterHelper extends Helper
             } elseif (count($formatter) === 2) {
                 [$formatter, $formatterArgs] = $formatter;
             } else {
-                debug("Unsupported formatter array format");
+                debug('Unsupported formatter array format');
                 $formatter = null;
             }
         }
 
         switch ($formatter) {
-            case "integer":
+            case 'integer':
                 $formatter = 'number';
                 $formatterArgs = ['precision' => 0];
                 break;
-            case "float":
-            case "double":
-            case "decimal":
+            case 'float':
+            case 'double':
+            case 'decimal':
                 $formatter = 'number';
                 $formatterArgs = ['precision' => 8];
                 break;
 
-            case "unknown type":
-            case "resource":
-                return "[" . h($formatter) . "]";
+            case 'unknown type':
+            case 'resource':
+                return '[' . h($formatter) . ']';
 
             /*
             //case "datetime":
@@ -299,7 +304,7 @@ class FormatterHelper extends Helper
         if (!is_callable($formatter)) {
             //@TODO remove debug code
             if ($formatter) {
-                debug("Uncallable formatter");
+                debug('Uncallable formatter');
                 var_dump($formatter);
             }
 
@@ -315,10 +320,10 @@ class FormatterHelper extends Helper
      * @param mixed $value The value to format
      * @return string Formatter alias
      */
-    protected function _detectFormatter($value)
+    protected function _detectFormatter(mixed $value): string
     {
         // detect date types
-        if (is_object($value) && $value instanceof \DateTimeInterface) {
+        if (is_object($value) && $value instanceof DateTimeInterface) {
             $formatter = 'datetime';
         } else {
             // Fallback to default formatter based on values datatype

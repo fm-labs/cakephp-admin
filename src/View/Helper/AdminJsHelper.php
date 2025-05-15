@@ -15,7 +15,7 @@ use Cake\View\Helper;
  */
 class AdminJsHelper extends Helper
 {
-    public $helpers = ['Html', 'Url'];
+    public array $helpers = ['Html', 'Url'];
 
     /**
      * @inheritDoc

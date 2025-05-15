@@ -10,7 +10,7 @@ use Cake\ORM\Query;
 
 class JsTreeBehavior extends Behavior
 {
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'fields' => [
             'id' => null,
             'title' => null,
@@ -23,7 +23,7 @@ class JsTreeBehavior extends Behavior
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function initialize(array $config): void
     {
@@ -40,7 +40,7 @@ class JsTreeBehavior extends Behavior
      * @param array $options Finder options
      * @return \Cake\ORM\Query
      */
-    public function findJsTree(Query $query, array $options = [])
+    public function findJsTree(Query $query, array $options = []): Query
     {
         return $this->formatJsTree($query, $options);
     }
@@ -52,10 +52,10 @@ class JsTreeBehavior extends Behavior
      * @param array $options Array of options as described above.
      * @return \Cake\ORM\Query Augmented query.
      */
-    public function formatJsTree(Query $query, array $options = [])
+    public function formatJsTree(Query $query, array $options = []): Query
     {
         $query->find('threaded');
-        $query->order(['lft' => 'ASC']);
+        $query->orderBy(['lft' => 'ASC']);
 
         return $query->formatResults(function ($results) use ($options) {
             $jstree = $this->_format($results);
@@ -68,7 +68,7 @@ class JsTreeBehavior extends Behavior
      * @param array $entities List of result entities
      * @return array
      */
-    protected function _format($entities)
+    protected function _format(array $entities): array
     {
         $this->_table->getDisplayField();
 
@@ -82,7 +82,7 @@ class JsTreeBehavior extends Behavior
 
         $entityFormatter = function (EntityInterface $entity) use ($fields, $dataFields) {
 
-            $class = "";
+            $class = '';
             //$publishedClass = ($entity->isPagePublished()) ? 'published' : 'unpublished';
             //$class = $entity->getPageType();
             //$class.= " " . $publishedClass;

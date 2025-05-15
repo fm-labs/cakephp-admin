@@ -95,6 +95,6 @@ class SimpleTreeController extends AppController
         //$this->response->body(json_encode($responseData));
 
         $this->set('result', $responseData);
-        $this->set('_serialize', 'result');
+        $this->viewBuilder()->setOption('serialize', 'result');
     }
 }

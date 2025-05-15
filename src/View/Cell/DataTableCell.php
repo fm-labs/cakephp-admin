@@ -17,7 +17,7 @@ class DataTableCell extends Cell
      * @param array $data Data
      * @return void
      */
-    public function display($params = [], $data = [])
+    public function display(array $params = [], array $data = []): void
     {
         $params = array_merge([
             'model' => null,

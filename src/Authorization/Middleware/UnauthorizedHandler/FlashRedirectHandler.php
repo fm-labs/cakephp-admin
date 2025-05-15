@@ -5,6 +5,7 @@ namespace Admin\Authorization\Middleware\UnauthorizedHandler;
 
 use Authorization\Exception\Exception;
 use Authorization\Middleware\UnauthorizedHandler\RedirectHandler;
+use Cake\Http\ServerRequest;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -32,11 +33,12 @@ class FlashRedirectHandler extends RedirectHandler
 
         $response = parent::handle($exception, $request, $options);
 
-        if ($request instanceof \Cake\Http\ServerRequest) {
+        if ($request instanceof ServerRequest) {
             $session = $request->getSession();
             $messages = $session->read('Flash.' . $flash['key']);
             $messages[] = [
-                'message' => __d('admin', 
+                'message' => __d(
+                    'admin',
                     'UNAUTHORIZED! You are not allowed to access the resource at {0}',
                     $request->getUri()->getPath()
                 ),

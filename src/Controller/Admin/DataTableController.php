@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
-use Cake\Core\Exception\Exception;
 use Cake\Http\Exception\BadRequestException;
 use Cake\Http\Exception\NotFoundException;
 use Cake\ORM\TableRegistry;
@@ -61,7 +60,7 @@ class DataTableController extends AppController
 
         $data = $model->find()
             ->where($queryArgs)
-            ->order(['pos' => 'ASC'])
+            ->orderBy(['pos' => 'ASC'])
             ->all();
 
         $this->set(compact('data', 'modelName'));
@@ -119,7 +118,7 @@ class DataTableController extends AppController
         //$this->response->body(json_encode($responseData));
 
         $this->set('result', $responseData);
-        $this->set('_serialize', 'result');
+        $this->viewBuilder()->setOption('serialize', 'result');
     }
 
     /**

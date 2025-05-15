@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 namespace Admin\Service;
 
+use Admin\AdminService;
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
 use Cake\Event\EventDispatcherTrait;
 use Cake\Event\EventManager;
+use RuntimeException;
 
 class ServiceRegistry extends ObjectRegistry
 {
@@ -31,7 +33,7 @@ class ServiceRegistry extends ObjectRegistry
      * @param string $class Partial class name to resolve.
      * @return string|false Either the correct class name or false.
      */
-    protected function _resolveClassName($class): ?string
+    protected function _resolveClassName(string $class): ?string
     {
         return App::className($class, 'Service', 'Service');
     }
@@ -48,7 +50,7 @@ class ServiceRegistry extends ObjectRegistry
      */
     protected function _throwMissingClassError(string $class, ?string $plugin): void
     {
-        throw new \RuntimeException("Unable to find '$class' service.");
+        throw new RuntimeException("Unable to find '$class' service.");
     }
 
     /**
@@ -61,7 +63,7 @@ class ServiceRegistry extends ObjectRegistry
      * @param array $config An array of config to use for the service.
      * @return \Admin\AdminService The constructed service class.
      */
-    protected function _create($class, $alias, $config)
+    protected function _create(string|object $class, string $alias, array $config): AdminService
     {
         $instance = new $class($this, $config);
         $this->getEventManager()->on($instance);

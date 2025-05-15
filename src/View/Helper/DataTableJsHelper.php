@@ -5,6 +5,7 @@ namespace Admin\View\Helper;
 
 /**
  * Class DataTablesJsHelper
+ *
  * @package Sugar\View\Helper
  * @property \Cake\View\Helper\HtmlHelper $Html
  */
@@ -49,7 +50,7 @@ class DataTableJsHelper extends DataTableHelper
     ];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function initialize(array $config): void
     {
@@ -73,7 +74,7 @@ class DataTableJsHelper extends DataTableHelper
      * @param array $options Javascript options
      * @return $this
      */
-    public function options($options = null)
+    public function options(?array $options = null)
     {
         if ($options === null) {
             return $this->_jsOptions;
@@ -85,9 +86,9 @@ class DataTableJsHelper extends DataTableHelper
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    protected function _initialize()
+    protected function _initialize(): void
     {
         $jsOpts = (array)$this->getParam('extra');
         //$jsOpts['lengthChange'] = false;
@@ -122,36 +123,36 @@ class DataTableJsHelper extends DataTableHelper
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    protected function _renderFilterRow()
+    protected function _renderFilterRow(): string
     {
         // Search is injected by DataTable JS
         return '';
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    protected function _renderPagination()
+    protected function _renderPagination(): string
     {
         // Pagination is injected by DataTable JS
         return '';
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    protected function _buildPaginationFieldLabel($fieldName, $field)
+    protected function _buildPaginationFieldLabel($fieldName, $field): string
     {
         // Pagination is injected by DataTable JS
         return h($field['label']);
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    protected function _renderScript($block = null)
+    protected function _renderScript($block = null): string
     {
         $jsTable = $this->_jsOptions;
         if (empty($jsTable['columns'])) {
@@ -213,7 +214,7 @@ SCRIPT;
     /**
      * @return array
      */
-    protected function _buildDataTableColumns()
+    protected function _buildDataTableColumns(): array
     {
         $columns = [];
         foreach ($this->_fields as $fieldName => $field) {
@@ -242,7 +243,7 @@ SCRIPT;
      * @param array $columns Columns list
      * @return array
      */
-    protected function _buildDataTableOrder(&$order, &$columns)
+    protected function _buildDataTableOrder(array &$order, array &$columns): array
     {
         $_order = [];
         foreach ($order as $col => $dir) {

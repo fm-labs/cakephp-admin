@@ -86,7 +86,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
         $controller->set('tabs', $this->_config['tabs']);
 
         $controller->set('title', $entity->get($this->model()->getDisplayField()));
-        $controller->set('_serialize', ['entity']);
+        $controller->viewBuilder()->setOption('serialize', ['entity']);
     }
 
     public function beforeRender(Event $event)

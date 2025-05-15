@@ -8,12 +8,12 @@ use Cake\Event\Event;
 class TreeService extends AdminService
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function implementedEvents(): array
     {
         return [
-            'Admin.Controller.setupActions' => ['callable' => function (Event $event) {
+            'Admin.Controller.setupActions' => ['callable' => function (Event $event): void {
 
                 $modelClass = $event->getSubject()->modelClass;
                 if ($modelClass) {

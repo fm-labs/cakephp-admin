@@ -9,12 +9,12 @@ use Cake\Event\Event;
 class PublishService extends AdminService
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function implementedEvents(): array
     {
         return [
-            'Admin.Controller.setupActions' => ['callable' => function (Event $event) {
+            'Admin.Controller.setupActions' => ['callable' => function (Event $event): void {
                 $modelClass = $event->getSubject()->modelClass;
                 if ($modelClass) {
                     $Model = $event->getSubject()->loadModel($modelClass);
@@ -25,7 +25,7 @@ class PublishService extends AdminService
                 }
             }],
 
-            'Admin.beforeAction' => ['callable' => function (Event $event) {
+            'Admin.beforeAction' => ['callable' => function (Event $event): void {
 
                 if ($event->getData('action') instanceof EditAction) {
                     $elements = $event->getSubject()->viewVars['form_elements'] ?? [];

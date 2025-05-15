@@ -54,7 +54,7 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
 
         $controller->set('tabs', $this->_config['tabs']);
         $controller->set('entity', $entity);
-        $controller->set('_serialize', ['entity']);
+        $controller->viewBuilder()->setOption('serialize', ['entity']);
     }
 
     public function beforeRender(Event $event)

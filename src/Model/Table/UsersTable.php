@@ -27,7 +27,7 @@ class UsersTable extends BaseUsersTable
      * @param array $options Finder options
      * @return \Cake\ORM\Query
      */
-    public function findAuthUser(Query $query, array $options)
+    public function findAuthUser(Query $query, array $options): Query
     {
         $query
             ->where([

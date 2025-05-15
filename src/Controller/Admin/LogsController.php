@@ -3,9 +3,6 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
-use Cake\Filesystem\File;
-use Cake\Filesystem\Folder;
-
 /**
  * Class LogsController
  *

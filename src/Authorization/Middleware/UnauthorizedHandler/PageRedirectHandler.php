@@ -78,7 +78,8 @@ HTML;
         $replace = [
             '/\{\{TIMEOUT\}\}/' => 2000,
             '/\{\{TITLE\}\}/' => __d('admin', 'UNAUTHORIZED'),
-            '/\{\{MESSAGE\}\}/' => __d('admin', 
+            '/\{\{MESSAGE\}\}/' => __d(
+                'admin',
                 'You are not allowed to access the resource at {0}',
                 $request->getUri()->getPath()
             ),

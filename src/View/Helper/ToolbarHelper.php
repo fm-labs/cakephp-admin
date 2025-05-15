@@ -5,7 +5,7 @@ namespace Admin\View\Helper;
 
 use Cake\Event\Event;
 use Cake\View\Helper;
-use Cake\View\View;
+use RuntimeException;
 
 /**
  * Class ToolbarHelper
@@ -17,9 +17,9 @@ use Cake\View\View;
  */
 class ToolbarHelper extends Helper
 {
-    public $helpers = ['Html', 'Bootstrap.Ui', 'Bootstrap.Button'];
+    public array $helpers = ['Html', 'Bootstrap.Ui', 'Bootstrap.Button'];
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'element' => 'Admin.layout/admin/toolbar',
         'block' => 'toolbar',
         'options' => ['class' => ''],
@@ -28,20 +28,21 @@ class ToolbarHelper extends Helper
     /**
      * @var array List of toolbar menu items
      */
-    protected $_items = [];
+    protected array $_items = [];
 
     /**
      * @var bool Render flag. True, if render method has been called
      */
-    protected $_rendered = false;
+    protected bool $_rendered = false;
 
     /**
      * @var bool Grouping flag. True, if grouping is active (experimental)
      */
-    protected $_grouping = false;
+    protected bool $_grouping = false;
 
     /**
      * Reset to default config settings and clear items
+     *
      * @return $this
      */
     public function reset()
@@ -68,7 +69,7 @@ class ToolbarHelper extends Helper
      * @param array $config Toolbar config
      * @return $this
      */
-    public function create($config = [])
+    public function create(array $config = [])
     {
         $this->_items = [];
         $this->_rendered = false;
@@ -78,11 +79,11 @@ class ToolbarHelper extends Helper
         // parse toolbar actions defined in 'toolbar.actions' view-var
         $toolbarActions = $this->_View->get('toolbar.actions');
         if ($toolbarActions) {
-            array_walk($toolbarActions, function ($action) {
+            array_walk($toolbarActions, function ($action): void {
                 $title = $url = null;
                 $attr = [];
                 if (!is_array($action)) {
-                    throw new \RuntimeException('Invalid toolbar action item');
+                    throw new RuntimeException('Invalid toolbar action item');
                 }
                 if (count($action) == 2) {
                     [$title, $url] = $action;
@@ -106,7 +107,7 @@ class ToolbarHelper extends Helper
      * @param array $options Link options
      * @return $this
      */
-    public function add($title, $options = [])
+    public function add(string $title, array $options = [])
     {
         $options = array_merge([
             'type' => null,
@@ -116,11 +117,11 @@ class ToolbarHelper extends Helper
         ], $options);
 
         switch ($options['type']) {
-            case "postLink":
-            case "post":
+            case 'postLink':
+            case 'post':
                 $this->addPostLink($options);
                 break;
-            case "link":
+            case 'link':
             default:
                 $this->addLink($options);
         }
@@ -131,12 +132,12 @@ class ToolbarHelper extends Helper
     /**
      * Add a new toolbar link item.
      *
-     * @param string|array $title Link title
-     * @param null|string $url Link Url
+     * @param array|string $title Link title
+     * @param string|null $url Link Url
      * @param array $attr Link attributes
      * @return $this
      */
-    public function addLink($title, $url = null, $attr = [])
+    public function addLink(string|array $title, ?string $url = null, array $attr = [])
     {
         if ($this->_grouping === true) {
             return $this;
@@ -159,13 +160,13 @@ class ToolbarHelper extends Helper
     /**
      * Add a new toolbar item (post-link).
      *
-     * @param string|array $title Link title
-     * @param null|string $url Link Url
+     * @param array|string $title Link title
+     * @param string|null $url Link Url
      * @param array $attr Link attributes
      * @param array $data Post data
      * @return $this
      */
-    public function addPostLink($title, $url = null, $attr = [], $data = [])
+    public function addPostLink(string|array $title, ?string $url = null, array $attr = [], array $data = [])
     {
         //@TODO Implement ToolbarHelper::addPostLink()
         $this->addLink($title, $url, $attr);
@@ -180,7 +181,7 @@ class ToolbarHelper extends Helper
      * @param array $options Group options
      * @return $this
      */
-    public function startGroup($title, $options = [])
+    public function startGroup(string $title, array $options = [])
     {
         //@TODO Implement ToolbarHelper::startGroup()
         $this->_grouping = true;
@@ -206,7 +207,7 @@ class ToolbarHelper extends Helper
      *
      * @return array
      */
-    public function getMenuItems()
+    public function getMenuItems(): array
     {
         return $this->_items;
     }
@@ -217,33 +218,35 @@ class ToolbarHelper extends Helper
      * @param array $options Render options
      * @return string Rendered HTML string
      */
-    public function render($options = [], $childMenuOptions = [], $itemOptions = [])
+    public function render(array $options = [], $childMenuOptions = [], $itemOptions = []): string
     {
         //$options = array_merge($this->getConfig('options'), $options);
         //$html = $this->Ui->menu($this->getMenuItems(), $options, $childMenuOptions, $itemOptions);
-        $html = "";
+        $html = '';
         foreach ($this->getMenuItems() as $item) {
             $html .= $this->_renderMenuItem($item);
         }
         $this->_rendered = true;
+
         return $html;
     }
 
     protected function _renderMenuItem(array $item)
     {
         $item += ['size' => 'sm'];
+
         return $this->Button->create($item['title'], $item);
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function beforeRender(Event $event)
     {
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function beforeLayout(Event $event)
     {
@@ -260,7 +263,7 @@ class ToolbarHelper extends Helper
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function implementedEvents(): array
     {

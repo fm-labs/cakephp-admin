@@ -5,10 +5,11 @@ namespace Admin\Ui\Layout;
 
 class Header extends BaseLayoutElement
 {
-    protected $elementName = "Admin.layout/admin/header";
+    protected ?string $elementName = 'Admin.layout/admin/header';
 
     /**
      * {@inheritDoc}
+     *
      * @throws \Exception
      */
     public function initialize(): void

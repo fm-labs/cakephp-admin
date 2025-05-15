@@ -11,9 +11,8 @@ namespace Admin\Controller;
  *
  * @package Admin\Controller\Base
  * @property \Admin\Controller\Component\ActionComponent $Action
- * @property \User\Controller\Component\AuthComponent $Auth
  * @property \Admin\Controller\Component\FlashComponent $Flash
- * @property \Cake\Controller\Component\PaginatorComponent $Paginator
+ * @property \User\Controller\Component\AuthComponent $Auth
  */
 class Controller extends \Cake\Controller\Controller
 {

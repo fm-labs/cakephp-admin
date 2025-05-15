@@ -60,7 +60,7 @@ class FooTableIndexAction extends IndexAction
             $result = $this->_fetchResult();
 
             $controller->set('data', $result);
-            $controller->set('_serialize', 'data');
+            $controller->viewBuilder()->setOption('serialize', 'data');
 
             return;
         }
@@ -96,7 +96,7 @@ class FooTableIndexAction extends IndexAction
         $controller->set('actions', $this->_config['actions']);
         $controller->set('rowsUrl', $dataUrl);
 
-        $controller->set('_serialize', ['result']);
+        $controller->viewBuilder()->setOption('serialize', ['result']);
         //$controller->render('Admin.foo_table_index');
     }
 

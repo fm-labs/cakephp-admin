@@ -22,7 +22,7 @@ class ServiceManager
      *
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'services' => [
             //'Admin.Crud' => true,
             //'Admin.Publish' => false,
@@ -33,14 +33,14 @@ class ServiceManager
     /**
      * @var array Object storage
      */
-    protected static $_objects = [];
+    protected static array $_objects = [];
 
     /**
      * The service services.
      *
      * @var \Admin\Service\ServiceRegistry
      */
-    protected $services;
+    protected ServiceRegistry $services;
 
     /**
      * Constructor
@@ -66,7 +66,7 @@ class ServiceManager
      * @param string $name Service name
      * @return mixed|null
      */
-    public function get(string $name)
+    public function get(string $name): mixed
     {
         if (isset(static::$_objects[$name])) {
             return static::$_objects[$name];
@@ -90,7 +90,7 @@ class ServiceManager
      *
      * @return \Admin\Service\ServiceRegistry
      */
-    public function services()
+    public function services(): ServiceRegistry
     {
         return $this->services;
     }

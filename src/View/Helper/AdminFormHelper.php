@@ -11,7 +11,7 @@ class AdminFormHelper extends BootstrapFormHelper
     private $_fieldsetOptions = [];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct(View $View, array $config = [])
     {
@@ -50,7 +50,7 @@ class AdminFormHelper extends BootstrapFormHelper
      * @param array $options Fieldset options
      * @return void
      */
-    public function fieldsetStart($legend = null, $options = [])
+    public function fieldsetStart(?string $legend = null, array $options = []): void
     {
         if (is_array($legend)) {
             $options = $legend;
@@ -73,7 +73,7 @@ class AdminFormHelper extends BootstrapFormHelper
      *
      * @return string
      */
-    public function fieldsetEnd()
+    public function fieldsetEnd(): string
     {
         $this->_View->end();
 
@@ -98,9 +98,9 @@ class AdminFormHelper extends BootstrapFormHelper
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    protected function _getInput($fieldName, $options)
+    protected function _getInput(string $fieldName, array $options): array|string
     {
         //@TODO Dispatch Form.getInput event
         //debug("get input for $fieldName");
@@ -133,7 +133,7 @@ class AdminFormHelper extends BootstrapFormHelper
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function _parseOptions($fieldName, $options): array
     {
@@ -144,7 +144,7 @@ class AdminFormHelper extends BootstrapFormHelper
             return parent::_parseOptions($fieldName, $options);
         }
 
-        if ($fieldName == "created" || $fieldName == "modified" || $fieldName == "updated") {
+        if ($fieldName == 'created' || $fieldName == 'modified' || $fieldName == 'updated') {
             $options['type'] = 'hidden';
             $options['disabled'] = true;
         }

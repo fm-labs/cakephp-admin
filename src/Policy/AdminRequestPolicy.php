@@ -5,6 +5,7 @@ namespace Admin\Policy;
 
 use Authorization\IdentityInterface;
 use Authorization\Policy\RequestPolicyInterface;
+use Authorization\Policy\ResultInterface;
 use Cake\Http\ServerRequest;
 
 class AdminRequestPolicy implements RequestPolicyInterface
@@ -14,13 +15,13 @@ class AdminRequestPolicy implements RequestPolicyInterface
      *
      * @param \Authorization\IdentityInterface|null $identity Identity
      * @param \Cake\Http\ServerRequest $request Server Request
-     * @return bool|\Authorization\Policy\ResultInterface
+     * @return \Authorization\Policy\ResultInterface|bool
      */
-    public function canAccess(?IdentityInterface $identity, ServerRequest $request)
+    public function canAccess(?IdentityInterface $identity, ServerRequest $request): bool|ResultInterface
     {
         // always allow access to the auth controller
         if (
-            $request->getParam('prefix') === "Admin"
+            $request->getParam('prefix') === 'Admin'
             && $request->getParam('plugin') == 'Admin'
             && $request->getParam('controller') == 'Auth'
         ) {
@@ -31,7 +32,7 @@ class AdminRequestPolicy implements RequestPolicyInterface
             return false;
         }
 
-        if ($identity->id === 1 || $identity->username === "root" || $identity->superuser === true) {
+        if ($identity->id === 1 || $identity->username === 'root' || $identity->superuser === true) {
             return true;
         }
 

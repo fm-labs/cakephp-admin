@@ -7,7 +7,7 @@ use Cake\Form\Form;
 
 class DesignController extends AppController
 {
-    public $sections = [
+    public array $sections = [
         'form',
         'table',
         'box',
@@ -15,9 +15,8 @@ class DesignController extends AppController
         'tabs',
     ];
 
-    public $modelClass = false;
 
-    public $actions = [];
+    public array $actions = [];
 
     /**
      * @return void
@@ -47,13 +46,12 @@ class DesignController extends AppController
     public function form(): void
     {
         $form = new Form();
-        $form->schema()
+        $form->getSchema()
             ->addField('h_text', ['type' => 'string'])
             ->addField('h_text_error', ['type' => 'string'])
             ->addField('h_checkbox', ['type' => 'tinyint'])
             ->addField('text_error', ['type' => 'string'])
-            ->addField('checkbox', ['type' => 'tinyint'])
-        ;
+            ->addField('checkbox', ['type' => 'tinyint']);
 
         $form->getValidator()
             ->requirePresence('h_text_error', true)
@@ -63,8 +61,7 @@ class DesignController extends AppController
             ->notEmptyString('text_error')
 
             ->requirePresence('checkbox', true)
-            ->equals('checkbox', 1)
-        ;
+            ->equals('checkbox', 1);
 
         if ($this->request->is(['post'])) {
             $form->execute($this->request->getData());
@@ -81,11 +78,11 @@ class DesignController extends AppController
         $this->set(compact('form', 'selectOptions'));
     }
 
-    public function daterange()
-    {
-    }
-
-    public function ajaxTest()
-    {
-    }
+    //    public function daterange()
+    //    {
+    //    }
+    //
+    //    public function ajaxTest()
+    //    {
+    //    }
 }

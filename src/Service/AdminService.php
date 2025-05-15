@@ -8,7 +8,7 @@ use Cake\Event\EventListenerInterface;
 abstract class AdminService implements EventListenerInterface
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function implementedEvents(): array
     {

@@ -17,7 +17,7 @@ class TreeIndexAction extends IndexAction
         $displayField = $this->model()->getDisplayField();
 
         // @todo Ensure model has TreeBehavior loaded
-        $treeList = $this->model()->find('treeList', ['spacer' => '_ '])->toArray();
+        $treeList = $this->model()->find('treeList', spacer: '_ ')->toArray();
 
         if (!isset($this->_config['fields'][$displayField])) {
             $this->_config['fields'][$displayField] = [];

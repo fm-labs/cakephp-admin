@@ -64,7 +64,7 @@ class TreeController extends AppController
         }
 
         $this->set('tree', $tree);
-        $this->set('_serialize', 'tree');
+        $this->viewBuilder()->setOption('serialize', 'tree');
     }
 
     /**
@@ -102,6 +102,6 @@ class TreeController extends AppController
         $this->set('request', $request);
         $this->set('node', $node);
         $this->set('result', $result);
-        $this->set('_serialize', ['request', 'result', 'node']);
+        $this->viewBuilder()->setOption('serialize', ['request', 'result', 'node']);
     }
 }

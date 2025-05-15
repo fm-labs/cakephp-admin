@@ -1,27 +1,38 @@
 <?php
+declare(strict_types=1);
 
 namespace Admin\Ui\Layout\Sidebar;
 
+use Admin\Admin;
 use Admin\Ui\Layout\BaseLayoutElement;
-use Cake\Core\Configure;
 
 class SidebarMenu extends BaseLayoutElement
 {
+    /**
+     * @inheritDoc
+     */
     //protected $elementName = "Admin.layout/admin/sidebar/sidebar_collapsible_menu";
-    protected $elementName = "Admin.layout/admin/sidebar/sidebar_menu";
+    protected ?string $elementName = 'Admin.layout/admin/sidebar/sidebar_menu';
 
+    /**
+     * @inheritDoc
+     */
     public function initialize(): void
     {
         $this->_View->loadHelper('Bootstrap.Menu');
     }
 
+    /**
+     * @inheritDoc
+     */
     public function data(): array
     {
-        $primary = \Admin\Admin::getMenu('admin_primary')->toArray();
-        $secondary = \Admin\Admin::getMenu('admin_secondary')->toArray();
-        $system = \Admin\Admin::getMenu('admin_system')->toArray();
-        $developer = \Admin\Admin::getMenu('admin_developer')->toArray();
-        $user = \Admin\Admin::getMenu('admin_user')->toArray();
+        $primary = Admin::getMenu('admin_primary')->toArray();
+        $secondary = Admin::getMenu('admin_secondary')->toArray();
+        $system = Admin::getMenu('admin_system')->toArray();
+        $developer = Admin::getMenu('admin_developer')->toArray();
+        $user = Admin::getMenu('admin_user')->toArray();
+
         return compact('primary', 'secondary', 'system', 'developer', 'user');
     }
 

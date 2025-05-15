@@ -8,12 +8,12 @@ use Cake\Event\Event;
 class CrudService extends AdminService
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function implementedEvents(): array
     {
         return [
-            'Admin.Controller.setupActions' => ['callable' => function (Event $event) {
+            'Admin.Controller.setupActions' => ['callable' => function (Event $event): void {
 
                 if (isset($event->getSubject()->scaffold)) {
                     if (!isset($event->getData('actions')['index'])) {

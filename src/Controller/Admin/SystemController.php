@@ -62,6 +62,6 @@ class SystemController extends AppController
         $this->set(compact('date'));
 
 
-        $this->set('_serialize', ['plugins', 'routes']);
+        $this->viewBuilder()->setOption('serialize', ['plugins', 'routes']);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Controller;
 
 use Cake\Datasource\Exception\MissingModelException;
+use Cake\ORM\Table;
 
 /**
  * Class JsTreeAwareTrait
@@ -29,11 +30,11 @@ trait JsTreeAwareTrait
      *  li_attr     : {}  // attributes for the generated LI node
      *  a_attr      : {}  // attributes for the generated A node
      * }
-     * @link https://jstree.com
      *
+     * @link https://jstree.com
      * @param \Cake\ORM\Table $Model
      */
-    public function treeData($Model = null)
+    public function treeData(?Table $Model = null)
     {
         $this->autoRender = false;
         $this->viewBuilder()->setClassName('Json');
@@ -45,14 +46,14 @@ trait JsTreeAwareTrait
             [, $alias] = pluginSplit($this->modelClass, true);
 
             if (!isset($this->{$alias})) {
-                throw new MissingModelException("Primary model not loaded");
+                throw new MissingModelException('Primary model not loaded');
             }
 
             $Model = $this->{$alias};
         }
 
         if ($Model === null) {
-            throw new MissingModelException("No primary model found");
+            throw new MissingModelException('No primary model found');
         }
 
         if (!$Model->behaviors()->has('JsTree')) {
@@ -62,7 +63,7 @@ trait JsTreeAwareTrait
         $jsTree = $Model->getJsTree();
 
         $this->set('jsTree', $jsTree);
-        $this->set('_serialize', 'jsTree');
+        $this->viewBuilder()->setOption('serialize', 'jsTree');
         $this->render();
     }
 

@@ -7,6 +7,7 @@ use Cake\Command\Command;
 use Cake\Console\Arguments;
 use Cake\Console\ConsoleIo;
 use Cake\Console\ConsoleOptionParser;
+use Cake\ORM\Table;
 
 /**
  * RootUser command.
@@ -16,7 +17,8 @@ class RootUserCommand extends Command
     /**
      * @var \Cake\ORM\Table|null
      */
-    protected ?\Cake\ORM\Table $Users;
+    protected ?Table $Users;
+
     /**
      * @return string
      */
@@ -55,11 +57,11 @@ class RootUserCommand extends Command
      *
      * @param \Cake\Console\Arguments $args The command arguments.
      * @param \Cake\Console\ConsoleIo $io The console io
-     * @return null|void|int The exit code or null for success
+     * @return int|null|void The exit code or null for success
      */
-    public function execute(Arguments $args, ConsoleIo $io)
+    public function execute(Arguments $args, ConsoleIo $io): ?int
     {
-        $io->out("-- Setup root user --");
+        $io->out('-- Setup root user --');
         foreach ($args as $key => $val) {
             $io->out("Arg: $key - $val");
         }
@@ -71,30 +73,30 @@ class RootUserCommand extends Command
         }
 
         do {
-            $email = trim($io->ask("Enter root email address: "));
+            $email = trim($io->ask('Enter root email address: '));
             $strlen = strlen($email);
         } while ($strlen < 1);
 
         do {
-            $pass1 = trim($io->ask("Choose root password: "));
+            $pass1 = trim($io->ask('Choose root password: '));
             if (strlen($pass1) < 1) {
-                $io->out("Please enter a password");
+                $io->out('Please enter a password');
                 continue;
             }
 
-            $pass2 = trim($io->ask("Repeat password: "));
+            $pass2 = trim($io->ask('Repeat password: '));
 
             $match = ($pass1 === $pass2);
             if (!$match) {
-                $io->out("Passwords do not match. Please try again.");
+                $io->out('Passwords do not match. Please try again.');
             }
         } while (!$match);
 
         $root = $this->Users->createRootUser($email, $pass1);
         if ($root === false) {
-            $io->abort("Failed to create root user");
+            $io->abort('Failed to create root user');
         }
 
-        $io->success("Root user successfully created!");
+        $io->success('Root user successfully created!');
     }
 }

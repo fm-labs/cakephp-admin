@@ -17,7 +17,7 @@ use Cake\View\Helper;
  */
 class AdminThemeHelper extends Helper
 {
-    public $helpers = ['Html', 'Url'];
+    public array $helpers = ['Html', 'Url'];
 
     protected $_themeConfig = ['name' => null, 'skin' => null, 'bodyClass' => null, 'darkmode' => null];
 

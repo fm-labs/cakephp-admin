@@ -13,9 +13,9 @@ use Cake\View\Helper;
  */
 class BreadcrumbHelper extends Helper
 {
-    public $helpers = ['Breadcrumbs'];
+    public array $helpers = ['Breadcrumbs'];
 
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'class' => 'breadcrumb',
     ];
 
@@ -30,7 +30,7 @@ class BreadcrumbHelper extends Helper
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function implementedEvents(): array
     {
@@ -43,7 +43,7 @@ class BreadcrumbHelper extends Helper
      * @param \Cake\Event\Event $event The event object
      * @return void
      */
-    public function beforeLayout(Event $event)
+    public function beforeLayout(Event $event): void
     {
         $request = $this->getView()->getRequest();
         //@TODO _no_breadcrumbs and layout_no_breadcrumbs are deprecated. Set `breadcrumbs` to FALSE instead
@@ -102,6 +102,7 @@ class BreadcrumbHelper extends Helper
         $crumbs = $this->Breadcrumbs->getCrumbs();
         $crumbs = collection($crumbs)->map(function ($crumb) {
             $crumb['options']['class'] = 'breadcrumb-item';
+
             return $crumb;
         })->toArray();
         $this->Breadcrumbs->reset()->add($crumbs);

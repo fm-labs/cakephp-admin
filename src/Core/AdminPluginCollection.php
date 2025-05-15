@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Admin\Core;
 
-class AdminPluginCollection implements \Iterator
+use Iterator;
+
+class AdminPluginCollection implements Iterator
 {
     /**
      * @var array

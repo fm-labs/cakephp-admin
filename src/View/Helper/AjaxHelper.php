@@ -7,19 +7,19 @@ use Cake\View\Helper;
 
 /**
  * Class AjaxHelper
- * @package Admin\View\Helper
  *
+ * @package Admin\View\Helper
  * @property \Cake\View\Helper\HtmlHelper $Html
  */
 class AjaxHelper extends Helper
 {
-    public $helpers = ['Html'];
+    public array $helpers = ['Html'];
 
     /**
      * @param array|string $url URL for ajax content
      * @return string
      */
-    public function content($url)
+    public function content(array|string $url): string
     {
         return $this->Html->div('ajax-content', 'Loading ...', [
             'id' => uniqid('ajaxcont'),

@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Admin\Controller\Admin;
 
 use Cake\Collection\Collection;
-use Cake\Core\Configure;
 use Cake\Core\Plugin;
+use Cake\Http\Response;
 use Cupcake\PluginManager;
 
 /**
@@ -16,8 +16,6 @@ use Cupcake\PluginManager;
 class PluginsController extends AppController
 {
     public array $actions = []; //@TODO Disable ActionComponent
-
-    public $modelClass = false;
 
     /**
      * Displays information about loaded Cake plugins
@@ -36,6 +34,7 @@ class PluginsController extends AppController
                 if (!isset($plugins[$plugin['name']])) {
                     $plugins[$plugin['name']] = $plugin;
                 }
+
                 return $plugins;
             }, []);
         ksort($plugins);
@@ -49,18 +48,17 @@ class PluginsController extends AppController
                 return array_merge($plugin, $pluginInfo);
             })
             ->sortBy('name')
-            ->sortBy('loaded')
-        ;
+            ->sortBy('loaded');
 
         $this->set('plugins', $plugins->toArray());
         $this->set('loaded', Plugin::loaded());
-        $this->set('_serialize', ['plugins']);
+        $this->viewBuilder()->setOption('serialize', ['plugins']);
     }
 
     /**
      * @param string $pluginName Plugin name
      * @param bool|null $newState Plugin enabled state
-     * @return false|int
+     * @return int|false
      */
     protected function _setPluginState(string $pluginName, ?bool $newState)
     {
@@ -108,7 +106,7 @@ class PluginsController extends AppController
      * @param string|null $pluginName Plugin name
      * @return \Cake\Http\Response|null
      */
-    public function enable(?string $pluginName = null): ?\Cake\Http\Response
+    public function enable(?string $pluginName = null): ?Response
     {
         if ($this->_setPluginState($pluginName, true)) {
             $this->Flash->success(__d('admin', 'Plugin {0} enabled', $pluginName));
@@ -121,7 +119,7 @@ class PluginsController extends AppController
      * @param string|null $pluginName Plugin name
      * @return \Cake\Http\Response|null
      */
-    public function disable(?string $pluginName = null): ?\Cake\Http\Response
+    public function disable(?string $pluginName = null): ?Response
     {
         if ($this->_setPluginState($pluginName, false)) {
             $this->Flash->success(__d('admin', 'Plugin {0} disabled', $pluginName));
@@ -134,7 +132,7 @@ class PluginsController extends AppController
      * @param string|null $pluginName Plugin name
      * @return \Cake\Http\Response|null
      */
-    public function uninstall(?string $pluginName = null): ?\Cake\Http\Response
+    public function uninstall(?string $pluginName = null): ?Response
     {
         if ($this->_setPluginState($pluginName, false)) {
             $this->Flash->success(__d('admin', 'Plugin {0} uninstalled', $pluginName));

@@ -171,7 +171,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
                     if (!isset($this->_config[$var])) {
                         $list = $assoc->getTarget()
                             ->find('list')
-                            ->order([$assoc->getTarget()->getDisplayField() => 'ASC'])
+                            ->orderBy([$assoc->getTarget()->getDisplayField() => 'ASC'])
                             ->toArray();
                         $controller->set($var, $list);
                     }

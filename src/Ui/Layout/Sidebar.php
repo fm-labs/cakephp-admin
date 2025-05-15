@@ -7,14 +7,14 @@ use Admin\Ui\Layout\Sidebar\SidebarMenu;
 
 class Sidebar extends BaseLayoutElement
 {
-    protected $elementName = "Admin.layout/admin/sidebar_sticky";
+    protected ?string $elementName = 'Admin.layout/admin/sidebar_sticky';
     //protected $elementName = "Admin.layout/admin/sidebar_collapsible";
 
     /**
-     * {@inheritDoc}}
-     * @throws \Exception
+     * @inheritDoc
      */
-    public function initialize(): void {
+    public function initialize(): void
+    {
         $bodyClass = $this->_View->get('body_class', '');
         $bodyClass = $bodyClass ? $bodyClass . ' sidebar-enabled' : 'sidebar-enabled';
 

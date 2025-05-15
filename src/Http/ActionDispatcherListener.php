@@ -7,6 +7,8 @@ use Admin\Controller\ActionController;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Http\ControllerFactory;
+use Cake\Http\Response;
+use ReflectionObject;
 
 /**
  * @internal Experimental Action-aware dispatcher
@@ -25,9 +27,9 @@ class ActionDispatcherListener implements EventListenerInterface
 
     /**
      * @param \Cake\Event\Event $event The event object
-     * @return void|\Cake\Http\Response
+     * @return \Cake\Http\Response|void
      */
-    public function beforeDispatch(Event $event)
+    public function beforeDispatch(Event $event): ?Response
     {
         /** @var \Cake\Http\ServerRequest $request */
         $request = $event->getData('request');
@@ -48,7 +50,7 @@ class ActionDispatcherListener implements EventListenerInterface
             //debug($actionList);
             if (in_array($action, $actionList)) {
                 // check if method is defined in controller
-                $reflection = new \ReflectionObject($controller);
+                $reflection = new ReflectionObject($controller);
                 if (!$reflection->hasMethod($action)) {
                     $actionObj = $controller->Action->getAction($action);
                     $controller = new ActionController($controller, $actionObj);

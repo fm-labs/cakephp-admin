@@ -15,7 +15,7 @@ trait EntityInfoActionTrait
     public function info($entityId = null)
     {
         if (!$this->modelClass) {
-            throw new Exception("Can not load entity of unknown model");
+            throw new Exception('Can not load entity of unknown model');
         }
 
         $modelClass = $this->modelClass;

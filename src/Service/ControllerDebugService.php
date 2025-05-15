@@ -19,34 +19,39 @@ class ControllerDebugService
         ];
     }
 
-    public function beforeFilter(Event $event)
+    public function beforeFilter(Event $event): void
     {
         $this->_logEvent(__FUNCTION__, $event);
     }
 
-    public function startup(Event $event)
+    public function startup(Event $event): void
     {
         $this->_logEvent(__FUNCTION__, $event);
     }
 
-    public function beforeRender(Event $event)
+    public function beforeRender(Event $event): void
     {
         $this->_logEvent(__FUNCTION__, $event);
     }
 
-    public function beforeRedirect(Event $event)
+    public function beforeRedirect(Event $event): void
     {
         $this->_logEvent(__FUNCTION__, $event);
     }
 
-    public function shutdown(Event $event)
+    public function shutdown(Event $event): void
     {
         $this->_logEvent(__FUNCTION__, $event);
     }
 
-    protected function _logEvent($eventName, Event $event)
+    protected function _logEvent($eventName, Event $event): void
     {
-        Log::debug(sprintf('ControllerDebug [%s:%s] %s %s',
-            static::class, $eventName, $event->getName(), get_class($event->getSubject())));
+        Log::debug(sprintf(
+            'ControllerDebug [%s:%s] %s %s',
+            static::class,
+            $eventName,
+            $event->getName(),
+            get_class($event->getSubject())
+        ));
     }
 }

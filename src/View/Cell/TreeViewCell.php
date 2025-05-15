@@ -13,7 +13,7 @@ use Cake\View\Cell;
  */
 class TreeViewCell extends Cell
 {
-    public $modelClass = "Shop.ShopCategories";
+    public $modelClass = 'Shop.ShopCategories';
 
     /**
      * List of valid options that can be passed into this
@@ -21,14 +21,14 @@ class TreeViewCell extends Cell
      *
      * @var array
      */
-    protected $_validCellOptions = [];
+    protected array $_validCellOptions = [];
 
     /**
      * Default display method.
      *
      * @return void
      */
-    public function display()
+    public function display(): void
     {
         $this->loadModel('Shop.ShopCategories');
         $treeList = $this->ShopCategories->find('threaded')->toArray();

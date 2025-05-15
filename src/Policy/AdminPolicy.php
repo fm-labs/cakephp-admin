@@ -5,7 +5,6 @@ namespace Admin\Policy;
 
 use Authorization\IdentityInterface;
 use Authorization\Policy\Result;
-use Cake\Core\Configure;
 
 class AdminPolicy
 {
@@ -14,9 +13,9 @@ class AdminPolicy
      * @param object $context Authorization context
      * @return \Authorization\Policy\Result
      */
-    public function canAccess(IdentityInterface $user, $context)
+    public function canAccess(IdentityInterface $user, object $context): Result
     {
-        if ($user->id === 1 || $user->username === "root") {
+        if ($user->id === 1 || $user->username === 'root') {
             return new Result(false, 'not-root');
         }
 

@@ -156,7 +156,7 @@ class EditAction extends BaseEntityAction
                     if (!$controller->viewBuilder()->getVar($var)) {
                         $list = $assoc->getTarget()
                             ->find('list')
-                            ->order([$assoc->getTarget()->getDisplayField() => 'ASC'])
+                            ->orderBy([$assoc->getTarget()->getDisplayField() => 'ASC'])
                             ->toArray();
                         $controller->set($var, $list);
                         //debug("assoc list for " . $assoc->getName() . ": " . count($list)
@@ -170,7 +170,7 @@ class EditAction extends BaseEntityAction
                 if ($entity->get($assoc->getProperty()) && !$controller->viewBuilder()->getVar($var)) {
                     $list = $assoc->getTarget()
                         ->find('list')
-                        ->order([$assoc->getTarget()->getDisplayField() => 'ASC'])
+                        ->orderBy([$assoc->getTarget()->getDisplayField() => 'ASC'])
                         ->toArray();
                     $controller->set($var, $list);
                     //debug("assoc list for " . $assoc->getName() . ": " . count($list)
@@ -187,7 +187,7 @@ class EditAction extends BaseEntityAction
                 if (!$controller->viewBuilder()->getVar($var)) {
                     $list = $assoc->getTarget()
                         ->find('list')
-                        ->order([$assoc->getTarget()->getDisplayField() => 'ASC'])
+                        ->orderBy([$assoc->getTarget()->getDisplayField() => 'ASC'])
                         ->toArray();
                     $controller->set($var, $list);
                 }

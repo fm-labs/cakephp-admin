@@ -126,7 +126,7 @@ class Admin
      */
     public static function registerListener(string $type, string $listenerClass): void
     {
-        deprecationWarning('Admin::registerListener() is deprecated.');
+        \Cake\Core\deprecationWarning('Admin::registerListener() is deprecated.');
         if (!isset(static::$_listeners[$type])) {
             static::$_listeners[$type] = [];
         }
@@ -145,7 +145,7 @@ class Admin
      */
     public static function getListeners(string $type): array
     {
-        deprecationWarning('Admin::getListeners() is deprecated.');
+        \Cake\Core\deprecationWarning('Admin::getListeners() is deprecated.');
         if (!isset(static::$_listeners[$type])) {
             return [];
         }

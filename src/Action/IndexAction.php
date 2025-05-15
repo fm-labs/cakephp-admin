@@ -73,7 +73,7 @@ class IndexAction extends BaseAction
 
         // custom template
         if (isset($this->_config['template'])) {
-            deprecationWarning("Using the 'template' var is deprecated. Use getAction()->setTemplate() instead.");
+            \Cake\Core\deprecationWarning("Using the 'template' var is deprecated. Use getAction()->setTemplate() instead.");
             $this->setTemplate($this->_config['template']);
         }
 

@@ -3,14 +3,15 @@
     "description": "Admin plugin for CakePHP",
     "type": "cakephp-plugin",
     "require": {
-        "php": ">=8.0",
-        "cakephp/cakephp": "^4.4",
-        "fm-labs/cakephp-cupcake": ">=0.8.0",
-        "fm-labs/cakephp-bootstrap": "^1.1.1",
-        "fm-labs/cakephp-sugar": "^1.2.0",
-        "fm-labs/cakephp-user": ">=0.7.0"
+        "php": ">=8.2",
+        "cakephp/cakephp": "^5",
+        "fm-labs/cakephp-cupcake": "^5",
+        "fm-labs/cakephp-bootstrap": "^5",
+        "fm-labs/cakephp-sugar": "^5",
+        "fm-labs/cakephp-user": "^5"
     },
     "require-dev": {
+        "phpunit/phpunit": "^10"
     },
     "autoload": {
         "psr-4": {

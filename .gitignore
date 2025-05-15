@@ -1,8 +1,4 @@
 .idea/
 /vendor/
 /node_modules/
-/bower_components/
-/webroot/vendor/datatables
 .phpunit.result.cache
-.yarnclean
-composer.lock

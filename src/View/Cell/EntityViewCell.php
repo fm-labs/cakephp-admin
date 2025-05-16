@@ -26,7 +26,7 @@ class EntityViewCell extends Cell
     /**
      * @deprecated
      */
-    public $modelClass;
+    public ?string $modelClass;
 
     public array $fields = [];
 
@@ -41,7 +41,7 @@ class EntityViewCell extends Cell
         ?Request $request = null,
         ?Response $response = null,
         ?EventManager $eventManager = null,
-        array $cellOptions = []
+        array $cellOptions = [],
     ) {
         parent::__construct($request, $response, $eventManager, $cellOptions);
 
@@ -62,7 +62,7 @@ class EntityViewCell extends Cell
      * @param \Cake\Datasource\EntityInterface $entity The entity object
      * @return void
      */
-    public function display(EntityInterface $entity)
+    public function display(EntityInterface $entity): void
     {
         //$Table = $this->loadModel();
         $Table = $this->fetchTable();
@@ -99,7 +99,7 @@ class EntityViewCell extends Cell
         $belongsTo = [];
         if ($associations) {
             foreach ($associations as $assoc) {
-                if ($assoc->type() == "manyToOne") {
+                if ($assoc->type() == 'manyToOne') {
                     $belongsTo[$assoc->getForeignKey()] = $assoc->getName();
                 }
             }
@@ -132,7 +132,7 @@ class EntityViewCell extends Cell
                         return $view->Html->link(
                             $related->get($assoc->getTarget()->getDisplayField()),
                             [/*'plugin' => $plugin,*/ 'controller' => $assoc->getName(), 'action' => 'view', $related->id],
-                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $related->get($assoc->getTarget()->getDisplayField())]
+                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $related->get($assoc->getTarget()->getDisplayField())],
                         );
                     };
                 } elseif ($entity->get($property)) {
@@ -140,9 +140,9 @@ class EntityViewCell extends Cell
                         [$plugin, $modelName] = pluginSplit($assoc->getTarget()->getRegistryAlias());
 
                         return $view->Html->link(
-                            $val,
+                            (string)$val,
                             [/*'plugin' => $plugin,*/ 'controller' => $assoc->getName(), 'action' => 'view', $val],
-                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val]
+                            ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val],
                         );
                     };
                 } else {
@@ -156,8 +156,8 @@ class EntityViewCell extends Cell
                     $assocType = $assoc->type();
                     //debug($property . "->" . $assocType);
                     switch ($assocType) {
-                        case "oneToMany":
-                        case "manyToMany":
+                        case 'oneToMany':
+                        case 'manyToMany':
                             //debug($assocType . ":" . $formatter);
                             //$formatter = "array";
                             /*
@@ -173,7 +173,7 @@ class EntityViewCell extends Cell
                                 }
 
                                 return $view->Html->link(
-                                    __d('admin', "{0} records", count($val)),
+                                    __d('admin', '{0} records', count($val)),
                                     [
                                         'controller' => $assoc->getName(),
                                         'action' => 'index',
@@ -181,19 +181,19 @@ class EntityViewCell extends Cell
                                             '_filter' => [
                                                 $assoc->getForeignKey() => $row->get($assoc->getTarget()->getPrimaryKey()),
                                             ],
-                                        ]
+                                        ],
                                     ],
                                     [
                                         'data-modal-frame',
                                         'data-modal-class' => 'modal-wide',
-                                        'data-modal-title' => __d('admin', "Related {0}", $assoc->getName()),
-                                    ]
+                                        'data-modal-title' => __d('admin', 'Related {0}', $assoc->getName()),
+                                    ],
                                 );
                             };
                             break;
 
-                        case "manyToOne":
-                        case "oneToOne":
+                        case 'manyToOne':
+                        case 'oneToOne':
                             $formatter = function ($val, $row, $args, $view) use ($assoc) {
                                 if (!$val) {
                                     return $val;
@@ -202,14 +202,14 @@ class EntityViewCell extends Cell
                                 return $view->Html->link(
                                     $val->get($assoc->getTarget()->getDisplayField()),
                                     ['controller' => $assoc->getName(), 'action' => 'view', $val->get($assoc->getTarget()->getPrimaryKey())],
-                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val->get($assoc->getTarget()->getDisplayField())]
+                                    ['data-modal-frame', 'data-modal-class' => 'modal-wide', 'data-modal-title' => $val->get($assoc->getTarget()->getDisplayField())],
                                 );
                             };
                             break;
 
                         default:
                             $formatter = $assocType;
-                            debug($assocType . ":" . $formatter);
+                            debug($assocType . ':' . $formatter);
                             break;
                     }
                 } else {

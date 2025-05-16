@@ -3,32 +3,29 @@ declare(strict_types=1);
 
 namespace Admin\Controller;
 
+use Cake\Controller\Controller as BaseController;
+
 /**
- * Class Controller
+ * Class BaseAdminController
  *
  * Use this class as a base controller for (app) controllers
  * which should run in admin context
  *
- * @package Admin\Controller\Base
- * @property \Admin\Controller\Component\ActionComponent $Action
- * @property \Admin\Controller\Component\FlashComponent $Flash
- * @property \User\Controller\Component\AuthComponent $Auth
+ * @package Admin\Controller
  */
-class Controller extends \Cake\Controller\Controller
+abstract class Controller extends BaseController
 {
     /**
      * Initialization hook method.
      *
-     * Use this method to add common initialization code like loading components.
+     * Makes sure the Admin component is loaded
      *
+     * @throws \Cake\Core\Exception\Exception
      * @return void
-     * @throws \Exception
      */
     public function initialize(): void
     {
         $this->loadComponent('Admin.Admin');
-        $this->loadComponent('Admin.Action');
-        $this->loadComponent('Admin.Flash');
     }
 
     /**

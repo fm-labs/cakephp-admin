@@ -59,7 +59,7 @@ class BreadcrumbHelper extends Helper
         if (empty($this->Breadcrumbs->getCrumbs()) && $event->getSubject()->get('breadcrumbs')) {
             foreach ((array)$event->getSubject()->get('breadcrumbs') as $breadcrumb) {
                 $breadcrumb += ['title' => null, 'url' => null, 'options' => []];
-                $this->Breadcrumbs->add($breadcrumb['title'], $breadcrumb['url'], $breadcrumb['options']);
+                $this->Breadcrumbs->add((string)$breadcrumb['title'], $breadcrumb['url'], $breadcrumb['options']);
             }
         } elseif (empty($this->Breadcrumbs->getCrumbs())) {
             if ($request->getParam('plugin') && $request->getParam('plugin') != $request->getParam('controller')) {

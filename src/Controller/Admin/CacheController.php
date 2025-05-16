@@ -5,8 +5,9 @@ namespace Admin\Controller\Admin;
 
 use Cake\Cache\Cache;
 use Cake\Core\Plugin;
-use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Exception\NotFoundException;
 use DebugKit\Cache\Engine\DebugEngine;
+use Exception;
 
 /**
  * Class CacheController
@@ -63,15 +64,20 @@ class CacheController extends AppController
      */
     public function clear(?string $config = null): void
     {
-        if ($config === null || Cache::getConfig($config) === null) {
-            throw new BadRequestException('Cache config missing or not configured');
+        try {
+            if ($config === null || Cache::getConfig($config) === null) {
+                throw new NotFoundException('Cache config missing or not configured');
+            }
+
+            if (!Cache::clear($config)) {
+                throw new Exception('Failed to clear cache');
+            }
+
+            $this->Flash->success(__d('admin', 'Cache cleared'));
+        } catch (Exception $exception) {
+            $this->Flash->error(__d('admin', $exception->getMessage()));
         }
 
-        if (Cache::clear($config)) {
-            $this->Flash->success(__d('admin', 'Cache cleared'));
-        } else {
-            $this->Flash->error(__d('admin', 'Failed to clear cache'));
-        }
         $this->redirect($this->referer(['action' => 'index']));
     }
 }

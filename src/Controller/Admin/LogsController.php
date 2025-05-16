@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace Admin\Controller\Admin;
 
+use Exception;
+
 /**
  * Class LogsController
  *
@@ -80,7 +82,6 @@ class LogsController extends AppController
 
         $files = [];
         foreach ($logFiles as $logFile) {
-            //$F = new File($logDir . $logFile);
             $logFile = $logDir . $logFile;
             $fileSize = filesize($logFile);
             $lastModified = filemtime($logFile);
@@ -123,13 +124,23 @@ class LogsController extends AppController
         }
 
         $page = $this->request->getQuery('page') ?: 1;
-        $length = 409600; // 400 kB
+        $length = 1 * 1024 * 1024; // 1 MB
         $offset = ($page - 1) * $length;
 
-        $File = new File($filePath, false);
-        $File->offset($offset);
-        $log = $File->read($length); // read max 400 kB
-        $File->close();
+        $log = '';
+        try {
+            $handle = fopen($filePath, 'r');
+            if ($handle) {
+                fseek($handle, $offset);
+                $log = fread($handle, $length);
+                fclose($handle);
+            }
+        } catch (Exception $ex) {
+            $this->Flash->error(__d('admin', 'Failed to read log file {0}: {1}', $logFile, $ex->getMessage()));
+
+            return;
+        }
+
         $this->set(compact('logFile', 'log', 'page'));
     }
 
@@ -153,8 +164,7 @@ class LogsController extends AppController
             return $this->redirect($this->referer(['action' => 'index']));
         }
 
-        $File = new File($filePath, false);
-        if ($File->write('')) {
+        if (file_put_contents($filePath, '') !== false) {
             $this->Flash->success(__d('admin', 'Logfile {0} cleared', $logFile));
         } else {
             $this->Flash->error(__d('admin', 'Failed to clear logFile {0}', $logFile));
@@ -167,7 +177,7 @@ class LogsController extends AppController
      *
      * @param string|null $logFile
      */
-    public function delete(string $logFile = null)
+    public function delete(?string $logFile = null)
     {
         if (!$logFile) {
             $this->Flash->error(__d('admin', 'No logFile selected'));

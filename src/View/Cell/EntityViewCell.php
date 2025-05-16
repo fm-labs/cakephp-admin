@@ -28,11 +28,11 @@ class EntityViewCell extends Cell
      */
     public $modelClass;
 
-    public $fields = [];
+    public array $fields = [];
 
-    public $helpers = [];
+    public array $helpers = [];
 
-    public ?string $defaultTable;
+    public ?string $defaultTable = null;
 
     /**
      * @inheritDoc

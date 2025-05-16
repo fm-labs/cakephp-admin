@@ -161,12 +161,12 @@ class ToolbarHelper extends Helper
      * Add a new toolbar item (post-link).
      *
      * @param array|string $title Link title
-     * @param string|null $url Link Url
+     * @param array|string|null $url Link Url
      * @param array $attr Link attributes
      * @param array $data Post data
      * @return $this
      */
-    public function addPostLink(string|array $title, ?string $url = null, array $attr = [], array $data = [])
+    public function addPostLink(string|array $title, string|array|null $url = null, array $attr = [], array $data = [])
     {
         //@TODO Implement ToolbarHelper::addPostLink()
         $this->addLink($title, $url, $attr);

@@ -191,7 +191,7 @@ abstract class BaseAction implements ActionInterface
 
         if (in_array($key, array_keys($this->_defaultConfig))) {
             //debug("Trying to set config variable as template variable: {$key}");
-            deprecationWarning("Trying to set config variable as template variable: {$key}");
+            \Cake\Core\deprecationWarning("Trying to set config variable as template variable: {$key}");
             //$this->_config[$key] = $val;
             $this->setConfig($key, $val);
         }
@@ -299,7 +299,7 @@ abstract class BaseAction implements ActionInterface
      */
     public function controller(): Controller
     {
-        deprecationWarning("BaseAction::controller() is deprecated. Use getController() instead.");
+        \Cake\Core\deprecationWarning("BaseAction::controller() is deprecated. Use getController() instead.");
 
         return $this->getController();
     }

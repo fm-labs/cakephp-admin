@@ -177,7 +177,8 @@ class EditAction extends BaseEntityAction
                     //    . " item using key " . $assoc->getForeignKey()
                     //    . " prop: " . $assoc->getProperty() . " -> " . Inflector::variable($assoc->getProperty()));
                 }
-            //} elseif ($assoc->type() == Association::ONE_TO_ONE) {
+            } elseif ($assoc->type() == Association::ONE_TO_ONE) {
+                // @todo Implement ONE_TO_ONE assoc
                 //$list = ['foo' => 'bar'];
                 //debug($assoc);
                 //$controller->set($assoc->foreignKey(), $list);

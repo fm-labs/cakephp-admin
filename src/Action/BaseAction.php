@@ -199,7 +199,7 @@ abstract class BaseAction implements ActionInterface
 
         if (in_array($key, array_keys($this->_defaultConfig))) {
             //debug("Trying to set config variable as template variable: {$key}");
-            deprecationWarning("Trying to set config variable as template variable: {$key}");
+            deprecationWarning('4.0.1', "Trying to set config variable as template variable: {$key}");
             //$this->_config[$key] = $val;
             $this->setConfig($key, $val);
         }

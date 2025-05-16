@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 
 /**
  * Class MediaAction
@@ -12,10 +13,10 @@ use Cake\Controller\Controller;
  */
 class MediaAction extends BaseEntityAction
 {
-    public $scope = [];
+    protected array $scope = [];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
@@ -23,16 +24,15 @@ class MediaAction extends BaseEntityAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getAttributes(): array
     {
         return ['data-icon' => 'media'];
     }
 
-    protected function _execute(Controller $controller)
+    protected function _execute(Controller $controller): ?Response
     {
-
         $fields = [];
 
         if ($controller->modelClass) {
@@ -47,5 +47,7 @@ class MediaAction extends BaseEntityAction
         $controller->set('fields', $fields);
         $controller->set('modelClass', $controller->modelClass);
         $controller->set('entity', $this->entity());
+
+        return null;
     }
 }

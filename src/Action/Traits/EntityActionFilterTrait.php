@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Action\Traits;
 
 use Cake\Datasource\EntityInterface;
+use InvalidArgumentException;
 
 trait EntityActionFilterTrait
 {
@@ -12,7 +13,7 @@ trait EntityActionFilterTrait
     /**
      * @return bool
      */
-    public function isUsable(EntityInterface $entity)
+    public function isUsable(EntityInterface $entity): bool
     {
         if (is_callable($this->_filter)) {
             return call_user_func($this->_filter, $entity);
@@ -24,7 +25,7 @@ trait EntityActionFilterTrait
     public function setFilter($filter)
     {
         if (!is_callable($filter)) {
-            throw new \InvalidArgumentException("The filter MUST be a valid callable");
+            throw new InvalidArgumentException('The filter MUST be a valid callable');
         }
         $this->_filter = $filter;
 

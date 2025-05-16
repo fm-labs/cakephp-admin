@@ -5,6 +5,7 @@ namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
+use Cake\Http\Response;
 
 /**
  * Class UnpublishAction
@@ -13,10 +14,10 @@ use Cake\Datasource\EntityInterface;
  */
 class UnpublishAction extends BaseEntityAction
 {
-    public $scope = ['table'];
+    protected array $scope = ['table'];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
@@ -24,7 +25,7 @@ class UnpublishAction extends BaseEntityAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getAttributes(): array
     {
@@ -32,17 +33,17 @@ class UnpublishAction extends BaseEntityAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function isUsable(EntityInterface $entity)
+    public function isUsable(EntityInterface $entity): bool
     {
         return $entity->get('is_published');
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function _execute(Controller $controller)
+    public function _execute(Controller $controller): ?Response
     {
         if ($this->model()->hasBehavior('Publish')) {
             $entity = $this->entity();

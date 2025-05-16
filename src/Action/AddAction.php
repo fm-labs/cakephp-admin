@@ -6,8 +6,10 @@ namespace Admin\Action;
 use Admin\Action\Interfaces\ActionInterface;
 use Admin\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 use Cake\ORM\Association;
 use Cake\Utility\Inflector;
+use function Cake\Core\deprecationWarning;
 
 /**
  * Class AddAction
@@ -19,7 +21,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
     /**
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $defaultConfig = [
         'fields' => [],
         'include' => [],
         'exclude' => [],
@@ -32,9 +34,9 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         //'fields.blacklist' => [], // deprecated use 'exclude' instead
     ];
 
-    public $scope = ['index'];
+    protected array $scope = ['index'];
 
-    //public $template = 'Admin.add';
+    //public ?string $template = 'Admin.add';
 
     /**
      * @inheritDoc
@@ -75,24 +77,24 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
 
     /**
      * @param \Cake\Controller\Controller $controller
-     * @return \Cake\Http\Response|void|null
+     * @return \Cake\Http\Response|null
      */
-    public function execute(Controller $controller)
+    public function execute(Controller $controller): ?Response
     {
         # debug($this->_config);
         // @todo Remove legacy settings
         if (isset($this->_config['fields.whitelist'])) {
-            \Cake\Core\deprecationWarning('The `fields.whitelist` option is deprecated. Use `include` instead.');
+            deprecationWarning('4.0.1', 'The `fields.whitelist` option is deprecated. Use `include` instead.');
             $this->_config['include'] = $this->_config['fields.whitelist'];
             unset($this->_config['fields.whitelist']);
         }
         if (isset($this->_config['fields.blacklist'])) {
-            \Cake\Core\deprecationWarning('The `fields.blacklist` option is deprecated. Use `exclude` instead.');
+            deprecationWarning('4.0.1', 'The `fields.blacklist` option is deprecated. Use `exclude` instead.');
             $this->_config['exclude'] = $this->_config['fields.blacklist'];
             unset($this->_config['fields.blacklist']);
         }
         if (isset($this->_config['fields.access'])) {
-            \Cake\Core\deprecationWarning('The `fields.access` option is deprecated. Use `allowAccess` instead.');
+            deprecationWarning('4.0.1', 'The `fields.access` option is deprecated. Use `allowAccess` instead.');
             $this->_config['allowAccess'] = $this->_config['fields.access'];
             unset($this->_config['fields.access']);
         }
@@ -143,7 +145,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
             $entity = $this->model()->patchEntity(
                 $entity,
                 $this->request->getData(),
-                ['validate' => $this->_config['validator']]
+                ['validate' => $this->_config['validator']],
             );
             if ($this->model()->save($entity)) {
                 $this->flashSuccess(__d('admin', 'Record created'));
@@ -153,6 +155,7 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
                     $redirectUrl = $this->_config['redirectUrl'] === true
                         ? ['action' => 'edit', $entity->id]
                         : $this->_config['redirectUrl'];
+
                     return $this->redirect($redirectUrl);
                 }
             } else {
@@ -194,7 +197,9 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
         //$controller->set($this->_config);
 
         $controller->set('entity', $entity);
-        $controller->set('modelClass', $controller->loadModel()->getRegistryAlias());
+        $controller->set('modelClass', $controller->fetchTable()->getRegistryAlias());
         $controller->set('fields', $fields);
+
+        return null;
     }
 }

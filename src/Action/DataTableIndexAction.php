@@ -19,7 +19,7 @@ use Cake\Utility\Inflector;
  */
 class DataTableIndexAction extends IndexAction
 {
-    public $template = 'Admin.data_table_index';
+    public ?string $template = 'Admin.data_table_index';
 
     /**
      * @var array
@@ -38,7 +38,7 @@ class DataTableIndexAction extends IndexAction
     /**
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $defaultConfig = [
         'modelClass' => null,
         'paginate' => false, // Pagination params
         'paging' => false, // Enable pagination
@@ -60,7 +60,7 @@ class DataTableIndexAction extends IndexAction
     /**
      * {@inheritDoc}
      */
-    public function _execute(Controller $controller)
+    public function _execute(Controller $controller): ?\Cake\Http\Response
     {
         // data
         //$this->controller = $controller;
@@ -218,6 +218,8 @@ class DataTableIndexAction extends IndexAction
         $controller->viewBuilder()->setOption('serialize', ['result']);
 
         //$controller->render('Admin.data_table_index');
+
+        return null;
     }
 
     /**

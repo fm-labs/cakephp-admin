@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 use Cake\Routing\Router;
 
 /**
@@ -13,13 +14,14 @@ use Cake\Routing\Router;
  * @package Admin\Action
  * @internal
  * @codeCoverageIgnore
+ * @deprecated
  */
 class FooTableIndexAction extends IndexAction
 {
     public static $maxLimit = 200;
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function __construct(Controller $controller, array $config = [])
     {
@@ -29,17 +31,17 @@ class FooTableIndexAction extends IndexAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
-        return __d('admin', "Index");
+        return __d('admin', 'Index');
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function _execute(Controller $controller)
+    public function _execute(Controller $controller): ?Response
     {
         $this->controller = $controller;
         $result = [];
@@ -62,7 +64,7 @@ class FooTableIndexAction extends IndexAction
             $controller->set('data', $result);
             $controller->viewBuilder()->setOption('serialize', 'data');
 
-            return;
+            return null;
         }
 
         // AJAX
@@ -98,10 +100,12 @@ class FooTableIndexAction extends IndexAction
 
         $controller->viewBuilder()->setOption('serialize', ['result']);
         //$controller->render('Admin.foo_table_index');
+
+        return null;
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     protected function _fetchResult()
     {
@@ -118,10 +122,10 @@ class FooTableIndexAction extends IndexAction
                 $page = 1;
             }
 
-            array_walk($data, function (&$row) {
+            array_walk($data, function (&$row): void {
 
                 $aRow = $row->toArray();
-                array_walk($aRow, function (&$val, $key) {
+                array_walk($aRow, function (&$val, $key): void {
                     //$val = ['options' => ['expanded' => false, 'classes' => '_'], 'value' => $val];
                 });
 

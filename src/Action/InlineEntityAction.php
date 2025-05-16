@@ -4,27 +4,28 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 use Cake\Utility\Inflector;
 
 class InlineEntityAction extends BaseEntityAction
 {
-    protected $_defaultConfig = [];
+    protected array $defaultConfig = [];
 
-    public $scope = [];
-    protected $_attributes = [];
+    protected array $scope = [];
+    protected array $_attributes = [];
     protected $_callable;
-    protected $_executed = false;
+    protected bool $_executed = false;
     protected $_filter;
 
     /**
      * @var string The action name or alias
      */
-    public $action;
+    public string $action;
 
     /**
      * @var array Options for this action
      */
-    public $options;
+    public array $options;
 
     public function __construct(Controller $controller, array $options = [], ?callable $callable = null, ?callable $filter = null)
     {
@@ -57,11 +58,12 @@ class InlineEntityAction extends BaseEntityAction
         return $this->_attributes;
     }
 
-    public function getUrl($id) {
+    public function getUrl($id): array|string
+    {
         return ['action' => $this->action, $id];
     }
 
-    protected function _execute(Controller $controller)
+    protected function _execute(Controller $controller): ?Response
     {
         //if ($this->_executed == true) {
         //    return;

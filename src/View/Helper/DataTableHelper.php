@@ -82,7 +82,7 @@ class DataTableHelper extends Helper
      *
      * @var \Cake\ORM\Table
      */
-    protected Table $_table;
+    protected ?Table $_table = null;
 
     /**
      * @inheritDoc
@@ -145,10 +145,10 @@ class DataTableHelper extends Helper
      * - `sortable` boolean
      * - `filter` boolean
      * - `reduce` array
-     * @param array $data Table data
+     * @param mixed $data Table data
      * @return $this
      */
-    public function create(array $params = [], array $data = [])
+    public function create(array $params = [], mixed $data = [])
     {
         if (isset($params['data']) && $params['data']) {
             $data = $params['data'];
@@ -342,7 +342,7 @@ class DataTableHelper extends Helper
      * @param array|null $data Table data. If NULL, existing table data will be returned
      * @return $this|array
      */
-    public function data(?array $data = null)
+    public function data(mixed $data = null)
     {
         if ($data === null) {
             return $this->getData();
@@ -517,7 +517,7 @@ class DataTableHelper extends Helper
     /**
      * @return \Cake\ORM\Table
      */
-    protected function _table(): Table
+    protected function _table(): ?Table
     {
         if ($this->_table === null && $this->_params['model']) {
             $this->_table = TableRegistry::getTableLocator()->get($this->_params['model']);
@@ -632,7 +632,7 @@ class DataTableHelper extends Helper
             $rows = sprintf(
                 '<tr><td colspan="%d">%s</td></tr>',
                 count($this->_fields),
-                __d('admin', 'No data available')
+                __d('admin', 'No data available'),
             );
         }
 
@@ -777,10 +777,10 @@ class DataTableHelper extends Helper
     }
 
     /**
-     * @param array $row Table row data
+     * @param mixed $row Table row data
      * @return string
      */
-    protected function _renderRow(array $row): string
+    protected function _renderRow(mixed $row): string
     {
         // data cells
         $cells = $this->_renderRowCells($row);
@@ -802,10 +802,10 @@ class DataTableHelper extends Helper
     }
 
     /**
-     * @param array $row Table row data
+     * @param mixed $row Table row data
      * @return string
      */
-    protected function _renderRowActionsCell(array $row): string
+    protected function _renderRowActionsCell(mixed $row): string
     {
         $rowActionsHtml = $this->_renderRowActions($row);
 
@@ -816,10 +816,10 @@ class DataTableHelper extends Helper
     }
 
     /**
-     * @param array $row Table row data
+     * @param mixed $row Table row data
      * @return string
      */
-    protected function _renderRowActions(array $row): string
+    protected function _renderRowActions(mixed $row): string
     {
         $row = is_object($row) ? $row->toArray() : $row;
         $actions = $row['_actions_'] ?? [];
@@ -846,10 +846,10 @@ class DataTableHelper extends Helper
     }
 
     /**
-     * @param array $row Table row data
+     * @param mixed $row Table row data
      * @return string
      */
-    protected function _renderRowCells(array $row): string
+    protected function _renderRowCells(mixed $row): string
     {
         $html = '';
 
@@ -888,10 +888,10 @@ class DataTableHelper extends Helper
     }
 
     /**
-     * @param array $row Table row data
+     * @param mixed $row Table row data
      * @return string
      */
-    protected function _renderRowSelectCell(array $row): string
+    protected function _renderRowSelectCell(mixed $row): string
     {
         if (isset($this->_params['select']) && $this->_params['select'] === true) {
             $input = $this->Form->checkbox('multiselect_' . $row->id);
@@ -962,10 +962,10 @@ class DataTableHelper extends Helper
     }
 
     /**
-     * @param array $row Table data row
+     * @param mixed $row Table data row
      * @return string
      */
-    protected function _buildRowAttributes(array $row): string
+    protected function _buildRowAttributes(mixed $row): string
     {
         $rowAttributes = [
             'data-id' => $row['id'] ?? null,
@@ -998,12 +998,12 @@ class DataTableHelper extends Helper
      * @param mixed $cellData Cell data
      * @param mixed $formatter Formatter name
      * @param array $formatterArgs Formatter args
-     * @param array $row Table row data
+     * @param mixed $row Table row data
      * @return string
      */
-    protected function _formatRowCellData(string $fieldName, mixed $cellData, mixed $formatter = null, array $formatterArgs = [], array $row = []): string
+    protected function _formatRowCellData(string $fieldName, mixed $cellData, mixed $formatter = null, array $formatterArgs = [], mixed $row = []): string
     {
-        return $this->Formatter->format($cellData, $formatter, $formatterArgs, $row);
+        return $this->Formatter->format($cellData, $formatter, $formatterArgs, $row) ?? '';
     }
 
     /**
@@ -1110,18 +1110,19 @@ SCRIPT;
         $replace = [
             '/__DATATABLE_ID__/' => $this->getParam('id'),
             '/__DATATABLE_MODEL__/' => $this->getParam('model'),
-            '/__DATATABLE_SORTURL__/' => $this->Html->Url->build($this->getParam('sortable')),
+            //'/__DATATABLE_SORTURL__/' => $this->Html->Url->build($this->getParam('sortable')),
+            '/__DATATABLE_SORTURL__/' => $this->Html->Url->build(null),
         ];
 
         return preg_replace(array_keys($replace), array_values($replace), $script);
     }
 
     /**
-     * @param array $rowActions List of row actions
-     * @param array $row Table row data
+     * @param mixed $rowActions List of row actions
+     * @param mixed $row Table row data
      * @return array
      */
-    protected function _applyRowActions(array $rowActions, array $row = []): array
+    protected function _applyRowActions(mixed $rowActions, mixed $row = []): array
     {
         $row = is_object($row) ? $row->toArray() : $row;
         // rowActions
@@ -1154,12 +1155,12 @@ SCRIPT;
     }
 
 //    /**
-//     * @param array $rowActions List of row actions
-//     * @param array $row Table row data
+//     * @param mixed $rowActions List of row actions
+//     * @param mixed $row Table row data
 //     * @return string
 //     * @deprecated Unused
 //     */
-//    protected function _renderRowActionsOld(array $rowActions, $row = [])
+//    protected function _renderRowActionsOld(mixed $rowActions, $row = [])
 //    {
 //        $html = "";
 //        $row = is_object($row) ? $row->toArray() : $row;

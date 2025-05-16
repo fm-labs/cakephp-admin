@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 
 class TreeMoveUpAction extends BaseEntityAction
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
@@ -16,7 +17,7 @@ class TreeMoveUpAction extends BaseEntityAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getAttributes(): array
     {
@@ -24,9 +25,9 @@ class TreeMoveUpAction extends BaseEntityAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function _execute(Controller $controller)
+    public function _execute(Controller $controller): ?Response
     {
         if ($this->model()->hasBehavior('Tree')) {
             $entity = $this->entity();

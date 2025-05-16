@@ -5,15 +5,17 @@ namespace Admin\Action;
 
 use Admin\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 
 /**
  * Class SearchAction
+ *
  * @package Admin\Action
  */
 class SearchAction implements IndexActionInterface
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
@@ -21,7 +23,7 @@ class SearchAction implements IndexActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getAttributes(): array
     {
@@ -29,12 +31,14 @@ class SearchAction implements IndexActionInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function execute(Controller $controller)
+    public function execute(Controller $controller): ?Response
     {
         $controller->set('foo', 'bar');
         $controller->render('index');
+
+        return null;
     }
 
     /**
@@ -42,5 +46,6 @@ class SearchAction implements IndexActionInterface
      */
     public function getScope(): array
     {
+        return ['table'];
     }
 }

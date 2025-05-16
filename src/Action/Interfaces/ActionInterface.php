@@ -35,5 +35,5 @@ interface ActionInterface
      * @param \Cake\Controller\Controller $controller Active controller
      * @return null|\Cake\Http\Response
      */
-    public function execute(Controller $controller);
+    public function execute(Controller $controller): ?\Cake\Http\Response;
 }

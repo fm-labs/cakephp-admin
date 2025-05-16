@@ -234,10 +234,10 @@ class FormatterHelper extends Helper
      * @param mixed $value Value to format
      * @param callable|string|null $formatter Formatter to use
      * @param array $formatterArgs Formatter callback arguments
-     * @param array $extra Extra data passed to the formatter callback
+     * @param mixed $extra Extra data passed to the formatter callback
      * @return mixed
      */
-    public function format(mixed $value, string|callable|null $formatter = null, array $formatterArgs = [], array $extra = []): mixed
+    public function format(mixed $value, string|callable|null $formatter = null, array $formatterArgs = [], mixed $extra = []): mixed
     {
         if ($formatter === false) {
             return $value;

@@ -4,21 +4,25 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 use Cake\Utility\Inflector;
 
 class ExternalEntityAction extends BaseEntityAction
 {
-    protected $_action = null;
+    protected ?string $_action = null;
 
-    protected $_attributes = [];
+    protected array $_attributes = [];
 
-    protected $label = 'External';
+    protected string $label = 'External';
 
-    public $scope = ['table'];
+    protected array $scope = ['table'];
 
-    protected $_url = null;
+    protected string|array|null $_url = null;
 
-    public function __construct($action, array $options = [])
+    /**
+     * @inheritDoc
+     */
+    public function __construct(string $action, array $options = [])
     {
         $options += ['url' => null, 'label' => null, 'scope' => [], 'attrs' => []];
         $this->_action = $action;
@@ -28,11 +32,17 @@ class ExternalEntityAction extends BaseEntityAction
         $this->label = $options['label'] ?: Inflector::humanize($this->_action);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getLabel(): string
     {
         return $this->label;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getAttributes(): array
     {
         return $this->_attributes;
@@ -40,25 +50,31 @@ class ExternalEntityAction extends BaseEntityAction
 
     /**
      * @inheritDoc
-     *
-     * The $id parameter is ignored here. The entity ID is always used instead.
      */
-    public function getUrl($id)
+    public function getUrl($id): array|string
     {
         return $this->_buildUrl(['id' => $id]);
     }
 
-    protected function _execute(Controller $controller)
+    /**
+     * @inheritDoc
+     */
+    protected function _execute(Controller $controller): ?Response
     {
         $redirectUrl = $this->_buildUrl();
+
         return $controller->redirect($redirectUrl);
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function _buildUrl($data = null)
     {
         if ($data === null) {
             $data = $this->entity()->toArray();
         }
+
         return $this->_replaceTokens($this->_url, $data);
     }
 }

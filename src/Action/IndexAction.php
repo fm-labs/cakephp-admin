@@ -7,6 +7,8 @@ use Admin\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\QueryInterface;
 use Cake\Utility\Hash;
+use Exception;
+use function Cake\Core\deprecationWarning;
 
 /**
  * Class IndexAction
@@ -15,10 +17,7 @@ use Cake\Utility\Hash;
  */
 class IndexAction extends BaseAction
 {
-    /**
-     * @var array
-     */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'modelClass' => null,
         'data' => [],
         'fields' => [], // map of field column
@@ -39,7 +38,7 @@ class IndexAction extends BaseAction
 
         // deprecated
         'fields.whitelist' => [],
-        'fields.blacklist' => []
+        'fields.blacklist' => [],
     ];
 
     protected $_defaultLimit = 15;
@@ -48,7 +47,7 @@ class IndexAction extends BaseAction
     /**
      * @inheritDoc
      */
-    public function execute(Controller $controller)
+    public function execute(Controller $controller): ?\Cake\Http\Response
     {
         parent::execute($controller);
 
@@ -63,7 +62,7 @@ class IndexAction extends BaseAction
         }
 
         // detect model class
-        //$this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->loadModel()->getRegistryAlias();
+        //$this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->fetchTable()->getRegistryAlias();
         //$this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->fetchTable()->getRegistryAlias();
 
         // load helpers
@@ -73,7 +72,7 @@ class IndexAction extends BaseAction
 
         // custom template
         if (isset($this->_config['template'])) {
-            \Cake\Core\deprecationWarning("Using the 'template' var is deprecated. Use getAction()->setTemplate() instead.");
+            deprecationWarning("Using the 'template' var is deprecated. Use getAction()->setTemplate() instead.");
             $this->setTemplate($this->_config['template']);
         }
 
@@ -121,15 +120,17 @@ class IndexAction extends BaseAction
 
         try {
             $this->_execute($controller);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $controller->Flash->error($ex->getMessage());
         }
+
+        return null;
     }
 
     /**
      * @inheritDoc
      */
-    protected function _execute(Controller $controller)
+    protected function _execute(Controller $controller): ?\Cake\Http\Response
     {
         $controller->set('dataTable', [
             'filter' => $this->_config['filter'],
@@ -157,6 +158,8 @@ class IndexAction extends BaseAction
         $controller->set('toolbar.actions', $toolbarActions);
 
         $controller->viewBuilder()->setOption('serialize', ['result']);
+
+        return null;
     }
 
     /**
@@ -187,7 +190,7 @@ class IndexAction extends BaseAction
             if ($this->_config['queryObj'] instanceof QueryInterface) {
                 $query = $this->_config['queryObj'];
             } else {
-                $query = $this->model()->find();
+                $query = $this->model()->selectQuery();
                 $query->applyOptions(['contain' => $this->_config['contain']]);
                 $query->applyOptions($this->_config['query']);
             }
@@ -216,19 +219,19 @@ class IndexAction extends BaseAction
                 $result = $query->all();
             }
 
-            $result->each(function ($row) {
+            foreach ($result->items() as $row) {
                 $row->set('_actions_', $this->buildTableRowActions($row));
-            });
+            }
         }
 
         return $result;
     }
 
     /**
-     * @param array $row Table row data
+     * @param mixed $row Table row data
      * @return array List of named actions
      */
-    public function buildTableRowActions($row)
+    public function buildTableRowActions(mixed $row): array
     {
         $actions = [];
         /** @var \Admin\Controller\Component\ActionComponent $actionComponent */
@@ -271,5 +274,4 @@ class IndexAction extends BaseAction
 
         return $actions;
     }
-
 }

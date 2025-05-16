@@ -5,6 +5,7 @@ namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
+use Cake\Http\Response;
 
 /**
  * Class PublishAction
@@ -13,7 +14,7 @@ use Cake\Datasource\EntityInterface;
  */
 class PublishAction extends BaseEntityAction
 {
-    public $scope = ['table'];
+    protected array $scope = ['table'];
 
     /**
      * @inheritDoc
@@ -34,7 +35,7 @@ class PublishAction extends BaseEntityAction
     /**
      * @inheritDoc
      */
-    public function isUsable(EntityInterface $entity)
+    public function isUsable(EntityInterface $entity): bool
     {
         return !$entity->get('is_published');
     }
@@ -42,7 +43,7 @@ class PublishAction extends BaseEntityAction
     /**
      * @inheritDoc
      */
-    protected function _execute(Controller $controller)
+    protected function _execute(Controller $controller): ?Response
     {
         if (!$this->model()->hasBehavior('Publish')) {
             $controller->Flash->error('Publish behavior not loaded for model ' . $this->model()->getAlias());
@@ -64,5 +65,7 @@ class PublishAction extends BaseEntityAction
         }
 
         $controller->set('entity', $entity);
+
+        return null;
     }
 }

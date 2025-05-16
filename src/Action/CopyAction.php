@@ -5,6 +5,7 @@ namespace Admin\Action;
 
 use Cake\Controller\Controller;
 use Cake\Http\Exception\NotImplementedException;
+use Cake\Http\Response;
 
 /**
  * Class CopyAction
@@ -17,10 +18,10 @@ use Cake\Http\Exception\NotImplementedException;
  */
 class CopyAction extends BaseEntityAction
 {
-    public $scope = ['table'];
+    protected array $scope = ['table'];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
@@ -28,7 +29,7 @@ class CopyAction extends BaseEntityAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getAttributes(): array
     {
@@ -36,10 +37,10 @@ class CopyAction extends BaseEntityAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    protected function _execute(Controller $controller)
+    protected function _execute(Controller $controller): ?Response
     {
-        throw new NotImplementedException(self::class . " not implemented");
+        throw new NotImplementedException(self::class . ' not implemented');
     }
 }

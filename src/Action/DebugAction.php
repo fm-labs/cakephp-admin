@@ -8,6 +8,7 @@ use Admin\Action\Interfaces\EntityActionInterface;
 use Admin\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
+use Cake\Http\Response;
 
 class DebugAction extends BaseEntityAction implements ActionInterface, IndexActionInterface, EntityActionInterface
 {
@@ -38,23 +39,23 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
     /**
      * @inheritDoc
      */
-    public function isUsable(EntityInterface $entity)
+    public function isUsable(EntityInterface $entity): bool
     {
         return true;
     }
 
     /**
      * @param \Cake\Controller\Controller $controller
-     * @return \Cake\Http\Response|void|null
+     * @return \Cake\Http\Response|null
      */
-    protected function _execute(Controller $controller)
+    protected function _execute(Controller $controller): ?Response
     {
         $controller->set('controller_actions', $controller->actions);
 
         // Actions
         $actionsLoaded = [];
         $actions = $controller->Action->listActions();
-        array_walk($actions, function ($action) use (&$actionsLoaded, &$controller) {
+        array_walk($actions, function ($action) use (&$actionsLoaded, &$controller): void {
             $a = $controller->Action->getAction($action);
             $actionsLoaded[$action] = [
                 'class' => get_class($a),
@@ -73,5 +74,7 @@ class DebugAction extends BaseEntityAction implements ActionInterface, IndexActi
             $controller->set('model_class', $controller->modelClass);
             $controller->set('model_schema', $schema);
         }
+
+        return null;
     }
 }

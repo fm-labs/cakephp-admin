@@ -6,16 +6,16 @@ namespace Admin\Action;
 use Cake\Controller\Controller;
 use Cake\Datasource\EntityInterface;
 use Cake\Datasource\Exception\RecordNotFoundException;
-use Cake\Http\Exception\NotFoundException;
+use Cake\Http\Response;
 
 class DeleteAction extends BaseEntityAction
 {
-    protected $_defaultConfig = [];
+    protected array $defaultConfig = [];
 
-    public $scope = ['table', 'form'];
+    protected array $scope = ['table', 'form'];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
@@ -23,14 +23,14 @@ class DeleteAction extends BaseEntityAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getAttributes(): array
     {
         return ['data-icon' => 'trash', 'class' => 'action-danger'];
     }
 
-    protected function _execute(Controller $controller)
+    protected function _execute(Controller $controller): ?Response
     {
         try {
             $entity = $this->entity();
@@ -39,17 +39,18 @@ class DeleteAction extends BaseEntityAction
                     if ($entity instanceof EntityInterface) {
                         if ($this->model()->delete($entity)) {
                             $controller->Flash->success(__d('admin', 'Deleted'));
+
                             return $controller->redirect(['action' => 'index']);
                         } else {
-                            $controller->Flash->error(__d('admin', "Failed to delete record(s)"));
+                            $controller->Flash->error(__d('admin', 'Failed to delete record(s)'));
                         }
                     } else {
-                        $controller->Flash->error(__d('admin', "Delete failed. No entity selected"));
+                        $controller->Flash->error(__d('admin', 'Delete failed. No entity selected'));
                     }
 
                     //return $controller->redirect($controller->referer(['action' => 'index']));
                 } else {
-                    $controller->Flash->error(__d('admin', "You must confirm to delete record"));
+                    $controller->Flash->error(__d('admin', 'You must confirm to delete record'));
                 }
             }
 
@@ -59,8 +60,11 @@ class DeleteAction extends BaseEntityAction
                 'defaultTable' => $this->model()->getRegistryAlias(),
             ]);
         } catch (RecordNotFoundException $ex) {
-            $controller->Flash->error(__d('admin', "Record not found"));
+            $controller->Flash->error(__d('admin', 'Record not found'));
+
             return $controller->redirect($controller->referer(['action' => 'index']));
         }
+
+        return null;
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 use Cake\ORM\Association;
 use Cake\Utility\Inflector;
 
@@ -14,12 +15,12 @@ use Cake\Utility\Inflector;
  */
 class EditAction extends BaseEntityAction
 {
-    public $scope = ['table', 'form'];
+    protected array $scope = ['table', 'form'];
 
     /**
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $defaultConfig = [
         'modelClass' => null,
         'modelId' => null,
         'actions' => [],
@@ -55,10 +56,10 @@ class EditAction extends BaseEntityAction
 
     /**
      * @param \Cake\Controller\Controller $controller Controller instance
-     * @return \Cake\Http\Response|void|null
+     * @return \Cake\Http\Response|null
      * @throws \Exception
      */
-    protected function _execute(Controller $controller)
+    protected function _execute(Controller $controller): ?Response
     {
         $entity = $this->entity();
         $viewVars = $controller->viewBuilder()->getVars();
@@ -113,7 +114,7 @@ class EditAction extends BaseEntityAction
             $entity = $this->model()->patchEntity(
                 $entity,
                 $this->request->getData(),
-                ['validate' => $this->_config['model.validator']]
+                ['validate' => $this->_config['model.validator']],
             );
             if ($this->model()->save($entity)) {
                 $this->flashSuccess(__d('admin', 'Saved!'));
@@ -137,13 +138,15 @@ class EditAction extends BaseEntityAction
             ['Cake\Utility\Inflector', 'dasherize'],
             array_map(
                 ['Cake\Utility\Inflector', 'underscore'],
-                ['form', $request->getParam('controller'), $request->getParam('action')]
-            )
+                ['form', $request->getParam('controller'), $request->getParam('action')],
+            ),
         ));
+
+        $configuredFormOptions = $this->_config['form.options'] ?? [];
         $formOptions = array_merge([
             'horizontal' => true,
             'id' => $formId,
-        ], $this->_config['form.options']);
+        ], $configuredFormOptions);
 
         // associated
         /** @var \Cake\ORM\Association $assoc */
@@ -201,6 +204,8 @@ class EditAction extends BaseEntityAction
         $controller->set('form.options', $formOptions);
         $controller->set('fields', $fields);
         $controller->set('entity', $entity);
-        $controller->set('modelClass', $controller->loadModel()->getRegistryAlias());
+        $controller->set('modelClass', $controller->fetchTable()->getRegistryAlias());
+
+        return null;
     }
 }

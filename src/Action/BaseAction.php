@@ -7,51 +7,55 @@ use Admin\Action\Interfaces\ActionInterface;
 use Admin\Action\Interfaces\EntityActionInterface;
 use Admin\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
-use Cake\Core\Exception\CakeException;
 use Cake\Core\InstanceConfigTrait;
+use Cake\Http\Response;
+use Cake\Http\ServerRequest;
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
+use ReflectionClass;
+use RuntimeException;
+use function Cake\Core\deprecationWarning;
 
 abstract class BaseAction implements ActionInterface
 {
     use InstanceConfigTrait;
 
-    protected $_defaultConfig = [];
+    protected array $_defaultConfig = [];
 
     /**
      * @var string Action label
      */
-    protected $label;
+    protected string $label;
 
     /**
      * @var string|null Action plugin
      */
-    protected ?string $plugin = "Admin";
+    protected ?string $plugin = 'Admin';
 
     /**
-     * @var Controller|null Active controller. Available only after setController() has been called.
+     * @var \Cake\Controller\Controller|null Active controller. Available only after setController() has been called.
      */
     protected ?Controller $controller = null;
 
     /**
      * @var \Cake\Http\ServerRequest|null Active request. Available only after setController() has been called.
      */
-    protected ?\Cake\Http\ServerRequest $request = null;
+    protected ?ServerRequest $request = null;
 
     /**
      * @var array List of action scopes
      */
-    protected $scope = [];
+    protected array $scope = [];
 
     /**
      * @var string Name of the action view template
      */
-    protected $template = null;
+    protected ?string $template = null;
 
     /**
      * @var string|null Action view template path
      */
-    protected ?string $templatePath = "Action";
+    protected ?string $templatePath = 'Action';
 
     /**
      * @var \Cake\ORM\Table|null
@@ -67,7 +71,7 @@ abstract class BaseAction implements ActionInterface
     }
 
 //    /**
-//     * @return \Cake\Http\Response|void|null
+//     * @return \Cake\Http\Response|null
 //     */
 //    public function __invoke()
 //    {
@@ -78,13 +82,15 @@ abstract class BaseAction implements ActionInterface
      * Execute the action in context of controller.
      * Subclasses SHOULD call this parent method in order to properly use the convenience methods in this class.
      *
-     * @param Controller $controller Active controller
-     * @return \Cake\Http\Response|void|null
+     * @param \Cake\Controller\Controller $controller Active controller
+     * @return \Cake\Http\Response|null
      */
-    public function execute(Controller $controller)
+    public function execute(Controller $controller): ?Response
     {
         //$this->mergeControllerVars();
         $this->setController($controller);
+
+        return null;
     }
 
     /**
@@ -154,9 +160,10 @@ abstract class BaseAction implements ActionInterface
      * @param mixed $val
      * @return $this
      */
-    public function setVar(string $key, mixed $val): static
+    public function setVar(string $key, mixed $val)
     {
         $this->getController()->viewBuilder()->setVar($key, $val);
+
         return $this;
     }
 
@@ -165,9 +172,10 @@ abstract class BaseAction implements ActionInterface
      * @param bool $merge
      * @return $this
      */
-    public function setVars(array $data, bool $merge = true): static
+    public function setVars(array $data, bool $merge = true)
     {
         $this->getController()->viewBuilder()->setVars($data, $merge);
+
         return $this;
     }
 
@@ -178,20 +186,20 @@ abstract class BaseAction implements ActionInterface
      * @param mixed $val
      * @return $this
      */
-    public function set(string $key, mixed $val): static
+    public function set(string $key, mixed $val)
     {
         // legacy workaround
-        if ($key === "fields.whitelist") {
-            \Cake\Core\deprecationWarning("The `fields.whitelist` option is deprecated. Use `include` instead.");
-            $key = "include";
-        } elseif ($key === "fields.blacklist") {
-            \Cake\Core\deprecationWarning("The `fields.blacklist` option is deprecated. Use `exclude` instead.");
-            $key = "exclude";
+        if ($key === 'fields.whitelist') {
+            deprecationWarning('4.0.1', 'The `fields.whitelist` option is deprecated. Use `include` instead.');
+            $key = 'include';
+        } elseif ($key === 'fields.blacklist') {
+            deprecationWarning('4.0.1', 'The `fields.blacklist` option is deprecated. Use `exclude` instead.');
+            $key = 'exclude';
         }
 
         if (in_array($key, array_keys($this->_defaultConfig))) {
             //debug("Trying to set config variable as template variable: {$key}");
-            \Cake\Core\deprecationWarning("Trying to set config variable as template variable: {$key}");
+            deprecationWarning("Trying to set config variable as template variable: {$key}");
             //$this->_config[$key] = $val;
             $this->setConfig($key, $val);
         }
@@ -281,7 +289,7 @@ abstract class BaseAction implements ActionInterface
      * @param string|null $templatePath Action template path
      * @return $this
      */
-    public function setTemplate(string $template, ?string $templatePath = null): static
+    public function setTemplate(string $template, ?string $templatePath = null)
     {
         //[$plugin, $template] = pluginSplit($template);
         //$this->plugin = $plugin;
@@ -294,24 +302,24 @@ abstract class BaseAction implements ActionInterface
     /**
      * Controller accessor.
      *
-     * @return Controller
+     * @return \Cake\Controller\Controller
      * @deprecated Use getController() instead.
      */
     public function controller(): Controller
     {
-        \Cake\Core\deprecationWarning("BaseAction::controller() is deprecated. Use getController() instead.");
+        deprecationWarning('4.0.1', 'BaseAction::controller() is deprecated. Use getController() instead.');
 
         return $this->getController();
     }
 
     /**
-     * @return Controller
+     * @return \Cake\Controller\Controller
      */
     public function getController(): Controller
     {
         if (!$this->controller) {
-            throw new \RuntimeException(
-                "Controller not loaded. The action must be executed in order to access the controller object."
+            throw new RuntimeException(
+                'Controller not loaded. The action must be executed in order to access the controller object.',
             );
         }
 
@@ -319,10 +327,10 @@ abstract class BaseAction implements ActionInterface
     }
 
     /**
-     * @param Controller|null $controller
+     * @param \Cake\Controller\Controller|null $controller
      * @return $this
      */
-    public function setController(?Controller $controller): static
+    public function setController(?Controller $controller)
     {
         $this->controller = $controller;
         $this->request = $controller->getRequest();
@@ -347,7 +355,8 @@ abstract class BaseAction implements ActionInterface
         return $this->table;
     }
 
-    protected function detectModelClass() {
+    protected function detectModelClass()
+    {
         $modelClass = $this->getConfig('modelClass');
         if (!$modelClass) {
             $modelClass = $this->get('modelClass');
@@ -356,7 +365,7 @@ abstract class BaseAction implements ActionInterface
         if (!$modelClass && $this->controller) {
             // get protected defaultTable member via reflection
             //$modelClass = $this->controller->defaultTable ?: null;
-            $reflection = new \ReflectionClass($this->controller);
+            $reflection = new ReflectionClass($this->controller);
             if ($reflection->hasProperty('defaultTable')) {
                 $property = $reflection->getProperty('defaultTable');
                 $property->setAccessible(true);
@@ -366,7 +375,7 @@ abstract class BaseAction implements ActionInterface
         }
         if (!$modelClass && $this->controller) {
             //$modelClass = $this->controller->modelClass ?: null;
-            $reflection = new \ReflectionClass($this->controller);
+            $reflection = new ReflectionClass($this->controller);
             if ($reflection->hasProperty('modelClass')) {
                 $property = $reflection->getProperty('modelClass');
                 $property->setAccessible(true);
@@ -374,16 +383,17 @@ abstract class BaseAction implements ActionInterface
                 $property->setAccessible(false);
             }
         }
+
         return $modelClass;
     }
 
     /**
      * Convenience method for redirecting
      *
-     * @param string|array|null $url Redirect URL
+     * @param array|string|null $url Redirect URL
      * @return \Cake\Http\Response
      */
-    protected function redirect($url)
+    protected function redirect(string|array|null $url): Response
     {
         return $this->getController()->redirect($url);
     }
@@ -394,7 +404,7 @@ abstract class BaseAction implements ActionInterface
      * @param string|null $msg The flash message
      * @return void
      */
-    protected function flashSuccess(string $msg = null): void
+    protected function flashSuccess(?string $msg = null): void
     {
         $msg = $msg ?: __d('admin', 'Ok');
         $this->getController()->Flash->success($msg);
@@ -406,7 +416,7 @@ abstract class BaseAction implements ActionInterface
      * @param string|null $msg The flash message
      * @return void
      */
-    protected function flashError(string $msg = null): void
+    protected function flashError(?string $msg = null): void
     {
         $msg = $msg ?: __d('admin', 'Failed');
         $this->getController()->Flash->error($msg);
@@ -416,7 +426,7 @@ abstract class BaseAction implements ActionInterface
      * @param array $columns Columns schema
      * @return array
      */
-    protected function _normalizeColumns(array $columns)
+    protected function _normalizeColumns(array $columns): array
     {
         $normalized = [];
         foreach ($columns as $col => $conf) {

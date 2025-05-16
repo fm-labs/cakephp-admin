@@ -7,11 +7,13 @@ use Admin\Action\Interfaces\EntityActionInterface;
 use Admin\Action\Traits\EntityActionFilterTrait;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
-use Cake\Error\Debugger;
+use Cake\Datasource\EntityInterface;
 use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Response;
 use Cake\I18n\I18n;
 use Cake\Utility\Inflector;
 use Cake\Utility\Text;
+use Exception;
 
 abstract class BaseEntityAction extends BaseAction implements EntityActionInterface
 {
@@ -20,17 +22,17 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     /**
      * @var string
      */
-    protected $_action;
+    protected ?string $_action;
 
     /**
      * @var \Cake\Datasource\EntityInterface
      */
-    protected $_entity;
+    protected ?EntityInterface $_entity = null;
 
     /**
      * @var array List of enabled scopes
      */
-    protected $scope = ['table', 'form'];
+    protected array $scope = ['table', 'form'];
 
     /**
      * @inheritDoc
@@ -49,7 +51,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         }
     }
 
-    public function getUrl($id)
+    public function getUrl($id): array|string
     {
         return ['action' => $this->getConfig('_action'), $id];
     }
@@ -57,7 +59,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     /**
      * @inheritDoc
      */
-    public function entity()
+    public function entity(): EntityInterface
     {
         $controller = $this->getController();
         if (!$this->_entity) {
@@ -77,11 +79,11 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
                 //Debugger::dump(Debugger::trace());
                 //debug($this->_config);
                 if (!$this->_config['modelId']) {
-                    throw new \Exception(static::class . ' has no model ID defined');
+                    throw new Exception(static::class . ' has no model ID defined');
                 }
                 $options = $this->_config['entityOptions'] ?? [];
                 $options['contain'] = $this->_config['contain'] ?? [];
-                $this->_entity = $this->model()->get($this->_config['modelId'], $options);
+                $this->_entity = $this->model()->get($this->_config['modelId'], ...$options);
             }
         }
 
@@ -91,7 +93,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     /**
      * @inheritDoc
      */
-    public function execute(Controller $controller)
+    public function execute(Controller $controller): ?\Cake\Http\Response
     {
         parent::execute($controller);
 
@@ -107,7 +109,6 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             // detect model class and load entity
             $this->_config['modelClass'] = $this->_config['modelClass'] ?? null;
             if (!$this->_config['modelClass']) {
-                //$this->_config['modelClass'] = $controller->loadModel()->getRegistryAlias();
                 $this->_config['modelClass'] = $controller->fetchTable()->getRegistryAlias();
             }
 
@@ -183,25 +184,27 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
             return $this->_execute($controller);
         } catch (\Cake\Core\Exception\Exception $ex) {
             throw $ex;
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             debug($ex->getMessage());
             $controller->Flash->error($ex->getMessage());
             //$controller->redirect($controller->referer());
         }
+
+        return null;
     }
 
     /**
      * @param \Cake\Controller\Controller $controller Controller instance
-     * @return null|void|\Cake\Http\Response
+     * @return \Cake\Http\Response|null
      */
-    abstract protected function _execute(Controller $controller);
+    abstract protected function _execute(Controller $controller): ?Response;
 
     /**
      * @param string $tokenStr String template
      * @param array $data Data
-     * @return string
+     * @return array|string
      */
-    protected function _replaceTokens($tokenStr, $data = [])
+    protected function _replaceTokens(string $tokenStr, array $data = []): string|array
     {
         if (is_array($tokenStr)) {
             foreach ($tokenStr as &$_tokenStr) {
@@ -214,7 +217,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
         // extract tokenized vars from data and cast them to their string representation
         preg_match_all('/:(\w+)/', $tokenStr, $matches);
         $inserts = array_intersect_key($data, array_flip(array_values($matches[1])));
-        array_walk($inserts, function (&$val) {
+        array_walk($inserts, function (&$val): void {
             $val = (string)$val;
         });
 

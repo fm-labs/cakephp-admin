@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 
 /**
  * Class TreeRepairAction
@@ -13,7 +14,7 @@ use Cake\Controller\Controller;
 class TreeRepairAction extends BaseIndexAction
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
@@ -21,7 +22,7 @@ class TreeRepairAction extends BaseIndexAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getAttributes(): array
     {
@@ -29,9 +30,9 @@ class TreeRepairAction extends BaseIndexAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function _execute(Controller $controller)
+    public function _execute(Controller $controller): ?Response
     {
         if ($this->model()->hasBehavior('Tree')) {
             $this->model()->recover();

@@ -5,6 +5,8 @@ namespace Admin\Action;
 
 use Admin\Action\Interfaces\IndexActionInterface;
 use Cake\Controller\Controller;
+use Cake\Http\Response;
+use Exception;
 
 /**
  * Class BaseIndexAction
@@ -16,7 +18,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
     /**
      * @var array
      */
-    protected $_defaultConfig = [
+    protected array $_defaultConfig = [
         'actions' => [],
         'rowActions' => [],
         'fields' => [],
@@ -27,12 +29,12 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
     /**
      * @var array List of enabled scopes
      */
-    public $scope = ['table', 'form'];
+    public array $scope = ['table', 'form'];
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function execute(Controller $controller)
+    public function execute(Controller $controller): ?\Cake\Http\Response
     {
         parent::execute($controller);
 
@@ -88,7 +90,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
         $response = null;
         try {
             $response = $this->_execute($controller);
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $controller->Flash->error($ex->getMessage());
         } finally {
         }
@@ -98,8 +100,7 @@ abstract class BaseIndexAction extends BaseAction implements IndexActionInterfac
 
     /**
      * @param \Cake\Controller\Controller $controller Controller instance
-     * @return null|void|\Cake\Http\Response
+     * @return \Cake\Http\Response|null
      */
-    abstract protected function _execute(Controller $controller);
-
+    abstract protected function _execute(Controller $controller): ?Response;
 }

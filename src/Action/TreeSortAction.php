@@ -4,15 +4,18 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
+use Exception;
 
 /**
  * Class TreeSortAction
+ *
  * @package Admin\Action
  */
 class TreeSortAction extends IndexAction
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
@@ -20,7 +23,7 @@ class TreeSortAction extends IndexAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getAttributes(): array
     {
@@ -30,16 +33,16 @@ class TreeSortAction extends IndexAction
     /**
      * @param \Cake\Controller\Controller $controller
      */
-    public function _execute(Controller $controller)
+    public function _execute(Controller $controller): ?Response
     {
         try {
             if (!$this->model()->behaviors()->has('Tree')) {
                 $controller->Flash->error(__d('admin', 'Model {0} has no Tree behavior attached', $controller->modelClass));
             }
-        } catch (\Exception $ex) {
+        } catch (Exception $ex) {
             $controller->Flash->error(__d('admin', 'Failed to load model {0}', $this->model()->getAlias()));
 
-            return;
+            return null;
         }
 
         $controller->set('dataUrl', ['plugin' => 'Admin', 'controller' => 'Tree', 'action' => 'jstreeData', 'model' => $controller->modelClass]);

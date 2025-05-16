@@ -6,12 +6,13 @@ namespace Admin\Action;
 use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
+use Cake\Http\Response;
 
 class ManageAction extends BaseEntityAction implements EventListenerInterface
 {
-    public $scope = ['table', 'form'];
+    protected array $scope = ['table', 'form'];
 
-    protected $_defaultConfig = [
+    protected array $defaultConfig = [
         'entity' => null,
         'entityOptions' => [],
         'modelClass' => null,
@@ -20,10 +21,10 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
         'tabs' => [],
     ];
 
-    public $template = "Admin.manage";
+    public ?string $template = 'Admin.manage';
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
@@ -31,7 +32,7 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getAttributes(): array
     {
@@ -39,9 +40,9 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    public function _execute(Controller $controller)
+    public function _execute(Controller $controller): ?Response
     {
         $entity = $this->entity();
 
@@ -55,9 +56,11 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
         $controller->set('tabs', $this->_config['tabs']);
         $controller->set('entity', $entity);
         $controller->viewBuilder()->setOption('serialize', ['entity']);
+
+        return null;
     }
 
-    public function beforeRender(Event $event)
+    public function beforeRender(Event $event): void
     {
         $entity = $event->getSubject()->viewVars['entity'];
         $modelClass = $event->getSubject()->viewVars['modelClass'];

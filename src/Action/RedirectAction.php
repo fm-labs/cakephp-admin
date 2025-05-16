@@ -4,11 +4,12 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 
 class RedirectAction extends BaseEntityAction
 {
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getLabel(): string
     {
@@ -16,7 +17,7 @@ class RedirectAction extends BaseEntityAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
     public function getAttributes(): array
     {
@@ -24,9 +25,9 @@ class RedirectAction extends BaseEntityAction
     }
 
     /**
-     * {@inheritDoc}
+     * @inheritDoc
      */
-    protected function _execute(Controller $controller)
+    protected function _execute(Controller $controller): ?Response
     {
         debug(get_class($controller));
         $redirect = $controller->redirect($controller->referer(['action' => 'index']));

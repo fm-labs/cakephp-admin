@@ -133,11 +133,11 @@ class ToolbarHelper extends Helper
      * Add a new toolbar link item.
      *
      * @param array|string $title Link title
-     * @param string|null $url Link Url
+     * @param array|string $url Link Url
      * @param array $attr Link attributes
      * @return $this
      */
-    public function addLink(string|array $title, ?string $url = null, array $attr = [])
+    public function addLink(string|array $title, string|array|null $url = null, array $attr = [])
     {
         if ($this->_grouping === true) {
             return $this;

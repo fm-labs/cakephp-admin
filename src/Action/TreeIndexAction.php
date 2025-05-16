@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Admin\Action;
 
 use Cake\Controller\Controller;
+use Cake\Http\Response;
 
 class TreeIndexAction extends IndexAction
 {
@@ -12,7 +13,7 @@ class TreeIndexAction extends IndexAction
         return __d('admin', 'Index');
     }
 
-    public function _execute(Controller $controller)
+    public function _execute(Controller $controller): ?Response
     {
         $displayField = $this->model()->getDisplayField();
 
@@ -32,6 +33,6 @@ class TreeIndexAction extends IndexAction
             $this->_config['include'] = array_keys($this->_config['fields']);
         }
 
-        parent::_execute($controller);
+       return parent::_execute($controller);
     }
 }

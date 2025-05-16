@@ -8,7 +8,7 @@ use Cake\Controller\Controller;
 
 class DashboardAction extends BaseAction
 {
-    //public $template = "Admin.Action/dashboard";
+    //public ?string $template = "Admin.Action/dashboard";
 
     /**
      * @return string
@@ -22,9 +22,11 @@ class DashboardAction extends BaseAction
      * @param \Cake\Controller\Controller $controller
      * @return void
      */
-    public function execute(Controller $controller)
+    public function execute(Controller $controller): ?\Cake\Http\Response
     {
         $controller->viewBuilder()->addHelper('Bootstrap.Button');
         $controller->viewBuilder()->addHelper('Sugar.Box');
+
+        return null;
     }
 }

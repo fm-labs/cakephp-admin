@@ -6,6 +6,7 @@ namespace Admin\Action;
 use Admin\Action\Interfaces\ActionInterface;
 use Cake\Core\App;
 use Cake\Core\ObjectRegistry;
+use Generator;
 use RuntimeException;
 
 /**
@@ -50,7 +51,7 @@ class ActionRegistry extends ObjectRegistry
      *
      * Part of the template method for Cake\Core\ObjectRegistry::load()
      *
-     * @param string|\Admin\Action\Interfaces\ActionInterface $class The classname or object to make.
+     * @param \Admin\Action\Interfaces\ActionInterface|string $class The classname or object to make.
      * @param string $alias The alias of the object.
      * @param array $settings An array of settings to use for the action.
      * @return \Admin\Action\Interfaces\ActionInterface The constructed action class.
@@ -75,7 +76,7 @@ class ActionRegistry extends ObjectRegistry
         }
 
         throw new RuntimeException(
-            'Action ' . $alias . ' must implement ActionInterface.'
+            'Action ' . $alias . ' must implement ActionInterface.',
         );
     }
 
@@ -83,7 +84,7 @@ class ActionRegistry extends ObjectRegistry
      * @param string $className Class or Interface to inherit from
      * @return \Generator
      */
-    public function with(string $className = ActionInterface::class): \Generator
+    public function with(string $className = ActionInterface::class): Generator
     {
         foreach ($this->loaded() as $actionName) {
             $action = $this->get($actionName);

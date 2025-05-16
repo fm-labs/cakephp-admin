@@ -7,12 +7,14 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Event\EventListenerInterface;
 use Cake\Http\Exception\BadRequestException;
+use Cake\Http\Response;
 use Cake\ORM\Association;
 
 class ViewAction extends BaseEntityAction implements EventListenerInterface
 {
-    protected $scope = ['table', 'form'];
-    protected $_defaultConfig = [
+    protected array $scope = ['table', 'form'];
+
+    protected array $defaultConfig = [
         'modelClass' => null,
         'modelId' => null,
         'label' => null,
@@ -43,13 +45,14 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
     public function getAttributes(): array
     {
         $attrs = $this->getConfig('attrs', []);
+
         return array_merge($this->_defaultAttrs, $attrs);
     }
 
     /**
      * @inheritDoc
      */
-    public function _execute(Controller $controller)
+    public function _execute(Controller $controller): ?Response
     {
         if (!isset($this->_config['related'])) {
             $related = [];
@@ -87,9 +90,11 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
 
         $controller->set('title', $entity->get($this->model()->getDisplayField()));
         $controller->viewBuilder()->setOption('serialize', ['entity']);
+
+        return null;
     }
 
-    public function beforeRender(Event $event)
+    public function beforeRender(Event $event): void
     {
         $entity = $event->getSubject()->viewVars['entity'];
         $modelClass = $event->getSubject()->viewVars['modelClass'];
@@ -103,7 +108,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
     public function implementedEvents(): array
     {
         return [
-            'Controller.beforeRender' => 'beforeRender'
+            'Controller.beforeRender' => 'beforeRender',
         ];
     }
 }

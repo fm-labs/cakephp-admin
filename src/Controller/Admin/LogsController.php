@@ -13,7 +13,7 @@ class LogsController extends AppController
     /**
      * @var array
      */
-    public $permissions = [
+    public array $permissions = [
         'index' => ['logs.view'],
         'view' => ['logs.view'],
         'clear' => ['logs.edit'],
@@ -23,18 +23,18 @@ class LogsController extends AppController
 
     public $actions = []; //@TODO Disable ActionComponent
 
-    public $modelClass = false;
+    public ?string $defaultTable = null;
 
     /**
      * @var string
      */
-    public $logDir = LOGS;
+    public string $logDir = LOGS;
 
     /**
-     * @param $logFile
-     * @return bool|string
+     * @param string $logFile
+     * @return string|bool
      */
-    protected function _getFilePath($logFile)
+    protected function _getFilePath(string $logFile)
     {
         $logFile .= '.log';
         $path = realpath($this->logDir . $logFile);
@@ -60,20 +60,39 @@ class LogsController extends AppController
     {
         $logDir = $this->logDir;
 
-        $Folder = new Folder($logDir, false);
-        $logFiles = $Folder->find('.*.log(\.[0-9])?', true);
+        //$Folder = new Folder($logDir, false);
+        //$logFiles = $Folder->find('.*.log(\.[0-9])?', true);
+
+        $logFiles = [];
+        $handle = opendir($logDir);
+        if (!$handle) {
+            $this->Flash->error(__d('admin', 'Failed to open log directory {0}', $logDir));
+
+            return;
+        }
+
+        while (($file = readdir($handle)) !== false) {
+            if (preg_match('/.*\.log(\.[0-9])?$/', $file)) {
+                $logFiles[] = $file;
+            }
+        }
+        closedir($handle);
 
         $files = [];
         foreach ($logFiles as $logFile) {
-            $F = new File($logDir . $logFile);
+            //$F = new File($logDir . $logFile);
+            $logFile = $logDir . $logFile;
+            $fileSize = filesize($logFile);
+            $lastModified = filemtime($logFile);
+            $lastAccess = fileatime($logFile);
 
             $file = [
                 'id' => basename($logFile, '.log'),
                 'name' => $logFile,
                 //'dir' => $logDir,
-                'size' => $F->size(),
-                'last_modified' => $F->lastChange(),
-                'last_access' => $F->lastAccess(),
+                'size' => $fileSize,
+                'last_modified' => $lastModified,
+                'last_access' => $lastAccess,
             ];
             array_push($files, $file);
         }
@@ -87,9 +106,9 @@ class LogsController extends AppController
     /**
      * View log file
      *
-     * @param null $logFile
+     * @param string|null $logFile
      */
-    public function view($logFile = null)
+    public function view(?string $logFile = null): void
     {
         if (!$logFile) {
             $this->Flash->error(__d('admin', 'No logFile selected'));
@@ -117,10 +136,10 @@ class LogsController extends AppController
     /**
      * Clear log file
      *
-     * @param null $logFile
+     * @param string|null $logFile
      * @return \Cake\Http\Response|null
      */
-    public function clear($logFile = null)
+    public function clear(?string $logFile = null)
     {
         if (!$logFile) {
             $this->Flash->error(__d('admin', 'No logFile selected'));
@@ -135,7 +154,7 @@ class LogsController extends AppController
         }
 
         $File = new File($filePath, false);
-        if ($File->write("")) {
+        if ($File->write('')) {
             $this->Flash->success(__d('admin', 'Logfile {0} cleared', $logFile));
         } else {
             $this->Flash->error(__d('admin', 'Failed to clear logFile {0}', $logFile));
@@ -146,9 +165,9 @@ class LogsController extends AppController
     /**
      * Delete log file
      *
-     * @param null $logFile
+     * @param string|null $logFile
      */
-    public function delete($logFile = null)
+    public function delete(string $logFile = null)
     {
         if (!$logFile) {
             $this->Flash->error(__d('admin', 'No logFile selected'));
@@ -165,10 +184,10 @@ class LogsController extends AppController
     }
 
     /**
-     * @param null $alias
+     * @param string|null $alias
      * @deprecated
      */
-    public function rotate($alias = null)
+    public function rotate(?string $alias = null)
     {
         /*
         $L = new LogRotation($alias);

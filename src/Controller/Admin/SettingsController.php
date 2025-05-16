@@ -4,19 +4,18 @@ declare(strict_types=1);
 namespace Admin\Controller\Admin;
 
 use Cake\Core\Exception\MissingPluginException;
-use Cake\Event\EventInterface;
+use Cake\Core\Plugin;
 
 /**
  * Class SettingsController
  *
  * @package Admin\Controller\Admin
  * @property \Settings\Model\Table\SettingsTable $Settings
- *
  * @deprecated
  */
 class SettingsController extends AppController
 {
-    public $modelClass = 'Settings.Settings';
+    public ?string $defaultTable = 'Settings.Settings';
 
     /**
      * @throws \Exception
@@ -26,7 +25,7 @@ class SettingsController extends AppController
     {
         parent::initialize();
 
-        if (!\Cake\Core\Plugin::isLoaded('Settings')) {
+        if (!Plugin::isLoaded('Settings')) {
             throw new MissingPluginException(['plugin' => 'Settings']);
         }
     }

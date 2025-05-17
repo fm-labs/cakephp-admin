@@ -68,6 +68,10 @@ class FormatterHelper extends Helper
 
         // date
         self::register('date', function ($val, $extra, $params) {
+            if ($val === null || !$val) {
+                return '';
+            }
+
             //$format = null;
             //$format = 'MM.dd.yyyy';
             $format = 'yyyy-MM-dd';
@@ -81,6 +85,10 @@ class FormatterHelper extends Helper
             return (string)$val;
         });
         self::register('datetime', function ($val, $extra, $params) {
+            if ($val === null || !$val) {
+                return '';
+            }
+
             $format = null;
             //$format = 'yyyy-MM-dd HH:mm:ss';
             //$format = 'MM.dd.yyyy HH:mm:ss';
@@ -121,12 +129,20 @@ class FormatterHelper extends Helper
 
         // number
         self::register('number', function ($val, $extra, $params) {
+            if ($val === null || !$val) {
+                return '';
+            }
+
             return $this->Number->format($val, $params);
         });
 
         // truncate
         // @todo make span html wrapper optional
         self::register('truncate', function ($val, $extra, $params) {
+            if ($val === null || !$val) {
+                return '';
+            }
+
             $length = is_int($params) ? $params : 300;
             $str = Text::truncate((string)$val, $length);
 
@@ -135,6 +151,10 @@ class FormatterHelper extends Helper
 
         // currency
         self::register('currency', function ($val, $extra, $params) {
+            if ($val === null || !$val) {
+                return '';
+            }
+
             $currency = $params['currency'] ?? Configure::read('Shop.defaultCurrency'); // @TODO Use App-level default currency
             $currency = !$currency && $extra && isset($extra, $params['currency_field'])
                 ? Hash::get($extra, $params['currency_field']) : $currency;
@@ -148,14 +168,26 @@ class FormatterHelper extends Helper
 
         // email
         self::register('email', function ($val, $extra, $params) {
+            if ($val === null || !$val) {
+                return '';
+            }
+
             return $val ? $this->Html->link($val, 'mailto:' . $val) : null;
         });
 
         // array
         self::register('array', function ($val, $extra, $params, $view) {
+            if ($val === null || !$val) {
+                $val = [];
+            }
             return $view->element('Admin.array_to_list', ['array' => $val]);
         });
+
         self::register('json', function ($val, $extra, $params, $view) {
+            if ($val === null || !$val) {
+               $val = [];
+            }
+
             if (is_string($val)) {
                 try {
                     $val = json_decode($val, true);
@@ -178,6 +210,9 @@ class FormatterHelper extends Helper
 
         // object
         self::register('object', function ($val, $extra, $params) {
+            if ($val === null || !$val) {
+                return '';
+            }
 
             if ($val instanceof EntityInterface) {
                 return '[entity:' . get_class($val) . ']';

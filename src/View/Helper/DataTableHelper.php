@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Admin\View\Helper;
 
+use Cake\Datasource\Paging\PaginatedInterface;
 use Cake\Event\Event;
 use Cake\ORM\Association;
 use Cake\ORM\Table;
@@ -157,6 +158,10 @@ class DataTableHelper extends Helper
 
         $this->init($params);
         $this->data($data);
+
+        if ($data instanceof PaginatedInterface) {
+            $this->Paginator->setPaginated($data);
+        }
 
         return $this;
     }
@@ -376,7 +381,7 @@ class DataTableHelper extends Helper
 
         $pagination = '';
         if ($this->_params['paginate'] && $options['pagination'] !== false) {
-            $pagination = $this->_renderPagination();
+            //$pagination = $this->_renderPagination();
         }
 
         $script = '';
@@ -955,7 +960,7 @@ class DataTableHelper extends Helper
     protected function _buildPaginationFieldLabel(string $fieldName, array $field): string
     {
         if ($this->_params['paginate'] && $this->_params['sortable']) {
-            return $this->Paginator->sort($fieldName, $field['label']);
+            //return $this->Paginator->sort($fieldName, $field['label']);
         }
 
         return h($field['label']);

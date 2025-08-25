@@ -6,6 +6,7 @@ namespace Admin\Action;
 use Admin\Action\Interfaces\EntityActionInterface;
 use Cake\Controller\Controller;
 use Cake\Datasource\QueryInterface;
+use Cake\Http\Response;
 use Cake\Utility\Hash;
 use Exception;
 use function Cake\Core\deprecationWarning;
@@ -41,13 +42,13 @@ class IndexAction extends BaseAction
         'fields.blacklist' => [],
     ];
 
-    protected $_defaultLimit = 15;
+    protected int $_defaultLimit = 15;
     //protected $_maxLimit = 1000;
 
     /**
      * @inheritDoc
      */
-    public function execute(Controller $controller): ?\Cake\Http\Response
+    public function execute(Controller $controller): ?Response
     {
         parent::execute($controller);
 
@@ -130,7 +131,7 @@ class IndexAction extends BaseAction
     /**
      * @inheritDoc
      */
-    protected function _execute(Controller $controller): ?\Cake\Http\Response
+    protected function _execute(Controller $controller): ?Response
     {
         $controller->set('dataTable', [
             'filter' => $this->_config['filter'],
@@ -219,7 +220,7 @@ class IndexAction extends BaseAction
                 $result = $query->all();
             }
 
-            foreach ($result->items() as $row) {
+            foreach ($result as $row) {
                 $row->set('_actions_', $this->buildTableRowActions($row));
             }
         }

@@ -24,12 +24,12 @@ class IndexAction extends BaseAction
         'fields' => [], // map of field column
         'exclude' => [], // list of column names to exclude
         'include' => [], // list of column names to include
-        'paginate' => true,
+        'paginate' => true, // enable pagination
+        'paginateSettings' => [], // pagination settings
         'filter' => false,
         'sortable' => true,
         'ajax' => false,
         'queryObj' => null, // table query object instance
-        'query' => [], // query options
         'filters' => [], // query conditions
         'contain' => [], // query contain param
         'limit' => null, // query limit
@@ -40,6 +40,7 @@ class IndexAction extends BaseAction
         // deprecated
         'fields.whitelist' => [],
         'fields.blacklist' => [],
+        'query' => [], // query options (deprecated, use 'paginateSettings' instead)
     ];
 
     protected int $_defaultLimit = 15;
@@ -55,10 +56,12 @@ class IndexAction extends BaseAction
         // legacy settings
         if (!empty($this->_config['fields.whitelist'])) {
             $this->_config['include'] = $this->_config['fields.whitelist'];
+            deprecationWarning('4.0.1', "Using the 'fields.whitelist' config is deprecated. Use 'include' instead.");
             unset($this->_config['fields.whitelist']);
         }
         if (!empty($this->_config['fields.blacklist'])) {
             $this->_config['exclude'] = $this->_config['fields.blacklist'];
+            deprecationWarning('4.0.1', "Using the 'fields.blacklist' config is deprecated. Use 'exclude' instead.");
             unset($this->_config['fields.blacklist']);
         }
 
@@ -110,8 +113,8 @@ class IndexAction extends BaseAction
 
         // actions
         //if ($this->_config['actions'] !== false) {
-            //$event = $controller->dispatchEvent('Admin.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);
-            //$this->_config['actions'] = (array)$event->getData('actions');
+        //$event = $controller->dispatchEvent('Admin.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);
+        //$this->_config['actions'] = (array)$event->getData('actions');
         //}
 
         //if ($this->_config['rowActions'] !== false) {
@@ -181,10 +184,10 @@ class IndexAction extends BaseAction
             //}
 
             //if ($this->_config['paginate']) {
-                //$maxLimit = $this->_maxLimit;
-                //$limit = (isset($this->_config['query']['limit'])) ? $this->_config['query']['limit'] : $this->_defaultLimit;
-                //$limit = ($limit <= $maxLimit) ? $limit : $maxLimit;
-                //$this->_config['query']['limit'] = $limit;
+            //$maxLimit = $this->_maxLimit;
+            //$limit = (isset($this->_config['query']['limit'])) ? $this->_config['query']['limit'] : $this->_defaultLimit;
+            //$limit = ($limit <= $maxLimit) ? $limit : $maxLimit;
+            //$this->_config['query']['limit'] = $limit;
             //}
 
             // build query
@@ -193,7 +196,6 @@ class IndexAction extends BaseAction
             } else {
                 $query = $this->model()->selectQuery();
                 $query->applyOptions(['contain' => $this->_config['contain']]);
-                $query->applyOptions($this->_config['query']);
             }
 
             // apply query conditions from request
@@ -215,7 +217,19 @@ class IndexAction extends BaseAction
             }
 
             if ($this->_config['paginate']) {
-                $result = $this->controller->paginate($query, $this->_config['query']);
+                // check if deprecated 'query' config is used
+                if (!empty($this->_config['query'])) {
+                    deprecationWarning('4.0.1',
+                        "Using the 'query' config is deprecated. Use 'paginateSettings' instead.");
+                    $this->_config['paginateSettings'] = array_merge((array)$this->_config['paginateSettings'], (array)$this->_config['query']);
+                    unset($this->_config['query']);
+                }
+
+                $paginateSettings = (array)$this->_config['paginateSettings'] ?? [];
+                if (!isset($paginateSettings['limit'])) {
+                    $paginateSettings['limit'] = $this->_defaultLimit;
+                }
+                $result = $this->controller->paginate($query, $paginateSettings);
             } else {
                 $result = $query->all();
             }
@@ -252,26 +266,26 @@ class IndexAction extends BaseAction
                 ];
             }
         }
-//        foreach ($this->controller->Action->actions as $action => $conf) {
-//            if ($conf['type'] != 'entity') {
-//                continue;
-//            }
-//            $actions[$action] = [
-//                'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
-//                'title' => $conf['label'],
-//                'attrs' => $conf['attrs'],
-//            ];
-//        }
-//        foreach ($this->controller->Action->listActions() as $action) {
-//            $_action = $this->controller->Action->getAction($action);
-//
-//            if ($_action instanceof EntityActionInterface && in_array('table', $_action->getScope()) /*&& $_action->isUsable($row)*/) {
-//                $actions[$action] = [
-//                    'title' => $_action->getLabel(),
-//                    'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
-//                    'attrs' => $_action->getAttributes()];
-//            }
-//        }
+        //        foreach ($this->controller->Action->actions as $action => $conf) {
+        //            if ($conf['type'] != 'entity') {
+        //                continue;
+        //            }
+        //            $actions[$action] = [
+        //                'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
+        //                'title' => $conf['label'],
+        //                'attrs' => $conf['attrs'],
+        //            ];
+        //        }
+        //        foreach ($this->controller->Action->listActions() as $action) {
+        //            $_action = $this->controller->Action->getAction($action);
+        //
+        //            if ($_action instanceof EntityActionInterface && in_array('table', $_action->getScope()) /*&& $_action->isUsable($row)*/) {
+        //                $actions[$action] = [
+        //                    'title' => $_action->getLabel(),
+        //                    'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
+        //                    'attrs' => $_action->getAttributes()];
+        //            }
+        //        }
 
         return $actions;
     }

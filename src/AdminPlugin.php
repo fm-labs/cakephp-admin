@@ -23,6 +23,7 @@ use Cake\Routing\RouteBuilder;
 use Cake\Routing\Router;
 use Cake\Utility\Inflector;
 use Cupcake\Application;
+use Cupcake\Middleware\RequestFilterMiddleware;
 use Exception;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -111,7 +112,12 @@ class AdminPlugin extends BasePlugin implements
             '/' . Admin::$urlPrefix,
             ['prefix' => 'Admin', '_namePrefix' => 'admin:'],
             function (RouteBuilder $routes): void {
-                $routes->registerMiddleware('admin_plugins', new AdminMiddleware($this->_app));
+                $routes->registerMiddleware(
+                    'admin_filter',
+                    new RequestFilterMiddleware(Configure::read('Admin.RequestFilter', [])),
+                );
+                $routes->applyMiddleware('admin_filter');
+
 
                 //if (Configure::read('Admin.Auth.authenticationEnabled')) {
                 $routes->registerMiddleware('admin_authentication', $this->buildAuthenticationMiddleware());
@@ -122,8 +128,6 @@ class AdminPlugin extends BasePlugin implements
                 //    $routes->registerMiddleware('admin_request_authorization', new RequestAuthorizationMiddleware());
                 //}
 
-                $routes->applyMiddleware('admin_plugins');
-
                 //if (Configure::read('Admin.Auth.authenticationEnabled')) {
                 $routes->applyMiddleware('admin_authentication');
                 //}
@@ -132,6 +136,9 @@ class AdminPlugin extends BasePlugin implements
                 //$routes->applyMiddleware('admin_authorization');
                 //$routes->applyMiddleware('admin_request_authorization');
                 //}
+
+                $routes->registerMiddleware('admin_plugins', new AdminMiddleware($this->_app));
+                $routes->applyMiddleware('admin_plugins');
 
                 $fallbackAdminRootUrl = ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'];
                 $adminRootUrl = Configure::read('Admin.Dashboard.url', $fallbackAdminRootUrl);

@@ -180,12 +180,13 @@ class FormatterHelper extends Helper
             if ($val === null || !$val) {
                 $val = [];
             }
+
             return $view->element('Admin.array_to_list', ['array' => $val]);
         });
 
         self::register('json', function ($val, $extra, $params, $view) {
             if ($val === null || !$val) {
-               $val = [];
+                $val = [];
             }
 
             if (is_string($val)) {

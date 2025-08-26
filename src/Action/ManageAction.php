@@ -12,7 +12,7 @@ class ManageAction extends BaseEntityAction implements EventListenerInterface
 {
     protected array $scope = ['table', 'form'];
 
-    protected array $defaultConfig = [
+    protected array $_defaultConfig = [
         'entity' => null,
         'entityOptions' => [],
         'modelClass' => null,

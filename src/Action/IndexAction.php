@@ -32,19 +32,17 @@ class IndexAction extends BaseAction
         'queryObj' => null, // table query object instance
         'filters' => [], // query conditions
         'contain' => [], // query contain param
-        'limit' => null, // query limit
+        'limit' => 15, // query limit
+        'maxLimit' => 1000, // query max limit
         'helpers' => [],
         'rowActions' => [],
         'actions' => [],
 
         // deprecated
-        'fields.whitelist' => [],
-        'fields.blacklist' => [],
-        'query' => [], // query options (deprecated, use 'paginateSettings' instead)
+        //'fields.whitelist' => [], // use 'include' instead
+        //'fields.blacklist' => [], // use 'exclude' instead
+        //'query' => [], // use 'paginateSettings' instead
     ];
-
-    protected int $_defaultLimit = 15;
-    //protected $_maxLimit = 1000;
 
     /**
      * @inheritDoc
@@ -64,10 +62,6 @@ class IndexAction extends BaseAction
             deprecationWarning('4.0.1', "Using the 'fields.blacklist' config is deprecated. Use 'exclude' instead.");
             unset($this->_config['fields.blacklist']);
         }
-
-        // detect model class
-        //$this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->fetchTable()->getRegistryAlias();
-        //$this->_config['modelClass'] = $this->_config['modelClass'] ?? $controller->fetchTable()->getRegistryAlias();
 
         // load helpers
         if ($this->_config['helpers']) {
@@ -109,19 +103,6 @@ class IndexAction extends BaseAction
 
         $this->_config['fields'] = $cols;
 
-        //debug($this->_config);
-
-        // actions
-        //if ($this->_config['actions'] !== false) {
-        //$event = $controller->dispatchEvent('Admin.Controller.buildIndexActions', ['actions' => $this->_config['actions']]);
-        //$this->_config['actions'] = (array)$event->getData('actions');
-        //}
-
-        //if ($this->_config['rowActions'] !== false) {
-        //    $event = $controller->dispatchEvent('Admin.Action.Index.getRowActions', ['actions' => $this->_config['rowActions']]);
-        //    $this->_config['rowActions'] = (array)$event->getData('actions');
-        //}
-
         try {
             $this->_execute($controller);
         } catch (Exception $ex) {
@@ -144,9 +125,9 @@ class IndexAction extends BaseAction
             'fields' => $this->_config['fields'],
             'rowActions' => $this->_config['rowActions'],
             //'data' => $result,
-            'rowActionCallbacks' => [
-                //[$this, 'buildTableRowActions']
-            ],
+            //'rowActionCallbacks' => [
+            //    [$this, 'buildTableRowActions']
+            //],
         ]);
         //$controller->set('actions', $this->_config['actions']);
 
@@ -158,7 +139,18 @@ class IndexAction extends BaseAction
         }
 
         $toolbarActions = $controller->viewBuilder()->getVar('toolbar.actions');
-        $toolbarActions[] = [__d('admin', 'Add'), ['action' => 'add'], ['data-icon' => 'plus']];
+        if ($controller->Action) {
+            foreach ($controller->Action->listActions() as $actionName) {
+                $action = $controller->Action->getAction($actionName);
+                if (in_array('index', $action->getScope()) && !$action instanceof EntityActionInterface) {
+                    $toolbarActions[] = [
+                        $action->getLabel(),
+                        ['action' => $actionName],
+                        $action->getAttributes(),
+                    ];
+                }
+            }
+        }
         $controller->set('toolbar.actions', $toolbarActions);
 
         $controller->viewBuilder()->setOption('serialize', ['result']);
@@ -175,20 +167,6 @@ class IndexAction extends BaseAction
         if (!empty($this->_config['data'])) {
             $result = $this->_config['data'];
         } elseif ($this->model()) {
-            //if ($this->_config['paginate'] === true) {
-            //    $this->_config['paginate'] = (array)$controller->paginate;
-            //}
-
-            //if ($this->_config['filter'] === true && !$this->model()->behaviors()->has('Search')) {
-            //    $this->_config['filter'] = false;
-            //}
-
-            //if ($this->_config['paginate']) {
-            //$maxLimit = $this->_maxLimit;
-            //$limit = (isset($this->_config['query']['limit'])) ? $this->_config['query']['limit'] : $this->_defaultLimit;
-            //$limit = ($limit <= $maxLimit) ? $limit : $maxLimit;
-            //$this->_config['query']['limit'] = $limit;
-            //}
 
             // build query
             if ($this->_config['queryObj'] instanceof QueryInterface) {
@@ -225,9 +203,12 @@ class IndexAction extends BaseAction
                     unset($this->_config['query']);
                 }
 
-                $paginateSettings = (array)$this->_config['paginateSettings'] ?? [];
+                $paginateSettings = (array)$this->_config['paginateSettings'] ?? $this->controller->paginate ?? [];
                 if (!isset($paginateSettings['limit'])) {
-                    $paginateSettings['limit'] = $this->_defaultLimit;
+                    $paginateSettings['limit'] = $this->_config['limit'];
+                }
+                if (!isset($paginateSettings['maxLimit'])) {
+                    $paginateSettings['maxLimit'] = $this->_config['maxLimit'];
                 }
                 $result = $this->controller->paginate($query, $paginateSettings);
             } else {
@@ -251,7 +232,7 @@ class IndexAction extends BaseAction
         $actions = [];
         /** @var \Admin\Controller\Component\ActionComponent $actionComponent */
         $actionComponent = $this->controller->components()->get('Action');
-        //foreach ($actionComponent->getActionRegistry()->with(EntityActionInterface::class) as $action) {
+
         foreach ($actionComponent->listActions() as $actionName) {
             /** @var \Admin\Action\Interfaces\ActionInterface $action */
             $action = $actionComponent->getAction($actionName);
@@ -259,33 +240,12 @@ class IndexAction extends BaseAction
             /** @var \Admin\Action\Interfaces\EntityActionInterface $action */
             if ($action instanceof EntityActionInterface) {
                 $actions[] = [
-                    //'url' => Router::url(['action' => $actionName, $row[$this->model()->getPrimaryKey()]]),
                     'url' => $action->getUrl($row[$this->model()->getPrimaryKey()]),
                     'title' => $action->getLabel(),
                     'attrs' => $action->getAttributes(),
                 ];
             }
         }
-        //        foreach ($this->controller->Action->actions as $action => $conf) {
-        //            if ($conf['type'] != 'entity') {
-        //                continue;
-        //            }
-        //            $actions[$action] = [
-        //                'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
-        //                'title' => $conf['label'],
-        //                'attrs' => $conf['attrs'],
-        //            ];
-        //        }
-        //        foreach ($this->controller->Action->listActions() as $action) {
-        //            $_action = $this->controller->Action->getAction($action);
-        //
-        //            if ($_action instanceof EntityActionInterface && in_array('table', $_action->getScope()) /*&& $_action->isUsable($row)*/) {
-        //                $actions[$action] = [
-        //                    'title' => $_action->getLabel(),
-        //                    'url' => Router::url(['action' => $action, $row[$this->model()->getPrimaryKey()]]),
-        //                    'attrs' => $_action->getAttributes()];
-        //            }
-        //        }
 
         return $actions;
     }

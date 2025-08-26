@@ -152,7 +152,7 @@ class AdminPlugin extends BasePlugin implements
                             ],
                             function (RouteBuilder $routes) use ($plugin): void {
                                 $plugin->routes($routes);
-                            }
+                            },
                         );
                     } catch (Exception $ex) {
                         Log::error("Admin routes loading failed: $pluginName: " . $ex->getMessage());
@@ -194,7 +194,7 @@ class AdminPlugin extends BasePlugin implements
                 $routes->connect(
                     '/',
                     ['plugin' => 'Admin', 'controller' => 'Admin', 'action' => 'index'],
-                    ['_name' => 'index']
+                    ['_name' => 'index'],
                 );
 
                 //admin:auth:*
@@ -206,50 +206,50 @@ class AdminPlugin extends BasePlugin implements
                         $routes->connect(
                             '/',
                             ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'index'],
-                            ['_name' => 'index']
+                            ['_name' => 'index'],
                         );
 
                         // admin:auth:user:login
                         $routes->connect(
                             '/login',
                             ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'login'],
-                            ['_name' => 'user:login']
+                            ['_name' => 'user:login'],
                         );
 
                         // admin:auth:user:checkauth
                         $routes->connect(
                             '/session',
                             ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'session'],
-                            ['_name' => 'user:checkauth']
+                            ['_name' => 'user:checkauth'],
                         );
 
                         // admin:auth:user:loginsuccess
                         $routes->connect(
                             '/login-success',
                             ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'loginSuccess'],
-                            ['_name' => 'user:loginsuccess']
+                            ['_name' => 'user:loginsuccess'],
                         );
 
                         // admin:auth:user:logout
                         $routes->connect(
                             '/logout',
                             ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'logout'],
-                            ['_name' => 'user:logout']
+                            ['_name' => 'user:logout'],
                         );
 
                         // admin:auth:user:profile
                         $routes->connect(
                             '/user',
                             ['plugin' => 'Admin', 'controller' => 'Auth', 'action' => 'user'],
-                            ['_name' => 'user:profile']
+                            ['_name' => 'user:profile'],
                         );
 
                         //$routes->fallbacks(DashedRoute::class);
-                    }
+                    },
                 );
 
                 $this->dispatchEvent('Admin.Routes.setup', ['routes' => $routes]);
-            } # End of admin root scope
+            }, # End of admin root scope
         );
     }
 
@@ -283,8 +283,21 @@ class AdminPlugin extends BasePlugin implements
             'password' => 'password',
         ];
 
+        $passwordIdentifier = [
+            'Authentication.Password' => [
+                'resolver' => [
+                    'className' => 'Authentication.Orm',
+                    'userModel' => 'Admin.Users',
+                    'finder' => 'authUser',
+                ],
+                'fields' => $fields,
+                'passwordHasher' => null,
+            ],
+        ];
+
         // Load the authenticators, you want session first
         $service->loadAuthenticator('Authentication.Session', [
+            'identifier' => $passwordIdentifier,
             'fields' => [
                 'username' => 'username',
             ],
@@ -293,20 +306,10 @@ class AdminPlugin extends BasePlugin implements
             'identityAttribute' => static::AUTH_IDENTITY_ATTRIBUTE,
         ]);
         $service->loadAuthenticator('Authentication.Form', [
+            'identifier' => $passwordIdentifier,
             'loginUrl' => null,
             'urlChecker' => 'Authentication.Default',
             'fields' => $fields,
-        ]);
-
-        // Load identifiers
-        $service->loadIdentifier('Authentication.Password', [
-            'resolver' => [
-                'className' => 'Authentication.Orm',
-                'userModel' => 'Admin.Users',
-                'finder' => 'authUser',
-            ],
-            'fields' => $fields,
-            'passwordHasher' => null,
         ]);
 
         return $service;

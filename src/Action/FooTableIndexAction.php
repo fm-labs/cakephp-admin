@@ -49,10 +49,10 @@ class FooTableIndexAction extends IndexAction
         $dataUrl = null; // required for ajax mode
 
         // query limit workaround
-        $limit = $this->_config['query']['limit'] ?? $this->_defaultLimit;
-        $extra['paging']['size'] = $limit;
-        $this->_config['query']['limit'] = $limit; //self::$maxLimit; // hard limit
-        $this->_config['query']['maxLimit'] = self::$maxLimit; // hard limit
+        //$limit = $this->_config['query']['limit'] ?? $this->_defaultLimit;
+        //$extra['paging']['size'] = $limit;
+        //$this->_config['query']['limit'] = $limit; //self::$maxLimit; // hard limit
+        //$this->_config['query']['maxLimit'] = self::$maxLimit; // hard limit
 
         // JSON data
         if ($controller->getRequest()->getQuery('rows') == true) {

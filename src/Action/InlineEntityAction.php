@@ -9,7 +9,7 @@ use Cake\Utility\Inflector;
 
 class InlineEntityAction extends BaseEntityAction
 {
-    protected array $defaultConfig = [];
+    protected array $_defaultConfig = [];
 
     protected array $scope = [];
     protected array $_attributes = [];

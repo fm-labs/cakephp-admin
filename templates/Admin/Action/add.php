@@ -9,7 +9,12 @@
  * - viewOptions: EntityView options array
  */
 $entity = $this->get('entity');
-$title = $this->get('title', @array_pop(explode('\\', get_class($entity))));
+$title = $this->get('title');
+if (!$title) {
+    $entityClassParts = explode('\\', get_class($entity));
+    $title = @array_pop($entityClassParts);
+}
+
 $viewOptions = (array)$this->get('viewOptions');
 $fieldsets = $this->get('fieldsets');
 $fields = $this->get('fields');

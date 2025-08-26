@@ -16,6 +16,7 @@ use Cake\Utility\Inflector;
  * @package Admin\Action
  * @internal
  * @codeCoverageIgnore
+ * @deprecated
  */
 class DataTableIndexAction extends IndexAction
 {
@@ -33,12 +34,10 @@ class DataTableIndexAction extends IndexAction
         //'pageLength' => 10
     ];
 
-    protected $_defaultLimit = 10;
-
     /**
      * @var array
      */
-    protected array $defaultConfig = [
+    protected array $_defaultConfig = [
         'modelClass' => null,
         'paginate' => false, // Pagination params
         'paging' => false, // Enable pagination

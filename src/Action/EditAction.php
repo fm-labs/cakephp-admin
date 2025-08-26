@@ -20,7 +20,7 @@ class EditAction extends BaseEntityAction
     /**
      * @var array
      */
-    protected array $defaultConfig = [
+    protected array $_defaultConfig = [
         'modelClass' => null,
         'modelId' => null,
         'actions' => [],
@@ -114,7 +114,7 @@ class EditAction extends BaseEntityAction
             $entity = $this->model()->patchEntity(
                 $entity,
                 $this->request->getData(),
-                ['validate' => $this->_config['model.validator']],
+                ['validate' => $this->getConfig('model.validator', 'default')],
             );
             if ($this->model()->save($entity)) {
                 $this->flashSuccess(__d('admin', 'Saved!'));

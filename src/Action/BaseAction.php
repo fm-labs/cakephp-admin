@@ -23,9 +23,9 @@ abstract class BaseAction implements ActionInterface
     protected array $_defaultConfig = [];
 
     /**
-     * @var string Action label
+     * @var string|null Action label
      */
-    protected string $label;
+    protected ?string $label = null;
 
     /**
      * @var string|null Action plugin

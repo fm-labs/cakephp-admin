@@ -37,11 +37,11 @@ class DataTableHelper extends Helper
         'Admin.Formatter',
     ];
 
-    protected $_params = [];
+    protected array $_params = [];
 
-    protected $_fields = [];
+    protected array $_fields = [];
 
-    protected $_defaultParams = [
+    protected array $_defaultParams = [
         'model' => null,
         'data' => null,
         'id' => null,
@@ -51,9 +51,7 @@ class DataTableHelper extends Helper
         'exclude' => null,
         'actions' => [],
         'rowActions' => [],
-        'paging' => false,
-        'pagingLimit' => 20,
-        'paginate' => [],
+        'paginate' => false,
         'select' => false,
         'sortable' => false,
         'reduce' => [],
@@ -61,7 +59,7 @@ class DataTableHelper extends Helper
         'ajax' => false,
     ];
 
-    protected $_defaultField = [
+    protected array $_defaultField = [
         'type' => null,
         'label' => null,
         'class' => null,
@@ -70,13 +68,13 @@ class DataTableHelper extends Helper
         'schema' => null,
     ];
 
-    protected $_tableArgs = [];
+    protected array $_tableArgs = [];
 
-    protected $_reduceStack = [];
+    protected array $_reduceStack = [];
 
-    protected $_rowCallbacks = [];
+    protected array $_rowCallbacks = [];
 
-    protected $_setup = null;
+    //protected $_setup = null;
 
     /**
      * Table instance
@@ -226,7 +224,8 @@ class DataTableHelper extends Helper
         $this->_initialize();
 
         //if ($this->_setup === null) {
-        $event = $this->_View->getEventManager()->dispatch(new Event('Admin.DataTable.setup', $this));
+        $event = $this->_View->getEventManager()
+            ->dispatch(new Event('Admin.DataTable.setup', $this));
         //}
 
         return $this;
@@ -380,8 +379,8 @@ class DataTableHelper extends Helper
         $table = $this->_renderTable();
 
         $pagination = '';
-        if ($this->_params['paginate'] && $options['pagination'] !== false) {
-            //$pagination = $this->_renderPagination();
+        if ($this->_params['paginate'] !== false) {
+            $pagination = $this->_renderPagination();
         }
 
         $script = '';
@@ -914,9 +913,9 @@ class DataTableHelper extends Helper
      */
     protected function _renderPagination(): string
     {
-        //if (!$this->_params['paginate']) {
-        //    return '';
-        //}
+       if (!$this->getData()) {
+           return '';
+       }
 
         return $this->_View->element('Admin.Pagination/default', [
             'counter' => ['format' => __d('admin', 'Page {{page}} of {{pages}} . Showing {{current}} records from row {{start}} to {{end}} of {{count}} records')],
@@ -1197,11 +1196,11 @@ SCRIPT;
 //    }
 
     /**
-     * @param string $tokenStr Template
+     * @param array|string $tokenStr Template
      * @param array $data Data
-     * @return string
+     * @return array|string
      */
-    protected function _replaceTokens(string $tokenStr, array $data = []): string
+    protected function _replaceTokens(string|array $tokenStr, array $data = []): string|array
     {
         if (is_array($tokenStr)) {
             foreach ($tokenStr as &$_tokenStr) {

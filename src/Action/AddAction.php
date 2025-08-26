@@ -21,17 +21,17 @@ class AddAction extends BaseAction implements ActionInterface, IndexActionInterf
     /**
      * @var array
      */
-    protected array $defaultConfig = [
+    protected array $_defaultConfig = [
         'fields' => [],
         'include' => [],
         'exclude' => [],
         'allowAccess' => [],
         'actions' => [],
-        'rowActions' => [],
         'validator' => 'default',
         'redirectUrl' => true,
         //'fields.whitelist' => [], // deprecated use 'include' instead
         //'fields.blacklist' => [], // deprecated use 'exclude' instead
+        //'fields.access' => [], // deprecated use 'allowAccess' instead
     ];
 
     protected array $scope = ['index'];

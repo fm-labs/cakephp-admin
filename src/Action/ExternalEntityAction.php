@@ -13,7 +13,7 @@ class ExternalEntityAction extends BaseEntityAction
 
     protected array $_attributes = [];
 
-    protected string $label = 'External';
+    protected ?string $label = 'External';
 
     protected array $scope = ['table'];
 
@@ -30,6 +30,13 @@ class ExternalEntityAction extends BaseEntityAction
         $this->scope = $options['scope'];
         $this->_url = $options['url'];
         $this->label = $options['label'] ?: Inflector::humanize($this->_action);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getName() {
+        return $this->_action;
     }
 
     /**

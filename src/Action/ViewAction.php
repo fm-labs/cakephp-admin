@@ -14,7 +14,7 @@ class ViewAction extends BaseEntityAction implements EventListenerInterface
 {
     protected array $scope = ['table', 'form'];
 
-    protected array $defaultConfig = [
+    protected array $_defaultConfig = [
         'modelClass' => null,
         'modelId' => null,
         'label' => null,

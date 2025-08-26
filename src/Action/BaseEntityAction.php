@@ -19,10 +19,10 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
 {
     use EntityActionFilterTrait;
 
-    /**
-     * @var string
-     */
-    protected ?string $_action;
+//    /**
+//     * @var string
+//     */
+//    protected ?string $_action;
 
     /**
      * @var \Cake\Datasource\EntityInterface
@@ -93,7 +93,7 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     /**
      * @inheritDoc
      */
-    public function execute(Controller $controller): ?\Cake\Http\Response
+    public function execute(Controller $controller): ?Response
     {
         parent::execute($controller);
 
@@ -200,11 +200,11 @@ abstract class BaseEntityAction extends BaseAction implements EntityActionInterf
     abstract protected function _execute(Controller $controller): ?Response;
 
     /**
-     * @param string $tokenStr String template
+     * @param array|string $tokenStr String template
      * @param array $data Data
      * @return array|string
      */
-    protected function _replaceTokens(string $tokenStr, array $data = []): string|array
+    protected function _replaceTokens(string|array $tokenStr, array $data = []): string|array
     {
         if (is_array($tokenStr)) {
             foreach ($tokenStr as &$_tokenStr) {

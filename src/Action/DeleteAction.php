@@ -10,7 +10,7 @@ use Cake\Http\Response;
 
 class DeleteAction extends BaseEntityAction
 {
-    protected array $defaultConfig = [];
+    protected array $_defaultConfig = [];
 
     protected array $scope = ['table', 'form'];
 

@@ -112,12 +112,9 @@ class AdminPlugin extends BasePlugin implements
             '/' . Admin::$urlPrefix,
             ['prefix' => 'Admin', '_namePrefix' => 'admin:'],
             function (RouteBuilder $routes): void {
-                $routes->registerMiddleware(
-                    'admin_filter',
-                    new RequestFilterMiddleware(Configure::read('Admin.RequestFilter', [])),
-                );
+                //debug('Loading Admin routes...');
+                $routes->registerMiddleware('admin_filter', $this->buildAdminRequestFilterMiddleware());
                 $routes->applyMiddleware('admin_filter');
-
 
                 //if (Configure::read('Admin.Auth.authenticationEnabled')) {
                 $routes->registerMiddleware('admin_authentication', $this->buildAuthenticationMiddleware());
@@ -259,6 +256,15 @@ class AdminPlugin extends BasePlugin implements
             }, # End of admin root scope
         );
     }
+
+    /**
+     * @return \Cupcake\Middleware\RequestFilterMiddleware
+     */
+    public function buildAdminRequestFilterMiddleware(): RequestFilterMiddleware
+    {
+        return new RequestFilterMiddleware(Configure::read('Admin.RequestFilter', []));
+    }
+
 
     /**
      * @return \Authentication\Middleware\AuthenticationMiddleware
